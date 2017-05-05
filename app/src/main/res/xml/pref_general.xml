@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:key="default_city"
+        android:title="@string/pref_title_default_city"
+        android:defaultValue="Минск"
+        android:entries="@array/pref_cities_list"
+        android:entryValues="@array/pref_cities_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+    <PreferenceCategory android:title="@string/support">
+        <Preference android:title="@string/support_yandexmoney">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://yasobe.ru/na/valutchik"/>
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

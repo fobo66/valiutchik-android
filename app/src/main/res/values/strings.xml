@@ -1,0 +1,65 @@
+
+<resources>
+    <string name="app_name">Валютчик</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_update">Обновить</string>
+    <string name="action_buysell">Купить/Продать</string>
+    <string name="action_about">О приложении</string>
+
+    <string name="buy">Купить</string>
+    <string name="sell">Продать</string>
+
+    <string name="service_not_available">Сервисы Google Play временно недоступны</string>
+    <string name="invalid_lat_long_used">Неправильная широта или долгота</string>
+    <string name="no_address_found">Адрес не найден</string>
+    <string name="connection_error">Ошибка соединения</string>
+    <string name="connection_unavailable_info">Отсутствует подключение к сети. Будут показаны старые курсы.</string>
+    <string name="xml_error">Ошибка при обработке XML</string>
+
+    <string name="title_activity_about">О приложении</string>
+    <string name="copyright">© 2016 Андрей Мукамолов aka @fobo66</string>
+    <string name="myfin_copyright">Информация предоставлена сайтом <a href="myfin.by">myfin.by</a></string>
+    <string name="app_desc">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. С его помощью вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте.</string>
+    <string name="about_activity_warn">Обратите внимание, что информация может быть неактуальной. Уточняйте в банке.</string>
+
+    <string name="location_error_title">Ошибка получения местоположения</string>
+    <string name="no_location_data_provided">Не предоставлена инфа о локации</string>
+    <string name="address_found" translatable="false">Адрес получен</string>
+    <string name="geocoder_not_available">Геокодер недоступен</string>
+    <string name="ok">OK</string>
+    <string name="title_activity_settings">Настройки</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">Основные</string>
+
+    <string-array name="pref_cities_list">
+        <item>Минск</item>
+        <item>Брест</item>
+        <item>Витебск</item>
+        <item>Гомель</item>
+        <item>Гродно</item>
+        <item>Могилёв</item>
+    </string-array>
+
+    <string-array name="pref_cities_values" translatable="false">
+        <item>Минск</item>
+        <item>Брест</item>
+        <item>Витебск</item>
+        <item>Гомель</item>
+        <item>Гродно</item>
+        <item>Могилёв</item>
+    </string-array>
+
+    <string name="pref_buysell" translatable="false">buysell</string>
+    <string name="data_error">Ошибка обработки данных</string>
+    <string name="data_error_info">Невозможно преобразовать данные, полученные с сервера</string>
+    <string name="feed_xml_name" translatable="false">data.xml</string>
+    <string name="pref_title_default_city">Город по умолчанию</string>
+    <string name="pref_summary_default_city">Город, который будет использоваться в случае, если ваше местоположение недоступно или вы запретили приложению доступ к местоложению</string>
+    <string name="support">Поддержать приложение</string>
+    <string name="support_yandexmoney">Поддержать с банковской карты или Яндекс.Денег</string>
+    <string name="pref_ringtone_silent">Тихо</string>
+    <string name="maps_app_required">Невозможно показать отделения банка на карте: не найдено приложение карт</string>
+</resources>

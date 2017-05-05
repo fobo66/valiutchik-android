@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="10dp">
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/cv"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android.support.v7.cardview:cardUseCompatPadding="true"
+    android.support.v7.cardview:cardCornerRadius="5dp"
+    android.support.v7.cardview:cardElevation="2sp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="false">
+            <TextView
+                android:id="@+id/currency_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/currency_name_value_size"
+                android:maxLines="1"
+                android:textStyle="bold"
+                tools:text="USD"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true" />
+            <TextView
+                android:id="@+id/currency_value"
+                android:layout_width="130dp"
+                android:textSize="@dimen/currency_name_value_size"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                tools:text="1,94"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
+            <TextView
+                android:id="@+id/bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Беларусбанк"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
