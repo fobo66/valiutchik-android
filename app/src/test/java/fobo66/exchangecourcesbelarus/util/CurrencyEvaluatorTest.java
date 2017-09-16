@@ -1,18 +1,18 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
+import fobo66.exchangecourcesbelarus.BuildConfig;
+import fobo66.exchangecourcesbelarus.MyfinXMLParser;
+import fobo66.exchangecourcesbelarus.models.BestCourse;
+import fobo66.exchangecourcesbelarus.models.Currency;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import fobo66.exchangecourcesbelarus.MyfinXMLParser;
-import fobo66.exchangecourcesbelarus.models.BestCourse;
-import fobo66.exchangecourcesbelarus.models.Currency;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Test cases for my algorithm.
  */
 @RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class)
 public class CurrencyEvaluatorTest {
 
     private CurrencyEvaluator evaluator;

@@ -20,8 +20,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
@@ -46,8 +49,11 @@ public class CurrencyRateService extends JobIntentService {
   private final long httpCacheSize = 1024 * 1024 * 5; // 5 MiB
   private SharedPreferences prefs;
 
+  private final Map<String, Integer> citiesMap = new HashMap<>();
+
   public CurrencyRateService() {
     super();
+    setupCitiesMap();
   }
 
   @Override public void onCreate() {
@@ -85,33 +91,8 @@ public class CurrencyRateService extends JobIntentService {
     if (city != null) {
       timeStamp = prefs.getLong(TIMESTAMP, currentTime - MAX_STALE_PERIOD);
       if ((currentTime - timeStamp) >= MAX_STALE_PERIOD) {
-        switch (city) {
-          case "Могилёв":
-            url = Constants.MOGILEV_URI;
-            break;
-          case "Минск":
-            url = Constants.MINSK_URI;
-            break;
-          case "Витебск":
-            url = Constants.VITEBSK_URI;
-            break;
-          case "Гомель":
-            url = Constants.GOMEL_URI;
-            break;
-          case "Брест":
-            url = Constants.BREST_URI;
-            break;
-          case "Гродно":
-            url = Constants.GRODNO_URI;
-            break;
-          default:
-            url = Constants.MINSK_URI;
-        }
-        String credential = Credentials.basic("app", "android");
-        Request request = new Request.Builder().url(url)
-            .addHeader("Authorization", credential)
-            .cacheControl(new CacheControl.Builder().maxAge(3, TimeUnit.HOURS).build())
-            .build();
+        url = getUrlForCity(city);
+        Request request = prepareRequest(url);
         client.newCall(request).enqueue(new Callback() {
           @Override public void onFailure(@NonNull Call call, @NonNull IOException e) {
             ExceptionHandler.handleException(e);
@@ -141,6 +122,23 @@ public class CurrencyRateService extends JobIntentService {
         ExceptionHandler.handleException(e);
       }
     }
+  }
+
+  private Request prepareRequest(String url) {
+    String credential = Credentials.basic("app", "android");
+    return new Request.Builder().url(url)
+        .addHeader("Authorization", credential)
+        .cacheControl(new CacheControl.Builder().maxAge(3, TimeUnit.HOURS).build())
+        .build();
+  }
+
+  @NonNull private String getUrlForCity(String city) {
+    Integer cityIndex = citiesMap.get(city);
+    if (cityIndex == null) {
+      cityIndex = 1;
+    }
+
+    return String.format(Locale.getDefault(), Constants.TEMPLATE_URI, cityIndex);
   }
 
   private void saveTimestamp() {
@@ -175,5 +173,14 @@ public class CurrencyRateService extends JobIntentService {
     intent.putParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES,
         (ArrayList<? extends Parcelable>) result);
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+  }
+
+  private void setupCitiesMap() {
+    citiesMap.put("Минск", 1);
+    citiesMap.put("Витебск", 2);
+    citiesMap.put("Гомель", 3);
+    citiesMap.put("Гродно", 4);
+    citiesMap.put("Брест", 5);
+    citiesMap.put("Могилёв", 6);
   }
 }
