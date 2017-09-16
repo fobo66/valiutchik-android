@@ -2,85 +2,74 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-crash'
 
 android {
-    signingConfigs {
-        signconfig {
-            keyAlias 'ReleaseKey'
-            keyPassword 'keyfobo'
-            storeFile file('keys.jks')
-            storePassword 'fobo66'
-        }
+  signingConfigs {
+    signconfig {
+      keyAlias 'ReleaseKey'
+      keyPassword 'keyfobo'
+      storeFile file('valutchik.jks')
+      storePassword 'fobo66'
     }
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
-    defaultConfig {
-        applicationId "fobo66.exchangecourcesbelarus"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 5
-        versionName "1.3"
-        multiDexEnabled true
+  }
+  compileSdkVersion 26
+  buildToolsVersion '26.0.1'
+  defaultConfig {
+    applicationId "fobo66.exchangecourcesbelarus"
+    minSdkVersion 14
+    targetSdkVersion 26
+    versionCode 6
+    versionName "1.4"
+    multiDexEnabled true
+  }
+  buildTypes {
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.signconfig
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.signconfig
-        }
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    debug {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
 }
 
 dependencies {
-    def supportVersion = "25.3.0"
-    def playServicesVersion = "10.2.0"
+  def supportVersion = "26.1.0"
+  def playServicesVersion = "11.2.2"
 
-    //design
-    compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:cardview-v7:$supportVersion"
-    compile "com.android.support:recyclerview-v7:$supportVersion"
-    compile "com.android.support:support-v4:$supportVersion"
+  //design
+  compile "com.android.support:appcompat-v7:$supportVersion"
+  compile "com.android.support:cardview-v7:$supportVersion"
+  compile "com.android.support:recyclerview-v7:$supportVersion"
+  compile "com.android.support:support-v4:$supportVersion"
 
-    //location
-    compile "com.google.android.gms:play-services-location:$playServicesVersion"
-    compile 'com.google.maps:google-maps-services:0.1.17'
+  //location
+  compile "com.google.android.gms:play-services-location:$playServicesVersion"
+  compile 'com.google.maps:google-maps-services:0.2.3'
+  compile 'org.slf4j:slf4j-nop:1.7.25'
 
-    //firebase
-    compile "com.google.firebase:firebase-core:$playServicesVersion"
-    compile "com.google.firebase:firebase-database:$playServicesVersion"
-    compile "com.google.firebase:firebase-crash:$playServicesVersion"
+  //firebase
+  compile "com.google.firebase:firebase-core:$playServicesVersion"
+  compile "com.google.firebase:firebase-database:$playServicesVersion"
+  compile "com.google.firebase:firebase-crash:$playServicesVersion"
 
-    //http
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+  //http
+  compile 'com.squareup.okhttp3:okhttp:3.9.0'
 
-    //ads
-    compile "com.google.android.gms:play-services-ads:$playServicesVersion"
+  //multidex
+  compile 'com.android.support:multidex:1.0.1'
 
-    //multidex
-    compile 'com.android.support:multidex:1.0.1'
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:1.10.19'
+  testCompile "org.robolectric:robolectric:3.2.2"
+  testCompile 'com.google.guava:guava:23.0-android'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile "org.robolectric:robolectric:3.2.2"
+  //ioutils for xml caching
+  compile 'commons-io:commons-io:2.5'
 
-    //ads by appodeal
-    compile project(':cheetah-mobile-3.4.7')
-    compile files('libs/applovin-6.3.0.jar')
-    compile files('libs/appodeal-1.15.8.jar')
-    compile files('libs/chartboost-6.5.1.jar')
-    compile files('libs/flurry-analytics-6.5.0.jar')
-    compile files('libs/my-target-4.5.10.jar')
-    compile files('libs/unity-ads-2.0.4.jar')
-    compile files('libs/yandex-metrica-2.51.jar')
-
-    //ioutils for xml caching
-    compile 'org.apache.commons:commons-io:1.3.2'
-
-    //utility
-    compile 'com.google.guava:guava:20.0'
+  //utility
+  compile 'com.google.guava:guava:23.0-android'
 }
 
 apply plugin: 'com.google.gms.google-services'
