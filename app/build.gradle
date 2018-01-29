@@ -11,13 +11,13 @@ android {
     }
   }
   compileSdkVersion 26
-  buildToolsVersion '26.0.1'
+  buildToolsVersion '26.0.3'
   defaultConfig {
     applicationId "fobo66.exchangecourcesbelarus"
     minSdkVersion 14
     targetSdkVersion 26
-    versionCode 6
-    versionName "1.4"
+    versionCode 7
+    versionName "1.5"
     multiDexEnabled true
   }
   buildTypes {
@@ -36,40 +36,40 @@ android {
 
 dependencies {
   def supportVersion = "26.1.0"
-  def playServicesVersion = "11.2.2"
+  def playServicesVersion = "11.8.0"
 
   //design
-  compile "com.android.support:appcompat-v7:$supportVersion"
-  compile "com.android.support:cardview-v7:$supportVersion"
-  compile "com.android.support:recyclerview-v7:$supportVersion"
-  compile "com.android.support:support-v4:$supportVersion"
+  implementation "com.android.support:appcompat-v7:$supportVersion"
+  implementation "com.android.support:cardview-v7:$supportVersion"
+  implementation "com.android.support:recyclerview-v7:$supportVersion"
+  implementation "com.android.support:support-v4:$supportVersion"
 
   //location
-  compile "com.google.android.gms:play-services-location:$playServicesVersion"
-  compile 'com.google.maps:google-maps-services:0.2.3'
-  compile 'org.slf4j:slf4j-nop:1.7.25'
+  implementation "com.google.android.gms:play-services-location:$playServicesVersion"
+  implementation 'com.google.maps:google-maps-services:0.2.3'
+  implementation 'org.slf4j:slf4j-nop:1.7.25'
 
   //firebase
-  compile "com.google.firebase:firebase-core:$playServicesVersion"
-  compile "com.google.firebase:firebase-database:$playServicesVersion"
-  compile "com.google.firebase:firebase-crash:$playServicesVersion"
+  implementation "com.google.firebase:firebase-core:$playServicesVersion"
+  implementation "com.google.firebase:firebase-database:$playServicesVersion"
+  implementation "com.google.firebase:firebase-crash:$playServicesVersion"
 
   //http
-  compile 'com.squareup.okhttp3:okhttp:3.9.0'
+  implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 
   //multidex
-  compile 'com.android.support:multidex:1.0.1'
+  implementation 'com.android.support:multidex:1.0.2'
 
-  testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:1.10.19'
-  testCompile "org.robolectric:robolectric:3.4.2"
-  testCompile 'com.google.guava:guava:23.0-android'
+  testImplementation 'junit:junit:4.12'
+  testImplementation 'org.mockito:mockito-core:2.8.47'
+  testImplementation "org.robolectric:robolectric:3.4.2"
+  testImplementation 'com.google.guava:guava:23.0-android'
 
   //ioutils for xml caching
-  compile 'commons-io:commons-io:2.5'
+  implementation 'commons-io:commons-io:2.5'
 
   //utility
-  compile 'com.google.guava:guava:23.0-android'
+  implementation 'com.google.guava:guava:23.0-android'
 }
 
 apply plugin: 'com.google.gms.google-services'
