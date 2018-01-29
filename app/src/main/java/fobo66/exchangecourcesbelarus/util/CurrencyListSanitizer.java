@@ -11,24 +11,24 @@ import fobo66.exchangecourcesbelarus.models.Currency;
  */
 
 class CurrencyListSanitizer implements Sanitizer {
-    private static final String EMPTY_COURSE = "-";
+  private static final String EMPTY_COURSE = "-";
 
-    public List<Currency> sanitize(List<Currency> list) {
-        for (Iterator<Currency> iterator = list.iterator(); iterator.hasNext(); ) {
-            Currency currency = iterator.next();
-            if (isInvalidEntry(currency)) {
-                iterator.remove();
-            }
-        }
-        return list;
+  @Override public List<Currency> sanitize(List<Currency> list) {
+    for (Iterator<Currency> iterator = list.iterator(); iterator.hasNext(); ) {
+      Currency currency = iterator.next();
+      if (isInvalidEntry(currency)) {
+        iterator.remove();
+      }
     }
+    return list;
+  }
 
-    private boolean isInvalidEntry(Currency currency) {
-        return currency.eurBuy.equals(EMPTY_COURSE) ||
-                currency.eurSell.equals(EMPTY_COURSE) ||
-                currency.rurBuy.equals(EMPTY_COURSE) ||
-                currency.rurSell.equals(EMPTY_COURSE) ||
-                currency.usdBuy.equals(EMPTY_COURSE) ||
-                currency.usdSell.equals(EMPTY_COURSE);
-    }
+  private boolean isInvalidEntry(Currency currency) {
+    return currency.eurBuy.equals(EMPTY_COURSE)
+        || currency.eurSell.equals(EMPTY_COURSE)
+        || currency.rurBuy.equals(EMPTY_COURSE)
+        || currency.rurSell.equals(EMPTY_COURSE)
+        || currency.usdBuy.equals(EMPTY_COURSE)
+        || currency.usdSell.equals(EMPTY_COURSE);
+  }
 }

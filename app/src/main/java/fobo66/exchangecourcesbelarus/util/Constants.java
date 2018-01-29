@@ -8,13 +8,6 @@ package fobo66.exchangecourcesbelarus.util;
 public final class Constants {
   public static final String GEOCODER_API_KEY = "AIzaSyAFkmb5zd8r-eaPsbHw9lyCvExXOrGfNU0";
 
-  public static final String MINSK_URI = "https://admin.myfin.by/outer/authXml/1";
-  public static final String VITEBSK_URI = "https://admin.myfin.by/outer/authXml/2";
-  public static final String GOMEL_URI = "https://admin.myfin.by/outer/authXml/3";
-  public static final String GRODNO_URI = "https://admin.myfin.by/outer/authXml/4";
-  public static final String BREST_URI = "https://admin.myfin.by/outer/authXml/5";
-  public static final String MOGILEV_URI = "https://admin.myfin.by/outer/authXml/6";
-
   public static final String TEMPLATE_URI = "https://admin.myfin.by/outer/authXml/%d";
 
   public static final String USD = "USD";

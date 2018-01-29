@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -26,19 +24,24 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fobo66.exchangecourcesbelarus.list.BestCurrencyAdapter;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.ui.AboutActivity;
 import fobo66.exchangecourcesbelarus.ui.SettingsActivity;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
-import java.util.ArrayList;
-import java.util.List;
+import fobo66.exchangecourcesbelarus.util.Util;
 
 public class MainActivity extends BaseActivity {
 
@@ -54,7 +57,7 @@ public class MainActivity extends BaseActivity {
 
   public BestCurrencyAdapter adapter;
 
-  private static List<BestCourse> previousBest;
+  private static List<BestCourse> previousBest = new ArrayList<>();
   private DatabaseReference bestCourseRef;
   private boolean firebaseRegistering = true;
   private BroadcastReceiver receiver;
@@ -165,11 +168,10 @@ public class MainActivity extends BaseActivity {
           fetchCourses(false);
         } catch (Exception e) {
           ExceptionHandler.handleException(e);
+          Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
         }
 
         setBuySellIndicator();
-
-        mySwipeRefreshLayout.setRefreshing(false);
       }
     });
 
@@ -206,6 +208,7 @@ public class MainActivity extends BaseActivity {
           fetchCourses(true);
         } catch (Exception e) {
           ExceptionHandler.handleException(e);
+          Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
         }
       } else {
         mySwipeRefreshLayout.post(new Runnable() {
@@ -217,7 +220,7 @@ public class MainActivity extends BaseActivity {
     }
   }
 
-  @Override public void fetchCourses(boolean forceReload) throws Exception {
+  @Override public void fetchCourses(boolean forceReload) {
 
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)
         != PackageManager.PERMISSION_GRANTED
@@ -229,16 +232,11 @@ public class MainActivity extends BaseActivity {
           Constants.INTERNET_PERMISSIONS_REQUEST);
     } else {
 
-      ConnectivityManager connectManager =
-          (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-      NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
-      if (netInfo != null && netInfo.isConnected()) {
+      if (new Util().isNetworkAvailable(this)) {
         CurrencyRateService.fetchCourses(this, userCity);
       } else {
         Toast.makeText(this, R.string.connection_unavailable_info, Toast.LENGTH_LONG).show();
         onDataError();
-
-        throw new Exception("Cannot fetch data from network ");
       }
 
       runOnUiThread(new Runnable() {
@@ -267,6 +265,8 @@ public class MainActivity extends BaseActivity {
             fetchCourses(false);
           } catch (Exception e) {
             ExceptionHandler.handleException(e);
+            Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
+
           }
         }
       }
@@ -324,8 +324,7 @@ public class MainActivity extends BaseActivity {
   private void onDataError() {
     runOnUiThread(new Runnable() {
       @Override public void run() {
-        adapter.courses = previousBest;
-        adapter.notifyDataSetChanged();
+        MainActivity.this.adapter.onDataUpdate(previousBest);
         mySwipeRefreshLayout.setRefreshing(false);
       }
     });
@@ -356,9 +355,8 @@ public class MainActivity extends BaseActivity {
       @Override public void onReceive(Context context, Intent intent) {
         ArrayList<BestCourse> extra =
             intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES);
-        MainActivity.this.adapter.courses = extra;
+        MainActivity.this.adapter.onDataUpdate(extra);
         MainActivity.this.getBestCoursesReference().setValue(extra);
-        MainActivity.this.adapter.notifyDataSetChanged();
       }
     };
   }

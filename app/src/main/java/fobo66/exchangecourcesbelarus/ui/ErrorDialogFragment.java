@@ -17,23 +17,20 @@ import fobo66.exchangecourcesbelarus.MainActivity;
  * A fragment to display an error dialog
  */
 public class ErrorDialogFragment extends DialogFragment {
-    public static final String DIALOG_ERROR = "dialog_error";
-    public static final int REQUEST_RESOLVE_ERROR = 1001;
+  public static final String DIALOG_ERROR = "dialog_error";
+  public static final int REQUEST_RESOLVE_ERROR = 1001;
 
-    public ErrorDialogFragment() {
-    }
+  public ErrorDialogFragment() {
+  }
 
-    @Override
-    @NonNull
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Get the error code and retrieve the appropriate dialog
-        int errorCode = this.getArguments().getInt(DIALOG_ERROR);
-        return GoogleApiAvailability.getInstance().getErrorDialog(
-                this.getActivity(), errorCode,REQUEST_RESOLVE_ERROR);
-    }
+  @Override @NonNull public Dialog onCreateDialog(Bundle savedInstanceState) {
+    // Get the error code and retrieve the appropriate dialog
+    int errorCode = this.getArguments().getInt(DIALOG_ERROR);
+    return GoogleApiAvailability.getInstance()
+        .getErrorDialog(this.getActivity(), errorCode, REQUEST_RESOLVE_ERROR);
+  }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        ((MainActivity) getActivity()).onDialogDismissed();
-    }
+  @Override public void onDismiss(DialogInterface dialog) {
+    ((MainActivity) getActivity()).onDialogDismissed();
+  }
 }

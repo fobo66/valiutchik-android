@@ -23,7 +23,7 @@
     <string name="ok">Добра</string>
     <string name="title_activity_settings">Налады</string>
     <string name="data_error">Памылка апрацоўкi дадзеных</string>
-    <string name="data_error_info">Немагчыма </string>
+    <string name="data_error_info">"Немагчыма апрацаваць дадзеныя з сервера "</string>
     <string name="no_location_data_provided">Няма iнфармацыи пра месцазнахожданне</string>
     <string name="pref_header_general">Галоўныя</string>
     <string name="pref_summary_default_city">Горад, які будзе выкарыстоўвацца ў выпадку, калі ваша месцазнаходжанне недаступна ці вы забаранілі прыладзе доступ да месцазнаходжання</string>
@@ -41,5 +41,6 @@
     <string name="support_yandexmoney">Падтрымаць з банкаўскай картки ці Яндекс.Денег</string>
     <string name="pref_ringtone_silent">Ціха</string>
     <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
+  <string name="get_data_error">Немагчыма аднавіць дадзеныя</string>
 
 </resources>
