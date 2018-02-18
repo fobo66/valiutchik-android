@@ -1,45 +1,49 @@
 <RelativeLayout
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorPrimary"
+      android:theme="@style/ExchangeCoursesTheme"
+      app:popupTheme="@style/ExchangeCoursesTheme"
+      />
+
+  <TextView
+      android:id="@+id/buysell_indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@+id/swipe_refresh"
+      android:layout_centerHorizontal="true"
+      android:layout_margin="5dp"
+      tools:text="@string/buy"
+      />
+
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/swipe_refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_below="@+id/toolbar"
+      tools:context=".MainActivityFragment"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ExchangeCoursesTheme"
-        app:popupTheme="@style/ExchangeCoursesTheme"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buysell_indicator"
-        tools:text="@string/buy"
-        android:layout_alignTop="@+id/swipe_refresh"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="5dp" />
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        tools:context=".MainActivityFragment"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/swipe_refresh"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/toolbar"
-        >
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-                android:padding="16dp" />
+        android:padding="16dp"
+        />
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+  </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

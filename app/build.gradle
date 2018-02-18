@@ -10,14 +10,14 @@ android {
       storePassword 'fobo66'
     }
   }
-  compileSdkVersion 26
-  buildToolsVersion '26.0.3'
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
   defaultConfig {
     applicationId "fobo66.exchangecourcesbelarus"
     minSdkVersion 14
-    targetSdkVersion 26
+    targetSdkVersion 27
     versionCode 7
-    versionName "1.5"
+    versionName "1.6"
     multiDexEnabled true
   }
   buildTypes {
@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-  def supportVersion = "26.1.0"
+  def supportVersion = "27.0.2"
   def playServicesVersion = "11.8.0"
 
   //design
@@ -46,7 +46,7 @@ dependencies {
 
   //location
   implementation "com.google.android.gms:play-services-location:$playServicesVersion"
-  implementation 'com.google.maps:google-maps-services:0.2.3'
+  implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.9'
   implementation 'org.slf4j:slf4j-nop:1.7.25'
 
   //firebase
@@ -55,7 +55,7 @@ dependencies {
   implementation "com.google.firebase:firebase-crash:$playServicesVersion"
 
   //http
-  implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+  implementation 'com.squareup.okhttp3:okhttp:3.9.1'
 
   //multidex
   implementation 'com.android.support:multidex:1.0.2'
@@ -63,13 +63,13 @@ dependencies {
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-core:2.8.47'
   testImplementation "org.robolectric:robolectric:3.4.2"
-  testImplementation 'com.google.guava:guava:23.0-android'
+  testImplementation 'com.google.guava:guava:24.0-android'
 
   //ioutils for xml caching
   implementation 'commons-io:commons-io:2.5'
 
   //utility
-  implementation 'com.google.guava:guava:23.0-android'
+  implementation 'com.google.guava:guava:24.0-android'
 }
 
 apply plugin: 'com.google.gms.google-services'

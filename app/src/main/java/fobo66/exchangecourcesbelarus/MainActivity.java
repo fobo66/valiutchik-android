@@ -24,17 +24,16 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import fobo66.exchangecourcesbelarus.list.BestCurrencyAdapter;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.ui.AboutActivity;
@@ -42,12 +41,12 @@ import fobo66.exchangecourcesbelarus.ui.SettingsActivity;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
 import fobo66.exchangecourcesbelarus.util.Util;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
-  public static final String TIMESTAMP = "timestamp";
   private static final String TAG = MainActivity.class.getSimpleName();
-  public static final String FIREBASE_REGISTERING_KEY = "firebase_registering";
 
   private SwipeRefreshLayout mySwipeRefreshLayout;
   private RecyclerView rv;
@@ -74,6 +73,14 @@ public class MainActivity extends BaseActivity {
     setupFirebaseReference();
     setupLayout();
 
+    try {
+      ProviderInstaller.installIfNeeded(this);
+    } catch (GooglePlayServicesRepairableException e) {
+      GoogleApiAvailability.getInstance().showErrorNotification(this, e.getConnectionStatusCode());
+    } catch (GooglePlayServicesNotAvailableException e) {
+      GoogleApiAvailability.getInstance().showErrorDialogFragment(this, e.errorCode, 0);
+    }
+
     setupCurrenciesList();
 
     setupSwipeRefreshLayout();
@@ -84,9 +91,10 @@ public class MainActivity extends BaseActivity {
   @Override protected void onStart() {
     super.onStart();
     buyOrSell = prefs.getBoolean(getString(R.string.pref_buysell), false);
-    mGoogleApiClient.connect();
-    LocalBroadcastManager.getInstance(this)
-        .registerReceiver(receiver, new IntentFilter(Constants.BROADCAST_ACTION));
+    googleApiClient.connect();
+    IntentFilter intentFilter = new IntentFilter(Constants.BROADCAST_ACTION_SUCCESS);
+    intentFilter.addAction(Constants.BROADCAST_ACTION_ERROR);
+    LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
   }
 
   @Override protected void onStop() {
@@ -96,8 +104,8 @@ public class MainActivity extends BaseActivity {
     editor.putBoolean(getString(R.string.pref_buysell), buyOrSell);
     editor.apply();
 
-    if (mGoogleApiClient.isConnected()) {
-      mGoogleApiClient.disconnect();
+    if (googleApiClient.isConnected()) {
+      googleApiClient.disconnect();
     }
 
     LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
@@ -161,7 +169,7 @@ public class MainActivity extends BaseActivity {
         mySwipeRefreshLayout.setRefreshing(true);
         buyOrSell = compoundButton.isChecked();
 
-        if (mGoogleApiClient.isConnected() && userCity == null) {
+        if (googleApiClient.isConnected() && userCity == null) {
           resolveUserCity();
         }
         try {
@@ -179,7 +187,7 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override public void onSaveInstanceState(Bundle savedInstanceState) {
-    savedInstanceState.putBoolean(ADDRESS_REQUESTED_KEY, mAddressRequested);
+    savedInstanceState.putBoolean(ADDRESS_REQUESTED_KEY, addressRequested);
     savedInstanceState.putString(LOCATION_ADDRESS_KEY, userCity);
 
     savedInstanceState.putBoolean(getString(R.string.pref_buysell), buyOrSell);
@@ -233,9 +241,8 @@ public class MainActivity extends BaseActivity {
     } else {
 
       if (new Util().isNetworkAvailable(this)) {
-        CurrencyRateService.fetchCourses(this, userCity);
+        CurrencyRateService.fetchCourses(this, userCity, buyOrSell);
       } else {
-        Toast.makeText(this, R.string.connection_unavailable_info, Toast.LENGTH_LONG).show();
         onDataError();
       }
 
@@ -266,12 +273,11 @@ public class MainActivity extends BaseActivity {
           } catch (Exception e) {
             ExceptionHandler.handleException(e);
             Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
-
           }
         }
       }
     });
-    mySwipeRefreshLayout.setColorSchemeResources(R.color.primary_material_light_1);
+    mySwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
     mySwipeRefreshLayout.post(new Runnable() {
       @Override public void run() {
         mySwipeRefreshLayout.setRefreshing(true);
@@ -322,6 +328,8 @@ public class MainActivity extends BaseActivity {
   }
 
   private void onDataError() {
+    Toast.makeText(this, R.string.courses_unavailable_info, Toast.LENGTH_LONG).show();
+
     runOnUiThread(new Runnable() {
       @Override public void run() {
         MainActivity.this.adapter.onDataUpdate(previousBest);
@@ -333,7 +341,7 @@ public class MainActivity extends BaseActivity {
   private void updateValuesFromBundle(Bundle savedInstanceState) {
     if (savedInstanceState != null) {
       if (savedInstanceState.keySet().contains(ADDRESS_REQUESTED_KEY)) {
-        mAddressRequested = savedInstanceState.getBoolean(ADDRESS_REQUESTED_KEY);
+        addressRequested = savedInstanceState.getBoolean(ADDRESS_REQUESTED_KEY);
       }
 
       if (savedInstanceState.keySet().contains(LOCATION_ADDRESS_KEY)) {
@@ -344,8 +352,8 @@ public class MainActivity extends BaseActivity {
         buyOrSell = savedInstanceState.getBoolean(getString(R.string.pref_buysell));
       }
 
-      if (savedInstanceState.keySet().contains(FIREBASE_REGISTERING_KEY)) {
-        firebaseRegistering = savedInstanceState.getBoolean(FIREBASE_REGISTERING_KEY);
+      if (savedInstanceState.keySet().contains(Constants.FIREBASE_REGISTERING_KEY)) {
+        firebaseRegistering = savedInstanceState.getBoolean(Constants.FIREBASE_REGISTERING_KEY);
       }
     }
   }
@@ -353,10 +361,19 @@ public class MainActivity extends BaseActivity {
   private void constructBroadcastReceiver() {
     receiver = new BroadcastReceiver() {
       @Override public void onReceive(Context context, Intent intent) {
-        ArrayList<BestCourse> extra =
-            intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES);
-        MainActivity.this.adapter.onDataUpdate(extra);
-        MainActivity.this.getBestCoursesReference().setValue(extra);
+        String intentAction = intent.getAction();
+        if (intentAction != null) {
+          if (intentAction.equals(Constants.BROADCAST_ACTION_SUCCESS)) {
+            ArrayList<BestCourse> extra =
+                intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES);
+            MainActivity.this.adapter.onDataUpdate(extra);
+            MainActivity.this.getBestCoursesReference().setValue(extra);
+          } else if (intentAction.equals(Constants.BROADCAST_ACTION_ERROR)) {
+            onDataError();
+          }
+        } else {
+          onDataError();
+        }
       }
     };
   }

@@ -10,19 +10,25 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.crash.FirebaseCrash;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
-import com.google.maps.PendingResult;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
+import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
+import com.mapbox.services.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.services.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.services.commons.models.Position;
 import fobo66.exchangecourcesbelarus.ui.ErrorDialogFragment;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * (c) 2017 Andrey Mukamolow aka fobo66 <fobo66@protonmail.com>
@@ -35,24 +41,33 @@ public abstract class BaseActivity extends AppCompatActivity
   private static final String TAG = "BaseActivity";
   protected static final String ADDRESS_REQUESTED_KEY = "address-request-pending";
   protected static final String LOCATION_ADDRESS_KEY = "location-address";
-  public static String userCity;
-  public GoogleApiClient mGoogleApiClient;
-  protected Location mLastLocation;
-  private boolean mResolvingError = false;
-  protected boolean mAddressRequested;
+
+  public String userCity;
+  public GoogleApiClient googleApiClient;
+  private boolean resolvingError = false;
+  protected boolean addressRequested;
 
   protected SharedPreferences prefs;
+  private MapboxGeocoding geocodingRequest;
 
   public abstract void fetchCourses(boolean force) throws Exception;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (mGoogleApiClient == null) {
-      mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
+    if (googleApiClient == null) {
+      googleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
           .addOnConnectionFailedListener(this)
           .addApi(LocationServices.API)
           .build();
+    }
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+
+    if (geocodingRequest != null) {
+      geocodingRequest.cancelCall();
     }
   }
 
@@ -63,21 +78,21 @@ public abstract class BaseActivity extends AppCompatActivity
 
   @Override public void onConnectionSuspended(int i) {
     Log.i(TAG, "Connection suspended");
-    mGoogleApiClient.connect();
+    googleApiClient.connect();
   }
 
   @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    if (!mResolvingError && connectionResult.hasResolution()) {
+    if (!resolvingError && connectionResult.hasResolution()) {
       try {
-        mResolvingError = true;
+        resolvingError = true;
         connectionResult.startResolutionForResult(this, ErrorDialogFragment.REQUEST_RESOLVE_ERROR);
       } catch (IntentSender.SendIntentException e) {
-        mGoogleApiClient.connect();
+        googleApiClient.connect();
       }
     } else {
       showErrorDialog(connectionResult.getErrorCode());
-      mResolvingError = true;
+      resolvingError = true;
     }
   }
 
@@ -90,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity
   }
 
   public void onDialogDismissed() {
-    mResolvingError = false;
+    resolvingError = false;
   }
 
   public void resolveUserCity() {
@@ -101,51 +116,77 @@ public abstract class BaseActivity extends AppCompatActivity
           new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
           Constants.LOCATION_PERMISSION_REQUEST);
     } else {
-      mAddressRequested = true;
-      mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-      if (mLastLocation != null) {
-        GeoApiContext geocontext =
-            new GeoApiContext.Builder().apiKey(Constants.GEOCODER_API_KEY).build();
-        GeocodingApiRequest req = GeocodingApi.newRequest(geocontext)
-            .language("ru-RU")
-            .latlng(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+      addressRequested = true;
+      LocationServices.getFusedLocationProviderClient(this)
+          .getLastLocation()
+          .addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override public void onSuccess(Location lastLocation) {
 
-        req.setCallback(new PendingResult.Callback<GeocodingResult[]>() {
-          @Override public void onResult(GeocodingResult[] result) {
-            userCity = result[2].addressComponents[0].longName;
+              if (lastLocation != null) {
 
-            try {
-              fetchCourses(true);
-            } catch (Exception e) {
+                geocodingRequest =
+                    new MapboxGeocoding.Builder().setAccessToken(Constants.GEOCODER_ACCESS_TOKEN)
+                        .setCoordinates(Position.fromCoordinates(lastLocation.getLongitude(),
+                            lastLocation.getLatitude()))
+                        .setGeocodingType(GeocodingCriteria.TYPE_PLACE)
+                        .setLanguages("ru-RU")
+                        .setCountry("by")
+                        .build();
+
+                geocodingRequest.enqueueCall(new Callback<GeocodingResponse>() {
+                  @Override public void onResponse(Call<GeocodingResponse> call,
+                      Response<GeocodingResponse> response) {
+                    List<CarmenFeature> features = response.body().getFeatures();
+
+                    if (!features.isEmpty()) {
+                      userCity = features.get(0).getText();
+
+                      try {
+                        fetchCourses(true);
+                      } catch (Exception e) {
+                        ExceptionHandler.handleException(e);
+                      }
+                    }
+                    addressRequested = false;
+                  }
+
+                  @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                    Log.d(TAG,
+                        "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...",
+                        t);
+                    userCity = prefs.getString("default_city", "Минск");
+                    FirebaseCrash.report(t);
+
+                    try {
+                      fetchCourses(true);
+                    } catch (Exception ex) {
+                      ExceptionHandler.handleException(ex);
+                    }
+
+                    addressRequested = false;
+                  }
+                });
+              } else {
+                Log.i(TAG, "Last location unavailable, setting default city...");
+                userCity = prefs.getString("default_city", "Минск");
+                try {
+                  fetchCourses(true);
+                } catch (Exception e) {
+                  ExceptionHandler.handleException(e);
+                }
+
+                addressRequested = false;
+              }
+            }
+          })
+          .addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
               ExceptionHandler.handleException(e);
+              Toast.makeText(BaseActivity.this, R.string.location_error_title, Toast.LENGTH_SHORT)
+                  .show();
+              addressRequested = false;
             }
-          }
-
-          @Override public void onFailure(Throwable e) {
-            Log.d(TAG,
-                "onFailure: Getting city using GMaps Geocoding API unsuccessful, setting default city...",
-                e);
-            userCity = prefs.getString("default_city", "Минск");
-            FirebaseCrash.report(e);
-
-            try {
-              fetchCourses(true);
-            } catch (Exception ex) {
-              ExceptionHandler.handleException(ex);
-            }
-          }
-        });
-
-        mAddressRequested = false;
-      } else {
-        Log.i(TAG, "Last location unavailable, setting default city...");
-        userCity = prefs.getString("default_city", "Минск");
-        try {
-          fetchCourses(true);
-        } catch (Exception e) {
-          ExceptionHandler.handleException(e);
-        }
-      }
+          });
     }
   }
 }

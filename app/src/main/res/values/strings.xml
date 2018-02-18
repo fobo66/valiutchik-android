@@ -12,12 +12,12 @@
   <string name="invalid_lat_long_used">Неправильная широта или долгота</string>
   <string name="no_address_found">Адрес не найден</string>
   <string name="connection_error">Ошибка соединения</string>
-  <string name="connection_unavailable_info">Отсутствует подключение к сети. Будут показаны старые курсы.</string>
+  <string name="courses_unavailable_info">Не удалось обновить курсы валют. Будут показаны старые курсы.</string>
   <string name="xml_error">Ошибка при обработке XML</string>
 
   <string name="title_activity_about">О приложении</string>
   <string name="copyright">© 2016 Андрей Мукамолов aka @fobo66</string>
-  <string name="myfin_copyright">Информация предоставлена сайтом <a href="myfin.by">myfin.by</a></string>
+  <string name="myfin_copyright">Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
   <string name="app_desc">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. С его помощью вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте.</string>
   <string name="about_activity_warn">Обратите внимание, что информация может быть неактуальной. Уточняйте в банке.</string>
 

@@ -9,6 +9,7 @@ import android.support.v4.app.JobIntentService;
 import android.support.v4.content.LocalBroadcastManager;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.util.CertificateManager;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,18 +40,18 @@ import okhttp3.Response;
 import org.apache.commons.io.IOUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
-import static fobo66.exchangecourcesbelarus.MainActivity.TIMESTAMP;
-import static fobo66.exchangecourcesbelarus.MainActivity.buyOrSell;
-
 public class CurrencyRateService extends JobIntentService {
 
   private static final int JOB_ID = 228;
-  private OkHttpClient client;
   private static final long MAX_STALE_PERIOD = 10800000; // 3 hours in ms
   private final long httpCacheSize = 1024 * 1024 * 5; // 5 MiB
+
   private SharedPreferences prefs;
 
+  private OkHttpClient client;
+
   private final Map<String, Integer> citiesMap = new HashMap<>();
+  private boolean buyOrSell;
 
   public CurrencyRateService() {
     super();
@@ -59,7 +61,17 @@ public class CurrencyRateService extends JobIntentService {
   @Override public void onCreate() {
     super.onCreate();
 
-    client = new OkHttpClient.Builder().cache(new Cache(getCacheDir(), httpCacheSize)).build();
+    CertificateManager certificateManager = new CertificateManager();
+    try {
+      certificateManager.createTrustManagerForCertificate(
+          getResources().openRawResource(R.raw.myfinby));
+    } catch (GeneralSecurityException e) {
+      throw new RuntimeException("Cannot load myfin certificate", e);
+    }
+
+    client = new OkHttpClient.Builder().cache(new Cache(getCacheDir(), httpCacheSize))
+        .socketFactory(certificateManager.getTrustedSocketFactory())
+        .build();
 
     prefs =
         getApplicationContext().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
@@ -69,14 +81,16 @@ public class CurrencyRateService extends JobIntentService {
     final String action = intent.getAction();
     if (Constants.ACTION_FETCH_COURSES.equals(action)) {
       final String city = intent.getStringExtra(Constants.EXTRA_CITY);
+      buyOrSell = intent.getBooleanExtra(Constants.EXTRA_BUYORSELL, false);
       resolveBestCurrencyRates(city);
     }
   }
 
-  public static void fetchCourses(Context context, String city) {
+  public static void fetchCourses(Context context, String city, boolean buyOrSell) {
     Intent intent = new Intent(context, CurrencyRateService.class);
     intent.setAction(Constants.ACTION_FETCH_COURSES);
     intent.putExtra(Constants.EXTRA_CITY, city);
+    intent.putExtra(Constants.EXTRA_BUYORSELL, buyOrSell);
     enqueueWork(context, CurrencyRateService.class, JOB_ID, intent);
   }
 
@@ -89,16 +103,18 @@ public class CurrencyRateService extends JobIntentService {
     long timeStamp;
     long currentTime = System.currentTimeMillis();
     if (city != null) {
-      timeStamp = prefs.getLong(TIMESTAMP, currentTime - MAX_STALE_PERIOD);
+      timeStamp = prefs.getLong(Constants.TIMESTAMP, currentTime - MAX_STALE_PERIOD);
       if ((currentTime - timeStamp) >= MAX_STALE_PERIOD) {
         url = getUrlForCity(city);
         Request request = prepareRequest(url);
         client.newCall(request).enqueue(new Callback() {
           @Override public void onFailure(@NonNull Call call, @NonNull IOException e) {
             ExceptionHandler.handleException(e);
+            sendError();
           }
 
-          @Override public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+          @Override public void onResponse(@NonNull Call call, @NonNull Response response)
+              throws IOException {
             if (response.isSuccessful()) {
               Reader responseCharStream = response.body().charStream();
               File xmlCache = new File(getCacheDir(), getString(R.string.feed_xml_name));
@@ -120,6 +136,7 @@ public class CurrencyRateService extends JobIntentService {
         readCached();
       } catch (Exception e) {
         ExceptionHandler.handleException(e);
+        sendError();
       }
     }
   }
@@ -143,7 +160,7 @@ public class CurrencyRateService extends JobIntentService {
 
   private void saveTimestamp() {
     SharedPreferences.Editor editor = prefs.edit();
-    editor.putLong(TIMESTAMP, System.currentTimeMillis());
+    editor.putLong(Constants.TIMESTAMP, System.currentTimeMillis());
     editor.apply();
   }
 
@@ -169,10 +186,15 @@ public class CurrencyRateService extends JobIntentService {
   }
 
   private void sendResult(List<BestCourse> result) {
-    Intent intent = new Intent(Constants.BROADCAST_ACTION);
+    Intent intent = new Intent(Constants.BROADCAST_ACTION_SUCCESS);
     intent.putParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES,
         (ArrayList<? extends Parcelable>) result);
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+  }
+
+  private void sendError() {
+    LocalBroadcastManager.getInstance(this)
+        .sendBroadcast(new Intent(Constants.BROADCAST_ACTION_ERROR));
   }
 
   private void setupCitiesMap() {

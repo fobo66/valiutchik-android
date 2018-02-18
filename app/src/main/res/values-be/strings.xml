@@ -17,7 +17,7 @@
     <string name="invalid_lat_long_used">Памылковыя каардынаты</string>
     <string name="service_not_available">Сэрвісы Google Play часова недаступны</string>
     <string name="myfin_copyright">Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
-    <string name="connection_unavailable_info">Адсутнічае падключэнне да сеціва. Можа, пазней яно будзе даступна.</string>
+    <string name="courses_unavailable_info">Немагчыма аднавіць курсы валют. Будуць паказаны старыя курсы.</string>
     <string name="geocoder_not_available">Геакодэр недаступны</string>
     <string name="location_error_title">Памылка атрымання каардынатаў</string>
     <string name="ok">Добра</string>
