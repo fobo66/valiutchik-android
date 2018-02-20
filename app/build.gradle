@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-crash'
+apply from: 'https://gist.githubusercontent.com/fobo66/17d5116b5c7bccf5f28036f401f3c09d/raw/23dcd9e144a40da0f3140d788de8f7f541d11408/propertiesLoader.gradle'
+
+def keystoreProperties = loadProperties('keystore.properties')
 
 android {
   signingConfigs {
     signconfig {
-      keyAlias 'ReleaseKey'
-      keyPassword 'keyfobo'
-      storeFile file('valutchik.jks')
-      storePassword 'fobo66'
+      keyAlias keystoreProperties['keyAlias']
+      keyPassword keystoreProperties['keyPassword']
+      storeFile file(keystoreProperties['storeFile'])
+      storePassword keystoreProperties['storePassword']
     }
   }
   compileSdkVersion 27
