@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.google.firebase.firebase-crash'
 apply from: 'https://gist.githubusercontent.com/fobo66/17d5116b5c7bccf5f28036f401f3c09d/raw/23dcd9e144a40da0f3140d788de8f7f541d11408/propertiesLoader.gradle'
 
@@ -56,6 +57,7 @@ dependencies {
   implementation "com.google.firebase:firebase-core:$playServicesVersion"
   implementation "com.google.firebase:firebase-database:$playServicesVersion"
   implementation "com.google.firebase:firebase-crash:$playServicesVersion"
+  implementation "com.google.firebase:firebase-perf:$playServicesVersion"
 
   //http
   implementation 'com.squareup.okhttp3:okhttp:3.9.1'
