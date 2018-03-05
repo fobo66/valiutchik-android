@@ -16,6 +16,9 @@
 #   public *;
 #}
 
+  -keepattributes SourceFile, LineNumberTable
+  -repackageclasses
+
   -dontwarn afu.org.checkerframework.checker.**
   -dontwarn org.checkerframework.checker.**
   -dontwarn org.joda.convert.**
