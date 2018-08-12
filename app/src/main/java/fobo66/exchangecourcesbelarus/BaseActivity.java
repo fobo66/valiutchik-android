@@ -9,14 +9,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.crash.FirebaseCrash;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
@@ -72,12 +71,10 @@ public abstract class BaseActivity extends AppCompatActivity
   }
 
   @Override public void onConnected(Bundle bundle) {
-    Log.i(TAG, "Connection established");
     resolveUserCity();
   }
 
   @Override public void onConnectionSuspended(int i) {
-    Log.i(TAG, "Connection suspended");
     googleApiClient.connect();
   }
 
@@ -151,11 +148,10 @@ public abstract class BaseActivity extends AppCompatActivity
                   }
 
                   @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                    Log.d(TAG,
-                        "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...",
-                        t);
+                    Crashlytics.log(0, TAG,
+                        "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
                     userCity = prefs.getString("default_city", "Минск");
-                    FirebaseCrash.report(t);
+                    Crashlytics.logException(t);
 
                     try {
                       fetchCourses(true);
@@ -167,7 +163,7 @@ public abstract class BaseActivity extends AppCompatActivity
                   }
                 });
               } else {
-                Log.i(TAG, "Last location unavailable, setting default city...");
+                Crashlytics.log(0, TAG, "Last location unavailable, setting default city...");
                 userCity = prefs.getString("default_city", "Минск");
                 try {
                   fetchCourses(true);

@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 
 /**
  * (c) 2017 Andrey Mukamolow aka fobo66 <fobo66@protonmail.com>
@@ -10,6 +10,6 @@ import com.google.firebase.crash.FirebaseCrash;
 public class ExceptionHandler {
     public static void handleException(Exception e) {
         e.printStackTrace();
-        FirebaseCrash.report(e);
+        Crashlytics.logException(e);
     }
 }

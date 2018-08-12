@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin: 'com.google.firebase.firebase-crash'
+apply plugin: 'io.fabric'
 apply from: 'https://gist.githubusercontent.com/fobo66/17d5116b5c7bccf5f28036f401f3c09d/raw/23dcd9e144a40da0f3140d788de8f7f541d11408/propertiesLoader.gradle'
 
 def keystoreProperties = loadProperties('keystore.properties')
@@ -20,8 +20,8 @@ android {
     applicationId "fobo66.exchangecourcesbelarus"
     minSdkVersion 14
     targetSdkVersion 27
-    versionCode 7
-    versionName "1.6"
+    versionCode 8
+    versionName "1.7"
     multiDexEnabled true
   }
   buildTypes {
@@ -39,8 +39,7 @@ android {
 }
 
 dependencies {
-  def supportVersion = "27.0.2"
-  def playServicesVersion = "11.8.0"
+  def supportVersion = "27.1.1"
 
   //design
   implementation "com.android.support:appcompat-v7:$supportVersion"
@@ -49,29 +48,29 @@ dependencies {
   implementation "com.android.support:support-v4:$supportVersion"
 
   //location
-  implementation "com.google.android.gms:play-services-location:$playServicesVersion"
-  implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.9'
+  implementation "com.google.android.gms:play-services-location:15.0.1"
+  implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.10'
   implementation 'org.slf4j:slf4j-nop:1.7.25'
 
   //firebase
-  implementation "com.google.firebase:firebase-core:$playServicesVersion"
-  implementation "com.google.firebase:firebase-database:$playServicesVersion"
-  implementation "com.google.firebase:firebase-crash:$playServicesVersion"
-  implementation "com.google.firebase:firebase-perf:$playServicesVersion"
+  implementation "com.google.firebase:firebase-core:16.0.1"
+  implementation "com.google.firebase:firebase-database:16.0.1"
+  implementation "com.google.firebase:firebase-perf:16.0.0"
+  implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
 
   //http
-  implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+  implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 
   //multidex
-  implementation 'com.android.support:multidex:1.0.2'
+  implementation 'com.android.support:multidex:1.0.3'
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-core:2.8.47'
-  testImplementation "org.robolectric:robolectric:3.4.2"
+  testImplementation "org.robolectric:robolectric:3.6.1"
   testImplementation 'com.google.guava:guava:24.0-android'
 
   //ioutils for xml caching
-  implementation 'commons-io:commons-io:2.5'
+  implementation 'commons-io:commons-io:2.6'
 
   //utility
   implementation 'com.google.guava:guava:24.0-android'

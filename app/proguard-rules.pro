@@ -16,7 +16,9 @@
 #   public *;
 #}
 
-  -keepattributes SourceFile, LineNumberTable
+  -keepattributes *Annotation*
+  -keepattributes SourceFile,LineNumberTable
+  -keep public class * extends java.lang.Exception
   -repackageclasses
 
   -dontwarn afu.org.checkerframework.checker.**

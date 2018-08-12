@@ -34,7 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import fobo66.exchangecourcesbelarus.list.BestCurrencyAdapter;
+import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.ui.AboutActivity;
 import fobo66.exchangecourcesbelarus.ui.SettingsActivity;
@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
 
   public static boolean buyOrSell;
 
-  public BestCurrencyAdapter adapter;
+  public BestCoursesAdapter adapter;
 
   private static List<BestCourse> previousBest = new ArrayList<>();
   private DatabaseReference bestCourseRef;
@@ -287,7 +287,7 @@ public class MainActivity extends BaseActivity {
 
   private void setupCurrenciesList() {
     LinearLayoutManager llm = new LinearLayoutManager(this);
-    adapter = new BestCurrencyAdapter(previousBest);
+    adapter = new BestCoursesAdapter(previousBest);
     rv.setLayoutManager(llm);
     rv.setItemAnimator(new DefaultItemAnimator());
     rv.setAdapter(adapter);
