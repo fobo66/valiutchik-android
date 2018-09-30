@@ -8,15 +8,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +15,15 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -52,9 +52,9 @@ public class MainActivity extends BaseActivity {
   private RecyclerView rv;
   private TextView buysell_indicator;
 
-  public static boolean buyOrSell;
+  public boolean buyOrSell;
 
-  public BestCoursesAdapter adapter;
+  private BestCoursesAdapter adapter;
 
   private static List<BestCourse> previousBest = new ArrayList<>();
   private DatabaseReference bestCourseRef;
@@ -168,6 +168,7 @@ public class MainActivity extends BaseActivity {
       @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         mySwipeRefreshLayout.setRefreshing(true);
         buyOrSell = compoundButton.isChecked();
+        adapter.setBuyOrSell(buyOrSell);
 
         if (googleApiClient.isConnected() && userCity == null) {
           resolveUserCity();
@@ -307,13 +308,13 @@ public class MainActivity extends BaseActivity {
     bestCourseRef = getBestCoursesReference();
     bestCourseRef.keepSynced(false);
     bestCourseRef.addValueEventListener(new ValueEventListener() {
-      @Override public void onDataChange(DataSnapshot dataSnapshot) {
+      @Override public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         GenericTypeIndicator<List<BestCourse>> t = new GenericTypeIndicator<List<BestCourse>>() {
         };
         previousBest = dataSnapshot.getValue(t);
       }
 
-      @Override public void onCancelled(DatabaseError databaseError) {
+      @Override public void onCancelled(@NonNull DatabaseError databaseError) {
         Log.e(TAG, "onCancelled: Firebase failed: " + databaseError.getDetails());
       }
     });

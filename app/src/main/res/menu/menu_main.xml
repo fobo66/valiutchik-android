@@ -10,7 +10,7 @@
   <item
       android:id="@+id/action_buysell"
       android:title="@string/action_buysell"
-      app:actionViewClass="android.support.v7.widget.SwitchCompat"
+      app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
       app:showAsAction="always"
       />
   <item

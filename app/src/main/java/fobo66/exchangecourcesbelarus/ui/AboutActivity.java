@@ -2,12 +2,11 @@ package fobo66.exchangecourcesbelarus.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import fobo66.exchangecourcesbelarus.R;
 
 public class AboutActivity extends AppCompatActivity {

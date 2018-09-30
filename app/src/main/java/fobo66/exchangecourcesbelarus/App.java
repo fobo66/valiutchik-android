@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus;
 
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**

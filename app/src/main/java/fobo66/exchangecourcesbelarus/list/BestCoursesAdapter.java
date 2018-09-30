@@ -1,11 +1,10 @@
 package fobo66.exchangecourcesbelarus.list;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import fobo66.exchangecourcesbelarus.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.List;
 public class BestCoursesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
 
   private List<BestCourse> courses = new ArrayList<>();
+  private boolean buyOrSell;
 
   public BestCoursesAdapter(List<BestCourse> courses) {
     this.courses.addAll(courses);
@@ -34,7 +34,7 @@ public class BestCoursesAdapter extends RecyclerView.Adapter<CurrencyViewHolder>
   @Override public void onBindViewHolder(@NonNull CurrencyViewHolder holder, int position) {
     BestCourse bestCourse = courses.get(position);
 
-    if (bestCourse.isBuy == MainActivity.buyOrSell) {
+    if (bestCourse.isBuy == buyOrSell) {
       holder.bind(bestCourse);
     }
   }
@@ -47,5 +47,9 @@ public class BestCoursesAdapter extends RecyclerView.Adapter<CurrencyViewHolder>
     courses.clear();
     courses.addAll(newCourses);
     notifyDataSetChanged();
+  }
+
+  public void setBuyOrSell(boolean buyOrSell) {
+    this.buyOrSell = buyOrSell;
   }
 }
