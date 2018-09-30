@@ -43,7 +43,10 @@ dependencies {
   implementation 'androidx.appcompat:appcompat:1.0.0'
   implementation 'androidx.cardview:cardview:1.0.0'
   implementation 'androidx.recyclerview:recyclerview:1.0.0'
-  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  implementation 'androidx.fragment:fragment:1.0.0'
+  implementation 'androidx.collection:collection:1.0.0'
+  implementation 'androidx.viewpager:viewpager:1.0.0'
+  implementation 'androidx.core:core:1.0.0'
 
   //location
   implementation "com.google.android.gms:play-services-location:15.0.1"
