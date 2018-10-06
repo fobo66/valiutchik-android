@@ -49,18 +49,18 @@ dependencies {
   implementation 'androidx.core:core:1.0.0'
 
   //location
-  implementation "com.google.android.gms:play-services-location:15.0.1"
+  implementation "com.google.android.gms:play-services-location:16.0.0"
   implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.10'
   implementation 'org.slf4j:slf4j-nop:1.7.25'
 
   //firebase
-  implementation "com.google.firebase:firebase-core:16.0.3"
-  implementation "com.google.firebase:firebase-database:16.0.2"
-  implementation "com.google.firebase:firebase-perf:16.1.0"
+  implementation "com.google.firebase:firebase-core:16.0.4"
+  implementation "com.google.firebase:firebase-database:16.0.3"
+  implementation "com.google.firebase:firebase-perf:16.1.2"
   implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
   //http
-  implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+  implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
   //multidex
   implementation 'androidx.multidex:multidex:2.0.0'
