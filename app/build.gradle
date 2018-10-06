@@ -27,12 +27,12 @@ android {
     release {
       minifyEnabled true
       shrinkResources true
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
       signingConfig signingConfigs.signconfig
     }
     debug {
       minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
     }
   }
   compileOptions {
@@ -44,41 +44,42 @@ android {
 dependencies {
 
   //androidx
-  implementation 'androidx.appcompat:appcompat:1.0.0'
-  implementation 'androidx.cardview:cardview:1.0.0'
-  implementation 'androidx.recyclerview:recyclerview:1.0.0'
-  implementation 'androidx.fragment:fragment:1.0.0'
-  implementation 'androidx.collection:collection:1.0.0'
-  implementation 'androidx.viewpager:viewpager:1.0.0'
-  implementation 'androidx.core:core:1.0.0'
+  implementation "androidx.appcompat:appcompat:1.0.0"
+  implementation "androidx.cardview:cardview:1.0.0"
+  implementation "androidx.recyclerview:recyclerview:1.0.0"
+  implementation "androidx.fragment:fragment:1.0.0"
+  implementation "androidx.collection:collection:1.0.0"
+  implementation "androidx.viewpager:viewpager:1.0.0"
+  implementation "androidx.core:core:1.0.0"
+  implementation "com.google.android.material:material:1.0.0"
 
   //location
   implementation "com.google.android.gms:play-services-location:16.0.0"
-  implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.10'
-  implementation 'org.slf4j:slf4j-nop:1.7.25'
+  implementation "com.mapbox.mapboxsdk:mapbox-android-services:2.2.10"
+  implementation "org.slf4j:slf4j-nop:1.7.25"
 
   //firebase
   implementation "com.google.firebase:firebase-core:16.0.4"
   implementation "com.google.firebase:firebase-database:16.0.3"
   implementation "com.google.firebase:firebase-perf:16.1.2"
-  implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+  implementation "com.crashlytics.sdk.android:crashlytics:2.9.5"
 
   //http
-  implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+  implementation "com.squareup.okhttp3:okhttp:3.11.0"
 
   //multidex
-  implementation 'androidx.multidex:multidex:2.0.0'
+  implementation "androidx.multidex:multidex:2.0.0"
 
-  testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-core:2.8.47'
+  testImplementation "junit:junit:4.12"
+  testImplementation "org.mockito:mockito-core:2.8.47"
   testImplementation "org.robolectric:robolectric:3.6.1"
-  testImplementation 'com.google.guava:guava:24.0-android'
+  testImplementation "com.google.guava:guava:24.0-android"
 
   //ioutils for xml caching
   implementation 'commons-io:commons-io:2.6'
 
   //utility
-  implementation 'com.google.guava:guava:24.0-android'
+  implementation "com.google.guava:guava:24.0-android"
 }
 
-apply plugin: 'com.google.gms.google-services'
+apply plugin: "com.google.gms.google-services"

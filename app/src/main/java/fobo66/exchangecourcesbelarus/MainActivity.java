@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +26,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.security.ProviderInstaller;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,15 +47,15 @@ public class MainActivity extends BaseActivity {
 
   private static final String TAG = MainActivity.class.getSimpleName();
 
-  private SwipeRefreshLayout mySwipeRefreshLayout;
-  private RecyclerView rv;
-  private TextView buysell_indicator;
+  private SwipeRefreshLayout swipeRefreshLayout;
+  private RecyclerView coursesList;
+  private TextView buysellIndicator;
 
   public boolean buyOrSell;
 
   private BestCoursesAdapter adapter;
 
-  private static List<BestCourse> previousBest = new ArrayList<>();
+  private List<BestCourse> previousBest = new ArrayList<>();
   private DatabaseReference bestCourseRef;
   private boolean firebaseRegistering = true;
   private BroadcastReceiver receiver;
@@ -72,15 +72,9 @@ public class MainActivity extends BaseActivity {
     setupFirebaseReference();
     setupLayout();
 
-    try {
-      ProviderInstaller.installIfNeeded(this);
-    } catch (GooglePlayServicesRepairableException e) {
-      GoogleApiAvailability.getInstance().showErrorNotification(this, e.getConnectionStatusCode());
-    } catch (GooglePlayServicesNotAvailableException e) {
-      GoogleApiAvailability.getInstance().showErrorDialogFragment(this, e.errorCode, 0);
-    }
+    setupPlayServices();
 
-    setupCurrenciesList();
+    setupCoursesList();
 
     setupSwipeRefreshLayout();
 
@@ -132,7 +126,7 @@ public class MainActivity extends BaseActivity {
         startActivity(settingsIntent);
         return true;
       case R.id.action_update:
-        mySwipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(true);
         try {
           fetchCourses(true);
         } catch (Exception e) {
@@ -158,13 +152,13 @@ public class MainActivity extends BaseActivity {
     control.setChecked(buyOrSell);
 
     if (control.isChecked()) {
-      buysell_indicator.setText(R.string.sell);
+      buysellIndicator.setText(R.string.sell);
     } else {
-      buysell_indicator.setText(R.string.buy);
+      buysellIndicator.setText(R.string.buy);
     }
 
     control.setOnCheckedChangeListener((compoundButton, b) -> {
-      mySwipeRefreshLayout.setRefreshing(true);
+      swipeRefreshLayout.setRefreshing(true);
       buyOrSell = compoundButton.isChecked();
       adapter.setBuyOrSell(buyOrSell);
 
@@ -175,7 +169,7 @@ public class MainActivity extends BaseActivity {
         fetchCourses(false);
       } catch (Exception e) {
         ExceptionHandler.handleException(e);
-        Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
+        Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show();
       }
 
       setBuySellIndicator();
@@ -202,7 +196,7 @@ public class MainActivity extends BaseActivity {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         resolveUserCity();
       } else {
-        mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(false));
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
       }
     } else if (requestCode == Constants.INTERNET_PERMISSIONS_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -210,10 +204,10 @@ public class MainActivity extends BaseActivity {
           fetchCourses(true);
         } catch (Exception e) {
           ExceptionHandler.handleException(e);
-          Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
+          Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show();
         }
       } else {
-        mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(false));
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
       }
     }
   }
@@ -236,20 +230,20 @@ public class MainActivity extends BaseActivity {
         onDataError();
       }
 
-      mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(false));
+      swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
     }
   }
 
   private void setBuySellIndicator() {
     if (buyOrSell) {
-      buysell_indicator.setText(R.string.sell);
+      buysellIndicator.setText(R.string.sell);
     } else {
-      buysell_indicator.setText(R.string.buy);
+      buysellIndicator.setText(R.string.buy);
     }
   }
 
   private void setupSwipeRefreshLayout() {
-    mySwipeRefreshLayout.setOnRefreshListener(() -> {
+    swipeRefreshLayout.setOnRefreshListener(() -> {
       if (userCity == null) {
         resolveUserCity();
       } else {
@@ -257,28 +251,38 @@ public class MainActivity extends BaseActivity {
           fetchCourses(false);
         } catch (Exception e) {
           ExceptionHandler.handleException(e);
-          Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
+          Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show();
         }
       }
     });
-    mySwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
-    mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(true));
+    swipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
+    swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
   }
 
-  private void setupCurrenciesList() {
+  private void setupPlayServices() {
+    try {
+      ProviderInstaller.installIfNeeded(this);
+    } catch (GooglePlayServicesRepairableException e) {
+      GoogleApiAvailability.getInstance().showErrorNotification(this, e.getConnectionStatusCode());
+    } catch (GooglePlayServicesNotAvailableException e) {
+      GoogleApiAvailability.getInstance().showErrorDialogFragment(this, e.errorCode, 0);
+    }
+  }
+
+  private void setupCoursesList() {
     LinearLayoutManager llm = new LinearLayoutManager(this);
     adapter = new BestCoursesAdapter(previousBest);
-    rv.setLayoutManager(llm);
-    rv.setItemAnimator(new DefaultItemAnimator());
-    rv.setAdapter(adapter);
-    rv.setHasFixedSize(true);
+    coursesList.setLayoutManager(llm);
+    coursesList.setItemAnimator(new DefaultItemAnimator());
+    coursesList.setAdapter(adapter);
+    coursesList.setHasFixedSize(true);
   }
 
   private void setupLayout() {
     Toolbar toolbar = findViewById(R.id.toolbar);
-    mySwipeRefreshLayout = findViewById(R.id.swipe_refresh);
-    rv = findViewById(R.id.rv);
-    buysell_indicator = findViewById(R.id.buysell_indicator);
+    swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+    coursesList = findViewById(R.id.rv);
+    buysellIndicator = findViewById(R.id.buysell_indicator);
 
     setSupportActionBar(toolbar);
   }
@@ -290,7 +294,8 @@ public class MainActivity extends BaseActivity {
       @Override public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         GenericTypeIndicator<List<BestCourse>> t = new GenericTypeIndicator<List<BestCourse>>() {
         };
-        previousBest = dataSnapshot.getValue(t);
+        previousBest.clear();
+        previousBest.addAll(dataSnapshot.getValue(t));
       }
 
       @Override public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -308,11 +313,12 @@ public class MainActivity extends BaseActivity {
   }
 
   private void onDataError() {
-    Toast.makeText(this, R.string.courses_unavailable_info, Toast.LENGTH_LONG).show();
+    Snackbar.make(swipeRefreshLayout, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
+        .show();
 
     runOnUiThread(() -> {
       MainActivity.this.adapter.onDataUpdate(previousBest);
-      mySwipeRefreshLayout.setRefreshing(false);
+      swipeRefreshLayout.setRefreshing(false);
     });
   }
 
