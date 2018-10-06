@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -164,24 +163,22 @@ public class MainActivity extends BaseActivity {
       buysell_indicator.setText(R.string.buy);
     }
 
-    control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        mySwipeRefreshLayout.setRefreshing(true);
-        buyOrSell = compoundButton.isChecked();
-        adapter.setBuyOrSell(buyOrSell);
+    control.setOnCheckedChangeListener((compoundButton, b) -> {
+      mySwipeRefreshLayout.setRefreshing(true);
+      buyOrSell = compoundButton.isChecked();
+      adapter.setBuyOrSell(buyOrSell);
 
-        if (googleApiClient.isConnected() && userCity == null) {
-          resolveUserCity();
-        }
-        try {
-          fetchCourses(false);
-        } catch (Exception e) {
-          ExceptionHandler.handleException(e);
-          Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
-        }
-
-        setBuySellIndicator();
+      if (googleApiClient.isConnected() && userCity == null) {
+        resolveUserCity();
       }
+      try {
+        fetchCourses(false);
+      } catch (Exception e) {
+        ExceptionHandler.handleException(e);
+        Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
+      }
+
+      setBuySellIndicator();
     });
 
     return true;
@@ -205,11 +202,7 @@ public class MainActivity extends BaseActivity {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         resolveUserCity();
       } else {
-        mySwipeRefreshLayout.post(new Runnable() {
-          @Override public void run() {
-            mySwipeRefreshLayout.setRefreshing(false);
-          }
-        });
+        mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(false));
       }
     } else if (requestCode == Constants.INTERNET_PERMISSIONS_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -220,11 +213,7 @@ public class MainActivity extends BaseActivity {
           Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
         }
       } else {
-        mySwipeRefreshLayout.post(new Runnable() {
-          @Override public void run() {
-            mySwipeRefreshLayout.setRefreshing(false);
-          }
-        });
+        mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(false));
       }
     }
   }
@@ -247,11 +236,7 @@ public class MainActivity extends BaseActivity {
         onDataError();
       }
 
-      runOnUiThread(new Runnable() {
-        @Override public void run() {
-          mySwipeRefreshLayout.setRefreshing(false);
-        }
-      });
+      mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(false));
     }
   }
 
@@ -264,26 +249,20 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setupSwipeRefreshLayout() {
-    mySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-      @Override public void onRefresh() {
-        if (userCity == null) {
-          resolveUserCity();
-        } else {
-          try {
-            fetchCourses(false);
-          } catch (Exception e) {
-            ExceptionHandler.handleException(e);
-            Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
-          }
+    mySwipeRefreshLayout.setOnRefreshListener(() -> {
+      if (userCity == null) {
+        resolveUserCity();
+      } else {
+        try {
+          fetchCourses(false);
+        } catch (Exception e) {
+          ExceptionHandler.handleException(e);
+          Toast.makeText(MainActivity.this, R.string.get_data_error, Toast.LENGTH_SHORT).show();
         }
       }
     });
     mySwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
-    mySwipeRefreshLayout.post(new Runnable() {
-      @Override public void run() {
-        mySwipeRefreshLayout.setRefreshing(true);
-      }
-    });
+    mySwipeRefreshLayout.post(() -> mySwipeRefreshLayout.setRefreshing(true));
   }
 
   private void setupCurrenciesList() {
@@ -331,11 +310,9 @@ public class MainActivity extends BaseActivity {
   private void onDataError() {
     Toast.makeText(this, R.string.courses_unavailable_info, Toast.LENGTH_LONG).show();
 
-    runOnUiThread(new Runnable() {
-      @Override public void run() {
-        MainActivity.this.adapter.onDataUpdate(previousBest);
-        mySwipeRefreshLayout.setRefreshing(false);
-      }
+    runOnUiThread(() -> {
+      MainActivity.this.adapter.onDataUpdate(previousBest);
+      mySwipeRefreshLayout.setRefreshing(false);
     });
   }
 
