@@ -1,30 +1,30 @@
-package fobo66.exchangecourcesbelarus;
+package fobo66.exchangecourcesbelarus.ui;
 
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.services.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.services.commons.models.Position;
-import fobo66.exchangecourcesbelarus.ui.ErrorDialogFragment;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
-import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -116,72 +116,68 @@ public abstract class BaseActivity extends AppCompatActivity
       addressRequested = true;
       LocationServices.getFusedLocationProviderClient(this)
           .getLastLocation()
-          .addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override public void onSuccess(Location lastLocation) {
+          .addOnSuccessListener(lastLocation -> {
 
-              if (lastLocation != null) {
+            if (lastLocation != null) {
 
-                geocodingRequest =
-                    new MapboxGeocoding.Builder().setAccessToken(Constants.GEOCODER_ACCESS_TOKEN)
-                        .setCoordinates(Position.fromCoordinates(lastLocation.getLongitude(),
-                            lastLocation.getLatitude()))
-                        .setGeocodingType(GeocodingCriteria.TYPE_PLACE)
-                        .setLanguages("ru-RU")
-                        .setCountry("by")
-                        .build();
+              geocodingRequest =
+                  new MapboxGeocoding.Builder().setAccessToken(Constants.GEOCODER_ACCESS_TOKEN)
+                      .setCoordinates(Position.fromCoordinates(lastLocation.getLongitude(),
+                          lastLocation.getLatitude()))
+                      .setGeocodingType(GeocodingCriteria.TYPE_PLACE)
+                      .setLanguages("ru-RU")
+                      .setCountry("by")
+                      .build();
 
-                geocodingRequest.enqueueCall(new Callback<GeocodingResponse>() {
-                  @Override public void onResponse(Call<GeocodingResponse> call,
-                      Response<GeocodingResponse> response) {
-                    List<CarmenFeature> features = response.body().getFeatures();
+              geocodingRequest.enqueueCall(new Callback<GeocodingResponse>() {
+                @Override public void onResponse(Call<GeocodingResponse> call,
+                    Response<GeocodingResponse> response) {
+                  List<CarmenFeature> features = response.body().getFeatures();
 
-                    if (!features.isEmpty()) {
-                      userCity = features.get(0).getText();
-
-                      try {
-                        fetchCourses(true);
-                      } catch (Exception e) {
-                        ExceptionHandler.handleException(e);
-                      }
-                    }
-                    addressRequested = false;
-                  }
-
-                  @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                    Crashlytics.log(0, TAG,
-                        "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
-                    userCity = prefs.getString("default_city", "Минск");
-                    Crashlytics.logException(t);
+                  if (!features.isEmpty()) {
+                    userCity = features.get(0).getText();
 
                     try {
                       fetchCourses(true);
-                    } catch (Exception ex) {
-                      ExceptionHandler.handleException(ex);
+                    } catch (Exception e) {
+                      ExceptionHandler.handleException(e);
                     }
-
-                    addressRequested = false;
                   }
-                });
-              } else {
-                Crashlytics.log(0, TAG, "Last location unavailable, setting default city...");
-                userCity = prefs.getString("default_city", "Минск");
-                try {
-                  fetchCourses(true);
-                } catch (Exception e) {
-                  ExceptionHandler.handleException(e);
+                  addressRequested = false;
                 }
 
-                addressRequested = false;
+                @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                  Crashlytics.log(0, TAG,
+                      "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
+                  userCity = prefs.getString("default_city", "Минск");
+                  Crashlytics.logException(t);
+
+                  try {
+                    fetchCourses(true);
+                  } catch (Exception ex) {
+                    ExceptionHandler.handleException(ex);
+                  }
+
+                  addressRequested = false;
+                }
+              });
+            } else {
+              Crashlytics.log(0, TAG, "Last location unavailable, setting default city...");
+              userCity = prefs.getString("default_city", "Минск");
+              try {
+                fetchCourses(true);
+              } catch (Exception e) {
+                ExceptionHandler.handleException(e);
               }
-            }
-          })
-          .addOnFailureListener(new OnFailureListener() {
-            @Override public void onFailure(@NonNull Exception e) {
-              ExceptionHandler.handleException(e);
-              Toast.makeText(BaseActivity.this, R.string.location_error_title, Toast.LENGTH_SHORT)
-                  .show();
+
               addressRequested = false;
             }
+          })
+          .addOnFailureListener(e -> {
+            ExceptionHandler.handleException(e);
+            Toast.makeText(BaseActivity.this, R.string.location_error_title, Toast.LENGTH_SHORT)
+                .show();
+            addressRequested = false;
           });
     }
   }

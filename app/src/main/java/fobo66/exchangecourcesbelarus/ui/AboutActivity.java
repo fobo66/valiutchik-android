@@ -6,7 +6,9 @@ import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import fobo66.exchangecourcesbelarus.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -14,6 +16,11 @@ public class AboutActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_about);
+
+    Toolbar toolbar = findViewById(R.id.toolbar);
+
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     setupClickableLinks();
   }

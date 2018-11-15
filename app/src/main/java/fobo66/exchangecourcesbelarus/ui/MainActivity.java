@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus;
+package fobo66.exchangecourcesbelarus.ui;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -13,15 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -33,15 +25,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import fobo66.exchangecourcesbelarus.CurrencyRateService;
+import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
-import fobo66.exchangecourcesbelarus.ui.AboutActivity;
-import fobo66.exchangecourcesbelarus.ui.SettingsActivity;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
 import fobo66.exchangecourcesbelarus.util.Util;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -196,7 +199,7 @@ public class MainActivity extends BaseActivity {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         resolveUserCity();
       } else {
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
+        hideRefreshSpinner();
       }
     } else if (requestCode == Constants.INTERNET_PERMISSIONS_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -207,7 +210,7 @@ public class MainActivity extends BaseActivity {
           Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show();
         }
       } else {
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
+        hideRefreshSpinner();
       }
     }
   }
@@ -230,8 +233,12 @@ public class MainActivity extends BaseActivity {
         onDataError();
       }
 
-      swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
+      hideRefreshSpinner();
     }
+  }
+
+  private void hideRefreshSpinner() {
+    swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
   }
 
   private void setBuySellIndicator() {

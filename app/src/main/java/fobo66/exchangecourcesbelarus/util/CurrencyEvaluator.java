@@ -33,7 +33,7 @@ public class CurrencyEvaluator {
 
     private Pattern pattern;
     private Sanitizer sanitizer;
-    private static final String regexpForEscapingBankName = "(\"|«)[^\"]*(\"|»)";
+    private static final String regexpForEscapingBankName = "([\"«])[^\"]*([\"»])";
     private Map<String, CurrencyComparator> comparatorsMap;
 
     public List<BestCourse> findBestBuyCourses(Set<Currency> tempSet) {

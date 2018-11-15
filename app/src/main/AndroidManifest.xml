@@ -16,7 +16,7 @@
       android:label="@string/app_name"
       android:theme="@style/Theme.AppCompat.Light.NoActionBar">
     <activity
-        android:name=".MainActivity"
+        android:name=".ui.MainActivity"
         android:label="@string/app_name">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -27,18 +27,18 @@
     <activity
         android:name=".ui.AboutActivity"
         android:label="@string/title_activity_about"
-        android:parentActivityName=".MainActivity">
+        android:parentActivityName=".ui.MainActivity">
       <meta-data
           android:name="android.support.PARENT_ACTIVITY"
-          android:value="fobo66.exchangecourcesbelarus.MainActivity"/>
+          android:value="fobo66.exchangecourcesbelarus.ui.MainActivity"/>
     </activity>
     <activity
         android:name=".ui.SettingsActivity"
         android:label="@string/title_activity_settings"
-        android:parentActivityName=".MainActivity">
+        android:parentActivityName=".ui.MainActivity">
       <meta-data
           android:name="android.support.PARENT_ACTIVITY"
-          android:value="fobo66.exchangecourcesbelarus.MainActivity"/>
+          android:value="fobo66.exchangecourcesbelarus.ui.MainActivity"/>
     </activity>
 
     <service

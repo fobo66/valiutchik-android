@@ -3,10 +3,13 @@ package fobo66.exchangecourcesbelarus.ui;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.google.android.gms.common.GoogleApiAvailability;
+
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import com.google.android.gms.common.GoogleApiAvailability;
-import fobo66.exchangecourcesbelarus.MainActivity;
 
 /**
  * (c) 2017 Andrey Mukamolow aka fobo66 <fobo66@protonmail.com>
@@ -15,20 +18,20 @@ import fobo66.exchangecourcesbelarus.MainActivity;
  * A fragment to display an error dialog
  */
 public class ErrorDialogFragment extends DialogFragment {
-  public static final String DIALOG_ERROR = "dialog_error";
-  public static final int REQUEST_RESOLVE_ERROR = 1001;
+  static final String DIALOG_ERROR = "dialog_error";
+  static final int REQUEST_RESOLVE_ERROR = 1001;
 
   public ErrorDialogFragment() {
   }
 
   @Override @NonNull public Dialog onCreateDialog(Bundle savedInstanceState) {
     // Get the error code and retrieve the appropriate dialog
-    int errorCode = this.getArguments().getInt(DIALOG_ERROR);
+    int errorCode = Objects.requireNonNull(this.getArguments()).getInt(DIALOG_ERROR);
     return GoogleApiAvailability.getInstance()
         .getErrorDialog(this.getActivity(), errorCode, REQUEST_RESOLVE_ERROR);
   }
 
   @Override public void onDismiss(DialogInterface dialog) {
-    ((MainActivity) getActivity()).onDialogDismissed();
+    ((MainActivity) Objects.requireNonNull(getActivity())).onDialogDismissed();
   }
 }
