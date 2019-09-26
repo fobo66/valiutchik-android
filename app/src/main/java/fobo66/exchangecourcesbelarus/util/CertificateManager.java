@@ -74,7 +74,6 @@ public class CertificateManager {
     return trustManager;
   }
 
-
   private KeyStore newEmptyKeyStore(char[] password) throws GeneralSecurityException {
     try {
       KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());

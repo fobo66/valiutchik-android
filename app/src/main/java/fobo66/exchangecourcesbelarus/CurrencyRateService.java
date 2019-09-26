@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
-
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.models.Currency;
 import fobo66.exchangecourcesbelarus.util.CertificateManager;
@@ -70,12 +69,12 @@ public class CurrencyRateService extends JobIntentService {
       throw new RuntimeException("Cannot load myfin certificate", e);
     }
 
-      // 5 MiB
-      long httpCacheSize = 1024 * 1024 * 5;
+    // 5 MiB
+    long httpCacheSize = 1024 * 1024 * 5;
 
-      client = new OkHttpClient.Builder().cache(new Cache(getCacheDir(), httpCacheSize))
+    client = new OkHttpClient.Builder().cache(new Cache(getCacheDir(), httpCacheSize))
         .sslSocketFactory(certificateManager.getTrustedSocketFactory(),
-          certificateManager.getTrustManager())
+            certificateManager.getTrustManager())
         .build();
 
     prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -168,21 +167,21 @@ public class CurrencyRateService extends JobIntentService {
     editor.apply();
   }
 
-  private void readCached() throws IOException {
+  private void readCached() {
     File cache = new File(getCacheDir(), getString(R.string.feed_xml_name));
     if (cache.exists() && cache.length() > 0) {
-        try (InputStream cachedStream = new FileInputStream(cache)) {
-            CurrencyEvaluator currencyEvaluator = new CurrencyEvaluator();
-            CurrencyCourseParser parser = new MyfinXMLParser();
-            List<Currency> entries = parser.parse(cachedStream);
-            Set<Currency> currencyTempSet = new HashSet<>(entries);
-            final List<BestCourse> best =
-                    (buyOrSell) ? (currencyEvaluator.findBestBuyCourses(currencyTempSet))
-                            : currencyEvaluator.findBestSellCourses(currencyTempSet);
-            sendResult(best);
-        } catch (XmlPullParserException | IOException e) {
-            ExceptionHandler.handleException(e);
-        }
+      try (InputStream cachedStream = new FileInputStream(cache)) {
+        CurrencyEvaluator currencyEvaluator = new CurrencyEvaluator();
+        CurrencyCourseParser parser = new MyfinXMLParser();
+        List<Currency> entries = parser.parse(cachedStream);
+        Set<Currency> currencyTempSet = new HashSet<>(entries);
+        final List<BestCourse> best =
+            (buyOrSell) ? (currencyEvaluator.findBestBuyCourses(currencyTempSet))
+                : currencyEvaluator.findBestSellCourses(currencyTempSet);
+        sendResult(best);
+      } catch (XmlPullParserException | IOException e) {
+        ExceptionHandler.handleException(e);
+      }
     }
   }
 
