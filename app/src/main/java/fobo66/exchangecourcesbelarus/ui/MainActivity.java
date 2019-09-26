@@ -45,7 +45,6 @@ import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
-import fobo66.exchangecourcesbelarus.util.Util;
 
 public class MainActivity extends BaseActivity {
 
@@ -227,11 +226,7 @@ public class MainActivity extends BaseActivity {
           Constants.INTERNET_PERMISSIONS_REQUEST);
     } else {
 
-      if (new Util().isNetworkAvailable(this)) {
-        CurrencyRateService.fetchCourses(this, userCity, buyOrSell);
-      } else {
-        onDataError();
-      }
+    CurrencyRateService.fetchCourses(this, userCity, buyOrSell);
 
       hideRefreshSpinner();
     }
@@ -331,19 +326,19 @@ public class MainActivity extends BaseActivity {
 
   private void updateValuesFromBundle(Bundle savedInstanceState) {
     if (savedInstanceState != null) {
-      if (savedInstanceState.keySet().contains(ADDRESS_REQUESTED_KEY)) {
+      if (savedInstanceState.containsKey(ADDRESS_REQUESTED_KEY)) {
         addressRequested = savedInstanceState.getBoolean(ADDRESS_REQUESTED_KEY);
       }
 
-      if (savedInstanceState.keySet().contains(LOCATION_ADDRESS_KEY)) {
+      if (savedInstanceState.containsKey(LOCATION_ADDRESS_KEY)) {
         userCity = savedInstanceState.getString(LOCATION_ADDRESS_KEY);
       }
 
-      if (savedInstanceState.keySet().contains(getString(R.string.pref_buysell))) {
+      if (savedInstanceState.containsKey(getString(R.string.pref_buysell))) {
         buyOrSell = savedInstanceState.getBoolean(getString(R.string.pref_buysell));
       }
 
-      if (savedInstanceState.keySet().contains(Constants.FIREBASE_REGISTERING_KEY)) {
+      if (savedInstanceState.containsKey(Constants.FIREBASE_REGISTERING_KEY)) {
         firebaseRegistering = savedInstanceState.getBoolean(Constants.FIREBASE_REGISTERING_KEY);
       }
     }
