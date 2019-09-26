@@ -34,6 +34,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    prefs = getPreferences(Context.MODE_PRIVATE);
+    prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
     updateValuesFromBundle(savedInstanceState);
 
@@ -125,7 +126,6 @@ public class MainActivity extends BaseActivity {
     switch (id) {
       case R.id.action_settings:
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        settingsIntent.putExtra(SettingsActivity.EXTRA_NO_HEADERS, true);
         startActivity(settingsIntent);
         return true;
       case R.id.action_update:

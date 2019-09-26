@@ -1,6 +1,5 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import fobo66.exchangecourcesbelarus.BuildConfig;
 import fobo66.exchangecourcesbelarus.MyfinXMLParser;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.models.Currency;
@@ -12,12 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * (c) 2017 Andrey Mukamolow aka fobo66 <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
  * Test cases for my algorithm.
  */
 @RunWith(RobolectricTestRunner.class)

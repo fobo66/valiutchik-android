@@ -1,14 +1,13 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:key="default_city"
         android:title="@string/pref_title_default_city"
         android:defaultValue="Минск"
         android:entries="@array/pref_cities_list"
         android:entryValues="@array/pref_cities_values"
+        app:useSimpleSummaryProvider="true"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
     <PreferenceCategory android:title="@string/support">

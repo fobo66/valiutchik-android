@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
+
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.models.Currency;
 import fobo66.exchangecourcesbelarus.util.CertificateManager;
@@ -76,8 +78,7 @@ public class CurrencyRateService extends JobIntentService {
           certificateManager.getTrustManager())
         .build();
 
-    prefs =
-        getApplicationContext().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+    prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
   }
 
   @Override protected void onHandleWork(@NonNull Intent intent) {

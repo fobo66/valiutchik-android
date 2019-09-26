@@ -17,7 +17,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * (c) 2018 Andrey Mukamolow <fobo66@protonmail.com>
+ * (c) 2018 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 2/18/18.
  */
 

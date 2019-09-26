@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 /**
- * (c) 2017 Andrey Mukamolow aka fobo66 <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
  * Created by fobo66 on 12.02.2017.
  *
  * A fragment to display an error dialog

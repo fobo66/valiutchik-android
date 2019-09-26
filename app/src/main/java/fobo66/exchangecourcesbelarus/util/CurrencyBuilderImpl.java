@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import fobo66.exchangecourcesbelarus.models.Currency;
 
 /**
- * (c) 2017 Andrey Mukamolow aka fobo66 <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
  * Created by fobo66 on 15.03.2017.
  */
 
