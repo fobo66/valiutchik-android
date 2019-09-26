@@ -24,6 +24,8 @@ import javax.net.ssl.X509TrustManager;
 public class CertificateManager {
   private final SSLContext sslContext;
 
+  private X509TrustManager trustManager;
+
   public CertificateManager() {
     try {
       sslContext = SSLContext.getInstance("TLSv1.2");
@@ -60,12 +62,18 @@ public class CertificateManager {
       throw new IllegalStateException(
           "Unexpected default trust managers:" + Arrays.toString(trustManagers));
     }
+    trustManager = (X509TrustManager) trustManagers[0];
     sslContext.init(null, trustManagers, null);
   }
 
   public SSLSocketFactory getTrustedSocketFactory() {
     return sslContext.getSocketFactory();
   }
+
+  public X509TrustManager getTrustManager() {
+    return trustManager;
+  }
+
 
   private KeyStore newEmptyKeyStore(char[] password) throws GeneralSecurityException {
     try {
