@@ -48,7 +48,7 @@ import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
 
 public class MainActivity extends BaseActivity {
 
-  private static final String TAG = MainActivity.class.getSimpleName();
+  private static final String TAG = "MainActivity";
 
   private SwipeRefreshLayout swipeRefreshLayout;
   private RecyclerView coursesList;

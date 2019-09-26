@@ -4,6 +4,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -147,6 +148,7 @@ public abstract class BaseActivity extends AppCompatActivity
                 }
 
                 @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                  Log.e(TAG, "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
                   Crashlytics.log(0, TAG,
                       "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
                   userCity = prefs.getString("default_city", "Минск");
