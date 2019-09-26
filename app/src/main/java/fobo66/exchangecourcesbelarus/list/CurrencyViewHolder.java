@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
@@ -18,21 +22,20 @@ import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
  * Created 10/19/17.
  */
 public class CurrencyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-  private CardView cv;
   private TextView currName;
   private TextView currValue;
   private TextView bankName;
 
   public CurrencyViewHolder(View itemView) {
     super(itemView);
-    cv = itemView.findViewById(R.id.cv);
+    CardView cv = itemView.findViewById(R.id.cv);
     currName = itemView.findViewById(R.id.currency_name);
     currValue = itemView.findViewById(R.id.currency_value);
     bankName = itemView.findViewById(R.id.bank_name);
     cv.setOnClickListener(this);
   }
 
-  public void bind(BestCourse item) {
+  public void bind(@NonNull BestCourse item) {
     currName.setText(item.currencyName);
     currValue.setText(item.currencyValue);
     bankName.setText(item.bank);
@@ -45,7 +48,7 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder implements View.
       ActivityCompat.startActivity(view.getContext(), mapIntent, null);
     } catch (ActivityNotFoundException e) {
       ExceptionHandler.handleException(e);
-      Toast.makeText(itemView.getContext(), R.string.maps_app_required, Toast.LENGTH_LONG).show();
+      Snackbar.make(itemView, R.string.maps_app_required, Snackbar.LENGTH_LONG).show();
     }
   }
 }
