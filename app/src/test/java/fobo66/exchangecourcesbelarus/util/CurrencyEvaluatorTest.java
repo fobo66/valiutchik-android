@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
  * Test cases for my algorithm.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class)
 public class CurrencyEvaluatorTest {
 
     private CurrencyEvaluator evaluator;
