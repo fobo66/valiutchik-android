@@ -172,7 +172,7 @@ public class CurrencyRateService extends JobIntentService {
     if (cache.exists() && cache.length() > 0) {
       try (InputStream cachedStream = new FileInputStream(cache)) {
         CurrencyEvaluator currencyEvaluator = new CurrencyEvaluator();
-        CurrencyCourseParser parser = new MyfinXMLParser();
+        CurrencyCourseParser parser = new MyfinParser();
         List<Currency> entries = parser.parse(cachedStream);
         Set<Currency> currencyTempSet = new HashSet<>(entries);
         final List<BestCourse> best =

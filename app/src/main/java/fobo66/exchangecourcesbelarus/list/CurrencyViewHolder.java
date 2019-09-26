@@ -5,20 +5,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.snackbar.Snackbar;
-
 import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
 
 /**
- * (c) 2017 Andrey Mukamolov <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov
  * Created 10/19/17.
  */
 public class CurrencyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -28,10 +25,11 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder implements View.
 
   public CurrencyViewHolder(View itemView) {
     super(itemView);
-    CardView cv = itemView.findViewById(R.id.cv);
     currName = itemView.findViewById(R.id.currency_name);
     currValue = itemView.findViewById(R.id.currency_value);
     bankName = itemView.findViewById(R.id.bank_name);
+
+    CardView cv = itemView.findViewById(R.id.cv);
     cv.setOnClickListener(this);
   }
 
