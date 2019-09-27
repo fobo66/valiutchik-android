@@ -51,8 +51,9 @@ dependencies {
   implementation "androidx.collection:collection:1.1.0"
   implementation "androidx.viewpager:viewpager:1.0.0"
   implementation "androidx.core:core:1.1.0"
-  implementation "com.google.android.material:material:1.0.0"
+  implementation "com.google.android.material:material:1.1.0-alpha10"
   implementation "androidx.preference:preference:1.1.0"
+  implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
   //location
   implementation "com.google.android.gms:play-services-location:17.0.0"
