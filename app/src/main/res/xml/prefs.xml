@@ -10,12 +10,4 @@
         app:useSimpleSummaryProvider="true"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
-    <PreferenceCategory android:title="@string/support">
-        <Preference android:title="@string/support_yandexmoney">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://yasobe.ru/na/valutchik"/>
-        </Preference>
-    </PreferenceCategory>
-
 </PreferenceScreen>

@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * Adapter for currency cards
- *
  * Created by fobo66 on 23.08.2015.
  */
 public class BestCoursesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
