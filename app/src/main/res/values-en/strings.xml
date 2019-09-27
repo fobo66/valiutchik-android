@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Valiutchik</string>
+  <string name="action_about">About</string>
+  <string name="action_buysell">Buy/Sell</string>
+  <string name="action_update">Update</string>
+  <string name="about_activity_warn">Please pay attention that info about exchnge rates amy be out of date. Please clarify in banks.</string>
+  <string name="action_settings">Settings</string>
+  <string name="buy">Buy</string>
+  <string name="title_activity_settings">Settings</string>
+  <string name="title_activity_about">About the application</string>
+  <string name="sell">Sell</string>
+  <string name="pref_title_default_city">Default city</string>
+  <string name="ok">OK</string>
+  <string name="copyright">© 2016 Andrey Mukamolov aka @fobo66</string>
+  <string name="location_error_title">Error getting location</string>
+  <string name="maps_app_required">Unable to show bank offices on map: no maps application found</string>
+  <string name="myfin_copyright">Info about exchange rates provided by <a href="https://myfin.by">myfin.by</a></string>
+  <string name="get_data_error">Unable to refresh data</string>
+  <string name="courses_unavailable_info">Failed to refresh rates. Old rates will be shown.</string>
+  <string name="app_desc">App allows to quickly load the best exchange rates in the big cities of Belarus. By clicking on list item you can find nearest bank offices with best rates on the map.</string>
+</resources>

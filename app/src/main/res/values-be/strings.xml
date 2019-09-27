@@ -8,27 +8,16 @@
     <string name="action_update">Аднавіць</string>
     <string name="app_desc">Прылада дазваляе хутка палучыць інфармацыю пра найлепшыя курсы валют у абласных центрах Беларусі. З яго дапамогай вы можаце знайсці бліжэйшае аддзаленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе</string>
     <string name="buy">Купіць</string>
-    <string name="connection_error">Памылка злучэння</string>
-    <string name="no_address_found">Адрас не знойдзены</string>
-    <string name="sell">Прадаць</string>
+  <string name="sell">Прадаць</string>
     <string name="title_activity_about">Інфармацыя пра прыладу</string>
-    <string name="xml_error">Памылка ў апрацоўке XML</string>
-    <string name="copyright">© 2016 Андрэй Мукамолаў aka @fobo66</string>
-    <string name="invalid_lat_long_used">Памылковыя каардынаты</string>
-    <string name="service_not_available">Сэрвісы Google Play часова недаступны</string>
-    <string name="myfin_copyright">Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
+  <string name="copyright">© 2016 Андрэй Мукамолаў aka @fobo66</string>
+  <string name="myfin_copyright">Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
     <string name="courses_unavailable_info">Немагчыма аднавіць курсы валют. Будуць паказаны старыя курсы.</string>
-    <string name="geocoder_not_available">Геакодэр недаступны</string>
-    <string name="location_error_title">Памылка атрымання каардынатаў</string>
+  <string name="location_error_title">Памылка атрымання каардынатаў</string>
     <string name="ok">Добра</string>
     <string name="title_activity_settings">Налады</string>
-    <string name="data_error">Памылка апрацоўкi дадзеных</string>
-    <string name="data_error_info">"Немагчыма апрацаваць дадзеныя з сервера "</string>
-    <string name="no_location_data_provided">Няма iнфармацыи пра месцазнахожданне</string>
-    <string name="pref_header_general">Галоўныя</string>
-    <string name="pref_summary_default_city">Горад, які будзе выкарыстоўвацца ў выпадку, калі ваша месцазнаходжанне недаступна ці вы забаранілі прыладзе доступ да месцазнаходжання</string>
 
-    <string-array name="pref_cities_list">
+  <string-array name="pref_cities_list">
         <item>Менск</item>
         <item>Брэст</item>
         <item>Віцебск</item>
@@ -37,10 +26,7 @@
         <item>Магілёў</item>
     </string-array>
     <string name="pref_title_default_city">Горад па змаўчанні</string>
-    <string name="support">Падтрымаць прыладу</string>
-    <string name="support_yandexmoney">Падтрымаць з банкаўскай картки ці Яндекс.Денег</string>
-    <string name="pref_ringtone_silent">Ціха</string>
-    <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
+  <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
   <string name="get_data_error">Немагчыма аднавіць дадзеныя</string>
 
 </resources>
