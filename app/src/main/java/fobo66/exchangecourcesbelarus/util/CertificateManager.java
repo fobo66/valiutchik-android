@@ -17,7 +17,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * (c) 2018 Andrey Mukamolov <fobo66@protonmail.com>
+ * (c) 2018 Andrey Mukamolov
  * Created 2/18/18.
  */
 
@@ -73,7 +73,6 @@ public class CertificateManager {
   public X509TrustManager getTrustManager() {
     return trustManager;
   }
-
 
   private KeyStore newEmptyKeyStore(char[] password) throws GeneralSecurityException {
     try {

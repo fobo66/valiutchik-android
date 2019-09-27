@@ -13,7 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -25,26 +34,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import fobo66.exchangecourcesbelarus.CurrencyRateService;
 import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -139,9 +136,9 @@ public class MainActivity extends BaseActivity {
       case R.id.action_about:
         startActivity(new Intent(this, AboutActivity.class));
         return true;
+      default:
+        return super.onOptionsItemSelected(item);
     }
-
-    return super.onOptionsItemSelected(item);
   }
 
   @Override public boolean onPrepareOptionsMenu(Menu menu) {
@@ -226,7 +223,7 @@ public class MainActivity extends BaseActivity {
           Constants.INTERNET_PERMISSIONS_REQUEST);
     } else {
 
-    CurrencyRateService.fetchCourses(this, userCity, buyOrSell);
+      CurrencyRateService.fetchCourses(this, userCity, buyOrSell);
 
       hideRefreshSpinner();
     }
@@ -281,11 +278,11 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setupLayout() {
-    Toolbar toolbar = findViewById(R.id.toolbar);
     swipeRefreshLayout = findViewById(R.id.swipe_refresh);
     coursesList = findViewById(R.id.rv);
     buysellIndicator = findViewById(R.id.buysell_indicator);
 
+    Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
   }
 

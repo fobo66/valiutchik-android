@@ -4,9 +4,11 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,25 +18,18 @@ import com.mapbox.services.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.services.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.services.commons.models.Position;
-
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
+import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov aka fobo66
  * Created by fobo66 on 19.03.2017.
  */
-
 public abstract class BaseActivity extends AppCompatActivity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -148,9 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity
                 }
 
                 @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                  Log.e(TAG, "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
-                  Crashlytics.log(0, TAG,
-                      "onFailure: Getting city using Mapbox Geocoding API unsuccessful, setting default city...");
+                  Crashlytics.log(0, TAG, "Getting city using Mapbox Geocoding API unsuccessful");
                   userCity = prefs.getString("default_city", "Минск");
                   Crashlytics.logException(t);
 

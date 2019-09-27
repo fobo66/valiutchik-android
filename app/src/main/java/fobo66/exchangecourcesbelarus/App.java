@@ -4,7 +4,7 @@ import androidx.multidex.MultiDexApplication;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * (c) 2017 Andrey Mukamolov <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov
  * Created 9/16/17.
  */
 

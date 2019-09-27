@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import fobo66.exchangecourcesbelarus.MyfinXMLParser;
+import fobo66.exchangecourcesbelarus.MyfinParser;
 import fobo66.exchangecourcesbelarus.models.BestCourse;
 import fobo66.exchangecourcesbelarus.models.Currency;
 import java.io.InputStream;
@@ -30,7 +30,7 @@ public class CurrencyEvaluatorTest {
     public void setUp() throws Exception {
         this.evaluator = new CurrencyEvaluator();
         this.testFile = this.getClass().getClassLoader().getResourceAsStream("data.xml");
-        MyfinXMLParser parser = new MyfinXMLParser();
+        MyfinParser parser = new MyfinParser();
         List<Currency> entries = parser.parse(testFile);
         Set<Currency> currencyTempSet = new HashSet<>(entries);
         bestBuy = evaluator.findBestBuyCourses(currencyTempSet);

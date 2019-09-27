@@ -1,26 +1,23 @@
 package fobo66.exchangecourcesbelarus;
 
 import android.util.Xml;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
+import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.util.CurrencyBuilder;
+import fobo66.exchangecourcesbelarus.util.CurrencyBuilderImpl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import fobo66.exchangecourcesbelarus.models.Currency;
-import fobo66.exchangecourcesbelarus.util.CurrencyBuilder;
-import fobo66.exchangecourcesbelarus.util.CurrencyBuilderImpl;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * XML parser for <a href="myfin.by">MyFIN</a> feed
- * <p>
+ * </p>
  * Created by fobo66 on 16.08.2015.
  */
-public class MyfinXMLParser implements CurrencyCourseParser {
+public class MyfinParser implements CurrencyCourseParser {
   private static final String ns = null;
   private final List<String> neededTagNames = new ArrayList<>(
       Arrays.asList("bankname", "usd_buy", "usd_sell", "eur_buy", "eur_sell", "rur_buy",
@@ -46,7 +43,9 @@ public class MyfinXMLParser implements CurrencyCourseParser {
       String name = parser.getName();
       if (name.equals("bank")) {
         entry = readEntry(parser);
-        if (entry != null) entries.add(entry);
+        if (entry != null) {
+          entries.add(entry);
+        }
       } else {
         skip(parser);
       }

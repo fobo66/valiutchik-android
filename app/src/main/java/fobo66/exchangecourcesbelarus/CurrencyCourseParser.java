@@ -1,18 +1,16 @@
 package fobo66.exchangecourcesbelarus;
 
-import org.xmlpull.v1.XmlPullParserException;
-
+import fobo66.exchangecourcesbelarus.models.Currency;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import fobo66.exchangecourcesbelarus.models.Currency;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
- * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov aka fobo66
  * Created by fobo66 on 14.03.2017.
  */
 
 interface CurrencyCourseParser {
-    List<Currency> parse(InputStream in) throws XmlPullParserException, IOException;
+  List<Currency> parse(InputStream in) throws XmlPullParserException, IOException;
 }

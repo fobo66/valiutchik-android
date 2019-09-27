@@ -1,5 +1,14 @@
 package fobo66.exchangecourcesbelarus.util;
 
+import fobo66.exchangecourcesbelarus.models.BestCourse;
+import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.util.comparators.CurrencyComparator;
+import fobo66.exchangecourcesbelarus.util.comparators.EurBuyComparator;
+import fobo66.exchangecourcesbelarus.util.comparators.EurSellComparator;
+import fobo66.exchangecourcesbelarus.util.comparators.RurBuyComparator;
+import fobo66.exchangecourcesbelarus.util.comparators.RurSellComparator;
+import fobo66.exchangecourcesbelarus.util.comparators.UsdBuyComparator;
+import fobo66.exchangecourcesbelarus.util.comparators.UsdSellComparator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -9,120 +18,107 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fobo66.exchangecourcesbelarus.models.BestCourse;
-import fobo66.exchangecourcesbelarus.models.Currency;
-import fobo66.exchangecourcesbelarus.util.comparators.CurrencyComparator;
-import fobo66.exchangecourcesbelarus.util.comparators.EURBuyComparator;
-import fobo66.exchangecourcesbelarus.util.comparators.EURSellComparator;
-import fobo66.exchangecourcesbelarus.util.comparators.RURBuyComparator;
-import fobo66.exchangecourcesbelarus.util.comparators.RURSellComparator;
-import fobo66.exchangecourcesbelarus.util.comparators.USDBuyComparator;
-import fobo66.exchangecourcesbelarus.util.comparators.USDSellComparator;
-
 /**
- * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
+ * (c) 2017 Andrey Mukamolov aka fobo66
  * Created by fobo66 on 05.02.2017.
  */
 
 public class CurrencyEvaluator {
 
-    public CurrencyEvaluator() {
-        pattern = Pattern.compile(regexpForEscapingBankName);
-        sanitizer = new CurrencyListSanitizer();
+  private static final String regexpForEscapingBankName = "([\"«])[^\"]*([\"»])";
+  private Pattern pattern;
+  private Sanitizer sanitizer;
+  private Map<String, CurrencyComparator> comparatorsMap;
+
+  public CurrencyEvaluator() {
+    pattern = Pattern.compile(regexpForEscapingBankName);
+    sanitizer = new CurrencyListSanitizer();
+  }
+
+  public List<BestCourse> findBestBuyCourses(Set<Currency> tempSet) {
+
+    List<BestCourse> result = new ArrayList<>();
+    Currency currency;
+    List<Currency> workList = new ArrayList<>(tempSet);
+    initializeBuyComparators();
+    workList = sanitizer.sanitize(workList);
+
+    for (String currencyKey : comparatorsMap.keySet()) {
+      Collections.sort(workList, comparatorsMap.get(currencyKey));
+      currency = workList.get(0);
+      result.add(new BestCourse(escapeBankName(currency.bankname),
+          resolveCurrencyBuyValue(currency, currencyKey), currencyKey, Constants.BUY_COURSE));
     }
 
-    private Pattern pattern;
-    private Sanitizer sanitizer;
-    private static final String regexpForEscapingBankName = "([\"«])[^\"]*([\"»])";
-    private Map<String, CurrencyComparator> comparatorsMap;
+    return result;
+  }
 
-    public List<BestCourse> findBestBuyCourses(Set<Currency> tempSet) {
+  public List<BestCourse> findBestSellCourses(Set<Currency> tempSet) {
 
-        List<BestCourse> result = new ArrayList<>();
-        Currency currency;
-        List<Currency> workList = new ArrayList<>(tempSet);
-        initializeBuyComparators();
-        workList = sanitizer.sanitize(workList);
+    Currency currency;
+    List<BestCourse> result = new ArrayList<>();
+    initializeSellComparators();
+    List<Currency> workList = new ArrayList<>(tempSet);
+    workList = sanitizer.sanitize(workList);
 
-        for (String currencyKey : comparatorsMap.keySet()) {
-            Collections.sort(workList, comparatorsMap.get(currencyKey));
-            currency = workList.get(0);
-            result.add(new BestCourse(escapeBankName(currency.bankname),
-                    resolveCurrencyBuyValue(currency, currencyKey),
-                    currencyKey, Constants.BUY_COURSE));
-        }
-
-        return result;
+    for (String currencyKey : comparatorsMap.keySet()) {
+      Collections.sort(workList, Collections.reverseOrder(comparatorsMap.get(currencyKey)));
+      currency = workList.get(0);
+      result.add(new BestCourse(escapeBankName(currency.bankname),
+          resolveCurrencySellValue(currency, currencyKey), currencyKey, Constants.SELL_COURSE));
     }
 
-    public List<BestCourse> findBestSellCourses(Set<Currency> tempSet) {
+    return result;
+  }
 
-        Currency currency;
-        List<BestCourse> result = new ArrayList<>();
-        initializeSellComparators();
-        List<Currency> workList = new ArrayList<>(tempSet);
-        workList = sanitizer.sanitize(workList);
+  private void initializeBuyComparators() {
+    this.comparatorsMap = new LinkedHashMap<>();
+    this.comparatorsMap.put(Constants.USD, new UsdBuyComparator());
+    this.comparatorsMap.put(Constants.EUR, new EurBuyComparator());
+    this.comparatorsMap.put(Constants.RUR, new RurBuyComparator());
+  }
 
-        for (String currencyKey : comparatorsMap.keySet()) {
-            Collections.sort(workList, Collections.reverseOrder(comparatorsMap.get(currencyKey)));
-            currency = workList.get(0);
-            result.add(new BestCourse(escapeBankName(currency.bankname),
-                    resolveCurrencySellValue(currency, currencyKey),
-                    currencyKey,
-                    Constants.SELL_COURSE));
-        }
+  private void initializeSellComparators() {
+    this.comparatorsMap = new LinkedHashMap<>();
+    this.comparatorsMap.put(Constants.USD, new UsdSellComparator());
+    this.comparatorsMap.put(Constants.EUR, new EurSellComparator());
+    this.comparatorsMap.put(Constants.RUR, new RurSellComparator());
+  }
 
-        return result;
-    }
+  private String escapeBankName(String bankName) {
+    Matcher matcher = pattern.matcher(bankName);
+    return matcher.find() ? matcher.group(0) : bankName;
+  }
 
-    private void initializeBuyComparators() {
-        this.comparatorsMap = new LinkedHashMap<>();
-        this.comparatorsMap.put(Constants.USD, new USDBuyComparator());
-        this.comparatorsMap.put(Constants.EUR, new EURBuyComparator());
-        this.comparatorsMap.put(Constants.RUR, new RURBuyComparator());
-    }
-
-    private void initializeSellComparators() {
-        this.comparatorsMap = new LinkedHashMap<>();
-        this.comparatorsMap.put(Constants.USD, new USDSellComparator());
-        this.comparatorsMap.put(Constants.EUR, new EURSellComparator());
-        this.comparatorsMap.put(Constants.RUR, new RURSellComparator());
-    }
-
-    private String escapeBankName(String bankName) {
-        Matcher matcher = pattern.matcher(bankName);
-        return matcher.find() ? matcher.group(0) : bankName;
-    }
-
-    /**
-     * Method to figure out which currency will be used depends on the context
-     * By default, USD value is returned
-     * If I find the better way to do it, I'll rewrite it
-     */
-    private String resolveCurrencyBuyValue(Currency currency, String name) {
-        switch (name) {
-            case Constants.USD:
-                return currency.usdBuy;
-            case Constants.EUR:
-                return currency.eurBuy;
-            case Constants.RUR:
-                return currency.rurBuy;
-        }
+  /**
+   * Method to figure out which currency will be used depends on the context
+   * By default, USD value is returned
+   * If I find the better way to do it, I'll rewrite it.
+   */
+  private String resolveCurrencyBuyValue(Currency currency, String name) {
+    switch (name) {
+      case Constants.EUR:
+        return currency.eurBuy;
+      case Constants.RUR:
+        return currency.rurBuy;
+      case Constants.USD:
+      default:
         return currency.usdBuy;
     }
+  }
 
-    /**
-     * See above
-     */
-    private String resolveCurrencySellValue(Currency currency, String name) {
-        switch (name) {
-            case Constants.USD:
-                return currency.usdSell;
-            case Constants.EUR:
-                return currency.eurSell;
-            case Constants.RUR:
-                return currency.rurSell;
-        }
+  /**
+   * See above.
+   */
+  private String resolveCurrencySellValue(Currency currency, String name) {
+    switch (name) {
+      case Constants.EUR:
+        return currency.eurSell;
+      case Constants.RUR:
+        return currency.rurSell;
+      case Constants.USD:
+      default:
         return currency.usdSell;
     }
+  }
 }
