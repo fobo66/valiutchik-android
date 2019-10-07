@@ -1,7 +1,7 @@
-package fobo66.exchangecourcesbelarus;
+package fobo66.exchangecourcesbelarus.model;
 
 import android.util.Xml;
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.entities.Currency;
 import fobo66.exchangecourcesbelarus.util.CurrencyBuilder;
 import fobo66.exchangecourcesbelarus.util.CurrencyBuilderImpl;
 import java.io.IOException;

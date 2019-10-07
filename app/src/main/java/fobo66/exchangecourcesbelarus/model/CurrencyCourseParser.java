@@ -1,6 +1,6 @@
-package fobo66.exchangecourcesbelarus;
+package fobo66.exchangecourcesbelarus.model;
 
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.entities.Currency;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

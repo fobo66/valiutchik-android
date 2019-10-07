@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.util;
 
 import com.google.common.base.CaseFormat;
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.entities.Currency;
 import java.lang.reflect.Field;
 
 /**

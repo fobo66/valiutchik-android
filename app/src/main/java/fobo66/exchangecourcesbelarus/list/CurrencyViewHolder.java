@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import fobo66.exchangecourcesbelarus.R;
-import fobo66.exchangecourcesbelarus.models.BestCourse;
+import fobo66.exchangecourcesbelarus.entities.BestCourse;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
 
 /**

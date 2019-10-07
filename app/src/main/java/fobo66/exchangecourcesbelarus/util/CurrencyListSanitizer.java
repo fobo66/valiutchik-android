@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.entities.Currency;
 import java.util.Iterator;
 import java.util.List;
 

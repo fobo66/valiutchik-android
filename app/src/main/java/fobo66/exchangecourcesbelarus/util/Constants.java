@@ -21,9 +21,9 @@ public final class Constants {
   public static final int INTERNET_PERMISSIONS_REQUEST = 66;
 
   public static final String BROADCAST_ACTION_SUCCESS =
-      "fobo66.exchangecourcesbelarus.CurrencyRateService.SUCCESS";
+      "fobo66.exchangecourcesbelarus.model.CurrencyRateService.SUCCESS";
   public static final String BROADCAST_ACTION_ERROR =
-      "fobo66.exchangecourcesbelarus.CurrencyRateService.ERROR";
+      "fobo66.exchangecourcesbelarus.model.CurrencyRateService.ERROR";
   public static final String ACTION_FETCH_COURSES =
       "fobo66.exchangecourcesbelarus.action.FETCH_COURSES";
   public static final String EXTRA_CITY = "fobo66.exchangecourcesbelarus.extra.CITY";
