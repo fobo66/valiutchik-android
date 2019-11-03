@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import fobo66.exchangecourcesbelarus.R;
-import fobo66.exchangecourcesbelarus.models.BestCourse;
+import fobo66.exchangecourcesbelarus.entities.BestCourse;
 import java.util.ArrayList;
 import java.util.List;
 

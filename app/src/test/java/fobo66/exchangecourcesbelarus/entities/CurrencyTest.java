@@ -1,9 +1,8 @@
-package fobo66.exchangecourcesbelarus.models;
-
-import org.junit.Before;
-import org.junit.Test;
+package fobo66.exchangecourcesbelarus.entities;
 
 import java.lang.reflect.Field;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

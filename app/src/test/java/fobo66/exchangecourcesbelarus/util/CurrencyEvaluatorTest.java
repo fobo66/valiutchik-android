@@ -1,8 +1,8 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import fobo66.exchangecourcesbelarus.MyfinParser;
-import fobo66.exchangecourcesbelarus.models.BestCourse;
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.entities.BestCourse;
+import fobo66.exchangecourcesbelarus.entities.Currency;
+import fobo66.exchangecourcesbelarus.model.MyfinParser;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;

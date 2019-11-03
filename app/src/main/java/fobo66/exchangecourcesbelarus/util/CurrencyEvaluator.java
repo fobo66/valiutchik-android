@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.util;
 
-import fobo66.exchangecourcesbelarus.models.BestCourse;
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.entities.BestCourse;
+import fobo66.exchangecourcesbelarus.entities.Currency;
 import fobo66.exchangecourcesbelarus.util.comparators.CurrencyComparator;
 import fobo66.exchangecourcesbelarus.util.comparators.EurBuyComparator;
 import fobo66.exchangecourcesbelarus.util.comparators.EurSellComparator;

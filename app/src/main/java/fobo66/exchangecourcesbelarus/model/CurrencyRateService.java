@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus;
+package fobo66.exchangecourcesbelarus.model;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
-import fobo66.exchangecourcesbelarus.models.BestCourse;
-import fobo66.exchangecourcesbelarus.models.Currency;
+import fobo66.exchangecourcesbelarus.R;
+import fobo66.exchangecourcesbelarus.entities.BestCourse;
+import fobo66.exchangecourcesbelarus.entities.Currency;
 import fobo66.exchangecourcesbelarus.util.CertificateManager;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator;

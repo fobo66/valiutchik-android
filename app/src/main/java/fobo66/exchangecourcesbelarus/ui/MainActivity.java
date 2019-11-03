@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -34,10 +35,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import fobo66.exchangecourcesbelarus.CurrencyRateService;
 import fobo66.exchangecourcesbelarus.R;
+import fobo66.exchangecourcesbelarus.entities.BestCourse;
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter;
-import fobo66.exchangecourcesbelarus.models.BestCourse;
+import fobo66.exchangecourcesbelarus.model.CurrencyRateService;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 
   private static final String TAG = "MainActivity";
+
+  private MainViewModel viewModel;
 
   private SwipeRefreshLayout swipeRefreshLayout;
   private RecyclerView coursesList;
@@ -65,6 +68,8 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
 
     prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+    viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
     updateValuesFromBundle(savedInstanceState);
 

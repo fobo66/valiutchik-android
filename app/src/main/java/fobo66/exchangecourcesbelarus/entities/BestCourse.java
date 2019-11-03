@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.models;
+package fobo66.exchangecourcesbelarus.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
