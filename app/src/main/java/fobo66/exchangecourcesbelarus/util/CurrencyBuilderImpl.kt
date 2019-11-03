@@ -2,7 +2,7 @@ package fobo66.exchangecourcesbelarus.util
 
 import com.google.common.base.CaseFormat.LOWER_CAMEL
 import com.google.common.base.CaseFormat.LOWER_UNDERSCORE
-import fobo66.exchangecourcesbelarus.models.Currency
+import fobo66.exchangecourcesbelarus.entities.Currency
 
 /**
  * (c) 2017 Andrey Mukamolov aka fobo66

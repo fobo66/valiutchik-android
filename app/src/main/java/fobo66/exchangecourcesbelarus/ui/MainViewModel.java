@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
 
-  private LiveData<Boolean> buyOrSell = new MutableLiveData<>(false);
+  private LiveData<Boolean> buyOrSell = new MutableLiveData<>();
 
   public LiveData<Boolean> getBuyOrSell() {
     return buyOrSell;
