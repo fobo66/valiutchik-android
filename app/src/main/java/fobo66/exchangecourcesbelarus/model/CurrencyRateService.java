@@ -39,9 +39,8 @@ import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.io.IOUtil;
 import org.xmlpull.v1.XmlPullParserException;
-
-import static org.apache.commons.io.IOUtil.copy;
 
 public class CurrencyRateService extends JobIntentService {
 
@@ -126,7 +125,7 @@ public class CurrencyRateService extends JobIntentService {
               xmlCache.createNewFile();
               OutputStream xmlStream = new FileOutputStream(xmlCache);
               try {
-                copy(responseCharStream, xmlStream);
+                IOUtil.copy(responseCharStream, xmlStream);
                 saveTimestamp();
                 readCached();
               } finally {

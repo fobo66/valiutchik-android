@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.util;
 
+import androidx.annotation.NonNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -34,7 +35,8 @@ public class CertificateManager {
     }
   }
 
-  public void createTrustManagerForCertificate(InputStream cert) throws GeneralSecurityException {
+  public void createTrustManagerForCertificate(@NonNull InputStream cert)
+      throws GeneralSecurityException {
     CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
     Collection<? extends Certificate> certificates = certificateFactory.generateCertificates(cert);
     if (certificates.isEmpty()) {
@@ -66,15 +68,15 @@ public class CertificateManager {
     sslContext.init(null, trustManagers, null);
   }
 
-  public SSLSocketFactory getTrustedSocketFactory() {
+  @NonNull public SSLSocketFactory getTrustedSocketFactory() {
     return sslContext.getSocketFactory();
   }
 
-  public X509TrustManager getTrustManager() {
+  @NonNull public X509TrustManager getTrustManager() {
     return trustManager;
   }
 
-  private KeyStore newEmptyKeyStore(char[] password) throws GeneralSecurityException {
+  @NonNull private KeyStore newEmptyKeyStore(char[] password) throws GeneralSecurityException {
     try {
       KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
       InputStream in = null; // By convention, 'null' creates an empty key store.
