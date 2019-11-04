@@ -76,25 +76,6 @@
    -keep class com.google.android.gms.common.GooglePlayServicesNotAvailableException {*;}
    -keep class com.google.android.gms.common.GooglePlayServicesRepairableException {*;}
 
-   # Google Play Services library 9.0.0 only
-   -dontwarn android.security.NetworkSecurityPolicy
-   -keep public @com.google.android.gms.common.util.DynamiteApi class * { *; }
-
-   # support-v4
-   -keep class androidx.fragment.app.Fragment { *; }
-   -keep class androidx.fragment.app.FragmentActivity { *; }
-   -keep class androidx.fragment.app.FragmentManager { *; }
-   -keep class androidx.fragment.app.FragmentTransaction { *; }
-   -keep class androidx.localbroadcastmanager.content.LocalBroadcastManager { *; }
-   -keep class androidx.collection.LruCache { *; }
-   -keep class androidx.viewpager.widget.PagerAdapter { *; }
-   -keep class androidx.viewpager.widget.ViewPager { *; }
-   -keep class androidx.core.content.ContextCompat { *; }
-
-   # support-v7-recyclerview
-   -keep class android.support.v7.widget.RecyclerView { *; }
-   -keep class android.support.v7.widget.LinearLayoutManager { *; }
-
   -keepclassmembers class fobo66.exchangecourcesbelarus.models.** {
     *;
   }

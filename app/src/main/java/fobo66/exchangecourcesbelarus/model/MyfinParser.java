@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus.model;
 
 import android.util.Xml;
+import androidx.annotation.NonNull;
 import fobo66.exchangecourcesbelarus.entities.Currency;
 import fobo66.exchangecourcesbelarus.util.CurrencyBuilder;
 import fobo66.exchangecourcesbelarus.util.CurrencyBuilderImpl;
@@ -23,15 +24,17 @@ public class MyfinParser implements CurrencyCourseParser {
       Arrays.asList("bankname", "usd_buy", "usd_sell", "eur_buy", "eur_sell", "rur_buy",
           "rur_sell"));
 
-  public List<Currency> parse(InputStream in) throws XmlPullParserException, IOException {
+  @NonNull public List<Currency> parse(@NonNull InputStream inputStream)
+      throws XmlPullParserException, IOException {
     XmlPullParser parser = Xml.newPullParser();
     parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-    parser.setInput(in, "utf-8");
+    parser.setInput(inputStream, "utf-8");
     parser.nextTag();
     return readFeed(parser);
   }
 
-  private List<Currency> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+  @NonNull private List<Currency> readFeed(@NonNull XmlPullParser parser)
+      throws XmlPullParserException, IOException {
     List<Currency> entries = new ArrayList<>();
     Currency entry;
 
