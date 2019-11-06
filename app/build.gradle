@@ -3,6 +3,7 @@ apply plugin: "com.google.firebase.firebase-perf"
 apply plugin: "io.fabric"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 apply from: "https://gist.githubusercontent.com/fobo66/17d5116b5c7bccf5f28036f401f3c09d/raw/23dcd9e144a40da0f3140d788de8f7f541d11408/propertiesLoader.gradle"
 
 def keystoreProperties = loadProperties("keystore.properties")
@@ -67,8 +68,6 @@ dependencies {
   implementation "androidx.preference:preference:1.1.0"
   implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
   implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0-rc01"
-  implementation "com.google.android.material:material:1.2.0-alpha01"
-  implementation "dev.chrisbanes:insetter-ktx:0.1.1"
 
   //location
   implementation "com.google.android.gms:play-services-location:17.0.0"
@@ -87,12 +86,18 @@ dependencies {
   //multidex
   implementation "androidx.multidex:multidex:2.0.1"
 
+  //tests
   testImplementation "junit:junit:4.12"
   testImplementation "androidx.test:core:1.2.0"
   androidTestImplementation "androidx.test:runner:1.2.0"
 
   //ioutils for xml caching
   implementation "commons-io:commons-io:20030203.000550"
+
+  //dagger
+  def dagger_version = "2.25.2"
+  implementation "com.google.dagger:dagger:$dagger_version"
+  kapt "com.google.dagger:dagger-compiler:$dagger_version"
 }
 
 apply plugin: "com.google.gms.google-services"
