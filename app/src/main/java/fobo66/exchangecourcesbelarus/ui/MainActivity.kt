@@ -6,20 +6,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.widget.CompoundButton
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +40,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
-import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter
@@ -59,7 +63,6 @@ class MainActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    prefs = PreferenceManager.getDefaultSharedPreferences(this)
     viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     updateValuesFromBundle(savedInstanceState)
     constructBroadcastReceiver()
@@ -258,11 +261,26 @@ class MainActivity : BaseActivity() {
     coursesList = findViewById(R.id.rv)
     buysellIndicator = findViewById(R.id.buysell_indicator)
     val toolbar = findViewById<Toolbar>(R.id.toolbar)
+    val root = findViewById<CoordinatorLayout>(R.id.root)
+
+    root.setSystemUiVisibility(
+      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+          or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+    )
+
+    setupLightNavigationBar()
+
     setSupportActionBar(toolbar)
-    toolbar.doOnApplyWindowInsets { view, insets, initialState ->
-      view.updatePadding(
-        top = initialState.paddings.top + insets.systemWindowInsetTop
-      )
+  }
+
+  private fun setupLightNavigationBar() {
+    if (VERSION.SDK_INT >= VERSION_CODES.O) {
+      val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+
+      if (mode != Configuration.UI_MODE_NIGHT_YES) {
+        window.decorView.systemUiVisibility = FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or
+            SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+      }
     }
   }
 

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,10 +46,12 @@ public abstract class BaseActivity extends AppCompatActivity
   protected SharedPreferences prefs;
   private MapboxGeocoding geocodingRequest;
 
-  public abstract void fetchCourses(boolean force) throws Exception;
+  public abstract void fetchCourses(boolean force);
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
     if (googleApiClient == null) {
       googleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
@@ -56,6 +59,8 @@ public abstract class BaseActivity extends AppCompatActivity
           .addApi(LocationServices.API)
           .build();
     }
+
+    userCity = prefs.getString("default_city", "Минск");
   }
 
   @Override protected void onDestroy() {
@@ -132,13 +137,12 @@ public abstract class BaseActivity extends AppCompatActivity
 
                   if (!features.isEmpty()) {
                     userCity = features.get(0).getText();
-
-                    try {
-                      fetchCourses(true);
-                    } catch (Exception e) {
-                      ExceptionHandler.handleException(e);
-                    }
+                  } else {
+                    userCity = prefs.getString("default_city", "Минск");
                   }
+
+                  fetchCourses(true);
+
                   addressRequested = false;
                 }
 
@@ -147,11 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity
                   userCity = prefs.getString("default_city", "Минск");
                   Crashlytics.logException(t);
 
-                  try {
-                    fetchCourses(true);
-                  } catch (Exception ex) {
-                    ExceptionHandler.handleException(ex);
-                  }
+                  fetchCourses(true);
 
                   addressRequested = false;
                 }
