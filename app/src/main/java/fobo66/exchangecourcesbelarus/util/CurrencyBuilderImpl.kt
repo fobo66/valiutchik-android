@@ -1,7 +1,5 @@
 package fobo66.exchangecourcesbelarus.util
 
-import com.google.common.base.CaseFormat.LOWER_CAMEL
-import com.google.common.base.CaseFormat.LOWER_UNDERSCORE
 import fobo66.exchangecourcesbelarus.entities.Currency
 
 /**
@@ -11,20 +9,23 @@ import fobo66.exchangecourcesbelarus.entities.Currency
 class CurrencyBuilderImpl : CurrencyBuilder {
   private val currency: Currency
 
-  @Throws(NoSuchFieldException::class, IllegalAccessException::class)
+  private val currencyMap = mutableMapOf<String, String>()
+
   override fun with(fieldName: String, fieldValue: String): CurrencyBuilder {
-    val field = Currency::class.java.getDeclaredField(convertFieldName(fieldName))
-    field.isAccessible = true
-    field[currency] = fieldValue
+    currencyMap.put(fieldName, fieldValue)
     return this
   }
 
-  private fun convertFieldName(fieldName: String): String {
-    return LOWER_UNDERSCORE.to(LOWER_CAMEL, fieldName)
-  }
-
   override fun build(): Currency {
-    return currency
+    return Currency(
+      currencyMap["bankname"].orEmpty(),
+      currencyMap["usd_buy"].orEmpty(),
+      currencyMap["usd_sell"].orEmpty(),
+      currencyMap["eur_buy"].orEmpty(),
+      currencyMap["eur_sell"].orEmpty(),
+      currencyMap["rur_buy"].orEmpty(),
+      currencyMap["rur_sell"].orEmpty()
+    )
   }
 
   init {

@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +16,6 @@ import static org.junit.Assert.assertEquals;
  * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
  * Test cases for my algorithm.
  */
-@RunWith(RobolectricTestRunner.class)
 public class CurrencyEvaluatorTest {
 
     private CurrencyEvaluator evaluator;
