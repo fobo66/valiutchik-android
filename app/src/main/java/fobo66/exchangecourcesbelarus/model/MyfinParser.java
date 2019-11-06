@@ -56,7 +56,8 @@ public class MyfinParser implements CurrencyCourseParser {
     return entries;
   }
 
-  private Currency readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
+  @NonNull private Currency readEntry(@NonNull XmlPullParser parser)
+      throws XmlPullParserException, IOException {
     parser.require(XmlPullParser.START_TAG, ns, "bank");
 
     String fieldName;
@@ -82,10 +83,10 @@ public class MyfinParser implements CurrencyCourseParser {
   }
 
   private boolean isTagNeeded(String tagName) {
-    return neededTagNames.indexOf(tagName) != -1;
+    return neededTagNames.contains(tagName);
   }
 
-  private String readTag(XmlPullParser parser, String tagName)
+  private String readTag(@NonNull XmlPullParser parser, String tagName)
       throws IOException, XmlPullParserException {
     parser.require(XmlPullParser.START_TAG, ns, tagName);
     String param = readText(parser);
@@ -93,7 +94,8 @@ public class MyfinParser implements CurrencyCourseParser {
     return param;
   }
 
-  private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
+  @NonNull private String readText(@NonNull XmlPullParser parser)
+      throws IOException, XmlPullParserException {
     String result = "";
     if (parser.next() == XmlPullParser.TEXT) {
       result = parser.getText();
@@ -102,7 +104,7 @@ public class MyfinParser implements CurrencyCourseParser {
     return result;
   }
 
-  private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+  private void skip(@NonNull XmlPullParser parser) throws XmlPullParserException, IOException {
     if (parser.getEventType() != XmlPullParser.START_TAG) {
       throw new IllegalStateException();
     }
