@@ -14,9 +14,10 @@ import javax.inject.Singleton
  */
 @Component(
   modules = [
-    NetworkModule::class,
     CoroutineDispatchersModule::class,
+    CurrencyRatesModule::class,
     LocationModule::class,
+    NetworkModule::class,
     SystemModule::class
   ]
 )

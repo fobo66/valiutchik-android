@@ -9,13 +9,14 @@ import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
 import java.util.Arrays
+import javax.inject.Inject
 
 /**
  * XML parser for [MyFIN](myfin.by) feed
  *
  * Created by fobo66 on 16.08.2015.
  */
-class MyfinParser : CurrencyRatesParser {
+class MyfinParser @Inject constructor() : CurrencyRatesParser {
   private val namespace: String? = null
   private val neededTagNames: List<String> = ArrayList(
     Arrays.asList(

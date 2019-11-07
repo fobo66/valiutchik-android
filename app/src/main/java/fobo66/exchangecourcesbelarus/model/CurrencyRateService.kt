@@ -40,6 +40,12 @@ class CurrencyRateService : JobIntentService() {
   @Inject
   lateinit var client: OkHttpClient
 
+  @Inject
+  lateinit var currencyEvaluator: CurrencyEvaluator
+
+  @Inject
+  lateinit var parser: CurrencyRatesParser
+
   private val citiesMap: Map<String, Int> = mapOf(
     "Минск" to 1,
     "Витебск" to 2,
@@ -138,8 +144,6 @@ class CurrencyRateService : JobIntentService() {
     if (cache.exists() && cache.length() > 0) {
       try {
         FileInputStream(cache).use { cachedStream ->
-          val currencyEvaluator = CurrencyEvaluator()
-          val parser: CurrencyRatesParser = MyfinParser()
           val entries = parser.parse(cachedStream)
           val currencyTempSet: Set<Currency> = HashSet(entries)
           val best =

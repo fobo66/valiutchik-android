@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.inject.Inject;
 
 /**
  * (c) 2017 Andrey Mukamolov aka fobo66
@@ -27,12 +28,12 @@ public class CurrencyEvaluator {
 
   private static final String regexpForEscapingBankName = "([\"«])[^\"]*([\"»])";
   private Pattern pattern;
-  private Sanitizer sanitizer;
+  private CurrencyListSanitizer sanitizer;
   private Map<String, CurrencyComparator> comparatorsMap;
 
-  public CurrencyEvaluator() {
+  @Inject public CurrencyEvaluator(CurrencyListSanitizer sanitizer) {
     pattern = Pattern.compile(regexpForEscapingBankName);
-    sanitizer = new CurrencyListSanitizer();
+    this.sanitizer = sanitizer;
   }
 
   public List<BestCourse> findBestBuyCourses(Set<Currency> tempSet) {
