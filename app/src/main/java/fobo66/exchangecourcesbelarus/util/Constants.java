@@ -9,6 +9,7 @@ public final class Constants {
       "pk.eyJ1IjoiZm9ibzY2IiwiYSI6ImNqZHJvZ2k1OTBsZjMzM3BkNG0zanoyMGMifQ.g825XQ7bhGHwSW0cggrJcQ";
 
   public static final String TEMPLATE_URI = "https://admin.myfin.by/outer/authXml/%d";
+  public static final String BASE_URL = "https://admin.myfin.by/outer/authXml";
 
   public static final String USD = "USD";
   public static final String EUR = "EUR";

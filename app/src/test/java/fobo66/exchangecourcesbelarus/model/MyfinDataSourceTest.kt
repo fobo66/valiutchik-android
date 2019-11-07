@@ -1,6 +1,8 @@
 package fobo66.exchangecourcesbelarus.model
 
+import fobo66.exchangecourcesbelarus.util.Constants
 import kotlinx.coroutines.runBlocking
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -24,7 +26,7 @@ class MyfinDataSourceTest {
   @Before
   fun setUp() {
     mockWebServer = MockWebServer()
-    myfinDataSource = MyfinDataSource(OkHttpClient(), mockWebServer.url("/%d").toString())
+    myfinDataSource = MyfinDataSource(OkHttpClient(), mockWebServer.url("").toString())
   }
 
   @After
@@ -72,5 +74,17 @@ class MyfinDataSourceTest {
       val response = myfinDataSource.loadExchangeRates("Минск")
       assertFalse(response.isSuccessful)
     }
+  }
+
+  @Test
+  fun myfinUrlProcessing() {
+    val myfinUrl = Constants.BASE_URL.toHttpUrl().newBuilder()
+      .addPathSegment("1")
+      .build()
+    assertEquals(
+      "/outer/authXml/1", myfinUrl
+        .encodedPath
+    )
+
   }
 }
