@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import fobo66.exchangecourcesbelarus.ui.MainActivity
+import fobo66.exchangecourcesbelarus.ui.MainViewModel
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -19,4 +20,6 @@ interface ApplicationComponent {
   }
 
   fun inject(mainActivity: MainActivity)
+
+  fun mainViewModelFactory(): ViewModelFactory<MainViewModel>
 }

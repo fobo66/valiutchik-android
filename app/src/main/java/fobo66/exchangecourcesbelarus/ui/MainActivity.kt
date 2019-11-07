@@ -41,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter
 import fobo66.exchangecourcesbelarus.model.CurrencyRateService
@@ -63,7 +64,10 @@ class MainActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+    viewModel =
+      ViewModelProvider(this, injector.mainViewModelFactory()).get(MainViewModel::class.java)
+
     updateValuesFromBundle(savedInstanceState)
     constructBroadcastReceiver()
     setupFirebaseReference()
