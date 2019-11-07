@@ -10,7 +10,13 @@ import fobo66.exchangecourcesbelarus.ui.MainViewModel
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
-@Component(modules = [NetworkModule::class, CoroutineDispatchersModule::class])
+@Component(
+  modules = [
+    NetworkModule::class,
+    CoroutineDispatchersModule::class,
+    LocationModule::class
+  ]
+)
 interface ApplicationComponent {
 
   @Component.Factory
