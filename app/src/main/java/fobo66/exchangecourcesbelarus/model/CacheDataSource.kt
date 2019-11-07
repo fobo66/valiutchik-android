@@ -1,8 +1,8 @@
 package fobo66.exchangecourcesbelarus.model
 
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import org.apache.commons.io.IOUtil
+import org.apache.commons.io.IOUtils
 import java.io.File
 import java.io.FileInputStream
 import java.io.Reader
@@ -14,16 +14,17 @@ import javax.inject.Inject
  */
 class CacheDataSource @Inject constructor(
   private val cacheDirectory: File,
-  private val cacheFileName: String = "data.xml"
+  private val cacheFileName: String = "data.xml",
+  private val ioDispatcher: CoroutineDispatcher
 ) {
 
-  suspend fun writeToCache(dataStream: Reader) = withContext(Dispatchers.IO) {
-    val cacheFile = File(cacheDirectory, cacheFileName).bufferedWriter()
-
-    IOUtil.copy(dataStream, cacheFile)
+  suspend fun writeToCache(dataStream: Reader) = withContext(ioDispatcher) {
+    File(cacheDirectory, cacheFileName).bufferedWriter().use {
+      IOUtils.copy(dataStream, it)
+    }
   }
 
-  suspend fun readCached(block: FileInputStream.() -> Unit) = withContext(Dispatchers.IO) {
+  suspend fun readCached(block: FileInputStream.() -> Unit) = withContext(ioDispatcher) {
     val cacheFile = File(cacheDirectory, cacheFileName)
 
     FileInputStream(cacheFile).use {

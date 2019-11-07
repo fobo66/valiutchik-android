@@ -6,5 +6,5 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor() : ViewModel() {
-  val buyOrSell: LiveData<Boolean> = MutableLiveData()
+  val buyOrSell: LiveData<Boolean> = MutableLiveData(false)
 }
