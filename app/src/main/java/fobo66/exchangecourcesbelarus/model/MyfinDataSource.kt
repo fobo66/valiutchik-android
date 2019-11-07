@@ -16,7 +16,8 @@ import javax.inject.Inject
  * Created 11/4/19.
  */
 class MyfinDataSource @Inject constructor(
-  private val client: OkHttpClient
+  private val client: OkHttpClient,
+  private val templateUri: String = Constants.TEMPLATE_URI
 ) {
 
   private val citiesMap: Map<String, Int> = mapOf(
@@ -45,6 +46,6 @@ class MyfinDataSource @Inject constructor(
   private fun resolveUrl(city: String): String {
     val cityIndex = citiesMap[city] ?: 1
 
-    return String.format(Locale.getDefault(), Constants.TEMPLATE_URI, cityIndex)
+    return String.format(Locale.getDefault(), templateUri, cityIndex)
   }
 }
