@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created 11/4/19.
  */
 class CurrencyRateRepository @Inject constructor(
-  private val parser: CurrencyCourseParser,
+  private val parser: CurrencyRatesParser,
   private val currencyEvaluator: CurrencyEvaluator,
   private val myfinDataSource: MyfinDataSource,
   private val cacheDataSource: CacheDataSource

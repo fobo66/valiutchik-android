@@ -9,7 +9,7 @@ import java.io.InputStream
  * (c) 2017 Andrey Mukamolov aka fobo66
  * Created by fobo66 on 14.03.2017.
  */
-interface CurrencyCourseParser {
+interface CurrencyRatesParser {
   @Throws(XmlPullParserException::class, IOException::class)
   fun parse(inputStream: InputStream): List<Currency>
 }
