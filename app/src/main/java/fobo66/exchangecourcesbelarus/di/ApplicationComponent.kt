@@ -3,8 +3,10 @@ package fobo66.exchangecourcesbelarus.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import fobo66.exchangecourcesbelarus.model.CurrencyRateService
 import fobo66.exchangecourcesbelarus.ui.MainActivity
 import fobo66.exchangecourcesbelarus.ui.MainViewModel
+import javax.inject.Singleton
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -14,9 +16,11 @@ import fobo66.exchangecourcesbelarus.ui.MainViewModel
   modules = [
     NetworkModule::class,
     CoroutineDispatchersModule::class,
-    LocationModule::class
+    LocationModule::class,
+    SystemModule::class
   ]
 )
+@Singleton
 interface ApplicationComponent {
 
   @Component.Factory
@@ -26,6 +30,8 @@ interface ApplicationComponent {
   }
 
   fun inject(mainActivity: MainActivity)
+
+  fun inject(currencyRateService: CurrencyRateService)
 
   fun mainViewModelFactory(): ViewModelFactory<MainViewModel>
 }

@@ -5,6 +5,7 @@ package fobo66.exchangecourcesbelarus.di
  * Created 11/7/19.
  */
 import android.app.Activity
+import android.app.Service
 
 interface DaggerComponentProvider {
 
@@ -12,3 +13,4 @@ interface DaggerComponentProvider {
 }
 
 val Activity.injector get() = (application as DaggerComponentProvider).component
+val Service.injector get() = (application as DaggerComponentProvider).component

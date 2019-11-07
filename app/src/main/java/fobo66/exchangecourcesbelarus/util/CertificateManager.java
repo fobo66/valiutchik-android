@@ -10,6 +10,8 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Arrays;
 import java.util.Collection;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -22,12 +24,13 @@ import javax.net.ssl.X509TrustManager;
  * Created 2/18/18.
  */
 
+@Singleton
 public class CertificateManager {
   private final SSLContext sslContext;
 
   private X509TrustManager trustManager;
 
-  public CertificateManager() {
+  @Inject public CertificateManager() {
     try {
       sslContext = SSLContext.getInstance("TLSv1.2");
     } catch (NoSuchAlgorithmException e) {
