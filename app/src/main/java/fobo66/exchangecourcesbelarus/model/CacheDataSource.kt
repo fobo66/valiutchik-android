@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
+import fobo66.exchangecourcesbelarus.di.CoroutineDispatchersModule.IO
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.apache.commons.io.IOUtils
@@ -7,6 +8,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.Reader
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -15,7 +17,7 @@ import javax.inject.Inject
 class CacheDataSource @Inject constructor(
   private val cacheDirectory: File,
   private val cacheFileName: String = "data.xml",
-  private val ioDispatcher: CoroutineDispatcher
+  private @Named(IO) val ioDispatcher: CoroutineDispatcher
 ) {
 
   suspend fun writeToCache(dataStream: Reader) = withContext(ioDispatcher) {
