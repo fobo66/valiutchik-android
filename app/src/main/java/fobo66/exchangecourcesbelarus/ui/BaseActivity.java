@@ -14,11 +14,11 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
-import com.mapbox.services.api.geocoding.v5.MapboxGeocoding;
-import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
-import com.mapbox.services.api.geocoding.v5.models.GeocodingResponse;
-import com.mapbox.services.commons.models.Position;
+import com.mapbox.api.geocoding.v5.GeocodingCriteria;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
 import fobo66.exchangecourcesbelarus.R;
 import fobo66.exchangecourcesbelarus.util.Constants;
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler;
@@ -121,22 +121,21 @@ public abstract class BaseActivity extends AppCompatActivity
 
             if (lastLocation != null) {
 
-              geocodingRequest =
-                  new MapboxGeocoding.Builder().setAccessToken(Constants.GEOCODER_ACCESS_TOKEN)
-                      .setCoordinates(Position.fromCoordinates(lastLocation.getLongitude(),
-                          lastLocation.getLatitude()))
-                      .setGeocodingType(GeocodingCriteria.TYPE_PLACE)
-                      .setLanguages("ru-RU")
-                      .setCountry("by")
+              geocodingRequest = MapboxGeocoding.builder()
+                  .accessToken(Constants.GEOCODER_ACCESS_TOKEN)
+                  .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
+                  .query(Point.fromLngLat(lastLocation.getLongitude(), lastLocation.getLatitude()))
+                  .languages("ru-RU")
+                  .country("by")
                       .build();
 
               geocodingRequest.enqueueCall(new Callback<GeocodingResponse>() {
                 @Override public void onResponse(Call<GeocodingResponse> call,
                     Response<GeocodingResponse> response) {
-                  List<CarmenFeature> features = response.body().getFeatures();
+                  List<CarmenFeature> features = response.body().features();
 
                   if (!features.isEmpty()) {
-                    userCity = features.get(0).getText();
+                    userCity = features.get(0).text();
                   } else {
                     userCity = prefs.getString("default_city", "Минск");
                   }

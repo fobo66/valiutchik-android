@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus.di
 
 import android.content.Context
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import fobo66.exchangecourcesbelarus.BuildConfig
@@ -9,7 +10,6 @@ import fobo66.exchangecourcesbelarus.util.CertificateManager
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import timber.log.Timber
 import javax.inject.Singleton
 
 /**
@@ -41,7 +41,7 @@ object NetworkModule {
   @Singleton
   fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     val loggingInterceptor = HttpLoggingInterceptor(
-      HttpLoggingInterceptor.Logger { message -> Timber.tag("OkHttp").d(message) }
+      HttpLoggingInterceptor.Logger { message -> Log.d("OkHttp", message) }
     )
 
     loggingInterceptor.level = if (BuildConfig.DEBUG) {
