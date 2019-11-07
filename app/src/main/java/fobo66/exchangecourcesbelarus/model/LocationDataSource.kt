@@ -1,11 +1,11 @@
 package fobo66.exchangecourcesbelarus.model
 
-import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.mapbox.api.geocoding.v5.GeocodingCriteria
 import com.mapbox.api.geocoding.v5.MapboxGeocoding
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import com.mapbox.geojson.Point
+import fobo66.exchangecourcesbelarus.entities.Location
 import fobo66.exchangecourcesbelarus.util.Constants
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
@@ -24,11 +24,11 @@ class LocationDataSource @Inject constructor(
   private val fusedLocationProviderClient: FusedLocationProviderClient
 ) {
 
-  suspend fun getLastLocation(): Location = suspendCancellableCoroutine { continuation ->
+  suspend fun lastLocation(): Location = suspendCancellableCoroutine { continuation ->
     fusedLocationProviderClient.lastLocation
       .addOnSuccessListener {
         if (!continuation.isCancelled) {
-          continuation.resume(it)
+          continuation.resume(Location(it.latitude, it.longitude))
         }
       }
       .addOnFailureListener {
@@ -50,8 +50,8 @@ class LocationDataSource @Inject constructor(
       .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
       .query(
         Point.fromLngLat(
-          location.getLongitude(),
-          location.getLatitude()
+          location.longitude,
+          location.latitude
         )
       )
       .languages("ru-RU")
