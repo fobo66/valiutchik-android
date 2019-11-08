@@ -1,6 +1,5 @@
 package fobo66.exchangecourcesbelarus.model
 
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.mapbox.api.geocoding.v5.GeocodingCriteria
 import com.mapbox.api.geocoding.v5.MapboxGeocoding
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
@@ -20,28 +19,7 @@ import kotlin.coroutines.resumeWithException
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
-class LocationDataSource @Inject constructor(
-  private val fusedLocationProviderClient: FusedLocationProviderClient
-) {
-
-  suspend fun lastLocation(): Location = suspendCancellableCoroutine { continuation ->
-    fusedLocationProviderClient.lastLocation
-      .addOnSuccessListener {
-        if (!continuation.isCancelled) {
-          continuation.resume(Location(it.latitude, it.longitude))
-        }
-      }
-      .addOnFailureListener {
-        if (!continuation.isCancelled) {
-          continuation.resumeWithException(it)
-        }
-      }
-      .addOnCanceledListener {
-        if (!continuation.isCancelled) {
-          continuation.cancel()
-        }
-      }
-  }
+class LocationDataSource @Inject constructor() {
 
   suspend fun resolveUserCity(location: Location): GeocodingResponse {
 

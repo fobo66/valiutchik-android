@@ -8,7 +8,6 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
-import java.util.Arrays
 import javax.inject.Inject
 
 /**
@@ -18,12 +17,10 @@ import javax.inject.Inject
  */
 class MyfinParser @Inject constructor() : CurrencyRatesParser {
   private val namespace: String? = null
-  private val neededTagNames: List<String> = ArrayList(
-    Arrays.asList(
+  private val neededTagNames: List<String> = listOf(
       "bankname", "usd_buy", "usd_sell", "eur_buy", "eur_sell", "rur_buy",
       "rur_sell"
     )
-  )
 
   @Throws(XmlPullParserException::class, IOException::class)
   override fun parse(inputStream: InputStream): List<Currency> {

@@ -347,8 +347,8 @@ class MainActivity : BaseActivity() {
         val intentAction = intent.action
         if (intentAction != null) {
           if (intentAction == Constants.BROADCAST_ACTION_SUCCESS) {
-            val extra: ArrayList<BestCourse> =
-              intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES)
+            val extra: List<BestCourse> =
+              intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES) ?: emptyList()
             bestCoursesAdapter.onDataUpdate(extra)
             bestCoursesReference.setValue(extra)
           } else if (intentAction == Constants.BROADCAST_ACTION_ERROR) {
