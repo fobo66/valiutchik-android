@@ -18,17 +18,13 @@ import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.widget.CompoundButton
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
@@ -41,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter
@@ -51,19 +48,19 @@ import fobo66.exchangecourcesbelarus.util.ExceptionHandler
 
 class MainActivity : BaseActivity() {
   private lateinit var viewModel: MainViewModel
-  private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-  private lateinit var coursesList: RecyclerView
-  private lateinit var buysellIndicator: TextView
+  private lateinit var binding: ActivityMainBinding
+
   var buyOrSell = false
+
   private lateinit var bestCoursesAdapter: BestCoursesAdapter
-  private val previousBest: MutableList<BestCourse> = ArrayList()
+  private val previousBest: MutableList<BestCourse> = mutableListOf()
   private lateinit var bestCourseRef: DatabaseReference
-  private var firebaseRegistering = true
   private lateinit var receiver: BroadcastReceiver
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     viewModel =
       ViewModelProvider(this, injector.mainViewModelFactory()).get(MainViewModel::class.java)
@@ -89,15 +86,14 @@ class MainActivity : BaseActivity() {
 
   override fun onStop() {
     super.onStop()
-    val editor = prefs.edit()
-    editor.putBoolean(EXTRA_BUYORSELL, buyOrSell)
-    editor.apply()
+    prefs.edit {
+      putBoolean(EXTRA_BUYORSELL, buyOrSell)
+    }
     if (googleApiClient.isConnected) {
       googleApiClient.disconnect()
     }
     LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
     bestCourseRef.onDisconnect()
-    firebaseRegistering = false
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -116,7 +112,7 @@ class MainActivity : BaseActivity() {
         true
       }
       R.id.action_update -> {
-        swipeRefreshLayout.isRefreshing = true
+        binding.swipeRefresh.isRefreshing = true
         try {
           fetchCourses(true)
         } catch (e: Exception) {
@@ -139,35 +135,27 @@ class MainActivity : BaseActivity() {
     val rootView = item.actionView as RelativeLayout
     val control: SwitchCompat = rootView.findViewById(R.id.switchForActionBar)
     control.isChecked = buyOrSell
-    if (control.isChecked) {
-      buysellIndicator.setText(R.string.sell)
-    } else {
-      buysellIndicator.setText(R.string.buy)
-    }
+    setBuySellIndicator()
     control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
-      swipeRefreshLayout.isRefreshing = true
+      binding.swipeRefresh.isRefreshing = true
       buyOrSell = compoundButton.isChecked
       bestCoursesAdapter.setBuyOrSell(buyOrSell)
       if (googleApiClient.isConnected && userCity == null) {
         resolveUserCity()
       }
-      try {
-        fetchCourses(false)
-      } catch (e: Exception) {
-        ExceptionHandler.handleException(e)
-        Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
-      }
+
+      fetchCourses(false)
+
       setBuySellIndicator()
     }
     return true
   }
 
   public override fun onSaveInstanceState(savedInstanceState: Bundle) {
+    super.onSaveInstanceState(savedInstanceState)
     savedInstanceState.putBoolean(ADDRESS_REQUESTED_KEY, addressRequested)
     savedInstanceState.putString(LOCATION_ADDRESS_KEY, userCity)
     savedInstanceState.putBoolean(EXTRA_BUYORSELL, buyOrSell)
-    savedInstanceState.putBoolean("firebase_registering", firebaseRegistering)
-    super.onSaveInstanceState(savedInstanceState)
   }
 
   override fun onRequestPermissionsResult(
@@ -187,7 +175,7 @@ class MainActivity : BaseActivity() {
           fetchCourses(true)
         } catch (e: Exception) {
           ExceptionHandler.handleException(e)
-          Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
+          Snackbar.make(binding.swipeRefresh, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
         }
       } else {
         hideRefreshSpinner()
@@ -212,19 +200,19 @@ class MainActivity : BaseActivity() {
   }
 
   private fun hideRefreshSpinner() {
-    swipeRefreshLayout.post { swipeRefreshLayout.isRefreshing = false }
+    binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = false }
   }
 
   private fun setBuySellIndicator() {
     if (buyOrSell) {
-      buysellIndicator.setText(R.string.sell)
+      binding.buysellIndicator.setText(R.string.sell)
     } else {
-      buysellIndicator.setText(R.string.buy)
+      binding.buysellIndicator.setText(R.string.buy)
     }
   }
 
   private fun setupSwipeRefreshLayout() {
-    swipeRefreshLayout.setOnRefreshListener {
+    binding.swipeRefresh.setOnRefreshListener {
       if (userCity == null) {
         resolveUserCity()
       } else {
@@ -232,12 +220,12 @@ class MainActivity : BaseActivity() {
           fetchCourses(false)
         } catch (e: Exception) {
           ExceptionHandler.handleException(e)
-          Snackbar.make(swipeRefreshLayout, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
+          Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
         }
       }
     }
-    swipeRefreshLayout.setColorSchemeResources(R.color.primary_color)
-    swipeRefreshLayout.post { swipeRefreshLayout.isRefreshing = true }
+    binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
+    binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = true }
   }
 
   private fun setupPlayServices() {
@@ -252,7 +240,7 @@ class MainActivity : BaseActivity() {
 
   private fun setupCoursesList() {
     bestCoursesAdapter = BestCoursesAdapter(previousBest)
-    coursesList.apply {
+    binding.coursesList.apply {
       layoutManager = LinearLayoutManager(context)
       itemAnimator = DefaultItemAnimator()
       adapter = bestCoursesAdapter
@@ -261,20 +249,12 @@ class MainActivity : BaseActivity() {
   }
 
   private fun setupLayout() {
-    swipeRefreshLayout = findViewById(R.id.swipe_refresh)
-    coursesList = findViewById(R.id.rv)
-    buysellIndicator = findViewById(R.id.buysell_indicator)
-    val toolbar = findViewById<Toolbar>(R.id.toolbar)
-    val root = findViewById<CoordinatorLayout>(R.id.root)
-
-    root.setSystemUiVisibility(
-      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-          or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-    )
+    binding.root.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
 
     setupLightNavigationBar()
 
-    setSupportActionBar(toolbar)
+    setSupportActionBar(binding.toolbar)
   }
 
   private fun setupLightNavigationBar() {
@@ -316,11 +296,11 @@ class MainActivity : BaseActivity() {
     }
 
   private fun onDataError() {
-    Snackbar.make(swipeRefreshLayout, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
-      .show()
     runOnUiThread {
+      Snackbar.make(binding.root, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
+        .show()
       bestCoursesAdapter.onDataUpdate(previousBest)
-      swipeRefreshLayout.isRefreshing = false
+      binding.swipeRefresh.isRefreshing = false
     }
   }
 
@@ -334,9 +314,6 @@ class MainActivity : BaseActivity() {
       }
       if (savedInstanceState.containsKey(EXTRA_BUYORSELL)) {
         buyOrSell = savedInstanceState.getBoolean(EXTRA_BUYORSELL)
-      }
-      if (savedInstanceState.containsKey(Constants.FIREBASE_REGISTERING_KEY)) {
-        firebaseRegistering = savedInstanceState.getBoolean(Constants.FIREBASE_REGISTERING_KEY)
       }
     }
   }

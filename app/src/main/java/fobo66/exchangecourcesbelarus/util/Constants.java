@@ -32,6 +32,4 @@ public final class Constants {
   public static final String EXTRA_BUYORSELL = "fobo66.exchangecourcesbelarus.extra.BUYORSELL";
 
   public static final String TIMESTAMP = "timestamp";
-
-  public static final String FIREBASE_REGISTERING_KEY = "firebase_registering";
 }

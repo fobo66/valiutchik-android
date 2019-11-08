@@ -5,24 +5,24 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.R.id
-import fobo66.exchangecourcesbelarus.R.layout
+import fobo66.exchangecourcesbelarus.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
+
+  private lateinit var binding: ActivityAboutBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_about)
-    val toolbar = findViewById<Toolbar>(id.toolbar)
-    setSupportActionBar(toolbar)
+    binding = ActivityAboutBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    setSupportActionBar(binding.toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     setupClickableLinks()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_about, menu)
     return true
   }
@@ -37,7 +37,6 @@ class AboutActivity : AppCompatActivity() {
   }
 
   private fun setupClickableLinks() {
-    val aboutText = findViewById<TextView>(id.source_copyright)
-    aboutText.movementMethod = LinkMovementMethod.getInstance()
+    binding.sourceCopyright.movementMethod = LinkMovementMethod.getInstance()
   }
 }

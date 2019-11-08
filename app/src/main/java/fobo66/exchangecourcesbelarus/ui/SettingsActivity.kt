@@ -2,14 +2,17 @@ package fobo66.exchangecourcesbelarus.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import fobo66.exchangecourcesbelarus.R.id
-import fobo66.exchangecourcesbelarus.R.layout
+import fobo66.exchangecourcesbelarus.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
+
+  private lateinit var binding: ActivitySettingsBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_settings)
+    binding = ActivitySettingsBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     setupActionBar()
     supportFragmentManager.beginTransaction()
       .replace(id.settings_container, SettingsFragment())
@@ -20,9 +23,7 @@ class SettingsActivity : AppCompatActivity() {
    * Set up the [android.app.ActionBar], if the API is available.
    */
   private fun setupActionBar() {
-    val toolbar = findViewById<Toolbar>(id.toolbar)
-    setSupportActionBar(toolbar)
-    val actionBar = supportActionBar
-    actionBar?.setDisplayHomeAsUpEnabled(true)
+    setSupportActionBar(binding.toolbar)
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
   }
 }
