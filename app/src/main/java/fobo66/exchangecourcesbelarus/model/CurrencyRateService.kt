@@ -21,13 +21,12 @@ import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import org.apache.commons.io.IOUtils
+import okio.buffer
+import okio.sink
 import org.xmlpull.v1.XmlPullParserException
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 import java.util.Locale
 import java.util.concurrent.TimeUnit.HOURS
 import javax.inject.Inject
@@ -94,18 +93,17 @@ class CurrencyRateService : JobIntentService() {
           @Throws(IOException::class)
           override fun onResponse(call: Call, response: Response) {
             if (response.isSuccessful) {
-              val responseCharStream = response.body!!.charStream()
               val xmlCache = File(cacheDir, getString(string.feed_xml_name))
               xmlCache.createNewFile()
-              val xmlStream: OutputStream = FileOutputStream(xmlCache)
-              try {
-                IOUtils.copy(responseCharStream, xmlStream)
-                saveTimestamp()
-                readCached()
-              } finally {
-                xmlStream.close()
-                responseCharStream.close()
+              xmlCache.sink().buffer().use { cache ->
+                response.body?.source()?.let { responseSource ->
+                  cache.writeAll(responseSource)
+                  saveTimestamp()
+                }
               }
+              readCached()
+            } else {
+              sendError()
             }
           }
         })
