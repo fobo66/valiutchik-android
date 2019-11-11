@@ -4,7 +4,8 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Named
+import javax.inject.Qualifier
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -12,14 +13,20 @@ import javax.inject.Named
  */
 @Module
 object CoroutineDispatchersModule {
-  const val IO = "io"
-  const val MAIN = "main"
 
   @Provides
-  @Named(IO)
+  @Io
   fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
   @Provides
-  @Named(MAIN)
+  @Main
   fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class Io
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class Main

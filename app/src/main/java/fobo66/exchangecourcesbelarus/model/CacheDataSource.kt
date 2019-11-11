@@ -1,14 +1,14 @@
 package fobo66.exchangecourcesbelarus.model
 
-import fobo66.exchangecourcesbelarus.di.CoroutineDispatchersModule.IO
+import fobo66.exchangecourcesbelarus.di.Io
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import org.apache.commons.io.IOUtils
+import okio.Source
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.FileInputStream
-import java.io.Reader
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -17,12 +17,12 @@ import javax.inject.Named
 class CacheDataSource @Inject constructor(
   private val cacheDirectory: File,
   private val cacheFileName: String = "data.xml",
-  private @Named(IO) val ioDispatcher: CoroutineDispatcher
+  @Io private val ioDispatcher: CoroutineDispatcher
 ) {
 
-  suspend fun writeToCache(dataStream: Reader) = withContext(ioDispatcher) {
-    File(cacheDirectory, cacheFileName).bufferedWriter().use {
-      IOUtils.copy(dataStream, it)
+  suspend fun writeToCache(dataStream: Source) = withContext(ioDispatcher) {
+    File(cacheDirectory, cacheFileName).sink().buffer().use {
+      it.writeAll(dataStream)
     }
   }
 

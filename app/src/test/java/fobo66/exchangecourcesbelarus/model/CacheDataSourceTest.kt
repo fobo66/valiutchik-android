@@ -4,6 +4,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import okio.source
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -45,7 +46,7 @@ class CacheDataSourceTest {
     val tempFile = temporaryFolder.newFile()
     tempFile.writeText("test")
 
-    val reader = tempFile.reader()
+    val reader = tempFile.source()
     runBlocking {
       cacheDataSource.writeToCache(reader)
     }
