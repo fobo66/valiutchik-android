@@ -60,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity
           .build();
     }
 
-    userCity = prefs.getString("default_city", "Минск");
+    loadDefaultCity();
   }
 
   @Override protected void onDestroy() {
@@ -138,10 +138,10 @@ public abstract class BaseActivity extends AppCompatActivity
                     if (!features.isEmpty()) {
                       userCity = features.get(0).text();
                     } else {
-                      userCity = prefs.getString("default_city", "Минск");
+                      loadDefaultCity();
                     }
                   } else {
-                    userCity = prefs.getString("default_city", "Минск");
+                    loadDefaultCity();
                   }
 
                   fetchCourses(true);
@@ -151,7 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
                 @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
                   Crashlytics.log(0, TAG, "Getting city using Mapbox Geocoding API unsuccessful");
-                  userCity = prefs.getString("default_city", "Минск");
+                  loadDefaultCity();
                   Crashlytics.logException(t);
 
                   fetchCourses(true);
@@ -161,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity
               });
             } else {
               Crashlytics.log(0, TAG, "Last location unavailable, setting default city...");
-              userCity = prefs.getString("default_city", "Минск");
+              loadDefaultCity();
               try {
                 fetchCourses(true);
               } catch (Exception e) {
@@ -178,5 +178,9 @@ public abstract class BaseActivity extends AppCompatActivity
             addressRequested = false;
           });
     }
+  }
+
+  private void loadDefaultCity() {
+    userCity = prefs.getString("default_city", "Минск");
   }
 }
