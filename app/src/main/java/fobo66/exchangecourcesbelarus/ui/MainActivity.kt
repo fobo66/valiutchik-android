@@ -54,7 +54,6 @@ class MainActivity : BaseActivity() {
 
   private lateinit var bestCoursesAdapter: BestCoursesAdapter
   private val previousBest: MutableList<BestCourse> = mutableListOf()
-  private lateinit var bestCourseRef: DatabaseReference
   private lateinit var receiver: BroadcastReceiver
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +92,7 @@ class MainActivity : BaseActivity() {
       googleApiClient.disconnect()
     }
     LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
-    bestCourseRef.onDisconnect()
+    bestCoursesReference.onDisconnect()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -269,9 +268,8 @@ class MainActivity : BaseActivity() {
   }
 
   private fun setupFirebaseReference() {
-    bestCourseRef = bestCoursesReference
-    bestCourseRef.keepSynced(false)
-    bestCourseRef.addValueEventListener(object : ValueEventListener {
+    bestCoursesReference.keepSynced(false)
+    bestCoursesReference.addValueEventListener(object : ValueEventListener {
       override fun onDataChange(dataSnapshot: DataSnapshot) {
         val t: GenericTypeIndicator<List<BestCourse>> =
           object : GenericTypeIndicator<List<BestCourse>>() {}
