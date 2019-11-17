@@ -16,6 +16,7 @@ import javax.inject.Singleton
   modules = [
     CoroutineDispatchersModule::class,
     CurrencyRatesModule::class,
+    DatabaseModule::class,
     LocationModule::class,
     NetworkModule::class,
     SystemModule::class
