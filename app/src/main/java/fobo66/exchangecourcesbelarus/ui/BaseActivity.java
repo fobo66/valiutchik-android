@@ -132,10 +132,14 @@ public abstract class BaseActivity extends AppCompatActivity
               geocodingRequest.enqueueCall(new Callback<GeocodingResponse>() {
                 @Override public void onResponse(Call<GeocodingResponse> call,
                     Response<GeocodingResponse> response) {
-                  List<CarmenFeature> features = response.body().features();
+                  if (response.body() != null) {
+                    List<CarmenFeature> features = response.body().features();
 
-                  if (!features.isEmpty()) {
-                    userCity = features.get(0).text();
+                    if (!features.isEmpty()) {
+                      userCity = features.get(0).text();
+                    } else {
+                      userCity = prefs.getString("default_city", "Минск");
+                    }
                   } else {
                     userCity = prefs.getString("default_city", "Минск");
                   }
