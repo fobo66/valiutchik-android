@@ -72,6 +72,8 @@ dependencies {
   implementation "androidx.preference:preference-ktx:1.1.0"
   implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc02"
+  implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc02"
+  implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc02"
 
   //location
   implementation "com.google.android.gms:play-services-location:17.0.0"
