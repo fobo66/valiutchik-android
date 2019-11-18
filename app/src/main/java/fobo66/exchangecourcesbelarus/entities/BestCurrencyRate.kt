@@ -3,6 +3,8 @@ package fobo66.exchangecourcesbelarus.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate.BestBuyRate
+import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate.BestSellRate
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -24,4 +26,12 @@ sealed class BestCurrencyRate {
     @ColumnInfo(name = "currency_name") val currencyName: String,
     @ColumnInfo(name = "currency_value") val currencyValue: String
   ) : BestCurrencyRate()
+}
+
+fun BestCourse.toBestCurrencyRate(): BestCurrencyRate {
+  return if (isBuy) {
+    BestBuyRate(0, bank, currencyName, currencyValue)
+  } else {
+    BestSellRate(0, bank, currencyName, currencyValue)
+  }
 }

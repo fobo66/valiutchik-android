@@ -145,9 +145,11 @@ class CurrencyRateService : JobIntentService() {
           val entries = parser.parse(cachedStream)
           val currencyTempSet: Set<Currency> = HashSet(entries)
           val best =
-            if (buyOrSell) currencyEvaluator.findBestBuyCourses(currencyTempSet) else currencyEvaluator.findBestSellCourses(
-              currencyTempSet
-            )
+            if (buyOrSell) {
+              currencyEvaluator.findBestBuyCourses(currencyTempSet)
+            } else {
+              currencyEvaluator.findBestSellCourses(currencyTempSet)
+            }
           sendResult(best)
         }
       } catch (e: XmlPullParserException) {
