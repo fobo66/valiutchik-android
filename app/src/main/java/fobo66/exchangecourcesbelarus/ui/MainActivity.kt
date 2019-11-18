@@ -44,7 +44,6 @@ import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter
 import fobo66.exchangecourcesbelarus.model.CurrencyRateService
 import fobo66.exchangecourcesbelarus.util.Constants
 import fobo66.exchangecourcesbelarus.util.Constants.EXTRA_BUYORSELL
-import fobo66.exchangecourcesbelarus.util.ExceptionHandler
 
 class MainActivity : BaseActivity() {
   private lateinit var viewModel: MainViewModel
@@ -112,12 +111,7 @@ class MainActivity : BaseActivity() {
       }
       R.id.action_update -> {
         binding.swipeRefresh.isRefreshing = true
-        try {
-          fetchCourses(true)
-        } catch (e: Exception) {
-          ExceptionHandler.handleException(e)
-          resolveUserCity()
-        }
+        fetchCourses(true)
         true
       }
       R.id.action_about -> {
@@ -170,12 +164,7 @@ class MainActivity : BaseActivity() {
       }
     } else if (requestCode == Constants.INTERNET_PERMISSIONS_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        try {
-          fetchCourses(true)
-        } catch (e: Exception) {
-          ExceptionHandler.handleException(e)
-          Snackbar.make(binding.swipeRefresh, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
-        }
+        fetchCourses(true)
       } else {
         hideRefreshSpinner()
       }
@@ -215,12 +204,7 @@ class MainActivity : BaseActivity() {
       if (userCity == null) {
         resolveUserCity()
       } else {
-        try {
-          fetchCourses(false)
-        } catch (e: Exception) {
-          ExceptionHandler.handleException(e)
-          Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
-        }
+        fetchCourses(false)
       }
     }
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)

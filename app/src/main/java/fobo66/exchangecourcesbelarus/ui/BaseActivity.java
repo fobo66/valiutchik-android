@@ -162,11 +162,7 @@ public abstract class BaseActivity extends AppCompatActivity
             } else {
               Crashlytics.log(0, TAG, "Last location unavailable, setting default city...");
               loadDefaultCity();
-              try {
-                fetchCourses(true);
-              } catch (Exception e) {
-                ExceptionHandler.handleException(e);
-              }
+              fetchCourses(true);
 
               addressRequested = false;
             }
