@@ -28,10 +28,12 @@ sealed class BestCurrencyRate {
   ) : BestCurrencyRate()
 }
 
-fun BestCourse.toBestCurrencyRate(): BestCurrencyRate {
-  return if (isBuy) {
-    BestBuyRate(0, bank, currencyName, currencyValue)
-  } else {
-    BestSellRate(0, bank, currencyName, currencyValue)
-  }
+fun BestCourse.toBestBuyRate(): BestBuyRate {
+  check(isBuy) { "Wrong value. Expected it to be buy course, but was sell course" }
+  return BestBuyRate(0, bank, currencyName, currencyValue)
+}
+
+fun BestCourse.toBestSellRate(): BestSellRate {
+  check(!isBuy) { "Wrong value. Expected it to be sell course, but was buy course" }
+  return BestSellRate(0, bank, currencyName, currencyValue)
 }

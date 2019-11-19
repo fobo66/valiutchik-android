@@ -25,7 +25,7 @@ public class CurrencyEvaluatorTest {
 
     @Before
     public void setUp() throws Exception {
-        this.evaluator = new CurrencyEvaluator();
+        this.evaluator = new CurrencyEvaluator(new CurrencyListSanitizerImpl());
         this.testFile = this.getClass().getClassLoader().getResourceAsStream("data.xml");
         MyfinParser parser = new MyfinParser();
         List<Currency> entries = parser.parse(testFile);
