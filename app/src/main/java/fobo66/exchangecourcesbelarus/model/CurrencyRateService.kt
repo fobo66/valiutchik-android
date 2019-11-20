@@ -3,9 +3,15 @@ package fobo66.exchangecourcesbelarus.model
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.IBinder
 import android.os.Parcelable
+import androidx.annotation.CallSuper
 import androidx.core.app.JobIntentService
 import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ServiceLifecycleDispatcher
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.di.injector
@@ -14,6 +20,7 @@ import fobo66.exchangecourcesbelarus.entities.Currency
 import fobo66.exchangecourcesbelarus.util.Constants
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler
+import kotlinx.coroutines.launch
 import okhttp3.CacheControl
 import okhttp3.Call
 import okhttp3.Callback
@@ -31,7 +38,7 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit.HOURS
 import javax.inject.Inject
 
-class CurrencyRateService : JobIntentService() {
+class CurrencyRateService : JobIntentService(), LifecycleOwner {
 
   @Inject
   lateinit var prefs: SharedPreferences
@@ -45,6 +52,9 @@ class CurrencyRateService : JobIntentService() {
   @Inject
   lateinit var parser: CurrencyRatesParser
 
+  @Inject
+  lateinit var persistenceDataSource: PersistenceDataSource
+
   private val citiesMap: Map<String, Int> = mapOf(
     "Минск" to 1,
     "Витебск" to 2,
@@ -55,9 +65,30 @@ class CurrencyRateService : JobIntentService() {
   )
   private var buyOrSell = false
 
+  private val lifecycleDispatcher = ServiceLifecycleDispatcher(this)
+
   override fun onCreate() {
+    lifecycleDispatcher.onServicePreSuperOnCreate()
     injector.inject(this)
     super.onCreate()
+  }
+
+  @CallSuper
+  override fun onBind(intent: Intent): IBinder? {
+    lifecycleDispatcher.onServicePreSuperOnBind()
+    return super.onBind(intent)
+  }
+
+  @CallSuper
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    lifecycleDispatcher.onServicePreSuperOnStart()
+    return super.onStartCommand(intent, flags, startId)
+  }
+
+  @CallSuper
+  override fun onDestroy() {
+    lifecycleDispatcher.onServicePreSuperOnDestroy()
+    super.onDestroy()
   }
 
   override fun onHandleWork(intent: Intent) {
@@ -150,6 +181,7 @@ class CurrencyRateService : JobIntentService() {
             } else {
               currencyEvaluator.findBestSellCourses(currencyTempSet)
             }
+          saveResult(best)
           sendResult(best)
         }
       } catch (e: XmlPullParserException) {
@@ -158,6 +190,10 @@ class CurrencyRateService : JobIntentService() {
         ExceptionHandler.handleException(e)
       }
     }
+  }
+
+  private fun saveResult(bestCourses: List<BestCourse>) = lifecycleScope.launch {
+    persistenceDataSource.saveBestCourses(bestCourses)
   }
 
   private fun sendResult(result: List<BestCourse?>) {
@@ -191,4 +227,6 @@ class CurrencyRateService : JobIntentService() {
       )
     }
   }
+
+  override fun getLifecycle(): Lifecycle = lifecycleDispatcher.lifecycle
 }

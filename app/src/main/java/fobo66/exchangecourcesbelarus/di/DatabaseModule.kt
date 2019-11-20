@@ -2,7 +2,6 @@ package fobo66.exchangecourcesbelarus.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import dagger.Module
 import dagger.Provides
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
@@ -17,7 +16,7 @@ object DatabaseModule {
 
   @Provides
   @Singleton
-  fun provideDatabase(context: Context): RoomDatabase =
+  fun provideDatabase(context: Context): CurrencyRatesDatabase =
     Room.databaseBuilder(
       context,
       CurrencyRatesDatabase::class.java,
