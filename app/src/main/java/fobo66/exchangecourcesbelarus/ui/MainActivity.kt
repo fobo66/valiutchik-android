@@ -30,6 +30,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -182,6 +183,7 @@ class MainActivity : BaseActivity() {
         Constants.INTERNET_PERMISSIONS_REQUEST
       )
     } else {
+      FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
       CurrencyRateService.fetchCourses(this, userCity, buyOrSell)
     }
   }
@@ -282,6 +284,7 @@ class MainActivity : BaseActivity() {
         .show()
       bestCoursesAdapter.onDataUpdate(previousBest)
       hideRefreshSpinner()
+      FirebaseAnalytics.getInstance(this).logEvent("failed_to_load_exchange_rates", Bundle.EMPTY)
     }
   }
 
