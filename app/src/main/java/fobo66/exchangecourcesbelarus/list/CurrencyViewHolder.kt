@@ -44,9 +44,10 @@ class CurrencyViewHolder(itemView: View) : ViewHolder(itemView), OnClickListener
   }
 
   private fun trackEvent() {
-    val params = Bundle()
-    params
-      .putString(Param.CURRENCY, binding.currencyName.text.toString())
+    val params = Bundle().apply {
+      putString(Param.CURRENCY, binding.currencyName.text.toString())
+    }
+
     FirebaseAnalytics.getInstance(itemView.context).logEvent(
       Event.VIEW_ITEM,
       params

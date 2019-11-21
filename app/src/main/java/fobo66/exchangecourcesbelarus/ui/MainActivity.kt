@@ -133,13 +133,17 @@ class MainActivity : BaseActivity() {
     control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
       binding.swipeRefresh.isRefreshing = true
       buyOrSell = compoundButton.isChecked
+      viewModel.updateBuySell(buyOrSell)
       bestCoursesAdapter.setBuyOrSell(buyOrSell)
       if (googleApiClient.isConnected && userCity == null) {
         resolveUserCity()
+      } else {
+        fetchCourses(false)
       }
-
-      fetchCourses(false)
-
+      val params = Bundle().apply {
+        putBoolean(FirebaseAnalytics.Param.VALUE, buyOrSell)
+      }
+      FirebaseAnalytics.getInstance(this).logEvent("buy_sell_switch_toggled", params)
       setBuySellIndicator()
     }
     return true
