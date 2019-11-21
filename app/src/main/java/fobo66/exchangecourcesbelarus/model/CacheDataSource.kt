@@ -20,10 +20,12 @@ class CacheDataSource @Inject constructor(
   @Io private val ioDispatcher: CoroutineDispatcher
 ) {
 
-  suspend fun writeToCache(dataStream: Source, cacheFileName: String = "data.xml") =
+  suspend fun writeToCache(dataStream: Source?, cacheFileName: String = "data.xml") =
     withContext(ioDispatcher) {
-      File(cacheDirectory, cacheFileName).sink().buffer().use {
-        it.writeAll(dataStream)
+      dataStream?.let {
+        File(cacheDirectory, cacheFileName).sink().buffer().use { sink ->
+          sink.writeAll(dataStream)
+        }
       }
     }
 
