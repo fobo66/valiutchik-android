@@ -23,7 +23,7 @@ class MyfinParser @Inject constructor() : CurrencyRatesParser {
     )
 
   @Throws(XmlPullParserException::class, IOException::class)
-  override fun parse(inputStream: InputStream): List<Currency> {
+  override fun parse(inputStream: InputStream): Set<Currency> {
     val parser = Xml.newPullParser()
     parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
     parser.setInput(inputStream, "utf-8")
@@ -32,8 +32,8 @@ class MyfinParser @Inject constructor() : CurrencyRatesParser {
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readFeed(parser: XmlPullParser): List<Currency> {
-    val entries: MutableList<Currency> = ArrayList()
+  private fun readFeed(parser: XmlPullParser): Set<Currency> {
+    val entries = mutableSetOf<Currency>()
     var entry: Currency
     parser.require(XmlPullParser.START_TAG, namespace, "root")
     while (parser.next() != XmlPullParser.END_TAG) {

@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.exchangecourcesbelarus.entities.Currency
 import fobo66.exchangecourcesbelarus.util.Constants
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler
@@ -169,12 +168,11 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
   private fun readCached() = lifecycleScope.launch {
     cacheDataSource.readCached {
       val entries = parser.parse(this)
-      val currencyTempSet: Set<Currency> = HashSet(entries)
       val best =
         if (buyOrSell) {
-          currencyEvaluator.findBestBuyCourses(currencyTempSet)
+          currencyEvaluator.findBestBuyCourses(entries)
         } else {
-          currencyEvaluator.findBestSellCourses(currencyTempSet)
+          currencyEvaluator.findBestSellCourses(entries)
         }
       saveResult(best)
       sendResult(best)
@@ -185,7 +183,7 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
     persistenceDataSource.saveBestCourses(bestCourses)
   }
 
-  private fun sendResult(result: List<BestCourse?>) {
+  private fun sendResult(result: List<BestCourse>) {
     val intent = Intent(Constants.BROADCAST_ACTION_SUCCESS)
     intent.putParcelableArrayListExtra(
       Constants.EXTRA_BESTCOURSES,
@@ -204,10 +202,12 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
     private const val MAX_STALE_PERIOD: Long = 10800000 // 3 hours in ms
 
     fun fetchCourses(context: Context, city: String?, buyOrSell: Boolean) {
-      val intent = Intent(context, CurrencyRateService::class.java)
-      intent.action = Constants.ACTION_FETCH_COURSES
-      intent.putExtra(Constants.EXTRA_CITY, city)
-      intent.putExtra(Constants.EXTRA_BUYORSELL, buyOrSell)
+      val intent = Intent(context, CurrencyRateService::class.java).apply {
+        action = Constants.ACTION_FETCH_COURSES
+        putExtra(Constants.EXTRA_CITY, city)
+        putExtra(Constants.EXTRA_BUYORSELL, buyOrSell)
+      }
+
       enqueueWork(
         context,
         CurrencyRateService::class.java,

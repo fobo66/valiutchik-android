@@ -4,7 +4,6 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse;
 import fobo66.exchangecourcesbelarus.entities.Currency;
 import fobo66.exchangecourcesbelarus.model.MyfinParser;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.Before;
@@ -28,8 +27,7 @@ public class CurrencyEvaluatorTest {
         this.evaluator = new CurrencyEvaluator(new CurrencyListSanitizerImpl());
         this.testFile = this.getClass().getClassLoader().getResourceAsStream("data.xml");
         MyfinParser parser = new MyfinParser();
-        List<Currency> entries = parser.parse(testFile);
-        Set<Currency> currencyTempSet = new HashSet<>(entries);
+        Set<Currency> currencyTempSet = parser.parse(testFile);
         bestBuy = evaluator.findBestBuyCourses(currencyTempSet);
         bestSell = evaluator.findBestSellCourses(currencyTempSet);
     }

@@ -11,5 +11,5 @@ import java.io.InputStream
  */
 interface CurrencyRatesParser {
   @Throws(XmlPullParserException::class, IOException::class)
-  fun parse(inputStream: InputStream): List<Currency>
+  fun parse(inputStream: InputStream): Set<Currency>
 }
