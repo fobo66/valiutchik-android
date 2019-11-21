@@ -30,9 +30,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okio.buffer
 import okio.sink
-import org.xmlpull.v1.XmlPullParserException
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
 import java.util.Locale
 import java.util.concurrent.TimeUnit.HOURS
@@ -51,6 +49,9 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
 
   @Inject
   lateinit var parser: CurrencyRatesParser
+
+  @Inject
+  lateinit var cacheDataSource: CacheDataSource
 
   @Inject
   lateinit var persistenceDataSource: PersistenceDataSource
@@ -73,13 +74,11 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
     super.onCreate()
   }
 
-  @CallSuper
   override fun onBind(intent: Intent): IBinder? {
     lifecycleDispatcher.onServicePreSuperOnBind()
     return super.onBind(intent)
   }
 
-  @CallSuper
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     lifecycleDispatcher.onServicePreSuperOnStart()
     return super.onStartCommand(intent, flags, startId)
@@ -168,27 +167,18 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
     }
   }
 
-  private fun readCached() {
-    val cache = File(cacheDir, getString(string.feed_xml_name))
-    if (cache.exists() && cache.length() > 0) {
-      try {
-        FileInputStream(cache).use { cachedStream ->
-          val entries = parser.parse(cachedStream)
-          val currencyTempSet: Set<Currency> = HashSet(entries)
-          val best =
-            if (buyOrSell) {
-              currencyEvaluator.findBestBuyCourses(currencyTempSet)
-            } else {
-              currencyEvaluator.findBestSellCourses(currencyTempSet)
-            }
-          saveResult(best)
-          sendResult(best)
+  private fun readCached() = lifecycleScope.launch {
+    cacheDataSource.readCached {
+      val entries = parser.parse(this)
+      val currencyTempSet: Set<Currency> = HashSet(entries)
+      val best =
+        if (buyOrSell) {
+          currencyEvaluator.findBestBuyCourses(currencyTempSet)
+        } else {
+          currencyEvaluator.findBestSellCourses(currencyTempSet)
         }
-      } catch (e: XmlPullParserException) {
-        ExceptionHandler.handleException(e)
-      } catch (e: IOException) {
-        ExceptionHandler.handleException(e)
-      }
+      saveResult(best)
+      sendResult(best)
     }
   }
 

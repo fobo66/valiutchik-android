@@ -11,6 +11,5 @@ class CurrencyRateRepository @Inject constructor(
   private val parser: CurrencyRatesParser,
   private val currencyEvaluator: CurrencyEvaluator,
   private val myfinDataSource: MyfinDataSource,
-  private val cacheDataSource: CacheDataSource
-) {
-}
+  private val persistenceDataSource: PersistenceDataSource
+)
