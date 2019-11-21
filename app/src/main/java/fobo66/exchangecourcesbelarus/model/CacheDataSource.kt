@@ -22,8 +22,10 @@ class CacheDataSource @Inject constructor(
 
   suspend fun writeToCache(dataStream: Source?, cacheFileName: String = "data.xml") =
     withContext(ioDispatcher) {
-      dataStream?.let {
-        File(cacheDirectory, cacheFileName).sink().buffer().use { sink ->
+      if (dataStream != null) {
+        val file = File(cacheDirectory, cacheFileName)
+        file.createNewFile()
+        file.sink().buffer().use { sink ->
           sink.writeAll(dataStream)
         }
       }

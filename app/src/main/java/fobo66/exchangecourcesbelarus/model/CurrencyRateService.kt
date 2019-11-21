@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ServiceLifecycleDispatcher
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.entities.Currency
@@ -28,9 +27,6 @@ import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okio.buffer
-import okio.sink
-import java.io.File
 import java.io.IOException
 import java.util.Locale
 import java.util.concurrent.TimeUnit.HOURS
@@ -123,14 +119,8 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
           @Throws(IOException::class)
           override fun onResponse(call: Call, response: Response) {
             if (response.isSuccessful) {
-              val xmlCache = File(cacheDir, getString(string.feed_xml_name))
-              xmlCache.createNewFile()
-              xmlCache.sink().buffer().use { cache ->
-                response.body?.source()?.let { responseSource ->
-                  cache.writeAll(responseSource)
-                  saveTimestamp()
-                }
-              }
+              cacheResponse(response)
+              saveTimestamp()
               tryReadCached()
             } else {
               sendError()
@@ -141,6 +131,10 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
         tryReadCached()
       }
     }
+  }
+
+  private fun cacheResponse(response: Response) = lifecycleScope.launch {
+    cacheDataSource.writeToCache(response.body?.source())
   }
 
   private fun tryReadCached() {
