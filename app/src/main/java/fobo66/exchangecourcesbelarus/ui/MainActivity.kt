@@ -151,7 +151,6 @@ class MainActivity : BaseActivity() {
 
   public override fun onSaveInstanceState(savedInstanceState: Bundle) {
     super.onSaveInstanceState(savedInstanceState)
-    savedInstanceState.putBoolean(ADDRESS_REQUESTED_KEY, addressRequested)
     savedInstanceState.putString(LOCATION_ADDRESS_KEY, userCity)
     savedInstanceState.putBoolean(EXTRA_BUYORSELL, buyOrSell)
   }
@@ -294,9 +293,6 @@ class MainActivity : BaseActivity() {
 
   private fun updateValuesFromBundle(savedInstanceState: Bundle?) {
     if (savedInstanceState != null) {
-      if (savedInstanceState.containsKey(ADDRESS_REQUESTED_KEY)) {
-        addressRequested = savedInstanceState.getBoolean(ADDRESS_REQUESTED_KEY)
-      }
       if (savedInstanceState.containsKey(LOCATION_ADDRESS_KEY)) {
         userCity = savedInstanceState.getString(LOCATION_ADDRESS_KEY)
       }

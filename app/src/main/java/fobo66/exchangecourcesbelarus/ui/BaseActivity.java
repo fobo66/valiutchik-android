@@ -35,13 +35,11 @@ public abstract class BaseActivity extends AppCompatActivity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   private static final String TAG = "BaseActivity";
-  protected static final String ADDRESS_REQUESTED_KEY = "address-request-pending";
   protected static final String LOCATION_ADDRESS_KEY = "location-address";
 
   public String userCity;
   public GoogleApiClient googleApiClient;
   private boolean resolvingError = false;
-  protected boolean addressRequested;
 
   protected SharedPreferences prefs;
   private MapboxGeocoding geocodingRequest;
@@ -114,7 +112,6 @@ public abstract class BaseActivity extends AppCompatActivity
           new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
           Constants.LOCATION_PERMISSION_REQUEST);
     } else {
-      addressRequested = true;
       LocationServices.getFusedLocationProviderClient(this)
           .getLastLocation()
           .addOnSuccessListener(lastLocation -> {
@@ -126,8 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity
                   .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
                   .query(Point.fromLngLat(lastLocation.getLongitude(), lastLocation.getLatitude()))
                   .languages("ru-RU")
-                  .country("by")
-                      .build();
+                  .country("by").build();
 
               geocodingRequest.enqueueCall(new Callback<GeocodingResponse>() {
                 @Override public void onResponse(Call<GeocodingResponse> call,
@@ -145,33 +141,26 @@ public abstract class BaseActivity extends AppCompatActivity
                   }
 
                   fetchCourses(true);
-
-                  addressRequested = false;
                 }
 
                 @Override public void onFailure(Call<GeocodingResponse> call, Throwable t) {
                   Crashlytics.log(0, TAG, "Getting city using Mapbox Geocoding API unsuccessful");
+                  ExceptionHandler.INSTANCE.handleException(t);
                   loadDefaultCity();
-                  Crashlytics.logException(t);
 
                   fetchCourses(true);
-
-                  addressRequested = false;
                 }
               });
             } else {
               Crashlytics.log(0, TAG, "Last location unavailable, setting default city...");
               loadDefaultCity();
               fetchCourses(true);
-
-              addressRequested = false;
             }
           })
           .addOnFailureListener(e -> {
-            ExceptionHandler.handleException(e);
+            ExceptionHandler.INSTANCE.handleException(e);
             Toast.makeText(BaseActivity.this, R.string.location_error_title, Toast.LENGTH_SHORT)
                 .show();
-            addressRequested = false;
           });
     }
   }
