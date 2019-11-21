@@ -15,9 +15,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.exchangecourcesbelarus.util.Constants
+import fobo66.exchangecourcesbelarus.util.ACTION_FETCH_COURSES
+import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_ERROR
+import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_SUCCESS
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
+import fobo66.exchangecourcesbelarus.util.EXTRA_BESTCOURSES
+import fobo66.exchangecourcesbelarus.util.EXTRA_BUYORSELL
+import fobo66.exchangecourcesbelarus.util.EXTRA_CITY
 import fobo66.exchangecourcesbelarus.util.ExceptionHandler
+import fobo66.exchangecourcesbelarus.util.TEMPLATE_URI
+import fobo66.exchangecourcesbelarus.util.TIMESTAMP
 import kotlinx.coroutines.launch
 import okhttp3.CacheControl
 import okhttp3.Call
@@ -86,9 +93,9 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
   }
 
   override fun onHandleWork(intent: Intent) {
-    if (Constants.ACTION_FETCH_COURSES == intent.action) {
-      val city = intent.getStringExtra(Constants.EXTRA_CITY)
-      buyOrSell = intent.getBooleanExtra(Constants.EXTRA_BUYORSELL, false)
+    if (ACTION_FETCH_COURSES == intent.action) {
+      val city = intent.getStringExtra(EXTRA_CITY)
+      buyOrSell = intent.getBooleanExtra(EXTRA_BUYORSELL, false)
       resolveBestCurrencyRates(city)
     }
   }
@@ -103,7 +110,7 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
     val currentTime = System.currentTimeMillis()
     if (city != null) {
       timeStamp = prefs.getLong(
-        Constants.TIMESTAMP,
+        TIMESTAMP,
         currentTime - MAX_STALE_PERIOD
       )
       if (currentTime - timeStamp >= MAX_STALE_PERIOD) {
@@ -156,12 +163,12 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
   private fun getUrlForCity(city: String): String {
     val cityIndex = citiesMap[city] ?: 1
 
-    return String.format(Locale.getDefault(), Constants.TEMPLATE_URI, cityIndex)
+    return String.format(Locale.getDefault(), TEMPLATE_URI, cityIndex)
   }
 
   private fun saveTimestamp() {
     prefs.edit {
-      putLong(Constants.TIMESTAMP, System.currentTimeMillis())
+      putLong(TIMESTAMP, System.currentTimeMillis())
     }
   }
 
@@ -184,9 +191,9 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
   }
 
   private fun sendResult(result: List<BestCourse>) {
-    val intent = Intent(Constants.BROADCAST_ACTION_SUCCESS)
+    val intent = Intent(BROADCAST_ACTION_SUCCESS)
     intent.putParcelableArrayListExtra(
-      Constants.EXTRA_BESTCOURSES,
+      EXTRA_BESTCOURSES,
       result as ArrayList<out Parcelable?>
     )
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
@@ -194,7 +201,7 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
 
   private fun sendError() {
     LocalBroadcastManager.getInstance(this)
-      .sendBroadcast(Intent(Constants.BROADCAST_ACTION_ERROR))
+      .sendBroadcast(Intent(BROADCAST_ACTION_ERROR))
   }
 
   companion object {
@@ -203,9 +210,9 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
 
     fun fetchCourses(context: Context, city: String?, buyOrSell: Boolean) {
       val intent = Intent(context, CurrencyRateService::class.java).apply {
-        action = Constants.ACTION_FETCH_COURSES
-        putExtra(Constants.EXTRA_CITY, city)
-        putExtra(Constants.EXTRA_BUYORSELL, buyOrSell)
+        action = ACTION_FETCH_COURSES
+        putExtra(EXTRA_CITY, city)
+        putExtra(EXTRA_BUYORSELL, buyOrSell)
       }
 
       enqueueWork(

@@ -7,5 +7,5 @@ import fobo66.exchangecourcesbelarus.entities.Currency
  * Created by fobo66 on 14.03.2017.
  */
 interface CurrencyListSanitizer {
-  fun sanitize(list: MutableList<Currency>): List<Currency>
+  fun sanitize(list: MutableList<Currency>): MutableList<Currency>
 }

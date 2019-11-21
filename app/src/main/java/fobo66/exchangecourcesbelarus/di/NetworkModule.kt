@@ -31,8 +31,8 @@ object NetworkModule {
     return OkHttpClient.Builder().cache(Cache(context.cacheDir, 1024 * 1024 * 5))
       .addInterceptor(loggingInterceptor)
       .sslSocketFactory(
-        certificateManager.getTrustedSocketFactory(),
-        certificateManager.getTrustManager()
+        certificateManager.trustedSocketFactory,
+        certificateManager.trustManager
       )
       .build()
   }

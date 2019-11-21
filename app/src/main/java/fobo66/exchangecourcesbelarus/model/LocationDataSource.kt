@@ -5,7 +5,7 @@ import com.mapbox.api.geocoding.v5.MapboxGeocoding
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import com.mapbox.geojson.Point
 import fobo66.exchangecourcesbelarus.entities.Location
-import fobo66.exchangecourcesbelarus.util.Constants
+import fobo66.exchangecourcesbelarus.util.GEOCODER_ACCESS_TOKEN
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,7 +24,7 @@ class LocationDataSource @Inject constructor() {
   suspend fun resolveUserCity(location: Location): GeocodingResponse {
 
     val geocodingRequest = MapboxGeocoding.builder()
-      .accessToken(Constants.GEOCODER_ACCESS_TOKEN)
+      .accessToken(GEOCODER_ACCESS_TOKEN)
       .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
       .query(
         Point.fromLngLat(

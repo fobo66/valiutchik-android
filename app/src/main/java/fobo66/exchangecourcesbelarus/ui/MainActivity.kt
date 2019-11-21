@@ -43,8 +43,12 @@ import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter
 import fobo66.exchangecourcesbelarus.model.CurrencyRateService
-import fobo66.exchangecourcesbelarus.util.Constants
-import fobo66.exchangecourcesbelarus.util.Constants.EXTRA_BUYORSELL
+import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_ERROR
+import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_SUCCESS
+import fobo66.exchangecourcesbelarus.util.EXTRA_BESTCOURSES
+import fobo66.exchangecourcesbelarus.util.EXTRA_BUYORSELL
+import fobo66.exchangecourcesbelarus.util.INTERNET_PERMISSIONS_REQUEST
+import fobo66.exchangecourcesbelarus.util.LOCATION_PERMISSION_REQUEST
 
 class MainActivity : BaseActivity() {
   private lateinit var viewModel: MainViewModel
@@ -77,9 +81,11 @@ class MainActivity : BaseActivity() {
   override fun onStart() {
     super.onStart()
     buyOrSell = prefs.getBoolean(EXTRA_BUYORSELL, false)
-    googleApiClient.connect()
-    val intentFilter = IntentFilter(Constants.BROADCAST_ACTION_SUCCESS)
-    intentFilter.addAction(Constants.BROADCAST_ACTION_ERROR)
+    googleApiClient?.connect()
+
+    val intentFilter = IntentFilter(BROADCAST_ACTION_SUCCESS).apply {
+      addAction(BROADCAST_ACTION_ERROR)
+    }
     LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter)
   }
 
@@ -88,8 +94,8 @@ class MainActivity : BaseActivity() {
     prefs.edit {
       putBoolean(EXTRA_BUYORSELL, buyOrSell)
     }
-    if (googleApiClient.isConnected) {
-      googleApiClient.disconnect()
+    if (googleApiClient?.isConnected == true) {
+      googleApiClient?.disconnect()
     }
     LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
     bestCoursesReference.onDisconnect()
@@ -135,7 +141,7 @@ class MainActivity : BaseActivity() {
       buyOrSell = compoundButton.isChecked
       viewModel.updateBuySell(buyOrSell)
       bestCoursesAdapter.setBuyOrSell(buyOrSell)
-      if (googleApiClient.isConnected && userCity == null) {
+      if (googleApiClient?.isConnected == true && userCity == null) {
         resolveUserCity()
       } else {
         fetchCourses(false)
@@ -160,13 +166,13 @@ class MainActivity : BaseActivity() {
     grantResults: IntArray
   ) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    if (requestCode == Constants.LOCATION_PERMISSION_REQUEST) {
+    if (requestCode == LOCATION_PERMISSION_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         resolveUserCity()
       } else {
         hideRefreshSpinner()
       }
-    } else if (requestCode == Constants.INTERNET_PERMISSIONS_REQUEST) {
+    } else if (requestCode == INTERNET_PERMISSIONS_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         fetchCourses(true)
       } else {
@@ -175,7 +181,7 @@ class MainActivity : BaseActivity() {
     }
   }
 
-  override fun fetchCourses(forceReload: Boolean) {
+  override fun fetchCourses(force: Boolean) {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_NETWORK_STATE)
       != PackageManager.PERMISSION_GRANTED
       && ActivityCompat.checkSelfPermission(this, permission.INTERNET)
@@ -183,7 +189,7 @@ class MainActivity : BaseActivity() {
       ActivityCompat.requestPermissions(
         this,
         arrayOf(permission.ACCESS_NETWORK_STATE, permission.INTERNET),
-        Constants.INTERNET_PERMISSIONS_REQUEST
+        INTERNET_PERMISSIONS_REQUEST
       )
     } else {
       FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
@@ -197,9 +203,9 @@ class MainActivity : BaseActivity() {
 
   private fun setBuySellIndicator() {
     if (buyOrSell) {
-      binding.buysellIndicator.setText(R.string.sell)
-    } else {
       binding.buysellIndicator.setText(R.string.buy)
+    } else {
+      binding.buysellIndicator.setText(R.string.sell)
     }
   }
 
@@ -306,18 +312,17 @@ class MainActivity : BaseActivity() {
     receiver = object : BroadcastReceiver() {
       override fun onReceive(context: Context, intent: Intent) {
         val intentAction = intent.action
-        if (intentAction != null) {
-          if (intentAction == Constants.BROADCAST_ACTION_SUCCESS) {
+        when {
+          intentAction == BROADCAST_ACTION_SUCCESS -> {
             hideRefreshSpinner()
             val extra: List<BestCourse> =
-              intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES) ?: emptyList()
+              intent.getParcelableArrayListExtra(EXTRA_BESTCOURSES) ?: emptyList()
             bestCoursesAdapter.onDataUpdate(extra)
             bestCoursesReference.setValue(extra)
-          } else if (intentAction == Constants.BROADCAST_ACTION_ERROR) {
+          }
+          else -> {
             onDataError()
           }
-        } else {
-          onDataError()
         }
       }
     }

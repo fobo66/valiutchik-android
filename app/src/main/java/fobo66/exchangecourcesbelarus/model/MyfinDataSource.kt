@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
-import fobo66.exchangecourcesbelarus.util.Constants
+import fobo66.exchangecourcesbelarus.util.BASE_URL
 import fobo66.exchangecourcesbelarus.util.await
 import okhttp3.CacheControl
 import okhttp3.Credentials
@@ -22,7 +22,7 @@ interface CurrencyRatesDataSource {
  */
 class MyfinDataSource @Inject constructor(
   private val client: OkHttpClient,
-  private val baseUrl: String = Constants.BASE_URL
+  private val baseUrl: String = BASE_URL
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> = mapOf(

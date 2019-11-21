@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by fobo66 on 14.03.2017.
  */
 class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
-  override fun sanitize(list: MutableList<Currency>): List<Currency> {
+  override fun sanitize(list: MutableList<Currency>): MutableList<Currency> {
     val iterator = list.iterator()
     while (iterator.hasNext()) {
       val currency = iterator.next()
