@@ -131,20 +131,24 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
                   saveTimestamp()
                 }
               }
-              readCached()
+              tryReadCached()
             } else {
               sendError()
             }
           }
         })
       } else {
-        try {
-          readCached()
-        } catch (e: Exception) {
-          ExceptionHandler.handleException(e)
-          sendError()
-        }
+        tryReadCached()
       }
+    }
+  }
+
+  private fun tryReadCached() {
+    try {
+      readCached()
+    } catch (e: Exception) {
+      ExceptionHandler.handleException(e)
+      sendError()
     }
   }
 
