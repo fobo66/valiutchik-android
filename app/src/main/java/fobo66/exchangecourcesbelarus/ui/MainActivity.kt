@@ -183,7 +183,6 @@ class MainActivity : BaseActivity() {
       )
     } else {
       CurrencyRateService.fetchCourses(this, userCity, buyOrSell)
-      hideRefreshSpinner()
     }
   }
 
@@ -282,7 +281,7 @@ class MainActivity : BaseActivity() {
       Snackbar.make(binding.root, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
         .show()
       bestCoursesAdapter.onDataUpdate(previousBest)
-      binding.swipeRefresh.isRefreshing = false
+      hideRefreshSpinner()
     }
   }
 
@@ -306,6 +305,7 @@ class MainActivity : BaseActivity() {
         val intentAction = intent.action
         if (intentAction != null) {
           if (intentAction == Constants.BROADCAST_ACTION_SUCCESS) {
+            hideRefreshSpinner()
             val extra: List<BestCourse> =
               intent.getParcelableArrayListExtra(Constants.EXTRA_BESTCOURSES) ?: emptyList()
             bestCoursesAdapter.onDataUpdate(extra)
