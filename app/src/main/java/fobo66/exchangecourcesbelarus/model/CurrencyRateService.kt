@@ -137,12 +137,13 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
             }
           }
         })
-      }
-      try {
-        readCached()
-      } catch (e: Exception) {
-        ExceptionHandler.handleException(e)
-        sendError()
+      } else {
+        try {
+          readCached()
+        } catch (e: Exception) {
+          ExceptionHandler.handleException(e)
+          sendError()
+        }
       }
     }
   }

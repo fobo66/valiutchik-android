@@ -22,19 +22,19 @@ class CacheDataSource @Inject constructor(
 
   suspend fun writeToCache(dataStream: Source, cacheFileName: String = "data.xml") =
     withContext(ioDispatcher) {
-    File(cacheDirectory, cacheFileName).sink().buffer().use {
-      it.writeAll(dataStream)
+      File(cacheDirectory, cacheFileName).sink().buffer().use {
+        it.writeAll(dataStream)
+      }
     }
-  }
 
   suspend fun readCached(cacheFileName: String = "data.xml", block: FileInputStream.() -> Unit) =
     withContext(ioDispatcher) {
-    val cacheFile = File(cacheDirectory, cacheFileName)
+      val cacheFile = File(cacheDirectory, cacheFileName)
 
       if (cacheFile.exists() && cacheFile.length() > 0) {
         FileInputStream(cacheFile).use {
           block(it)
         }
+      }
     }
-  }
 }
