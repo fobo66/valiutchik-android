@@ -12,6 +12,10 @@ import okhttp3.Response
 import java.util.concurrent.TimeUnit.HOURS
 import javax.inject.Inject
 
+interface CurrencyRatesDataSource {
+  suspend fun loadExchangeRates(city: String): Response
+}
+
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/4/19.
@@ -19,7 +23,7 @@ import javax.inject.Inject
 class MyfinDataSource @Inject constructor(
   private val client: OkHttpClient,
   private val baseUrl: String = Constants.BASE_URL
-) {
+) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> = mapOf(
     "Минск" to "1",
@@ -30,7 +34,7 @@ class MyfinDataSource @Inject constructor(
     "Могилёв" to "6"
   )
 
-  suspend fun loadExchangeRates(city: String): Response {
+  override suspend fun loadExchangeRates(city: String): Response {
     val request = prepareRequest(resolveUrl(city))
 
     return client.newCall(request).await()
