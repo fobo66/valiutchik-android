@@ -22,6 +22,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,8 +55,6 @@ class MainActivity : BaseActivity() {
   private lateinit var viewModel: MainViewModel
   private lateinit var binding: ActivityMainBinding
 
-  var buyOrSell = false
-
   private lateinit var bestCoursesAdapter: BestCoursesAdapter
   private val previousBest: MutableList<BestCourse> = mutableListOf()
   private lateinit var receiver: BroadcastReceiver
@@ -75,12 +74,12 @@ class MainActivity : BaseActivity() {
     setupPlayServices()
     setupCoursesList()
     setupSwipeRefreshLayout()
-    setBuySellIndicator()
+    setupBuyOrSellObserver()
   }
 
   override fun onStart() {
     super.onStart()
-    buyOrSell = prefs.getBoolean(EXTRA_BUYORSELL, false)
+    viewModel.updateBuySell(prefs.getBoolean(EXTRA_BUYORSELL, false))
     googleApiClient?.connect()
 
     val intentFilter = IntentFilter(BROADCAST_ACTION_SUCCESS).apply {
@@ -92,7 +91,7 @@ class MainActivity : BaseActivity() {
   override fun onStop() {
     super.onStop()
     prefs.edit {
-      putBoolean(EXTRA_BUYORSELL, buyOrSell)
+      putBoolean(EXTRA_BUYORSELL, viewModel.buyOrSell.value == true)
     }
     if (googleApiClient?.isConnected == true) {
       googleApiClient?.disconnect()
@@ -134,23 +133,15 @@ class MainActivity : BaseActivity() {
     val item = menu.findItem(R.id.action_buysell)
     val rootView = item.actionView as RelativeLayout
     val control: SwitchCompat = rootView.findViewById(R.id.switchForActionBar)
-    control.isChecked = buyOrSell
-    setBuySellIndicator()
+    control.isChecked = viewModel.buyOrSell.value == true
+    setBuySellIndicator(control.isChecked)
     control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
       binding.swipeRefresh.isRefreshing = true
-      buyOrSell = compoundButton.isChecked
-      viewModel.updateBuySell(buyOrSell)
-      bestCoursesAdapter.setBuyOrSell(buyOrSell)
-      if (googleApiClient?.isConnected == true && userCity == null) {
-        resolveUserCity()
-      } else {
-        fetchCourses(false)
-      }
       val params = Bundle().apply {
-        putBoolean(FirebaseAnalytics.Param.VALUE, buyOrSell)
+        putBoolean(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked)
       }
       FirebaseAnalytics.getInstance(this).logEvent("buy_sell_switch_toggled", params)
-      setBuySellIndicator()
+      viewModel.updateBuySell(compoundButton.isChecked)
     }
     return true
   }
@@ -158,7 +149,7 @@ class MainActivity : BaseActivity() {
   public override fun onSaveInstanceState(savedInstanceState: Bundle) {
     super.onSaveInstanceState(savedInstanceState)
     savedInstanceState.putString(LOCATION_ADDRESS_KEY, userCity)
-    savedInstanceState.putBoolean(EXTRA_BUYORSELL, buyOrSell)
+    savedInstanceState.putBoolean(EXTRA_BUYORSELL, viewModel.buyOrSell.value == true)
   }
 
   override fun onRequestPermissionsResult(
@@ -193,7 +184,23 @@ class MainActivity : BaseActivity() {
       )
     } else {
       FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
-      CurrencyRateService.fetchCourses(this, userCity, buyOrSell)
+      CurrencyRateService.fetchCourses(
+        this,
+        userCity,
+        viewModel.buyOrSell.value == true
+      )
+    }
+  }
+
+  private fun setupBuyOrSellObserver() {
+    viewModel.buyOrSell.observe(this) {
+      bestCoursesAdapter.setBuyOrSell(it)
+      if (googleApiClient?.isConnected == true && userCity == null) {
+        resolveUserCity()
+      } else {
+        fetchCourses(false)
+      }
+      setBuySellIndicator(it)
     }
   }
 
@@ -201,7 +208,7 @@ class MainActivity : BaseActivity() {
     binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = false }
   }
 
-  private fun setBuySellIndicator() {
+  private fun setBuySellIndicator(buyOrSell: Boolean) {
     if (buyOrSell) {
       binding.buysellIndicator.setText(R.string.buy)
     } else {
@@ -281,7 +288,7 @@ class MainActivity : BaseActivity() {
   }
 
   private val bestCoursesReference: DatabaseReference
-    get() = if (buyOrSell) {
+    get() = if (viewModel.buyOrSell.value == true) {
       FirebaseDatabase.getInstance().getReference("bestcourse_buy")
     } else {
       FirebaseDatabase.getInstance().getReference("bestcourse_sell")
@@ -303,7 +310,7 @@ class MainActivity : BaseActivity() {
         userCity = savedInstanceState.getString(LOCATION_ADDRESS_KEY)
       }
       if (savedInstanceState.containsKey(EXTRA_BUYORSELL)) {
-        buyOrSell = savedInstanceState.getBoolean(EXTRA_BUYORSELL)
+        viewModel.updateBuySell(savedInstanceState.getBoolean(EXTRA_BUYORSELL))
       }
     }
   }
