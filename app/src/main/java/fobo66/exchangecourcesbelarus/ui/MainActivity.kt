@@ -20,7 +20,6 @@ import android.widget.CompoundButton
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
-import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -47,7 +46,6 @@ import fobo66.exchangecourcesbelarus.model.CurrencyRateService
 import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_ERROR
 import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_SUCCESS
 import fobo66.exchangecourcesbelarus.util.EXTRA_BESTCOURSES
-import fobo66.exchangecourcesbelarus.util.EXTRA_BUYORSELL
 import fobo66.exchangecourcesbelarus.util.INTERNET_PERMISSIONS_REQUEST
 import fobo66.exchangecourcesbelarus.util.LOCATION_PERMISSION_REQUEST
 
@@ -79,7 +77,7 @@ class MainActivity : BaseActivity() {
 
   override fun onStart() {
     super.onStart()
-    viewModel.updateBuySell(prefs.getBoolean(EXTRA_BUYORSELL, false))
+
     googleApiClient?.connect()
 
     val intentFilter = IntentFilter(BROADCAST_ACTION_SUCCESS).apply {
@@ -90,9 +88,7 @@ class MainActivity : BaseActivity() {
 
   override fun onStop() {
     super.onStop()
-    prefs.edit {
-      putBoolean(EXTRA_BUYORSELL, viewModel.buyOrSell.value == true)
-    }
+
     if (googleApiClient?.isConnected == true) {
       googleApiClient?.disconnect()
     }
@@ -116,7 +112,7 @@ class MainActivity : BaseActivity() {
         true
       }
       R.id.action_update -> {
-        binding.swipeRefresh.isRefreshing = true
+        showRefreshSpinner()
         fetchCourses(true)
         true
       }
@@ -136,7 +132,7 @@ class MainActivity : BaseActivity() {
     control.isChecked = viewModel.buyOrSell.value == true
     setBuySellIndicator(control.isChecked)
     control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
-      binding.swipeRefresh.isRefreshing = true
+      showRefreshSpinner()
       val params = Bundle().apply {
         putBoolean(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked)
       }
@@ -149,7 +145,6 @@ class MainActivity : BaseActivity() {
   public override fun onSaveInstanceState(savedInstanceState: Bundle) {
     super.onSaveInstanceState(savedInstanceState)
     savedInstanceState.putString(LOCATION_ADDRESS_KEY, userCity)
-    savedInstanceState.putBoolean(EXTRA_BUYORSELL, viewModel.buyOrSell.value == true)
   }
 
   override fun onRequestPermissionsResult(
@@ -204,6 +199,10 @@ class MainActivity : BaseActivity() {
     }
   }
 
+  private fun showRefreshSpinner() {
+    binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = true }
+  }
+
   private fun hideRefreshSpinner() {
     binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = false }
   }
@@ -225,7 +224,7 @@ class MainActivity : BaseActivity() {
       }
     }
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
-    binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = true }
+    showRefreshSpinner()
   }
 
   private fun setupPlayServices() {
@@ -308,9 +307,6 @@ class MainActivity : BaseActivity() {
     if (savedInstanceState != null) {
       if (savedInstanceState.containsKey(LOCATION_ADDRESS_KEY)) {
         userCity = savedInstanceState.getString(LOCATION_ADDRESS_KEY)
-      }
-      if (savedInstanceState.containsKey(EXTRA_BUYORSELL)) {
-        viewModel.updateBuySell(savedInstanceState.getBoolean(EXTRA_BUYORSELL))
       }
     }
   }
