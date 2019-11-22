@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.entities
 
-import fobo66.exchangecourcesbelarus.util.Constants
+import fobo66.exchangecourcesbelarus.util.USD
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -10,8 +10,8 @@ import org.junit.Test
  */
 class BestCourseTest {
 
-  private val bestBuyCourse = BestCourse("test", "1.925", Constants.USD, true)
-  private val bestSellCourse = BestCourse("test", "1.925", Constants.USD, false)
+  private val bestBuyCourse = BestCourse("test", "1.925", USD, true)
+  private val bestSellCourse = BestCourse("test", "1.925", USD, false)
 
   @Test
   fun toBuyRateCorrectConversion() {

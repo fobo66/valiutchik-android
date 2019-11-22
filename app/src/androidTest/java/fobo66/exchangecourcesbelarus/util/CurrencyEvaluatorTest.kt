@@ -31,42 +31,48 @@ class CurrencyEvaluatorTest {
   @Test
   @Throws(Exception::class)
   fun testBestUSDBuyCoursesAreReallyBest() {
-    assertEquals("USD", bestBuy[0].currencyName)
-    assertEquals("1.925", bestBuy[0].currencyValue)
+    assertEquals(USD, bestBuy[USD_INDEX].currencyName)
+    assertEquals("1.925", bestBuy[USD_INDEX].currencyValue)
   }
 
   @Test
   @Throws(Exception::class)
   fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals("RUR", bestBuy[2].currencyName)
-    assertEquals("0.0324", bestBuy[2].currencyValue)
+    assertEquals(RUR, bestBuy[RUR_INDEX].currencyName)
+    assertEquals("0.0324", bestBuy[RUR_INDEX].currencyValue)
   }
 
   @Test
   @Throws(Exception::class)
   fun testBestEURBuyCourseAreReallyBest() {
-    assertEquals("EUR", bestBuy[1].currencyName)
-    assertEquals("2.075", bestBuy[1].currencyValue)
+    assertEquals(EUR, bestBuy[EUR_INDEX].currencyName)
+    assertEquals("2.075", bestBuy[EUR_INDEX].currencyValue)
   }
 
   @Test
   @Throws(Exception::class)
   fun testBestUSDSellCoursesAreReallyBest() {
-    assertEquals("USD", bestSell[0].currencyName)
-    assertEquals("1.914", bestSell[0].currencyValue)
+    assertEquals(USD, bestSell[USD_INDEX].currencyName)
+    assertEquals("1.914", bestSell[USD_INDEX].currencyValue)
   }
 
   @Test
   @Throws(Exception::class)
   fun testBestRURSellCourseAreReallyBest() {
-    assertEquals("RUR", bestSell[2].currencyName)
-    assertEquals("0.0323", bestSell[2].currencyValue)
+    assertEquals(RUR, bestSell[RUR_INDEX].currencyName)
+    assertEquals("0.0323", bestSell[RUR_INDEX].currencyValue)
   }
 
   @Test
   @Throws(Exception::class)
   fun testBestEURSellCourseAreReallyBest() {
-    assertEquals("EUR", bestSell[1].currencyName)
-    assertEquals("2.038", bestSell[1].currencyValue)
+    assertEquals(EUR, bestSell[EUR_INDEX].currencyName)
+    assertEquals("2.038", bestSell[EUR_INDEX].currencyValue)
+  }
+
+  companion object {
+    const val USD_INDEX = 0
+    const val EUR_INDEX = 1
+    const val RUR_INDEX = 2
   }
 }

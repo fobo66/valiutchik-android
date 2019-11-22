@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
-import fobo66.exchangecourcesbelarus.util.Constants
+import fobo66.exchangecourcesbelarus.util.BASE_URL
 import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -78,7 +78,7 @@ class MyfinDataSourceTest {
 
   @Test
   fun myfinUrlProcessing() {
-    val myfinUrl = Constants.BASE_URL.toHttpUrl().newBuilder()
+    val myfinUrl = BASE_URL.toHttpUrl().newBuilder()
       .addPathSegment("1")
       .build()
     assertEquals(

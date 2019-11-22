@@ -4,9 +4,9 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.exchangecourcesbelarus.util.Constants.EUR
-import fobo66.exchangecourcesbelarus.util.Constants.RUR
-import fobo66.exchangecourcesbelarus.util.Constants.USD
+import fobo66.exchangecourcesbelarus.util.EUR
+import fobo66.exchangecourcesbelarus.util.RUR
+import fobo66.exchangecourcesbelarus.util.USD
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
