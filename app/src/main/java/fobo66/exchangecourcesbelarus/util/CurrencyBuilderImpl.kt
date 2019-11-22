@@ -7,8 +7,6 @@ import fobo66.exchangecourcesbelarus.entities.Currency
  * Created by fobo66 on 15.03.2017.
  */
 class CurrencyBuilderImpl : CurrencyBuilder {
-  private val currency: Currency
-
   private val currencyMap = mutableMapOf<String, String>()
 
   override fun with(fieldName: String, fieldValue: String): CurrencyBuilder {
@@ -23,12 +21,8 @@ class CurrencyBuilderImpl : CurrencyBuilder {
       currencyMap["usd_sell"].orEmpty(),
       currencyMap["eur_buy"].orEmpty(),
       currencyMap["eur_sell"].orEmpty(),
-      currencyMap["rur_sell"].orEmpty(),
-      currencyMap["rur_buy"].orEmpty()
+      currencyMap["rur_buy"].orEmpty(),
+      currencyMap["rur_sell"].orEmpty()
     )
-  }
-
-  init {
-    currency = Currency()
   }
 }

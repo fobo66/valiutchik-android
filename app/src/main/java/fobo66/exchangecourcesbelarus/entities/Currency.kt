@@ -11,6 +11,6 @@ data class Currency(
   val usdSell: String = "",
   val eurBuy: String = "",
   val eurSell: String = "",
-  val rurSell: String = "",
-  val rurBuy: String = ""
+  val rurBuy: String = "",
+  val rurSell: String = ""
 )
