@@ -103,16 +103,14 @@ class MainActivity : BaseActivity() {
     return true
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    val id = item.itemId
-    return when (id) {
+  override fun onOptionsItemSelected(item: MenuItem): Boolean =
+    when (item.itemId) {
       R.id.action_settings -> {
         val settingsIntent = Intent(this, SettingsActivity::class.java)
         startActivity(settingsIntent)
         true
       }
       R.id.action_update -> {
-        showRefreshSpinner()
         fetchCourses(true)
         true
       }
@@ -121,7 +119,6 @@ class MainActivity : BaseActivity() {
         true
       }
       else -> super.onOptionsItemSelected(item)
-    }
   }
 
   override fun onPrepareOptionsMenu(menu: Menu): Boolean {
@@ -148,7 +145,8 @@ class MainActivity : BaseActivity() {
   }
 
   override fun onRequestPermissionsResult(
-    requestCode: Int, permissions: Array<String>,
+    requestCode: Int,
+    permissions: Array<String>,
     grantResults: IntArray
   ) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -178,6 +176,7 @@ class MainActivity : BaseActivity() {
         INTERNET_PERMISSIONS_REQUEST
       )
     } else {
+      showRefreshSpinner()
       FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
       CurrencyRateService.fetchCourses(
         this,
@@ -224,7 +223,6 @@ class MainActivity : BaseActivity() {
       }
     }
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
-    showRefreshSpinner()
   }
 
   private fun setupPlayServices() {
