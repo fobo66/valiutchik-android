@@ -21,12 +21,12 @@ import javax.net.ssl.HttpsURLConnection
 class MyfinDataSourceTest {
 
   private lateinit var mockWebServer: MockWebServer
-  private lateinit var myfinDataSource: MyfinDataSource
+  private lateinit var dataSource: CurrencyRatesDataSource
 
   @Before
   fun setUp() {
     mockWebServer = MockWebServer()
-    myfinDataSource = MyfinDataSource(OkHttpClient(), mockWebServer.url("").toString())
+    dataSource = MyfinDataSource(OkHttpClient(), mockWebServer.url("").toString())
   }
 
   @After
@@ -39,7 +39,7 @@ class MyfinDataSourceTest {
     mockWebServer.enqueue(MockResponse())
 
     runBlocking {
-      val response = myfinDataSource.loadExchangeRates("Минск")
+      val response = dataSource.loadExchangeRates("Минск")
       assertTrue(response.isSuccessful)
     }
 
@@ -50,7 +50,7 @@ class MyfinDataSourceTest {
     mockWebServer.enqueue(MockResponse())
 
     runBlocking {
-      val response = myfinDataSource.loadExchangeRates("Могилёв")
+      val response = dataSource.loadExchangeRates("Могилёв")
       assertEquals("/6", response.request.url.encodedPath)
     }
 
@@ -61,7 +61,7 @@ class MyfinDataSourceTest {
     mockWebServer.enqueue(MockResponse())
 
     runBlocking {
-      val response = myfinDataSource.loadExchangeRates("test")
+      val response = dataSource.loadExchangeRates("test")
       assertEquals("/1", response.request.url.encodedPath)
     }
   }
@@ -71,7 +71,7 @@ class MyfinDataSourceTest {
     mockWebServer.enqueue(MockResponse().setResponseCode(HttpsURLConnection.HTTP_INTERNAL_ERROR))
 
     runBlocking {
-      val response = myfinDataSource.loadExchangeRates("Минск")
+      val response = dataSource.loadExchangeRates("Минск")
       assertFalse(response.isSuccessful)
     }
   }
