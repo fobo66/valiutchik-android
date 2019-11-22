@@ -23,8 +23,8 @@ class CurrencyBuilderImpl : CurrencyBuilder {
       currencyMap["usd_sell"].orEmpty(),
       currencyMap["eur_buy"].orEmpty(),
       currencyMap["eur_sell"].orEmpty(),
-      currencyMap["rur_buy"].orEmpty(),
-      currencyMap["rur_sell"].orEmpty()
+      currencyMap["rur_sell"].orEmpty(),
+      currencyMap["rur_buy"].orEmpty()
     )
   }
 
