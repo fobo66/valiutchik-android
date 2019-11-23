@@ -4,6 +4,7 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.EUR
 import fobo66.exchangecourcesbelarus.util.RUR
 import fobo66.exchangecourcesbelarus.util.USD
@@ -29,7 +30,8 @@ class PersistenceDataSourceTest {
     db = Room.inMemoryDatabaseBuilder(
       context, CurrencyRatesDatabase::class.java
     ).build()
-    persistenceDataSource = PersistenceDataSource(db)
+    persistenceDataSource =
+      PersistenceDataSource(db)
   }
 
   @After

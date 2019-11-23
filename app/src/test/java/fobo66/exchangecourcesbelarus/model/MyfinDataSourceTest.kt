@@ -1,5 +1,7 @@
 package fobo66.exchangecourcesbelarus.model
 
+import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
 import fobo66.exchangecourcesbelarus.util.BASE_URL
 import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -26,7 +28,10 @@ class MyfinDataSourceTest {
   @Before
   fun setUp() {
     mockWebServer = MockWebServer()
-    dataSource = MyfinDataSource(OkHttpClient(), mockWebServer.url("").toString())
+    dataSource = MyfinDataSource(
+      OkHttpClient(),
+      mockWebServer.url("").toString()
+    )
   }
 
   @After

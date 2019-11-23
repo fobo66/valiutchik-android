@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.exchangecourcesbelarus.model.datasource
 
 import fobo66.exchangecourcesbelarus.di.CacheDirectory
 import fobo66.exchangecourcesbelarus.di.Io

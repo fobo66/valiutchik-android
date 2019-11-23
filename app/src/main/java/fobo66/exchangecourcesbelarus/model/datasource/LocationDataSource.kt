@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.exchangecourcesbelarus.model.datasource
 
 import com.mapbox.api.geocoding.v5.GeocodingCriteria
 import com.mapbox.api.geocoding.v5.MapboxGeocoding

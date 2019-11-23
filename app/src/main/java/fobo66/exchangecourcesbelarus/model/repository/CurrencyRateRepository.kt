@@ -1,5 +1,8 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.exchangecourcesbelarus.model.repository
 
+import fobo66.exchangecourcesbelarus.model.CurrencyRatesParser
+import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import javax.inject.Inject
 

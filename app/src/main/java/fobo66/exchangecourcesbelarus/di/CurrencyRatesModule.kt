@@ -2,10 +2,10 @@ package fobo66.exchangecourcesbelarus.di
 
 import dagger.Binds
 import dagger.Module
-import fobo66.exchangecourcesbelarus.model.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.CurrencyRatesParser
-import fobo66.exchangecourcesbelarus.model.MyfinDataSource
 import fobo66.exchangecourcesbelarus.model.MyfinParser
+import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyListSanitizer
 import fobo66.exchangecourcesbelarus.util.CurrencyListSanitizerImpl
 

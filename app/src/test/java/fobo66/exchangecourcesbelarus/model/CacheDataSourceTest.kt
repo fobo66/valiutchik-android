@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
+import fobo66.exchangecourcesbelarus.model.datasource.CacheDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
@@ -30,7 +31,11 @@ class CacheDataSourceTest {
   @ObsoleteCoroutinesApi
   @Before
   fun setUp() {
-    cacheDataSource = CacheDataSource(temporaryFolder.root, ioDispatcher = ioDispatcher)
+    cacheDataSource =
+      CacheDataSource(
+        temporaryFolder.root,
+        ioDispatcher = ioDispatcher
+      )
   }
 
   @ObsoleteCoroutinesApi
