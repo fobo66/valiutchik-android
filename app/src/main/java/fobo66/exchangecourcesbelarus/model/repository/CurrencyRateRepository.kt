@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
+import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
 import fobo66.exchangecourcesbelarus.model.CurrencyRatesParser
 import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
@@ -15,4 +16,9 @@ class CurrencyRateRepository @Inject constructor(
   private val currencyEvaluator: CurrencyEvaluator,
   private val myfinDataSource: MyfinDataSource,
   private val persistenceDataSource: PersistenceDataSource
-)
+) {
+
+  fun loadExchangeRates(city: String): List<BestCurrencyRate> {
+    return emptyList()
+  }
+}
