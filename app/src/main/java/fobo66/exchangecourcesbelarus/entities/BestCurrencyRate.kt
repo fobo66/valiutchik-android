@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate.BestBuyRate
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate.BestSellRate
+import fobo66.exchangecourcesbelarus.util.CurrencyName
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -15,7 +16,7 @@ sealed class BestCurrencyRate {
   data class BestBuyRate(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "bank") val bank: String,
-    @ColumnInfo(name = "currency_name") val currencyName: String,
+    @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String,
     @ColumnInfo(name = "currency_value") val currencyValue: String
   ) : BestCurrencyRate()
 
@@ -23,7 +24,7 @@ sealed class BestCurrencyRate {
   data class BestSellRate(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "bank") val bank: String,
-    @ColumnInfo(name = "currency_name") val currencyName: String,
+    @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String,
     @ColumnInfo(name = "currency_value") val currencyValue: String
   ) : BestCurrencyRate()
 }

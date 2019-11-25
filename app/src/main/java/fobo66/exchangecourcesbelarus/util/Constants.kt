@@ -1,5 +1,8 @@
 package fobo66.exchangecourcesbelarus.util
 
+import androidx.annotation.StringDef
+import kotlin.annotation.AnnotationRetention.SOURCE
+
 /**
  * Constants used in project
  * Created by fobo66 on 09.08.2015.
@@ -24,3 +27,7 @@ const val EXTRA_CITY = "fobo66.exchangecourcesbelarus.extra.CITY"
 const val EXTRA_BESTCOURSES = "fobo66.exchangecourcesbelarus.extra.BESTCOURSES"
 const val EXTRA_BUYORSELL = "fobo66.exchangecourcesbelarus.extra.BUYORSELL"
 const val TIMESTAMP = "timestamp"
+
+@Retention(SOURCE)
+@StringDef(value = [USD, EUR, RUR])
+annotation class CurrencyName

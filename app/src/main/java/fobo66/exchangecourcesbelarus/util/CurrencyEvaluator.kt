@@ -86,7 +86,7 @@ class CurrencyEvaluator @Inject constructor(sanitizer: CurrencyListSanitizer) {
    * By default, USD value is returned
    * If I find the better way to do it, I'll rewrite it.
    */
-  private fun resolveCurrencyBuyValue(currency: Currency, name: String): String {
+  private fun resolveCurrencyBuyValue(currency: Currency, @CurrencyName name: String): String {
     return when (name) {
       EUR -> currency.eurBuy
       RUR -> currency.rurBuy
@@ -98,7 +98,7 @@ class CurrencyEvaluator @Inject constructor(sanitizer: CurrencyListSanitizer) {
   /**
    * See above.
    */
-  private fun resolveCurrencySellValue(currency: Currency, name: String): String {
+  private fun resolveCurrencySellValue(currency: Currency, @CurrencyName name: String): String {
     return when (name) {
       EUR -> currency.eurSell
       RUR -> currency.rurSell
