@@ -11,22 +11,27 @@ import fobo66.exchangecourcesbelarus.util.CurrencyName
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/17/19.
  */
-sealed class BestCurrencyRate {
+sealed class BestCurrencyRate(
+  open var id: Int,
+  open var bank: String,
+  @CurrencyName open var currencyName: String,
+  open var currencyValue: String
+) {
   @Entity(tableName = "best_buy_rates")
   data class BestBuyRate(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "bank") val bank: String,
-    @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String,
-    @ColumnInfo(name = "currency_value") val currencyValue: String
-  ) : BestCurrencyRate()
+    @PrimaryKey(autoGenerate = true) val buyId: Int,
+    @ColumnInfo(name = "buy_bank") override var bank: String,
+    @ColumnInfo(name = "buy_currency_name") @CurrencyName override var currencyName: String,
+    @ColumnInfo(name = "buy_currency_value") override var currencyValue: String
+  ) : BestCurrencyRate(buyId, bank, currencyName, currencyValue)
 
   @Entity(tableName = "best_sell_rates")
   data class BestSellRate(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "bank") val bank: String,
-    @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String,
-    @ColumnInfo(name = "currency_value") val currencyValue: String
-  ) : BestCurrencyRate()
+    @PrimaryKey(autoGenerate = true) val sellId: Int,
+    @ColumnInfo(name = "sell_bank") override var bank: String,
+    @ColumnInfo(name = "sell_currency_name") @CurrencyName override var currencyName: String,
+    @ColumnInfo(name = "sell_currency_value") override var currencyValue: String
+  ) : BestCurrencyRate(sellId, bank, currencyName, currencyValue)
 }
 
 fun BestCourse.toBestBuyRate(): BestBuyRate {

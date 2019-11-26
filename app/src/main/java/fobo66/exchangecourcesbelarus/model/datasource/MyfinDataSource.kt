@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.datasource
 
-import fobo66.exchangecourcesbelarus.util.BASE_URL
+import fobo66.exchangecourcesbelarus.di.BaseUrl
 import fobo66.exchangecourcesbelarus.util.await
 import okhttp3.CacheControl
 import okhttp3.Credentials
@@ -12,17 +12,13 @@ import okhttp3.Response
 import java.util.concurrent.TimeUnit.HOURS
 import javax.inject.Inject
 
-interface CurrencyRatesDataSource {
-  suspend fun loadExchangeRates(city: String): Response
-}
-
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/4/19.
  */
 class MyfinDataSource @Inject constructor(
   private val client: OkHttpClient,
-  private val baseUrl: String = BASE_URL
+  @BaseUrl private val baseUrl: String
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> = mapOf(

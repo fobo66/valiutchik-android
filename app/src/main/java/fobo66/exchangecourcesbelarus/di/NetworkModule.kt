@@ -6,11 +6,14 @@ import dagger.Module
 import dagger.Provides
 import fobo66.exchangecourcesbelarus.BuildConfig
 import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.util.BASE_URL
 import fobo66.exchangecourcesbelarus.util.CertificateManager
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Qualifier
 import javax.inject.Singleton
+import kotlin.annotation.AnnotationRetention.SOURCE
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -52,4 +55,12 @@ object NetworkModule {
 
     return loggingInterceptor
   }
+
+  @Provides
+  @BaseUrl
+  fun provideBaseUrl(): String = BASE_URL
 }
+
+@Qualifier
+@Retention(SOURCE)
+annotation class BaseUrl
