@@ -3,6 +3,7 @@ package fobo66.exchangecourcesbelarus.entities
 import android.os.Parcelable
 import com.google.firebase.database.IgnoreExtraProperties
 import fobo66.exchangecourcesbelarus.util.CurrencyName
+import fobo66.exchangecourcesbelarus.util.USD
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -14,6 +15,6 @@ import kotlinx.android.parcel.Parcelize
 data class BestCourse(
   val bank: String = "",
   val currencyValue: String = "",
-  @CurrencyName val currencyName: String = "",
+  @CurrencyName val currencyName: String = USD,
   val isBuy: Boolean = false
 ) : Parcelable
