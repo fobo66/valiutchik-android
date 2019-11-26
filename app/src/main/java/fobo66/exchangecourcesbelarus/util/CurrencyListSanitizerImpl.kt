@@ -20,13 +20,16 @@ class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
   }
 
   private fun isInvalidEntry(currency: Currency): Boolean {
-    return currency.eurBuy == EMPTY_COURSE ||
-        currency.eurSell == EMPTY_COURSE ||
-        currency.rurBuy == EMPTY_COURSE ||
-        currency.rurSell == EMPTY_COURSE ||
-        currency.usdBuy == EMPTY_COURSE ||
-        currency.usdSell == EMPTY_COURSE
+    return isCurrencyRateValueInvalid(currency.eurBuy) ||
+        isCurrencyRateValueInvalid(currency.eurSell) ||
+        isCurrencyRateValueInvalid(currency.rurBuy) ||
+        isCurrencyRateValueInvalid(currency.rurSell) ||
+        isCurrencyRateValueInvalid(currency.usdBuy) ||
+        isCurrencyRateValueInvalid(currency.usdSell)
   }
+
+  private fun isCurrencyRateValueInvalid(value: String) =
+    value.isEmpty() || value == EMPTY_COURSE
 
   companion object {
     private const val EMPTY_COURSE = "-"
