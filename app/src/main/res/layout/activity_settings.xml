@@ -12,10 +12,9 @@
         android:theme="@style/ExchangeCoursesTheme"
         app:elevation="4dp"
         app:popupTheme="@style/ExchangeCoursesTheme" />
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/settings_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
 </LinearLayout>

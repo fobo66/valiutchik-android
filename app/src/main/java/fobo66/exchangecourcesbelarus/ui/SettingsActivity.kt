@@ -19,9 +19,6 @@ class SettingsActivity : AppCompatActivity() {
       .commit()
   }
 
-  /**
-   * Set up the [android.app.ActionBar], if the API is available.
-   */
   private fun setupActionBar() {
     setSupportActionBar(binding.toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
