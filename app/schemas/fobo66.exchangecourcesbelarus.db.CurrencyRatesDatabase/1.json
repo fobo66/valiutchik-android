@@ -2,78 +2,52 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2cb2249e9eecf506d4b60fc440e36f60",
+    "identityHash": "ab37bfdb4757faa08d1041a5e0fab57c",
     "entities": [
       {
-        "tableName": "best_buy_rates",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`buyId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `buy_bank` TEXT NOT NULL, `buy_currency_name` TEXT NOT NULL, `buy_currency_value` TEXT NOT NULL)",
+        "tableName": "best_rates",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bank` TEXT NOT NULL, `currency_value` TEXT NOT NULL, `currency_name` TEXT NOT NULL, `timestamp` TEXT NOT NULL, `is_buy` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "buyId",
-            "columnName": "buyId",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "bank",
-            "columnName": "buy_bank",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "currencyName",
-            "columnName": "buy_currency_name",
+            "columnName": "bank",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "currencyValue",
-            "columnName": "buy_currency_value",
+            "columnName": "currency_value",
             "affinity": "TEXT",
             "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "buyId"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "best_sell_rates",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sellId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sell_bank` TEXT NOT NULL, `sell_currency_name` TEXT NOT NULL, `sell_currency_value` TEXT NOT NULL)",
-        "fields": [
+          },
           {
-            "fieldPath": "sellId",
-            "columnName": "sellId",
+            "fieldPath": "currencyName",
+            "columnName": "currency_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isBuy",
+            "columnName": "is_buy",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "bank",
-            "columnName": "sell_bank",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "currencyName",
-            "columnName": "sell_currency_name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "currencyValue",
-            "columnName": "sell_currency_value",
-            "affinity": "TEXT",
-            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "sellId"
+            "id"
           ],
           "autoGenerate": true
         },
@@ -84,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2cb2249e9eecf506d4b60fc440e36f60')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab37bfdb4757faa08d1041a5e0fab57c')"
     ]
   }
 }

@@ -10,8 +10,8 @@ import org.junit.Test
  */
 class BestCourseTest {
 
-  private val bestBuyCourse = BestCourse("test", "1.925", USD, true)
-  private val bestSellCourse = BestCourse("test", "1.925", USD, false)
+  private val bestBuyCourse = BestCourse("test", "1.925", USD, true, timestamp = "")
+  private val bestSellCourse = BestCourse("test", "1.925", USD, false, timestamp = "")
 
   @Test
   fun toBuyRateCorrectConversion() {

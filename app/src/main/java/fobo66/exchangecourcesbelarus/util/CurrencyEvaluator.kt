@@ -17,9 +17,9 @@ import javax.inject.Inject
  * (c) 2017 Andrey Mukamolov aka fobo66
  * Created by fobo66 on 05.02.2017.
  */
-class CurrencyEvaluator @Inject constructor(sanitizer: CurrencyListSanitizer) {
-  private val pattern: Pattern
-  private val sanitizer: CurrencyListSanitizer
+class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListSanitizer) {
+
+  private val pattern: Pattern = "([\"«])[^\"]*([\"»])".toPattern()
   private var comparatorsMap: MutableMap<String, CurrencyComparator> = mutableMapOf()
 
   fun findBestBuyCourses(tempSet: Set<Currency>): List<BestCourse> {
@@ -33,8 +33,12 @@ class CurrencyEvaluator @Inject constructor(sanitizer: CurrencyListSanitizer) {
       currency = workList[0]
       result.add(
         BestCourse(
+          0,
           escapeBankName(currency.bankname),
-          resolveCurrencyBuyValue(currency, currencyKey), currencyKey, BUY_COURSE
+          resolveCurrencyBuyValue(currency, currencyKey),
+          currencyKey,
+          "",
+          BUY_COURSE
         )
       )
     }
@@ -52,8 +56,12 @@ class CurrencyEvaluator @Inject constructor(sanitizer: CurrencyListSanitizer) {
       currency = workList[0]
       result.add(
         BestCourse(
+          0,
           escapeBankName(currency.bankname),
-          resolveCurrencySellValue(currency, currencyKey), currencyKey, SELL_COURSE
+          resolveCurrencySellValue(currency, currencyKey),
+          currencyKey,
+          "",
+          SELL_COURSE
         )
       )
     }
@@ -105,14 +113,5 @@ class CurrencyEvaluator @Inject constructor(sanitizer: CurrencyListSanitizer) {
       USD -> currency.usdSell
       else -> currency.usdSell
     }
-  }
-
-  companion object {
-    private const val regexpForEscapingBankName = "([\"«])[^\"]*([\"»])"
-  }
-
-  init {
-    pattern = Pattern.compile(regexpForEscapingBankName)
-    this.sanitizer = sanitizer
   }
 }

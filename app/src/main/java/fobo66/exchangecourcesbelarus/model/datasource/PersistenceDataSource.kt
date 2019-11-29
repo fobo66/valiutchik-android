@@ -2,8 +2,6 @@ package fobo66.exchangecourcesbelarus.model.datasource
 
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.exchangecourcesbelarus.entities.toBestBuyRate
-import fobo66.exchangecourcesbelarus.entities.toBestSellRate
 import javax.inject.Inject
 
 /**
@@ -15,12 +13,6 @@ class PersistenceDataSource @Inject constructor(
 ) {
 
   suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-    bestCourses.forEach {
-      if (it.isBuy) {
-        database.currencyRatesDao().insertBestBuyRate(it.toBestBuyRate())
-      } else {
-        database.currencyRatesDao().insertBestSellRate(it.toBestSellRate())
-      }
-    }
+    database.currencyRatesDao().insertBestCurrencyRates(*bestCourses.toTypedArray())
   }
 }

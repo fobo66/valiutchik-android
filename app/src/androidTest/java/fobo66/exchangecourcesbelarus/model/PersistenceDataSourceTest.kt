@@ -44,8 +44,8 @@ class PersistenceDataSourceTest {
   fun saveBestBuyCourses() {
 
     val bestCourses = listOf(
-      BestCourse("test", "1.925", USD, true),
-      BestCourse("test", "2.25", EUR, true)
+      BestCourse(0, "test", "1.925", USD, "", true),
+      BestCourse(0, "test", "2.25", EUR, "", true)
     )
 
     runBlocking {
@@ -53,7 +53,7 @@ class PersistenceDataSourceTest {
     }
 
     runBlocking {
-      val bestBuyRates = db.currencyRatesDao().loadBestBuyRates()
+      val bestBuyRates = db.currencyRatesDao().loadBestCurrencyRates()
       assertEquals(2, bestBuyRates.size)
     }
   }
@@ -62,8 +62,8 @@ class PersistenceDataSourceTest {
   fun saveBestSellCourses() {
 
     val bestCourses = listOf(
-      BestCourse("test", "1.925", USD, false),
-      BestCourse("test", "2.25", EUR, false)
+      BestCourse(0, "test", "1.925", USD, "", false),
+      BestCourse(0, "test", "2.25", EUR, "", false)
     )
 
     runBlocking {
@@ -71,7 +71,7 @@ class PersistenceDataSourceTest {
     }
 
     runBlocking {
-      val bestSellRates = db.currencyRatesDao().loadBestSellRates()
+      val bestSellRates = db.currencyRatesDao().loadBestCurrencyRates()
       assertEquals(2, bestSellRates.size)
     }
   }
@@ -80,9 +80,9 @@ class PersistenceDataSourceTest {
   fun saveMixedCourses() {
 
     val bestCourses = listOf(
-      BestCourse("test", "1.925", USD, true),
-      BestCourse("test", "2.25", EUR, true),
-      BestCourse("test", "0.0325", RUR, false)
+      BestCourse(0, "test", "1.925", USD, "", true),
+      BestCourse(0, "test", "2.25", EUR, "", true),
+      BestCourse(0, "test", "0.0325", RUR, "", false)
     )
 
     runBlocking {
@@ -90,10 +90,8 @@ class PersistenceDataSourceTest {
     }
 
     runBlocking {
-      val bestBuyRates = db.currencyRatesDao().loadBestBuyRates()
-      val bestSellRates = db.currencyRatesDao().loadBestSellRates()
-      assertEquals(2, bestBuyRates.size)
-      assertEquals(1, bestSellRates.size)
+      val bestRates = db.currencyRatesDao().loadBestCurrencyRates()
+      assertEquals(3, bestRates.size)
     }
   }
 }

@@ -1,6 +1,10 @@
 package fobo66.exchangecourcesbelarus.entities
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import fobo66.exchangecourcesbelarus.util.CurrencyName
 import fobo66.exchangecourcesbelarus.util.USD
@@ -12,9 +16,12 @@ import kotlinx.android.parcel.Parcelize
  */
 @IgnoreExtraProperties
 @Parcelize
+@Entity(tableName = "best_rates")
 data class BestCourse(
-  val bank: String = "",
-  val currencyValue: String = "",
-  @CurrencyName val currencyName: String = USD,
-  val isBuy: Boolean = false
+  @PrimaryKey(autoGenerate = true) @Exclude val id: Long,
+  @ColumnInfo(name = "bank") val bank: String = "",
+  @ColumnInfo(name = "currency_value") val currencyValue: String = "",
+  @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String = USD,
+  @ColumnInfo(name = "timestamp") val timestamp: String = "",
+  @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
 ) : Parcelable
