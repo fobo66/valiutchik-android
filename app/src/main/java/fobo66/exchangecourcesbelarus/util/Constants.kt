@@ -27,6 +27,7 @@ const val EXTRA_CITY = "fobo66.exchangecourcesbelarus.extra.CITY"
 const val EXTRA_BESTCOURSES = "fobo66.exchangecourcesbelarus.extra.BESTCOURSES"
 const val EXTRA_BUYORSELL = "fobo66.exchangecourcesbelarus.extra.BUYORSELL"
 const val TIMESTAMP = "timestamp"
+const val TIMESTAMP_NEW = "fobo66.exchangecourcesbelarus.TIMESTAMP"
 const val USER_CITY_KEY = "fobo66.exchangecourcesbelarus.USER_CITY"
 
 @Retention(SOURCE)

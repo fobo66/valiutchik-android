@@ -53,7 +53,7 @@ class PersistenceDataSourceTest {
     }
 
     runBlocking {
-      val bestBuyRates = db.currencyRatesDao().loadBestCurrencyRates()
+      val bestBuyRates = db.currencyRatesDao().loadAllBestCurrencyRates()
       assertEquals(2, bestBuyRates.size)
     }
   }
@@ -71,7 +71,7 @@ class PersistenceDataSourceTest {
     }
 
     runBlocking {
-      val bestSellRates = db.currencyRatesDao().loadBestCurrencyRates()
+      val bestSellRates = db.currencyRatesDao().loadAllBestCurrencyRates()
       assertEquals(2, bestSellRates.size)
     }
   }
@@ -90,7 +90,7 @@ class PersistenceDataSourceTest {
     }
 
     runBlocking {
-      val bestRates = db.currencyRatesDao().loadBestCurrencyRates()
+      val bestRates = db.currencyRatesDao().loadAllBestCurrencyRates()
       assertEquals(3, bestRates.size)
     }
   }

@@ -14,7 +14,10 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse
 interface CurrencyRatesDao {
 
   @Query("SELECT * FROM best_rates")
-  suspend fun loadBestCurrencyRates(): List<BestCourse>
+  suspend fun loadAllBestCurrencyRates(): List<BestCourse>
+
+  @Query("SELECT * FROM best_rates WHERE timestamp = :timestamp")
+  suspend fun loadBestCurrencyRates(timestamp: String): List<BestCourse>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertBestCurrencyRates(vararg bestRates: BestCourse)
