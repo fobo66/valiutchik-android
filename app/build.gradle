@@ -112,6 +112,9 @@ dependencies {
   //multidex
   implementation "androidx.multidex:multidex:2.0.1"
 
+  //threeten
+  implementation "com.jakewharton.threetenabp:threetenabp:1.2.1"
+
   //tests
   testImplementation "junit:junit:4.12"
   testImplementation "androidx.test:core:1.2.0"

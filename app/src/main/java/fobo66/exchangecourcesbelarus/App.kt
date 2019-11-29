@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus
 
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.database.FirebaseDatabase
+import com.jakewharton.threetenabp.AndroidThreeTen
 import fobo66.exchangecourcesbelarus.di.ApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerComponentProvider
@@ -20,6 +21,7 @@ class App : MultiDexApplication(), DaggerComponentProvider {
 
   override fun onCreate() {
     super.onCreate()
+    AndroidThreeTen.init(this)
     FirebaseDatabase.getInstance().setPersistenceEnabled(true)
   }
 }
