@@ -5,6 +5,7 @@ import fobo66.exchangecourcesbelarus.model.MyfinParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.threeten.bp.LocalDateTime
 import java.io.InputStream
 
 /**
@@ -17,6 +18,8 @@ class CurrencyEvaluatorTest {
   private lateinit var bestSell: List<BestCourse>
   private lateinit var testFile: InputStream
 
+  private val timestamp = LocalDateTime.now().toString()
+
   @Before
   @Throws(Exception::class)
   fun setUp() {
@@ -24,8 +27,8 @@ class CurrencyEvaluatorTest {
     testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
     val parser = MyfinParser()
     val currencyTempSet = parser.parse(testFile)
-    bestBuy = evaluator.findBestBuyCourses(currencyTempSet)
-    bestSell = evaluator.findBestSellCourses(currencyTempSet)
+    bestBuy = evaluator.findBestBuyCourses(currencyTempSet, timestamp)
+    bestSell = evaluator.findBestSellCourses(currencyTempSet, timestamp)
   }
 
   @Test

@@ -35,6 +35,7 @@ import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.threeten.bp.LocalDateTime
 import java.io.IOException
 import java.util.Locale
 import java.util.concurrent.TimeUnit.HOURS
@@ -176,12 +177,13 @@ class CurrencyRateService : JobIntentService(), LifecycleOwner {
 
   private fun readCached() = lifecycleScope.launch {
     cacheDataSource.readCached {
+      val timestamp = LocalDateTime.now().toString()
       val entries = parser.parse(this)
       val best =
         if (buyOrSell) {
-          currencyEvaluator.findBestBuyCourses(entries)
+          currencyEvaluator.findBestBuyCourses(entries, timestamp)
         } else {
-          currencyEvaluator.findBestSellCourses(entries)
+          currencyEvaluator.findBestSellCourses(entries, timestamp)
         }
       saveResult(best)
       sendResult(best)

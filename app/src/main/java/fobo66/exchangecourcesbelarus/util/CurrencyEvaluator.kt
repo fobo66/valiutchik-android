@@ -22,7 +22,10 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
   private val pattern: Pattern = "([\"«])[^\"]*([\"»])".toPattern()
   private var comparatorsMap: MutableMap<String, CurrencyComparator> = mutableMapOf()
 
-  fun findBestBuyCourses(tempSet: Set<Currency>): List<BestCourse> {
+  fun findBestBuyCourses(
+    tempSet: Set<Currency>,
+    timestamp: String
+  ): List<BestCourse> {
     val result: MutableList<BestCourse> = ArrayList()
     var currency: Currency
     var workList: MutableList<Currency> = ArrayList(tempSet)
@@ -37,7 +40,7 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
           escapeBankName(currency.bankname),
           resolveCurrencyBuyValue(currency, currencyKey),
           currencyKey,
-          "",
+          timestamp,
           BUY_COURSE
         )
       )
@@ -45,7 +48,10 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
     return result
   }
 
-  fun findBestSellCourses(tempSet: Set<Currency>): List<BestCourse> {
+  fun findBestSellCourses(
+    tempSet: Set<Currency>,
+    timestamp: String
+  ): List<BestCourse> {
     var currency: Currency
     val result: MutableList<BestCourse> = ArrayList()
     initializeSellComparators()
@@ -60,7 +66,7 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
           escapeBankName(currency.bankname),
           resolveCurrencySellValue(currency, currencyKey),
           currencyKey,
-          "",
+          timestamp,
           SELL_COURSE
         )
       )
