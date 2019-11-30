@@ -118,6 +118,7 @@ dependencies {
   //tests
   testImplementation "junit:junit:4.12"
   testImplementation "androidx.test:core:1.2.0"
+  testImplementation "io.mockk:mockk:1.9.3"
   testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
   testImplementation "androidx.room:room-testing:$room_version"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
