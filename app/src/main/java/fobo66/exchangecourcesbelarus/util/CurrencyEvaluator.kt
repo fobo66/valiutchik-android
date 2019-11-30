@@ -2,7 +2,6 @@ package fobo66.exchangecourcesbelarus.util
 
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.entities.Currency
-import fobo66.exchangecourcesbelarus.util.comparators.CurrencyComparator
 import fobo66.exchangecourcesbelarus.util.comparators.EurBuyComparator
 import fobo66.exchangecourcesbelarus.util.comparators.EurSellComparator
 import fobo66.exchangecourcesbelarus.util.comparators.RurBuyComparator
@@ -20,23 +19,21 @@ import javax.inject.Inject
 class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListSanitizer) {
 
   private val pattern: Pattern = "([\"«])[^\"]*([\"»])".toPattern()
-  private var comparatorsMap: MutableMap<String, CurrencyComparator> = mutableMapOf()
 
   fun findBestBuyCourses(
     tempSet: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = ArrayList()
-    var currency: Currency
     var workList: MutableList<Currency> = ArrayList(tempSet)
-    initializeBuyComparators()
+    val comparatorsMap = initializeBuyComparators()
     workList = sanitizer.sanitize(workList)
-    for (currencyKey in comparatorsMap.keys) {
+    comparatorsMap.keys.forEachIndexed { index, currencyKey ->
       Collections.sort(workList, comparatorsMap[currencyKey])
-      currency = workList[0]
+      val currency = workList.first()
       result.add(
         BestCourse(
-          0,
+          (index + 1).toLong(),
           escapeBankName(currency.bankname),
           resolveCurrencyBuyValue(currency, currencyKey),
           currencyKey,
@@ -52,17 +49,16 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
     tempSet: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
-    var currency: Currency
     val result: MutableList<BestCourse> = ArrayList()
-    initializeSellComparators()
+    val comparatorsMap = initializeSellComparators()
     var workList: MutableList<Currency> = ArrayList(tempSet)
     workList = sanitizer.sanitize(workList)
-    for (currencyKey in comparatorsMap.keys) {
+    comparatorsMap.keys.forEachIndexed { index, currencyKey ->
       Collections.sort(workList, Collections.reverseOrder(comparatorsMap[currencyKey]))
-      currency = workList[0]
+      val currency = workList.first()
       result.add(
         BestCourse(
-          0,
+          (index + 1).toLong(),
           escapeBankName(currency.bankname),
           resolveCurrencySellValue(currency, currencyKey),
           currencyKey,
@@ -74,21 +70,17 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
     return result
   }
 
-  private fun initializeBuyComparators() {
-    comparatorsMap = mutableMapOf(
+  private fun initializeBuyComparators() = mapOf(
       USD to UsdBuyComparator(),
       EUR to EurBuyComparator(),
       RUR to RurBuyComparator()
     )
-  }
 
-  private fun initializeSellComparators() {
-    comparatorsMap = mutableMapOf(
+  private fun initializeSellComparators() = mapOf(
       USD to UsdSellComparator(),
       EUR to EurSellComparator(),
       RUR to RurSellComparator()
     )
-  }
 
   private fun escapeBankName(bankName: String): String {
     val matcher = pattern.matcher(bankName)
