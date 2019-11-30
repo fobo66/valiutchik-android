@@ -46,11 +46,9 @@ class CurrencyRateRepository @Inject constructor(
           preferencesDataSource.saveString(TIMESTAMP_NEW, nowString)
           val currencies = parser.parse(it.byteStream())
 
-          val bestBuyCourses = currencyEvaluator.findBestBuyCourses(currencies, nowString)
-          val bestSellCourses = currencyEvaluator.findBestSellCourses(currencies, nowString)
-
-          val bestCourses =
-            mutableListOf(*bestBuyCourses.toTypedArray(), *bestSellCourses.toTypedArray())
+          val bestCourses = currencyEvaluator.findBestBuyCourses(currencies, nowString)
+            .toMutableList()
+          bestCourses.addAll(currencyEvaluator.findBestSellCourses(currencies, nowString))
 
           persistenceDataSource.saveBestCourses(bestCourses)
         }
