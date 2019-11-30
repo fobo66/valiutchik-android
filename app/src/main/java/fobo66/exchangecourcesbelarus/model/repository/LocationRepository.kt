@@ -27,5 +27,5 @@ class LocationRepository @Inject constructor(
     }
   }
 
-  private fun loadDefaultCity() = preferencesDataSource.loadSting(USER_CITY_KEY, "Минск")
+  private fun loadDefaultCity() = preferencesDataSource.loadSting("default_city", "Минск")
 }
