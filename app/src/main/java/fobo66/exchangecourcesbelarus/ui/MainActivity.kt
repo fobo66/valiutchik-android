@@ -1,10 +1,7 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build.VERSION
@@ -17,38 +14,32 @@ import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.widget.CompoundButton
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
+import androidx.core.location.component1
+import androidx.core.location.component2
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
-import com.google.android.gms.security.ProviderInstaller
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.di.injector
-import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.exchangecourcesbelarus.list.BestCoursesAdapter
-import fobo66.exchangecourcesbelarus.model.CurrencyRateService
-import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_ERROR
-import fobo66.exchangecourcesbelarus.util.BROADCAST_ACTION_SUCCESS
-import fobo66.exchangecourcesbelarus.util.EXTRA_BESTCOURSES
-import fobo66.exchangecourcesbelarus.util.INTERNET_PERMISSIONS_REQUEST
+import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import fobo66.exchangecourcesbelarus.util.LOCATION_PERMISSION_REQUEST
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
   private lateinit var viewModel: MainViewModel
   private lateinit var binding: ActivityMainBinding
 
-  private lateinit var bestCoursesAdapter: BestCoursesAdapter
-  private val previousBest: MutableList<BestCourse> = mutableListOf()
-  private lateinit var receiver: BroadcastReceiver
+  private lateinit var bestCoursesAdapter: BestCurrencyRatesAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,33 +49,10 @@ class MainActivity : BaseActivity() {
     viewModel =
       ViewModelProvider(this, injector.mainViewModelFactory()).get(MainViewModel::class.java)
 
-    updateValuesFromBundle(savedInstanceState)
-    constructBroadcastReceiver()
     setupLayout()
-    setupPlayServices()
     setupCoursesList()
     setupSwipeRefreshLayout()
     setupBuyOrSellObserver()
-  }
-
-  override fun onStart() {
-    super.onStart()
-
-    googleApiClient?.connect()
-
-    val intentFilter = IntentFilter(BROADCAST_ACTION_SUCCESS).apply {
-      addAction(BROADCAST_ACTION_ERROR)
-    }
-    LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter)
-  }
-
-  override fun onStop() {
-    super.onStop()
-
-    if (googleApiClient?.isConnected == true) {
-      googleApiClient?.disconnect()
-    }
-    LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -102,7 +70,7 @@ class MainActivity : BaseActivity() {
         true
       }
       R.id.action_update -> {
-        fetchCourses(true)
+        fetchCourses()
         true
       }
       R.id.action_about -> {
@@ -110,7 +78,7 @@ class MainActivity : BaseActivity() {
         true
       }
       else -> super.onOptionsItemSelected(item)
-  }
+    }
 
   override fun onPrepareOptionsMenu(menu: Menu): Boolean {
     super.onPrepareOptionsMenu(menu)
@@ -130,11 +98,6 @@ class MainActivity : BaseActivity() {
     return true
   }
 
-  public override fun onSaveInstanceState(savedInstanceState: Bundle) {
-    super.onSaveInstanceState(savedInstanceState)
-    savedInstanceState.putString(LOCATION_ADDRESS_KEY, userCity)
-  }
-
   override fun onRequestPermissionsResult(
     requestCode: Int,
     permissions: Array<String>,
@@ -143,48 +106,35 @@ class MainActivity : BaseActivity() {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     if (requestCode == LOCATION_PERMISSION_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        resolveUserCity()
-      } else {
-        hideRefreshSpinner()
-      }
-    } else if (requestCode == INTERNET_PERMISSIONS_REQUEST) {
-      if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        fetchCourses(true)
+        fetchCourses()
       } else {
         hideRefreshSpinner()
       }
     }
   }
 
-  override fun fetchCourses(force: Boolean) {
-    if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_NETWORK_STATE)
-      != PackageManager.PERMISSION_GRANTED
-      && ActivityCompat.checkSelfPermission(this, permission.INTERNET)
+  fun fetchCourses() {
+    if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED) {
       ActivityCompat.requestPermissions(
         this,
-        arrayOf(permission.ACCESS_NETWORK_STATE, permission.INTERNET),
-        INTERNET_PERMISSIONS_REQUEST
+        arrayOf(permission.ACCESS_COARSE_LOCATION),
+        LOCATION_PERMISSION_REQUEST
       )
     } else {
       showRefreshSpinner()
       FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
-      CurrencyRateService.fetchCourses(
-        this,
-        userCity,
-        viewModel.buyOrSell.value == true
-      )
+      val locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+      lifecycleScope.launch {
+        val (latitude, longitude) = locationProviderClient.lastLocation.await()
+        viewModel.loadExchangeRates(latitude, longitude)
+      }
     }
   }
 
   private fun setupBuyOrSellObserver() {
     viewModel.buyOrSell.observe(this) {
-      bestCoursesAdapter.setBuyOrSell(it)
-      if (googleApiClient?.isConnected == true && userCity == null) {
-        resolveUserCity()
-      } else {
-        fetchCourses(false)
-      }
+      fetchCourses()
       setBuySellIndicator(it)
     }
   }
@@ -198,41 +148,33 @@ class MainActivity : BaseActivity() {
   }
 
   private fun setBuySellIndicator(buyOrSell: Boolean) {
-    if (buyOrSell) {
-      binding.buysellIndicator.setText(R.string.buy)
-    } else {
-      binding.buysellIndicator.setText(R.string.sell)
-    }
+    binding.buysellIndicator.setText(
+      if (buyOrSell) {
+        R.string.buy
+      } else {
+        R.string.sell
+      }
+    )
   }
 
   private fun setupSwipeRefreshLayout() {
     binding.swipeRefresh.setOnRefreshListener {
-      if (userCity == null) {
-        resolveUserCity()
-      } else {
-        fetchCourses(false)
-      }
+      fetchCourses()
     }
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }
 
-  private fun setupPlayServices() {
-    try {
-      ProviderInstaller.installIfNeeded(this)
-    } catch (e: GooglePlayServicesRepairableException) {
-      GoogleApiAvailability.getInstance().showErrorNotification(this, e.connectionStatusCode)
-    } catch (e: GooglePlayServicesNotAvailableException) {
-      GoogleApiAvailability.getInstance().showErrorDialogFragment(this, e.errorCode, 0)
-    }
-  }
-
   private fun setupCoursesList() {
-    bestCoursesAdapter = BestCoursesAdapter(previousBest)
+    bestCoursesAdapter = BestCurrencyRatesAdapter()
     binding.coursesList.apply {
       layoutManager = LinearLayoutManager(context)
       itemAnimator = DefaultItemAnimator()
       adapter = bestCoursesAdapter
       setHasFixedSize(true)
+    }
+    viewModel.bestCurrencyRates.observe(this) {
+      bestCoursesAdapter.submitList(it)
+      hideRefreshSpinner()
     }
   }
 
@@ -260,36 +202,8 @@ class MainActivity : BaseActivity() {
     runOnUiThread {
       Snackbar.make(binding.root, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
         .show()
-      bestCoursesAdapter.onDataUpdate(previousBest)
       hideRefreshSpinner()
       FirebaseAnalytics.getInstance(this).logEvent("failed_to_load_exchange_rates", Bundle.EMPTY)
-    }
-  }
-
-  private fun updateValuesFromBundle(savedInstanceState: Bundle?) {
-    if (savedInstanceState != null) {
-      if (savedInstanceState.containsKey(LOCATION_ADDRESS_KEY)) {
-        userCity = savedInstanceState.getString(LOCATION_ADDRESS_KEY)
-      }
-    }
-  }
-
-  private fun constructBroadcastReceiver() {
-    receiver = object : BroadcastReceiver() {
-      override fun onReceive(context: Context, intent: Intent) {
-        val intentAction = intent.action
-        when {
-          intentAction == BROADCAST_ACTION_SUCCESS -> {
-            hideRefreshSpinner()
-            val extra: List<BestCourse> =
-              intent.getParcelableArrayListExtra(EXTRA_BESTCOURSES) ?: emptyList()
-            bestCoursesAdapter.onDataUpdate(extra)
-          }
-          else -> {
-            onDataError()
-          }
-        }
-      }
     }
   }
 
