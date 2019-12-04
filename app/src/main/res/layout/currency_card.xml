@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        cardview:cardCornerRadius="5dp"
+        cardview:cardCornerRadius="12dp"
         cardview:cardElevation="2sp"
         cardview:cardUseCompatPadding="true">
 
@@ -64,5 +64,5 @@
                 tools:text="Статусбанк (бывш. ОАО Евроторгинвестбанк) ффффффффффффффф" />
 
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
