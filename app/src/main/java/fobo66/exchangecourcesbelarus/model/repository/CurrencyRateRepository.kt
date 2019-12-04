@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.di.Io
 import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.exchangecourcesbelarus.entities.Currency
 import fobo66.exchangecourcesbelarus.model.CurrencyRatesParser
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
@@ -46,9 +47,7 @@ class CurrencyRateRepository @Inject constructor(
           preferencesDataSource.saveString(TIMESTAMP_NEW, nowString)
           val currencies = parser.parse(it.byteStream())
 
-          val bestCourses = currencyEvaluator.findBestBuyCourses(currencies, nowString)
-            .toMutableList()
-          bestCourses.addAll(currencyEvaluator.findBestSellCourses(currencies, nowString))
+          val bestCourses = findBestCourses(currencies, nowString)
 
           persistenceDataSource.saveBestCourses(bestCourses)
         }
@@ -56,6 +55,16 @@ class CurrencyRateRepository @Inject constructor(
     }
 
     return persistenceDataSource.loadBestCourses(timestamp.toString())
+  }
+
+  private fun findBestCourses(
+    currencies: Set<Currency>,
+    now: String
+  ): List<BestCourse> {
+    val bestCourses = mutableListOf<BestCourse>()
+    bestCourses.addAll(currencyEvaluator.findBestBuyCourses(currencies, now))
+    bestCourses.addAll(currencyEvaluator.findBestSellCourses(currencies, now))
+    return bestCourses
   }
 
   private fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {

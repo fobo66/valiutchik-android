@@ -58,7 +58,7 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
       val currency = workList.first()
       result.add(
         BestCourse(
-          (index + 1).toLong(),
+          (index + 4).toLong(),
           escapeBankName(currency.bankname),
           resolveCurrencySellValue(currency, currencyKey),
           currencyKey,
