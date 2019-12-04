@@ -25,7 +25,6 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
@@ -196,18 +195,5 @@ class MainActivity : AppCompatActivity() {
             SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
       }
     }
-  }
-
-  private fun onDataError() {
-    runOnUiThread {
-      Snackbar.make(binding.root, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
-        .show()
-      hideRefreshSpinner()
-      FirebaseAnalytics.getInstance(this).logEvent("failed_to_load_exchange_rates", Bundle.EMPTY)
-    }
-  }
-
-  companion object {
-    private const val TAG = "MainActivity"
   }
 }
