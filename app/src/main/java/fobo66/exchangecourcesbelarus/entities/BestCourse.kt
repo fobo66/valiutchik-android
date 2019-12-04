@@ -4,8 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.firebase.database.Exclude
-import com.google.firebase.database.IgnoreExtraProperties
 import fobo66.exchangecourcesbelarus.util.CurrencyName
 import fobo66.exchangecourcesbelarus.util.USD
 import kotlinx.android.parcel.Parcelize
@@ -14,11 +12,10 @@ import kotlinx.android.parcel.Parcelize
  * Model for best available exchange courses to put into cardview
  * Created by fobo66 on 23.08.2015.
  */
-@IgnoreExtraProperties
 @Parcelize
 @Entity(tableName = "best_rates")
 data class BestCourse(
-  @PrimaryKey(autoGenerate = true) @Exclude val id: Long,
+  @PrimaryKey(autoGenerate = true) val id: Long,
   @ColumnInfo(name = "bank") val bank: String = "",
   @ColumnInfo(name = "currency_value") val currencyValue: String = "",
   @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String = USD,

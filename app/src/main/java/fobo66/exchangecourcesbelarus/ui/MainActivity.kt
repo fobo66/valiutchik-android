@@ -10,7 +10,6 @@ import android.content.res.Configuration
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -31,12 +30,6 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.database.ValueEventListener
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.di.injector
@@ -67,7 +60,6 @@ class MainActivity : BaseActivity() {
 
     updateValuesFromBundle(savedInstanceState)
     constructBroadcastReceiver()
-    setupFirebaseReference()
     setupLayout()
     setupPlayServices()
     setupCoursesList()
@@ -93,7 +85,6 @@ class MainActivity : BaseActivity() {
       googleApiClient?.disconnect()
     }
     LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
-    bestCoursesReference.onDisconnect()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -265,32 +256,6 @@ class MainActivity : BaseActivity() {
     }
   }
 
-  private fun setupFirebaseReference() {
-    bestCoursesReference.keepSynced(false)
-    bestCoursesReference.addValueEventListener(object : ValueEventListener {
-      override fun onDataChange(dataSnapshot: DataSnapshot) {
-        val t: GenericTypeIndicator<List<BestCourse>> =
-          object : GenericTypeIndicator<List<BestCourse>>() {}
-        previousBest.clear()
-        previousBest.addAll(dataSnapshot.getValue(t)!!)
-      }
-
-      override fun onCancelled(databaseError: DatabaseError) {
-        Log.e(
-          TAG,
-          "onCancelled: Firebase failed: " + databaseError.details
-        )
-      }
-    })
-  }
-
-  private val bestCoursesReference: DatabaseReference
-    get() = if (viewModel.buyOrSell.value == true) {
-      FirebaseDatabase.getInstance().getReference("bestcourse_buy")
-    } else {
-      FirebaseDatabase.getInstance().getReference("bestcourse_sell")
-    }
-
   private fun onDataError() {
     runOnUiThread {
       Snackbar.make(binding.root, R.string.courses_unavailable_info, Snackbar.LENGTH_LONG)
@@ -319,7 +284,6 @@ class MainActivity : BaseActivity() {
             val extra: List<BestCourse> =
               intent.getParcelableArrayListExtra(EXTRA_BESTCOURSES) ?: emptyList()
             bestCoursesAdapter.onDataUpdate(extra)
-            bestCoursesReference.setValue(extra)
           }
           else -> {
             onDataError()
