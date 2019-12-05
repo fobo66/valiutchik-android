@@ -8,7 +8,6 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
-import fobo66.exchangecourcesbelarus.util.ExceptionHandler
 import fobo66.exchangecourcesbelarus.util.TIMESTAMP_NEW
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -39,7 +38,6 @@ class CurrencyRateRepository @Inject constructor(
       val currenciesResponse = try {
         currencyRatesDataSource.loadExchangeRates(city)
       } catch (e: Exception) {
-        ExceptionHandler.handleException(e)
         null
       }
 

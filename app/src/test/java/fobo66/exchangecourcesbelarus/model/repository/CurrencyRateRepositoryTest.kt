@@ -96,7 +96,7 @@ class CurrencyRateRepositoryTest {
   }
 
   @Test
-  fun loadExchangeRates() {
+  fun loadExchangeRates_stale_loadFromNetwork() {
     every {
       preferencesDataSource.loadSting(TIMESTAMP_NEW)
     } returns LocalDateTime.now().minusHours(4).toString()
@@ -107,6 +107,55 @@ class CurrencyRateRepositoryTest {
 
     coVerify {
       persistenceDataSource.saveBestCourses(any())
+    }
+  }
+
+  @Test
+  fun loadExchangeRates_error_loadFromDatabase() {
+    every {
+      preferencesDataSource.loadSting(TIMESTAMP_NEW)
+    } returns ""
+
+    coEvery {
+      currencyRatesDataSource.loadExchangeRates(any())
+    } throws Exception("test")
+
+    runBlocking {
+      currencyRateRepository.loadExchangeRates("Минск")
+    }
+
+    coVerify(inverse = true) {
+      persistenceDataSource.saveBestCourses(any())
+    }
+  }
+
+  @Test
+  fun loadExchangeRates_noSavedTimestamp_loadFromServer() {
+    every {
+      preferencesDataSource.loadSting(TIMESTAMP_NEW)
+    } returns ""
+
+    runBlocking {
+      currencyRateRepository.loadExchangeRates("Минск")
+    }
+
+    coVerify {
+      persistenceDataSource.saveBestCourses(any())
+    }
+  }
+
+  @Test
+  fun loadExchangeRates_notStale_loadFromDatabase() {
+    every {
+      preferencesDataSource.loadSting(TIMESTAMP_NEW)
+    } returns LocalDateTime.now().minusMinutes(42).toString()
+
+    runBlocking {
+      currencyRateRepository.loadExchangeRates("Минск")
+    }
+
+    coVerify(inverse = true) {
+      currencyRatesDataSource.loadExchangeRates(any())
     }
   }
 }
