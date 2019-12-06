@@ -79,5 +79,4 @@ class CurrencyRateRepository @Inject constructor(
 
   private fun needToUpdateCurrencyRates(cachedValueAge: Duration): Boolean =
     cachedValueAge == Duration.ZERO || cachedValueAge > maxStalePeriod
-
 }

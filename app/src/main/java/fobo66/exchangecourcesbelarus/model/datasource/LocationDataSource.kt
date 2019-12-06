@@ -69,7 +69,6 @@ private suspend fun MapboxGeocoding.await(): GeocodingResponse =
         if (continuation.isCancelled) return
         continuation.resumeWithException(t)
       }
-
     })
 
     continuation.invokeOnCancellation {

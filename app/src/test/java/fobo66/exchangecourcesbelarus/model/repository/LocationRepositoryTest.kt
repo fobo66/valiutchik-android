@@ -76,7 +76,7 @@ class LocationRepositoryTest {
 
     coEvery {
       locationDataSource.resolveUserCity(any())
-    }
+    } throws Exception("test")
 
     runBlocking {
       val city = locationRepository.resolveUserCity(0.0, 0.0)

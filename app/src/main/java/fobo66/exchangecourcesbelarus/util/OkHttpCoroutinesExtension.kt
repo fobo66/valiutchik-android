@@ -41,7 +41,7 @@ suspend fun Call.await(recordStack: Boolean = false): Response {
       try {
         cancel()
       } catch (ex: Throwable) {
-        //Ignore cancel exception
+        // Ignore cancel exception
       }
     }
   }

@@ -47,7 +47,6 @@ class MyfinDataSourceTest {
       val response = dataSource.loadExchangeRates("Минск")
       assertTrue(response.isSuccessful)
     }
-
   }
 
   @Test
@@ -58,7 +57,6 @@ class MyfinDataSourceTest {
       val response = dataSource.loadExchangeRates("Могилёв")
       assertEquals("/6", response.request.url.encodedPath)
     }
-
   }
 
   @Test
@@ -90,6 +88,5 @@ class MyfinDataSourceTest {
       "/outer/authXml/1", myfinUrl
         .encodedPath
     )
-
   }
 }
