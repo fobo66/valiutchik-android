@@ -62,11 +62,7 @@ class MyfinParser @Inject constructor() : CurrencyRatesParser {
       }
       fieldName = parser.name
       if (isTagNeeded(fieldName)) {
-        try {
-          currencyBuilder = currencyBuilder.with(fieldName, readTag(parser, fieldName))
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
+        currencyBuilder = currencyBuilder.with(fieldName, readTag(parser, fieldName))
       } else {
         skip(parser)
       }
