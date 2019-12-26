@@ -6,7 +6,7 @@
 /.idea/workspace.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
+build
 /captures
 *.jks
 *.iml
