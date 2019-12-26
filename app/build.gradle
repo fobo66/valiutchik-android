@@ -3,9 +3,8 @@ apply plugin: "io.fabric"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
-apply from: "https://gist.githubusercontent.com/fobo66/17d5116b5c7bccf5f28036f401f3c09d/raw/23dcd9e144a40da0f3140d788de8f7f541d11408/propertiesLoader.gradle"
 
-def keystoreProperties = loadProperties("keystore.properties")
+def keystoreProperties = PropertiesLoaderKt.loadProperties(rootProject.file("keystore.properties"))
 
 android {
   signingConfigs {
