@@ -15,4 +15,8 @@ class BestCurrencyRateDiffUtilItemCallback : DiffUtil.ItemCallback<BestCurrencyR
   override fun areContentsTheSame(oldItem: BestCurrencyRate, newItem: BestCurrencyRate): Boolean {
     return oldItem == newItem
   }
+
+  override fun getChangePayload(oldItem: BestCurrencyRate, newItem: BestCurrencyRate): Any? {
+    return Any()
+  }
 }
