@@ -24,7 +24,7 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
     tempSet: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
-    val result: MutableList<BestCourse> = ArrayList()
+    val result: MutableList<BestCourse> = mutableListOf()
     var workList: MutableList<Currency> = ArrayList(tempSet)
     val comparatorsMap = initializeBuyComparators()
     workList = sanitizer.sanitize(workList)
