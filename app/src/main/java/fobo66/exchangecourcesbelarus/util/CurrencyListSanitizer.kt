@@ -8,4 +8,5 @@ import fobo66.exchangecourcesbelarus.entities.Currency
  */
 interface CurrencyListSanitizer {
   fun sanitize(list: MutableList<Currency>): MutableList<Currency>
+  fun isInvalidEntry(currency: Currency): Boolean
 }

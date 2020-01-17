@@ -5,7 +5,7 @@ import fobo66.exchangecourcesbelarus.entities.Currency
 /**
  * Created by fobo66 on 31.03.2016.
  */
-class UsdBuyComparator : CurrencyComparator {
+class UsdBuyComparator : Comparator<Currency> {
   override fun compare(lhs: Currency, rhs: Currency): Int {
     return rhs.usdBuy.compareTo(lhs.usdBuy, ignoreCase = true)
   }

@@ -19,7 +19,7 @@ class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
     return list
   }
 
-  private fun isInvalidEntry(currency: Currency): Boolean {
+  override fun isInvalidEntry(currency: Currency): Boolean {
     return isCurrencyRateValueInvalid(currency.eurBuy) ||
         isCurrencyRateValueInvalid(currency.eurSell) ||
         isCurrencyRateValueInvalid(currency.rurBuy) ||

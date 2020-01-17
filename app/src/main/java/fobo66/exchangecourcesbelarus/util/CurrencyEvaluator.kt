@@ -25,9 +25,12 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
-    var workList: MutableList<Currency> = ArrayList(tempSet)
-    val comparatorsMap = initializeBuyComparators()
-    workList = sanitizer.sanitize(workList)
+
+    val workList: List<Currency> = ArrayList(tempSet)
+      .filter { !sanitizer.isInvalidEntry(it) }
+
+    val comparatorsMap: Map<String, Comparator<Currency>> = initializeBuyComparators()
+
     comparatorsMap.keys.forEachIndexed { index, currencyKey ->
       Collections.sort(workList, comparatorsMap[currencyKey])
       val currency = workList.first()
@@ -49,10 +52,11 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
     tempSet: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
-    val result: MutableList<BestCourse> = ArrayList()
+    val result: MutableList<BestCourse> = mutableListOf()
     val comparatorsMap = initializeSellComparators()
-    var workList: MutableList<Currency> = ArrayList(tempSet)
-    workList = sanitizer.sanitize(workList)
+    val workList: List<Currency> = ArrayList(tempSet)
+      .filter { !sanitizer.isInvalidEntry(it) }
+
     comparatorsMap.keys.forEachIndexed { index, currencyKey ->
       Collections.sort(workList, Collections.reverseOrder(comparatorsMap[currencyKey]))
       val currency = workList.first()
