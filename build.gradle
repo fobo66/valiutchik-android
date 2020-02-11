@@ -3,10 +3,10 @@
 buildscript {
   ext.kotlin_version = "1.3.61"
   ext.kotlin_coroutines_version = "1.3.2"
-  ext.okhttp_version = "4.2.2"
-  ext.dagger_version = "2.25.3"
+  ext.okhttp_version = "4.3.1"
+  ext.dagger_version = "2.26"
   ext.room_version = "2.2.3"
-  ext.lifecycle_version = "2.2.0-rc03"
+  ext.lifecycle_version = "2.2.0"
 
   repositories {
     jcenter()
@@ -17,7 +17,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:4.0.0-alpha08'
+    classpath "com.android.tools.build:gradle:4.0.0-alpha09"
     classpath "com.google.gms:google-services:4.3.3"
     classpath "io.fabric.tools:gradle:1.31.2"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
