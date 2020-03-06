@@ -11,11 +11,13 @@ import fobo66.exchangecourcesbelarus.util.comparators.UsdSellComparator
 import java.util.Collections
 import java.util.regex.Pattern
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * (c) 2017 Andrey Mukamolov aka fobo66
  * Created by fobo66 on 05.02.2017.
  */
+@Singleton
 class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListSanitizer) {
 
   private val pattern: Pattern = "([\"«])[^\"]*([\"»])".toPattern()
@@ -26,8 +28,9 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
 
-    val workList: List<Currency> = ArrayList(tempSet)
+    val workList: List<Currency> = tempSet.asSequence()
       .filter { !sanitizer.isInvalidEntry(it) }
+      .toList()
 
     val comparatorsMap: Map<String, Comparator<Currency>> = initializeBuyComparators()
 
@@ -54,8 +57,9 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
     val comparatorsMap = initializeSellComparators()
-    val workList: List<Currency> = ArrayList(tempSet)
+    val workList: List<Currency> = tempSet.asSequence()
       .filter { !sanitizer.isInvalidEntry(it) }
+      .toList()
 
     comparatorsMap.keys.forEachIndexed { index, currencyKey ->
       Collections.sort(workList, Collections.reverseOrder(comparatorsMap[currencyKey]))
