@@ -4,6 +4,7 @@ import android.Manifest.permission
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.Location
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
@@ -17,8 +18,6 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
-import androidx.core.location.component1
-import androidx.core.location.component2
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -125,8 +124,12 @@ class MainActivity : AppCompatActivity() {
       FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
       val locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
       lifecycleScope.launch {
-        val (latitude, longitude) = locationProviderClient.lastLocation.await()
-        viewModel.loadExchangeRates(latitude, longitude)
+        val location: Location? = locationProviderClient.lastLocation.await()
+        if (location != null) {
+          viewModel.loadExchangeRates(location.latitude, location.longitude)
+        } else {
+          viewModel.loadExchangeRates(0.0, 0.0)
+        }
       }
     }
   }
