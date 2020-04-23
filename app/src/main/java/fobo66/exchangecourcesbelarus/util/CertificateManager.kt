@@ -64,8 +64,8 @@ class CertificateManager @Inject constructor() {
   private fun newEmptyKeyStore(password: CharArray): KeyStore {
     return try {
       val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
-      val `in`: InputStream? = null // By convention, 'null' creates an empty key store.
-      keyStore.load(`in`, password)
+      val inputStream: InputStream? = null // By convention, 'null' creates an empty key store.
+      keyStore.load(inputStream, password)
       keyStore
     } catch (e: IOException) {
       throw AssertionError(e)
