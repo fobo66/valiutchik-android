@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-apply plugin: "io.fabric"
+apply plugin: "com.google.firebase.crashlytics"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
@@ -44,6 +44,9 @@ android {
     debug {
       minifyEnabled false
       proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+      firebaseCrashlytics {
+        mappingFileUploadEnabled false
+      }
     }
   }
   compileOptions {
@@ -98,7 +101,7 @@ dependencies {
 
   //firebase
   implementation "com.google.firebase:firebase-core:17.3.0"
-  implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
+  implementation "com.google.firebase:firebase-crashlytics:17.0.0-beta04"
 
   //room
   implementation "androidx.room:room-runtime:$room_version"

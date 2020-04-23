@@ -11,15 +11,11 @@ buildscript {
   repositories {
     jcenter()
     google()
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
-    maven {
-      url "https://maven.fabric.io/public"
-    }
   }
   dependencies {
     classpath "com.android.tools.build:gradle:4.0.0-beta04"
     classpath "com.google.gms:google-services:4.3.3"
-    classpath "io.fabric.tools:gradle:1.31.2"
+    classpath "com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta04"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
@@ -34,6 +30,5 @@ allprojects {
   repositories {
     jcenter()
     google()
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
   }
 }

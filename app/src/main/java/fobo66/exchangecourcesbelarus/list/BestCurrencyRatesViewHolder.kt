@@ -15,14 +15,14 @@ import com.google.firebase.analytics.FirebaseAnalytics.Param
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.CurrencyCardBinding
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
-import fobo66.exchangecourcesbelarus.util.ExceptionHandler
+import timber.log.Timber
 
 /**
  * (c) 2017 Andrey Mukamolov
  * Created 10/19/17.
  */
 class BestCurrencyRatesViewHolder(itemView: View) : ViewHolder(itemView), OnClickListener {
-  private val binding: CurrencyCardBinding
+  private val binding: CurrencyCardBinding = CurrencyCardBinding.bind(itemView)
 
   fun bind(item: BestCurrencyRate) {
     binding.currencyName.text = item.currencyName
@@ -38,7 +38,7 @@ class BestCurrencyRatesViewHolder(itemView: View) : ViewHolder(itemView), OnClic
       trackEvent()
       ActivityCompat.startActivity(view.context, mapIntent, null)
     } catch (e: ActivityNotFoundException) {
-      ExceptionHandler.handleException(e)
+      Timber.e(e, "Failed to show banks on map")
       Snackbar.make(itemView, R.string.maps_app_required, Snackbar.LENGTH_LONG).show()
     }
   }
@@ -55,7 +55,6 @@ class BestCurrencyRatesViewHolder(itemView: View) : ViewHolder(itemView), OnClic
   }
 
   init {
-    binding = CurrencyCardBinding.bind(itemView)
     binding.cv.setOnClickListener(this)
   }
 }

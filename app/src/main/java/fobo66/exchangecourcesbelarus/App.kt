@@ -5,6 +5,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import fobo66.exchangecourcesbelarus.di.ApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerComponentProvider
+import fobo66.exchangecourcesbelarus.util.CrashlyticsTree
 import timber.log.Timber
 
 /**
@@ -24,6 +25,8 @@ class App : MultiDexApplication(), DaggerComponentProvider {
     AndroidThreeTen.init(this)
     if (BuildConfig.DEBUG) {
       Timber.plant(Timber.DebugTree())
+    } else {
+      Timber.plant(CrashlyticsTree())
     }
   }
 }
