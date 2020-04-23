@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -38,6 +39,7 @@ class CurrencyRateRepository @Inject constructor(
       val currenciesResponse = try {
         currencyRatesDataSource.loadExchangeRates(city)
       } catch (e: Exception) {
+        Timber.e(e, "Failed to load exchange rates")
         null
       }
 

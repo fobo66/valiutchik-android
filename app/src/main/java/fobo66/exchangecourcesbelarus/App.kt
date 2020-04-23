@@ -5,6 +5,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import fobo66.exchangecourcesbelarus.di.ApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerComponentProvider
+import timber.log.Timber
 
 /**
  * (c) 2017 Andrey Mukamolov
@@ -21,5 +22,8 @@ class App : MultiDexApplication(), DaggerComponentProvider {
   override fun onCreate() {
     super.onCreate()
     AndroidThreeTen.init(this)
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
+    }
   }
 }
