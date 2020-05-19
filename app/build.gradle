@@ -76,9 +76,9 @@ dependencies {
 
   //androidx
   implementation "androidx.annotation:annotation:1.1.0"
-  implementation "androidx.activity:activity:1.2.0-alpha03"
+  implementation "androidx.activity:activity:1.2.0-alpha04"
   implementation "androidx.recyclerview:recyclerview:1.1.0"
-  implementation "androidx.fragment:fragment:1.3.0-alpha03"
+  implementation "androidx.fragment:fragment:1.3.0-alpha04"
   implementation "androidx.collection:collection:1.1.0"
   implementation "androidx.viewpager:viewpager:1.0.0"
   implementation "androidx.core:core:1.2.0"
@@ -100,8 +100,8 @@ dependencies {
   implementation "org.slf4j:slf4j-nop:1.7.30"
 
   //firebase
-  implementation "com.google.firebase:firebase-core:17.3.0"
-  implementation "com.google.firebase:firebase-crashlytics:17.0.0-beta04"
+  implementation "com.google.firebase:firebase-core:17.4.1"
+  implementation "com.google.firebase:firebase-crashlytics:17.0.0"
 
   //room
   implementation "androidx.room:room-runtime:$room_version"
@@ -115,7 +115,7 @@ dependencies {
   implementation "androidx.multidex:multidex:2.0.1"
 
   //threeten
-  implementation "com.jakewharton.threetenabp:threetenabp:1.2.3"
+  implementation "com.jakewharton.threetenabp:threetenabp:1.2.4"
 
   //timber
   implementation "com.jakewharton.timber:timber:4.7.1"
@@ -123,11 +123,11 @@ dependencies {
   //tests
   testImplementation "junit:junit:4.13"
   testImplementation "androidx.test:core:1.2.0"
-  testImplementation "io.mockk:mockk:1.9.3"
+  testImplementation "io.mockk:mockk:1.10.0"
   testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
   testImplementation "androidx.room:room-testing:$room_version"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
-  testImplementation "org.threeten:threetenbp:1.4.3"
+  testImplementation "org.threeten:threetenbp:1.4.4"
   androidTestImplementation "androidx.test:runner:1.2.0"
 
   //dagger
