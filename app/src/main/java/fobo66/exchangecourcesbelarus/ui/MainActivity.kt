@@ -15,6 +15,7 @@ import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.widget.CompoundButton
 import android.widget.RelativeLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
@@ -29,7 +30,6 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
-import fobo66.exchangecourcesbelarus.util.LOCATION_PERMISSION_REQUEST
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -38,6 +38,15 @@ class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
 
   private lateinit var bestCoursesAdapter: BestCurrencyRatesAdapter
+
+  private val requestPermission =
+    registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+      if (granted) {
+        fetchCourses()
+      } else {
+        hideRefreshSpinner()
+      }
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -96,29 +105,10 @@ class MainActivity : AppCompatActivity() {
     return true
   }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<String>,
-    grantResults: IntArray
-  ) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    if (requestCode == LOCATION_PERMISSION_REQUEST) {
-      if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        fetchCourses()
-      } else {
-        hideRefreshSpinner()
-      }
-    }
-  }
-
   fun fetchCourses() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(
-        this,
-        arrayOf(permission.ACCESS_COARSE_LOCATION),
-        LOCATION_PERMISSION_REQUEST
-      )
+      requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
       showRefreshSpinner()
       FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
