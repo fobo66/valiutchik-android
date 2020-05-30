@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
 import fobo66.exchangecourcesbelarus.entities.toBestCurrencyRate
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -18,15 +20,23 @@ class MainViewModel @Inject constructor(
     get() = _buyOrSell
   val bestCurrencyRates: LiveData<List<BestCurrencyRate>>
     get() = _bestCurrencyRates
+  val errors: LiveData<Throwable>
+    get() = _errors
 
   private val _buyOrSell = MutableLiveData(false)
   private val _bestCurrencyRates = MutableLiveData<List<BestCurrencyRate>>()
+  private val _errors = MutableLiveData<Throwable>()
+
+  private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    Timber.e(throwable, "Error happened when refreshing currency rates")
+    _errors.postValue(throwable)
+  }
 
   fun updateBuySell(buySell: Boolean) {
     _buyOrSell.postValue(buySell)
   }
 
-  fun loadExchangeRates(latitude: Double, longitude: Double) = viewModelScope.launch {
+  fun loadExchangeRates(latitude: Double, longitude: Double) = viewModelScope.launch(errorHandler) {
     val rates = loadExchangeRates.execute(latitude, longitude)
       .filter { it.isBuy == buyOrSell.value }
       .map { it.toBestCurrencyRate() }

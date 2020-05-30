@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus
 
 import androidx.multidex.MultiDexApplication
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import fobo66.exchangecourcesbelarus.di.ApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerApplicationComponent
@@ -26,7 +27,7 @@ class App : MultiDexApplication(), DaggerComponentProvider {
     if (BuildConfig.DEBUG) {
       Timber.plant(Timber.DebugTree())
     } else {
-      Timber.plant(CrashlyticsTree())
+      Timber.plant(CrashlyticsTree(FirebaseCrashlytics.getInstance()))
     }
   }
 }

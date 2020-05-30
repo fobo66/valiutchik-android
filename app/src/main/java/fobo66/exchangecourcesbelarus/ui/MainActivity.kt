@@ -25,6 +25,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
@@ -32,12 +33,17 @@ import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlin.LazyThreadSafetyMode.NONE
 
 class MainActivity : AppCompatActivity() {
   private lateinit var viewModel: MainViewModel
   private lateinit var binding: ActivityMainBinding
 
   private lateinit var bestCoursesAdapter: BestCurrencyRatesAdapter
+
+  private val errorSnackbar: Snackbar by lazy(mode = NONE) {
+    Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT)
+  }
 
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -105,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     return true
   }
 
-  fun fetchCourses() {
+  private fun fetchCourses() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED) {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
@@ -167,6 +173,9 @@ class MainActivity : AppCompatActivity() {
     viewModel.bestCurrencyRates.observe(this) {
       bestCoursesAdapter.submitList(it)
       hideRefreshSpinner()
+    }
+    viewModel.errors.observe(this) {
+      errorSnackbar.show()
     }
   }
 

@@ -6,9 +6,9 @@ import timber.log.Timber
 /**
  * Tree for reporting caught exceptions to Crashlytics
  */
-class CrashlyticsTree : Timber.Tree() {
+class CrashlyticsTree(private val crashlytics: FirebaseCrashlytics) : Timber.Tree() {
+
   override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-    val crashlytics = FirebaseCrashlytics.getInstance()
     if (t != null) {
       crashlytics.recordException(t)
     }
