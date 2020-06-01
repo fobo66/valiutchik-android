@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import dev.chrisbanes.insetter.applySystemWindowInsetsToMargin
+import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.di.injector
@@ -186,6 +188,10 @@ class MainActivity : AppCompatActivity() {
     setupLightNavigationBar()
 
     setSupportActionBar(binding.toolbar)
+
+    binding.toolbar.doOnApplyWindowInsets { view, _, _ ->
+      view.applySystemWindowInsetsToMargin(top = true)
+    }
   }
 
   private fun setupLightNavigationBar() {
