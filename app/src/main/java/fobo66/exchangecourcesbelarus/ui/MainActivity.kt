@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity() {
     Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT)
   }
 
+  private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
+  private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
+
+
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
       if (granted) {
@@ -101,7 +105,9 @@ class MainActivity : AppCompatActivity() {
     val rootView = item.actionView as RelativeLayout
     val control: SwitchCompat = rootView.findViewById(R.id.switchForActionBar)
     control.isChecked = viewModel.buyOrSell.value == true
+
     setBuySellIndicator(control.isChecked)
+
     control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
       showRefreshSpinner()
       val params = Bundle().apply {
@@ -140,11 +146,11 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showRefreshSpinner() {
-    binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = true }
+    binding.swipeRefresh.post(showRefreshSpinnerRunnable)
   }
 
   private fun hideRefreshSpinner() {
-    binding.swipeRefresh.post { binding.swipeRefresh.isRefreshing = false }
+    binding.swipeRefresh.post(hideRefreshSpinnerRunnable)
   }
 
   private fun setBuySellIndicator(buyOrSell: Boolean) {
