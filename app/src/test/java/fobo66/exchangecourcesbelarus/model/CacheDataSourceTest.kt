@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.model
 import fobo66.exchangecourcesbelarus.model.datasource.CacheDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import okio.source
 import org.junit.After
@@ -13,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import java.util.concurrent.Executors
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -23,8 +24,7 @@ class CacheDataSourceTest {
   @get:Rule
   val temporaryFolder = TemporaryFolder()
 
-  @ObsoleteCoroutinesApi
-  val ioDispatcher = newSingleThreadContext("IO")
+  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
   private lateinit var cacheDataSource: CacheDataSource
 

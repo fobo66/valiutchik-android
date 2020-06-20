@@ -6,13 +6,12 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
-import fobo66.exchangecourcesbelarus.util.TIMESTAMP_NEW
+import fobo66.exchangecourcesbelarus.util.TIMESTAMP
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Protocol.HTTP_1_1
@@ -23,12 +22,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
+import java.util.concurrent.Executors
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/30/19.
  */
-@ObsoleteCoroutinesApi
 class CurrencyRateRepositoryTest {
 
   private lateinit var currencyRateRepository: CurrencyRateRepository
@@ -39,7 +38,7 @@ class CurrencyRateRepositoryTest {
   private lateinit var preferencesDataSource: PreferencesDataSource
   private lateinit var currencyRatesDataSource: CurrencyRatesDataSource
 
-  private val ioDispatcher = newSingleThreadContext("IO")
+  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
   @Before
   fun setUp() {
@@ -95,14 +94,31 @@ class CurrencyRateRepositoryTest {
     ioDispatcher.close()
   }
 
+  private val now = LocalDateTime.now()
+
   @Test
-  fun loadExchangeRates_stale_loadFromNetwork() {
+  fun `load exchange rates from network when they are stale`() {
     every {
-      preferencesDataSource.loadSting(TIMESTAMP_NEW)
-    } returns LocalDateTime.now().minusHours(4).toString()
+      preferencesDataSource.loadSting(TIMESTAMP)
+    } returns now.minusHours(4).toString()
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск")
+      currencyRateRepository.loadExchangeRates("Минск", now)
+    }
+
+    coVerify {
+      persistenceDataSource.saveBestCourses(any())
+    }
+  }
+
+  @Test
+  fun `load exchange rates from database when they were just created`() {
+    every {
+      preferencesDataSource.loadSting(TIMESTAMP)
+    } returns now.toString()
+
+    runBlocking {
+      currencyRateRepository.loadExchangeRates("Минск", now)
     }
 
     coVerify {
@@ -113,7 +129,7 @@ class CurrencyRateRepositoryTest {
   @Test
   fun loadExchangeRates_error_loadFromDatabase() {
     every {
-      preferencesDataSource.loadSting(TIMESTAMP_NEW)
+      preferencesDataSource.loadSting(TIMESTAMP)
     } returns ""
 
     coEvery {
@@ -121,7 +137,7 @@ class CurrencyRateRepositoryTest {
     } throws Exception("test")
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск")
+      currencyRateRepository.loadExchangeRates("Минск", now)
     }
 
     coVerify(inverse = true) {
@@ -132,11 +148,11 @@ class CurrencyRateRepositoryTest {
   @Test
   fun loadExchangeRates_noSavedTimestamp_loadFromServer() {
     every {
-      preferencesDataSource.loadSting(TIMESTAMP_NEW)
+      preferencesDataSource.loadSting(TIMESTAMP)
     } returns ""
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск")
+      currencyRateRepository.loadExchangeRates("Минск", now)
     }
 
     coVerify {
@@ -147,11 +163,11 @@ class CurrencyRateRepositoryTest {
   @Test
   fun loadExchangeRates_notStale_loadFromDatabase() {
     every {
-      preferencesDataSource.loadSting(TIMESTAMP_NEW)
-    } returns LocalDateTime.now().minusMinutes(42).toString()
+      preferencesDataSource.loadSting(TIMESTAMP)
+    } returns now.minusMinutes(42).toString()
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск")
+      currencyRateRepository.loadExchangeRates("Минск", now)
     }
 
     coVerify(inverse = true) {

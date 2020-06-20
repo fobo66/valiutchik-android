@@ -8,7 +8,7 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
-import fobo66.exchangecourcesbelarus.util.TIMESTAMP_NEW
+import fobo66.exchangecourcesbelarus.util.TIMESTAMP
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.threeten.bp.Duration
@@ -31,8 +31,7 @@ class CurrencyRateRepository @Inject constructor(
 
   private val maxStalePeriod: Duration = Duration.ofHours(3)
 
-  suspend fun loadExchangeRates(city: String): List<BestCourse> {
-    val now = LocalDateTime.now()
+  suspend fun loadExchangeRates(city: String, now: LocalDateTime): List<BestCourse> {
     val timestamp = loadTimestamp(now)
 
     if (needToUpdateCurrencyRates(Duration.between(timestamp, now))) {
@@ -46,7 +45,7 @@ class CurrencyRateRepository @Inject constructor(
       currenciesResponse?.body?.let {
         withContext(ioDispatcher) {
           val nowString = now.toString()
-          preferencesDataSource.saveString(TIMESTAMP_NEW, nowString)
+          preferencesDataSource.saveString(TIMESTAMP, nowString)
           val currencies = parser.parse(it.byteStream())
 
           val bestCourses = findBestCourses(currencies, nowString)
@@ -70,7 +69,7 @@ class CurrencyRateRepository @Inject constructor(
   }
 
   private fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {
-    val rawTimestamp: String = preferencesDataSource.loadSting(TIMESTAMP_NEW)
+    val rawTimestamp: String = preferencesDataSource.loadSting(TIMESTAMP)
 
     return if (rawTimestamp.isEmpty()) {
       fallbackTimestamp

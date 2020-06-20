@@ -3,6 +3,7 @@ package fobo66.exchangecourcesbelarus.model
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.repository.LocationRepository
+import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
 interface LoadExchangeRates {
@@ -15,6 +16,6 @@ class LoadExchangeRatesImpl @Inject constructor(
 ) : LoadExchangeRates {
   override suspend fun execute(latitude: Double, longitude: Double): List<BestCourse> {
     val city = locationRepository.resolveUserCity(latitude, longitude)
-    return currencyRateRepository.loadExchangeRates(city)
+    return currencyRateRepository.loadExchangeRates(city, LocalDateTime.now())
   }
 }
