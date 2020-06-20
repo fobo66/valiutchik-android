@@ -5,8 +5,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
+import fobo66.exchangecourcesbelarus.util.BUY_COURSE
 import fobo66.exchangecourcesbelarus.util.EUR
 import fobo66.exchangecourcesbelarus.util.RUR
+import fobo66.exchangecourcesbelarus.util.SELL_COURSE
 import fobo66.exchangecourcesbelarus.util.USD
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -44,8 +46,8 @@ class PersistenceDataSourceTest {
   fun saveBestBuyCourses() {
 
     val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", true),
-      BestCourse(0, "test", "2.25", EUR, "", true)
+      BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+      BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE)
     )
 
     runBlocking {
@@ -62,8 +64,8 @@ class PersistenceDataSourceTest {
   fun saveBestSellCourses() {
 
     val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", false),
-      BestCourse(0, "test", "2.25", EUR, "", false)
+      BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
+      BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE)
     )
 
     runBlocking {
@@ -80,9 +82,9 @@ class PersistenceDataSourceTest {
   fun saveMixedCourses() {
 
     val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", true),
-      BestCourse(0, "test", "2.25", EUR, "", true),
-      BestCourse(0, "test", "0.0325", RUR, "", false)
+      BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+      BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+      BestCourse(0, "test", "0.0325", RUR, "", SELL_COURSE)
     )
 
     runBlocking {
