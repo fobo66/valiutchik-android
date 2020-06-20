@@ -31,7 +31,7 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
       val currency = workList.maxBy { resolveCurrencyBuyValue(it, currencyKey) } ?: workList.first()
       result.add(
         BestCourse(
-          (index + 1).toLong(),
+          0L,
           escapeBankName(currency.bankname),
           resolveCurrencyBuyValue(currency, currencyKey),
           currencyKey,
@@ -58,7 +58,7 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
         workList.minBy { resolveCurrencySellValue(it, currencyKey) } ?: workList.first()
       result.add(
         BestCourse(
-          (index + 4).toLong(),
+          0L,
           escapeBankName(currency.bankname),
           resolveCurrencySellValue(currency, currencyKey),
           currencyKey,
