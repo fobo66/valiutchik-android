@@ -9,15 +9,12 @@ import kotlin.annotation.AnnotationRetention.SOURCE
  */
 const val GEOCODER_ACCESS_TOKEN =
   "pk.eyJ1IjoiZm9ibzY2IiwiYSI6ImNqZHJvZ2k1OTBsZjMzM3BkNG0zanoyMGMifQ.g825XQ7bhGHwSW0cggrJcQ"
-const val TEMPLATE_URI = "https://admin.myfin.by/outer/authXml/%d"
 const val BASE_URL = "https://admin.myfin.by/outer/authXml"
 const val USD = "USD"
 const val EUR = "EUR"
 const val RUR = "RUR"
 const val BUY_COURSE = true
 const val SELL_COURSE = false
-const val LOCATION_PERMISSION_REQUEST = 746
-const val INTERNET_PERMISSIONS_REQUEST = 66
 const val BROADCAST_ACTION_SUCCESS =
   "fobo66.exchangecourcesbelarus.model.CurrencyRateService.SUCCESS"
 const val BROADCAST_ACTION_ERROR =
