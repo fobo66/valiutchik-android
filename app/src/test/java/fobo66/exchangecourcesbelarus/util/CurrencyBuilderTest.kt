@@ -14,19 +14,19 @@ class CurrencyBuilderTest {
   }
 
   @Test
-  fun fieldNameCorrect() {
+  fun `for correct field name value is present`() {
     val currency = currencyBuilder.with("bankname", "test").build()
     assertEquals("test", currency.bankname)
   }
 
   @Test
-  fun fieldNameIncorrect_empty() {
+  fun `for incorrect field name value is empty`() {
     val currency = currencyBuilder.with("test", "test").build()
     assertEquals("", currency.bankname)
   }
 
   @Test
-  fun fieldNameCorrect_rewrite() {
+  fun `value is rewritten if specified multiple times`() {
     val currency = currencyBuilder
       .with("bankname", "test")
       .with("bankname", "test2")

@@ -1,8 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
 import fobo66.exchangecourcesbelarus.model.datasource.CacheDataSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import okio.source
@@ -28,7 +26,6 @@ class CacheDataSourceTest {
 
   private lateinit var cacheDataSource: CacheDataSource
 
-  @ObsoleteCoroutinesApi
   @Before
   fun setUp() {
     cacheDataSource =
@@ -38,16 +35,13 @@ class CacheDataSourceTest {
       )
   }
 
-  @ObsoleteCoroutinesApi
   @After
   fun tearDown() {
     ioDispatcher.close()
   }
 
-  @ObsoleteCoroutinesApi
-  @ExperimentalCoroutinesApi
   @Test
-  fun writeToCache() {
+  fun `write to cache`() {
     val tempFile = temporaryFolder.newFile()
     tempFile.writeText("test")
 
@@ -60,7 +54,7 @@ class CacheDataSourceTest {
   }
 
   @Test
-  fun readCached() {
+  fun `read from cache`() {
     val tempFile = temporaryFolder.newFile("data.xml")
     tempFile.writeText("test")
 

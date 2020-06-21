@@ -127,7 +127,7 @@ class CurrencyRateRepositoryTest {
   }
 
   @Test
-  fun loadExchangeRates_error_loadFromDatabase() {
+  fun `load exchange rates from database when there was an error`() {
     every {
       preferencesDataSource.loadSting(TIMESTAMP)
     } returns ""
@@ -146,7 +146,7 @@ class CurrencyRateRepositoryTest {
   }
 
   @Test
-  fun loadExchangeRates_noSavedTimestamp_loadFromServer() {
+  fun `load exchange rates from network when they were not yet loaded`() {
     every {
       preferencesDataSource.loadSting(TIMESTAMP)
     } returns ""
@@ -161,7 +161,7 @@ class CurrencyRateRepositoryTest {
   }
 
   @Test
-  fun loadExchangeRates_notStale_loadFromDatabase() {
+  fun `load exchange rates from database when they are not stale`() {
     every {
       preferencesDataSource.loadSting(TIMESTAMP)
     } returns now.minusMinutes(42).toString()

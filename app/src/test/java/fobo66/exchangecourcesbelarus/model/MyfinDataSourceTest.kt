@@ -40,7 +40,7 @@ class MyfinDataSourceTest {
   }
 
   @Test
-  fun loadExchangeRates() {
+  fun `load exchange rates`() {
     mockWebServer.enqueue(MockResponse())
 
     runBlocking {
@@ -50,7 +50,7 @@ class MyfinDataSourceTest {
   }
 
   @Test
-  fun loadExchangeRates_correctCityUrl() {
+  fun `correct url for city`() {
     mockWebServer.enqueue(MockResponse())
 
     runBlocking {
@@ -60,7 +60,7 @@ class MyfinDataSourceTest {
   }
 
   @Test
-  fun loadExchangeRates_defaultCityWhenCityIsNotChecked() {
+  fun `default url for unknown city`() {
     mockWebServer.enqueue(MockResponse())
 
     runBlocking {
@@ -70,7 +70,7 @@ class MyfinDataSourceTest {
   }
 
   @Test
-  fun loadExchangeRates_error() {
+  fun `error while loading exchange rates`() {
     mockWebServer.enqueue(MockResponse().setResponseCode(HttpsURLConnection.HTTP_INTERNAL_ERROR))
 
     runBlocking {
@@ -80,7 +80,7 @@ class MyfinDataSourceTest {
   }
 
   @Test
-  fun myfinUrlProcessing() {
+  fun `myfin url processing is correct`() {
     val myfinUrl = BASE_URL.toHttpUrl().newBuilder()
       .addPathSegment("1")
       .build()

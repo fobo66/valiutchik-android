@@ -63,7 +63,7 @@ class LocationRepositoryTest {
   }
 
   @Test
-  fun resolveUserCity() {
+  fun `resolve user city`() {
 
     runBlocking {
       val city = locationRepository.resolveUserCity(0.0, 0.0)
@@ -72,7 +72,7 @@ class LocationRepositoryTest {
   }
 
   @Test
-  fun resolveUserCity_error_returnDefault() {
+  fun `return default city on error`() {
 
     coEvery {
       locationDataSource.resolveUserCity(any())
