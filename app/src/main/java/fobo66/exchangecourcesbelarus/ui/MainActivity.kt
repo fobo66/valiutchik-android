@@ -92,25 +92,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       else -> false
     }
 
-  private fun prepareMenu(menu: Menu): Boolean {
-    super.onPrepareOptionsMenu(menu)
-    val item = menu.findItem(R.id.action_buysell)
-    val control: SwitchCompat = item.actionView as SwitchCompat
-    control.isChecked = viewModel.buyOrSell.value == true
-
-    setBuySellIndicator(control.isChecked)
-
-    control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
-      showRefreshSpinner()
-      val params = Bundle().apply {
-        putBoolean(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked)
-      }
-      FirebaseAnalytics.getInstance(this).logEvent("buy_sell_switch_toggled", params)
-      viewModel.updateBuySell(compoundButton.isChecked)
-    }
-    return true
-  }
-
   private fun fetchCourses() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED) {
@@ -135,6 +116,25 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       fetchCourses()
       setBuySellIndicator(it)
     }
+  }
+
+  private fun prepareMenu(menu: Menu): Boolean {
+    super.onPrepareOptionsMenu(menu)
+    val item = menu.findItem(R.id.action_buysell)
+    val control: SwitchCompat = item.actionView as SwitchCompat
+    control.isChecked = viewModel.buyOrSell.value == true
+
+    setBuySellIndicator(control.isChecked)
+
+    control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
+      showRefreshSpinner()
+      val params = Bundle().apply {
+        putBoolean(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked)
+      }
+      FirebaseAnalytics.getInstance(this).logEvent("buy_sell_switch_toggled", params)
+      viewModel.updateBuySell(compoundButton.isChecked)
+    }
+    return true
   }
 
   private fun showRefreshSpinner() {
