@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.core.app.ActivityCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -29,8 +28,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.ViewState
-import dev.chrisbanes.insetter.applySystemWindowInsetsToMargin
+import dev.chrisbanes.insetter.Side
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.di.injector
@@ -190,9 +188,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     binding.toolbar.setOnMenuItemClickListener(this)
 
-    Insetter.builder().setOnApplyInsetsListener { view: View, _: WindowInsetsCompat, _: ViewState ->
-      view.applySystemWindowInsetsToMargin(top = true)
-    }.applyToView(binding.toolbar)
+    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.toolbar)
   }
 
   private fun setupLightNavigationBar() {
