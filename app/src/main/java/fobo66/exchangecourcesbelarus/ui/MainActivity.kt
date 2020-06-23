@@ -14,10 +14,10 @@ import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.widget.CompoundButton
-import android.widget.RelativeLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.LazyThreadSafetyMode.NONE
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   private lateinit var viewModel: MainViewModel
   private lateinit var binding: ActivityMainBinding
 
@@ -76,15 +76,8 @@ class MainActivity : AppCompatActivity() {
     setupBuyOrSellObserver()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.menu_main, menu)
-    val item = menu.findItem(R.id.action_buysell)
-    item.setActionView(R.layout.switch_actionbar)
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean =
-    when (item.itemId) {
+  override fun onMenuItemClick(item: MenuItem?): Boolean =
+    when (item?.itemId) {
       R.id.action_settings -> {
         val settingsIntent = Intent(this, SettingsActivity::class.java)
         startActivity(settingsIntent)
@@ -98,14 +91,13 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, AboutActivity::class.java))
         true
       }
-      else -> super.onOptionsItemSelected(item)
+      else -> false
     }
 
-  override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+  private fun prepareMenu(menu: Menu): Boolean {
     super.onPrepareOptionsMenu(menu)
     val item = menu.findItem(R.id.action_buysell)
-    val rootView = item.actionView as RelativeLayout
-    val control: SwitchCompat = rootView.findViewById(R.id.switchForActionBar)
+    val control: SwitchCompat = item.actionView as SwitchCompat
     control.isChecked = viewModel.buyOrSell.value == true
 
     setBuySellIndicator(control.isChecked)
@@ -194,8 +186,9 @@ class MainActivity : AppCompatActivity() {
         or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
 
     setupLightNavigationBar()
+    prepareMenu(binding.toolbar.menu)
 
-    setSupportActionBar(binding.toolbar)
+    binding.toolbar.setOnMenuItemClickListener(this)
 
     Insetter.builder().setOnApplyInsetsListener { view: View, _: WindowInsetsCompat, _: ViewState ->
       view.applySystemWindowInsetsToMargin(top = true)
