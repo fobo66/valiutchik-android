@@ -1,0 +1,36 @@
+package fobo66.exchangecourcesbelarus.model
+
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+
+class MyfinParserTest {
+
+  private lateinit var parser: CurrencyRatesParser
+
+  @Before
+  fun setUp() {
+    parser = MyfinParser()
+  }
+
+  @Test
+  fun singleCurrency() {
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("singleCurrency.xml")!!
+    val currencies = parser.parse(testFileStream)
+    assertEquals(1, currencies.size)
+  }
+
+  @Test
+  fun multipleCurrencies() {
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("multipleCurrencies.xml")!!
+    val currencies = parser.parse(testFileStream)
+    assertEquals(2, currencies.size)
+  }
+
+  @Test
+  fun sameCurrenciesFilteredOut() {
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("sameCurrencies.xml")!!
+    val currencies = parser.parse(testFileStream)
+    assertEquals(2, currencies.size)
+  }
+}
