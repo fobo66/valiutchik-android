@@ -13,11 +13,11 @@ class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
 
   override fun isInvalidEntry(currency: Currency): Boolean {
     return isCurrencyRateValueInvalid(currency.eurBuy) ||
-        isCurrencyRateValueInvalid(currency.eurSell) ||
-        isCurrencyRateValueInvalid(currency.rurBuy) ||
-        isCurrencyRateValueInvalid(currency.rurSell) ||
-        isCurrencyRateValueInvalid(currency.usdBuy) ||
-        isCurrencyRateValueInvalid(currency.usdSell)
+      isCurrencyRateValueInvalid(currency.eurSell) ||
+      isCurrencyRateValueInvalid(currency.rurBuy) ||
+      isCurrencyRateValueInvalid(currency.rurSell) ||
+      isCurrencyRateValueInvalid(currency.usdBuy) ||
+      isCurrencyRateValueInvalid(currency.usdSell)
   }
 
   private fun isCurrencyRateValueInvalid(value: String) =

@@ -181,9 +181,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
   private fun setupLayout() {
     binding.root.systemUiVisibility = (
-        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        )
+      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+      )
 
     setupLightNavigationBar()
     prepareMenu(binding.toolbar.menu)
@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
       if (Configuration.UI_MODE_NIGHT_YES != mode) {
         window.decorView.systemUiVisibility = FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or
-            SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+          SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
       }
     }
   }
