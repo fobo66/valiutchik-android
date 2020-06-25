@@ -3,6 +3,7 @@ package fobo66.exchangecourcesbelarus.model
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.xmlpull.v1.XmlPullParserException
 
 class MyfinParserTest {
 
@@ -32,5 +33,11 @@ class MyfinParserTest {
     val testFileStream = javaClass.classLoader?.getResourceAsStream("sameCurrencies.xml")!!
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
+  }
+
+  @Test(expected = XmlPullParserException::class)
+  fun errorForIncorrectXml() {
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("wrongData.xml")!!
+    parser.parse(testFileStream)
   }
 }
