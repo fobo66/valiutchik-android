@@ -11,7 +11,9 @@ import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
  * Created 11/26/19.
  */
 class BestCurrencyRatesAdapter :
-  ListAdapter<BestCurrencyRate, BestCurrencyRatesViewHolder>(BestCurrencyRateDiffUtilItemCallback()) {
+  ListAdapter<BestCurrencyRate, BestCurrencyRatesViewHolder>(
+    BestCurrencyRateDiffUtilItemCallback()
+  ) {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestCurrencyRatesViewHolder {
     val v =
       LayoutInflater.from(parent.context).inflate(layout.currency_card, parent, false)

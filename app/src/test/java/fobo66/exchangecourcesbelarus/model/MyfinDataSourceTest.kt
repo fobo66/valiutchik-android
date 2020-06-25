@@ -85,7 +85,8 @@ class MyfinDataSourceTest {
       .addPathSegment("1")
       .build()
     assertEquals(
-      "/outer/authXml/1", myfinUrl
+      "/outer/authXml/1",
+      myfinUrl
         .encodedPath
     )
   }

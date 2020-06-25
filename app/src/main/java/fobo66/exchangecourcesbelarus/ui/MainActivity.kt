@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
   private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
 
-
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
       if (granted) {
@@ -94,7 +93,8 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
   private fun fetchCourses() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
-      != PackageManager.PERMISSION_GRANTED) {
+      != PackageManager.PERMISSION_GRANTED
+    ) {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
       showRefreshSpinner()
@@ -180,8 +180,10 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   }
 
   private fun setupLayout() {
-    binding.root.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+    binding.root.systemUiVisibility = (
+        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        )
 
     setupLightNavigationBar()
     prepareMenu(binding.toolbar.menu)

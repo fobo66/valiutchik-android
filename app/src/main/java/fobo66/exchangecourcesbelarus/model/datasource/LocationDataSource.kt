@@ -53,7 +53,7 @@ private suspend fun MapboxGeocoding.await(): GeocodingResponse =
             val e =
               KotlinNullPointerException(
                 "Response from Mapbox was null but response body type " +
-                    "was declared as non-null"
+                  "was declared as non-null"
               )
             continuation.resumeWithException(e)
           } else {

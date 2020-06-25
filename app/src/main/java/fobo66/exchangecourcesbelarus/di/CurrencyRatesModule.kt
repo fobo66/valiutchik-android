@@ -19,14 +19,22 @@ import fobo66.exchangecourcesbelarus.util.CurrencyListSanitizerImpl
 abstract class CurrencyRatesModule {
 
   @Binds
-  abstract fun provideLoadExchangeRates(loadExchangeRatesImpl: LoadExchangeRatesImpl): LoadExchangeRates
+  abstract fun provideLoadExchangeRates(
+    loadExchangeRatesImpl: LoadExchangeRatesImpl
+  ): LoadExchangeRates
 
   @Binds
-  abstract fun provideCurrencyRatesParser(myfinParser: MyfinParser): CurrencyRatesParser
+  abstract fun provideCurrencyRatesParser(
+    myfinParser: MyfinParser
+  ): CurrencyRatesParser
 
   @Binds
-  abstract fun provideCurrencyRatesDataSource(myfinDataSource: MyfinDataSource): CurrencyRatesDataSource
+  abstract fun provideCurrencyRatesDataSource(
+    myfinDataSource: MyfinDataSource
+  ): CurrencyRatesDataSource
 
   @Binds
-  abstract fun provideSanitizer(currencyListSanitizerImpl: CurrencyListSanitizerImpl): CurrencyListSanitizer
+  abstract fun provideSanitizer(
+    currencyListSanitizerImpl: CurrencyListSanitizerImpl
+  ): CurrencyListSanitizer
 }

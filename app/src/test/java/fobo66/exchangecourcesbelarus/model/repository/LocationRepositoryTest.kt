@@ -48,7 +48,7 @@ class LocationRepositoryTest {
           "name": "Dinagat Islands"
         }
       }
-    """.trimIndent()
+      """.trimIndent()
     )
 
     every {

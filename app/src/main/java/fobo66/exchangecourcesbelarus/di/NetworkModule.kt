@@ -29,7 +29,9 @@ object NetworkModule {
     certificateManager: CertificateManager,
     loggingInterceptor: HttpLoggingInterceptor
   ): OkHttpClient {
-    certificateManager.createTrustManagerForCertificate(context.resources.openRawResource(R.raw.myfinbynew))
+    certificateManager.createTrustManagerForCertificate(
+      context.resources.openRawResource(R.raw.myfinbynew)
+    )
 
     return OkHttpClient.Builder().cache(Cache(context.cacheDir, 1024 * 1024 * 5))
       .addInterceptor(loggingInterceptor)
