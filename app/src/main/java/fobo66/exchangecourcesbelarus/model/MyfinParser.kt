@@ -18,48 +18,42 @@ import javax.inject.Inject
 class MyfinParser @Inject constructor() : CurrencyRatesParser {
   private val namespace: String? = null
   private val neededTagNames: List<String> = listOf(
-      "bankname", "usd_buy", "usd_sell", "eur_buy", "eur_sell", "rur_buy",
-      "rur_sell"
-    )
+    "bankname", "usd_buy", "usd_sell", "eur_buy", "eur_sell", "rur_buy",
+    "rur_sell"
+  )
 
   @Throws(XmlPullParserException::class, IOException::class)
   override fun parse(inputStream: InputStream): Set<Currency> {
-    val parser = Xml.newPullParser()
-    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
-    parser.setInput(inputStream, "utf-8")
-    parser.nextTag()
-    return readFeed(parser)
+    val parser = Xml.newPullParser().apply {
+      setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+      setInput(inputStream, "utf-8")
+      nextTag()
+    }
+    return readCurrencies(parser)
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readFeed(parser: XmlPullParser): Set<Currency> {
-    val entries = mutableSetOf<Currency>()
-    var entry: Currency
-    parser.require(XmlPullParser.START_TAG, namespace, "root")
-    while (parser.next() != XmlPullParser.END_TAG) {
-      if (parser.eventType != XmlPullParser.START_TAG) {
-        continue
-      }
-      val name = parser.name
-      if (name == "bank") {
-        entry = readEntry(parser)
-        entries.add(entry)
+  private fun readCurrencies(parser: XmlPullParser): Set<Currency> {
+    val currencies = mutableSetOf<Currency>()
+    var currency: Currency
+    parser.require(XmlPullParser.START_TAG, namespace, ROOT_TAG_NAME)
+    parser.read {
+      if (parser.name == ENTRY_TAG_NAME) {
+        currency = readCurrency(parser)
+        currencies.add(currency)
       } else {
         skip(parser)
       }
     }
-    return entries
+    return currencies
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readEntry(parser: XmlPullParser): Currency {
-    parser.require(XmlPullParser.START_TAG, namespace, "bank")
+  private fun readCurrency(parser: XmlPullParser): Currency {
+    parser.require(XmlPullParser.START_TAG, namespace, ENTRY_TAG_NAME)
     var fieldName: String
     var currencyBuilder: CurrencyBuilder = CurrencyBuilderImpl()
-    while (parser.next() != XmlPullParser.END_TAG) {
-      if (parser.eventType != XmlPullParser.START_TAG) {
-        continue
-      }
+    parser.read {
       fieldName = parser.name
       if (isTagNeeded(fieldName)) {
         currencyBuilder = currencyBuilder.with(fieldName, readTag(parser, fieldName))
@@ -102,5 +96,20 @@ class MyfinParser @Inject constructor() : CurrencyRatesParser {
         XmlPullParser.START_TAG -> depth++
       }
     }
+  }
+
+  private inline fun XmlPullParser.read(block: () -> Unit) {
+    while (next() != XmlPullParser.END_TAG) {
+      if (eventType != XmlPullParser.START_TAG) {
+        continue
+      }
+
+      block()
+    }
+  }
+
+  companion object {
+    const val ROOT_TAG_NAME = "root"
+    const val ENTRY_TAG_NAME = "bank"
   }
 }
