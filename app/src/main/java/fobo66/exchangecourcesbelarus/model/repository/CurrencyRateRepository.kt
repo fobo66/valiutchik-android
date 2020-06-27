@@ -11,9 +11,9 @@ import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import fobo66.exchangecourcesbelarus.util.TIMESTAMP
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalDateTime
 import timber.log.Timber
+import java.time.Duration
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 /**

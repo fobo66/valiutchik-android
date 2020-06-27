@@ -2,7 +2,6 @@ package fobo66.exchangecourcesbelarus
 
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.jakewharton.threetenabp.AndroidThreeTen
 import fobo66.exchangecourcesbelarus.di.ApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerApplicationComponent
 import fobo66.exchangecourcesbelarus.di.DaggerComponentProvider
@@ -23,7 +22,6 @@ class App : MultiDexApplication(), DaggerComponentProvider {
 
   override fun onCreate() {
     super.onCreate()
-    AndroidThreeTen.init(this)
     if (BuildConfig.DEBUG) {
       Timber.plant(Timber.DebugTree())
     } else {

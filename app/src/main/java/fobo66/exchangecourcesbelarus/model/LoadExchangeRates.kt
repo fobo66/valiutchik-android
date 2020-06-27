@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.model
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.repository.LocationRepository
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 interface LoadExchangeRates {

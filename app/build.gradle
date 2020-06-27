@@ -116,9 +116,6 @@ dependencies {
   //multidex
   implementation "androidx.multidex:multidex:2.0.1"
 
-  //threeten
-  implementation "com.jakewharton.threetenabp:threetenabp:1.2.4"
-
   //timber
   implementation "com.jakewharton.timber:timber:4.7.1"
 
@@ -137,7 +134,6 @@ dependencies {
   testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
   testImplementation "androidx.room:room-testing:$room_version"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
-  testImplementation "org.threeten:threetenbp:1.4.4"
   androidTestImplementation "androidx.test:runner:1.2.0"
 
   //dagger
