@@ -27,6 +27,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
 import fobo66.exchangecourcesbelarus.R
@@ -98,7 +101,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
       showRefreshSpinner()
-      FirebaseAnalytics.getInstance(this).logEvent("load_exchange_rates", Bundle.EMPTY)
+      Firebase.analytics.logEvent("load_exchange_rates", Bundle.EMPTY)
       val locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
       lifecycleScope.launch {
         val location: Location? = locationProviderClient.lastLocation.await()
@@ -128,10 +131,10 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
       showRefreshSpinner()
-      val params = Bundle().apply {
-        putBoolean(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked)
+
+      Firebase.analytics.logEvent("buy_sell_switch_toggled") {
+        param(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked.toString())
       }
-      FirebaseAnalytics.getInstance(this).logEvent("buy_sell_switch_toggled", params)
       viewModel.updateBuySell(compoundButton.isChecked)
     }
     return true

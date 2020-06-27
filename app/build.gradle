@@ -99,8 +99,9 @@ dependencies {
   implementation "org.slf4j:slf4j-nop:1.7.30"
 
   //firebase
-  implementation "com.google.firebase:firebase-core:17.4.3"
-  implementation "com.google.firebase:firebase-crashlytics:17.1.0"
+  implementation platform("com.google.firebase:firebase-bom:25.5.0")
+  implementation "com.google.firebase:firebase-analytics-ktx"
+  implementation "com.google.firebase:firebase-crashlytics"
 
   //room
   implementation "androidx.room:room-runtime:$room_version"
