@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import fobo66.exchangecourcesbelarus.R.layout
+import fobo66.exchangecourcesbelarus.databinding.CurrencyCardBinding
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
 
 /**
@@ -15,9 +15,8 @@ class BestCurrencyRatesAdapter :
     BestCurrencyRateDiffUtilItemCallback()
   ) {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestCurrencyRatesViewHolder {
-    val v =
-      LayoutInflater.from(parent.context).inflate(layout.currency_card, parent, false)
-    return BestCurrencyRatesViewHolder(v)
+    val binding = CurrencyCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    return BestCurrencyRatesViewHolder(binding)
   }
 
   override fun onBindViewHolder(holder: BestCurrencyRatesViewHolder, position: Int) {

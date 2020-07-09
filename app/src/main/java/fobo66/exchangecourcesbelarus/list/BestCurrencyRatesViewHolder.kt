@@ -21,8 +21,8 @@ import timber.log.Timber
  * (c) 2017 Andrey Mukamolov
  * Created 10/19/17.
  */
-class BestCurrencyRatesViewHolder(itemView: View) : ViewHolder(itemView), OnClickListener {
-  private val binding: CurrencyCardBinding = CurrencyCardBinding.bind(itemView)
+class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
+  ViewHolder(binding.root), OnClickListener {
 
   fun bind(item: BestCurrencyRate) {
     binding.currencyName.text = item.currencyName
