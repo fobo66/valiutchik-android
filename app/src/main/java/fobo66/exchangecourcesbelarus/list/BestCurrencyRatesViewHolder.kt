@@ -1,17 +1,17 @@
 package fobo66.exchangecourcesbelarus.list
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.CurrencyCardBinding
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
@@ -34,24 +34,22 @@ class BestCurrencyRatesViewHolder(itemView: View) : ViewHolder(itemView), OnClic
     val req =
       Uri.parse("geo:0,0?q=" + binding.bankName.text.toString().replace(" ".toRegex(), "+"))
     val mapIntent = Intent(Intent.ACTION_VIEW, req)
-    try {
+
+    if (mapIntent.resolveActivity(itemView.context.packageManager) != null) {
       trackEvent()
       ActivityCompat.startActivity(view.context, mapIntent, null)
-    } catch (e: ActivityNotFoundException) {
-      Timber.e(e, "Failed to show banks on map")
+    } else {
+      Timber.e("Failed to show banks on map: maps app not found")
       Snackbar.make(itemView, R.string.maps_app_required, Snackbar.LENGTH_LONG).show()
     }
   }
 
   private fun trackEvent() {
-    val params = Bundle().apply {
-      putString(Param.CURRENCY, binding.currencyName.text.toString())
+    Firebase.analytics.logEvent(
+      Event.VIEW_ITEM
+    ) {
+      param(Param.CURRENCY, binding.currencyName.text.toString())
     }
-
-    FirebaseAnalytics.getInstance(itemView.context).logEvent(
-      Event.VIEW_ITEM,
-      params
-    )
   }
 
   init {
