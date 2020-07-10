@@ -1,10 +1,14 @@
 package fobo66.exchangecourcesbelarus.list
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.View.OnLongClickListener
 import androidx.core.app.ActivityCompat
+import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics.Event
@@ -22,7 +26,12 @@ import timber.log.Timber
  * Created 10/19/17.
  */
 class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
-  ViewHolder(binding.root), OnClickListener {
+  ViewHolder(binding.root), OnClickListener, OnLongClickListener {
+
+  init {
+    binding.cv.setOnClickListener(this)
+    binding.cv.setOnLongClickListener(this)
+  }
 
   fun bind(item: BestCurrencyRate) {
     binding.currencyName.text = item.currencyName
@@ -44,15 +53,19 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
     }
   }
 
+  override fun onLongClick(view: View): Boolean {
+    val clipData = ClipData.newPlainText(binding.currencyName.text, binding.currencyValue.text)
+    val clipboardManager: ClipboardManager? = itemView.context.getSystemService()
+    clipboardManager?.setPrimaryClip(clipData)
+    Snackbar.make(itemView, R.string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
+    return true
+  }
+
   private fun trackEvent() {
     Firebase.analytics.logEvent(
       Event.VIEW_ITEM
     ) {
       param(Param.CURRENCY, binding.currencyName.text.toString())
     }
-  }
-
-  init {
-    binding.cv.setOnClickListener(this)
   }
 }

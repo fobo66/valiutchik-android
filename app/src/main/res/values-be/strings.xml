@@ -28,5 +28,6 @@
     <string name="pref_title_default_city">Горад па змаўчанні</string>
   <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
   <string name="get_data_error">Немагчыма аднавіць дадзеныя</string>
+  <string name="currency_value_copied">Курс валюты быў скапіраваны ў буфер абмену</string>
 
 </resources>
