@@ -21,19 +21,23 @@ import kotlin.coroutines.resumeWithException
  */
 class LocationDataSource @Inject constructor() {
 
-  suspend fun resolveUserCity(location: Location): GeocodingResponse {
-
-    val geocodingRequest = MapboxGeocoding.builder()
+  private val geocodingRequestTemplate: MapboxGeocoding.Builder by lazy {
+    MapboxGeocoding.builder()
       .accessToken(GEOCODER_ACCESS_TOKEN)
       .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
+      .languages("ru-RU")
+      .country("by")
+  }
+
+  suspend fun resolveUserCity(location: Location): GeocodingResponse {
+
+    val geocodingRequest = geocodingRequestTemplate
       .query(
         Point.fromLngLat(
           location.longitude,
           location.latitude
         )
       )
-      .languages("ru-RU")
-      .country("by")
       .build()
 
     return geocodingRequest.await()
