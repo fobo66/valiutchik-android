@@ -35,9 +35,8 @@ class CertificateManager @Inject constructor() {
     // Put the certificates a key store.
     val password = "password".toCharArray() // Any password will work.
     val keyStore = newEmptyKeyStore(password)
-    var index = 0
-    for (certificate in certificates) {
-      val certificateAlias = Integer.toString(index++)
+    for ((index, certificate) in certificates.withIndex()) {
+      val certificateAlias = (index).toString()
       keyStore.setCertificateEntry(certificateAlias, certificate)
     }
     // Use it to build an X509 trust manager.

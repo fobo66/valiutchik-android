@@ -10,7 +10,7 @@ class CurrencyBuilderImpl : CurrencyBuilder {
   private val currencyMap = mutableMapOf<String, String>()
 
   override fun with(fieldName: String, fieldValue: String): CurrencyBuilder {
-    currencyMap.put(fieldName, fieldValue)
+    currencyMap[fieldName] = fieldValue
     return this
   }
 
