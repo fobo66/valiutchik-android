@@ -3,22 +3,17 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.location.Location
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.widget.CompoundButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.core.app.ActivityCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -183,27 +178,12 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   }
 
   private fun setupLayout() {
-    binding.root.systemUiVisibility = (
-      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-      )
+    WindowCompat.setDecorFitsSystemWindows(window, false)
 
-    setupLightNavigationBar()
     prepareMenu(binding.toolbar.menu)
 
     binding.toolbar.setOnMenuItemClickListener(this)
 
     Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.toolbar)
-  }
-
-  private fun setupLightNavigationBar() {
-    if (VERSION.SDK_INT >= VERSION_CODES.O) {
-      val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-
-      if (Configuration.UI_MODE_NIGHT_YES != mode) {
-        window.decorView.systemUiVisibility = FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or
-          SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-      }
-    }
   }
 }
