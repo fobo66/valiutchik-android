@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus.model.datasource
 
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -18,4 +19,7 @@ class PersistenceDataSource @Inject constructor(
 
   suspend fun loadBestCourses(timestamp: String): List<BestCourse> =
     database.currencyRatesDao().loadBestCurrencyRates(timestamp)
+
+  fun readBestCourses(isBuy: Boolean): Flow<List<BestCourse>> =
+    database.currencyRatesDao().loadLatestBestCurrencyRates(isBuy)
 }

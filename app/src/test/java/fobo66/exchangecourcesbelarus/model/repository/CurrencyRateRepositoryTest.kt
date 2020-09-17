@@ -103,7 +103,7 @@ class CurrencyRateRepositoryTest {
     } returns now.minusHours(4).toString()
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск", now)
+      currencyRateRepository.refreshExchangeRates("Минск", now)
     }
 
     coVerify {
@@ -118,7 +118,7 @@ class CurrencyRateRepositoryTest {
     } returns now.toString()
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск", now)
+      currencyRateRepository.refreshExchangeRates("Минск", now)
     }
 
     coVerify {
@@ -137,7 +137,7 @@ class CurrencyRateRepositoryTest {
     } throws Exception("test")
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск", now)
+      currencyRateRepository.refreshExchangeRates("Минск", now)
     }
 
     coVerify(inverse = true) {
@@ -152,7 +152,7 @@ class CurrencyRateRepositoryTest {
     } returns ""
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск", now)
+      currencyRateRepository.refreshExchangeRates("Минск", now)
     }
 
     coVerify {
@@ -167,7 +167,7 @@ class CurrencyRateRepositoryTest {
     } returns now.minusMinutes(42).toString()
 
     runBlocking {
-      currencyRateRepository.loadExchangeRates("Минск", now)
+      currencyRateRepository.refreshExchangeRates("Минск", now)
     }
 
     coVerify(inverse = true) {

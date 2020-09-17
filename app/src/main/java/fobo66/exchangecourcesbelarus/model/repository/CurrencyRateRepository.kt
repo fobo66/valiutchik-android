@@ -10,6 +10,7 @@ import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import fobo66.exchangecourcesbelarus.util.TIMESTAMP
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.time.Duration
@@ -31,7 +32,7 @@ class CurrencyRateRepository @Inject constructor(
 
   private val maxStalePeriod: Duration = Duration.ofHours(3)
 
-  suspend fun loadExchangeRates(city: String, now: LocalDateTime): List<BestCourse> {
+  suspend fun refreshExchangeRates(city: String, now: LocalDateTime): List<BestCourse> {
     val timestamp = loadTimestamp(now)
 
     if (needToUpdateCurrencyRates(Duration.between(timestamp, now))) {
@@ -57,6 +58,9 @@ class CurrencyRateRepository @Inject constructor(
 
     return persistenceDataSource.loadBestCourses(timestamp.toString())
   }
+
+  fun loadExchangeRates(isBuy: Boolean): Flow<List<BestCourse>> =
+    persistenceDataSource.readBestCourses(isBuy)
 
   private fun findBestCourses(
     currencies: Set<Currency>,

@@ -1,21 +1,23 @@
 package fobo66.exchangecourcesbelarus.model
 
-import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
+import fobo66.exchangecourcesbelarus.entities.toBestCurrencyRate
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
-import fobo66.exchangecourcesbelarus.model.repository.LocationRepository
-import java.time.LocalDateTime
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface LoadExchangeRates {
-  suspend fun execute(latitude: Double, longitude: Double): List<BestCourse>
+  fun execute(isBuy: Boolean): Flow<List<BestCurrencyRate>>
 }
 
 class LoadExchangeRatesImpl @Inject constructor(
-  private val locationRepository: LocationRepository,
   private val currencyRateRepository: CurrencyRateRepository
 ) : LoadExchangeRates {
-  override suspend fun execute(latitude: Double, longitude: Double): List<BestCourse> {
-    val city = locationRepository.resolveUserCity(latitude, longitude)
-    return currencyRateRepository.loadExchangeRates(city, LocalDateTime.now())
+  override fun execute(isBuy: Boolean): Flow<List<BestCurrencyRate>> {
+    return currencyRateRepository.loadExchangeRates(isBuy)
+      .map {
+        it.map { bestCourse -> bestCourse.toBestCurrencyRate() }
+      }
   }
 }
