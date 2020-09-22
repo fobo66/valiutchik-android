@@ -21,9 +21,11 @@ class MainViewModel @Inject constructor(
 
   val buyOrSell: LiveData<Boolean>
     get() = _buyOrSell
+
   val bestCurrencyRates: LiveData<List<BestCurrencyRate>>
     get() = buyOrSell
       .switchMap { loadExchangeRates.execute(it).asLiveData() }
+
   val errors: LiveData<Throwable>
     get() = _errors
 
