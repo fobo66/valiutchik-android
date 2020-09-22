@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -74,12 +73,11 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   override fun onMenuItemClick(item: MenuItem?): Boolean =
     when (item?.itemId) {
       R.id.action_settings -> {
-        val settingsIntent = Intent(this, SettingsActivity::class.java)
-        ActivityCompat.startActivity(this, settingsIntent, null)
+        SettingsActivity.start(this)
         true
       }
       R.id.action_about -> {
-        ActivityCompat.startActivity(this, Intent(this, AboutActivity::class.java), null)
+        AboutActivity.start(this)
         true
       }
       else -> false
