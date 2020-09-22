@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -16,7 +15,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
       if (granted) {
-        fetchCourses()
+        refreshExchangeRates()
       } else {
         hideRefreshSpinner()
       }
@@ -74,22 +72,17 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   override fun onMenuItemClick(item: MenuItem?): Boolean =
     when (item?.itemId) {
       R.id.action_settings -> {
-        val settingsIntent = Intent(this, SettingsActivity::class.java)
-        startActivity(settingsIntent)
-        true
-      }
-      R.id.action_update -> {
-        fetchCourses()
+        SettingsActivity.start(this)
         true
       }
       R.id.action_about -> {
-        startActivity(Intent(this, AboutActivity::class.java))
+        AboutActivity.start(this)
         true
       }
       else -> false
     }
 
-  private fun fetchCourses() {
+  private fun refreshExchangeRates() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED
     ) {
@@ -101,9 +94,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       lifecycleScope.launch {
         val location: Location? = locationProviderClient.lastLocation.await()
         if (location != null) {
-          viewModel.loadExchangeRates(location.latitude, location.longitude)
+          viewModel.refreshExchangeRates(location.latitude, location.longitude)
         } else {
-          viewModel.loadExchangeRates(0.0, 0.0)
+          viewModel.refreshExchangeRates(0.0, 0.0)
         }
       }
     }
@@ -111,13 +104,12 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
   private fun setupBuyOrSellObserver() {
     viewModel.buyOrSell.observe(this) {
-      fetchCourses()
+      refreshExchangeRates()
       setBuySellIndicator(it)
     }
   }
 
-  private fun prepareMenu(menu: Menu): Boolean {
-    super.onPrepareOptionsMenu(menu)
+  private fun prepareMenu(menu: Menu) {
     val item = menu.findItem(R.id.action_buysell)
     val control: SwitchCompat = item.actionView as SwitchCompat
     control.isChecked = viewModel.buyOrSell.value == true
@@ -132,7 +124,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       }
       viewModel.updateBuySell(compoundButton.isChecked)
     }
-    return true
   }
 
   private fun showRefreshSpinner() {
@@ -155,7 +146,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
   private fun setupSwipeRefreshLayout() {
     binding.swipeRefresh.setOnRefreshListener {
-      fetchCourses()
+      refreshExchangeRates()
     }
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }

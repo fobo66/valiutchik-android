@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.MainActivity">
   <item
-      android:id="@+id/action_update"
-      android:icon="@drawable/ic_sync"
-      android:title="@string/action_update"
-      app:showAsAction="ifRoom"/>
-  <item
       android:id="@+id/action_buysell"
       android:title="@string/action_buysell"
       app:actionViewClass="androidx.appcompat.widget.SwitchCompat"

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import fobo66.exchangecourcesbelarus.entities.BestCourse
+import kotlinx.coroutines.flow.Flow
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -15,6 +16,9 @@ interface CurrencyRatesDao {
 
   @Query("SELECT * FROM best_rates")
   suspend fun loadAllBestCurrencyRates(): List<BestCourse>
+
+  @Query("SELECT * FROM best_rates WHERE is_buy = :isBuy ORDER BY timestamp DESC LIMIT 3")
+  fun loadLatestBestCurrencyRates(isBuy: Boolean): Flow<List<BestCourse>>
 
   @Query("SELECT * FROM best_rates WHERE timestamp = :timestamp")
   suspend fun loadBestCurrencyRates(timestamp: String): List<BestCourse>
