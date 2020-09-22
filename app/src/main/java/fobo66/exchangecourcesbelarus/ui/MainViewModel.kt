@@ -41,7 +41,8 @@ class MainViewModel @Inject constructor(
     _buyOrSell.postValue(buySell)
   }
 
-  fun loadExchangeRates(latitude: Double, longitude: Double) = viewModelScope.launch(errorHandler) {
-    refreshExchangeRates.execute(latitude, longitude)
-  }
+  fun refreshExchangeRates(latitude: Double, longitude: Double) =
+    viewModelScope.launch(errorHandler) {
+      refreshExchangeRates.execute(latitude, longitude)
+    }
 }

@@ -15,7 +15,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
       if (granted) {
-        fetchCourses()
+        refreshExchangeRates()
       } else {
         hideRefreshSpinner()
       }
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       else -> false
     }
 
-  private fun fetchCourses() {
+  private fun refreshExchangeRates() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED
     ) {
@@ -95,9 +94,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       lifecycleScope.launch {
         val location: Location? = locationProviderClient.lastLocation.await()
         if (location != null) {
-          viewModel.loadExchangeRates(location.latitude, location.longitude)
+          viewModel.refreshExchangeRates(location.latitude, location.longitude)
         } else {
-          viewModel.loadExchangeRates(0.0, 0.0)
+          viewModel.refreshExchangeRates(0.0, 0.0)
         }
       }
     }
@@ -105,7 +104,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
   private fun setupBuyOrSellObserver() {
     viewModel.buyOrSell.observe(this) {
-      fetchCourses()
+      refreshExchangeRates()
       setBuySellIndicator(it)
     }
   }
@@ -147,7 +146,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
   private fun setupSwipeRefreshLayout() {
     binding.swipeRefresh.setOnRefreshListener {
-      fetchCourses()
+      refreshExchangeRates()
     }
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }
