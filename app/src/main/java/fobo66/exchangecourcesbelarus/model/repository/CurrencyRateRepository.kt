@@ -32,7 +32,7 @@ class CurrencyRateRepository @Inject constructor(
 
   private val maxStalePeriod: Duration = Duration.ofHours(3)
 
-  suspend fun refreshExchangeRates(city: String, now: LocalDateTime): List<BestCourse> {
+  suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
     val timestamp = loadTimestamp(now)
 
     if (needToUpdateCurrencyRates(Duration.between(timestamp, now))) {
@@ -55,8 +55,6 @@ class CurrencyRateRepository @Inject constructor(
         }
       }
     }
-
-    return persistenceDataSource.loadBestCourses(timestamp.toString())
   }
 
   fun loadExchangeRates(isBuy: Boolean): Flow<List<BestCourse>> =

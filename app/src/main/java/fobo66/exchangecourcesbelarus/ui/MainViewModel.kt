@@ -7,7 +7,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
-import fobo66.exchangecourcesbelarus.entities.toBestCurrencyRate
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -29,7 +28,6 @@ class MainViewModel @Inject constructor(
     get() = _errors
 
   private val _buyOrSell = MutableLiveData(false)
-  private val _bestCurrencyRates = MutableLiveData<List<BestCurrencyRate>>()
   private val _errors = MutableLiveData<Throwable>()
 
   private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -42,9 +40,6 @@ class MainViewModel @Inject constructor(
   }
 
   fun loadExchangeRates(latitude: Double, longitude: Double) = viewModelScope.launch(errorHandler) {
-    val rates = refreshExchangeRates.execute(latitude, longitude)
-      .filter { it.isBuy == buyOrSell.value }
-      .map { it.toBestCurrencyRate() }
-    _bestCurrencyRates.postValue(rates)
+    refreshExchangeRates.execute(latitude, longitude)
   }
 }
