@@ -75,15 +75,11 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     when (item?.itemId) {
       R.id.action_settings -> {
         val settingsIntent = Intent(this, SettingsActivity::class.java)
-        startActivity(settingsIntent)
-        true
-      }
-      R.id.action_update -> {
-        fetchCourses()
+        ActivityCompat.startActivity(this, settingsIntent, null)
         true
       }
       R.id.action_about -> {
-        startActivity(Intent(this, AboutActivity::class.java))
+        ActivityCompat.startActivity(this, Intent(this, AboutActivity::class.java), null)
         true
       }
       else -> false
@@ -116,8 +112,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     }
   }
 
-  private fun prepareMenu(menu: Menu): Boolean {
-    super.onPrepareOptionsMenu(menu)
+  private fun prepareMenu(menu: Menu) {
     val item = menu.findItem(R.id.action_buysell)
     val control: SwitchCompat = item.actionView as SwitchCompat
     control.isChecked = viewModel.buyOrSell.value == true
@@ -132,7 +127,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       }
       viewModel.updateBuySell(compoundButton.isChecked)
     }
-    return true
   }
 
   private fun showRefreshSpinner() {
