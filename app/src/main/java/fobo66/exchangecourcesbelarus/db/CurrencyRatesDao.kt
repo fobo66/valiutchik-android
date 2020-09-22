@@ -17,7 +17,7 @@ interface CurrencyRatesDao {
   @Query("SELECT * FROM best_rates")
   suspend fun loadAllBestCurrencyRates(): List<BestCourse>
 
-  @Query("SELECT * FROM best_rates WHERE is_buy = :isBuy ORDER BY id DESC LIMIT 3")
+  @Query("SELECT * FROM best_rates WHERE is_buy = :isBuy ORDER BY timestamp DESC LIMIT 3")
   fun loadLatestBestCurrencyRates(isBuy: Boolean): Flow<List<BestCourse>>
 
   @Query("SELECT * FROM best_rates WHERE timestamp = :timestamp")
