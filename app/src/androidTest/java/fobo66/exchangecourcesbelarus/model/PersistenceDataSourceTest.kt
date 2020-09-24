@@ -10,12 +10,14 @@ import fobo66.exchangecourcesbelarus.util.EUR
 import fobo66.exchangecourcesbelarus.util.RUR
 import fobo66.exchangecourcesbelarus.util.SELL_COURSE
 import fobo66.exchangecourcesbelarus.util.USD
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
+import java.util.concurrent.Executors
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -25,6 +27,9 @@ class PersistenceDataSourceTest {
 
   private lateinit var db: CurrencyRatesDatabase
   private lateinit var persistenceDataSource: PersistenceDataSource
+
+  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+
 
   @Before
   fun setUp() {
@@ -40,6 +45,7 @@ class PersistenceDataSourceTest {
   @Throws(IOException::class)
   fun tearDown() {
     db.close()
+    ioDispatcher.close()
   }
 
   @Test

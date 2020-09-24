@@ -75,10 +75,6 @@ class CurrencyRateRepositoryTest {
       persistenceDataSource.saveBestCourses(any())
     } returns Unit
 
-    coEvery {
-      persistenceDataSource.loadBestCourses(any())
-    } returns emptyList()
-
     currencyRateRepository = CurrencyRateRepository(
       parser,
       currencyEvaluator,
