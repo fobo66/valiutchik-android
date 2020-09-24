@@ -2,7 +2,6 @@ plugins {
   id("com.android.application")
   id("com.google.firebase.crashlytics")
   kotlin("android")
-  kotlin("android.extensions")
   kotlin("kapt")
 }
 val kotlinVersion = "1.4.10"
@@ -85,10 +84,6 @@ android {
     exclude("META-INF/AL2.0")
     exclude("META-INF/LGPL2.1")
   }
-}
-
-androidExtensions {
-  features = setOf("parcelize")
 }
 
 dependencies {
