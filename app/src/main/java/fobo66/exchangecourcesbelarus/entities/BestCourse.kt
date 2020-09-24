@@ -21,4 +21,7 @@ data class BestCourse(
   @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String = USD,
   @ColumnInfo(name = "timestamp") val timestamp: String = "",
   @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
-) : Parcelable
+) : Parcelable {
+  fun toBestCurrencyRate(): BestCurrencyRate =
+    BestCurrencyRate(id, bank, currencyName, currencyValue)
+}

@@ -12,6 +12,3 @@ data class BestCurrencyRate(
   @CurrencyName val currencyName: String,
   val currencyValue: String
 )
-
-fun BestCourse.toBestCurrencyRate(): BestCurrencyRate =
-  BestCurrencyRate(id, bank, currencyName, currencyValue)

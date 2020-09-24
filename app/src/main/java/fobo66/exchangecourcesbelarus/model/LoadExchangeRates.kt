@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
 import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
-import fobo66.exchangecourcesbelarus.entities.toBestCurrencyRate
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

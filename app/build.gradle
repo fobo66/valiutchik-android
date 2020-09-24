@@ -18,7 +18,7 @@ android {
       enableV4Signing true
     }
   }
-  compileSdkVersion 30
+  compileSdk = 30
   defaultConfig {
     applicationId "fobo66.exchangecourcesbelarus"
     minSdkVersion 16
@@ -98,7 +98,7 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
   //location
-  implementation "com.google.android.gms:play-services-location:17.0.0"
+  implementation "com.google.android.gms:play-services-location:17.1.0"
   implementation "com.mapbox.mapboxsdk:mapbox-sdk-services:5.6.0"
   implementation "org.slf4j:slf4j-nop:1.7.30"
 
