@@ -1,7 +1,9 @@
 package fobo66.exchangecourcesbelarus.model
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
+import app.cash.turbine.test
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
@@ -10,14 +12,15 @@ import fobo66.exchangecourcesbelarus.util.EUR
 import fobo66.exchangecourcesbelarus.util.RUR
 import fobo66.exchangecourcesbelarus.util.SELL_COURSE
 import fobo66.exchangecourcesbelarus.util.USD
-import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-import java.util.concurrent.Executors
+import kotlin.time.ExperimentalTime
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -28,8 +31,8 @@ class PersistenceDataSourceTest {
   private lateinit var db: CurrencyRatesDatabase
   private lateinit var persistenceDataSource: PersistenceDataSource
 
-  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-
+  @get:Rule
+  val liveDataRule = InstantTaskExecutorRule()
 
   @Before
   fun setUp() {
@@ -45,7 +48,6 @@ class PersistenceDataSourceTest {
   @Throws(IOException::class)
   fun tearDown() {
     db.close()
-    ioDispatcher.close()
   }
 
   @Test
@@ -100,6 +102,27 @@ class PersistenceDataSourceTest {
     runBlocking {
       val bestRates = db.currencyRatesDao().loadAllBestCurrencyRates()
       assertEquals(3, bestRates.size)
+    }
+  }
+
+  @ExperimentalTime
+  @ExperimentalCoroutinesApi
+  @Test
+  fun loadOnlySellCoursesFromMixedCourses() {
+    runBlocking {
+      val bestCourses = listOf(
+        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+        BestCourse(0, "test", "0.0325", RUR, "", SELL_COURSE),
+        BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE)
+      )
+
+      persistenceDataSource.saveBestCourses(bestCourses)
+
+      db.currencyRatesDao().loadLatestBestCurrencyRates(SELL_COURSE)
+        .test {
+          assertEquals(2, expectItem().size)
+        }
     }
   }
 }
