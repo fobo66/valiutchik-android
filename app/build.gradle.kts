@@ -6,8 +6,8 @@ plugins {
 }
 val kotlinVersion = "1.4.10"
 val kotlinCoroutinesVersion = "1.3.9"
-val okhttpVersion = "4.8.1"
-val daggerVersion = "2.28.3"
+val okhttpVersion = "4.9.0"
+val daggerVersion = "2.29.1"
 val roomVersion = "2.2.5"
 val lifecycleVersion = "2.2.0"
 
@@ -95,14 +95,14 @@ dependencies {
 
   //androidx
   implementation("androidx.annotation:annotation:1.1.0")
-  implementation("androidx.activity:activity-ktx:1.2.0-alpha08")
+  implementation("androidx.activity:activity-ktx:1.2.0-beta01")
   implementation("androidx.recyclerview:recyclerview:1.1.0")
-  implementation("androidx.fragment:fragment-ktx:1.3.0-alpha08")
+  implementation("androidx.fragment:fragment-ktx:1.3.0-beta01")
   implementation("androidx.collection:collection-ktx:1.1.0")
   implementation("androidx.viewpager:viewpager:1.0.0")
-  implementation("androidx.core:core-ktx:1.5.0-alpha03")
-  implementation("androidx.constraintlayout:constraintlayout:2.0.1")
-  implementation("com.google.android.material:material:1.3.0-alpha02")
+  implementation("androidx.core:core-ktx:1.5.0-alpha04")
+  implementation("androidx.constraintlayout:constraintlayout:2.0.2")
+  implementation("com.google.android.material:material:1.3.0-alpha03")
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
@@ -117,7 +117,7 @@ dependencies {
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.6.0")
 
   //firebase
-  implementation(platform("com.google.firebase:firebase-bom:25.5.0"))
+  implementation(platform("com.google.firebase:firebase-bom:25.12.0"))
   implementation("com.google.firebase:firebase-analytics-ktx")
   implementation("com.google.firebase:firebase-crashlytics")
 
@@ -146,7 +146,7 @@ dependencies {
   //tests
   testImplementation("junit:junit:4.13")
   testImplementation("androidx.test:core:1.3.0")
-  testImplementation("io.mockk:mockk:1.10.0")
+  testImplementation("io.mockk:mockk:1.10.2")
   testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
@@ -156,7 +156,7 @@ dependencies {
   androidTestImplementation("androidx.test:runner:1.3.0")
 
   //dagger
-  implementation("com.google.dagger:dagger:$daggerVersion")
+  implementation("com.google.dagger:dagger:${daggerVersion}")
   kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 }
 
