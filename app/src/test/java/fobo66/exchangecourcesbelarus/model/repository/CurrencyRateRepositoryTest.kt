@@ -32,22 +32,16 @@ class CurrencyRateRepositoryTest {
 
   private lateinit var currencyRateRepository: CurrencyRateRepository
 
-  private lateinit var parser: CurrencyRatesParser
-  private lateinit var currencyEvaluator: CurrencyEvaluator
-  private lateinit var persistenceDataSource: PersistenceDataSource
-  private lateinit var preferencesDataSource: PreferencesDataSource
-  private lateinit var currencyRatesDataSource: CurrencyRatesDataSource
+  private val parser = mockk<CurrencyRatesParser>()
+  private val currencyEvaluator = mockk<CurrencyEvaluator>()
+  private val persistenceDataSource = mockk<PersistenceDataSource>()
+  private val preferencesDataSource = mockk<PreferencesDataSource>()
+  private val currencyRatesDataSource = mockk<CurrencyRatesDataSource>()
 
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
   @Before
   fun setUp() {
-    parser = mockk()
-    currencyEvaluator = mockk()
-    persistenceDataSource = mockk()
-    preferencesDataSource = mockk()
-    currencyRatesDataSource = mockk()
-
     coEvery {
       currencyRatesDataSource.loadExchangeRates(any())
     } returns Response.Builder()
