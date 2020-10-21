@@ -20,6 +20,7 @@ class RefreshExchangeRatesImpl @Inject constructor(
 
     if (timestampRepository.isNeededToUpdateCurrencyRates(now)) {
       currencyRateRepository.refreshExchangeRates(city, now)
+      timestampRepository.saveTimestamp(now)
     }
   }
 }
