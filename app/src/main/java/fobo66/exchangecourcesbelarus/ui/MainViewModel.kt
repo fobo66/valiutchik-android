@@ -12,6 +12,7 @@ import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -43,6 +44,6 @@ class MainViewModel @Inject constructor(
 
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch(errorHandler) {
-      refreshExchangeRates.execute(latitude, longitude)
+      refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
     }
 }
