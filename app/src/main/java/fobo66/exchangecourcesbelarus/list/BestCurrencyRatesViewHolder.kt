@@ -18,7 +18,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.CurrencyCardBinding
-import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
+import fobo66.valiutchik.core.entities.BestCurrencyRate
 import timber.log.Timber
 
 /**

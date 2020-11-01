@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.list
 
 import androidx.recyclerview.widget.DiffUtil
-import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
+import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

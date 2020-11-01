@@ -2,6 +2,9 @@ package fobo66.exchangecourcesbelarus.util
 
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.MyfinParser
+import fobo66.valiutchik.core.EUR
+import fobo66.valiutchik.core.RUR
+import fobo66.valiutchik.core.USD
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

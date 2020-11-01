@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
-import fobo66.exchangecourcesbelarus.entities.Currency
+import fobo66.valiutchik.core.entities.Currency
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream

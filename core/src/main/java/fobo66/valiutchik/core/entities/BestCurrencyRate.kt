@@ -1,6 +1,6 @@
-package fobo66.exchangecourcesbelarus.entities
+package fobo66.valiutchik.core.entities
 
-import fobo66.exchangecourcesbelarus.util.CurrencyName
+import fobo66.valiutchik.core.CurrencyName
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

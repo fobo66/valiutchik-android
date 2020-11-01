@@ -6,10 +6,11 @@ buildscript {
     google()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:4.2.0-alpha14")
+    classpath("com.android.tools.build:gradle:4.2.0-alpha15")
     classpath("com.google.gms:google-services:4.3.4")
     classpath("com.google.firebase:firebase-crashlytics-gradle:2.3.0")
     classpath(kotlin("gradle-plugin", version = "1.4.10"))
+    classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
   }
 }
 

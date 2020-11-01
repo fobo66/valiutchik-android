@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core
 
 import androidx.annotation.StringDef
 import kotlin.annotation.AnnotationRetention.SOURCE
@@ -15,14 +15,7 @@ const val EUR = "EUR"
 const val RUR = "RUR"
 const val BUY_COURSE = true
 const val SELL_COURSE = false
-const val BROADCAST_ACTION_SUCCESS =
-  "fobo66.exchangecourcesbelarus.model.CurrencyRateService.SUCCESS"
-const val BROADCAST_ACTION_ERROR =
-  "fobo66.exchangecourcesbelarus.model.CurrencyRateService.ERROR"
-const val ACTION_FETCH_COURSES = "fobo66.exchangecourcesbelarus.action.FETCH_COURSES"
-const val EXTRA_CITY = "fobo66.exchangecourcesbelarus.extra.CITY"
-const val EXTRA_BESTCOURSES = "fobo66.exchangecourcesbelarus.extra.BESTCOURSES"
-const val EXTRA_BUYORSELL = "fobo66.exchangecourcesbelarus.extra.BUYORSELL"
+
 const val TIMESTAMP = "fobo66.exchangecourcesbelarus.TIMESTAMP"
 const val USER_CITY_KEY = "fobo66.exchangecourcesbelarus.USER_CITY"
 

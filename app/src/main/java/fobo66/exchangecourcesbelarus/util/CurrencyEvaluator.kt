@@ -1,7 +1,13 @@
 package fobo66.exchangecourcesbelarus.util
 
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.exchangecourcesbelarus.entities.Currency
+import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.BUY_COURSE
+import fobo66.valiutchik.core.CurrencyName
+import fobo66.valiutchik.core.EUR
+import fobo66.valiutchik.core.RUR
+import fobo66.valiutchik.core.SELL_COURSE
+import fobo66.valiutchik.core.USD
 import java.util.regex.Pattern
 import javax.inject.Inject
 import javax.inject.Singleton

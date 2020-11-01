@@ -3,8 +3,9 @@ package fobo66.exchangecourcesbelarus.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import fobo66.exchangecourcesbelarus.util.CurrencyName
-import fobo66.exchangecourcesbelarus.util.USD
+import fobo66.valiutchik.core.CurrencyName
+import fobo66.valiutchik.core.USD
+import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 /**
  * Model for best available exchange courses to put into cardview

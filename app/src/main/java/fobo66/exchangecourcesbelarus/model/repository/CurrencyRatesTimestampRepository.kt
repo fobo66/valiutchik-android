@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.exchangecourcesbelarus.util.TIMESTAMP
+import fobo66.valiutchik.core.TIMESTAMP
 import java.time.Duration
 import java.time.LocalDateTime
 import javax.inject.Inject

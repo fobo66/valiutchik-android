@@ -7,11 +7,11 @@ import app.cash.turbine.test
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
-import fobo66.exchangecourcesbelarus.util.BUY_COURSE
-import fobo66.exchangecourcesbelarus.util.EUR
-import fobo66.exchangecourcesbelarus.util.RUR
-import fobo66.exchangecourcesbelarus.util.SELL_COURSE
-import fobo66.exchangecourcesbelarus.util.USD
+import fobo66.valiutchik.core.BUY_COURSE
+import fobo66.valiutchik.core.EUR
+import fobo66.valiutchik.core.RUR
+import fobo66.valiutchik.core.SELL_COURSE
+import fobo66.valiutchik.core.USD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After

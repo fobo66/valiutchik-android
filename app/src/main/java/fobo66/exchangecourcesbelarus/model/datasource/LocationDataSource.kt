@@ -4,8 +4,8 @@ import com.mapbox.api.geocoding.v5.GeocodingCriteria
 import com.mapbox.api.geocoding.v5.MapboxGeocoding
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import com.mapbox.geojson.Point
-import fobo66.exchangecourcesbelarus.entities.Location
-import fobo66.exchangecourcesbelarus.util.GEOCODER_ACCESS_TOKEN
+import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.GEOCODER_ACCESS_TOKEN
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback

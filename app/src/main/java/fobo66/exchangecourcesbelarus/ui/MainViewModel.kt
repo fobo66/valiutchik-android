@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
+import fobo66.valiutchik.core.entities.BestCurrencyRate
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import kotlinx.coroutines.CoroutineExceptionHandler

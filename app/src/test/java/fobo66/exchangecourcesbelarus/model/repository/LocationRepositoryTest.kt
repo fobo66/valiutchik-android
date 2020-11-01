@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.model.repository
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.exchangecourcesbelarus.util.USER_CITY_KEY
+import fobo66.valiutchik.core.USER_CITY_KEY
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

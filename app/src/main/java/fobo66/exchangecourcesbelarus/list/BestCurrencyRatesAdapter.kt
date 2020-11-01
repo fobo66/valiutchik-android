@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import fobo66.exchangecourcesbelarus.databinding.CurrencyCardBinding
-import fobo66.exchangecourcesbelarus.entities.BestCurrencyRate
+import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

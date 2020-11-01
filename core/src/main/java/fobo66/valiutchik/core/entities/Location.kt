@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.entities
+package fobo66.valiutchik.core.entities
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

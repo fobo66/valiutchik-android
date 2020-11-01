@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import fobo66.exchangecourcesbelarus.BuildConfig
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.util.BASE_URL
+import fobo66.valiutchik.core.BASE_URL
 import fobo66.exchangecourcesbelarus.util.CertificateManager
 import okhttp3.Cache
 import okhttp3.OkHttpClient

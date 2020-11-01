@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.entities
+package fobo66.valiutchik.core.entities
 
 /**
  * Currency model from XML

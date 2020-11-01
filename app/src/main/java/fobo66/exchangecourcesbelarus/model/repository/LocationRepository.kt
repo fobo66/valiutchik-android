@@ -1,9 +1,9 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import fobo66.exchangecourcesbelarus.entities.Location
+import fobo66.valiutchik.core.entities.Location
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.exchangecourcesbelarus.util.USER_CITY_KEY
+import fobo66.valiutchik.core.USER_CITY_KEY
 import javax.inject.Inject
 
 class LocationRepository @Inject constructor(

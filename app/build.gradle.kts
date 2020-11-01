@@ -87,6 +87,7 @@ android {
 }
 
 dependencies {
+  implementation(project(":core"))
 
   //kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
@@ -101,7 +102,7 @@ dependencies {
   implementation("androidx.collection:collection-ktx:1.1.0")
   implementation("androidx.viewpager:viewpager:1.0.0")
   implementation("androidx.core:core-ktx:1.5.0-alpha04")
-  implementation("androidx.constraintlayout:constraintlayout:2.0.2")
+  implementation("androidx.constraintlayout:constraintlayout:2.0.4")
   implementation("com.google.android.material:material:1.3.0-alpha03")
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
@@ -144,7 +145,7 @@ dependencies {
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.10")
 
   //tests
-  testImplementation("junit:junit:4.13")
+  testImplementation("junit:junit:4.13.1")
   testImplementation("androidx.test:core:1.3.0")
   testImplementation("io.mockk:mockk:1.10.2")
   testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
