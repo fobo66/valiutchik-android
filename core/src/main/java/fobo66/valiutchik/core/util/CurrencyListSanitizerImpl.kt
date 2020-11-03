@@ -11,7 +11,13 @@ import javax.inject.Singleton
 @Singleton
 class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
 
-  override fun isValidEntry(currency: Currency): Boolean {
+  override fun sanitize(currencies: Set<Currency>): List<Currency> {
+    return currencies.asSequence()
+      .filter { isValidEntry(it) }
+      .toList()
+  }
+
+  private fun isValidEntry(currency: Currency): Boolean {
     return isCurrencyRateValueValid(currency.eurBuy) ||
       isCurrencyRateValueValid(currency.eurSell) ||
       isCurrencyRateValueValid(currency.rurBuy) ||

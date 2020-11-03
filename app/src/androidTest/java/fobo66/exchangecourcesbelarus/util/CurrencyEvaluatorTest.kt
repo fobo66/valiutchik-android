@@ -38,11 +38,10 @@ class CurrencyEvaluatorTest {
     evaluator = CurrencyEvaluator()
     testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
     val currencies = parser.parse(testFile)
-      .filter { sanitizer.isValidEntry(it) }
-      .toList()
+    val clearCurrencies = sanitizer.sanitize(currencies)
 
-    bestBuy = evaluator.findBestBuyCourses(currencies, timestamp)
-    bestSell = evaluator.findBestSellCourses(currencies, timestamp)
+    bestBuy = evaluator.findBestBuyCourses(clearCurrencies, timestamp)
+    bestSell = evaluator.findBestSellCourses(clearCurrencies, timestamp)
   }
 
   @Test

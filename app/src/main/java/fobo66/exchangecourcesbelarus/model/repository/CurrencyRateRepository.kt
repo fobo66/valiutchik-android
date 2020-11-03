@@ -54,16 +54,10 @@ class CurrencyRateRepository @Inject constructor(
     now: String
   ): List<BestCourse> {
     val bestCourses = mutableListOf<BestCourse>()
-    val clearCurrencies = sanitizeCurrencies(currencies)
+    val clearCurrencies = sanitizer.sanitize(currencies)
 
     bestCourses.addAll(currencyEvaluator.findBestBuyCourses(clearCurrencies, now))
     bestCourses.addAll(currencyEvaluator.findBestSellCourses(clearCurrencies, now))
     return bestCourses
-  }
-
-  private fun sanitizeCurrencies(currencies: Set<Currency>): List<Currency> {
-    return currencies.asSequence()
-      .filter { sanitizer.isValidEntry(it) }
-      .toList()
   }
 }
