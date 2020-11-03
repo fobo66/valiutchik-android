@@ -6,6 +6,7 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.util.CurrencyListSanitizer
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,7 @@ class CurrencyRateRepository @Inject constructor(
   private val currencyEvaluator: CurrencyEvaluator,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
+  private val sanitizer: CurrencyListSanitizer,
   @Io private val ioDispatcher: CoroutineDispatcher
 ) {
 
@@ -52,8 +54,16 @@ class CurrencyRateRepository @Inject constructor(
     now: String
   ): List<BestCourse> {
     val bestCourses = mutableListOf<BestCourse>()
-    bestCourses.addAll(currencyEvaluator.findBestBuyCourses(currencies, now))
-    bestCourses.addAll(currencyEvaluator.findBestSellCourses(currencies, now))
+    val clearCurrencies = sanitizeCurrencies(currencies)
+
+    bestCourses.addAll(currencyEvaluator.findBestBuyCourses(clearCurrencies, now))
+    bestCourses.addAll(currencyEvaluator.findBestSellCourses(clearCurrencies, now))
     return bestCourses
+  }
+
+  private fun sanitizeCurrencies(currencies: Set<Currency>): List<Currency> {
+    return currencies.asSequence()
+      .filter { !sanitizer.isInvalidEntry(it) }
+      .toList()
   }
 }

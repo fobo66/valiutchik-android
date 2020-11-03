@@ -1,7 +1,6 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.util.CurrencyListSanitizer
 import javax.inject.Inject
 import javax.inject.Singleton
 

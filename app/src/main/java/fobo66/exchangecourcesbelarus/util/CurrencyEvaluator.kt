@@ -8,7 +8,6 @@ import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.util.CurrencyListSanitizer
 import java.util.regex.Pattern
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,25 +17,21 @@ import javax.inject.Singleton
  * Created by fobo66 on 05.02.2017.
  */
 @Singleton
-class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListSanitizer) {
+class CurrencyEvaluator @Inject constructor() {
 
   private val pattern: Pattern by lazy { "([\"«])[^\"]*([\"»])".toPattern() }
 
   private val currencyKeys by lazy { listOf(USD, EUR, RUR) }
 
   fun findBestBuyCourses(
-    courses: Set<Currency>,
+    courses: List<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
 
-    val workList: List<Currency> = courses.asSequence()
-      .filter { !sanitizer.isInvalidEntry(it) }
-      .toList()
-
     currencyKeys.forEach { currencyKey ->
       val currency =
-        workList.maxByOrNull { resolveCurrencyBuyValue(it, currencyKey) } ?: workList.first()
+        courses.maxByOrNull { resolveCurrencyBuyValue(it, currencyKey) } ?: courses.first()
       result.add(
         BestCourse(
           0L,
@@ -52,18 +47,14 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
   }
 
   fun findBestSellCourses(
-    courses: Set<Currency>,
+    courses: List<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
 
-    val workList: List<Currency> = courses.asSequence()
-      .filter { !sanitizer.isInvalidEntry(it) }
-      .toList()
-
     currencyKeys.forEach { currencyKey ->
       val currency =
-        workList.minByOrNull { resolveCurrencySellValue(it, currencyKey) } ?: workList.first()
+        courses.minByOrNull { resolveCurrencySellValue(it, currencyKey) } ?: courses.first()
       result.add(
         BestCourse(
           0L,

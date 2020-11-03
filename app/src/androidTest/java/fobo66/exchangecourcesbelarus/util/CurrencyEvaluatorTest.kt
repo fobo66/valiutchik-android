@@ -5,6 +5,8 @@ import fobo66.exchangecourcesbelarus.model.MyfinParser
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
+import fobo66.valiutchik.core.util.CurrencyListSanitizer
+import fobo66.valiutchik.core.util.CurrencyListSanitizerImpl
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -12,8 +14,8 @@ import java.io.InputStream
 import java.time.LocalDateTime
 
 /**
- * (c) 2017 Andrey Mukamolov aka fobo66 <fobo66@protonmail.com>
- * Test cases for my algorithm.
+ * Test cases for my algorithm. Check that value resolved as best is correct based on real
+ * data from server saved in resources
  */
 class CurrencyEvaluatorTest {
   private lateinit var evaluator: CurrencyEvaluator
@@ -23,14 +25,24 @@ class CurrencyEvaluatorTest {
 
   private val timestamp = LocalDateTime.now().toString()
 
+  private val sanitizer: CurrencyListSanitizer by lazy {
+    CurrencyListSanitizerImpl()
+  }
+
+  private val parser: MyfinParser by lazy {
+    MyfinParser()
+  }
+
   @Before
   fun setUp() {
-    evaluator = CurrencyEvaluator(CurrencyListSanitizerImpl())
+    evaluator = CurrencyEvaluator()
     testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
-    val parser = MyfinParser()
-    val currencyTempSet = parser.parse(testFile)
-    bestBuy = evaluator.findBestBuyCourses(currencyTempSet, timestamp)
-    bestSell = evaluator.findBestSellCourses(currencyTempSet, timestamp)
+    val currencies = parser.parse(testFile)
+      .filter { !sanitizer.isInvalidEntry(it) }
+      .toList()
+
+    bestBuy = evaluator.findBestBuyCourses(currencies, timestamp)
+    bestSell = evaluator.findBestSellCourses(currencies, timestamp)
   }
 
   @Test
