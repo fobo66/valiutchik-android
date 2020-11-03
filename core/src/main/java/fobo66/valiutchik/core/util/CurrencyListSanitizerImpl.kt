@@ -27,9 +27,9 @@ class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
   }
 
   private fun isCurrencyRateValueValid(value: String) =
-    value.isNotEmpty() && value != EMPTY_COURSE
+    value.isNotEmpty() && value != UNKNOWN_COURSE
 
   companion object {
-    private const val EMPTY_COURSE = "-"
+    private const val UNKNOWN_COURSE = "-"
   }
 }
