@@ -2,8 +2,9 @@ package fobo66.exchangecourcesbelarus.model
 
 import android.util.Xml
 import fobo66.valiutchik.core.entities.Currency
-import fobo66.exchangecourcesbelarus.util.CurrencyBuilder
-import fobo66.exchangecourcesbelarus.util.CurrencyBuilderImpl
+import fobo66.valiutchik.core.util.CurrencyBuilder
+import fobo66.valiutchik.core.util.CurrencyBuilderImpl
+import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException

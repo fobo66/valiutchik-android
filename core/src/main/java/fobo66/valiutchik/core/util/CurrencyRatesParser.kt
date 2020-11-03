@@ -1,8 +1,6 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.core.entities.Currency
-import org.xmlpull.v1.XmlPullParserException
-import java.io.IOException
 import java.io.InputStream
 
 /**
@@ -10,6 +8,5 @@ import java.io.InputStream
  * Created by fobo66 on 14.03.2017.
  */
 interface CurrencyRatesParser {
-  @Throws(XmlPullParserException::class, IOException::class)
   fun parse(inputStream: InputStream): Set<Currency>
 }

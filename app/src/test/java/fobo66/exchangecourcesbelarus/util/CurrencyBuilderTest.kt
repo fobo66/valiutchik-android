@@ -1,5 +1,7 @@
 package fobo66.exchangecourcesbelarus.util
 
+import fobo66.valiutchik.core.util.CurrencyBuilder
+import fobo66.valiutchik.core.util.CurrencyBuilderImpl
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

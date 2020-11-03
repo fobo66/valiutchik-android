@@ -1,11 +1,11 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import fobo66.valiutchik.core.entities.Currency
-import fobo66.exchangecourcesbelarus.model.CurrencyRatesParser
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
+import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.util.CurrencyRatesParser
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

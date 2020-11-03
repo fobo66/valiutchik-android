@@ -1,13 +1,14 @@
 package fobo66.exchangecourcesbelarus.util
 
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.CurrencyName
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.USD
+import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.util.CurrencyListSanitizer
 import java.util.regex.Pattern
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,12 +25,12 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
   private val currencyKeys by lazy { listOf(USD, EUR, RUR) }
 
   fun findBestBuyCourses(
-    tempSet: Set<Currency>,
+    courses: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
 
-    val workList: List<Currency> = tempSet.asSequence()
+    val workList: List<Currency> = courses.asSequence()
       .filter { !sanitizer.isInvalidEntry(it) }
       .toList()
 
@@ -51,12 +52,12 @@ class CurrencyEvaluator @Inject constructor(private val sanitizer: CurrencyListS
   }
 
   fun findBestSellCourses(
-    tempSet: Set<Currency>,
+    courses: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
 
-    val workList: List<Currency> = tempSet.asSequence()
+    val workList: List<Currency> = courses.asSequence()
       .filter { !sanitizer.isInvalidEntry(it) }
       .toList()
 

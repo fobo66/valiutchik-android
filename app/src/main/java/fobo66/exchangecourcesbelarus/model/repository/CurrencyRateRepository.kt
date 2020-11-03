@@ -2,11 +2,11 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.di.Io
 import fobo66.exchangecourcesbelarus.entities.BestCourse
-import fobo66.valiutchik.core.entities.Currency
-import fobo66.exchangecourcesbelarus.model.CurrencyRatesParser
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
+import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.util.CurrencyRatesParser
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext

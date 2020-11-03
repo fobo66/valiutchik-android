@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.model
 
+import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
