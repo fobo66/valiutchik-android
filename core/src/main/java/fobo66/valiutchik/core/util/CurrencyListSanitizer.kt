@@ -7,5 +7,5 @@ import fobo66.valiutchik.core.entities.Currency
  * Created by fobo66 on 14.03.2017.
  */
 interface CurrencyListSanitizer {
-  fun isInvalidEntry(currency: Currency): Boolean
+  fun isValidEntry(currency: Currency): Boolean
 }

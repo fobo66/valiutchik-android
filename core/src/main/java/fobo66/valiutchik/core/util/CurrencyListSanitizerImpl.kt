@@ -11,17 +11,17 @@ import javax.inject.Singleton
 @Singleton
 class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
 
-  override fun isInvalidEntry(currency: Currency): Boolean {
-    return isCurrencyRateValueInvalid(currency.eurBuy) ||
-      isCurrencyRateValueInvalid(currency.eurSell) ||
-      isCurrencyRateValueInvalid(currency.rurBuy) ||
-      isCurrencyRateValueInvalid(currency.rurSell) ||
-      isCurrencyRateValueInvalid(currency.usdBuy) ||
-      isCurrencyRateValueInvalid(currency.usdSell)
+  override fun isValidEntry(currency: Currency): Boolean {
+    return isCurrencyRateValueValid(currency.eurBuy) ||
+      isCurrencyRateValueValid(currency.eurSell) ||
+      isCurrencyRateValueValid(currency.rurBuy) ||
+      isCurrencyRateValueValid(currency.rurSell) ||
+      isCurrencyRateValueValid(currency.usdBuy) ||
+      isCurrencyRateValueValid(currency.usdSell)
   }
 
-  private fun isCurrencyRateValueInvalid(value: String) =
-    value.isEmpty() || value == EMPTY_COURSE
+  private fun isCurrencyRateValueValid(value: String) =
+    value.isNotEmpty() && value != EMPTY_COURSE
 
   companion object {
     private const val EMPTY_COURSE = "-"

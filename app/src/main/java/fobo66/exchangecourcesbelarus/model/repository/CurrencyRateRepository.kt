@@ -63,7 +63,7 @@ class CurrencyRateRepository @Inject constructor(
 
   private fun sanitizeCurrencies(currencies: Set<Currency>): List<Currency> {
     return currencies.asSequence()
-      .filter { !sanitizer.isInvalidEntry(it) }
+      .filter { sanitizer.isValidEntry(it) }
       .toList()
   }
 }
