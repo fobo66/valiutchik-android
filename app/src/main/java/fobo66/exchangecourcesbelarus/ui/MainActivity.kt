@@ -164,6 +164,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       hideRefreshSpinner()
     }
     viewModel.errors.observe(this) {
+      hideRefreshSpinner()
       errorSnackbar.show()
     }
   }
