@@ -133,13 +133,13 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     setBuySellIndicator(control.isChecked)
 
-    control.setOnCheckedChangeListener { compoundButton: CompoundButton, _ ->
+    control.setOnCheckedChangeListener { _ , isChecked ->
       showRefreshSpinner()
 
       Firebase.analytics.logEvent("buy_sell_switch_toggled") {
-        param(FirebaseAnalytics.Param.VALUE, compoundButton.isChecked.toString())
+        param(FirebaseAnalytics.Param.VALUE, isChecked.toString())
       }
-      viewModel.updateBuySell(compoundButton.isChecked)
+      viewModel.updateBuySell(isChecked)
     }
   }
 
