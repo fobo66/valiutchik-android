@@ -41,7 +41,7 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
 
   override fun onClick(view: View) {
     val req =
-      Uri.parse("geo:0,0?q=" + binding.bankName.text.toString().replace(" ".toRegex(), "+"))
+      Uri.parse("geo:0,0?q=" + binding.bankName.text.toString().replace(' ', '+'))
     val mapIntent = Intent(Intent.ACTION_VIEW, req)
 
     if (mapIntent.resolveActivity(itemView.context.packageManager) != null) {
