@@ -162,9 +162,11 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     viewModel.bestCurrencyRates.observe(this) {
       bestCoursesAdapter.submitList(it)
       hideRefreshSpinner()
+      binding.swipeRefresh.isEnabled = false
     }
     viewModel.errors.observe(this) {
       hideRefreshSpinner()
+      binding.swipeRefresh.isEnabled = true
       errorSnackbar.show()
     }
   }
