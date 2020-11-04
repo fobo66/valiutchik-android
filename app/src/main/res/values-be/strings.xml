@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Валютчык</string>
-    <string name="about_activity_warn">Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банке</string>
     <string name="action_about">Пра прыладу</string>
     <string name="action_buysell">Купіць/Прадаць</string>
     <string name="action_settings">Налады</string>
     <string name="action_update">Аднавіць</string>
-    <string name="app_desc">Прылада дазваляе хутка палучыць інфармацыю пра найлепшыя курсы валют у абласных центрах Беларусі. З яго дапамогай вы можаце знайсці бліжэйшае аддзаленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе</string>
+    <string name="about_app_description">Прылада дазваляе хутка палучыць інфармацыю пра найлепшыя курсы валют у абласных центрах Беларусі. З яго дапамогай вы можаце знайсці бліжэйшае аддзаленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе. Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банке. Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
     <string name="buy">Купіць</string>
   <string name="sell">Прадаць</string>
-    <string name="title_activity_about">Інфармацыя пра прыладу</string>
-  <string name="copyright">© 2016 Андрэй Мукамолаў aka @fobo66</string>
-  <string name="myfin_copyright">Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
+  <string name="title_about">Інфармацыя пра прыладу</string>
     <string name="courses_unavailable_info">Немагчыма аднавіць курсы валют. Будуць паказаны старыя курсы.</string>
   <string name="location_error_title">Памылка атрымання каардынатаў</string>
-    <string name="ok">Добра</string>
     <string name="title_activity_settings">Налады</string>
 
   <string-array name="pref_cities_list">

@@ -4,10 +4,13 @@ import android.Manifest.permission
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
@@ -43,6 +46,16 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT)
   }
 
+  private val aboutDialog: AlertDialog by lazy(mode = NONE) {
+    AlertDialog.Builder(this)
+      .setTitle(R.string.title_about)
+      .setMessage(R.string.about_app_description)
+      .setPositiveButton(android.R.string.ok) { dialog, _ ->
+        dialog.dismiss()
+      }
+      .create()
+  }
+
   private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
   private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
 
@@ -76,7 +89,11 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
         true
       }
       R.id.action_about -> {
-        AboutActivity.start(this)
+        if (!aboutDialog.isShowing) {
+          aboutDialog.show()
+          aboutDialog.findViewById<TextView>(android.R.id.message)?.movementMethod =
+            LinkMovementMethod.getInstance()
+        }
         true
       }
       else -> false

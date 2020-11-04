@@ -6,15 +6,17 @@
       android:id="@+id/action_buysell"
       android:title="@string/action_buysell"
       app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
-      app:showAsAction="always"
+      app:showAsAction="ifRoom"
       />
   <item
       android:id="@+id/action_settings"
       android:orderInCategory="100"
       android:title="@string/action_settings"
-      app:showAsAction="never"/>
+      android:icon="@drawable/ic_settings"
+      app:showAsAction="ifRoom" />
   <item
       android:id="@+id/action_about"
+      android:icon="@drawable/ic_about"
       android:title="@string/action_about"
-      app:showAsAction="never"/>
+      app:showAsAction="ifRoom" />
 </menu>

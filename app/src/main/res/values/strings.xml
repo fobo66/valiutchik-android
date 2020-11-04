@@ -10,14 +10,11 @@
 
   <string name="courses_unavailable_info">Не удалось обновить курсы валют. Будут показаны старые курсы.</string>
 
-  <string name="title_activity_about">О приложении</string>
-  <string name="copyright">© 2016 Андрей Мукамолов aka @fobo66</string>
-  <string name="myfin_copyright">Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
-  <string name="app_desc">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. С его помощью вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте.</string>
-  <string name="about_activity_warn">Обратите внимание, что информация может быть неактуальной. Уточняйте в банке.</string>
+  <string name="title_about">О приложении</string>
+  <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. С его помощью вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
+
 
   <string name="location_error_title">Ошибка получения местоположения</string>
-  <string name="ok">OK</string>
   <string name="title_activity_settings">Настройки</string>
 
   <!-- Strings related to Settings -->
