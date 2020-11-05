@@ -4,14 +4,14 @@ import dagger.Binds
 import dagger.Module
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRatesImpl
-import fobo66.exchangecourcesbelarus.model.MyfinParser
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRatesImpl
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
-import fobo66.valiutchik.core.util.CurrencyListSanitizerImpl
 import fobo66.valiutchik.core.util.CurrencyListSanitizer
+import fobo66.valiutchik.core.util.CurrencyListSanitizerImpl
 import fobo66.valiutchik.core.util.CurrencyRatesParser
+import fobo66.valiutchik.core.util.MyfinParser
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

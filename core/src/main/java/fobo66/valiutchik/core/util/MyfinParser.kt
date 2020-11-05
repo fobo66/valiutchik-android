@@ -1,10 +1,14 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.valiutchik.core.util
 
 import android.util.Xml
+import fobo66.valiutchik.core.TAG_NAME_BANKNAME
+import fobo66.valiutchik.core.TAG_NAME_EUR_BUY
+import fobo66.valiutchik.core.TAG_NAME_EUR_SELL
+import fobo66.valiutchik.core.TAG_NAME_RUR_BUY
+import fobo66.valiutchik.core.TAG_NAME_RUR_SELL
+import fobo66.valiutchik.core.TAG_NAME_USD_BUY
+import fobo66.valiutchik.core.TAG_NAME_USD_SELL
 import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.util.CurrencyBuilder
-import fobo66.valiutchik.core.util.CurrencyBuilderImpl
-import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
@@ -18,10 +22,17 @@ import javax.inject.Inject
  */
 class MyfinParser @Inject constructor() : CurrencyRatesParser {
   private val namespace: String? = null
-  private val neededTagNames: List<String> = listOf(
-    "bankname", "usd_buy", "usd_sell", "eur_buy", "eur_sell", "rur_buy",
-    "rur_sell"
-  )
+  private val neededTagNames by lazy {
+    setOf(
+      TAG_NAME_BANKNAME,
+      TAG_NAME_USD_BUY,
+      TAG_NAME_USD_SELL,
+      TAG_NAME_EUR_BUY,
+      TAG_NAME_EUR_SELL,
+      TAG_NAME_RUR_BUY,
+      TAG_NAME_RUR_SELL
+    )
+  }
 
   @Throws(XmlPullParserException::class, IOException::class)
   override fun parse(inputStream: InputStream): Set<Currency> {

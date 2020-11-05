@@ -1,5 +1,12 @@
 package fobo66.valiutchik.core.util
 
+import fobo66.valiutchik.core.TAG_NAME_BANKNAME
+import fobo66.valiutchik.core.TAG_NAME_EUR_BUY
+import fobo66.valiutchik.core.TAG_NAME_EUR_SELL
+import fobo66.valiutchik.core.TAG_NAME_RUR_BUY
+import fobo66.valiutchik.core.TAG_NAME_RUR_SELL
+import fobo66.valiutchik.core.TAG_NAME_USD_BUY
+import fobo66.valiutchik.core.TAG_NAME_USD_SELL
 import fobo66.valiutchik.core.entities.Currency
 
 /**
@@ -16,13 +23,13 @@ class CurrencyBuilderImpl : CurrencyBuilder {
 
   override fun build(): Currency {
     return Currency(
-      currencyMap["bankname"].orEmpty(),
-      currencyMap["usd_buy"].orEmpty(),
-      currencyMap["usd_sell"].orEmpty(),
-      currencyMap["eur_buy"].orEmpty(),
-      currencyMap["eur_sell"].orEmpty(),
-      currencyMap["rur_buy"].orEmpty(),
-      currencyMap["rur_sell"].orEmpty()
+      currencyMap[TAG_NAME_BANKNAME].orEmpty(),
+      currencyMap[TAG_NAME_USD_BUY].orEmpty(),
+      currencyMap[TAG_NAME_USD_SELL].orEmpty(),
+      currencyMap[TAG_NAME_EUR_BUY].orEmpty(),
+      currencyMap[TAG_NAME_EUR_SELL].orEmpty(),
+      currencyMap[TAG_NAME_RUR_BUY].orEmpty(),
+      currencyMap[TAG_NAME_RUR_SELL].orEmpty()
     )
   }
 }
