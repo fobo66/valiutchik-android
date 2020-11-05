@@ -5,7 +5,6 @@ import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
 import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.util.CurrencyListSanitizer
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,7 +36,6 @@ class CurrencyRateRepositoryTest {
   private val persistenceDataSource = mockk<PersistenceDataSource>()
   private val preferencesDataSource = mockk<PreferencesDataSource>()
   private val currencyRatesDataSource = mockk<CurrencyRatesDataSource>()
-  private val sanitizer = mockk<CurrencyListSanitizer>()
 
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
@@ -58,7 +56,6 @@ class CurrencyRateRepositoryTest {
       .build()
 
     every { parser.parse(any()) } returns setOf(Currency())
-    every { sanitizer.sanitize(any()) } returns emptyList()
 
     every { currencyEvaluator.findBestBuyCourses(any(), any()) } returns emptyList()
     every { currencyEvaluator.findBestSellCourses(any(), any()) } returns emptyList()
@@ -76,7 +73,6 @@ class CurrencyRateRepositoryTest {
       currencyEvaluator,
       persistenceDataSource,
       currencyRatesDataSource,
-      sanitizer,
       ioDispatcher
     )
   }

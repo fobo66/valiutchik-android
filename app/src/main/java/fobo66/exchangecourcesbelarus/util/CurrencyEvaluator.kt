@@ -25,7 +25,7 @@ class CurrencyEvaluator @Inject constructor() {
   private val currencyKeys by lazy { listOf(USD, EUR, RUR) }
 
   fun findBestBuyCourses(
-    courses: List<Currency>,
+    courses: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()
@@ -51,7 +51,7 @@ class CurrencyEvaluator @Inject constructor() {
   }
 
   fun findBestSellCourses(
-    courses: List<Currency>,
+    courses: Set<Currency>,
     timestamp: String
   ): List<BestCourse> {
     val result: MutableList<BestCourse> = mutableListOf()

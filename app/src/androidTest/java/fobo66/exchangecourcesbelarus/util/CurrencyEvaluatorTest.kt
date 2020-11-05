@@ -4,8 +4,6 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
-import fobo66.valiutchik.core.util.CurrencyListSanitizer
-import fobo66.valiutchik.core.util.CurrencyListSanitizerImpl
 import fobo66.valiutchik.core.util.MyfinParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -25,10 +23,6 @@ class CurrencyEvaluatorTest {
 
   private val timestamp = LocalDateTime.now().toString()
 
-  private val sanitizer: CurrencyListSanitizer by lazy {
-    CurrencyListSanitizerImpl()
-  }
-
   private val parser: MyfinParser by lazy {
     MyfinParser()
   }
@@ -38,10 +32,9 @@ class CurrencyEvaluatorTest {
     evaluator = CurrencyEvaluator()
     testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
     val currencies = parser.parse(testFile)
-    val clearCurrencies = sanitizer.sanitize(currencies)
 
-    bestBuy = evaluator.findBestBuyCourses(clearCurrencies, timestamp)
-    bestSell = evaluator.findBestSellCourses(clearCurrencies, timestamp)
+    bestBuy = evaluator.findBestBuyCourses(currencies, timestamp)
+    bestSell = evaluator.findBestSellCourses(currencies, timestamp)
   }
 
   @Test
