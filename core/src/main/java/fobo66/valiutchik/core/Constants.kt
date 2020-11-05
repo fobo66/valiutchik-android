@@ -27,6 +27,8 @@ const val TAG_NAME_EUR_SELL = "eur_sell"
 const val TAG_NAME_RUR_BUY = "rur_buy"
 const val TAG_NAME_RUR_SELL = "rur_sell"
 
+const val UNKNOWN_COURSE = "-"
+
 @Retention(SOURCE)
 @StringDef(value = [USD, EUR, RUR])
 annotation class CurrencyName

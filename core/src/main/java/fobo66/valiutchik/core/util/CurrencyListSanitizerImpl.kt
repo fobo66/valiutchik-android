@@ -1,5 +1,6 @@
 package fobo66.valiutchik.core.util
 
+import fobo66.valiutchik.core.UNKNOWN_COURSE
 import fobo66.valiutchik.core.entities.Currency
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,8 +29,4 @@ class CurrencyListSanitizerImpl @Inject constructor() : CurrencyListSanitizer {
 
   private fun isCurrencyRateValueValid(value: String) =
     value.isNotEmpty() && value != UNKNOWN_COURSE
-
-  companion object {
-    private const val UNKNOWN_COURSE = "-"
-  }
 }

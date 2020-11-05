@@ -6,6 +6,7 @@ import fobo66.valiutchik.core.CurrencyName
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.SELL_COURSE
+import fobo66.valiutchik.core.UNKNOWN_COURSE
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
 import java.util.regex.Pattern
@@ -30,13 +31,16 @@ class CurrencyEvaluator @Inject constructor() {
     val result: MutableList<BestCourse> = mutableListOf()
 
     currencyKeys.forEach { currencyKey ->
-      val currency =
-        courses.maxByOrNull { resolveCurrencyBuyValue(it, currencyKey) } ?: courses.first()
+      val currency = courses.asSequence()
+        .filter { isBuyRateCorrect(it, currencyKey) }
+        .maxByOrNull { resolveCurrencyBuyRate(it, currencyKey) } ?: courses.first {
+        isBuyRateCorrect(it, currencyKey)
+      }
       result.add(
         BestCourse(
           0L,
           escapeBankName(currency.bankname),
-          resolveCurrencyBuyValue(currency, currencyKey),
+          resolveCurrencyBuyRate(currency, currencyKey),
           currencyKey,
           timestamp,
           BUY_COURSE
@@ -53,13 +57,16 @@ class CurrencyEvaluator @Inject constructor() {
     val result: MutableList<BestCourse> = mutableListOf()
 
     currencyKeys.forEach { currencyKey ->
-      val currency =
-        courses.minByOrNull { resolveCurrencySellValue(it, currencyKey) } ?: courses.first()
+      val currency = courses.asSequence()
+        .filter { isSellRateCorrect(it, currencyKey) }
+        .minByOrNull { resolveCurrencySellRate(it, currencyKey) } ?: courses.first {
+        isSellRateCorrect(it, currencyKey)
+      }
       result.add(
         BestCourse(
           0L,
           escapeBankName(currency.bankname),
-          resolveCurrencySellValue(currency, currencyKey),
+          resolveCurrencySellRate(currency, currencyKey),
           currencyKey,
           timestamp,
           SELL_COURSE
@@ -68,6 +75,16 @@ class CurrencyEvaluator @Inject constructor() {
     }
     return result
   }
+
+  private fun isSellRateCorrect(
+    currency: Currency,
+    currencyKey: String
+  ) = resolveCurrencySellRate(currency, currencyKey) != UNKNOWN_COURSE
+
+  private fun isBuyRateCorrect(
+    currency: Currency,
+    currencyKey: String
+  ) = resolveCurrencyBuyRate(currency, currencyKey) != UNKNOWN_COURSE
 
   private fun escapeBankName(bankName: String): String {
     val matcher = pattern.matcher(bankName)
@@ -79,7 +96,7 @@ class CurrencyEvaluator @Inject constructor() {
    * By default, USD value is returned
    * If I find the better way to do it, I'll rewrite it.
    */
-  private fun resolveCurrencyBuyValue(currency: Currency, @CurrencyName name: String): String {
+  private fun resolveCurrencyBuyRate(currency: Currency, @CurrencyName name: String): String {
     return when (name) {
       EUR -> currency.eurBuy
       RUR -> currency.rurBuy
@@ -91,7 +108,7 @@ class CurrencyEvaluator @Inject constructor() {
   /**
    * See above.
    */
-  private fun resolveCurrencySellValue(currency: Currency, @CurrencyName name: String): String {
+  private fun resolveCurrencySellRate(currency: Currency, @CurrencyName name: String): String {
     return when (name) {
       EUR -> currency.eurSell
       RUR -> currency.rurSell
