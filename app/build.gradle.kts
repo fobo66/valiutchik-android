@@ -13,7 +13,7 @@ val lifecycleVersion = "2.2.0"
 
 android {
   signingConfigs {
-    create("signconfig") {
+    create("releaseSignConfig") {
       val keystoreProperties = loadProperties(rootProject.file("keystore.properties"))
 
       keyAlias = keystoreProperties["keyAlias"].toString()
@@ -53,7 +53,7 @@ android {
       isMinifyEnabled = true
       isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("signconfig")
+      signingConfig = signingConfigs.getByName("releaseSignConfig")
     }
     getByName("debug") {
       isMinifyEnabled = false
@@ -100,7 +100,6 @@ dependencies {
   implementation("androidx.recyclerview:recyclerview:1.1.0")
   implementation("androidx.fragment:fragment-ktx:1.3.0-beta01")
   implementation("androidx.collection:collection-ktx:1.1.0")
-  implementation("androidx.viewpager:viewpager:1.0.0")
   implementation("androidx.core:core-ktx:1.5.0-alpha04")
   implementation("androidx.constraintlayout:constraintlayout:2.0.4")
   implementation("com.google.android.material:material:1.3.0-alpha03")
@@ -118,7 +117,7 @@ dependencies {
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.6.0")
 
   //firebase
-  implementation(platform("com.google.firebase:firebase-bom:25.12.0"))
+  implementation(platform("com.google.firebase:firebase-bom:26.0.0"))
   implementation("com.google.firebase:firebase-analytics-ktx")
   implementation("com.google.firebase:firebase-crashlytics")
 
@@ -142,7 +141,7 @@ dependencies {
   //leakcanary
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.10")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.0")
 
   //tests
   testImplementation("junit:junit:4.13.1")
