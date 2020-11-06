@@ -28,7 +28,6 @@ class SettingsActivity : AppCompatActivity() {
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
   }
 
-
   companion object {
     fun start(activity: Activity) {
       ActivityCompat.startActivity(

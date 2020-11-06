@@ -73,7 +73,6 @@ android {
     jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
 
-
   buildFeatures {
     viewBinding = true
   }
@@ -89,12 +88,12 @@ android {
 dependencies {
   implementation(project(":core"))
 
-  //kotlin
+  // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$kotlinCoroutinesVersion")
 
-  //androidx
+  // androidx
   implementation("androidx.annotation:annotation:1.1.0")
   implementation("androidx.activity:activity-ktx:1.2.0-beta01")
   implementation("androidx.recyclerview:recyclerview:1.1.0")
@@ -106,57 +105,59 @@ dependencies {
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
-  //lifecycle
+  // lifecycle
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
-  //location
+  // location
   implementation("com.google.android.gms:play-services-location:17.1.0")
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.6.0")
 
-  //firebase
+  // firebase
   implementation(platform("com.google.firebase:firebase-bom:26.0.0"))
   implementation("com.google.firebase:firebase-analytics-ktx")
   implementation("com.google.firebase:firebase-crashlytics")
 
-  //room
+  // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
   kapt("androidx.room:room-compiler:$roomVersion")
 
-  //http
+  // http
   implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
 
-  //multidex
+  // multidex
   implementation("androidx.multidex:multidex:2.0.1")
 
-  //timber
+  // timber
   implementation("com.jakewharton.timber:timber:4.7.1")
 
-  //insets
+  // insets
   implementation("dev.chrisbanes:insetter-ktx:0.3.1")
 
-  //leakcanary
+  // leakcanary
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.0")
 
-  //tests
+  // tests
   testImplementation("junit:junit:4.13.1")
   testImplementation("androidx.test:core:1.3.0")
   testImplementation("io.mockk:mockk:1.10.2")
   testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
-  androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  androidTestImplementation(
+    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
+  )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("app.cash.turbine:turbine:0.2.1")
   androidTestImplementation("androidx.test:runner:1.3.0")
 
-  //dagger
-  implementation("com.google.dagger:dagger:${daggerVersion}")
+  // dagger
+  implementation("com.google.dagger:dagger:$daggerVersion")
   kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 }
 

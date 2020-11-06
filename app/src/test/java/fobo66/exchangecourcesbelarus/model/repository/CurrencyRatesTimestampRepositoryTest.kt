@@ -18,7 +18,6 @@ class CurrencyRatesTimestampRepositoryTest {
 
   private val now = LocalDateTime.now()
 
-
   @Before
   fun setUp() {
     currencyRatesTimestampRepository = CurrencyRatesTimestampRepository(preferencesDataSource)
@@ -77,5 +76,4 @@ class CurrencyRatesTimestampRepositoryTest {
 
     assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
-
 }

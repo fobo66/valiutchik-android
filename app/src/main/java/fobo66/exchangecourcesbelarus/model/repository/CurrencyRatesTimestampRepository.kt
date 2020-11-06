@@ -12,7 +12,6 @@ class CurrencyRatesTimestampRepository @Inject constructor(
 
   private val maxStalePeriod: Duration = Duration.ofHours(3)
 
-
   fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
     val timestamp = loadTimestamp(now)
     val cachedValueAge = Duration.between(timestamp, now)
@@ -34,5 +33,4 @@ class CurrencyRatesTimestampRepository @Inject constructor(
       LocalDateTime.parse(rawTimestamp)
     }
   }
-
 }
