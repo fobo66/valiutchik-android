@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -133,7 +132,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     setBuySellIndicator(control.isChecked)
 
-    control.setOnCheckedChangeListener { _ , isChecked ->
+    control.setOnCheckedChangeListener { _, isChecked ->
       showRefreshSpinner()
 
       Firebase.analytics.logEvent("buy_sell_switch_toggled") {
