@@ -113,7 +113,7 @@ dependencies {
 
   // location
   implementation("com.google.android.gms:play-services-location:17.1.0")
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.6.0")
+  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.7.0")
 
   // firebase
   implementation(platform("com.google.firebase:firebase-bom:26.0.0"))
