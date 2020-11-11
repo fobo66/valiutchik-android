@@ -18,9 +18,9 @@ import javax.inject.Singleton
  * Created by fobo66 on 05.02.2017.
  */
 @Singleton
-class CurrencyEvaluator @Inject constructor() {
+class BestCourseProducer @Inject constructor() {
 
-  private val pattern: Pattern by lazy { "([\"«])[^\"]*([\"»])".toPattern() }
+  private val bankNamePattern: Pattern by lazy { "([\"«])[^\"]*([\"»])".toPattern() }
 
   private val currencyKeys by lazy { listOf(USD, EUR, RUR) }
 
@@ -87,7 +87,7 @@ class CurrencyEvaluator @Inject constructor() {
   ) = resolveCurrencyBuyRate(currency, currencyKey) != UNKNOWN_COURSE
 
   private fun escapeBankName(bankName: String): String {
-    val matcher = pattern.matcher(bankName)
+    val matcher = bankNamePattern.matcher(bankName)
     return if (matcher.find()) matcher.group(0) ?: bankName else bankName
   }
 

@@ -10,10 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Benchmark, which will execute on an Android device.
- *
- * The body of [BenchmarkRule.measureRepeated] is measured in a loop, and Studio will
- * output the result. Modify your code to see how it affects performance.
+ * Benchmark for the XML parser
  */
 @RunWith(AndroidJUnit4::class)
 class MyfinParserBenchmark {

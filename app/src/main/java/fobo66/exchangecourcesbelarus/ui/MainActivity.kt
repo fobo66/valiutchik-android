@@ -150,9 +150,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     binding.swipeRefresh.post(hideRefreshSpinnerRunnable)
   }
 
-  private fun setBuySellIndicator(buyOrSell: Boolean) {
+  private fun setBuySellIndicator(isBuy: Boolean) {
     binding.buysellIndicator.setText(
-      if (buyOrSell) {
+      if (isBuy) {
         R.string.buy
       } else {
         R.string.sell

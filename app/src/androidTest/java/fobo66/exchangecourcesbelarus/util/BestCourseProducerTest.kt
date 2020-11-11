@@ -15,8 +15,8 @@ import java.time.LocalDateTime
  * Test cases for my algorithm. Check that value resolved as best is correct based on real
  * data from server saved in resources
  */
-class CurrencyEvaluatorTest {
-  private lateinit var evaluator: CurrencyEvaluator
+class BestCourseProducerTest {
+  private lateinit var evaluator: BestCourseProducer
   private lateinit var bestBuy: List<BestCourse>
   private lateinit var bestSell: List<BestCourse>
   private lateinit var testFile: InputStream
@@ -29,7 +29,7 @@ class CurrencyEvaluatorTest {
 
   @Before
   fun setUp() {
-    evaluator = CurrencyEvaluator()
+    evaluator = BestCourseProducer()
     testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
     val currencies = parser.parse(testFile)
 

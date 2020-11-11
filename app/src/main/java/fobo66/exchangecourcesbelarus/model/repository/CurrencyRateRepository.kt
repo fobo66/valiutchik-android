@@ -4,7 +4,7 @@ import fobo66.exchangecourcesbelarus.di.Io
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
-import fobo66.exchangecourcesbelarus.util.CurrencyEvaluator
+import fobo66.exchangecourcesbelarus.util.BestCourseProducer
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,7 +20,7 @@ import javax.inject.Inject
  */
 class CurrencyRateRepository @Inject constructor(
   private val parser: CurrencyRatesParser,
-  private val currencyEvaluator: CurrencyEvaluator,
+  private val bestCourseProducer: BestCourseProducer,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
   @Io private val ioDispatcher: CoroutineDispatcher
@@ -53,8 +53,8 @@ class CurrencyRateRepository @Inject constructor(
   ): List<BestCourse> {
     val bestCourses = mutableListOf<BestCourse>()
 
-    bestCourses.addAll(currencyEvaluator.findBestBuyCourses(currencies, now))
-    bestCourses.addAll(currencyEvaluator.findBestSellCourses(currencies, now))
+    bestCourses.addAll(bestCourseProducer.findBestBuyCourses(currencies, now))
+    bestCourses.addAll(bestCourseProducer.findBestSellCourses(currencies, now))
     return bestCourses
   }
 }
