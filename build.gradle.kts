@@ -14,9 +14,20 @@ buildscript {
   }
 }
 
+plugins {
+  id("io.gitlab.arturbosch.detekt").version("1.14.2")
+}
+
 allprojects {
   repositories {
     jcenter()
     google()
+  }
+}
+
+tasks {
+  withType<io.gitlab.arturbosch.detekt.Detekt> {
+    // Target version of the generated JVM bytecode. It is used for type resolution.
+    this.jvmTarget = "1.8"
   }
 }
