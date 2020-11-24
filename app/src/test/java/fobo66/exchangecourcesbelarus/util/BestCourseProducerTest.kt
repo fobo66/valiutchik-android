@@ -4,7 +4,7 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
-import fobo66.valiutchik.core.util.MyfinParser
+import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -23,8 +23,8 @@ class BestCourseProducerTest {
 
   private val timestamp = LocalDateTime.now().toString()
 
-  private val parser: MyfinParser by lazy {
-    MyfinParser()
+  private val parser: CurrencyRatesParser by lazy {
+    TestMyfinParser()
   }
 
   @Before
