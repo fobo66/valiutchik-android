@@ -19,7 +19,7 @@ class BestCourseProducerTest {
   private lateinit var bestBuy: List<BestCourse>
   private lateinit var bestSell: List<BestCourse>
 
-  private val testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
+  private val testFile = javaClass.classLoader?.getResourceAsStream("myfinTestData.xml")!!
 
   private val timestamp = LocalDateTime.now().toString()
 
