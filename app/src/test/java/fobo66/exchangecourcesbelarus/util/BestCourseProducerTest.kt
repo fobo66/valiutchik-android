@@ -8,7 +8,6 @@ import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.io.InputStream
 import java.time.LocalDateTime
 
 /**
@@ -16,10 +15,11 @@ import java.time.LocalDateTime
  * data from server saved in resources
  */
 class BestCourseProducerTest {
-  private lateinit var evaluator: BestCourseProducer
+  private lateinit var sut: BestCourseProducer
   private lateinit var bestBuy: List<BestCourse>
   private lateinit var bestSell: List<BestCourse>
-  private lateinit var testFile: InputStream
+
+  private val testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
 
   private val timestamp = LocalDateTime.now().toString()
 
@@ -29,12 +29,11 @@ class BestCourseProducerTest {
 
   @Before
   fun setUp() {
-    evaluator = BestCourseProducer()
-    testFile = javaClass.classLoader?.getResourceAsStream("data.xml")!!
+    sut = BestCourseProducer()
     val currencies = parser.parse(testFile)
 
-    bestBuy = evaluator.findBestBuyCourses(currencies, timestamp)
-    bestSell = evaluator.findBestSellCourses(currencies, timestamp)
+    bestBuy = sut.findBestBuyCourses(currencies, timestamp)
+    bestSell = sut.findBestSellCourses(currencies, timestamp)
   }
 
   @Test
