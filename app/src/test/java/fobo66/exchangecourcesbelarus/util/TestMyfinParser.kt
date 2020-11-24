@@ -60,10 +60,9 @@ class TestMyfinParser : CurrencyRatesParser {
     var currencyBuilder: CurrencyBuilder = CurrencyBuilderImpl()
     for (index in 0 until nodes.length) {
       val node = nodes.item(index)
-      fieldName = node?.nodeName ?: ""
-      println("$fieldName -> ${node?.textContent}")
+      fieldName = node?.nodeName.orEmpty()
       if (isTagNeeded(fieldName)) {
-        currencyBuilder = currencyBuilder.with(fieldName, node?.textContent ?: "")
+        currencyBuilder = currencyBuilder.with(fieldName, node?.textContent.orEmpty())
       }
     }
 
