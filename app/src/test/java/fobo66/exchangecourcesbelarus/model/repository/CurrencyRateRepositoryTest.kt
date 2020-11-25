@@ -57,8 +57,8 @@ class CurrencyRateRepositoryTest {
 
     every { parser.parse(any()) } returns setOf(Currency())
 
-    every { currencyEvaluator.findBestBuyCourses(any(), any()) } returns emptyList()
-    every { currencyEvaluator.findBestSellCourses(any(), any()) } returns emptyList()
+    every { currencyEvaluator.findBestBuyCurrencies(any()) } returns emptyMap()
+    every { currencyEvaluator.findBestSellCurrencies(any()) } returns emptyMap()
 
     coEvery {
       preferencesDataSource.saveString(any(), any())

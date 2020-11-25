@@ -1,14 +1,13 @@
 package fobo66.exchangecourcesbelarus.util
 
-import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
+import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDateTime
 
 /**
  * Test cases for my algorithm. Check that value resolved as best is correct based on real
@@ -16,12 +15,10 @@ import java.time.LocalDateTime
  */
 class BestCourseProducerTest {
   private lateinit var sut: BestCourseProducer
-  private lateinit var bestBuy: List<BestCourse>
-  private lateinit var bestSell: List<BestCourse>
+  private lateinit var bestBuy: Map<String, Currency>
+  private lateinit var bestSell: Map<String, Currency>
 
   private val testFile = javaClass.classLoader?.getResourceAsStream("myfinTestData.xml")!!
-
-  private val timestamp = LocalDateTime.now().toString()
 
   private val parser: CurrencyRatesParser by lazy {
     TestMyfinParser()
@@ -32,44 +29,38 @@ class BestCourseProducerTest {
     sut = BestCourseProducer()
     val currencies = parser.parse(testFile)
 
-    bestBuy = sut.findBestBuyCourses(currencies, timestamp)
-    bestSell = sut.findBestSellCourses(currencies, timestamp)
+    bestBuy = sut.findBestBuyCurrencies(currencies)
+    bestSell = sut.findBestSellCurrencies(currencies)
   }
 
   @Test
   fun testBestUSDBuyCoursesAreReallyBest() {
-    assertEquals(USD, bestBuy[USD_INDEX].currencyName)
-    assertEquals("1.925", bestBuy[USD_INDEX].currencyValue)
+    assertEquals("1.925", bestBuy[USD]?.usdBuy)
   }
 
   @Test
   fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals(RUR, bestBuy[RUR_INDEX].currencyName)
-    assertEquals("0.0324", bestBuy[RUR_INDEX].currencyValue)
+    assertEquals("0.0324", bestBuy[RUR]?.rurBuy)
   }
 
   @Test
   fun testBestEURBuyCourseAreReallyBest() {
-    assertEquals(EUR, bestBuy[EUR_INDEX].currencyName)
-    assertEquals("2.075", bestBuy[EUR_INDEX].currencyValue)
+    assertEquals("2.075", bestBuy[EUR]?.eurBuy)
   }
 
   @Test
   fun testBestUSDSellCoursesAreReallyBest() {
-    assertEquals(USD, bestSell[USD_INDEX].currencyName)
-    assertEquals("1.914", bestSell[USD_INDEX].currencyValue)
+    assertEquals("1.914", bestSell[USD]?.usdSell)
   }
 
   @Test
   fun testBestRURSellCourseAreReallyBest() {
-    assertEquals(RUR, bestSell[RUR_INDEX].currencyName)
-    assertEquals("0.0323", bestSell[RUR_INDEX].currencyValue)
+    assertEquals("0.0323", bestSell[RUR]?.rurSell)
   }
 
   @Test
   fun testBestEURSellCourseAreReallyBest() {
-    assertEquals(EUR, bestSell[EUR_INDEX].currencyName)
-    assertEquals("2.038", bestSell[EUR_INDEX].currencyValue)
+    assertEquals("2.038", bestSell[EUR]?.eurSell)
   }
 
   companion object {
