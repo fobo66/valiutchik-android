@@ -32,7 +32,7 @@ class CurrencyRateRepositoryTest {
   private lateinit var currencyRateRepository: CurrencyRateRepository
 
   private val parser = mockk<CurrencyRatesParser>()
-  private val currencyEvaluator = mockk<BestCourseProducer>()
+  private val bestCourseProducer = mockk<BestCourseProducer>()
   private val persistenceDataSource = mockk<PersistenceDataSource>()
   private val preferencesDataSource = mockk<PreferencesDataSource>()
   private val currencyRatesDataSource = mockk<CurrencyRatesDataSource>()
@@ -57,8 +57,8 @@ class CurrencyRateRepositoryTest {
 
     every { parser.parse(any()) } returns setOf(Currency())
 
-    every { currencyEvaluator.findBestBuyCurrencies(any()) } returns emptyMap()
-    every { currencyEvaluator.findBestSellCurrencies(any()) } returns emptyMap()
+    every { bestCourseProducer.findBestBuyCurrencies(any()) } returns emptyMap()
+    every { bestCourseProducer.findBestSellCurrencies(any()) } returns emptyMap()
 
     coEvery {
       preferencesDataSource.saveString(any(), any())
@@ -70,7 +70,7 @@ class CurrencyRateRepositoryTest {
 
     currencyRateRepository = CurrencyRateRepository(
       parser,
-      currencyEvaluator,
+      bestCourseProducer,
       persistenceDataSource,
       currencyRatesDataSource,
       ioDispatcher

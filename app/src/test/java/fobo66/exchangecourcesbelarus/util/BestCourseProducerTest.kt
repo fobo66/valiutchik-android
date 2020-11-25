@@ -14,7 +14,7 @@ import org.junit.Test
  * data from server saved in resources
  */
 class BestCourseProducerTest {
-  private lateinit var sut: BestCourseProducer
+  private lateinit var bestCourseProducer: BestCourseProducer
   private lateinit var bestBuy: Map<String, Currency>
   private lateinit var bestSell: Map<String, Currency>
 
@@ -26,46 +26,49 @@ class BestCourseProducerTest {
 
   @Before
   fun setUp() {
-    sut = BestCourseProducer()
+    bestCourseProducer = BestCourseProducer()
     val currencies = parser.parse(testFile)
 
-    bestBuy = sut.findBestBuyCurrencies(currencies)
-    bestSell = sut.findBestSellCurrencies(currencies)
+    bestBuy = bestCourseProducer.findBestBuyCurrencies(currencies)
+    bestSell = bestCourseProducer.findBestSellCurrencies(currencies)
   }
 
   @Test
   fun testBestUSDBuyCoursesAreReallyBest() {
-    assertEquals("1.925", bestBuy[USD]?.usdBuy)
+    assertEquals(BEST_USD_BUY, bestBuy[USD]?.usdBuy)
   }
 
   @Test
   fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals("0.0324", bestBuy[RUR]?.rurBuy)
+    assertEquals(BEST_RUR_BUY, bestBuy[RUR]?.rurBuy)
   }
 
   @Test
   fun testBestEURBuyCourseAreReallyBest() {
-    assertEquals("2.075", bestBuy[EUR]?.eurBuy)
+    assertEquals(BEST_EUR_BUY, bestBuy[EUR]?.eurBuy)
   }
 
   @Test
   fun testBestUSDSellCoursesAreReallyBest() {
-    assertEquals("1.914", bestSell[USD]?.usdSell)
+    assertEquals(BEST_USD_SELL, bestSell[USD]?.usdSell)
   }
 
   @Test
   fun testBestRURSellCourseAreReallyBest() {
-    assertEquals("0.0323", bestSell[RUR]?.rurSell)
+    assertEquals(BEST_RUR_SELL, bestSell[RUR]?.rurSell)
   }
 
   @Test
   fun testBestEURSellCourseAreReallyBest() {
-    assertEquals("2.038", bestSell[EUR]?.eurSell)
+    assertEquals(BEST_EUR_SELL, bestSell[EUR]?.eurSell)
   }
 
   companion object {
-    const val USD_INDEX = 0
-    const val EUR_INDEX = 1
-    const val RUR_INDEX = 2
+    const val BEST_USD_BUY = "1.925"
+    const val BEST_USD_SELL = "1.914"
+    const val BEST_EUR_BUY = "2.075"
+    const val BEST_EUR_SELL = "2.038"
+    const val BEST_RUR_BUY = "0.0324"
+    const val BEST_RUR_SELL = "0.0323"
   }
 }
