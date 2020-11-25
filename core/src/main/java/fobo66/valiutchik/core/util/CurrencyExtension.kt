@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.core.CurrencyName
 import fobo66.valiutchik.core.EUR

@@ -5,7 +5,8 @@ import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.UNKNOWN_COURSE
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
-import java.util.regex.Pattern
+import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
+import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import javax.inject.Inject
 import javax.inject.Singleton
 

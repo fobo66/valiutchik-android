@@ -5,8 +5,8 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.BestCourseProducer
-import fobo66.exchangecourcesbelarus.util.resolveCurrencyBuyRate
-import fobo66.exchangecourcesbelarus.util.resolveCurrencySellRate
+import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
+import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.Currency
