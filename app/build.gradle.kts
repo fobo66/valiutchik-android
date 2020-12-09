@@ -90,13 +90,13 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.1.0")
-  implementation("androidx.activity:activity-ktx:1.2.0-beta01")
+  implementation("androidx.activity:activity-ktx:1.2.0-beta02")
   implementation("androidx.recyclerview:recyclerview:1.1.0")
-  implementation("androidx.fragment:fragment-ktx:1.3.0-beta01")
+  implementation("androidx.fragment:fragment-ktx:1.3.0-beta02")
   implementation("androidx.collection:collection-ktx:1.1.0")
   implementation("androidx.core:core-ktx:1.5.0-alpha05")
   implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-  implementation("com.google.android.material:material:1.3.0-alpha03")
+  implementation("com.google.android.material:material:1.3.0-alpha04")
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
