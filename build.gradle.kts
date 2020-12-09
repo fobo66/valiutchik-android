@@ -6,7 +6,7 @@ buildscript {
     google()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:4.2.0-alpha16")
+    classpath("com.android.tools.build:gradle:7.0.0-alpha02")
     classpath("com.google.gms:google-services:4.3.4")
     classpath("com.google.firebase:firebase-crashlytics-gradle:2.4.1")
     classpath(kotlin("gradle-plugin", version = "1.4.20"))
