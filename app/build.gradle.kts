@@ -148,7 +148,7 @@ dependencies {
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("app.cash.turbine:turbine:0.2.1")
+  androidTestImplementation("app.cash.turbine:turbine:0.3.0")
   androidTestImplementation("androidx.test:runner:1.3.0")
 
   // dagger
