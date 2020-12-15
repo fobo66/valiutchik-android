@@ -5,7 +5,7 @@ plugins {
   kotlin("kapt")
 }
 val kotlinVersion = "1.4.10"
-val kotlinCoroutinesVersion = "1.3.9"
+val kotlinCoroutinesVersion = "1.4.2-native-mt"
 val okhttpVersion = "4.9.0"
 val daggerVersion = "2.29.1"
 val roomVersion = "2.2.5"
