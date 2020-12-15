@@ -4,7 +4,8 @@ plugins {
   kotlin("android")
   kotlin("kapt")
 }
-val kotlinVersion = "1.4.10"
+
+val kotlinVersion = "1.4.21"
 val kotlinCoroutinesVersion = "1.3.9"
 val okhttpVersion = "4.9.0"
 val daggerVersion = "2.30.1"
@@ -75,6 +76,13 @@ android {
 
   buildFeatures {
     viewBinding = true
+  }
+
+  packagingOptions {
+    resources {
+      excludes += "META-INF/AL2.0"
+      excludes += "META-INF/LGPL2.1"
+    }
   }
 
   testOptions.unitTests.isIncludeAndroidResources = true
