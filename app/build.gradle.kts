@@ -119,7 +119,7 @@ dependencies {
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.7.0")
 
   // firebase
-  implementation(platform("com.google.firebase:firebase-bom:26.0.0"))
+  implementation(platform("com.google.firebase:firebase-bom:26.1.1"))
   implementation("com.google.firebase:firebase-analytics-ktx")
   implementation("com.google.firebase:firebase-crashlytics")
 
