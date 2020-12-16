@@ -6,7 +6,7 @@ plugins {
 }
 
 val kotlinVersion = "1.4.21"
-val kotlinCoroutinesVersion = "1.3.9"
+val kotlinCoroutinesVersion = "1.4.1"
 val okhttpVersion = "4.9.0"
 val daggerVersion = "2.30.1"
 val roomVersion = "2.2.5"
