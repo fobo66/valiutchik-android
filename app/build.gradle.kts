@@ -98,7 +98,7 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.1.0")
-  implementation("androidx.activity:activity-ktx:1.2.0-beta02")
+  implementation("androidx.activity:activity-ktx:1.2.0-rc01")
   implementation("androidx.recyclerview:recyclerview:1.1.0")
   implementation("androidx.fragment:fragment-ktx:1.3.0-beta02")
   implementation("androidx.collection:collection-ktx:1.1.0")
