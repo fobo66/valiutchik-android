@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import java.io.File
 import javax.inject.Qualifier
@@ -15,11 +18,12 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
  * Created 11/18/19.
  */
 @Module
+@InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
   @Provides
   @Singleton
-  fun provideDatabase(context: Context): CurrencyRatesDatabase =
+  fun provideDatabase(@ApplicationContext context: Context): CurrencyRatesDatabase =
     Room.databaseBuilder(
       context,
       CurrencyRatesDatabase::class.java,
@@ -29,7 +33,7 @@ object DatabaseModule {
   @Provides
   @Singleton
   @CacheDirectory
-  fun provideCacheDirectory(context: Context): File = context.cacheDir
+  fun provideCacheDirectory(@ApplicationContext context: Context): File = context.cacheDir
 }
 
 @Qualifier

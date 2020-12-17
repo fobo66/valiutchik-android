@@ -3,12 +3,14 @@ plugins {
   id("com.google.firebase.crashlytics")
   kotlin("android")
   kotlin("kapt")
+  id("dagger.hilt.android.plugin")
 }
 
 val kotlinVersion = "1.4.21"
 val kotlinCoroutinesVersion = "1.4.1"
 val okhttpVersion = "4.9.0"
-val daggerVersion = "2.30.1"
+val hiltVersion = "2.30.1-alpha"
+val androidxHiltVersion = "1.0.0-alpha02"
 val roomVersion = "2.2.5"
 val lifecycleVersion = "2.2.0"
 
@@ -160,8 +162,10 @@ dependencies {
   androidTestImplementation("androidx.test:runner:1.3.0")
 
   // dagger
-  implementation("com.google.dagger:dagger:$daggerVersion")
-  kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+  implementation("com.google.dagger:hilt-android:$hiltVersion")
+  implementation("androidx.hilt:hilt-lifecycle-viewmodel:$androidxHiltVersion")
+  kapt("androidx.hilt:hilt-compiler:$androidxHiltVersion")
+  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 }
 
 apply(plugin = "com.google.gms.google-services")

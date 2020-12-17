@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +14,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDateTime
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel @ViewModelInject constructor(
   private val refreshExchangeRates: RefreshExchangeRates,
   private val loadExchangeRates: LoadExchangeRates
 ) : ViewModel() {

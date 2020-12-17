@@ -9,13 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,18 +25,19 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
-import fobo66.exchangecourcesbelarus.di.injector
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.LazyThreadSafetyMode.NONE
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
-  private lateinit var viewModel: MainViewModel
+  private val viewModel: MainViewModel by viewModels()
   private lateinit var binding: ActivityMainBinding
 
   private lateinit var bestCoursesAdapter: BestCurrencyRatesAdapter
@@ -71,9 +72,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
-
-    viewModel =
-      ViewModelProvider(this, injector.mainViewModelFactory()).get(MainViewModel::class.java)
 
     setupLayout()
     setupCoursesList()

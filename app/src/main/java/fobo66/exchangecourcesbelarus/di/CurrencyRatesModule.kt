@@ -2,6 +2,8 @@ package fobo66.exchangecourcesbelarus.di
 
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRatesImpl
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
@@ -16,6 +18,7 @@ import fobo66.valiutchik.core.util.MyfinParser
  * Created 11/8/19.
  */
 @Module
+@InstallIn(SingletonComponent::class)
 abstract class CurrencyRatesModule {
 
   @Binds
