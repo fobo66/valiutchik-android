@@ -192,6 +192,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     binding.toolbar.setOnMenuItemClickListener(this)
 
-    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.toolbar)
+    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.appbar)
   }
 }
