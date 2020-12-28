@@ -27,6 +27,8 @@ class SettingsActivity : AppCompatActivity() {
   }
 
   private fun setupActionBar() {
+    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP or Side.RIGHT or Side.LEFT)
+      .applyToView(binding.toolbar)
     binding.toolbar.setNavigationOnClickListener {
       onBackPressedDispatcher.onBackPressed()
     }
