@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     }
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    setTheme(R.style.ExchangeCoursesTheme)
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
@@ -192,6 +193,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     binding.toolbar.setOnMenuItemClickListener(this)
 
-    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.appbar)
+    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.toolbar)
   }
 }
