@@ -11,19 +11,6 @@
       android:layout_height="match_parent"
       >
 
-    <TextView
-        android:id="@+id/buysell_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/swipe_refresh"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"
-        tools:text="@string/buy"
-        />
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
 
@@ -53,7 +40,7 @@
         android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintTop_toBottomOf="@id/buysell_indicator"
         >
 
       <androidx.recyclerview.widget.RecyclerView
@@ -67,6 +54,19 @@
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/buysell_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/swipe_refresh"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        tools:text="@string/buy"
+        />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
