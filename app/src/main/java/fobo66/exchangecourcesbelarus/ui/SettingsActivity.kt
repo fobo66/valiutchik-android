@@ -20,7 +20,7 @@ class SettingsActivity : AppCompatActivity() {
     binding = ActivitySettingsBinding.inflate(layoutInflater)
     setContentView(binding.root)
     setupActionBar()
-    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.appbar)
+    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.toolbar)
     supportFragmentManager.beginTransaction()
       .replace(id.settings_container, SettingsFragment())
       .commit()
