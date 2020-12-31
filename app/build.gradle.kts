@@ -1,6 +1,5 @@
 plugins {
   id("com.android.application")
-  id("com.google.firebase.crashlytics")
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
@@ -58,12 +57,6 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("releaseSignConfig")
     }
-    getByName("debug") {
-      isMinifyEnabled = false
-      firebaseCrashlytics {
-        mappingFileUploadEnabled = false
-      }
-    }
   }
   compileOptions {
     isCoreLibraryDesugaringEnabled = true
@@ -120,11 +113,6 @@ dependencies {
   implementation("com.google.android.gms:play-services-location:17.1.0")
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.7.0")
 
-  // firebase
-  implementation(platform("com.google.firebase:firebase-bom:26.2.0"))
-  implementation("com.google.firebase:firebase-analytics-ktx")
-  implementation("com.google.firebase:firebase-crashlytics")
-
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
@@ -167,5 +155,3 @@ dependencies {
   kapt("androidx.hilt:hilt-compiler:$androidxHiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 }
-
-apply(plugin = "com.google.gms.google-services")

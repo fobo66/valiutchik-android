@@ -21,10 +21,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
@@ -104,7 +100,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
       showRefreshSpinner()
-      Firebase.analytics.logEvent("load_exchange_rates", Bundle.EMPTY)
+
       val locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
       lifecycleScope.launch {
         val location: Location? = locationProviderClient.lastLocation.await()
@@ -134,9 +130,6 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     control.setOnCheckedChangeListener { _, isChecked ->
       showRefreshSpinner()
 
-      Firebase.analytics.logEvent("buy_sell_switch_toggled") {
-        param(FirebaseAnalytics.Param.VALUE, isChecked.toString())
-      }
       viewModel.updateBuySell(isChecked)
     }
   }

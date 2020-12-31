@@ -11,11 +11,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics.Event
-import com.google.firebase.analytics.FirebaseAnalytics.Param
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.CurrencyCardBinding
 import fobo66.valiutchik.core.entities.BestCurrencyRate
@@ -45,7 +40,6 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
     val mapIntent = Intent(Intent.ACTION_VIEW, req)
 
     if (mapIntent.resolveActivity(itemView.context.packageManager) != null) {
-      trackEvent()
       ActivityCompat.startActivity(view.context, mapIntent, null)
     } else {
       Timber.e("Failed to show banks on map: maps app not found")
@@ -59,13 +53,5 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
     clipboardManager?.setPrimaryClip(clipData)
     Snackbar.make(itemView, R.string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
     return true
-  }
-
-  private fun trackEvent() {
-    Firebase.analytics.logEvent(
-      Event.VIEW_ITEM
-    ) {
-      param(Param.CURRENCY, binding.currencyName.text.toString())
-    }
   }
 }

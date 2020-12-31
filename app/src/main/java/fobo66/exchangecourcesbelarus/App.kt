@@ -1,9 +1,7 @@
 package fobo66.exchangecourcesbelarus
 
 import androidx.multidex.MultiDexApplication
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
-import fobo66.exchangecourcesbelarus.util.CrashlyticsTree
 import timber.log.Timber
 
 /**
@@ -17,8 +15,6 @@ open class App : MultiDexApplication() {
     super.onCreate()
     if (BuildConfig.DEBUG) {
       Timber.plant(Timber.DebugTree())
-    } else {
-      Timber.plant(CrashlyticsTree(FirebaseCrashlytics.getInstance()))
     }
   }
 }
