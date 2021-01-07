@@ -3,6 +3,7 @@ package fobo66.exchangecourcesbelarus.model.repository
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
 import fobo66.exchangecourcesbelarus.util.BestCourseProducer
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.util.CurrencyRatesParser
@@ -73,6 +74,7 @@ class CurrencyRateRepositoryTest {
       bestCourseProducer,
       persistenceDataSource,
       currencyRatesDataSource,
+      BankNameNormalizer(),
       ioDispatcher
     )
   }

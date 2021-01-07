@@ -4,6 +4,7 @@ import fobo66.exchangecourcesbelarus.di.Io
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
+import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
 import fobo66.exchangecourcesbelarus.util.BestCourseProducer
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
@@ -28,6 +29,7 @@ class CurrencyRateRepository @Inject constructor(
   private val bestCourseProducer: BestCourseProducer,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
+  private val bankNameNormalizer: BankNameNormalizer,
   @Io private val ioDispatcher: CoroutineDispatcher
 ) {
 
@@ -66,7 +68,7 @@ class CurrencyRateRepository @Inject constructor(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        currency.bankname,
+        bankNameNormalizer.normalize(currency.bankname),
         currency.resolveCurrencyBuyRate(currencyKey),
         currencyKey,
         now,
@@ -81,7 +83,7 @@ class CurrencyRateRepository @Inject constructor(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        currency.bankname,
+        bankNameNormalizer.normalize(currency.bankname),
         currency.resolveCurrencySellRate(currencyKey),
         currencyKey,
         now,
