@@ -30,7 +30,6 @@ class CurrencyRateRepository @Inject constructor(
   private val currencyRatesDataSource: CurrencyRatesDataSource,
   @Io private val ioDispatcher: CoroutineDispatcher
 ) {
-  private val bankNamePattern: Pattern by lazy { "([\"«])[^\"]*([\"»])".toPattern() }
 
   suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
     val currenciesResponse = try {
@@ -67,7 +66,7 @@ class CurrencyRateRepository @Inject constructor(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        escapeBankName(currency.bankname),
+        currency.bankname,
         currency.resolveCurrencyBuyRate(currencyKey),
         currencyKey,
         now,
@@ -82,16 +81,11 @@ class CurrencyRateRepository @Inject constructor(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        escapeBankName(currency.bankname),
+        currency.bankname,
         currency.resolveCurrencySellRate(currencyKey),
         currencyKey,
         now,
         SELL_COURSE
       )
     }
-
-  private fun escapeBankName(bankName: String): String {
-    val matcher = bankNamePattern.matcher(bankName)
-    return if (matcher.find()) matcher.group(0) ?: bankName else bankName
-  }
 }
