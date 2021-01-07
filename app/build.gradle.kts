@@ -33,8 +33,8 @@ android {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = 16
     targetSdk = 30
-    versionCode = 15
-    versionName = "1.11"
+    versionCode = 16
+    versionName = "1.11.1"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
