@@ -36,7 +36,7 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
 
   override fun onClick(view: View) {
     val req =
-      Uri.parse("geo:0,0?q=" + binding.bankName.text.toString().replace(' ', '+'))
+      Uri.parse("geo:0,0?q=${binding.bankName.text.toString().replace(' ', '+')}")
     val mapIntent = Intent(Intent.ACTION_VIEW, req)
 
     if (mapIntent.resolveActivity(itemView.context.packageManager) != null) {
@@ -49,7 +49,7 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
 
   override fun onLongClick(view: View): Boolean {
     val clipData = ClipData.newPlainText(binding.currencyName.text, binding.currencyValue.text)
-    val clipboardManager: ClipboardManager? = itemView.context.getSystemService()
+    val clipboardManager = itemView.context.getSystemService<ClipboardManager>()
     clipboardManager?.setPrimaryClip(clipData)
     Snackbar.make(itemView, R.string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
     return true
