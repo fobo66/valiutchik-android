@@ -3,14 +3,17 @@ package fobo66.exchangecourcesbelarus.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDateTime
@@ -22,17 +25,18 @@ class MainViewModel @Inject constructor(
   private val loadExchangeRates: LoadExchangeRates
 ) : ViewModel() {
 
-  val buyOrSell: LiveData<Boolean>
+  val buyOrSell: StateFlow<Boolean>
     get() = _buyOrSell
 
-  val bestCurrencyRates: LiveData<List<BestCurrencyRate>>
+  @ExperimentalCoroutinesApi
+  val bestCurrencyRates: Flow<List<BestCurrencyRate>>
     get() = buyOrSell
-      .switchMap { loadExchangeRates.execute(it).asLiveData() }
+      .flatMapLatest { loadExchangeRates.execute(it) }
 
   val errors: LiveData<Throwable>
     get() = _errors
 
-  private val _buyOrSell = MutableLiveData(false)
+  private val _buyOrSell = MutableStateFlow(false)
   private val _errors = MutableLiveData<Throwable>()
 
   private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -40,8 +44,8 @@ class MainViewModel @Inject constructor(
     _errors.postValue(throwable)
   }
 
-  fun updateBuySell(buySell: Boolean) {
-    _buyOrSell.postValue(buySell)
+  suspend fun updateBuySell(buySell: Boolean) {
+    _buyOrSell.emit(buySell)
   }
 
   fun refreshExchangeRates(latitude: Double, longitude: Double) =

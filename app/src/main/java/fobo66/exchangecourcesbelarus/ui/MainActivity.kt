@@ -27,6 +27,8 @@ import dev.chrisbanes.insetter.Side
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.LazyThreadSafetyMode.NONE
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       }
     }
 
+  @ExperimentalCoroutinesApi
   override fun onCreate(savedInstanceState: Bundle?) {
     setTheme(R.style.ExchangeCoursesTheme)
     super.onCreate(savedInstanceState)
@@ -114,9 +117,11 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   }
 
   private fun setupBuyOrSellObserver() {
-    viewModel.buyOrSell.observe(this) {
-      refreshExchangeRates()
-      setBuySellIndicator(it)
+    lifecycleScope.launchWhenCreated {
+      viewModel.buyOrSell.collect {
+        refreshExchangeRates()
+        setBuySellIndicator(it)
+      }
     }
   }
 
@@ -130,7 +135,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     control.setOnCheckedChangeListener { _, isChecked ->
       showRefreshSpinner()
 
-      viewModel.updateBuySell(isChecked)
+      lifecycleScope.launchWhenCreated {
+        viewModel.updateBuySell(isChecked)
+      }
     }
   }
 
@@ -159,6 +166,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }
 
+  @ExperimentalCoroutinesApi
   private fun setupCoursesList() {
     bestCoursesAdapter = BestCurrencyRatesAdapter()
     binding.coursesList.apply {
@@ -167,11 +175,15 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       adapter = bestCoursesAdapter
       setHasFixedSize(true)
     }
-    viewModel.bestCurrencyRates.observe(this) {
-      bestCoursesAdapter.submitList(it)
-      hideRefreshSpinner()
-      binding.swipeRefresh.isEnabled = false
+
+    lifecycleScope.launchWhenCreated {
+      viewModel.bestCurrencyRates.collect {
+        bestCoursesAdapter.submitList(it)
+        hideRefreshSpinner()
+        binding.swipeRefresh.isEnabled = false
+      }
     }
+
     viewModel.errors.observe(this) {
       hideRefreshSpinner()
       binding.swipeRefresh.isEnabled = true
