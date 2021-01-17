@@ -28,6 +28,7 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.consume
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
   private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
   private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
 
+  @ExperimentalCoroutinesApi
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
       if (granted) {
@@ -96,6 +98,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
       else -> false
     }
 
+  @ExperimentalCoroutinesApi
   private fun refreshExchangeRates() {
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED
@@ -116,6 +119,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     }
   }
 
+  @ExperimentalCoroutinesApi
   private fun setupBuyOrSellObserver() {
     lifecycleScope.launchWhenCreated {
       viewModel.buyOrSell.collect {
@@ -159,6 +163,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     )
   }
 
+  @ExperimentalCoroutinesApi
   private fun setupSwipeRefreshLayout() {
     binding.swipeRefresh.setOnRefreshListener {
       refreshExchangeRates()
@@ -182,12 +187,12 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
         hideRefreshSpinner()
         binding.swipeRefresh.isEnabled = false
       }
-    }
 
-    viewModel.errors.observe(this) {
-      hideRefreshSpinner()
-      binding.swipeRefresh.isEnabled = true
-      errorSnackbar.show()
+      viewModel.errors.openSubscription().consume {
+        hideRefreshSpinner()
+        binding.swipeRefresh.isEnabled = true
+        errorSnackbar.show()
+      }
     }
   }
 

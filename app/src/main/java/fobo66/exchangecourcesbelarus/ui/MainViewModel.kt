@@ -1,7 +1,5 @@
 package fobo66.exchangecourcesbelarus.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +8,8 @@ import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,23 +33,26 @@ class MainViewModel @Inject constructor(
     get() = buyOrSell
       .flatMapLatest { loadExchangeRates.execute(it) }
 
-  val errors: LiveData<Throwable>
-    get() = _errors
+  @ExperimentalCoroutinesApi
+  val errors = BroadcastChannel<Throwable>(BUFFERED)
 
   private val _buyOrSell = MutableStateFlow(false)
-  private val _errors = MutableLiveData<Throwable>()
 
   private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
     Timber.e(throwable, "Error happened when refreshing currency rates")
-    _errors.postValue(throwable)
   }
 
   suspend fun updateBuySell(buySell: Boolean) {
     _buyOrSell.emit(buySell)
   }
 
+  @ExperimentalCoroutinesApi
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch(errorHandler) {
-      refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
+      try {
+        refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
+      } catch (e: Exception) {
+        errors.send(e)
+      }
     }
 }
