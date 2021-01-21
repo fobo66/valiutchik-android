@@ -115,7 +115,7 @@ dependencies {
 
   // location
   implementation("com.google.android.gms:play-services-location:17.1.0")
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.7.0")
+  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.8.0")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
