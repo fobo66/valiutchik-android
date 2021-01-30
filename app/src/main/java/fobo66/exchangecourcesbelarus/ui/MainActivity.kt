@@ -33,7 +33,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import reactivecircus.flowbinding.android.widget.checkedChanges
 import reactivecircus.flowbinding.appcompat.itemClicks
+import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import kotlin.LazyThreadSafetyMode.NONE
 
 @AndroidEntryPoint
@@ -138,13 +140,13 @@ class MainActivity : AppCompatActivity() {
 
     setBuySellIndicator(control.isChecked)
 
-    control.setOnCheckedChangeListener { _, isChecked ->
-      showRefreshSpinner()
+    control.checkedChanges()
+      .onEach {
+        showRefreshSpinner()
 
-      lifecycleScope.launchWhenCreated {
-        viewModel.updateBuySell(isChecked)
+        viewModel.updateBuySell(it)
       }
-    }
+      .launchIn(lifecycleScope)
   }
 
   private fun showRefreshSpinner() {
@@ -167,9 +169,12 @@ class MainActivity : AppCompatActivity() {
 
   @ExperimentalCoroutinesApi
   private fun setupSwipeRefreshLayout() {
-    binding.swipeRefresh.setOnRefreshListener {
-      refreshExchangeRates()
-    }
+    binding.swipeRefresh.refreshes()
+      .onEach {
+        refreshExchangeRates()
+      }
+      .launchIn(lifecycleScope)
+
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }
 
