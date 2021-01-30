@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import fobo66.valiutchik.core.entities.BestCurrencyRate
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
@@ -38,20 +37,17 @@ class MainViewModel @Inject constructor(
 
   private val _buyOrSell = MutableStateFlow(false)
 
-  private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-    Timber.e(throwable, "Error happened when refreshing currency rates")
-  }
-
   suspend fun updateBuySell(buySell: Boolean) {
     _buyOrSell.emit(buySell)
   }
 
   @ExperimentalCoroutinesApi
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
-    viewModelScope.launch(errorHandler) {
+    viewModelScope.launch {
       try {
         refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
-      } catch (e: Exception) {
+      } catch (e: Throwable) {
+        Timber.e(e, "Error happened when refreshing currency rates")
         errors.send(e)
       }
     }
