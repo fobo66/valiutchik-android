@@ -13,7 +13,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
@@ -30,12 +29,15 @@ import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.consume
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import reactivecircus.flowbinding.appcompat.itemClicks
 import kotlin.LazyThreadSafetyMode.NONE
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
+class MainActivity : AppCompatActivity() {
   private val viewModel: MainViewModel by viewModels()
   private lateinit var binding: ActivityMainBinding
 
@@ -81,8 +83,8 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     setupBuyOrSellObserver()
   }
 
-  override fun onMenuItemClick(item: MenuItem?): Boolean =
-    when (item?.itemId) {
+  private fun processMenuItemClick(item: MenuItem): Boolean =
+    when (item.itemId) {
       R.id.action_settings -> {
         SettingsActivity.start(this)
         true
@@ -201,7 +203,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
     prepareMenu(binding.toolbar.menu)
 
-    binding.toolbar.setOnMenuItemClickListener(this)
+    binding.toolbar.itemClicks()
+      .onEach { processMenuItemClick(it) }
+      .launchIn(lifecycleScope)
 
     Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP or Side.RIGHT or Side.LEFT)
       .applyToView(binding.toolbar)

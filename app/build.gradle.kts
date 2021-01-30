@@ -12,6 +12,7 @@ val hiltVersion = "2.31.2-alpha"
 val androidxHiltVersion = "1.0.0-alpha02"
 val roomVersion = "2.2.6"
 val lifecycleVersion = "2.2.0"
+val flowBindingVersion = "1.0.0"
 
 android {
   signingConfigs {
@@ -106,6 +107,13 @@ dependencies {
   implementation("com.google.android.material:material:1.3.0-rc01")
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+  // flowbinding
+
+  implementation("io.github.reactivecircus.flowbinding:flowbinding-android:$flowBindingVersion")
+  implementation("io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion")
+  implementation("io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion")
+  implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
   // lifecycle
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
