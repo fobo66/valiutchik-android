@@ -5,7 +5,6 @@ plugins {
   id("dagger.hilt.android.plugin")
 }
 
-val kotlinVersion = "1.4.21"
 val kotlinCoroutinesVersion = "1.4.1"
 val okhttpVersion = "4.9.0"
 val hiltVersion = "2.31.2-alpha"
@@ -52,11 +51,11 @@ android {
     }
   }
   buildTypes {
-    getByName("debug") {
+    debug {
       applicationIdSuffix = ".debug"
     }
 
-    getByName("release") {
+    release {
       isMinifyEnabled = true
       isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
