@@ -147,7 +147,7 @@ dependencies {
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.1")
 
   // tests
-  testImplementation("junit:junit:4.13.1")
+  testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.3.0")
   testImplementation("io.mockk:mockk:1.10.5")
   testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
