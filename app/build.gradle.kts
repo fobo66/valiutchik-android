@@ -121,7 +121,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.google.android.gms:play-services-location:17.1.0")
+  implementation("com.google.android.gms:play-services-location:18.0.0")
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.8.0")
 
   // room
