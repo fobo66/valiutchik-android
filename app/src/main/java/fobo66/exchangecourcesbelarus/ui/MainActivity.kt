@@ -50,15 +50,7 @@ class MainActivity : AppCompatActivity() {
     Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT)
   }
 
-  private val aboutDialog: AlertDialog by lazy(mode = NONE) {
-    AlertDialog.Builder(this)
-      .setTitle(R.string.title_about)
-      .setMessage(R.string.about_app_description)
-      .setPositiveButton(android.R.string.ok) { dialog, _ ->
-        dialog.dismiss()
-      }
-      .create()
-  }
+  private var aboutDialog: AlertDialog? = null
 
   private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
   private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
@@ -93,9 +85,19 @@ class MainActivity : AppCompatActivity() {
         true
       }
       R.id.action_about -> {
-        if (!aboutDialog.isShowing) {
-          aboutDialog.show()
-          aboutDialog.findViewById<TextView>(android.R.id.message)?.movementMethod =
+        if (aboutDialog == null) {
+          aboutDialog = AlertDialog.Builder(this)
+            .setTitle(R.string.title_about)
+            .setMessage(R.string.about_app_description)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+              dialog.dismiss()
+            }
+            .create()
+        }
+
+        if (aboutDialog?.isShowing == false) {
+          aboutDialog?.show()
+          aboutDialog?.findViewById<TextView>(android.R.id.message)?.movementMethod =
             LinkMovementMethod.getInstance()
         }
         true
@@ -177,6 +179,13 @@ class MainActivity : AppCompatActivity() {
       .launchIn(lifecycleScope)
 
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
+  }
+
+  override fun onStop() {
+    super.onStop()
+
+    aboutDialog = null
+
   }
 
   @ExperimentalCoroutinesApi
