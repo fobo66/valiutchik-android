@@ -7,9 +7,8 @@ import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
 import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -32,10 +31,11 @@ class MainViewModel @Inject constructor(
     get() = buyOrSell
       .flatMapLatest { loadExchangeRates.execute(it) }
 
-  @ExperimentalCoroutinesApi
-  val errors = BroadcastChannel<Throwable>(BUFFERED)
+  val errors
+    get() = _errors
 
   private val _buyOrSell = MutableStateFlow(false)
+  private val _errors = MutableSharedFlow<Unit>()
 
   suspend fun updateBuySell(buySell: Boolean) {
     _buyOrSell.emit(buySell)
@@ -48,7 +48,7 @@ class MainViewModel @Inject constructor(
         refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
       } catch (e: Throwable) {
         Timber.e(e, "Error happened when refreshing currency rates")
-        errors.send(e)
+        _errors.emit(Unit)
       }
     }
 }
