@@ -27,8 +27,9 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.consume
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -189,13 +190,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     lifecycleScope.launchWhenCreated {
-      viewModel.bestCurrencyRates.collect {
+      viewModel.bestCurrencyRates.collectLatest {
         bestCoursesAdapter.submitList(it)
         hideRefreshSpinner()
         binding.swipeRefresh.isEnabled = false
       }
 
-      viewModel.errors.openSubscription().consume {
+      viewModel.errors.openSubscription().consumeAsFlow().collectLatest {
         hideRefreshSpinner()
         binding.swipeRefresh.isEnabled = true
         errorSnackbar.show()
