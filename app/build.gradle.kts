@@ -7,7 +7,7 @@ plugins {
 
 val kotlinCoroutinesVersion = "1.4.1"
 val okhttpVersion = "4.9.1"
-val hiltVersion = "2.32-alpha"
+val hiltVersion = "2.33-beta"
 val androidxHiltVersion = "1.0.0-alpha02"
 val roomVersion = "2.2.6"
 val lifecycleVersion = "2.2.0"
