@@ -20,12 +20,12 @@
       android:theme="@style/ExchangeCoursesTheme">
     <activity
         android:name=".ui.MainActivity"
-        android:theme="@style/ExchangeCoursesTheme.Splash"
-        android:label="@string/app_name">
+        android:exported="true"
+        android:label="@string/app_name"
+        android:theme="@style/ExchangeCoursesTheme.Splash">
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
     <activity
@@ -34,7 +34,7 @@
         android:parentActivityName=".ui.MainActivity">
       <meta-data
           android:name="android.support.PARENT_ACTIVITY"
-          android:value="fobo66.exchangecourcesbelarus.ui.MainActivity"/>
+          android:value="fobo66.exchangecourcesbelarus.ui.MainActivity" />
     </activity>
 
   </application>
