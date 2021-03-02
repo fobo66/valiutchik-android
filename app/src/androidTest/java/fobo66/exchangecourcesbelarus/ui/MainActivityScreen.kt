@@ -1,19 +1,28 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.view.View
+import com.agoda.kakao.check.KCheckBox
+import com.agoda.kakao.common.views.KView
 import com.agoda.kakao.dialog.KAlertDialog
 import com.agoda.kakao.recycler.KRecyclerItem
 import com.agoda.kakao.recycler.KRecyclerView
 import com.agoda.kakao.text.KTextView
-import com.agoda.kakao.toolbar.KToolbar
 import com.kaspersky.kaspresso.screens.KScreen
 import fobo66.exchangecourcesbelarus.R
 import org.hamcrest.Matcher
 
 object MainScreen : KScreen<MainScreen>() {
 
-  val toolbar = KToolbar {
-    withId(R.id.toolbar)
+  val aboutIcon = KView {
+    withId(R.id.action_about)
+  }
+
+  val buySellSwitch = KView {
+    withId(R.id.action_buysell)
+  }
+
+  val buySellIndicator = KCheckBox {
+    withId(R.id.buysell_indicator)
   }
 
   val aboutDialog = KAlertDialog()
