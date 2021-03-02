@@ -27,7 +27,7 @@ android {
 
   testBuildType = "release"
   buildTypes {
-    getByName("debug") {
+    debug {
       // Since debuggable can"t be modified by gradle for library modules,
       // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
       isMinifyEnabled = true
@@ -36,7 +36,7 @@ android {
         "benchmark-proguard-rules.pro"
       )
     }
-    getByName("release") {
+    release {
       isDefault = true
     }
   }
