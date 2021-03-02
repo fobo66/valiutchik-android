@@ -17,6 +17,10 @@ object MainScreen : KScreen<MainScreen>() {
     withId(R.id.action_about)
   }
 
+  val settingsIcon = KView {
+    withId(R.id.action_settings)
+  }
+
   val buySellSwitch = KView {
     withId(R.id.action_buysell)
   }

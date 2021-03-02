@@ -39,4 +39,15 @@ class MainActivityTest {
       aboutDialog.isDisplayed()
     }
   }
+
+  @Test
+  fun showSettings() {
+    MainScreen {
+      settingsIcon.click()
+    }
+
+    SettingsScreen {
+      settings.isDisplayed()
+    }
+  }
 }
