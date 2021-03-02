@@ -28,6 +28,7 @@
 
   <androidx.fragment.app.FragmentContainerView
       android:id="@+id/settings_container"
+      android:name="fobo66.exchangecourcesbelarus.ui.SettingsFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />

@@ -8,7 +8,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
-import fobo66.exchangecourcesbelarus.R.id
 import fobo66.exchangecourcesbelarus.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
@@ -21,9 +20,6 @@ class SettingsActivity : AppCompatActivity() {
     setContentView(binding.root)
     setupActionBar()
     Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP).applyToView(binding.toolbar)
-    supportFragmentManager.beginTransaction()
-      .replace(id.settings_container, SettingsFragment())
-      .commit()
   }
 
   private fun setupActionBar() {
