@@ -78,6 +78,13 @@ class MainActivity : AppCompatActivity() {
     setupBuyOrSellObserver()
   }
 
+  override fun onStop() {
+    super.onStop()
+
+    aboutDialog = null
+
+  }
+
   private fun processMenuItemClick(item: MenuItem): Boolean =
     when (item.itemId) {
       R.id.action_settings -> {
@@ -179,13 +186,6 @@ class MainActivity : AppCompatActivity() {
       .launchIn(lifecycleScope)
 
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
-  }
-
-  override fun onStop() {
-    super.onStop()
-
-    aboutDialog = null
-
   }
 
   @ExperimentalCoroutinesApi
