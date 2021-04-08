@@ -2,24 +2,24 @@
 
 buildscript {
   repositories {
-    jcenter()
+    mavenCentral()
     google()
   }
   dependencies {
     classpath("com.android.tools.build:gradle:7.0.0-alpha14")
-    classpath(kotlin("gradle-plugin", version = "1.4.30"))
+    classpath(kotlin("gradle-plugin", version = "1.4.32"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.34-beta")
   }
 }
 
 plugins {
-  id("io.gitlab.arturbosch.detekt").version("1.14.2")
+  id("io.gitlab.arturbosch.detekt").version("1.16.0")
 }
 
 allprojects {
   repositories {
-    jcenter()
+    mavenCentral()
     google()
   }
 }
