@@ -20,6 +20,7 @@ plugins {
 allprojects {
   repositories {
     mavenCentral()
+    jcenter()
     google()
   }
 }
