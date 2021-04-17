@@ -8,11 +8,11 @@
   <fragment
       android:id="@+id/settingsFragment"
       android:name="fobo66.exchangecourcesbelarus.ui.SettingsFragment"
-      android:label="SettingsFragment" />
+      android:label="@string/title_activity_settings" />
   <fragment
       android:id="@+id/mainFragment"
-      android:name="fobo66.exchangecourcesbelarus.MainFragment"
-      android:label="fragment_main"
+      android:name="fobo66.exchangecourcesbelarus.ui.MainFragment"
+      android:label="@string/app_name"
       tools:layout="@layout/fragment_main">
     <action
         android:id="@+id/action_mainFragment_to_settingsFragment"
