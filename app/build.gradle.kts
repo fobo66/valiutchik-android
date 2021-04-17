@@ -3,14 +3,15 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
+  id("kotlin-android")
 }
 
 val kotlinCoroutinesVersion = "1.4.3"
-val okhttpVersion = "4.9.1"
+val okhttpVersion = "5.0.0-alpha.2"
 val hiltVersion = "2.34.1-beta"
 val androidxHiltVersion = "1.0.0-alpha02"
 val roomVersion = "2.2.6"
-val lifecycleVersion = "2.2.0"
+val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.0.0"
 
 android {
@@ -123,11 +124,13 @@ dependencies {
 
   // location
   implementation("com.google.android.gms:play-services-location:18.0.0")
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.8.0")
+  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
+  implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+  implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
   kapt("androidx.room:room-compiler:$roomVersion")
 
   // http
