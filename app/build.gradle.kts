@@ -11,6 +11,7 @@ val okhttpVersion = "5.0.0-alpha.2"
 val hiltVersion = "2.34.1-beta"
 val androidxHiltVersion = "1.0.0-alpha02"
 val roomVersion = "2.2.6"
+val navVersion = "2.3.5"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.0.0"
 
@@ -129,9 +130,11 @@ dependencies {
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
-  implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-  implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
   kapt("androidx.room:room-compiler:$roomVersion")
+
+  // nav
+  implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+  implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
   // http
   implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
