@@ -9,7 +9,6 @@ plugins {
 val kotlinCoroutinesVersion = "1.4.3"
 val okhttpVersion = "5.0.0-alpha.2"
 val hiltVersion = "2.34.1-beta"
-val androidxHiltVersion = "1.0.0-alpha02"
 val roomVersion = "2.2.6"
 val navVersion = "2.3.5"
 val lifecycleVersion = "2.3.1"
@@ -119,9 +118,6 @@ dependencies {
 
   // lifecycle
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
   // location
   implementation("com.google.android.gms:play-services-location:18.0.0")

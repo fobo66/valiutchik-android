@@ -10,13 +10,15 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.Side
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
@@ -39,7 +41,7 @@ class MainFragment : Fragment() {
 
   private var bestCoursesAdapter: BestCurrencyRatesAdapter? = null
 
-  private val viewModel: MainViewModel by viewModels()
+  private val viewModel: MainViewModel by activityViewModels()
 
   private val binding: FragmentMainBinding
     get() = _binding!!
@@ -69,6 +71,9 @@ class MainFragment : Fragment() {
 
   @ExperimentalCoroutinesApi
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    Insetter.builder().applySystemWindowInsetsToPadding(Side.RIGHT or Side.LEFT)
+      .applyToView(binding.coursesList)
+
     setupCoursesList()
     setupSwipeRefreshLayout()
     setupBuyOrSellObserver()
