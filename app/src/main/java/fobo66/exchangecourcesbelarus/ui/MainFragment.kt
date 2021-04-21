@@ -97,7 +97,7 @@ class MainFragment : Fragment() {
 
       val locationProviderClient =
         LocationServices.getFusedLocationProviderClient(requireActivity())
-      lifecycleScope.launch {
+      viewLifecycleOwner.lifecycleScope.launch {
         val location: Location? = locationProviderClient.lastLocation.await()
         if (location != null) {
           viewModel.refreshExchangeRates(location.latitude, location.longitude)
@@ -110,7 +110,7 @@ class MainFragment : Fragment() {
 
   @ExperimentalCoroutinesApi
   private fun setupBuyOrSellObserver() {
-    lifecycleScope.launchWhenCreated {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.buyOrSell.collectLatest {
         refreshExchangeRates()
         setBuySellIndicator(it)
@@ -142,7 +142,7 @@ class MainFragment : Fragment() {
       .onEach {
         refreshExchangeRates()
       }
-      .launchIn(lifecycleScope)
+      .launchIn(viewLifecycleOwner.lifecycleScope)
 
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }
@@ -157,7 +157,7 @@ class MainFragment : Fragment() {
       setHasFixedSize(true)
     }
 
-    lifecycleScope.launchWhenCreated {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.bestCurrencyRates
         .catch { processError() }
         .collectLatest {
