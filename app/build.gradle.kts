@@ -5,7 +5,7 @@ plugins {
   id("dagger.hilt.android.plugin")
 }
 
-val kotlinCoroutinesVersion = "1.4.3"
+val kotlinCoroutinesVersion = "1.4.3-native-mt"
 val okhttpVersion = "5.0.0-alpha.2"
 val hiltVersion = "2.34.1-beta"
 val roomVersion = "2.4.0-alpha01"
