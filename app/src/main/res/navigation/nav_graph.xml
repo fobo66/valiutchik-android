@@ -17,8 +17,10 @@
     <action
         android:id="@+id/action_mainFragment_to_settingsFragment"
         app:destination="@id/settingsFragment"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
+        app:enterAnim="@anim/enter_animation"
+        app:exitAnim="@anim/exit_animation"
+        app:popEnterAnim="@anim/enter_animation"
+        app:popExitAnim="@anim/exit_animation"
         app:popUpTo="@id/mainFragment" />
   </fragment>
 </navigation>

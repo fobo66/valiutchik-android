@@ -3,7 +3,6 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-  id("kotlin-android")
 }
 
 val kotlinCoroutinesVersion = "1.4.3"
