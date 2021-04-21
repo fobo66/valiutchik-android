@@ -6,11 +6,11 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.4.3"
-val okhttpVersion = "4.9.1"
+val okhttpVersion = "5.0.0-alpha.2"
 val hiltVersion = "2.34.1-beta"
-val androidxHiltVersion = "1.0.0-alpha02"
-val roomVersion = "2.2.6"
-val lifecycleVersion = "2.2.0"
+val roomVersion = "2.4.0-alpha01"
+val navVersion = "2.3.5"
+val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.0.0"
 
 android {
@@ -98,9 +98,9 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.2.0")
-  implementation("androidx.activity:activity-ktx:1.3.0-alpha06")
+  implementation("androidx.activity:activity-ktx:1.3.0-alpha07")
   implementation("androidx.recyclerview:recyclerview:1.2.0")
-  implementation("androidx.fragment:fragment-ktx:1.3.2")
+  implementation("androidx.fragment:fragment-ktx:1.3.3")
   implementation("androidx.collection:collection-ktx:1.1.0")
   implementation("androidx.core:core-ktx:1.6.0-alpha02")
   implementation("androidx.constraintlayout:constraintlayout:2.0.4")
@@ -117,18 +117,19 @@ dependencies {
 
   // lifecycle
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
   // location
   implementation("com.google.android.gms:play-services-location:18.0.0")
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.8.0")
+  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
   kapt("androidx.room:room-compiler:$roomVersion")
+
+  // nav
+  implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+  implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
   // http
   implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
