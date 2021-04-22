@@ -4,6 +4,7 @@ import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -13,8 +14,8 @@ import org.junit.Test
  * Test cases for my algorithm. Check that value resolved as best is correct based on real
  * data from server saved in resources
  */
-class BestCourseProducerTest {
-  private lateinit var bestCourseProducer: BestCourseProducer
+class BestCourseDataSourceTest {
+  private lateinit var bestCourseDataSource: BestCourseDataSource
   private lateinit var bestBuy: Map<String, Currency>
   private lateinit var bestSell: Map<String, Currency>
 
@@ -26,11 +27,11 @@ class BestCourseProducerTest {
 
   @Before
   fun setUp() {
-    bestCourseProducer = BestCourseProducer()
+    bestCourseDataSource = BestCourseDataSource()
     val currencies = parser.parse(testFile)
 
-    bestBuy = bestCourseProducer.findBestBuyCurrencies(currencies)
-    bestSell = bestCourseProducer.findBestSellCurrencies(currencies)
+    bestBuy = bestCourseDataSource.findBestBuyCurrencies(currencies)
+    bestSell = bestCourseDataSource.findBestSellCurrencies(currencies)
   }
 
   @Test

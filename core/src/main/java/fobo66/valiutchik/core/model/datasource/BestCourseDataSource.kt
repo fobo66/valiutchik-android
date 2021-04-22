@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUR
@@ -15,7 +15,7 @@ import javax.inject.Singleton
  * Created by fobo66 on 05.02.2017.
  */
 @Singleton
-class BestCourseProducer @Inject constructor() {
+class BestCourseDataSource @Inject constructor() {
 
   private val currencyKeys by lazy { listOf(USD, EUR, RUR) }
 

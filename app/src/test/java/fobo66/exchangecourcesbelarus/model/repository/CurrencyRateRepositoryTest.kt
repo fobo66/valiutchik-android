@@ -4,7 +4,7 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
-import fobo66.exchangecourcesbelarus.util.BestCourseProducer
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import io.mockk.coEvery
@@ -33,7 +33,7 @@ class CurrencyRateRepositoryTest {
   private lateinit var currencyRateRepository: CurrencyRateRepository
 
   private val parser = mockk<CurrencyRatesParser>()
-  private val bestCourseProducer = mockk<BestCourseProducer>()
+  private val bestCourseProducer = mockk<BestCourseDataSource>()
   private val persistenceDataSource = mockk<PersistenceDataSource>()
   private val preferencesDataSource = mockk<PreferencesDataSource>()
   private val currencyRatesDataSource = mockk<CurrencyRatesDataSource>()
