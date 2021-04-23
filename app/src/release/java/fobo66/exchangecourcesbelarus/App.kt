@@ -9,12 +9,4 @@ import timber.log.Timber
  * Created 9/16/17.
  */
 @HiltAndroidApp
-open class App : MultiDexApplication() {
-
-  override fun onCreate() {
-    super.onCreate()
-    if (BuildConfig.DEBUG) {
-      Timber.plant(Timber.DebugTree())
-    }
-  }
-}
+open class App : MultiDexApplication()

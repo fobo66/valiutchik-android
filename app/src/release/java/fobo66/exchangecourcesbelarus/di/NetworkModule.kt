@@ -6,7 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.BuildConfig
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.util.CertificateManager
 import fobo66.valiutchik.core.BASE_URL
@@ -51,11 +50,7 @@ object NetworkModule {
   fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     val loggingInterceptor = HttpLoggingInterceptor { message -> Timber.d(message) }
 
-    loggingInterceptor.level = if (BuildConfig.DEBUG) {
-      HttpLoggingInterceptor.Level.BODY
-    } else {
-      HttpLoggingInterceptor.Level.NONE
-    }
+    loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
 
     return loggingInterceptor
   }
