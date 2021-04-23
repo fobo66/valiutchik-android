@@ -16,7 +16,7 @@ class BestCurrencyRateDiffUtilItemCallback : DiffUtil.ItemCallback<BestCurrencyR
     return oldItem == newItem
   }
 
-  override fun getChangePayload(oldItem: BestCurrencyRate, newItem: BestCurrencyRate): Any? {
+  override fun getChangePayload(oldItem: BestCurrencyRate, newItem: BestCurrencyRate): Any {
     return Any()
   }
 }
