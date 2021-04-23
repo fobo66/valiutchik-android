@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
+import dev.chrisbanes.insetter.windowInsetTypesOf
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -105,7 +106,10 @@ class MainActivity : AppCompatActivity() {
       .onEach { processMenuItemClick(it) }
       .launchIn(lifecycleScope)
 
-    Insetter.builder().applySystemWindowInsetsToMargin(Side.TOP or Side.RIGHT or Side.LEFT)
+    Insetter.builder().margin(
+      windowInsetTypesOf(ime = true, statusBars = true, navigationBars = true),
+      Side.TOP or Side.RIGHT or Side.LEFT
+    )
       .applyToView(binding.toolbar)
 
     val appBarConfiguration = AppBarConfiguration(navController.graph)

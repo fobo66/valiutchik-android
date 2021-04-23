@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
+import dev.chrisbanes.insetter.windowInsetTypesOf
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
@@ -71,7 +72,10 @@ class MainFragment : Fragment() {
 
   @ExperimentalCoroutinesApi
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    Insetter.builder().applySystemWindowInsetsToPadding(Side.RIGHT or Side.LEFT)
+    Insetter.builder().padding(
+      windowInsetTypesOf(ime = true, statusBars = true, navigationBars = true),
+      Side.RIGHT or Side.LEFT
+    )
       .applyToView(binding.coursesList)
 
     setupCoursesList()
