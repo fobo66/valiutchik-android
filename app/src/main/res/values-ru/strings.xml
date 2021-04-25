@@ -1,20 +1,16 @@
 <resources>
   <string name="app_name">Валютчик</string>
   <string name="action_settings">Настройки</string>
-  <string name="action_update">Обновить</string>
   <string name="action_buysell">Купить/Продать</string>
   <string name="action_about">О приложении</string>
 
   <string name="buy">Купить</string>
   <string name="sell">Продать</string>
 
-  <string name="courses_unavailable_info">Не удалось обновить курсы валют. Будут показаны старые курсы.</string>
-
   <string name="title_about">О приложении</string>
   <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. С его помощью вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
 
 
-  <string name="location_error_title">Ошибка получения местоположения</string>
   <string name="title_activity_settings">Настройки</string>
 
   <!-- Strings related to Settings -->
