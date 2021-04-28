@@ -6,7 +6,6 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.4.3"
-val okhttpVersion = "5.0.0-alpha.2"
 val hiltVersion = "2.35"
 val roomVersion = "2.4.0-alpha01"
 val navVersion = "2.3.5"
@@ -133,7 +132,9 @@ dependencies {
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
   // http
-  implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
+  implementation("com.squareup.okhttp3:okhttp")
+  implementation("com.squareup.okhttp3:logging-interceptor")
 
   // multidex
   implementation("androidx.multidex:multidex:2.0.1")
@@ -153,7 +154,8 @@ dependencies {
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.3.0")
   testImplementation("io.mockk:mockk:1.11.0")
-  testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
+  testImplementation("com.squareup.okhttp3:mockwebserver3")
+  testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   androidTestImplementation(
