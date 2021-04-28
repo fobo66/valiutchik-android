@@ -48,7 +48,7 @@ object NetworkModule {
   @Provides
   @Singleton
   fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-    val loggingInterceptor = HttpLoggingInterceptor { message -> Timber.d(message) }
+    val loggingInterceptor = HttpLoggingInterceptor { message -> Timber.tag("OkHttp").d(message) }
 
     loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
