@@ -65,11 +65,11 @@ class BestCourseDataSourceTest {
   }
 
   companion object {
-    const val BEST_USD_BUY = "1.925"
-    const val BEST_USD_SELL = "1.914"
-    const val BEST_EUR_BUY = "2.075"
-    const val BEST_EUR_SELL = "2.038"
-    const val BEST_RUR_BUY = "0.0324"
-    const val BEST_RUR_SELL = "0.0323"
+    const val BEST_USD_BUY = "2.54"
+    const val BEST_USD_SELL = "2.546"
+    const val BEST_EUR_BUY = "3.059"
+    const val BEST_EUR_SELL = "3.068"
+    const val BEST_RUR_BUY = "0.03405"
+    const val BEST_RUR_SELL = "0.03414"
   }
 }
