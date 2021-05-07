@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -155,7 +154,6 @@ class MainFragment : Fragment() {
   private fun setupCoursesList() {
     bestCoursesAdapter = BestCurrencyRatesAdapter()
     binding.coursesList.apply {
-      layoutManager = LinearLayoutManager(context)
       itemAnimator = DefaultItemAnimator()
       adapter = bestCoursesAdapter
       setHasFixedSize(true)
