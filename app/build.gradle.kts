@@ -3,6 +3,7 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
+  id("io.gitlab.arturbosch.detekt").version("1.16.0")
 }
 
 val kotlinCoroutinesVersion = "1.4.3"
@@ -85,6 +86,11 @@ android {
   }
 
   testOptions.unitTests.isIncludeAndroidResources = true
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "1.8"
 }
 
 dependencies {
