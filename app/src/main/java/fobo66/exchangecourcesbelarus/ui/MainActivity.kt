@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     super.onStop()
 
     aboutDialog = null
-
   }
 
   private fun processMenuItemClick(item: MenuItem): Boolean =

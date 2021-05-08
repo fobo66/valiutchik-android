@@ -11,7 +11,7 @@ interface LoadExchangeRates {
 }
 
 class LoadExchangeRatesImpl @Inject constructor(
-  private val currencyRateRepository: CurrencyRateRepository
+    private val currencyRateRepository: CurrencyRateRepository
 ) : LoadExchangeRates {
   override fun execute(isBuy: Boolean): Flow<List<BestCurrencyRate>> {
     return currencyRateRepository.loadExchangeRates(isBuy)

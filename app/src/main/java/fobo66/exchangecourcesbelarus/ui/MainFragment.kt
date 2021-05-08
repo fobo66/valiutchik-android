@@ -59,7 +59,6 @@ class MainFragment : Fragment() {
   private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
   private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
 
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,

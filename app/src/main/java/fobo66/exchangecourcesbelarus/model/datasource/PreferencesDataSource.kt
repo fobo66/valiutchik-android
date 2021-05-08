@@ -5,7 +5,7 @@ import androidx.core.content.edit
 import javax.inject.Inject
 
 class PreferencesDataSource @Inject constructor(
-  private val preferences: SharedPreferences
+    private val preferences: SharedPreferences
 ) {
   fun loadSting(key: String, defaultValue: String = ""): String =
     preferences.getString(key, defaultValue).orEmpty()

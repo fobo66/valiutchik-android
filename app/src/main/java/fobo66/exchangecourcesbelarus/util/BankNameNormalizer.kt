@@ -5,7 +5,7 @@ import javax.inject.Inject
 class BankNameNormalizer @Inject constructor() {
 
   fun normalize(bankName: String): String {
-    val startTypographicalQuotePosition = bankName.indexOfFirst {  it == '«' }
+    val startTypographicalQuotePosition = bankName.indexOfFirst { it == '«' }
     val startQuotePosition = bankName.indexOfFirst { it == '\"' }
 
     if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {

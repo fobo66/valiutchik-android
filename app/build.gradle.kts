@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
   id("com.android.application")
   kotlin("android")
@@ -88,9 +90,13 @@ android {
   testOptions.unitTests.isIncludeAndroidResources = true
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+tasks.withType<Detekt>().configureEach {
   // Target version of the generated JVM bytecode. It is used for type resolution.
   jvmTarget = "1.8"
+}
+
+detekt {
+  autoCorrect = true
 }
 
 dependencies {
@@ -154,6 +160,8 @@ dependencies {
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.16.0")
 
   // tests
   testImplementation("junit:junit:4.13.2")

@@ -23,7 +23,7 @@ abstract class CurrencyRatesModule {
 
   @Binds
   abstract fun provideRefreshExchangeRates(
-    refreshExchangeRatesImpl: RefreshExchangeRatesImpl
+      refreshExchangeRatesImpl: RefreshExchangeRatesImpl
   ): RefreshExchangeRates
 
   @Binds
