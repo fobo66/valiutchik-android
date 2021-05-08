@@ -14,12 +14,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CurrencyRatesDao {
 
-  @Query("SELECT * FROM best_rates")
-  suspend fun loadAllBestCurrencyRates(): List<BestCourse>
-
   @Query("SELECT * FROM best_rates WHERE is_buy = :isBuy ORDER BY timestamp DESC LIMIT 3")
   fun loadLatestBestCurrencyRates(isBuy: Boolean): Flow<List<BestCourse>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertBestCurrencyRates(vararg bestRates: BestCourse)
+  suspend fun insertBestCurrencyRates(bestRates: List<BestCourse>)
 }

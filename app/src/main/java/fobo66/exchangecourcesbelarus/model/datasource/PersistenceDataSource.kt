@@ -14,7 +14,7 @@ class PersistenceDataSource @Inject constructor(
 ) {
 
   suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-    database.currencyRatesDao().insertBestCurrencyRates(*bestCourses.toTypedArray())
+    database.currencyRatesDao().insertBestCurrencyRates(bestCourses)
   }
 
   fun readBestCourses(isBuy: Boolean): Flow<List<BestCourse>> =
