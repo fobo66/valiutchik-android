@@ -4,6 +4,7 @@ import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.entities.Location
+import timber.log.Timber
 import javax.inject.Inject
 
 class LocationRepository @Inject constructor(
@@ -15,6 +16,7 @@ class LocationRepository @Inject constructor(
     val response = try {
       locationDataSource.resolveUserCity(Location(latitude, longitude))
     } catch (e: Exception) {
+      Timber.e(e, "Failed to determine user city")
       null
     }
 
