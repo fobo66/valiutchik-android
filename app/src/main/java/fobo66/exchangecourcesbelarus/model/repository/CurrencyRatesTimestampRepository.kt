@@ -10,7 +10,7 @@ class CurrencyRatesTimestampRepository @Inject constructor(
     private val preferencesDataSource: PreferencesDataSource
 ) {
 
-  private val maxStalePeriod: Duration = Duration.ofHours(3)
+  private val maxStalePeriod: Duration = Duration.ofHours(DEFAULT_MAX_STALE_PERIOD)
 
   fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
     val timestamp = loadTimestamp(now)
@@ -32,5 +32,9 @@ class CurrencyRatesTimestampRepository @Inject constructor(
     } else {
       LocalDateTime.parse(rawTimestamp)
     }
+  }
+
+  companion object {
+    private const val DEFAULT_MAX_STALE_PERIOD = 3L
   }
 }
