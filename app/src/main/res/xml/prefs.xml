@@ -1,13 +1,19 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ListPreference
-        android:key="default_city"
-        android:title="@string/pref_title_default_city"
-        android:defaultValue="Минск"
-        android:entries="@array/pref_cities_list"
-        android:entryValues="@array/pref_cities_values"
-        app:useSimpleSummaryProvider="true"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
+  <ListPreference
+      android:key="default_city"
+      android:title="@string/pref_title_default_city"
+      android:defaultValue="Минск"
+      android:entries="@array/pref_cities_list"
+      android:entryValues="@array/pref_cities_values"
+      app:useSimpleSummaryProvider="true"
+      android:negativeButtonText="@null"
+      android:positiveButtonText="@null" />
+  <Preference android:title="@string/title_activity_oss_licenses">
+    <intent
+        android:action="android.intent.action.VIEW"
+        android:targetClass="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+        android:targetPackage="$APPLICATION_ID" />
+  </Preference>
 </PreferenceScreen>

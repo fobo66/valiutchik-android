@@ -11,6 +11,7 @@ buildscript {
     classpath(kotlin("gradle-plugin", version = "1.4.32"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.35.1")
+    classpath("com.google.android.gms:oss-licenses-plugin:0.10.4")
   }
 }
 

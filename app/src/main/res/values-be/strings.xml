@@ -22,5 +22,6 @@
   <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
   <string name="get_data_error">Немагчыма аднавіць дадзеныя</string>
   <string name="currency_value_copied">Курс валюты быў скапіраваны ў буфер абмену</string>
+  <string name="title_activity_oss_licenses">Ліцэнзіі адкрытака праграмнага забяспечання</string>
 
 </resources>

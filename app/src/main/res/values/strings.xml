@@ -13,6 +13,7 @@
   <string name="get_data_error">Unable to refresh data</string>
   <string name="about_app_description">App allows to quickly load the best exchange rates in the big cities of Belarus. By clicking on list item you can find nearest bank offices with best rates on the map. Please pay attention that info about exchange rates may be out of date. Please clarify in banks. Info about exchange rates provided by <a href="https://myfin.by">myfin.by</a></string>
   <string name="currency_value_copied">Currency rate was copied to clipboard</string>
+  <string name="title_activity_oss_licenses">Open source licenses</string>
 
   <string-array name="pref_cities_list">
     <item>Minsk</item>

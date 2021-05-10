@@ -29,4 +29,5 @@
   <string name="pref_title_default_city">Город по умолчанию</string>
   <string name="maps_app_required">Невозможно показать отделения банка на карте: не найдено приложение карт</string>
   <string name="currency_value_copied">Курс валюты скопирован в буфер обмена</string>
+  <string name="title_activity_oss_licenses">Лизензии открытого ПО</string>
 </resources>
