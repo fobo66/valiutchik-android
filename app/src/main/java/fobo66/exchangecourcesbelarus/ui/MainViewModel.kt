@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class MainViewModel @Inject constructor(
     get() = buyOrSell
       .flatMapLatest { loadExchangeRates.execute(it) }
 
-  val errors
+  val errors: SharedFlow<Unit>
     get() = _errors
 
   private val _buyOrSell = MutableStateFlow(false)
