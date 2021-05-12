@@ -22,7 +22,11 @@ import javax.net.ssl.X509TrustManager
 @Singleton
 class CertificateManager @Inject constructor() {
 
-  private val sslContext: SSLContext
+  private val sslContext: SSLContext = try {
+    SSLContext.getInstance("TLSv1.2")
+  } catch (e: NoSuchAlgorithmException) {
+    throw RuntimeException("Cannot load TLS socket factory", e)
+  }
 
   lateinit var trustManager: X509TrustManager
 
@@ -71,11 +75,4 @@ class CertificateManager @Inject constructor() {
     }
   }
 
-  init {
-    sslContext = try {
-      SSLContext.getInstance("TLSv1.2")
-    } catch (e: NoSuchAlgorithmException) {
-      throw RuntimeException("Cannot load TLS socket factory", e)
-    }
-  }
 }
