@@ -51,7 +51,7 @@ class CurrencyRateRepository @Inject constructor(
   }
 
   fun loadExchangeRates(isBuy: Boolean): Flow<List<BestCourse>> =
-    persistenceDataSource.readBestCourses(isBuy)
+    persistenceDataSource.readBestCourses()
 
   private fun findBestCourses(
     currencies: Set<Currency>,

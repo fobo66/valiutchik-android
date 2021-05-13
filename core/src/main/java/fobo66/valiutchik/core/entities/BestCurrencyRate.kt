@@ -8,7 +8,9 @@ import fobo66.valiutchik.core.CurrencyName
  */
 data class BestCurrencyRate(
   val id: Long,
-  val bank: String,
+  val bankBuy: String,
+  val bankSell: String,
   @CurrencyName val currencyName: String,
-  val currencyValue: String
+  val currencyValueBuy: String,
+  val currencyValueSell: String
 )

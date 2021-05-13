@@ -1,7 +1,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.EUR
-import fobo66.valiutchik.core.RUR
+import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.UNKNOWN_COURSE
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class BestCourseDataSource @Inject constructor() {
 
-  private val currencyKeys by lazy { listOf(USD, EUR, RUR) }
+  private val currencyKeys by lazy { listOf(USD, EUR, RUB) }
 
   fun findBestBuyCurrencies(
     courses: Set<Currency>

@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import fobo66.valiutchik.core.CurrencyName
 import fobo66.valiutchik.core.USD
-import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 /**
  * Model for best available exchange courses to put into cardview
@@ -19,7 +18,4 @@ data class BestCourse(
   @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String = USD,
   @ColumnInfo(name = "timestamp") val timestamp: String = "",
   @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
-) {
-  fun toBestCurrencyRate(): BestCurrencyRate =
-    BestCurrencyRate(id, bank, currencyName, currencyValue)
-}
+)

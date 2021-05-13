@@ -17,8 +17,8 @@ interface CurrencyRatesDao {
   @Query("SELECT * FROM best_rates")
   suspend fun loadAllBestCurrencyRates(): List<BestCourse>
 
-  @Query("SELECT * FROM best_rates WHERE is_buy = :isBuy ORDER BY timestamp DESC LIMIT 3")
-  fun loadLatestBestCurrencyRates(isBuy: Boolean): Flow<List<BestCourse>>
+  @Query("SELECT * FROM best_rates ORDER BY timestamp, currency_name DESC LIMIT 6")
+  fun loadLatestBestCurrencyRates(): Flow<List<BestCourse>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertBestCurrencyRates(bestRates: List<BestCourse>)
