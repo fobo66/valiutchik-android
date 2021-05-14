@@ -1,6 +1,6 @@
 package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.core.CurrencyName
+import androidx.annotation.StringRes
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -9,6 +9,6 @@ import fobo66.valiutchik.core.CurrencyName
 data class BestCurrencyRate(
   val id: Long,
   val bank: String,
-  @CurrencyName val currencyName: String,
+  @StringRes val currencyNameRes: Int,
   val currencyValue: String
 )

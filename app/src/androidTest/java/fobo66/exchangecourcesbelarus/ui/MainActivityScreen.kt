@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.view.View
-import com.agoda.kakao.check.KCheckBox
 import com.agoda.kakao.common.views.KView
 import com.agoda.kakao.dialog.KAlertDialog
 import com.agoda.kakao.recycler.KRecyclerItem
@@ -19,14 +18,6 @@ object MainScreen : KScreen<MainScreen>() {
 
   val settingsIcon = KView {
     withId(R.id.action_settings)
-  }
-
-  val buySellSwitch = KView {
-    withId(R.id.action_buysell)
-  }
-
-  val buySellIndicator = KCheckBox {
-    withId(R.id.buysell_indicator)
   }
 
   val aboutDialog = KAlertDialog()

@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.MainActivity">
   <item
-      android:id="@+id/action_buysell"
-      android:title="@string/action_buysell"
-      app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
-      app:showAsAction="ifRoom"
-      />
-  <item
       android:id="@+id/action_settings"
       android:orderInCategory="100"
       android:title="@string/action_settings"

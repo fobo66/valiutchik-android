@@ -9,10 +9,11 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.EUR
-import fobo66.valiutchik.core.RUR
+import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.USD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -92,7 +93,7 @@ class PersistenceDataSourceTest {
     val bestCourses = listOf(
       BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
       BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-      BestCourse(0, "test", "0.0325", RUR, "", SELL_COURSE)
+      BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE)
     )
 
     runBlocking {
@@ -113,13 +114,14 @@ class PersistenceDataSourceTest {
       val bestCourses = listOf(
         BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
         BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-        BestCourse(0, "test", "0.0325", RUR, "", SELL_COURSE),
+        BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
         BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE)
       )
 
       persistenceDataSource.saveBestCourses(bestCourses)
 
-      db.currencyRatesDao().loadLatestBestCurrencyRates(SELL_COURSE)
+      db.currencyRatesDao().loadLatestBestCurrencyRates()
+        .map { courses -> courses.filter { !it.isBuy } }
         .test {
           assertEquals(2, expectItem().size)
         }

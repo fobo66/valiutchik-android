@@ -74,5 +74,4 @@ class CertificateManager @Inject constructor() {
       throw AssertionError(e)
     }
   }
-
 }

@@ -12,7 +12,7 @@ const val GEOCODER_ACCESS_TOKEN =
 const val BASE_URL = "https://admin.myfin.by/outer/authXml"
 const val USD = "USD"
 const val EUR = "EUR"
-const val RUR = "RUR"
+const val RUB = "RUB"
 const val BUY_COURSE = true
 const val SELL_COURSE = false
 
@@ -30,5 +30,5 @@ const val TAG_NAME_RUR_SELL = "rub_sell"
 const val UNKNOWN_COURSE = "-"
 
 @Retention(SOURCE)
-@StringDef(value = [USD, EUR, RUR])
+@StringDef(value = [USD, EUR, RUB])
 annotation class CurrencyName

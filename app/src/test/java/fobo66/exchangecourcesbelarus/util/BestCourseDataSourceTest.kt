@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.util
 
 import fobo66.valiutchik.core.EUR
-import fobo66.valiutchik.core.RUR
+import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
@@ -41,7 +41,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals(BEST_RUR_BUY, bestBuy[RUR]?.rurBuy)
+    assertEquals(BEST_RUR_BUY, bestBuy[RUB]?.rurBuy)
   }
 
   @Test
@@ -56,7 +56,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestRURSellCourseAreReallyBest() {
-    assertEquals(BEST_RUR_SELL, bestSell[RUR]?.rurSell)
+    assertEquals(BEST_RUR_SELL, bestSell[RUB]?.rurSell)
   }
 
   @Test

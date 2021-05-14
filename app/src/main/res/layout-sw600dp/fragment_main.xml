@@ -28,18 +28,4 @@
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-  <com.google.android.material.chip.Chip
-      android:id="@+id/buysell_indicator"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignTop="@+id/swipe_refresh"
-      android:layout_centerHorizontal="true"
-      android:layout_margin="5dp"
-      android:layout_marginTop="24dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:text="@string/buy"
-      />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
