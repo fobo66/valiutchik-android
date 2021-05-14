@@ -13,6 +13,7 @@ import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.USD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -119,7 +120,8 @@ class PersistenceDataSourceTest {
 
       persistenceDataSource.saveBestCourses(bestCourses)
 
-      db.currencyRatesDao().loadLatestBestCurrencyRates(SELL_COURSE)
+      db.currencyRatesDao().loadLatestBestCurrencyRates()
+        .map { courses -> courses.filter { !it.isBuy } }
         .test {
           assertEquals(2, expectItem().size)
         }
