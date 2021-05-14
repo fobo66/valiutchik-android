@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface LoadExchangeRates {
-  fun execute(isBuy: Boolean): Flow<List<BestCurrencyRate>>
+  fun execute(): Flow<List<BestCurrencyRate>>
 }
 
 class LoadExchangeRatesImpl @Inject constructor(
     private val currencyRateRepository: CurrencyRateRepository
 ) : LoadExchangeRates {
-  override fun execute(isBuy: Boolean): Flow<List<BestCurrencyRate>> =
-    currencyRateRepository.loadExchangeRates(isBuy)
+  override fun execute(): Flow<List<BestCurrencyRate>> =
+    currencyRateRepository.loadExchangeRates()
       .map {
         it.map { bestCourse ->
           @StringRes val currencyNameRes = resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)

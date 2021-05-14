@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.android.gms.location.LocationServices
@@ -41,7 +41,7 @@ class MainFragment : Fragment() {
 
   private var bestCoursesAdapter: BestCurrencyRatesAdapter? = null
 
-  private val viewModel: MainViewModel by activityViewModels()
+  private val viewModel: MainViewModel by viewModels()
 
   private val binding: FragmentMainBinding
     get() = _binding!!
@@ -78,7 +78,6 @@ class MainFragment : Fragment() {
 
     setupCoursesList()
     setupSwipeRefreshLayout()
-    setupBuyOrSellObserver()
   }
 
   override fun onDestroyView() {
@@ -110,32 +109,12 @@ class MainFragment : Fragment() {
     }
   }
 
-  @ExperimentalCoroutinesApi
-  private fun setupBuyOrSellObserver() {
-    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-      viewModel.buyOrSell.collectLatest {
-        refreshExchangeRates()
-        setBuySellIndicator(it)
-      }
-    }
-  }
-
   private fun showRefreshSpinner() {
     binding.swipeRefresh.post(showRefreshSpinnerRunnable)
   }
 
   private fun hideRefreshSpinner() {
     binding.swipeRefresh.post(hideRefreshSpinnerRunnable)
-  }
-
-  private fun setBuySellIndicator(isBuy: Boolean) {
-    binding.buysellIndicator.setText(
-      if (isBuy) {
-        R.string.buy
-      } else {
-        R.string.sell
-      }
-    )
   }
 
   @ExperimentalCoroutinesApi

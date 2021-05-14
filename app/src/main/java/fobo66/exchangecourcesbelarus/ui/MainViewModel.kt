@@ -9,10 +9,7 @@ import fobo66.valiutchik.core.entities.BestCurrencyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDateTime
@@ -24,23 +21,13 @@ class MainViewModel @Inject constructor(
   private val loadExchangeRates: LoadExchangeRates
 ) : ViewModel() {
 
-  val buyOrSell: StateFlow<Boolean>
-    get() = _buyOrSell
-
-  @ExperimentalCoroutinesApi
   val bestCurrencyRates: Flow<List<BestCurrencyRate>>
-    get() = buyOrSell
-      .flatMapLatest { loadExchangeRates.execute(it) }
+    get() = loadExchangeRates.execute()
 
   val errors: SharedFlow<Unit>
     get() = _errors
 
-  private val _buyOrSell = MutableStateFlow(false)
   private val _errors = MutableSharedFlow<Unit>()
-
-  suspend fun updateBuySell(buySell: Boolean) {
-    _buyOrSell.emit(buySell)
-  }
 
   @ExperimentalCoroutinesApi
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
