@@ -14,12 +14,12 @@ import fobo66.valiutchik.core.entities.BestCurrencyRate
  */
 @Entity(tableName = "best_rates")
 data class BestCourse(
-  @PrimaryKey(autoGenerate = true) val id: Long,
-  @ColumnInfo(name = "bank") val bank: String = "",
-  @ColumnInfo(name = "currency_value") val currencyValue: String = "",
-  @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String = USD,
-  @ColumnInfo(name = "timestamp") val timestamp: String = "",
-  @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    @ColumnInfo(name = "bank") val bank: String = "",
+    @ColumnInfo(name = "currency_value") val currencyValue: String = "",
+    @ColumnInfo(name = "currency_name") @CurrencyName val currencyName: String = USD,
+    @ColumnInfo(name = "timestamp") val timestamp: String = "",
+    @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
 ) {
   fun toBestCurrencyRate(@StringRes currencyNameRes: Int): BestCurrencyRate =
     BestCurrencyRate(id, bank, currencyNameRes, currencyValue)

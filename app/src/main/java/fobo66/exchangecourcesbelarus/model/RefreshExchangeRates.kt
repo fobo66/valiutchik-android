@@ -11,9 +11,9 @@ interface RefreshExchangeRates {
 }
 
 class RefreshExchangeRatesImpl @Inject constructor(
-  private val locationRepository: LocationRepository,
-  private val timestampRepository: CurrencyRatesTimestampRepository,
-  private val currencyRateRepository: CurrencyRateRepository
+    private val locationRepository: LocationRepository,
+    private val timestampRepository: CurrencyRatesTimestampRepository,
+    private val currencyRateRepository: CurrencyRateRepository
 ) : RefreshExchangeRates {
   override suspend fun execute(latitude: Double, longitude: Double, now: LocalDateTime) {
     val city = locationRepository.resolveUserCity(latitude, longitude)

@@ -30,7 +30,7 @@ class LoadExchangeRatesImpl @Inject constructor(
       }
 
   @StringRes
-  private fun resolveCurrencyName(@CurrencyName currencyName: String, isBuy: Boolean) = when(currencyName to isBuy) {
+  private fun resolveCurrencyName(@CurrencyName currencyName: String, isBuy: Boolean) = when (currencyName to isBuy) {
     USD to true -> R.string.currency_name_usd_buy
     USD to false -> R.string.currency_name_usd_sell
     EUR to true -> R.string.currency_name_eur_buy
