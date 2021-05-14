@@ -29,7 +29,7 @@ class BestCurrencyRatesViewHolder(private val binding: CurrencyCardBinding) :
   }
 
   fun bind(item: BestCurrencyRate) {
-    binding.currencyName.text = item.currencyName
+    binding.currencyName.text = itemView.context.getString(item.currencyNameRes)
     binding.currencyValue.text = item.currencyValue
     binding.bankName.text = item.bank
   }

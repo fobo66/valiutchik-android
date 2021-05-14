@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.entities
 
+import androidx.annotation.StringRes
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,6 +21,6 @@ data class BestCourse(
   @ColumnInfo(name = "timestamp") val timestamp: String = "",
   @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
 ) {
-  fun toBestCurrencyRate(): BestCurrencyRate =
-    BestCurrencyRate(id, bank, currencyName, currencyValue)
+  fun toBestCurrencyRate(@StringRes currencyNameRes: Int): BestCurrencyRate =
+    BestCurrencyRate(id, bank, currencyNameRes, currencyValue)
 }
