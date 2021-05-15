@@ -12,12 +12,13 @@ class BankNameNormalizer @Inject constructor() {
       return bankName
     }
 
-    if (startTypographicalQuotePosition == -1 || (startQuotePosition in 1 until startTypographicalQuotePosition)) {
+    return if (startTypographicalQuotePosition == -1 ||
+      (startQuotePosition in 1 until startTypographicalQuotePosition)) {
       val endQuotePosition = bankName.indexOf('\"', startQuotePosition + 1)
-      return bankName.substring(startQuotePosition + 1, endQuotePosition)
+      bankName.substring(startQuotePosition + 1, endQuotePosition)
+    } else {
+      val endQuotePosition = bankName.indexOfFirst { it == '»' }
+      bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
     }
-
-    val endQuotePosition = bankName.indexOfFirst { it == '»' }
-    return bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
   }
 }

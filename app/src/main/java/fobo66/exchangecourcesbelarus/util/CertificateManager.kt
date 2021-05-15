@@ -25,7 +25,7 @@ class CertificateManager @Inject constructor() {
   private val sslContext: SSLContext = try {
     SSLContext.getInstance("TLSv1.2")
   } catch (e: NoSuchAlgorithmException) {
-    throw RuntimeException("Cannot load TLS socket factory", e)
+    throw IllegalStateException("Cannot load TLS socket factory", e)
   }
 
   lateinit var trustManager: X509TrustManager
