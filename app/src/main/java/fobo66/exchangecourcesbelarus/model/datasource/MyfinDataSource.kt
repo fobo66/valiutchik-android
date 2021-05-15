@@ -40,7 +40,7 @@ class MyfinDataSource @Inject constructor(
     val credential = Credentials.basic("app", "android")
     return Request.Builder().url(url)
       .addHeader("Authorization", credential)
-      .cacheControl(CacheControl.Builder().maxAge(3, HOURS).build())
+      .cacheControl(CacheControl.Builder().maxAge(CACHE_MAX_AGE, HOURS).build())
       .build()
   }
 
@@ -50,5 +50,9 @@ class MyfinDataSource @Inject constructor(
     return baseUrl.toHttpUrl().newBuilder()
       .addPathSegment(cityIndex)
       .build()
+  }
+
+  companion object {
+    const val CACHE_MAX_AGE = 3
   }
 }

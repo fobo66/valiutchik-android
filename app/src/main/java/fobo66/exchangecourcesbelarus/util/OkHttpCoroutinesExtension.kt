@@ -4,6 +4,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
+import timber.log.Timber
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -15,7 +16,7 @@ import kotlin.coroutines.resumeWithException
 
 suspend fun Call.await(recordStack: Boolean = false): Response {
   val callStack = if (recordStack) {
-    IOException().apply {
+    IOException("Initial exception to unwrap call stack").apply {
       // Remove unnecessary lines from stacktrace
       // This doesn't remove await$default, but better than nothing
       stackTrace = stackTrace.copyOfRange(1, stackTrace.size)
@@ -41,7 +42,7 @@ suspend fun Call.await(recordStack: Boolean = false): Response {
       try {
         cancel()
       } catch (ex: Throwable) {
-        // Ignore cancel exception
+        Timber.v("Ignore cancel exception")
       }
     }
   }
