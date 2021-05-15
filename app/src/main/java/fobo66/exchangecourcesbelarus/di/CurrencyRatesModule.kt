@@ -25,22 +25,22 @@ abstract class CurrencyRatesModule {
 
   @Binds
   abstract fun provideRefreshExchangeRates(
-      refreshExchangeRatesImpl: RefreshExchangeRatesImpl
+    refreshExchangeRatesImpl: RefreshExchangeRatesImpl
   ): RefreshExchangeRates
 
   @Binds
   abstract fun provideLoadExchangeRates(
-      loadExchangeRatesImpl: LoadExchangeRatesImpl
+    loadExchangeRatesImpl: LoadExchangeRatesImpl
   ): LoadExchangeRates
 
   @Binds
   abstract fun provideCurrencyRatesParser(
-      myfinParser: MyfinParser
+    myfinParser: MyfinParser
   ): CurrencyRatesParser
 
   @Binds
   abstract fun provideCurrencyRatesDataSource(
-      myfinDataSource: MyfinDataSource
+    myfinDataSource: MyfinDataSource
   ): CurrencyRatesDataSource
 
   @Binds

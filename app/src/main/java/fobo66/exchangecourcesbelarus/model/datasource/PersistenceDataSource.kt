@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Created 11/19/19.
  */
 class PersistenceDataSource @Inject constructor(
-    private val database: CurrencyRatesDatabase
+  private val database: CurrencyRatesDatabase
 ) {
 
   suspend fun saveBestCourses(bestCourses: List<BestCourse>) {

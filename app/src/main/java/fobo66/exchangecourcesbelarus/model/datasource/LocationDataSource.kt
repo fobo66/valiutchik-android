@@ -48,8 +48,8 @@ private suspend fun MapboxGeocoding.await(): GeocodingResponse =
   suspendCancellableCoroutine { continuation ->
     enqueueCall(object : Callback<GeocodingResponse> {
       override fun onResponse(
-          call: Call<GeocodingResponse>,
-          response: Response<GeocodingResponse>
+        call: Call<GeocodingResponse>,
+        response: Response<GeocodingResponse>
       ) {
         if (response.isSuccessful) {
           val body = response.body()

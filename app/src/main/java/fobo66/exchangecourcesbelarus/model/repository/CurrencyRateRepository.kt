@@ -24,12 +24,12 @@ import javax.inject.Inject
  * Created 11/4/19.
  */
 class CurrencyRateRepository @Inject constructor(
-    private val parser: CurrencyRatesParser,
-    private val bestCourseDataSource: BestCourseDataSource,
-    private val persistenceDataSource: PersistenceDataSource,
-    private val currencyRatesDataSource: CurrencyRatesDataSource,
-    private val bankNameNormalizer: BankNameNormalizer,
-    @Io private val ioDispatcher: CoroutineDispatcher
+  private val parser: CurrencyRatesParser,
+  private val bestCourseDataSource: BestCourseDataSource,
+  private val persistenceDataSource: PersistenceDataSource,
+  private val currencyRatesDataSource: CurrencyRatesDataSource,
+  private val bankNameNormalizer: BankNameNormalizer,
+  @Io private val ioDispatcher: CoroutineDispatcher
 ) {
 
   suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
@@ -54,15 +54,15 @@ class CurrencyRateRepository @Inject constructor(
     persistenceDataSource.readBestCourses()
 
   private fun findBestCourses(
-      currencies: Set<Currency>,
-      now: String
+    currencies: Set<Currency>,
+    now: String
   ): List<BestCourse> {
     return resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
   }
 
   private fun resolveBuyRates(
-      currencies: Set<Currency>,
-      now: String
+    currencies: Set<Currency>,
+    now: String
   ) = bestCourseDataSource.findBestBuyCurrencies(currencies)
     .map { (currencyKey, currency) ->
       BestCourse(
@@ -76,8 +76,8 @@ class CurrencyRateRepository @Inject constructor(
     }
 
   private fun resolveSellRates(
-      currencies: Set<Currency>,
-      now: String
+    currencies: Set<Currency>,
+    now: String
   ) = bestCourseDataSource.findBestSellCurrencies(currencies)
     .map { (currencyKey, currency) ->
       BestCourse(

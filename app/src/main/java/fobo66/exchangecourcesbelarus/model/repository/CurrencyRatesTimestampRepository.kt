@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 class CurrencyRatesTimestampRepository @Inject constructor(
-    private val preferencesDataSource: PreferencesDataSource
+  private val preferencesDataSource: PreferencesDataSource
 ) {
 
   private val maxStalePeriod: Duration = Duration.ofHours(DEFAULT_MAX_STALE_PERIOD)

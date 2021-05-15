@@ -9,8 +9,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LocationRepositoryImpl @Inject constructor(
-    private val locationDataSource: LocationDataSource,
-    private val preferencesDataSource: PreferencesDataSource
+  private val locationDataSource: LocationDataSource,
+  private val preferencesDataSource: PreferencesDataSource
 ) : LocationRepository {
 
   override suspend fun resolveUserCity(latitude: Double, longitude: Double): String {

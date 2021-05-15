@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val refreshExchangeRates: RefreshExchangeRates,
-    private val loadExchangeRates: LoadExchangeRates
+  private val refreshExchangeRates: RefreshExchangeRates,
+  private val loadExchangeRates: LoadExchangeRates
 ) : ViewModel() {
 
   val bestCurrencyRates: Flow<List<BestCurrencyRate>>

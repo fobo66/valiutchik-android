@@ -17,8 +17,8 @@ import javax.inject.Inject
  * Created 11/4/19.
  */
 class MyfinDataSource @Inject constructor(
-    private val client: OkHttpClient,
-    @BaseUrl private val baseUrl: String
+  private val client: OkHttpClient,
+  @BaseUrl private val baseUrl: String
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> = mapOf(

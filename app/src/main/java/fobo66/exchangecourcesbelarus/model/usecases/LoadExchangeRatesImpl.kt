@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LoadExchangeRatesImpl @Inject constructor(
-    private val currencyRateRepository: CurrencyRateRepository
+  private val currencyRateRepository: CurrencyRateRepository
 ) : LoadExchangeRates {
   override fun execute(): Flow<List<BestCurrencyRate>> =
     currencyRateRepository.loadExchangeRates()
