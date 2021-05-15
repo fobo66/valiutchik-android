@@ -3,9 +3,9 @@ package fobo66.exchangecourcesbelarus.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fobo66.exchangecourcesbelarus.model.LoadExchangeRates
-import fobo66.exchangecourcesbelarus.model.RefreshExchangeRates
 import fobo66.valiutchik.core.entities.BestCurrencyRate
+import fobo66.valiutchik.core.usecases.LoadExchangeRates
+import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
