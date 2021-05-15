@@ -6,8 +6,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
+import fobo66.exchangecourcesbelarus.model.repository.LocationRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.usecases.LoadExchangeRatesImpl
 import fobo66.exchangecourcesbelarus.model.usecases.RefreshExchangeRatesImpl
+import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import fobo66.valiutchik.core.util.CurrencyRatesParser
@@ -40,4 +42,9 @@ abstract class CurrencyRatesModule {
   abstract fun provideCurrencyRatesDataSource(
       myfinDataSource: MyfinDataSource
   ): CurrencyRatesDataSource
+
+  @Binds
+  abstract fun provideLocationRepository(
+    locationRepositoryImpl: LocationRepositoryImpl
+  ): LocationRepository
 }

@@ -4,6 +4,7 @@ import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.USER_CITY_KEY
+import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -59,7 +60,7 @@ class LocationRepositoryTest {
       preferencesDataSource.loadSting("default_city", "Минск")
     } returns "default"
 
-    locationRepository = LocationRepository(locationDataSource, preferencesDataSource)
+    locationRepository = LocationRepositoryImpl(locationDataSource, preferencesDataSource)
   }
 
   @Test

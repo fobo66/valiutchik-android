@@ -4,15 +4,16 @@ import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.repository.LocationRepository
 import timber.log.Timber
 import javax.inject.Inject
 
-class LocationRepository @Inject constructor(
+class LocationRepositoryImpl @Inject constructor(
     private val locationDataSource: LocationDataSource,
     private val preferencesDataSource: PreferencesDataSource
-) {
+) : LocationRepository {
 
-  suspend fun resolveUserCity(latitude: Double, longitude: Double): String {
+  override suspend fun resolveUserCity(latitude: Double, longitude: Double): String {
     val response = try {
       locationDataSource.resolveUserCity(Location(latitude, longitude))
     } catch (e: Exception) {
