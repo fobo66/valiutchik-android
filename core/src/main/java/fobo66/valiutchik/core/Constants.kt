@@ -13,6 +13,7 @@ const val BASE_URL = "https://admin.myfin.by/outer/authXml"
 const val USD = "USD"
 const val EUR = "EUR"
 const val RUB = "RUB"
+const val RUR = "RUR"
 const val BUY_COURSE = true
 const val SELL_COURSE = false
 
@@ -30,5 +31,5 @@ const val TAG_NAME_RUR_SELL = "rub_sell"
 const val UNKNOWN_COURSE = "-"
 
 @Retention(SOURCE)
-@StringDef(value = [USD, EUR, RUB])
+@StringDef(value = [USD, EUR, RUB, RUR])
 annotation class CurrencyName

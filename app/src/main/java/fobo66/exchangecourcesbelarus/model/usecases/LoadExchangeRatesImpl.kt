@@ -6,6 +6,7 @@ import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.CurrencyName
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUB
+import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
@@ -36,6 +37,8 @@ class LoadExchangeRatesImpl @Inject constructor(
       EUR to false -> string.currency_name_eur_sell
       RUB to true -> string.currency_name_rub_buy
       RUB to false -> string.currency_name_rub_sell
+      RUR to true -> string.currency_name_rub_buy
+      RUR to false -> string.currency_name_rub_sell
       else -> 0
     }
 }

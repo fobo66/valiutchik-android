@@ -3,6 +3,7 @@ package fobo66.valiutchik.core.util
 import fobo66.valiutchik.core.CurrencyName
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUB
+import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
 
@@ -14,7 +15,7 @@ import fobo66.valiutchik.core.entities.Currency
 fun Currency.resolveCurrencyBuyRate(@CurrencyName name: String): String {
   return when (name) {
     EUR -> eurBuy
-    RUB -> rurBuy
+    RUB, RUR -> rurBuy
     USD -> usdBuy
     else -> usdBuy
   }
@@ -26,7 +27,7 @@ fun Currency.resolveCurrencyBuyRate(@CurrencyName name: String): String {
 fun Currency.resolveCurrencySellRate(@CurrencyName name: String): String {
   return when (name) {
     EUR -> eurSell
-    RUB -> rurSell
+    RUB, RUR -> rurSell
     USD -> usdSell
     else -> usdSell
   }
