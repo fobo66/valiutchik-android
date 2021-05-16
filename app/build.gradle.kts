@@ -9,7 +9,7 @@ plugins {
   id("com.google.android.gms.oss-licenses-plugin")
 }
 
-val kotlinCoroutinesVersion = "1.4.3"
+val kotlinCoroutinesVersion = "1.5.0"
 val hiltVersion = "2.35.1"
 val roomVersion = "2.4.0-alpha02"
 val navVersion = "2.3.5"
@@ -73,7 +73,6 @@ android {
 
   kotlinOptions {
     jvmTarget = JavaVersion.VERSION_1_8.toString()
-    useIR = true
   }
 
   buildFeatures {

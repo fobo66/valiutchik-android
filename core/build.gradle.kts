@@ -3,7 +3,7 @@ plugins {
   kotlin("android")
 }
 
-val kotlinCoroutinesVersion = "1.4.3"
+val kotlinCoroutinesVersion = "1.5.0"
 
 android {
   compileSdk = 30
@@ -29,7 +29,6 @@ android {
   }
   kotlinOptions {
     jvmTarget = "1.8"
-    useIR = true
   }
 }
 
