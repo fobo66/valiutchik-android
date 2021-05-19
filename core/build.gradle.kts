@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-  implementation("androidx.annotation:annotation:1.2.0")
+  implementation("androidx.annotation:annotation:1.3.0-alpha01")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
   testImplementation("junit:junit:4.13.2")
