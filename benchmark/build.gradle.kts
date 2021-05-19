@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-  compileSdk = 30
+  compileSdkPreview = "android-S"
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -18,7 +18,7 @@ android {
 
   defaultConfig {
     minSdk = 18
-    targetSdk = 30
+    targetSdkPreview = "S"
     version = 1
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"

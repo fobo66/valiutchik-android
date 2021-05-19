@@ -6,11 +6,11 @@ plugins {
 val kotlinCoroutinesVersion = "1.5.0"
 
 android {
-  compileSdk = 30
+  compileSdkPreview = "android-S"
 
   defaultConfig {
     minSdk = 18
-    targetSdk = 30
+    targetSdkPreview = "S"
     version = 1
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
