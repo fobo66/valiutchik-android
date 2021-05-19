@@ -181,7 +181,7 @@ dependencies {
   androidTestImplementation("app.cash.turbine:turbine:0.5.1")
   androidTestImplementation("androidx.test:runner:1.4.0-alpha06")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0-alpha06")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3-alpha06")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3-beta01")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")
