@@ -5,7 +5,7 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-  id("io.gitlab.arturbosch.detekt").version("1.16.0")
+  id("io.gitlab.arturbosch.detekt").version("1.17.0")
   id("com.google.android.gms.oss-licenses-plugin")
 }
 
@@ -31,11 +31,11 @@ android {
     }
   }
 
-  compileSdk = 30
+  compileSdkPreview = "android-S"
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = 18
-    targetSdk = 30
+    targetSdkPreview = "S"
     versionCode = 17
     versionName = "1.12"
     multiDexEnabled = true
@@ -108,16 +108,16 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$kotlinCoroutinesVersion")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.2.0")
-  implementation("androidx.activity:activity-ktx:1.3.0-alpha07")
+  implementation("androidx.annotation:annotation:1.3.0-alpha01")
+  implementation("androidx.activity:activity-ktx:1.3.0-alpha08")
   implementation("androidx.recyclerview:recyclerview:1.2.0")
   implementation("androidx.fragment:fragment-ktx:1.3.3")
-  implementation("androidx.collection:collection-ktx:1.1.0")
+  implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
   implementation("androidx.core:core-ktx:1.6.0-alpha03")
-  implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+  implementation("androidx.constraintlayout:constraintlayout:2.1.0-beta02")
   implementation("com.google.android.material:material:1.3.0")
   implementation("androidx.preference:preference-ktx:1.1.1")
-  implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+  implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
   // flowbinding
 
@@ -163,11 +163,11 @@ dependencies {
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.16.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.0")
 
   // tests
   testImplementation("junit:junit:4.13.2")
-  testImplementation("androidx.test:core:1.3.0")
+  testImplementation("androidx.test:core:1.4.0-alpha06")
   testImplementation("io.mockk:mockk:1.11.0")
   testImplementation("com.squareup.okhttp3:mockwebserver3")
   testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
@@ -178,7 +178,7 @@ dependencies {
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.0")
-  androidTestImplementation("app.cash.turbine:turbine:0.5.0")
+  androidTestImplementation("app.cash.turbine:turbine:0.5.1")
   androidTestImplementation("androidx.test:runner:1.4.0-alpha06")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0-alpha06")
   androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3-alpha06")
