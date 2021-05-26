@@ -10,7 +10,7 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.5.0"
-val hiltVersion = "2.35.1"
+val hiltVersion = "2.36"
 val roomVersion = "2.4.0-alpha02"
 val navVersion = "2.3.5"
 val lifecycleVersion = "2.3.1"
@@ -154,7 +154,7 @@ dependencies {
   implementation("com.jakewharton.timber:timber:4.7.1")
 
   // insets
-  implementation("dev.chrisbanes.insetter:insetter:0.5.0")
+  implementation("dev.chrisbanes.insetter:insetter:0.6.0")
 
   // leakcanary
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
