@@ -1,14 +1,19 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,12 +29,14 @@ import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
+import timber.log.Timber
 
 /**
  * Main fragment with the list of currency rates
@@ -150,6 +157,32 @@ class MainFragment : Fragment() {
       viewModel.errors.collectLatest {
         processError()
       }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+      bestCoursesAdapter?.currencyRateClicked
+        ?.collect { bankName ->
+          val mapUri =
+            Uri.parse(viewModel.resolveMapQuery(bankName.toString()))
+          val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+
+          if (mapIntent.resolveActivity(requireContext().packageManager) != null) {
+            ActivityCompat.startActivity(requireContext(), mapIntent, null)
+          } else {
+            Timber.e("Failed to show banks on map: maps app not found")
+            Snackbar.make(binding.root, R.string.maps_app_required, Snackbar.LENGTH_LONG).show()
+          }
+        }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+      bestCoursesAdapter?.currencyRateLongClicked
+        ?.collect { (currencyName, currencyValue) ->
+          val clipData = ClipData.newPlainText(currencyName, currencyValue)
+          val clipboardManager = requireContext().getSystemService<ClipboardManager>()
+          clipboardManager?.setPrimaryClip(clipData)
+          Snackbar.make(binding.root, R.string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
+        }
     }
   }
 

@@ -29,6 +29,9 @@ class MainViewModel @Inject constructor(
 
   private val _errors = MutableSharedFlow<Unit>()
 
+  fun resolveMapQuery(bankName: String) =
+    "geo:0,0?q=${bankName.replace(' ', '+')}"
+
   @ExperimentalCoroutinesApi
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch {
