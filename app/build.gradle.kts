@@ -5,14 +5,14 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-  id("io.gitlab.arturbosch.detekt").version("1.17.0")
+  id("io.gitlab.arturbosch.detekt").version("1.17.1")
   id("com.google.android.gms.oss-licenses-plugin")
 }
 
 val kotlinCoroutinesVersion = "1.5.0"
 val hiltVersion = "2.36"
 val roomVersion = "2.4.0-alpha02"
-val navVersion = "2.3.5"
+val navVersion = "2.4.0-alpha01"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.0.0"
 
@@ -111,11 +111,11 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
   implementation("androidx.activity:activity-ktx:1.3.0-alpha08")
   implementation("androidx.recyclerview:recyclerview:1.2.0")
-  implementation("androidx.fragment:fragment-ktx:1.3.4")
+  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha01")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
   implementation("androidx.core:core-ktx:1.6.0-beta01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.0-beta02")
-  implementation("com.google.android.material:material:1.3.0")
+  implementation("com.google.android.material:material:1.4.0-beta01")
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
@@ -163,7 +163,7 @@ dependencies {
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
 
   // tests
   testImplementation("junit:junit:4.13.2")
