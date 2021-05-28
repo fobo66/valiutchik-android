@@ -5,7 +5,6 @@ import fobo66.valiutchik.core.UNKNOWN_COURSE
 import org.junit.Rule
 import org.junit.Test
 
-
 class MainActivityTest {
 
   @get:Rule
