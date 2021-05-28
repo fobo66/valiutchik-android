@@ -78,6 +78,7 @@ class MainFragment : Fragment() {
 
     setupCoursesList()
     setupSwipeRefreshLayout()
+    refreshExchangeRates()
   }
 
   override fun onDestroyView() {
