@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -32,7 +31,6 @@ class MainViewModel @Inject constructor(
   fun resolveMapQuery(bankName: String) =
     "geo:0,0?q=${bankName.replace(' ', '+')}"
 
-  @ExperimentalCoroutinesApi
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch {
       try {

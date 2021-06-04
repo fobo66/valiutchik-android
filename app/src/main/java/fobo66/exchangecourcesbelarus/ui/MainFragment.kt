@@ -53,7 +53,6 @@ class MainFragment : Fragment() {
   private val binding: FragmentMainBinding
     get() = _binding!!
 
-  @ExperimentalCoroutinesApi
   private val requestPermission =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
       if (granted) {
@@ -95,7 +94,6 @@ class MainFragment : Fragment() {
     bestCoursesAdapter = null
   }
 
-  @ExperimentalCoroutinesApi
   private fun refreshExchangeRates() {
     if (ActivityCompat.checkSelfPermission(requireContext(), permission.ACCESS_COARSE_LOCATION)
       != PackageManager.PERMISSION_GRANTED
@@ -125,7 +123,6 @@ class MainFragment : Fragment() {
     binding.swipeRefresh.post(hideRefreshSpinnerRunnable)
   }
 
-  @ExperimentalCoroutinesApi
   private fun setupSwipeRefreshLayout() {
     binding.swipeRefresh.refreshes()
       .onEach {
