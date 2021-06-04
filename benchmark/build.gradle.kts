@@ -17,7 +17,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = 21
+    minSdk = com.android.sdklib.AndroidVersion.VersionCodes.LOLLIPOP
     targetSdkPreview = "S"
     version = 1
 

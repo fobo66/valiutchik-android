@@ -1,3 +1,4 @@
+import com.android.sdklib.AndroidVersion
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
@@ -34,7 +35,7 @@ android {
   compileSdkPreview = "android-S"
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = 21
+    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
     targetSdkPreview = "S"
     versionCode = 17
     versionName = "1.12"

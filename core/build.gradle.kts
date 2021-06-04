@@ -1,3 +1,5 @@
+import com.android.sdklib.AndroidVersion
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -9,7 +11,7 @@ android {
   compileSdkPreview = "android-S"
 
   defaultConfig {
-    minSdk = 21
+    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
     targetSdkPreview = "S"
     version = 1
 
