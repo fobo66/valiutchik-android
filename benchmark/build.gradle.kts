@@ -17,7 +17,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = 18
+    minSdk = 21
     targetSdkPreview = "S"
     version = 1
 

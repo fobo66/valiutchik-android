@@ -34,7 +34,7 @@ android {
   compileSdkPreview = "android-S"
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = 18
+    minSdk = 21
     targetSdkPreview = "S"
     versionCode = 17
     versionName = "1.12"
