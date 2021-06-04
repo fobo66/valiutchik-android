@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.util
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class BankNameNormalizerTest {
