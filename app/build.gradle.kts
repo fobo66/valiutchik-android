@@ -178,7 +178,7 @@ dependencies {
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.0")
-  androidTestImplementation("app.cash.turbine:turbine:0.5.1")
+  androidTestImplementation("app.cash.turbine:turbine:0.5.2")
   androidTestImplementation("androidx.test:runner:1.4.0-beta01")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0-beta01")
   androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3-beta01")
