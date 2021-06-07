@@ -1,19 +1,19 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import androidx.core.content.getSystemService
-import dagger.hilt.android.qualifiers.ApplicationContext
+import fobo66.exchangecourcesbelarus.model.datasource.ClipboardDataSource
+import timber.log.Timber
 import javax.inject.Inject
 
 class ClipboardRepository @Inject constructor(
-  @ApplicationContext private val context: Context
+  private val clipboardDataSource: ClipboardDataSource
 ) {
 
   fun copyToClipboard(label: CharSequence, value: CharSequence) {
-    val clipData = ClipData.newPlainText(label, value)
-    val clipboardManager = context.getSystemService<ClipboardManager>()
-    clipboardManager?.setPrimaryClip(clipData)
+    Timber.d("Copying to clipboard: $1%s -> $2%s", label, value)
+    if (clipboardDataSource.copyToClipboard(label, value)) {
+      Timber.d("Copied successfully")
+    } else {
+      Timber.d("Copying failed")
+    }
   }
 }
