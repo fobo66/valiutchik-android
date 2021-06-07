@@ -27,7 +27,6 @@ import dev.chrisbanes.insetter.windowInsetTypesOf
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -74,7 +73,6 @@ class MainFragment : Fragment() {
     return binding.root
   }
 
-  @ExperimentalCoroutinesApi
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     Insetter.builder().padding(
       windowInsetTypesOf(ime = true, statusBars = true, navigationBars = true),
@@ -133,7 +131,6 @@ class MainFragment : Fragment() {
     binding.swipeRefresh.setColorSchemeResources(R.color.primary_color)
   }
 
-  @ExperimentalCoroutinesApi
   private fun setupCoursesList() {
     bestCoursesAdapter = BestCurrencyRatesAdapter()
     binding.coursesList.apply {
