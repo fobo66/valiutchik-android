@@ -168,7 +168,7 @@ dependencies {
 
   // tests
   testImplementation("junit:junit:4.13.2")
-  testImplementation("androidx.test:core:1.4.0-beta01")
+  testImplementation("androidx.test:core:1.4.0-beta02")
   testImplementation("io.mockk:mockk:1.11.0")
   testImplementation("com.squareup.okhttp3:mockwebserver3")
   testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
@@ -180,9 +180,9 @@ dependencies {
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.0")
   androidTestImplementation("app.cash.turbine:turbine:0.5.2")
-  androidTestImplementation("androidx.test:runner:1.4.0-beta01")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0-beta01")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3-beta01")
+  androidTestImplementation("androidx.test:runner:1.4.0-beta02")
+  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0-beta02")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3-beta02")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")
