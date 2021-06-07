@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.valiutchik.core.entities.BestCurrencyRate
+import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
   private val refreshExchangeRates: RefreshExchangeRates,
-  private val loadExchangeRates: LoadExchangeRates
+  private val loadExchangeRates: LoadExchangeRates,
+  private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard
 ) : ViewModel() {
 
   val bestCurrencyRates: Flow<List<BestCurrencyRate>>
@@ -40,4 +42,8 @@ class MainViewModel @Inject constructor(
         _errors.emit(Unit)
       }
     }
+
+  fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
+    copyCurrencyRateToClipboard.execute(currencyName, currencyValue)
+  }
 }

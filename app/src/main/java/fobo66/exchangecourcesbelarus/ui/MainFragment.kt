@@ -1,8 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -13,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -172,9 +169,7 @@ class MainFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launchWhenResumed {
       bestCoursesAdapter?.currencyRateLongClicked
         ?.collect { (currencyName, currencyValue) ->
-          val clipData = ClipData.newPlainText(currencyName, currencyValue)
-          val clipboardManager = requireContext().getSystemService<ClipboardManager>()
-          clipboardManager?.setPrimaryClip(clipData)
+          viewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
           Snackbar.make(binding.root, R.string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
         }
     }
