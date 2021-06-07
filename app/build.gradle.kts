@@ -15,7 +15,7 @@ val hiltVersion = "2.36"
 val roomVersion = "2.4.0-alpha02"
 val navVersion = "2.4.0-alpha02"
 val lifecycleVersion = "2.3.1"
-val flowBindingVersion = "1.0.0"
+val flowBindingVersion = "1.1.0"
 
 android {
   signingConfigs {
