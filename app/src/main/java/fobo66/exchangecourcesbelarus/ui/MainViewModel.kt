@@ -3,6 +3,7 @@ package fobo66.exchangecourcesbelarus.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
@@ -37,7 +38,7 @@ class MainViewModel @Inject constructor(
     viewModelScope.launch {
       try {
         refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
-      } catch (e: Throwable) {
+      } catch (e: CurrencyRatesLoadFailedException) {
         Timber.e(e, "Error happened when refreshing currency rates")
         _errors.emit(Unit)
       }

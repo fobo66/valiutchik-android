@@ -5,6 +5,7 @@ import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
+import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.Currency
@@ -15,7 +16,7 @@ import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import timber.log.Timber
+import java.io.IOException
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -35,12 +36,11 @@ class CurrencyRateRepository @Inject constructor(
   suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
     val currenciesResponse = try {
       currencyRatesDataSource.loadExchangeRates(city)
-    } catch (e: Exception) {
-      Timber.e(e, "Failed to load exchange rates")
-      null
+    } catch (e: IOException) {
+      throw CurrencyRatesLoadFailedException(e)
     }
 
-    currenciesResponse?.body?.let {
+    currenciesResponse.body?.let {
       withContext(ioDispatcher) {
         val currencies = parser.parse(it.byteStream())
         val bestCourses = findBestCourses(currencies, now.toString())
