@@ -22,6 +22,7 @@ import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.Side
 import dev.chrisbanes.insetter.windowInsetTypesOf
 import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
 import kotlinx.coroutines.flow.catch
@@ -153,16 +154,7 @@ class MainFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launchWhenResumed {
       bestCoursesAdapter?.currencyRateClicked
         ?.collect { bankName ->
-          val mapUri =
-            Uri.parse(viewModel.resolveMapQuery(bankName.toString()))
-          val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
-
-          if (mapIntent.resolveActivity(requireContext().packageManager) != null) {
-            ActivityCompat.startActivity(requireContext(), mapIntent, null)
-          } else {
-            Timber.e("Failed to show banks on map: maps app not found")
-            Snackbar.make(binding.root, R.string.maps_app_required, Snackbar.LENGTH_LONG).show()
-          }
+          searchBankOnMap(bankName)
         }
     }
 
@@ -170,14 +162,27 @@ class MainFragment : Fragment() {
       bestCoursesAdapter?.currencyRateLongClicked
         ?.collect { (currencyName, currencyValue) ->
           viewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-          Snackbar.make(binding.root, R.string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
+          Snackbar.make(binding.root, string.currency_value_copied, Snackbar.LENGTH_SHORT).show()
         }
+    }
+  }
+
+  private fun searchBankOnMap(bankName: CharSequence) {
+    val mapUri =
+      Uri.parse(viewModel.resolveMapQuery(bankName.toString()))
+    val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+
+    if (mapIntent.resolveActivity(requireContext().packageManager) != null) {
+      ActivityCompat.startActivity(requireContext(), mapIntent, null)
+    } else {
+      Timber.e("Failed to show banks on map: maps app not found")
+      Snackbar.make(binding.root, string.maps_app_required, Snackbar.LENGTH_LONG).show()
     }
   }
 
   private fun processError() {
     hideRefreshSpinner()
     binding.swipeRefresh.isEnabled = true
-    Snackbar.make(binding.root, R.string.get_data_error, Snackbar.LENGTH_SHORT).show()
+    Snackbar.make(binding.root, string.get_data_error, Snackbar.LENGTH_SHORT).show()
   }
 }
