@@ -4,6 +4,7 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
+import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.util.CurrencyRatesParser
@@ -21,6 +22,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
 import java.time.LocalDateTime
 import java.util.concurrent.Executors
 
@@ -97,19 +99,15 @@ class CurrencyRateRepositoryTest {
     }
   }
 
-  @Test
+  @Test(expected = CurrencyRatesLoadFailedException::class)
   fun `do not load exchange rates when there was an error`() {
 
     coEvery {
       currencyRatesDataSource.loadExchangeRates(any())
-    } throws Exception("test")
+    } throws IOException("test")
 
     runBlocking {
       currencyRateRepository.refreshExchangeRates("Минск", now)
-    }
-
-    coVerify(inverse = true) {
-      persistenceDataSource.saveBestCourses(any())
     }
   }
 }
