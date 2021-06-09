@@ -8,7 +8,16 @@
   <fragment
       android:id="@+id/settingsFragment"
       android:name="fobo66.exchangecourcesbelarus.ui.SettingsFragment"
-      android:label="@string/title_activity_settings" />
+      android:label="@string/title_activity_settings">
+    <action
+        android:id="@+id/action_settingsFragment_to_openSourceLicensesFragment"
+        app:destination="@id/openSourceLicensesFragment"
+        app:enterAnim="@anim/enter_animation"
+        app:exitAnim="@anim/exit_animation"
+        app:popEnterAnim="@anim/enter_animation"
+        app:popExitAnim="@anim/exit_animation"
+        app:popUpTo="@id/settingsFragment" />
+  </fragment>
   <fragment
       android:id="@+id/mainFragment"
       android:name="fobo66.exchangecourcesbelarus.ui.MainFragment"
@@ -23,4 +32,9 @@
         app:popExitAnim="@anim/exit_animation"
         app:popUpTo="@id/mainFragment" />
   </fragment>
+  <fragment
+      android:id="@+id/openSourceLicensesFragment"
+      android:name="fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesFragment"
+      android:label="@string/title_activity_oss_licenses"
+      tools:layout="@layout/fragment_open_source_licenses" />
 </navigation>

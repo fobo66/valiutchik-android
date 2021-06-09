@@ -7,7 +7,8 @@ plugins {
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
   id("io.gitlab.arturbosch.detekt").version("1.17.1")
-  id("com.google.android.gms.oss-licenses-plugin")
+  id("com.jaredsburrows.license")
+  id("kotlin-android")
 }
 
 val kotlinCoroutinesVersion = "1.5.0"

@@ -10,10 +10,4 @@
       app:useSimpleSummaryProvider="true"
       android:negativeButtonText="@null"
       android:positiveButtonText="@null" />
-  <Preference android:title="@string/title_activity_oss_licenses">
-    <intent
-        android:action="android.intent.action.VIEW"
-        android:targetClass="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-        android:targetPackage="fobo66.exchangecourcesbelarus" />
-  </Preference>
 </PreferenceScreen>
