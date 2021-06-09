@@ -9,9 +9,13 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import retrofit2.HttpException
+import retrofit2.Response
+import javax.net.ssl.HttpsURLConnection
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -73,11 +77,29 @@ class LocationRepositoryTest {
   }
 
   @Test
-  fun `return default city on error`() {
+  fun `return default city on HTTP error`() {
 
     coEvery {
       locationDataSource.resolveUserCity(any())
-    } throws Exception("test")
+    } throws HttpException(
+      Response.error<GeocodingResponse>(
+        HttpsURLConnection.HTTP_INTERNAL_ERROR,
+        "".toResponseBody()
+      )
+    )
+
+    runBlocking {
+      val city = locationRepository.resolveUserCity(0.0, 0.0)
+      assertEquals("default", city)
+    }
+  }
+
+  @Test(expected = KotlinNullPointerException::class)
+  fun `crash on unexpected error`() {
+
+    coEvery {
+      locationDataSource.resolveUserCity(any())
+    } throws KotlinNullPointerException("test")
 
     runBlocking {
       val city = locationRepository.resolveUserCity(0.0, 0.0)
