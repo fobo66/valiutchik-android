@@ -4,7 +4,6 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
-import timber.log.Timber
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -39,11 +38,7 @@ suspend fun Call.await(recordStack: Boolean = false): Response {
     })
 
     continuation.invokeOnCancellation {
-      try {
-        cancel()
-      } catch (ex: Throwable) {
-        Timber.v("Ignore cancel exception")
-      }
+      cancel()
     }
   }
 }
