@@ -1,12 +1,11 @@
 import com.android.sdklib.AndroidVersion
-import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-  id("io.gitlab.arturbosch.detekt").version("1.17.1")
+  id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
   id("kotlin-android")
 }
@@ -90,11 +89,6 @@ android {
   }
 
   testOptions.unitTests.isIncludeAndroidResources = true
-}
-
-tasks.withType<Detekt>().configureEach {
-  // Target version of the generated JVM bytecode. It is used for type resolution.
-  jvmTarget = "11"
 }
 
 detekt {
