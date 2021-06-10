@@ -3,6 +3,7 @@ import com.android.sdklib.AndroidVersion
 plugins {
   id("com.android.library")
   kotlin("android")
+  id("io.gitlab.arturbosch.detekt")
 }
 
 val kotlinCoroutinesVersion = "1.5.0"
@@ -36,10 +37,15 @@ android {
   }
 }
 
+detekt {
+  autoCorrect = true
+}
+
 dependencies {
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
   testImplementation("junit:junit:4.13.2")
 }
