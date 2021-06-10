@@ -48,5 +48,4 @@ class BestCourseDataSource @Inject constructor() {
     currency: Currency,
     currencyKey: String
   ) = currency.resolveCurrencyBuyRate(currencyKey) != UNKNOWN_COURSE
-
 }
