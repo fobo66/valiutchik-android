@@ -11,9 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
@@ -169,7 +171,7 @@ class MainFragment : Fragment() {
 
   private fun searchBankOnMap(bankName: CharSequence) {
     val mapUri =
-      Uri.parse(viewModel.resolveMapQuery(bankName.toString()))
+      viewModel.prepareMapUri(bankName.toString()).toUri()
     val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
 
     if (mapIntent.resolveActivity(requireContext().packageManager) != null) {

@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import okhttp3.HttpUrl
 import timber.log.Timber
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -33,6 +35,13 @@ class MainViewModel @Inject constructor(
 
   fun resolveMapQuery(bankName: String) =
     "geo:0,0?q=${bankName.replace(' ', '+')}"
+
+  fun prepareMapUri(bankName: String) = HttpUrl.Builder()
+    .scheme("geo")
+    .host("0,0")
+    .addQueryParameter("q", bankName)
+    .build()
+    .toString()
 
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch {
