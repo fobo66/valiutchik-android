@@ -9,20 +9,12 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/4/19.
+ * Integrate OkHttp code with coroutines.
+ *
+ * Taken from [kotlin-coroutines-okhttp project](https://github.com/gildor/kotlin-coroutines-okhttp)
+ * with modifications
  */
-
-suspend fun Call.await(recordStack: Boolean = false): Response {
-  val callStack = if (recordStack) {
-    IOException("Initial exception to unwrap call stack").apply {
-      // Remove unnecessary lines from stacktrace
-      // This doesn't remove await$default, but better than nothing
-      stackTrace = stackTrace.copyOfRange(1, stackTrace.size)
-    }
-  } else {
-    null
-  }
+suspend fun Call.await(): Response {
   return suspendCancellableCoroutine { continuation ->
     enqueue(object : Callback {
       override fun onResponse(call: Call, response: Response) {
@@ -32,8 +24,7 @@ suspend fun Call.await(recordStack: Boolean = false): Response {
       override fun onFailure(call: Call, e: IOException) {
         // Don't bother with resuming the continuation if it is already cancelled.
         if (continuation.isCancelled) return
-        callStack?.initCause(e)
-        continuation.resumeWithException(callStack ?: e)
+        continuation.resumeWithException(e)
       }
     })
 
