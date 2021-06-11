@@ -95,6 +95,15 @@ detekt {
   autoCorrect = true
 }
 
+licenseReport {
+  generateCsvReport = false
+  generateHtmlReport = true
+  generateJsonReport = false
+
+  copyHtmlReportToAssets = true
+  copyJsonReportToAssets = false
+}
+
 dependencies {
   implementation(project(":core"))
 
