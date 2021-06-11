@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.BASE_URL
+import fobo66.valiutchik.core.CACHE_SIZE
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,7 +29,7 @@ object NetworkModule {
     loggingInterceptor: HttpLoggingInterceptor
   ): OkHttpClient {
 
-    return OkHttpClient.Builder().cache(Cache(context.cacheDir, 1024 * 1024 * 5))
+    return OkHttpClient.Builder().cache(Cache(context.cacheDir, CACHE_SIZE))
       .addInterceptor(loggingInterceptor)
       .build()
   }

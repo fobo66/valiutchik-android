@@ -7,7 +7,6 @@ plugins {
   id("dagger.hilt.android.plugin")
   id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
-  id("kotlin-android")
 }
 
 val kotlinCoroutinesVersion = "1.5.0"

@@ -30,6 +30,8 @@ const val TAG_NAME_RUR_SELL = "rub_sell"
 
 const val UNKNOWN_COURSE = "-"
 
+const val CACHE_SIZE = 1024L * 1024L * 5L
+
 @Retention(SOURCE)
 @StringDef(value = [USD, EUR, RUB, RUR])
 annotation class CurrencyName
