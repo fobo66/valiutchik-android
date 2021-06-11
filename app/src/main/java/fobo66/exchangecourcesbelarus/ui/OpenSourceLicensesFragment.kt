@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import dev.chrisbanes.insetter.applyInsetter
 import fobo66.exchangecourcesbelarus.databinding.FragmentOpenSourceLicensesBinding
 
 class OpenSourceLicensesFragment : Fragment() {
@@ -22,6 +23,11 @@ class OpenSourceLicensesFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    binding.licensesView.applyInsetter {
+      type(statusBars = true, navigationBars = true, systemGestures = true) {
+        margin(left = true, right = true)
+      }
+    }
     binding.licensesView.loadUrl("file:///android_asset/open_source_licenses.html")
   }
 
