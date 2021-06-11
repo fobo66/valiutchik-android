@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import okhttp3.HttpUrl
 import timber.log.Timber
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -33,15 +32,11 @@ class MainViewModel @Inject constructor(
 
   private val _errors = MutableSharedFlow<Unit>()
 
-  fun resolveMapQuery(bankName: String) =
-    "geo:0,0?q=${bankName.replace(' ', '+')}"
-
-  fun prepareMapUri(bankName: String) = HttpUrl.Builder()
+  fun prepareMapUri(bankName: String): Uri = Uri.Builder()
     .scheme("geo")
-    .host("0,0")
-    .addQueryParameter("q", bankName)
+    .authority("0,0")
+    .appendQueryParameter("q", bankName)
     .build()
-    .toString()
 
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch {
