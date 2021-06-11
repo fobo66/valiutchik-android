@@ -7,11 +7,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.util.CertificateManager
 import fobo66.valiutchik.core.BASE_URL
 import okhttp3.Cache
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -28,18 +26,9 @@ object NetworkModule {
   @Provides
   @Singleton
   fun provideOkHttpClient(
-    @ApplicationContext context: Context,
-    certificateManager: CertificateManager
+    @ApplicationContext context: Context
   ): OkHttpClient {
-    certificateManager.createTrustManagerForCertificate(
-      context.resources.openRawResource(R.raw.myfinbynew)
-    )
-
     return OkHttpClient.Builder().cache(Cache(context.cacheDir, 1024 * 1024 * 5))
-      .sslSocketFactory(
-        certificateManager.trustedSocketFactory,
-        certificateManager.trustManager
-      )
       .build()
   }
 
@@ -47,7 +36,3 @@ object NetworkModule {
   @BaseUrl
   fun provideBaseUrl(): String = BASE_URL
 }
-
-@Qualifier
-@Retention(SOURCE)
-annotation class BaseUrl

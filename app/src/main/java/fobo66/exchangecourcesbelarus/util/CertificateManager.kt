@@ -6,7 +6,7 @@ import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateFactory
-import java.util.Arrays
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import javax.net.ssl.KeyManagerFactory
@@ -40,7 +40,7 @@ class CertificateManager @Inject constructor() {
     val password = "password".toCharArray() // Any password will work.
     val keyStore = newEmptyKeyStore(password)
     for ((index, certificate) in certificates.withIndex()) {
-      val certificateAlias = (index).toString()
+      val certificateAlias = index.toString()
       keyStore.setCertificateEntry(certificateAlias, certificate)
     }
     // Use it to build an X509 trust manager.
@@ -71,7 +71,7 @@ class CertificateManager @Inject constructor() {
       keyStore.load(inputStream, password)
       keyStore
     } catch (e: IOException) {
-      throw AssertionError(e)
+      throw AssertionError("Failed to create keystore", e)
     }
   }
 }
