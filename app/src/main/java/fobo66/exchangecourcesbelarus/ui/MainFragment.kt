@@ -17,9 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.Side
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import dev.chrisbanes.insetter.applyInsetter
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
@@ -71,11 +69,11 @@ class MainFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    Insetter.builder().padding(
-      windowInsetTypesOf(ime = true, statusBars = true, navigationBars = true),
-      Side.RIGHT or Side.LEFT
-    )
-      .applyToView(binding.coursesList)
+    binding.coursesList.applyInsetter {
+      type(statusBars = true, navigationBars = true, systemGestures = true) {
+        padding(left = true, right = true)
+      }
+    }
 
     setupCoursesList()
     setupSwipeRefreshLayout()
