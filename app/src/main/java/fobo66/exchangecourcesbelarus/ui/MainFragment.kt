@@ -54,12 +54,9 @@ class MainFragment : Fragment() {
       if (granted) {
         refreshExchangeRates()
       } else {
-        hideRefreshSpinner()
+        viewModel.hideProgress()
       }
     }
-
-  private val showRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = true }
-  private val hideRefreshSpinnerRunnable = { binding.swipeRefresh.isRefreshing = false }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -95,8 +92,6 @@ class MainFragment : Fragment() {
     ) {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
-      showRefreshSpinner()
-
       viewLifecycleOwner.lifecycleScope.launch {
         val (latitude, longitude) = locationResolver.resolveLocation(requireActivity())
         viewModel.refreshExchangeRates(latitude, longitude)
@@ -104,18 +99,16 @@ class MainFragment : Fragment() {
     }
   }
 
-  private fun showRefreshSpinner() {
-    binding.swipeRefresh.post(showRefreshSpinnerRunnable)
-  }
-
-  private fun hideRefreshSpinner() {
-    binding.swipeRefresh.post(hideRefreshSpinnerRunnable)
-  }
-
   private fun setupSwipeRefreshLayout() {
     binding.swipeRefresh.refreshes()
       .onEach {
         refreshExchangeRates()
+      }
+      .launchIn(viewLifecycleOwner.lifecycleScope)
+
+    viewModel.progress
+      .onEach {
+        binding.swipeRefresh.isRefreshing = it
       }
       .launchIn(viewLifecycleOwner.lifecycleScope)
 
@@ -135,8 +128,6 @@ class MainFragment : Fragment() {
         .catch { processError() }
         .collectLatest {
           bestCoursesAdapter?.submitList(it)
-          hideRefreshSpinner()
-          binding.swipeRefresh.isEnabled = false
         }
 
       viewModel.errors.collectLatest {
@@ -174,8 +165,6 @@ class MainFragment : Fragment() {
   }
 
   private fun processError() {
-    hideRefreshSpinner()
-    binding.swipeRefresh.isEnabled = true
     Snackbar.make(binding.root, string.get_data_error, Snackbar.LENGTH_SHORT).show()
   }
 }

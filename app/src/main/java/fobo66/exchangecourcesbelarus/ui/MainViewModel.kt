@@ -30,7 +30,11 @@ class MainViewModel @Inject constructor(
   val errors: SharedFlow<Unit>
     get() = _errors
 
+  val progress: SharedFlow<Boolean>
+    get() = _progress
+
   private val _errors = MutableSharedFlow<Unit>()
+  private val _progress = MutableSharedFlow<Boolean>()
 
   fun prepareMapUri(bankName: String): Uri = Uri.Builder()
     .scheme("geo")
@@ -42,13 +46,28 @@ class MainViewModel @Inject constructor(
     viewModelScope.launch {
       try {
         refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
+        hideProgress()
       } catch (e: CurrencyRatesLoadFailedException) {
         Timber.e(e, "Error happened when refreshing currency rates")
         _errors.emit(Unit)
+      } finally {
+        hideProgress()
       }
     }
 
   fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
     copyCurrencyRateToClipboard.execute(currencyName, currencyValue)
+  }
+
+  fun showProgress() {
+    viewModelScope.launch {
+      _progress.emit(true)
+    }
+  }
+
+  fun hideProgress() {
+    viewModelScope.launch {
+      _progress.emit(false)
+    }
   }
 }
