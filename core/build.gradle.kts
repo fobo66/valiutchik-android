@@ -9,11 +9,11 @@ plugins {
 val kotlinCoroutinesVersion = "1.5.0"
 
 android {
-  compileSdkPreview = "android-S"
+  compileSdk = AndroidVersion.VersionCodes.R
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdkPreview = "S"
+    targetSdk = AndroidVersion.VersionCodes.R
     version = 1
 
     multiDexEnabled = true

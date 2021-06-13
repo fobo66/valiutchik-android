@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import fobo66.exchangecourcesbelarus.BuildConfig
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -20,4 +21,9 @@ object SystemModule {
   @Provides
   fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
     PreferenceManager.getDefaultSharedPreferences(context)
+
+  @Provides
+  @GeocoderAccessToken
+  fun provideGeocoderAccessToken(): String =
+    BuildConfig.mapboxGeocoderAccessToken
 }

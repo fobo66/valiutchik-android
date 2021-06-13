@@ -4,7 +4,7 @@ import com.mapbox.api.geocoding.v5.GeocodingCriteria
 import com.mapbox.api.geocoding.v5.MapboxGeocoding
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import com.mapbox.geojson.Point
-import fobo66.valiutchik.core.GEOCODER_ACCESS_TOKEN
+import fobo66.exchangecourcesbelarus.di.GeocoderAccessToken
 import fobo66.valiutchik.core.entities.Location
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
@@ -12,6 +12,7 @@ import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -19,11 +20,14 @@ import kotlin.coroutines.resumeWithException
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
-class LocationDataSource @Inject constructor() {
+@Singleton
+class LocationDataSource @Inject constructor(
+  @GeocoderAccessToken private val geocoderAccessToken: String
+) {
 
   private val geocodingRequestTemplate: MapboxGeocoding.Builder by lazy {
     MapboxGeocoding.builder()
-      .accessToken(GEOCODER_ACCESS_TOKEN)
+      .accessToken(geocoderAccessToken)
       .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
       .languages("ru-RU")
       .country("by")
@@ -56,8 +60,7 @@ private suspend fun MapboxGeocoding.await(): GeocodingResponse =
           if (body == null) {
             val e =
               KotlinNullPointerException(
-                "Response from Mapbox was null but response body type " +
-                  "was declared as non-null"
+                "Response from Mapbox was null but response body type was declared as non-null"
               )
             continuation.resumeWithException(e)
           } else {

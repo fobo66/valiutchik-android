@@ -31,15 +31,23 @@ android {
     }
   }
 
-  compileSdkPreview = "android-S"
+  compileSdk = AndroidVersion.VersionCodes.R
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdkPreview = "S"
+    targetSdk = AndroidVersion.VersionCodes.R
     versionCode = 17
     versionName = "1.12"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    val keystoreProperties = loadProperties(rootProject.file("keystore.properties"))
+
+    buildConfigField(
+      "String",
+      "mapboxGeocoderAccessToken",
+      "\"${keystoreProperties["geocoderAccessToken"]}\""
+    )
 
     javaCompileOptions {
       annotationProcessorOptions {
@@ -77,7 +85,7 @@ android {
 
   buildFeatures {
     viewBinding = true
-    buildConfig = false
+    buildConfig = true
   }
 
   packagingOptions {
