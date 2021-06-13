@@ -3,7 +3,6 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
@@ -22,15 +20,16 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
+import fobo66.exchangecourcesbelarus.util.LocationResolver
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Main fragment with the list of currency rates
@@ -43,6 +42,9 @@ class MainFragment : Fragment() {
   private var bestCoursesAdapter: BestCurrencyRatesAdapter? = null
 
   private val viewModel: MainViewModel by viewModels()
+
+  @Inject
+  lateinit var locationResolver: LocationResolver
 
   private val binding: FragmentMainBinding
     get() = _binding!!
@@ -95,15 +97,9 @@ class MainFragment : Fragment() {
     } else {
       showRefreshSpinner()
 
-      val locationProviderClient =
-        LocationServices.getFusedLocationProviderClient(requireActivity())
       viewLifecycleOwner.lifecycleScope.launch {
-        val location: Location? = locationProviderClient.lastLocation.await()
-        if (location != null) {
-          viewModel.refreshExchangeRates(location.latitude, location.longitude)
-        } else {
-          viewModel.refreshExchangeRates(0.0, 0.0)
-        }
+        val (latitude, longitude) = locationResolver.resolveLocation(requireActivity())
+        viewModel.refreshExchangeRates(latitude, longitude)
       }
     }
   }
