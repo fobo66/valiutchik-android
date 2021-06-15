@@ -3,18 +3,11 @@
   <string name="action_settings">Настройки</string>
   <string name="action_buysell">Купить/Продать</string>
   <string name="action_about">О приложении</string>
-
   <string name="buy">Купить</string>
   <string name="sell">Продать</string>
-
   <string name="title_about">О приложении</string>
   <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. С его помощью вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
-
-
   <string name="title_activity_settings">Настройки</string>
-
-  <!-- Strings related to Settings -->
-
   <string-array name="pref_cities_list">
     <item>Минск</item>
     <item>Брест</item>
@@ -23,8 +16,6 @@
     <item>Гродно</item>
     <item>Могилёв</item>
   </string-array>
-
-
   <string name="get_data_error">Не получилось обновить данные</string>
   <string name="pref_title_default_city">Город по умолчанию</string>
   <string name="maps_app_required">Невозможно показать отделения банка на карте: не найдено приложение карт</string>

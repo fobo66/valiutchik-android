@@ -20,7 +20,6 @@
   <string name="currency_name_eur_sell">Euro sell rate</string>
   <string name="currency_name_rub_buy">Russian ruble buy rate</string>
   <string name="currency_name_rub_sell">Russian ruble sell rate</string>
-
   <string-array name="pref_cities_list">
     <item>Minsk</item>
     <item>Brest</item>
@@ -29,7 +28,6 @@
     <item>Hrodna</item>
     <item>Mogilev</item>
   </string-array>
-
   <string-array name="pref_cities_values" translatable="false">
     <item>Минск</item>
     <item>Брест</item>

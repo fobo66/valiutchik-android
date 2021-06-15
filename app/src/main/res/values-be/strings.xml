@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Валютчык</string>
-    <string name="action_about">Пра прыладу</string>
-    <string name="action_buysell">Купіць/Прадаць</string>
-    <string name="action_settings">Налады</string>
+  <string name="app_name">Валютчык</string>
+  <string name="action_about">Пра прыладу</string>
+  <string name="action_buysell">Купіць/Прадаць</string>
+  <string name="action_settings">Налады</string>
   <string name="about_app_description">Прылада дазваляе хутка палучыць інфармацыю пра найлепшыя курсы валют у абласных центрах Беларусі. З яго дапамогай вы можаце знайсці бліжэйшае аддзаленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе. Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банке. Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
-    <string name="buy">Купіць</string>
+  <string name="buy">Купіць</string>
   <string name="sell">Прадаць</string>
   <string name="title_about">Інфармацыя пра прыладу</string>
   <string name="title_activity_settings">Налады</string>
-
   <string-array name="pref_cities_list">
-        <item>Менск</item>
-        <item>Брэст</item>
-        <item>Віцебск</item>
-        <item>Гомель</item>
-        <item>Гародня</item>
-        <item>Магілёў</item>
-    </string-array>
-    <string name="pref_title_default_city">Горад па змаўчанні</string>
+    <item>Менск</item>
+    <item>Брэст</item>
+    <item>Віцебск</item>
+    <item>Гомель</item>
+    <item>Гародня</item>
+    <item>Магілёў</item>
+  </string-array>
+  <string name="pref_title_default_city">Горад па змаўчанні</string>
   <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
   <string name="get_data_error">Немагчыма аднавіць дадзеныя</string>
   <string name="currency_value_copied">Курс валюты быў скапіраваны ў буфер абмену</string>
@@ -29,5 +28,4 @@
   <string name="currency_name_eur_sell">Еўра курс прадажы</string>
   <string name="currency_name_rub_buy">Расійскі рубль курс пакупкі</string>
   <string name="currency_name_rub_sell">Расійскі рубль курс прадажы</string>
-
 </resources>
