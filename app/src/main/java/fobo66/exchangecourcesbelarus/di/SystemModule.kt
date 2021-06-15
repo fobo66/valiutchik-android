@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.BuildConfig
+import fobo66.exchangecourcesbelarus.R
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -24,6 +24,6 @@ object SystemModule {
 
   @Provides
   @GeocoderAccessToken
-  fun provideGeocoderAccessToken(): String =
-    BuildConfig.mapboxGeocoderAccessToken
+  fun provideGeocoderAccessToken(@ApplicationContext context: Context): String =
+    context.getString(R.string.mapboxGeocoderAccessToken)
 }

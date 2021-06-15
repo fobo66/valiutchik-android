@@ -41,12 +41,10 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    val keystoreProperties = loadProperties(rootProject.file("keystore.properties"))
-
-    buildConfigField(
-      "String",
+    resValue(
+      "string",
       "mapboxGeocoderAccessToken",
-      "\"${keystoreProperties["geocoderAccessToken"]}\""
+      System.getenv("MAPBOX_GEOCODER_ACCESS_TOKEN")
     )
 
     javaCompileOptions {
@@ -85,7 +83,7 @@ android {
 
   buildFeatures {
     viewBinding = true
-    buildConfig = true
+    buildConfig = false
   }
 
   packagingOptions {
