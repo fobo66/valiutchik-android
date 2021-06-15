@@ -44,7 +44,7 @@ object NetworkModule {
     return loggingInterceptor
   }
 
-  @Provides
   @BaseUrl
+  @Provides
   fun provideBaseUrl(): String = BASE_URL
 }

@@ -22,8 +22,8 @@ object SystemModule {
   fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
     PreferenceManager.getDefaultSharedPreferences(context)
 
-  @Provides
   @GeocoderAccessToken
+  @Provides
   fun provideGeocoderAccessToken(@ApplicationContext context: Context): String =
     context.getString(R.string.mapboxGeocoderAccessToken)
 }
