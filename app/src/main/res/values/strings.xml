@@ -20,6 +20,7 @@
   <string name="currency_name_eur_sell">Euro sell rate</string>
   <string name="currency_name_rub_buy">Russian ruble buy rate</string>
   <string name="currency_name_rub_sell">Russian ruble sell rate</string>
+  <string name="open_map">Search for exchange offices on map</string>
   <string-array name="pref_cities_list">
     <item>Minsk</item>
     <item>Brest</item>

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +29,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -152,14 +152,15 @@ class MainFragment : Fragment() {
   }
 
   private fun searchBankOnMap(bankName: CharSequence) {
-    val mapUri =
-      viewModel.prepareMapUri(bankName.toString())
-    val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+    val mapIntent = viewModel.findBankOnMap(bankName)
 
-    if (mapIntent.resolveActivity(requireContext().packageManager) != null) {
-      ActivityCompat.startActivity(requireContext(), mapIntent, null)
+    if (mapIntent != null) {
+      ActivityCompat.startActivity(
+        requireContext(),
+        Intent.createChooser(mapIntent, getString(string.open_map)),
+        ActivityOptionsCompat.makeBasic().toBundle()
+      )
     } else {
-      Timber.e("Failed to show banks on map: maps app not found")
       Snackbar.make(binding.root, string.maps_app_required, Snackbar.LENGTH_LONG).show()
     }
   }

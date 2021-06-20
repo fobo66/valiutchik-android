@@ -1,12 +1,13 @@
 package fobo66.exchangecourcesbelarus.ui
 
-import android.net.Uri
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
+import fobo66.valiutchik.core.usecases.FindBankOnMap
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
   private val refreshExchangeRates: RefreshExchangeRates,
   private val loadExchangeRates: LoadExchangeRates,
-  private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard
+  private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
+  private val findBankOnMap: FindBankOnMap
 ) : ViewModel() {
 
   val bestCurrencyRates: Flow<List<BestCurrencyRate>>
@@ -36,15 +38,14 @@ class MainViewModel @Inject constructor(
   private val _errors = MutableSharedFlow<Unit>()
   private val _progress = MutableSharedFlow<Boolean>()
 
-  fun prepareMapUri(bankName: String): Uri = Uri.Builder()
-    .scheme("geo")
-    .authority("0,0")
-    .appendQueryParameter("q", bankName)
-    .build()
+  fun findBankOnMap(bankName: CharSequence): Intent? {
+    return findBankOnMap.execute(bankName)
+  }
 
   fun refreshExchangeRates(latitude: Double, longitude: Double) =
     viewModelScope.launch {
       try {
+        showProgress()
         refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
         hideProgress()
       } catch (e: CurrencyRatesLoadFailedException) {
@@ -59,10 +60,8 @@ class MainViewModel @Inject constructor(
     copyCurrencyRateToClipboard.execute(currencyName, currencyValue)
   }
 
-  fun showProgress() {
-    viewModelScope.launch {
-      _progress.emit(true)
-    }
+  private suspend fun showProgress() {
+    _progress.emit(true)
   }
 
   fun hideProgress() {

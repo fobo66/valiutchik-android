@@ -28,4 +28,5 @@
   <string name="currency_name_eur_sell">Еўра курс прадажы</string>
   <string name="currency_name_rub_buy">Расійскі рубль курс пакупкі</string>
   <string name="currency_name_rub_sell">Расійскі рубль курс прадажы</string>
+  <string name="open_map">Шукаць абменнікі на мапе</string>
 </resources>
