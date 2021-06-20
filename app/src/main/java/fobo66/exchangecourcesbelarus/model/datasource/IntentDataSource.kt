@@ -4,10 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import fobo66.exchangecourcesbelarus.R
 import javax.inject.Inject
 
 class IntentDataSource @Inject constructor(
