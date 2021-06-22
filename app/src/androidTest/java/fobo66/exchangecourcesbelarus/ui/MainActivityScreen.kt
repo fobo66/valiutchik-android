@@ -1,13 +1,13 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.view.View
-import com.agoda.kakao.common.views.KView
-import com.agoda.kakao.dialog.KAlertDialog
-import com.agoda.kakao.recycler.KRecyclerItem
-import com.agoda.kakao.recycler.KRecyclerView
-import com.agoda.kakao.text.KTextView
 import com.kaspersky.kaspresso.screens.KScreen
 import fobo66.exchangecourcesbelarus.R
+import io.github.kakaocup.kakao.common.views.KView
+import io.github.kakaocup.kakao.dialog.KAlertDialog
+import io.github.kakaocup.kakao.recycler.KRecyclerItem
+import io.github.kakaocup.kakao.recycler.KRecyclerView
+import io.github.kakaocup.kakao.text.KTextView
 import org.hamcrest.Matcher
 
 object MainScreen : KScreen<MainScreen>() {
@@ -31,7 +31,5 @@ object MainScreen : KScreen<MainScreen>() {
 }
 
 class CoursesListItem(parent: Matcher<View>) : KRecyclerItem<CoursesListItem>(parent) {
-  val name: KTextView = KTextView(parent) { withId(R.id.currency_name) }
   val value: KTextView = KTextView(parent) { withId(R.id.currency_value) }
-  val bankName: KTextView = KTextView(parent) { withId(R.id.bank_name) }
 }

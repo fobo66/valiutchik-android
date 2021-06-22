@@ -1,8 +1,8 @@
 package fobo66.exchangecourcesbelarus.ui
 
-import com.agoda.kakao.common.views.KView
 import com.kaspersky.kaspresso.screens.KScreen
 import fobo66.exchangecourcesbelarus.R
+import io.github.kakaocup.kakao.common.views.KView
 
 object SettingsScreen : KScreen<SettingsScreen>() {
   val settings = KView {
