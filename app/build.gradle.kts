@@ -189,7 +189,7 @@ dependencies {
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
   androidTestImplementation("app.cash.turbine:turbine:0.5.2")
-  androidTestImplementation("androidx.test:runner:1.4.0-beta02")
+  androidTestImplementation("androidx.test:runner:1.4.0-rc01")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0-rc01")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0-rc01")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
