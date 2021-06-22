@@ -19,6 +19,7 @@ class LoadExchangeRatesImpl @Inject constructor(
 ) : LoadExchangeRates {
   override fun execute(): Flow<List<BestCurrencyRate>> =
     currencyRateRepository.loadExchangeRates()
+      .map { it.sortedByDescending { rate -> rate.currencyName } }
       .map {
         it.map { bestCourse ->
           @StringRes val currencyNameRes =
