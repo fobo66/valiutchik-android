@@ -177,7 +177,7 @@ dependencies {
 
   // tests
   testImplementation("junit:junit:4.13.2")
-  testImplementation("androidx.test:core:1.4.0-beta02")
+  testImplementation("androidx.test:core:1.4.0-rc01")
   testImplementation("io.mockk:mockk:1.11.0")
   testImplementation("com.squareup.okhttp3:mockwebserver3")
   testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
