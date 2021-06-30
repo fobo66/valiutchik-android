@@ -9,11 +9,11 @@ class ClipboardRepository @Inject constructor(
 ) {
 
   fun copyToClipboard(label: CharSequence, value: CharSequence) {
-    Timber.d("Copying to clipboard: $1%s -> $2%s", label, value)
+    Timber.v("Copying to clipboard: label = %s, value = %s", label, value)
     if (clipboardDataSource.copyToClipboard(label, value)) {
-      Timber.d("Copied successfully")
+      Timber.v("Copied successfully")
     } else {
-      Timber.d("Copying failed")
+      Timber.v("Copying failed")
     }
   }
 }
