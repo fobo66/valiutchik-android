@@ -5,7 +5,6 @@
     >
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appbar"
-
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintEnd_toEndOf="parent"
@@ -19,27 +18,17 @@
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ExchangeCoursesTheme"
         app:elevation="4dp"
-
         app:menu="@menu/menu_main"
         app:title="@string/app_name"
         />
   </com.google.android.material.appbar.AppBarLayout>
-  <androidx.core.widget.NestedScrollView
+  <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/nav_host_fragment"
+      android:name="androidx.navigation.fragment.NavHostFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:fillViewport="true"
+      app:defaultNavHost="true"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      >
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"
-        />
-
-  </androidx.core.widget.NestedScrollView>
-
+      app:navGraph="@navigation/nav_graph"
+      />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
