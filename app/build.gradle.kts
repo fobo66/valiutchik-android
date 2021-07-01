@@ -12,7 +12,7 @@ plugins {
 val kotlinCoroutinesVersion = "1.5.0"
 val hiltVersion = "2.37"
 val roomVersion = "2.4.0-alpha03"
-val navVersion = "2.4.0-alpha03"
+val navVersion = "2.4.0-alpha04"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.1.0"
 
@@ -187,7 +187,7 @@ dependencies {
   // tests
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.11.0")
+  testImplementation("io.mockk:mockk:1.12.0")
   testImplementation("com.squareup.okhttp3:mockwebserver3")
   testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
   testImplementation("androidx.room:room-testing:$roomVersion")
