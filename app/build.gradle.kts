@@ -124,7 +124,6 @@ dependencies {
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$kotlinCoroutinesVersion")
 
   // androidx
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
