@@ -149,7 +149,6 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.google.android.gms:play-services-location:18.0.0")
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
 
   // room
@@ -177,8 +176,6 @@ dependencies {
 
   // leakcanary
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-
-  implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
