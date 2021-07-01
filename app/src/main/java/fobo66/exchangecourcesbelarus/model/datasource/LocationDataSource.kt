@@ -18,7 +18,6 @@ import fobo66.exchangecourcesbelarus.util.await
 import fobo66.valiutchik.core.entities.Location
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.time.Duration
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -52,19 +51,15 @@ class LocationDataSource @Inject constructor(
 
     return if (LocationManagerCompat.isLocationEnabled(locationManager)) {
       var location: android.location.Location? = null
-      var tempLocation: android.location.Location?
-      var locationFixTime: Long
 
       withContext(ioDispatcher) {
-        locationManager.getProviders(true).forEach {
-          Timber.v("Trying provider %s", it)
-          tempLocation = locationManager.getLastKnownLocation(it)
-          Timber.v("Location from provider %s : %s", it, tempLocation)
-          locationFixTime = tempLocation?.elapsedRealtimeNanos ?: 0
-          if (tempLocation != null && SystemClock.elapsedRealtimeNanos() - locationFixTime <= locationFixTimeMaximum) {
-            location = tempLocation
+        location = locationManager.getProviders(true)
+          .asSequence()
+          .map { locationManager.getLastKnownLocation(it) }
+          .filterNotNull()
+          .find {
+            SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <= locationFixTimeMaximum
           }
-        }
       }
 
       location?.let {
