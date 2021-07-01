@@ -128,7 +128,7 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
-  implementation("androidx.activity:activity-ktx:1.3.0-beta02")
+  implementation("androidx.activity:activity-ktx:1.3.0-rc01")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.4.0-alpha03")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
@@ -198,9 +198,9 @@ dependencies {
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
   androidTestImplementation("app.cash.turbine:turbine:0.5.2")
-  androidTestImplementation("androidx.test:runner:1.4.0-rc01")
+  androidTestImplementation("androidx.test:runner:1.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0-rc01")
+  androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
   androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3")
 
