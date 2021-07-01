@@ -4,6 +4,7 @@ import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.USER_CITY_KEY
+import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.coEvery
 import io.mockk.every
@@ -25,16 +26,9 @@ class LocationRepositoryTest {
 
   private lateinit var locationRepository: LocationRepository
 
-  private lateinit var locationDataSource: LocationDataSource
-  private lateinit var preferencesDataSource: PreferencesDataSource
-
-  @Before
-  fun setUp() {
-    locationDataSource = mockk()
-    preferencesDataSource = mockk()
-
+  private val locationDataSource: LocationDataSource = mockk {
     coEvery {
-      locationDataSource.resolveUserCity(any())
+      resolveUserCity(any())
     } returns GeocodingResponse.fromJson(
       """
       {
@@ -56,14 +50,23 @@ class LocationRepositoryTest {
       """.trimIndent()
     )
 
+    coEvery {
+      resolveLocation()
+    } returns Location(0.0, 0.0)
+  }
+
+  private val preferencesDataSource: PreferencesDataSource = mockk {
     every {
-      preferencesDataSource.saveString(USER_CITY_KEY, any())
+      saveString(USER_CITY_KEY, any())
     } returns Unit
 
     every {
-      preferencesDataSource.loadSting("default_city", "Минск")
+      loadSting("default_city", "Минск")
     } returns "default"
+  }
 
+  @Before
+  fun setUp() {
     locationRepository = LocationRepositoryImpl(locationDataSource, preferencesDataSource)
   }
 
@@ -71,7 +74,7 @@ class LocationRepositoryTest {
   fun `resolve user city`() {
 
     runBlocking {
-      val city = locationRepository.resolveUserCity(0.0, 0.0)
+      val city = locationRepository.resolveUserCity()
       assertEquals("test", city)
     }
   }
@@ -89,7 +92,7 @@ class LocationRepositoryTest {
     )
 
     runBlocking {
-      val city = locationRepository.resolveUserCity(0.0, 0.0)
+      val city = locationRepository.resolveUserCity()
       assertEquals("default", city)
     }
   }
@@ -102,7 +105,7 @@ class LocationRepositoryTest {
     } throws KotlinNullPointerException("test")
 
     runBlocking {
-      val city = locationRepository.resolveUserCity(0.0, 0.0)
+      val city = locationRepository.resolveUserCity()
       assertEquals("default", city)
     }
   }

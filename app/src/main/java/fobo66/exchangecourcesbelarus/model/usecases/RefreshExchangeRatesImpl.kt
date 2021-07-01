@@ -12,8 +12,8 @@ class RefreshExchangeRatesImpl @Inject constructor(
   private val timestampRepository: CurrencyRatesTimestampRepository,
   private val currencyRateRepository: CurrencyRateRepository
 ) : RefreshExchangeRates {
-  override suspend fun execute(latitude: Double, longitude: Double, now: LocalDateTime) {
-    val city = locationRepository.resolveUserCity(latitude, longitude)
+  override suspend fun execute(now: LocalDateTime) {
+    val city = locationRepository.resolveUserCity()
 
     if (timestampRepository.isNeededToUpdateCurrencyRates(now)) {
       currencyRateRepository.refreshExchangeRates(city, now)
