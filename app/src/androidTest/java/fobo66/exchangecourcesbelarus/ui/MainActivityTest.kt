@@ -6,6 +6,7 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import fobo66.valiutchik.core.UNKNOWN_COURSE
+import io.github.kakaocup.kakao.screen.Screen.Companion.idle
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -51,6 +52,7 @@ class MainActivityTest {
   @Test
   fun showMaps() {
     MainScreen {
+      idle(IDLE_TIME)
       coursesList.firstChild<CoursesListItem> {
         click()
       }
@@ -62,10 +64,15 @@ class MainActivityTest {
   fun showSettings() {
     MainScreen {
       settingsIcon.click()
+      idle(IDLE_TIME)
     }
 
     SettingsScreen {
       settings.isDisplayed()
     }
+  }
+
+  companion object {
+    const val IDLE_TIME = 3000L
   }
 }

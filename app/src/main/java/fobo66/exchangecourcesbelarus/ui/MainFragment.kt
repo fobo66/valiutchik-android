@@ -21,7 +21,6 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.databinding.FragmentMainBinding
 import fobo66.exchangecourcesbelarus.list.BestCurrencyRatesAdapter
-import fobo66.exchangecourcesbelarus.util.LocationResolver
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +28,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
-import javax.inject.Inject
 
 /**
  * Main fragment with the list of currency rates
@@ -42,9 +40,6 @@ class MainFragment : Fragment() {
   private var bestCoursesAdapter: BestCurrencyRatesAdapter? = null
 
   private val viewModel: MainViewModel by viewModels()
-
-  @Inject
-  lateinit var locationResolver: LocationResolver
 
   private val binding: FragmentMainBinding
     get() = _binding!!
@@ -93,8 +88,7 @@ class MainFragment : Fragment() {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
       viewLifecycleOwner.lifecycleScope.launch {
-        val (latitude, longitude) = locationResolver.resolveLocation(requireActivity())
-        viewModel.refreshExchangeRates(latitude, longitude)
+        viewModel.refreshExchangeRates()
       }
     }
   }

@@ -42,11 +42,11 @@ class MainViewModel @Inject constructor(
     return findBankOnMap.execute(bankName)
   }
 
-  fun refreshExchangeRates(latitude: Double, longitude: Double) =
+  fun refreshExchangeRates() =
     viewModelScope.launch {
       try {
         showProgress()
-        refreshExchangeRates.execute(latitude, longitude, LocalDateTime.now())
+        refreshExchangeRates.execute(LocalDateTime.now())
         hideProgress()
       } catch (e: CurrencyRatesLoadFailedException) {
         Timber.e(e, "Error happened when refreshing currency rates")
