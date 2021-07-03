@@ -5,36 +5,29 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.kaspersky.kaspresso.testcases.api.testcaserule.TestCaseRule
 import fobo66.valiutchik.core.UNKNOWN_COURSE
-import io.github.kakaocup.kakao.screen.Screen.Companion.idle
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class MainActivityTest {
 
   @get:Rule
-  var activityScenario = ActivityScenarioRule(MainActivity::class.java)
+  val activityScenario = ActivityScenarioRule(MainActivity::class.java)
 
-  @Before
-  fun setUp() {
-    Intents.init()
-  }
-
-  @After
-  fun tearDown() {
-    Intents.release()
-  }
+  @get:Rule
+  val testCaseRule = TestCaseRule(javaClass.simpleName)
 
   @Test
-  fun noDashesInCurrenciesValues() {
-    MainScreen {
-      coursesList {
-        for (position in 0 until getSize()) {
-          scrollTo(position)
-          childAt<CoursesListItem>(position) {
-            value.hasNoText(UNKNOWN_COURSE)
+  fun noDashesInCurrenciesValues() = testCaseRule.run {
+    step("check for no dashes in list") {
+      MainScreen.coursesList {
+        flakySafely {
+          for (position in 0 until getSize()) {
+            scrollTo(position)
+            childAt<CoursesListItem>(position) {
+              value.hasNoText(UNKNOWN_COURSE)
+            }
           }
         }
       }
@@ -42,37 +35,50 @@ class MainActivityTest {
   }
 
   @Test
-  fun showAboutDialog() {
-    MainScreen {
-      aboutIcon.click()
-      aboutDialog.isDisplayed()
+  fun showAboutDialog() = testCaseRule.run {
+    step("click on About icon") {
+      MainScreen.aboutIcon.click()
+    }
+    step("check if about info is displayed") {
+      MainScreen.aboutDialog.isDisplayed()
     }
   }
 
   @Test
-  fun showMaps() {
-    MainScreen {
-      idle(IDLE_TIME)
-      coursesList.firstChild<CoursesListItem> {
-        click()
+  fun showMaps() = testCaseRule
+    .before {
+      Intents.init()
+    }.after {
+      Intents.release()
+    }.run {
+      step("click on list item") {
+        MainScreen {
+          flakySafely {
+            coursesList.firstChild<CoursesListItem> {
+              click()
+            }
+          }
+        }
+      }
+      step("check chooser is shown") {
+        intended(hasAction(Intent.ACTION_CHOOSER))
       }
     }
-    intended(hasAction(Intent.ACTION_CHOOSER))
-  }
 
   @Test
-  fun showSettings() {
-    MainScreen {
-      settingsIcon.click()
-      idle(IDLE_TIME)
+  fun showSettings() = testCaseRule.run {
+    step("open settings") {
+      MainScreen {
+        settingsIcon.click()
+      }
     }
 
-    SettingsScreen {
-      settings.isDisplayed()
+    step("check settings screen") {
+      SettingsScreen {
+        flakySafely {
+          settings.isDisplayed()
+        }
+      }
     }
-  }
-
-  companion object {
-    const val IDLE_TIME = 3000L
   }
 }
