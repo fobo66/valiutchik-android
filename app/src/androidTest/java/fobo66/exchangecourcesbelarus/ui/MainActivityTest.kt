@@ -52,7 +52,7 @@ class MainActivityTest {
   @Test
   fun showMaps() {
     MainScreen {
-      idle()
+      idle(IDLE_TIME)
       coursesList.firstChild<CoursesListItem> {
         click()
       }
@@ -64,11 +64,15 @@ class MainActivityTest {
   fun showSettings() {
     MainScreen {
       settingsIcon.click()
-      idle()
+      idle(IDLE_TIME)
     }
 
     SettingsScreen {
       settings.isDisplayed()
     }
+  }
+
+  companion object {
+    const val IDLE_TIME = 3000L
   }
 }
