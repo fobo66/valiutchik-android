@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 
 /**
@@ -87,9 +86,7 @@ class MainFragment : Fragment() {
     ) {
       requestPermission.launch(permission.ACCESS_COARSE_LOCATION)
     } else {
-      viewLifecycleOwner.lifecycleScope.launch {
-        viewModel.refreshExchangeRates()
-      }
+      viewModel.refreshExchangeRates()
     }
   }
 
