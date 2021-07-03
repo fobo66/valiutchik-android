@@ -66,6 +66,26 @@ class MainActivityTest {
     }
 
   @Test
+  fun copyToClipboard() = testCaseRule.run {
+      step("long press on list item") {
+        MainScreen {
+          flakySafely {
+            coursesList.firstChild<CoursesListItem> {
+              longClick()
+            }
+          }
+        }
+      }
+      step("check snackbar is shown") {
+       MainScreen {
+         flakySafely {
+           snackbar.isDisplayed()
+         }
+       }
+      }
+    }
+
+  @Test
   fun showSettings() = testCaseRule.run {
     step("open settings") {
       MainScreen {
