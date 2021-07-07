@@ -15,6 +15,7 @@ val roomVersion = "2.4.0-alpha03"
 val navVersion = "2.4.0-alpha04"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.2.0"
+val retrofitVersion = "2.9.0"
 
 android {
   signingConfigs {
@@ -163,6 +164,7 @@ dependencies {
   implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
   implementation("com.squareup.okhttp3:okhttp")
   implementation("com.squareup.okhttp3:logging-interceptor")
+  implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 
   // multidex
   implementation("androidx.multidex:multidex:2.0.1")
