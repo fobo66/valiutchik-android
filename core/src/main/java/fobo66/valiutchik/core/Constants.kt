@@ -7,7 +7,7 @@ import kotlin.annotation.AnnotationRetention.SOURCE
  * Constants used in project
  * Created by fobo66 on 09.08.2015.
  */
-const val BASE_URL = "https://admin.myfin.by/outer/authXml"
+const val BASE_URL = "https://admin.myfin.by/"
 const val USD = "USD"
 const val EUR = "EUR"
 const val RUB = "RUB"

@@ -188,6 +188,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.12.0")
   testImplementation("com.squareup.okhttp3:mockwebserver3")
   testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
+  testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   androidTestImplementation(
