@@ -11,11 +11,13 @@ class XmlConverterFactory @Inject constructor(
   private val parser: CurrencyRatesParser
 ) : Converter.Factory() {
 
+  private val xmlConverter: XmlConverter by lazy {
+      XmlConverter(parser)
+  }
+
   override fun responseBodyConverter(
     type: Type,
     annotations: Array<out Annotation>,
     retrofit: Retrofit
-  ): Converter<ResponseBody, *> {
-    return XmlConverter(parser)
-  }
+  ): Converter<ResponseBody, *> = xmlConverter
 }
