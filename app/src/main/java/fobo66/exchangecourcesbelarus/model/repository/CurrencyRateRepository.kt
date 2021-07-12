@@ -10,13 +10,12 @@ import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.util.CurrencyRatesParser
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import java.io.IOException
+import retrofit2.HttpException
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -25,7 +24,6 @@ import javax.inject.Inject
  * Created 11/4/19.
  */
 class CurrencyRateRepository @Inject constructor(
-  private val parser: CurrencyRatesParser,
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
@@ -34,20 +32,17 @@ class CurrencyRateRepository @Inject constructor(
 ) {
 
   suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
-    val currenciesResponse = try {
+    val currencies = try {
       currencyRatesDataSource.loadExchangeRates(city)
-    } catch (e: IOException) {
+    } catch (e: HttpException) {
       throw CurrencyRatesLoadFailedException(e)
     }
 
-    currenciesResponse.body?.let {
-      withContext(ioDispatcher) {
-        val currencies = parser.parse(it.byteStream())
-        val bestCourses = findBestCourses(currencies, now.toString())
-
-        persistenceDataSource.saveBestCourses(bestCourses)
-      }
+    val bestCourses: List<BestCourse>
+    withContext(ioDispatcher) {
+      bestCourses = findBestCourses(currencies, now.toString())
     }
+    persistenceDataSource.saveBestCourses(bestCourses)
   }
 
   fun loadExchangeRates(): Flow<List<BestCourse>> =

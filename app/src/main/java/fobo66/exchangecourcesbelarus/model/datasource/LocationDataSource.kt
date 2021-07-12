@@ -33,6 +33,10 @@ class LocationDataSource @Inject constructor(
   @GeocoderAccessToken private val geocoderAccessToken: String
 ) {
 
+  private val noLocation by lazy {
+    Location(0.0, 0.0)
+  }
+
   private val locationFixTimeMaximum: Long by lazy {
     Duration.ofHours(LOCATION_FIX_TIME_DURATION_HOURS).toNanos()
   }
@@ -47,7 +51,7 @@ class LocationDataSource @Inject constructor(
 
   @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
   suspend fun resolveLocation(): Location {
-    val locationManager = context.getSystemService<LocationManager>() ?: return NO_LOCATION
+    val locationManager = context.getSystemService<LocationManager>() ?: return noLocation
 
     return if (LocationManagerCompat.isLocationEnabled(locationManager)) {
       var location: android.location.Location? = null
@@ -64,9 +68,9 @@ class LocationDataSource @Inject constructor(
 
       location?.let {
         Location(it.latitude, it.longitude)
-      } ?: NO_LOCATION
+      } ?: noLocation
     } else {
-      NO_LOCATION
+      noLocation
     }
   }
 
@@ -85,7 +89,6 @@ class LocationDataSource @Inject constructor(
   }
 
   companion object {
-    private val NO_LOCATION = Location(0.0, 0.0)
     private const val LOCATION_FIX_TIME_DURATION_HOURS = 3L
   }
 }

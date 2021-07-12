@@ -1,15 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.datasource
 
-import fobo66.exchangecourcesbelarus.di.BaseUrl
-import fobo66.exchangecourcesbelarus.util.await
-import okhttp3.CacheControl
-import okhttp3.Credentials
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import java.util.concurrent.TimeUnit.HOURS
+import fobo66.exchangecourcesbelarus.api.ExchangeRatesApi
+import fobo66.valiutchik.core.entities.Currency
 import javax.inject.Inject
 
 /**
@@ -17,42 +9,23 @@ import javax.inject.Inject
  * Created 11/4/19.
  */
 class MyfinDataSource @Inject constructor(
-  private val client: OkHttpClient,
-  @BaseUrl private val baseUrl: String
+  private val exchangeRatesApi: ExchangeRatesApi
 ) : CurrencyRatesDataSource {
 
-  private val citiesMap: Map<String, String> = mapOf(
-    "Минск" to "1",
-    "Витебск" to "2",
-    "Гомель" to "3",
-    "Гродно" to "4",
-    "Брест" to "5",
-    "Могилёв" to "6"
-  )
-
-  override suspend fun loadExchangeRates(city: String): Response {
-    val request = prepareRequest(resolveUrl(city))
-
-    return client.newCall(request).await()
+  private val citiesMap: Map<String, String> by lazy {
+    mapOf(
+      "Минск" to "1",
+      "Витебск" to "2",
+      "Гомель" to "3",
+      "Гродно" to "4",
+      "Брест" to "5",
+      "Могилёв" to "6"
+    )
   }
 
-  private fun prepareRequest(url: HttpUrl): Request {
-    val credential = Credentials.basic("app", "android")
-    return Request.Builder().url(url)
-      .addHeader("Authorization", credential)
-      .cacheControl(CacheControl.Builder().maxAge(CACHE_MAX_AGE, HOURS).build())
-      .build()
-  }
-
-  private fun resolveUrl(city: String): HttpUrl {
+  override suspend fun loadExchangeRates(city: String): Set<Currency> {
     val cityIndex = citiesMap[city] ?: "1"
 
-    return baseUrl.toHttpUrl().newBuilder()
-      .addPathSegment(cityIndex)
-      .build()
-  }
-
-  companion object {
-    const val CACHE_MAX_AGE = 3
+    return exchangeRatesApi.loadExchangeRates(cityIndex)
   }
 }
