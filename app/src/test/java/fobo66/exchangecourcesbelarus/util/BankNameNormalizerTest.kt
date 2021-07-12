@@ -40,13 +40,19 @@ class BankNameNormalizerTest {
   @Test
   fun `bank name with multiple nested quotes starting with typographical`() {
     val bankName = "ЗАО «Статусбанк \"Евроторгинвестбанк\"»"
-    assertEquals("Статусбанк \"Евроторгинвестбанк\"", bankNameNormalizer.normalize(bankName))
+    assertEquals("Статусбанк Евроторгинвестбанк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name with multiple nested quotes starting with regular`() {
     val bankName = "ЗАО \"Статусбанк «Евроторгинвестбанк»\""
-    assertEquals("Статусбанк «Евроторгинвестбанк»", bankNameNormalizer.normalize(bankName))
+    assertEquals("Статусбанк Евроторгинвестбанк", bankNameNormalizer.normalize(bankName))
+  }
+
+  @Test
+  fun `real bank name with nested imbalanced quotes`() {
+    val bankName = "ЗАО «Банк «Решение»"
+    assertEquals("Банк Решение", bankNameNormalizer.normalize(bankName))
   }
 
   @Test

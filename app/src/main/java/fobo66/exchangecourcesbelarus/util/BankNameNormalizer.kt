@@ -4,6 +4,8 @@ import javax.inject.Inject
 
 class BankNameNormalizer @Inject constructor() {
 
+  private val quotes = "\"«»"
+
   fun normalize(bankName: String): String {
     val startTypographicalQuotePosition = bankName.indexOfFirst { it == '«' }
     val startQuotePosition = bankName.indexOfFirst { it == '\"' }
@@ -12,7 +14,7 @@ class BankNameNormalizer @Inject constructor() {
       return bankName
     }
 
-    return if (startTypographicalQuotePosition == -1 ||
+    val canonicalBankName = if (startTypographicalQuotePosition == -1 ||
       (startQuotePosition in 1 until startTypographicalQuotePosition)) {
       val endQuotePosition = bankName.indexOf('\"', startQuotePosition + 1)
       bankName.substring(startQuotePosition + 1, endQuotePosition)
@@ -20,5 +22,7 @@ class BankNameNormalizer @Inject constructor() {
       val endQuotePosition = bankName.indexOfFirst { it == '»' }
       bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
     }
+
+    return canonicalBankName.filterNot { quotes.contains(it) }
   }
 }
