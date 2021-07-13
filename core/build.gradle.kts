@@ -6,7 +6,7 @@ plugins {
   id("io.gitlab.arturbosch.detekt")
 }
 
-val kotlinCoroutinesVersion = "1.5.1"
+val kotlinCoroutinesVersion = "1.5.1-native-mt"
 
 android {
   compileSdk = AndroidVersion.VersionCodes.R
