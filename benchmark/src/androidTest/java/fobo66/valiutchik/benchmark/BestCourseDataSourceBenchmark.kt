@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.util.MyfinParser
+import fobo66.valiutchik.core.util.CurrencyRatesParserImpl
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +21,7 @@ class BestCourseDataSourceBenchmark {
   @get:Rule
   val benchmarkRule = BenchmarkRule()
 
-  private val parser = MyfinParser()
+  private val parser = CurrencyRatesParserImpl()
 
   private val bestCourseDataSource = BestCourseDataSource()
 

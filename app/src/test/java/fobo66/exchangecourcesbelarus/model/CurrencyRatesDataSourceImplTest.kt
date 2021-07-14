@@ -2,7 +2,7 @@ package fobo66.exchangecourcesbelarus.model
 
 import fobo66.exchangecourcesbelarus.api.ExchangeRatesApi
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.MyfinDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.entities.Currency
 import kotlinx.coroutines.runBlocking
 import mockwebserver3.junit4.MockWebServerRule
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
-class MyfinDataSourceTest {
+class CurrencyRatesDataSourceImplTest {
 
   @JvmField
   @Rule
@@ -46,7 +46,7 @@ class MyfinDataSourceTest {
 
   @Test
   fun `load exchange rates`() {
-    dataSource = MyfinDataSource(
+    dataSource = CurrencyRatesDataSourceImpl(
       mockApi.returningResponse(setOf<Currency>())
     )
 

@@ -8,7 +8,7 @@ import javax.inject.Inject
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/4/19.
  */
-class MyfinDataSource @Inject constructor(
+class CurrencyRatesDataSourceImpl @Inject constructor(
   private val exchangeRatesApi: ExchangeRatesApi
 ) : CurrencyRatesDataSource {
 

@@ -20,7 +20,7 @@ import javax.inject.Inject
  *
  * Created by fobo66 on 16.08.2015.
  */
-class MyfinParser @Inject constructor() : CurrencyRatesParser {
+class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
   private val neededTagNames by lazy {
     setOf(
       TAG_NAME_BANKNAME,
