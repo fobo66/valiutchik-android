@@ -45,7 +45,7 @@ android {
     resValue(
       "string",
       "mapboxGeocoderAccessToken",
-      System.getenv("MAPBOX_GEOCODER_ACCESS_TOKEN")
+      loadSecret("MAPBOX_GEOCODER_ACCESS_TOKEN")
     )
 
     javaCompileOptions {

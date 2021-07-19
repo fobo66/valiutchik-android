@@ -12,3 +12,4 @@ build
 *.jks
 *.iml
 /keystore.properties
+.env
