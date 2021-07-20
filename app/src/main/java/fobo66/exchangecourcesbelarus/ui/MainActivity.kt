@@ -13,9 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.Side
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import dev.chrisbanes.insetter.applyInsetter
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -82,15 +80,15 @@ class MainActivity : AppCompatActivity() {
   private fun setupLayout() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
+    binding.toolbar.applyInsetter {
+      type(ime = true, statusBars = true, navigationBars = true) {
+        margin(left = true, right = true, top = true)
+      }
+    }
+
     binding.toolbar.itemClicks()
       .onEach { processMenuItemClick(it) }
       .launchIn(lifecycleScope)
-
-    Insetter.builder().margin(
-      windowInsetTypesOf(ime = true, statusBars = true, navigationBars = true),
-      Side.TOP or Side.RIGHT or Side.LEFT
-    )
-      .applyToView(binding.toolbar)
 
     val appBarConfiguration = AppBarConfiguration(navController.graph)
     binding.toolbar.setupWithNavController(navController, appBarConfiguration)
