@@ -5,10 +5,8 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.entities.Currency
 import kotlinx.coroutines.runBlocking
-import mockwebserver3.junit4.MockWebServerRule
 import org.junit.Assert.assertNotNull
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.mock.BehaviorDelegate
@@ -21,11 +19,6 @@ import java.util.concurrent.TimeUnit
  * Created 11/7/19.
  */
 class CurrencyRatesDataSourceImplTest {
-
-  @JvmField
-  @Rule
-  val serverRule = MockWebServerRule()
-
   private lateinit var mockApi: BehaviorDelegate<ExchangeRatesApi>
 
   private lateinit var dataSource: CurrencyRatesDataSource

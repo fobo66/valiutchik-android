@@ -163,7 +163,7 @@ dependencies {
   // http
   implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
   implementation("com.squareup.okhttp3:okhttp")
-  implementation("com.squareup.okhttp3:logging-interceptor")
+  debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 
   // multidex
@@ -186,8 +186,6 @@ dependencies {
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.4.0")
   testImplementation("io.mockk:mockk:1.12.0")
-  testImplementation("com.squareup.okhttp3:mockwebserver3")
-  testImplementation("com.squareup.okhttp3:mockwebserver3-junit4")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
