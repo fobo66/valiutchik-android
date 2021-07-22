@@ -20,12 +20,10 @@ val retrofitVersion = "2.9.0"
 android {
   signingConfigs {
     create("releaseSignConfig") {
-      val keystoreProperties = loadProperties(rootProject.file("keystore.properties"))
-
-      keyAlias = keystoreProperties["keyAlias"].toString()
-      keyPassword = keystoreProperties["keyPassword"].toString()
-      storeFile = file(keystoreProperties["storeFile"].toString())
-      storePassword = keystoreProperties["storePassword"].toString()
+      keyAlias = loadSecret(KEY_ALIAS)
+      keyPassword = loadSecret(KEY_PASSWORD)
+      storeFile = file(loadSecret(STORE_FILE))
+      storePassword = loadSecret(STORE_PASSWORD)
 
       enableV3Signing = true
       enableV4Signing = true
