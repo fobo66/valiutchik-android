@@ -43,7 +43,19 @@ android {
     resValue(
       "string",
       "mapboxGeocoderAccessToken",
-      loadSecret("MAPBOX_GEOCODER_ACCESS_TOKEN")
+      loadSecret(MAPBOX_TOKEN)
+    )
+
+    resValue(
+      "string",
+      "apiUsername",
+      loadSecret(API_USERNAME)
+    )
+
+    resValue(
+      "string",
+      "apiPassword",
+      loadSecret(API_PASSWORD)
     )
 
     javaCompileOptions {
