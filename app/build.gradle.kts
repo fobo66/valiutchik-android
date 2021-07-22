@@ -32,11 +32,11 @@ android {
     }
   }
 
-  compileSdk = AndroidVersion.VersionCodes.R
+  compileSdk = AndroidVersion.VersionCodes.S
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = AndroidVersion.VersionCodes.R
+    targetSdk = AndroidVersion.VersionCodes.S
     versionCode = 17
     versionName = "1.12"
     multiDexEnabled = true
