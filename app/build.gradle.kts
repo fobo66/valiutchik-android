@@ -10,7 +10,7 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.5.1"
-val hiltVersion = "2.37"
+val hiltVersion = "2.38.1"
 val roomVersion = "2.4.0-alpha04"
 val navVersion = "2.4.0-alpha05"
 val lifecycleVersion = "2.3.1"
@@ -138,7 +138,7 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
-  implementation("androidx.activity:activity-ktx:1.3.0-rc02")
+  implementation("androidx.activity:activity-ktx:1.3.0")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.4.0-alpha05")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
@@ -204,7 +204,7 @@ dependencies {
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
-  androidTestImplementation("app.cash.turbine:turbine:0.5.2")
+  androidTestImplementation("app.cash.turbine:turbine:0.6.0")
   androidTestImplementation("androidx.test:runner:1.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
