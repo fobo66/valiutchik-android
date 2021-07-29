@@ -1,3 +1,4 @@
+import io.github.cdimascio.dotenv.dotenv
 import java.io.File
 import java.util.Properties
 
@@ -22,3 +23,5 @@ fun loadProperties(propertiesFile: File): Properties {
   properties.load(propertiesFile.inputStream())
   return properties
 }
+
+fun loadSecret(key: String): String = dotenv()[key]
