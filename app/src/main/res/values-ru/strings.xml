@@ -28,4 +28,5 @@
   <string name="currency_name_rub_buy">Российский рубль курс покупки</string>
   <string name="currency_name_rub_sell">Российский рубль курс продажи</string>
   <string name="open_map">Искать обменники на карте</string>
+  <string name="pref_title_update_interval">Время обновления, ч</string>
 </resources>

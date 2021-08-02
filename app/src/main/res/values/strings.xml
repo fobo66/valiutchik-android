@@ -9,6 +9,7 @@
   <string name="title_about">About the application</string>
   <string name="sell">Sell</string>
   <string name="pref_title_default_city">Default city</string>
+  <string name="pref_title_update_interval">Update interval, hours</string>
   <string name="maps_app_required">Unable to show bank offices on map: no maps application found</string>
   <string name="get_data_error">Unable to refresh data</string>
   <string name="about_app_description">App allows to quickly load the best exchange rates in the big cities of Belarus. By clicking on list item you can find nearest bank offices with best rates on the map. Please pay attention that info about exchange rates may be out of date. Please clarify in banks. Info about exchange rates provided by <a href="https://myfin.by">myfin.by</a></string>

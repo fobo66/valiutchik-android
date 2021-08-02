@@ -61,7 +61,7 @@ class LocationRepositoryTest {
     } returns Unit
 
     every {
-      loadSting("default_city", "Минск")
+      loadString("default_city", "Минск")
     } returns "default"
   }
 
