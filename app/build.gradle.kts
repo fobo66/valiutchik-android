@@ -9,6 +9,7 @@ plugins {
   id("com.jaredsburrows.license")
 }
 
+val composeVersion = "1.0.0"
 val kotlinCoroutinesVersion = "1.5.1"
 val hiltVersion = "2.38.1"
 val roomVersion = "2.4.0-alpha04"
@@ -58,6 +59,10 @@ android {
       loadSecret(API_PASSWORD)
     )
 
+    vectorDrawables {
+      useSupportLibrary = true
+    }
+
     javaCompileOptions {
       annotationProcessorOptions {
         arguments.putAll(
@@ -104,6 +109,7 @@ android {
   buildFeatures {
     viewBinding = true
     buildConfig = false
+    compose = true
   }
 
   packagingOptions {
@@ -114,6 +120,10 @@ android {
   }
 
   testOptions.unitTests.isIncludeAndroidResources = true
+
+  composeOptions {
+    kotlinCompilerExtensionVersion = composeVersion
+  }
 }
 
 detekt {
@@ -164,6 +174,13 @@ dependencies {
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
+  implementation("androidx.compose.ui:ui:$composeVersion")
+  implementation("androidx.compose.material:material:$composeVersion")
+  implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+  implementation("androidx.activity:activity-compose:1.3.0")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
+  debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
   kapt("androidx.room:room-compiler:$roomVersion")
 
   // nav

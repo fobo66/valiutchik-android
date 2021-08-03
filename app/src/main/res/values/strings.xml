@@ -38,4 +38,5 @@
     <item>Гродно</item>
     <item>Могилёв</item>
   </string-array>
+  <string name="title_activity_new_main">NewMainActivity</string>
 </resources>
