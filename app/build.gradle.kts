@@ -180,7 +180,7 @@ dependencies {
   implementation("androidx.multidex:multidex:2.0.1")
 
   // timber
-  implementation("com.jakewharton.timber:timber:4.7.1")
+  implementation("com.jakewharton.timber:timber:5.0.0")
 
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.0")
