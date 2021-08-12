@@ -13,7 +13,7 @@ val composeVersion = "1.0.0"
 val kotlinCoroutinesVersion = "1.5.1"
 val hiltVersion = "2.38.1"
 val roomVersion = "2.4.0-alpha04"
-val navVersion = "2.4.0-alpha05"
+val navVersion = "2.4.0-alpha06"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
@@ -148,9 +148,9 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
-  implementation("androidx.activity:activity-ktx:1.3.0")
+  implementation("androidx.activity:activity-ktx:1.3.1")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha05")
+  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha06")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
   implementation("androidx.core:core-ktx:1.7.0-alpha01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.0")
@@ -200,7 +200,7 @@ dependencies {
   implementation("androidx.multidex:multidex:2.0.1")
 
   // timber
-  implementation("com.jakewharton.timber:timber:4.7.1")
+  implementation("com.jakewharton.timber:timber:5.0.0")
 
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.0")
