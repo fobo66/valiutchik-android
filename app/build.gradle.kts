@@ -180,10 +180,9 @@ dependencies {
   // location
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
 
-  // data
+  // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
-  implementation("androidx.datastore:datastore-preferences:1.0.0")
   kapt("androidx.room:room-compiler:$roomVersion")
 
   // nav
