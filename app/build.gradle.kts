@@ -12,6 +12,7 @@ plugins {
 val composeVersion = "1.0.1"
 val kotlinCoroutinesVersion = "1.5.1"
 val hiltVersion = "2.38.1"
+val activityVersion = "1.3.1"
 val roomVersion = "2.4.0-alpha04"
 val navVersion = "2.4.0-alpha06"
 val lifecycleVersion = "2.3.1"
@@ -148,7 +149,7 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
-  implementation("androidx.activity:activity-ktx:1.3.1")
+  implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.4.0-alpha06")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
@@ -162,8 +163,7 @@ dependencies {
   implementation("androidx.compose.ui:ui:$composeVersion")
   implementation("androidx.compose.material:material:$composeVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-  implementation("androidx.activity:activity-compose:1.3.1")
+  implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
   debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
@@ -175,6 +175,7 @@ dependencies {
   implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
   // lifecycle
+  implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
@@ -188,6 +189,8 @@ dependencies {
   // nav
   implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+  implementation("androidx.navigation:navigation-compose:$navVersion")
+  implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
 
   // http
   implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
