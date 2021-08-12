@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.ui.ui.theme
+package fobo66.exchangecourcesbelarus.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

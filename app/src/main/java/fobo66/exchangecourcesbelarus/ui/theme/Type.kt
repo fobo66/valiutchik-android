@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.ui.ui.theme
+package fobo66.exchangecourcesbelarus.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
