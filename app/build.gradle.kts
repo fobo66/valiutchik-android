@@ -9,7 +9,7 @@ plugins {
   id("com.jaredsburrows.license")
 }
 
-val composeVersion = "1.0.0"
+val composeVersion = "1.0.1"
 val kotlinCoroutinesVersion = "1.5.1"
 val hiltVersion = "2.38.1"
 val roomVersion = "2.4.0-alpha04"
