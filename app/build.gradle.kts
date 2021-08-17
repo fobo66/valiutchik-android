@@ -202,7 +202,7 @@ dependencies {
   implementation("androidx.multidex:multidex:2.0.1")
 
   // timber
-  implementation("com.jakewharton.timber:timber:5.0.0")
+  implementation("com.jakewharton.timber:timber:5.0.1")
 
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.0")
@@ -212,7 +212,7 @@ dependencies {
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.0")
 
   // tests
   testImplementation("junit:junit:4.13.2")
