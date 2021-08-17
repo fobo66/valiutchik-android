@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import fobo66.valiutchik.core.TIMESTAMP
 import java.time.Duration
 import java.time.LocalDateTime
@@ -12,7 +13,7 @@ class CurrencyRatesTimestampRepository @Inject constructor(
 
   private val updateInterval: Duration by lazy {
     Duration.ofHours(
-      preferencesDataSource.loadInt("update_interval", DEFAULT_UPDATE_INTERVAL).toLong()
+      preferencesDataSource.loadInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL).toLong()
     )
   }
 

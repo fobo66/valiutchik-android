@@ -4,6 +4,7 @@ import android.Manifest
 import androidx.annotation.RequiresPermission
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import retrofit2.HttpException
@@ -38,5 +39,5 @@ class LocationRepositoryImpl @Inject constructor(
     }
   }
 
-  private fun loadDefaultCity() = preferencesDataSource.loadString("default_city", "Минск")
+  private fun loadDefaultCity() = preferencesDataSource.loadString(KEY_DEFAULT_CITY, "Минск")
 }
