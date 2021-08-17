@@ -22,10 +22,10 @@ val retrofitVersion = "2.9.0"
 android {
   signingConfigs {
     create("releaseSignConfig") {
-      keyAlias = loadSecret(KEY_ALIAS)
-      keyPassword = loadSecret(KEY_PASSWORD)
-      storeFile = file(loadSecret(STORE_FILE))
-      storePassword = loadSecret(STORE_PASSWORD)
+      keyAlias = loadSecret(rootProject, KEY_ALIAS)
+      keyPassword = loadSecret(rootProject, KEY_PASSWORD)
+      storeFile = file(loadSecret(rootProject, STORE_FILE))
+      storePassword = loadSecret(rootProject, STORE_PASSWORD)
 
       enableV3Signing = true
       enableV4Signing = true
@@ -45,19 +45,19 @@ android {
     resValue(
       "string",
       "mapboxGeocoderAccessToken",
-      loadSecret(MAPBOX_TOKEN)
+      loadSecret(rootProject, MAPBOX_TOKEN)
     )
 
     resValue(
       "string",
       "apiUsername",
-      loadSecret(API_USERNAME)
+      loadSecret(rootProject, API_USERNAME)
     )
 
     resValue(
       "string",
       "apiPassword",
-      loadSecret(API_PASSWORD)
+      loadSecret(rootProject, API_PASSWORD)
     )
 
     vectorDrawables {
