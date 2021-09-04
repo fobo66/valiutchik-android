@@ -9,12 +9,12 @@ plugins {
   id("com.jaredsburrows.license")
 }
 
-val composeVersion = "1.0.1"
-val kotlinCoroutinesVersion = "1.5.1"
+val composeVersion = "1.0.2"
+val kotlinCoroutinesVersion = "1.5.2"
 val hiltVersion = "2.38.1"
 val activityVersion = "1.3.1"
 val roomVersion = "2.4.0-alpha04"
-val navVersion = "2.4.0-alpha07"
+val navVersion = "2.4.0-alpha08"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
@@ -151,9 +151,9 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha07")
+  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha08")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
-  implementation("androidx.core:core-ktx:1.7.0-alpha01")
+  implementation("androidx.core:core-ktx:1.7.0-alpha02")
   implementation("androidx.constraintlayout:constraintlayout:2.1.0")
   implementation("com.google.android.material:material:1.4.0")
   implementation("androidx.preference:preference-ktx:1.1.1")
@@ -212,7 +212,7 @@ dependencies {
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
 
   // tests
   testImplementation("junit:junit:4.13.2")
@@ -226,7 +226,7 @@ dependencies {
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
-  androidTestImplementation("app.cash.turbine:turbine:0.6.0")
+  androidTestImplementation("app.cash.turbine:turbine:0.6.1")
   androidTestImplementation("androidx.test:runner:1.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
