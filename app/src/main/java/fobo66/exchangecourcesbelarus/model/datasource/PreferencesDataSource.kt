@@ -29,7 +29,7 @@ class PreferencesDataSource @Inject constructor(
   }
 
   @ExperimentalCoroutinesApi
-  fun <T : Any> onPreferenceChanges(resultType: KClass<T>): Flow<Preference<T>> =
+  fun <T : Any> onPreferenceChanges(resultType: KClass<T>): Flow<PreferenceRequest<T>> =
     callbackFlow {
       val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
         val prefsValue: Any = when (resultType) {
@@ -44,7 +44,7 @@ class PreferencesDataSource @Inject constructor(
             )
           )
         }
-        trySend(Preference(key, prefsValue as T))
+        trySend(PreferenceRequest(key, prefsValue as T))
       }
 
       preferences.registerOnSharedPreferenceChangeListener(listener)
@@ -55,7 +55,7 @@ class PreferencesDataSource @Inject constructor(
     }
 }
 
-data class Preference<T>(
+data class PreferenceRequest<T>(
   val key: String,
   val value: T
 )
