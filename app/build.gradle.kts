@@ -10,9 +10,9 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.5.2"
-val hiltVersion = "2.38.1"
+val hiltVersion = "2.39"
 val roomVersion = "2.4.0-alpha05"
-val navVersion = "2.4.0-alpha09"
+val navVersion = "2.4.0-alpha10"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
@@ -140,7 +140,7 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0-alpha01")
   implementation("androidx.activity:activity-ktx:1.3.1")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha09")
+  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha10")
   implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
   implementation("androidx.core:core-ktx:1.7.0-beta02")
   implementation("androidx.constraintlayout:constraintlayout:2.1.1")
