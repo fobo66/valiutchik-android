@@ -1,6 +1,5 @@
 import io.github.cdimascio.dotenv.dotenv
-import java.io.File
-import java.util.Properties
+import io.github.cdimascio.dotenv.Dotenv
 
 /*
  *    Copyright 2019 Andrey Mukamolov
@@ -18,10 +17,10 @@ import java.util.Properties
  *    limitations under the License.
  */
 
-fun loadProperties(propertiesFile: File): Properties {
-  val properties = Properties()
-  properties.load(propertiesFile.inputStream())
-  return properties
+private val env: Dotenv by lazy {
+  dotenv {
+    ignoreIfMissing = true
+  }
 }
 
-fun loadSecret(key: String): String = dotenv()[key]
+fun loadSecret(key: String): String = env[key]
