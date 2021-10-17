@@ -113,7 +113,10 @@ android {
     }
   }
 
-  testOptions.unitTests.isIncludeAndroidResources = true
+  testOptions {
+    animationsDisabled = true
+    unitTests.isIncludeAndroidResources = true
+  }
 }
 
 detekt {
@@ -206,6 +209,7 @@ dependencies {
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
   androidTestImplementation("app.cash.turbine:turbine:0.6.1")
   androidTestImplementation("androidx.test:runner:1.4.0")
+  androidTestImplementation("androidx.test:rules:1.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
