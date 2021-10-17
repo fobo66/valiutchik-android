@@ -123,7 +123,7 @@ class PersistenceDataSourceTest {
       db.currencyRatesDao().loadLatestBestCurrencyRates()
         .map { courses -> courses.filter { !it.isBuy } }
         .test {
-          assertEquals(2, expectItem().size)
+          assertEquals(2, awaitItem().size)
         }
     }
   }
