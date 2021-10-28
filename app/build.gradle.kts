@@ -12,7 +12,7 @@ plugins {
 val kotlinCoroutinesVersion = "1.5.2"
 val hiltVersion = "2.39.1"
 val roomVersion = "2.4.0-beta01"
-val navVersion = "2.4.0-alpha10"
+val navVersion = "2.4.0-beta01"
 val lifecycleVersion = "2.3.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
