@@ -42,7 +42,7 @@ detekt {
 }
 
 dependencies {
-  implementation("androidx.annotation:annotation:1.3.0-beta01")
+  implementation("androidx.annotation:annotation:1.3.0")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
