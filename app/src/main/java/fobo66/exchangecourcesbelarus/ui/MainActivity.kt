@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.appcompat.itemClicks
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     navHostFragment.navController
   }
 
-  @ExperimentalCoroutinesApi
   override fun onCreate(savedInstanceState: Bundle?) {
     setTheme(R.style.ExchangeCoursesTheme)
     super.onCreate(savedInstanceState)
