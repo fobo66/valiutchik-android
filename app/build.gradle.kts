@@ -11,11 +11,11 @@ plugins {
 
 val composeVersion = "1.0.4"
 val kotlinCoroutinesVersion = "1.5.2"
-val hiltVersion = "2.39.1"
-val activityVersion = "1.3.1"
+val hiltVersion = "2.40.1"
+val activityVersion = "1.4.0"
 val roomVersion = "2.4.0-beta01"
-val navVersion = "2.4.0-alpha10"
-val lifecycleVersion = "2.3.1"
+val navVersion = "2.4.0-beta02"
+val lifecycleVersion = "2.4.0"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 
@@ -120,7 +120,10 @@ android {
     }
   }
 
-  testOptions.unitTests.isIncludeAndroidResources = true
+  testOptions {
+    animationsDisabled = true
+    unitTests.isIncludeAndroidResources = true
+  }
 
   composeOptions {
     kotlinCompilerExtensionVersion = composeVersion
@@ -148,12 +151,12 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.3.0-beta01")
+  implementation("androidx.annotation:annotation:1.3.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha10")
+  implementation("androidx.fragment:fragment-ktx:1.4.0-rc01")
   implementation("androidx.collection:collection-ktx:1.2.0-beta01")
-  implementation("androidx.core:core-ktx:1.7.0-rc01")
+  implementation("androidx.core:core-ktx:1.7.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.1")
   implementation("com.google.android.material:material:1.4.0")
   implementation("androidx.preference:preference-ktx:1.1.1")
@@ -225,9 +228,10 @@ dependencies {
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
-  androidTestImplementation("app.cash.turbine:turbine:0.6.1")
+  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.3.0")
+  androidTestImplementation("app.cash.turbine:turbine:0.7.0")
   androidTestImplementation("androidx.test:runner:1.4.0")
+  androidTestImplementation("androidx.test:rules:1.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
