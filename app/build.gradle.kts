@@ -186,7 +186,7 @@ dependencies {
   implementation("com.jakewharton.timber:timber:5.0.1")
 
   // insets
-  implementation("dev.chrisbanes.insetter:insetter:0.6.0")
+  implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
   // leakcanary
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
