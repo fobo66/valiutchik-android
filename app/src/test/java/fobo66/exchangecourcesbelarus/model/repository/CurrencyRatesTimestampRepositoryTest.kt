@@ -85,7 +85,6 @@ class CurrencyRatesTimestampRepositoryTest {
     assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
-
   @Test
   fun `timestamp in the future - no need to update`() {
     every {

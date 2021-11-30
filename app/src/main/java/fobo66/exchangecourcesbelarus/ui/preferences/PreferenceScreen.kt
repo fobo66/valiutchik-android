@@ -11,6 +11,5 @@ fun PreferenceScreen(
   modifier: Modifier = Modifier
 ) {
   Column(modifier = modifier) {
-
   }
 }
