@@ -11,9 +11,9 @@ plugins {
 
 val composeVersion = "1.0.5"
 val kotlinCoroutinesVersion = "1.5.2"
-val hiltVersion = "2.40.1"
+val hiltVersion = "2.40.5"
 val activityVersion = "1.4.0"
-val roomVersion = "2.4.0-beta01"
+val roomVersion = "2.4.0-rc01"
 val navVersion = "2.4.0-beta02"
 val lifecycleVersion = "2.4.0"
 val flowBindingVersion = "1.2.0"
@@ -154,10 +154,10 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0-rc01")
-  implementation("androidx.collection:collection-ktx:1.2.0-beta01")
+  implementation("androidx.fragment:fragment-ktx:1.4.0")
+  implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.7.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.1")
+  implementation("androidx.constraintlayout:constraintlayout:2.1.2")
   implementation("com.google.android.material:material:1.4.0")
   implementation("androidx.preference:preference-ktx:1.1.1")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
@@ -196,7 +196,7 @@ dependencies {
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.3"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -208,19 +208,19 @@ dependencies {
   implementation("com.jakewharton.timber:timber:5.0.1")
 
   // insets
-  implementation("dev.chrisbanes.insetter:insetter:0.6.0")
+  implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
   // leakcanary
   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 
   // tests
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.0")
+  testImplementation("io.mockk:mockk:1.12.1")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
@@ -228,7 +228,7 @@ dependencies {
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.3.0")
+  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.0")
   androidTestImplementation("app.cash.turbine:turbine:0.7.0")
   androidTestImplementation("androidx.test:runner:1.4.0")
   androidTestImplementation("androidx.test:rules:1.4.0")
