@@ -17,7 +17,7 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     )
   }
 
-  override fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
+  override suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
     val timestamp = loadTimestamp(now)
     val cachedValueAge = Duration.between(timestamp, now)
 
@@ -29,7 +29,7 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     preferencesDataSource.saveString(TIMESTAMP, nowString)
   }
 
-  private fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {
+  private suspend fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {
     val rawTimestamp: String = preferencesDataSource.loadString(TIMESTAMP)
 
     return if (rawTimestamp.isEmpty()) {
