@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.entities
 
 import androidx.compose.runtime.Composable
-import fobo66.exchangecourcesbelarus.model.datasource.PreferenceRequest
 
 /**
  * Entities to represent preferences on the screen. Kindly borrowed from
