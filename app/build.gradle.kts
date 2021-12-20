@@ -193,7 +193,7 @@ dependencies {
   implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
   implementation("androidx.navigation:navigation-compose:$navVersion")
-  implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
+  implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
 
   // http
   implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.3"))
