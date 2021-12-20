@@ -2,8 +2,8 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import android.Manifest
 import androidx.annotation.RequiresPermission
-import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.model.repository.LocationRepository
