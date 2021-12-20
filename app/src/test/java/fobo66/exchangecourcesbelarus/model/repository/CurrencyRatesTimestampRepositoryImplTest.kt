@@ -10,7 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
 
-class CurrencyRatesTimestampRepositoryTest {
+class CurrencyRatesTimestampRepositoryImplTest {
 
   private lateinit var currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 
@@ -24,7 +24,7 @@ class CurrencyRatesTimestampRepositoryTest {
 
   @Before
   fun setUp() {
-    currencyRatesTimestampRepository = CurrencyRatesTimestampRepository(preferencesDataSource)
+    currencyRatesTimestampRepository = CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
   }
 
   @Test
@@ -84,7 +84,6 @@ class CurrencyRatesTimestampRepositoryTest {
 
     assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
-
 
   @Test
   fun `timestamp in the future - no need to update`() {
