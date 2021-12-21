@@ -97,6 +97,8 @@ android {
 
   kotlinOptions {
     jvmTarget = "11"
+
+    freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
   }
 
   kapt {
