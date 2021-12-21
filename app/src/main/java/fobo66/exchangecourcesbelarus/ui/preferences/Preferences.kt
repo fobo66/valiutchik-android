@@ -9,12 +9,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem
 import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.TextPreference
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TextPreference(
-  preference: TextPreference,
+  preference: PreferenceItem<*>,
   modifier: Modifier = Modifier,
   onValueChanged: () -> Unit = {},
   onClick: () -> Unit = {},
