@@ -56,11 +56,11 @@ class LocationRepositoryTest {
   }
 
   private val preferencesDataSource: PreferencesDataSource = mockk {
-    every {
+    coEvery {
       saveString(USER_CITY_KEY, any())
     } returns Unit
 
-    every {
+    coEvery {
       loadString("default_city", "Минск")
     } returns "default"
   }

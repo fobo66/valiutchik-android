@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus.model.datasource
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
@@ -14,8 +15,10 @@ class DataStorePreferencesDataSourceImpl @Inject constructor(
     return dataStore.data.map { it[stringPreferencesKey(key)] }.last() ?: defaultValue
   }
 
-  override fun saveString(key: String, value: String) {
-    TODO("Not yet implemented")
+  override suspend fun saveString(key: String, value: String) {
+    dataStore.edit {
+      it[stringPreferencesKey(key)] = value
+    }
   }
 
   override fun loadInt(key: String, defaultValue: Int): Int {

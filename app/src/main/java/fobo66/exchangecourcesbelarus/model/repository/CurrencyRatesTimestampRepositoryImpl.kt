@@ -24,7 +24,7 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     return cachedValueAge == Duration.ZERO || cachedValueAge > updateInterval
   }
 
-  override fun saveTimestamp(now: LocalDateTime) {
+  override suspend fun saveTimestamp(now: LocalDateTime) {
     val nowString = now.toString()
     preferencesDataSource.saveString(TIMESTAMP, nowString)
   }

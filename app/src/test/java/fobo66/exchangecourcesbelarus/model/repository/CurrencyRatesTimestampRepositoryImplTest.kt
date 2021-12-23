@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.TIMESTAMP
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertFalse
@@ -29,7 +30,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `no timestamp - need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns ""
 
@@ -38,7 +39,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `now timestamp - need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.toString()
 
@@ -47,7 +48,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp is old - need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusDays(1).toString()
 
@@ -56,7 +57,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp slightly in the past - no need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusHours(1).toString()
 
@@ -65,7 +66,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp on the limit - no need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusHours(3).toString()
 
@@ -74,11 +75,11 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp above customized limit - need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadInt(any(), any())
     } returns 2
 
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusHours(3).toString()
 
@@ -87,7 +88,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp in the future - no need to update`() {
-    every {
+    coEvery {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.plusHours(1).toString()
 

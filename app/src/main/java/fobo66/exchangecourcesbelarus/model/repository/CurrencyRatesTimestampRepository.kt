@@ -4,5 +4,5 @@ import java.time.LocalDateTime
 
 interface CurrencyRatesTimestampRepository {
   suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean
-  fun saveTimestamp(now: LocalDateTime)
+  suspend fun saveTimestamp(now: LocalDateTime)
 }
