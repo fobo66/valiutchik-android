@@ -6,7 +6,6 @@ import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -14,14 +13,14 @@ import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
 
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 class RefreshExchangeRatesTest {
   private val locationRepository: LocationRepository = mockk {
     coEvery { resolveUserCity() } returns "test"
   }
   private val timestampRepository: CurrencyRatesTimestampRepository = mockk {
-    every { saveTimestamp(any()) } returns Unit
-    every { isNeededToUpdateCurrencyRates(any()) } returns true
+    coEvery { saveTimestamp(any()) } returns Unit
+    coEvery { isNeededToUpdateCurrencyRates(any()) } returns true
   }
   private val currencyRateRepository: CurrencyRateRepository = mockk {
     coEvery { refreshExchangeRates(any(), any()) } returns Unit
@@ -47,7 +46,7 @@ class RefreshExchangeRatesTest {
 
   @Test
   fun `do not refresh recent exchange rates`() = runBlockingTest {
-    every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
+    coEvery { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
 
     refreshExchangeRates.execute(now)
     coVerify(inverse = true) {
@@ -57,7 +56,7 @@ class RefreshExchangeRatesTest {
 
   @Test
   fun `do not resolve location for recent exchange rates`() = runBlockingTest {
-    every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
+    coEvery { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
 
     refreshExchangeRates.execute(now)
     coVerify(inverse = true) {

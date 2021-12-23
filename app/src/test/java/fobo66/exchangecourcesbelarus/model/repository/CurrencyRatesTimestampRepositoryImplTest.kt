@@ -5,12 +5,15 @@ import fobo66.valiutchik.core.TIMESTAMP
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class CurrencyRatesTimestampRepositoryImplTest {
 
   private lateinit var currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
@@ -34,7 +37,9 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns ""
 
-    assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 
   @Test
@@ -43,7 +48,9 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.toString()
 
-    assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 
   @Test
@@ -52,7 +59,9 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusDays(1).toString()
 
-    assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 
   @Test
@@ -61,7 +70,9 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusHours(1).toString()
 
-    assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 
   @Test
@@ -70,7 +81,9 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusHours(3).toString()
 
-    assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 
   @Test
@@ -83,7 +96,9 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.minusHours(3).toString()
 
-    assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 
   @Test
@@ -92,6 +107,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
       preferencesDataSource.loadString(TIMESTAMP)
     } returns now.plusHours(1).toString()
 
-    assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    runBlockingTest {
+      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+    }
   }
 }
