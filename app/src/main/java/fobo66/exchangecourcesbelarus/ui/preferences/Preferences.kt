@@ -10,15 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem
-import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.TextPreference
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TextPreference(
   preference: PreferenceItem<*>,
   modifier: Modifier = Modifier,
-  onValueChanged: () -> Unit = {},
-  onClick: () -> Unit = {},
+  onClick: (() -> Unit)? = null,
   summaryProvider: () -> String? = { null },
   trailing: @Composable (() -> Unit)? = null,
 ) {
@@ -34,7 +32,7 @@ fun TextPreference(
       },
       secondaryText = { Text(text = summaryProvider() ?: preference.summary) },
       icon = preference.icon,
-      modifier = Modifier.clickable(onClick = { if (isEnabled) onClick() }),
+      modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
       trailing = trailing,
     )
   }
