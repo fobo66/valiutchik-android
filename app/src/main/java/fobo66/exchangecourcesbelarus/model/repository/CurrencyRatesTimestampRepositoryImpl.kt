@@ -13,7 +13,7 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
 
   private val updateInterval: Duration by lazy {
     Duration.ofHours(
-      preferencesDataSource.loadInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL).toLong()
+      preferencesDataSource.loadLong(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
     )
   }
 
@@ -40,6 +40,6 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   }
 
   companion object {
-    private const val DEFAULT_UPDATE_INTERVAL = 3
+    private const val DEFAULT_UPDATE_INTERVAL = 3L
   }
 }

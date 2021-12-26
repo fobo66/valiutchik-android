@@ -7,7 +7,6 @@ import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody

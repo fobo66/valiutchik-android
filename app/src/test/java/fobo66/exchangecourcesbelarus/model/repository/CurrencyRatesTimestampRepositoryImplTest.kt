@@ -20,8 +20,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   private val preferencesDataSource = mockk<PreferencesDataSource> {
     every {
-      loadInt(any(), any())
-    } returns 3
+      loadLong(any(), any())
+    } returns 3L
   }
 
   private val now = LocalDateTime.now()
@@ -89,8 +89,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
   @Test
   fun `timestamp above customized limit - need to update`() {
     coEvery {
-      preferencesDataSource.loadInt(any(), any())
-    } returns 2
+      preferencesDataSource.loadLong(any(), any())
+    } returns 2L
 
     coEvery {
       preferencesDataSource.loadString(TIMESTAMP)

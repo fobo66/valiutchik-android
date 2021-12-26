@@ -22,6 +22,6 @@ class PreferencesDataSourceImpl @Inject constructor(
     }
   }
 
-  override fun loadInt(key: String, defaultValue: Int): Int =
-    preferences.getInt(key, defaultValue)
+  override fun loadLong(key: String, defaultValue: Long): Long =
+    preferences.getLong(key, defaultValue)
 }

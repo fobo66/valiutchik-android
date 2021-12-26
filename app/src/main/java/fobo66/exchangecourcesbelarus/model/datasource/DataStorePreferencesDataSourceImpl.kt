@@ -21,7 +21,7 @@ class DataStorePreferencesDataSourceImpl @Inject constructor(
     }
   }
 
-  override fun loadInt(key: String, defaultValue: Int): Int {
+  override fun loadLong(key: String, defaultValue: Long): Long {
     TODO("Not yet implemented")
   }
 }
