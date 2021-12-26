@@ -3,7 +3,6 @@ package fobo66.exchangecourcesbelarus.model.repository
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.TIMESTAMP
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -19,7 +18,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
   private lateinit var currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 
   private val preferencesDataSource = mockk<PreferencesDataSource> {
-    every {
+    coEvery {
       loadLong(any(), any())
     } returns 3L
   }

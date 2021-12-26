@@ -22,6 +22,7 @@ class PreferencesDataSourceImpl @Inject constructor(
     }
   }
 
-  override fun loadLong(key: String, defaultValue: Long): Long =
+  override suspend fun loadLong(key: String, defaultValue: Long): Long = withContext(ioDispatcher) {
     preferences.getLong(key, defaultValue)
+  }
 }

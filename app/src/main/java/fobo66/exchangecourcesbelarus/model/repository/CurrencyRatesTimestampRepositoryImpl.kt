@@ -11,15 +11,12 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 
-  private val updateInterval: Duration by lazy {
-    Duration.ofHours(
-      preferencesDataSource.loadLong(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
-    )
-  }
-
   override suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
     val timestamp = loadTimestamp(now)
     val cachedValueAge = Duration.between(timestamp, now)
+    val updateInterval: Duration = Duration.ofHours(
+      preferencesDataSource.loadLong(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+    )
 
     return cachedValueAge == Duration.ZERO || cachedValueAge > updateInterval
   }
