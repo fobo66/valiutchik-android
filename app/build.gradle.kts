@@ -11,7 +11,7 @@ plugins {
 
 val kotlinCoroutinesVersion = "1.5.2"
 val hiltVersion = "2.40.5"
-val roomVersion = "2.4.0"
+val roomVersion = "2.4.1"
 val navVersion = "2.4.0-rc01"
 val lifecycleVersion = "2.4.0"
 val flowBindingVersion = "1.2.0"
@@ -143,12 +143,12 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0")
   implementation("androidx.activity:activity-ktx:1.4.0")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0")
+  implementation("androidx.fragment:fragment-ktx:1.4.1")
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.7.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-  implementation("com.google.android.material:material:1.4.0")
-  implementation("androidx.preference:preference-ktx:1.1.1")
+  implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+  implementation("com.google.android.material:material:1.5.0")
+  implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
   // flowbinding
@@ -189,7 +189,7 @@ dependencies {
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
   // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
+  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
@@ -198,7 +198,7 @@ dependencies {
   // tests
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.1")
+  testImplementation("io.mockk:mockk:1.12.2")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
