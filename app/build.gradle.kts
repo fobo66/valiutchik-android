@@ -174,7 +174,7 @@ dependencies {
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.4"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.5"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
