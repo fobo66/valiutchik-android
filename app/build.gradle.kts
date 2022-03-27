@@ -130,6 +130,7 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion = composeVersion
   }
+  namespace = "fobo66.exchangecourcesbelarus"
 }
 
 detekt {

@@ -39,6 +39,7 @@ android {
       isDefault = true
     }
   }
+    namespace = "fobo66.valiutchik.benchmark"
 }
 
 dependencies {

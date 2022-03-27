@@ -35,6 +35,7 @@ android {
   kotlinOptions {
     jvmTarget = "11"
   }
+    namespace = "fobo66.valiutchik.core"
 }
 
 detekt {
