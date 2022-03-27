@@ -9,7 +9,7 @@ plugins {
   id("com.jaredsburrows.license")
 }
 
-val composeVersion = "1.0.5"
+val composeVersion = "1.1.1"
 val kotlinCoroutinesVersion = "1.6.0"
 val hiltVersion = "2.41"
 val activityVersion = "1.4.0"
@@ -196,7 +196,7 @@ dependencies {
   implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
   implementation("androidx.navigation:navigation-compose:$navVersion")
-  implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
+  implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
   implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.6"))
