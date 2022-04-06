@@ -36,8 +36,9 @@ jobs:
           test-command: ./gradlew  testDebug --continue
 
   ui-tests:
-    docker:
-      - image: cimg/android:2022.03.1
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - android/accept-licenses
