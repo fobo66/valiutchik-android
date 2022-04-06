@@ -38,6 +38,11 @@ abstract class DataModule {
   ): LocationDataSource
 
   @Binds
+  abstract fun provideGeocodingDataSource(
+    geocodingDataSourceImpl: GeocodingDataSourceImpl
+  ): GeocodingDataSource
+
+  @Binds
   abstract fun provideLocationRepository(
     locationRepositoryImpl: LocationRepositoryImpl
   ): LocationRepository
