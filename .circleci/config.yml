@@ -18,7 +18,11 @@ jobs:
       - image: cimg/android:2022.03.1
     steps:
       - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: v1a
       - run: ./gradlew detekt
+      - android/save-gradle-cache:
+          cache-prefix: v1a
   unit-tests:
     # These next lines define the Android machine image executor.
     # See: https://circleci.com/docs/2.0/executor-types/
