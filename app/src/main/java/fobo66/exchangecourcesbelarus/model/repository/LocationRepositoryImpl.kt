@@ -2,13 +2,13 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import android.Manifest
 import androidx.annotation.RequiresPermission
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.model.repository.LocationRepository
+import javax.inject.Inject
 import retrofit2.HttpException
 import timber.log.Timber
-import javax.inject.Inject
 
 class LocationRepositoryImpl @Inject constructor(
   private val locationDataSource: LocationDataSource,

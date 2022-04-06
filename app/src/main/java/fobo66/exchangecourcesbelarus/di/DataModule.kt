@@ -4,10 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.*
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.LocationRepositoryImpl
@@ -34,6 +31,11 @@ abstract class DataModule {
   abstract fun provideCurrencyRatesTimestampRepository(
     currencyRatesTimestampRepositoryImpl: CurrencyRatesTimestampRepositoryImpl
   ): CurrencyRatesTimestampRepository
+
+  @Binds
+  abstract fun provideLocationDataSource(
+    locationDataSourceImpl: LocationDataSourceImpl
+  ): LocationDataSource
 
   @Binds
   abstract fun provideLocationRepository(

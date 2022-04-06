@@ -9,6 +9,7 @@ import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import javax.net.ssl.HttpsURLConnection
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertEquals
@@ -16,7 +17,6 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
-import javax.net.ssl.HttpsURLConnection
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
