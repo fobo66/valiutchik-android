@@ -43,7 +43,6 @@ workflows:
       - lint
       - unit-tests
       - android/run-ui-tests:
-          executor:
-            name: android/android-machine
-            resource-class: large
+          machine:
+            image: android:2022.03.1
           system-image: system-images;android-29;default;x86
