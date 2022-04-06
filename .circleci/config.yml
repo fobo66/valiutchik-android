@@ -34,12 +34,6 @@ jobs:
       # The next step will run the unit tests
       - android/run-tests:
           test-command: ./gradlew  testDebug --continue
-
-  ui-tests:
-    docker:
-      - image: cimg/android:2022.03.1
-    steps:
-      - android/run-ui-tests
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -48,4 +42,4 @@ workflows:
     jobs:
       - lint
       - unit-tests
-      - ui-tests
+      - android/run-ui-tests
