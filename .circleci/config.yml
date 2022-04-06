@@ -44,6 +44,6 @@ workflows:
       - unit-tests
       - android/run-ui-tests:
           executor:
-            name: android/android-machine:2022.03.1
+            name: android:2022.03.1
             resource-class: large
           system-image: system-images;android-29;default;x86
