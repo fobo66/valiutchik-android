@@ -66,6 +66,8 @@ jobs:
           avd-name: myavd
           restore-gradle-cache-prefix: v1a
       - android/run-tests
+      - store_test_results:
+          path: app/build/outputs/androidTest-results
       - android/kill-emulators
       - android/save-build-cache:
           cache-prefix: v1a
