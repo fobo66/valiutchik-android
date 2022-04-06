@@ -1,3 +1,5 @@
+import java.net.URI
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -21,6 +23,16 @@ allprojects {
     mavenCentral()
     google()
     maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+    maven {
+      url = URI.create("https://api.mapbox.com/downloads/v2/releases/maven")
+      authentication {
+        create<BasicAuthentication>("basic")
+      }
+      credentials {
+        username = "mapbox"
+        password = loadSecret(rootProject, MAPBOX_REPO_TOKEN)
+      }
+    }
   }
 }
 

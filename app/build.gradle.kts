@@ -163,6 +163,7 @@ dependencies {
 
   // location
   implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.28")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
