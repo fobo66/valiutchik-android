@@ -68,6 +68,8 @@ jobs:
       - android/run-tests
       - store_test_results:
           path: app/build/outputs/androidTest-results
+      - store_artifacts:
+          path: app/build/reports/androidTests/connected
       - android/kill-emulators
       - android/save-build-cache:
           cache-prefix: v1a
