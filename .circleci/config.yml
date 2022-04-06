@@ -30,12 +30,19 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
-
+      - android/restore-build-cache:
+          cache-prefix: v1a
+      - android/restore-gradle-cache:
+          cache-prefix: v1a
       # The next step will run the unit tests
       - android/run-tests:
           test-command: ./gradlew  testDebug --continue
       - store_test_results:
           path: app/build/test-results/testDebugUnitTest
+      - android/save-build-cache:
+          cache-prefix: v1a
+      - android/save-gradle-cache:
+          cache-prefix: v1a
 
   ui-tests:
     executor:
@@ -48,7 +55,7 @@ jobs:
       - android/create-avd:
           avd-name: myavd
           install: true
-          system-image: system-images;android-29;default;x86
+          system-image: system-images;android-30;default;x86
       - android/restore-build-cache:
           cache-prefix: v1a
       - android/start-emulator:
