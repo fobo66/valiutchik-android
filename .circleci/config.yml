@@ -42,4 +42,5 @@ workflows:
     jobs:
       - lint
       - unit-tests
-      - android/run-ui-tests
+      - android/run-ui-tests:
+          system-image: system-images;android-29;default;x86
