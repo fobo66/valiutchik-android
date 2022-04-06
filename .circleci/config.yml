@@ -34,6 +34,23 @@ jobs:
       # The next step will run the unit tests
       - android/run-tests:
           test-command: ./gradlew  testDebug --continue
+
+  ui-tests:
+    docker:
+      - image: cimg/android:2022.03.1
+    steps:
+      - checkout
+      - android/accept-licenses
+      - android/create-avd:
+          avd-name: myavd
+          install: true
+          system-image: system-images;android-28;default;arm64-v8a
+      - android/start-emulator:
+          avd-name: myavd
+          restore-gradle-cache-prefix: v1a
+      - android/run-tests
+      - android/save-gradle-cache:
+          cache-prefix: v1a
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -42,8 +59,4 @@ workflows:
     jobs:
       - lint
       - unit-tests
-      - android/run-ui-tests:
-          executor:
-            name: android:2022.03.1
-            resource-class: large
-          system-image: system-images;android-29;default;x86
+      - ui-tests
