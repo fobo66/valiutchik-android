@@ -1,22 +1,20 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse
+import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.result.SearchResult
+import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import java.io.IOException
 import kotlinx.coroutines.runBlocking
-import okhttp3.ResponseBody.Companion.toResponseBody
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import retrofit2.HttpException
-import retrofit2.Response
-import javax.net.ssl.HttpsURLConnection
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -26,48 +24,58 @@ class LocationRepositoryTest {
 
   private lateinit var locationRepository: LocationRepository
 
-  private val locationDataSource: LocationDataSource = mockk {
-    coEvery {
-      resolveUserCity(any())
-    } returns GeocodingResponse.fromJson(
-      """
-      {
-        "type": "Feature",
-        "query": ["aaa"],
-        "features": [{
-          "type": "place",
-          "text": "test"
-        }],
-        "attribution": "aaa",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [125.6, 10.1]
-        },
-        "properties": {
-          "name": "Dinagat Islands"
-        }
-      }
-      """.trimIndent()
-    )
-
-    coEvery {
-      resolveLocation()
-    } returns Location(0.0, 0.0)
+  private val searchAddress: SearchAddress = mockk {
+    every {
+      locality
+    } returns "test"
   }
 
-  private val preferencesDataSource: PreferencesDataSource = mockk {
+  private val searchResult: SearchResult = mockk {
     every {
-      saveString(USER_CITY_KEY, any())
-    } returns Unit
+      address
+    } returns searchAddress
+  }
 
-    every {
-      loadString("default_city", "Минск")
-    } returns "default"
+  private val locationDataSource = object : LocationDataSource {
+    override suspend fun resolveLocation(): Location =
+      Location(0.0, 0.0)
+  }
+
+  private val geocodingDataSource = object : GeocodingDataSource {
+    var showError = false
+    var unexpectedError = false
+
+    override suspend fun resolveUserCity(location: Location): List<SearchResult> =
+      when {
+        showError -> throw IOException("Yikes!")
+        unexpectedError -> throw KotlinNullPointerException("Yikes!")
+        else -> listOf(searchResult)
+      }
+  }
+
+  private val preferencesDataSource = object : PreferencesDataSource {
+    override fun loadString(key: String, defaultValue: String): String =
+      "default"
+
+    override fun saveString(key: String, value: String) = Unit
+
+    override fun loadInt(key: String, defaultValue: Int): Int = 0
+
+    override fun saveInt(key: String, value: Int) = Unit
   }
 
   @Before
   fun setUp() {
-    locationRepository = LocationRepositoryImpl(locationDataSource, preferencesDataSource)
+    locationRepository =
+      LocationRepositoryImpl(locationDataSource, geocodingDataSource, preferencesDataSource)
+  }
+
+  @After
+  fun tearDown() {
+    geocodingDataSource.apply {
+      showError = false
+      unexpectedError = false
+    }
   }
 
   @Test
@@ -81,15 +89,7 @@ class LocationRepositoryTest {
 
   @Test
   fun `return default city on HTTP error`() {
-
-    coEvery {
-      locationDataSource.resolveUserCity(any())
-    } throws HttpException(
-      Response.error<GeocodingResponse>(
-        HttpsURLConnection.HTTP_INTERNAL_ERROR,
-        "".toResponseBody()
-      )
-    )
+    geocodingDataSource.showError = true
 
     runBlocking {
       val city = locationRepository.resolveUserCity()
@@ -99,10 +99,7 @@ class LocationRepositoryTest {
 
   @Test(expected = KotlinNullPointerException::class)
   fun `crash on unexpected error`() {
-
-    coEvery {
-      locationDataSource.resolveUserCity(any())
-    } throws KotlinNullPointerException("test")
+    geocodingDataSource.unexpectedError = true
 
     runBlocking {
       val city = locationRepository.resolveUserCity()

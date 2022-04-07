@@ -9,11 +9,11 @@ plugins {
   id("com.jaredsburrows.license")
 }
 
-val kotlinCoroutinesVersion = "1.5.2"
-val hiltVersion = "2.40.5"
-val roomVersion = "2.4.1"
-val navVersion = "2.5.0-alpha01"
-val lifecycleVersion = "2.4.0"
+val kotlinCoroutinesVersion = "1.6.1"
+val hiltVersion = "2.41"
+val roomVersion = "2.4.2"
+val navVersion = "2.4.2"
+val lifecycleVersion = "2.4.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 
@@ -162,7 +162,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.28")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
@@ -174,7 +174,7 @@ dependencies {
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.3"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.6"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -198,7 +198,7 @@ dependencies {
   // tests
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.2")
+  testImplementation("io.mockk:mockk:1.12.3")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
@@ -206,7 +206,7 @@ dependencies {
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.0")
+  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.1")
   androidTestImplementation("app.cash.turbine:turbine:0.7.0")
   androidTestImplementation("androidx.test:runner:1.4.0")
   androidTestImplementation("androidx.test:rules:1.4.0")
