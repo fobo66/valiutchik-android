@@ -5,10 +5,8 @@ import com.mapbox.search.result.SearchResult
 import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.USER_CITY_KEY
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import java.io.IOException
@@ -38,10 +36,9 @@ class LocationRepositoryTest {
     } returns searchAddress
   }
 
-  private val locationDataSource: LocationDataSource = mockk {
-    coEvery {
-      resolveLocation()
-    } returns Location(0.0, 0.0)
+  private val locationDataSource = object : LocationDataSource {
+    override suspend fun resolveLocation(): Location =
+      Location(0.0, 0.0)
   }
 
   private val geocodingDataSource = object : GeocodingDataSource {
@@ -56,14 +53,15 @@ class LocationRepositoryTest {
       }
   }
 
-  private val preferencesDataSource: PreferencesDataSource = mockk {
-    every {
-      saveString(USER_CITY_KEY, any())
-    } returns Unit
+  private val preferencesDataSource = object : PreferencesDataSource {
+    override fun loadString(key: String, defaultValue: String): String =
+      "default"
 
-    every {
-      loadString("default_city", "Минск")
-    } returns "default"
+    override fun saveString(key: String, value: String) = Unit
+
+    override fun loadInt(key: String, defaultValue: Int): Int = 0
+
+    override fun saveInt(key: String, value: Int) = Unit
   }
 
   @Before

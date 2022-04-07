@@ -16,11 +16,11 @@ class LocationDataSourceTest {
   private val context = InstrumentationRegistry.getInstrumentation().targetContext
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-  private lateinit var locationDataSource: LocationDataSourceImpl
+  private lateinit var locationDataSource: LocationDataSource
 
   @Before
   fun setUp() {
-    locationDataSource = LocationDataSourceImpl(context, ioDispatcher, "test")
+    locationDataSource = LocationDataSourceImpl(context, ioDispatcher)
   }
 
   @Test
