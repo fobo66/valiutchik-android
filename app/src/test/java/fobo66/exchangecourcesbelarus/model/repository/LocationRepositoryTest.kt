@@ -1,6 +1,5 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
@@ -40,29 +39,6 @@ class LocationRepositoryTest {
   }
 
   private val locationDataSource: LocationDataSource = mockk {
-    coEvery {
-      resolveUserCity(any())
-    } returns GeocodingResponse.fromJson(
-      """
-      {
-        "type": "Feature",
-        "query": ["aaa"],
-        "features": [{
-          "type": "place",
-          "text": "test"
-        }],
-        "attribution": "aaa",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [125.6, 10.1]
-        },
-        "properties": {
-          "name": "Dinagat Islands"
-        }
-      }
-      """.trimIndent()
-    )
-
     coEvery {
       resolveLocation()
     } returns Location(0.0, 0.0)

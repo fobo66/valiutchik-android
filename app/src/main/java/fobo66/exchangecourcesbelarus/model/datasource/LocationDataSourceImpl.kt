@@ -7,20 +7,14 @@ import android.os.SystemClock
 import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationManagerCompat
-import com.mapbox.api.geocoding.v5.GeocodingCriteria
-import com.mapbox.api.geocoding.v5.MapboxGeocoding
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse
-import com.mapbox.geojson.Point
 import dagger.hilt.android.qualifiers.ApplicationContext
-import fobo66.exchangecourcesbelarus.di.GeocoderAccessToken
 import fobo66.exchangecourcesbelarus.di.Io
-import fobo66.exchangecourcesbelarus.util.await
 import fobo66.valiutchik.core.entities.Location
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import java.time.Duration
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -29,8 +23,7 @@ import javax.inject.Singleton
 @Singleton
 class LocationDataSourceImpl @Inject constructor(
   @ApplicationContext private val context: Context,
-  @Io private val ioDispatcher: CoroutineDispatcher,
-  @GeocoderAccessToken private val geocoderAccessToken: String
+  @Io private val ioDispatcher: CoroutineDispatcher
 ) : LocationDataSource {
 
   private val noLocation by lazy {
@@ -39,14 +32,6 @@ class LocationDataSourceImpl @Inject constructor(
 
   private val locationFixTimeMaximum: Long by lazy {
     Duration.ofHours(LOCATION_FIX_TIME_DURATION_HOURS).toNanos()
-  }
-
-  private val geocodingRequestTemplate: MapboxGeocoding.Builder by lazy {
-    MapboxGeocoding.builder()
-      .accessToken(geocoderAccessToken)
-      .geocodingTypes(GeocodingCriteria.TYPE_PLACE)
-      .languages("ru-RU")
-      .country("by")
   }
 
   @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -72,20 +57,6 @@ class LocationDataSourceImpl @Inject constructor(
     } else {
       noLocation
     }
-  }
-
-  override suspend fun resolveUserCity(location: Location): GeocodingResponse {
-
-    val geocodingRequest = geocodingRequestTemplate
-      .query(
-        Point.fromLngLat(
-          location.longitude,
-          location.latitude
-        )
-      )
-      .build()
-
-    return geocodingRequest.await()
   }
 
   companion object {
