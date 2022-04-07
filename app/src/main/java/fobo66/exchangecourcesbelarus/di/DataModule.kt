@@ -4,7 +4,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.model.datasource.*
+import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.LocationRepositoryImpl
