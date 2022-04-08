@@ -8,8 +8,9 @@ import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
+import java.time.LocalDateTime
+import java.util.concurrent.Executors
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -18,8 +19,6 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
-import java.time.LocalDateTime
-import java.util.concurrent.Executors
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -29,9 +28,10 @@ class CurrencyRateRepositoryTest {
 
   private lateinit var currencyRateRepository: CurrencyRateRepository
 
-  private val bestCourseDataSource = mockk<BestCourseDataSource> {
-    every { findBestBuyCurrencies(any()) } returns emptyMap()
-    every { findBestSellCurrencies(any()) } returns emptyMap()
+  private val bestCourseDataSource = object : BestCourseDataSource {
+    override fun findBestBuyCurrencies(courses: Set<Currency>): Map<String, Currency> = emptyMap()
+
+    override fun findBestSellCurrencies(courses: Set<Currency>): Map<String, Currency> = emptyMap()
   }
   private val persistenceDataSource = mockk<PersistenceDataSource> {
     coEvery {
