@@ -8,11 +8,12 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDateTime
 
 @ExperimentalCoroutinesApi
 class RefreshExchangeRatesTest {
@@ -38,7 +39,7 @@ class RefreshExchangeRatesTest {
   }
 
   @Test
-  fun `refresh exchange rates`() = runBlockingTest {
+  fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     refreshExchangeRates.execute(now)
     coVerify {
       currencyRateRepository.refreshExchangeRates(any(), any())
@@ -46,7 +47,7 @@ class RefreshExchangeRatesTest {
   }
 
   @Test
-  fun `do not refresh recent exchange rates`() = runBlockingTest {
+  fun `do not refresh recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
 
     refreshExchangeRates.execute(now)
@@ -56,7 +57,7 @@ class RefreshExchangeRatesTest {
   }
 
   @Test
-  fun `do not resolve location for recent exchange rates`() = runBlockingTest {
+  fun `do not resolve location for recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
 
     refreshExchangeRates.execute(now)
