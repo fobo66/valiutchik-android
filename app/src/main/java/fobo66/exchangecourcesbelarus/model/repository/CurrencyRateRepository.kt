@@ -12,12 +12,12 @@ import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
+import java.time.LocalDateTime
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.time.LocalDateTime
-import javax.inject.Inject
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
