@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
+import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
@@ -7,14 +8,16 @@ import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import java.time.LocalDateTime
 import java.util.concurrent.Executors
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
@@ -33,10 +36,14 @@ class CurrencyRateRepositoryTest {
 
     override fun findBestSellCurrencies(courses: Set<Currency>): Map<String, Currency> = emptyMap()
   }
-  private val persistenceDataSource = mockk<PersistenceDataSource> {
-    coEvery {
-      saveBestCourses(any())
-    } returns Unit
+  private val persistenceDataSource = object : PersistenceDataSource {
+    var isSaved = false
+
+    override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
+      isSaved = true
+    }
+
+    override fun readBestCourses(): Flow<List<BestCourse>> = emptyFlow()
   }
 
   private val currencyRatesDataSource = mockk<CurrencyRatesDataSource> {
@@ -60,6 +67,7 @@ class CurrencyRateRepositoryTest {
 
   @After
   fun tearDown() {
+    persistenceDataSource.isSaved = false
     ioDispatcher.close()
   }
 
@@ -71,9 +79,7 @@ class CurrencyRateRepositoryTest {
       currencyRateRepository.refreshExchangeRates("Минск", now)
     }
 
-    coVerify {
-      persistenceDataSource.saveBestCourses(any())
-    }
+    assertTrue(persistenceDataSource.isSaved)
   }
 
   @Test(expected = CurrencyRatesLoadFailedException::class)
