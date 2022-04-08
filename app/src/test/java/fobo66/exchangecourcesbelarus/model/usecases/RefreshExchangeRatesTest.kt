@@ -2,7 +2,7 @@ package fobo66.exchangecourcesbelarus.model.usecases
 
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.model.repository.LocationRepository
+import fobo66.exchangecourcesbelarus.model.repository.FakeLocationRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -12,14 +12,14 @@ import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class RefreshExchangeRatesTest {
-  private val locationRepository: LocationRepository = mockk {
-    coEvery { resolveUserCity() } returns "test"
-  }
+  private val locationRepository = FakeLocationRepository()
   private val timestampRepository: CurrencyRatesTimestampRepository = mockk {
     every { saveTimestamp(any()) } returns Unit
     every { isNeededToUpdateCurrencyRates(any()) } returns true
@@ -36,6 +36,11 @@ class RefreshExchangeRatesTest {
   fun setUp() {
     refreshExchangeRates =
       RefreshExchangeRatesImpl(locationRepository, timestampRepository, currencyRateRepository)
+  }
+
+  @After
+  fun tearDown() {
+    locationRepository.isResolved = false
   }
 
   @Test
@@ -61,8 +66,6 @@ class RefreshExchangeRatesTest {
     every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
 
     refreshExchangeRates.execute(now)
-    coVerify(inverse = true) {
-      locationRepository.resolveUserCity()
-    }
+    assertFalse(locationRepository.isResolved)
   }
 }

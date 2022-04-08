@@ -6,5 +6,9 @@ import fobo66.valiutchik.core.model.repository.LocationRepository
  * Fake location repo implementation for tests
  */
 class FakeLocationRepository : LocationRepository {
-  override suspend fun resolveUserCity(): String = "fake"
+  var isResolved = false
+  override suspend fun resolveUserCity(): String {
+    isResolved = true
+    return "fake"
+  }
 }
