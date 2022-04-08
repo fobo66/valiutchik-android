@@ -5,6 +5,7 @@ import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.util.CurrencyRatesParser
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -27,7 +28,7 @@ class BestCourseDataSourceTest {
 
   @Before
   fun setUp() {
-    bestCourseDataSource = BestCourseDataSource()
+    bestCourseDataSource = BestCourseDataSourceImpl()
     val currencies = parser.parse(testFile)
 
     bestBuy = bestCourseDataSource.findBestBuyCurrencies(currencies)

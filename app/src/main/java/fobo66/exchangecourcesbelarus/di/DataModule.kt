@@ -16,6 +16,8 @@ import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepo
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.LocationRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.MapRepositoryImpl
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.util.CurrencyRatesParser
@@ -63,4 +65,9 @@ abstract class DataModule {
   abstract fun providePreferencesDataSource(
     preferencesDataSourceImpl: PreferencesDataSourceImpl
   ): PreferencesDataSource
+
+  @Binds
+  abstract fun provideBestCourseDataSource(
+    bestCourseDataSourceImpl: BestCourseDataSourceImpl
+  ): BestCourseDataSource
 }
