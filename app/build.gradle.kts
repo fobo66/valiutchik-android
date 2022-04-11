@@ -16,6 +16,7 @@ val navVersion = "2.4.2"
 val lifecycleVersion = "2.4.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
+val mockkVersion = "1.12.3"
 
 android {
   signingConfigs {
@@ -199,7 +200,8 @@ dependencies {
   // tests
   testImplementation("junit:junit:4.13.2")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.3")
+  testImplementation("io.mockk:mockk:$mockkVersion")
+  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
