@@ -6,10 +6,11 @@ import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -24,13 +25,13 @@ class LocationRepositoryTest {
   private val geocodingDataSource = FakeGeocodingDataSource()
   private val preferencesDataSource = FakePreferenceDataSource()
 
-  @Before
+  @BeforeEach
   fun setUp() {
     locationRepository =
       LocationRepositoryImpl(locationDataSource, geocodingDataSource, preferencesDataSource)
   }
 
-  @After
+  @AfterEach
   fun tearDown() {
     geocodingDataSource.reset()
     preferencesDataSource.reset()
@@ -54,13 +55,14 @@ class LocationRepositoryTest {
     }
   }
 
-  @Test(expected = KotlinNullPointerException::class)
+  @Test
   fun `crash on unexpected error`() {
     geocodingDataSource.unexpectedError = true
 
     runTest {
-      val city = locationRepository.resolveUserCity()
-      assertEquals("default", city)
+      assertThrows<KotlinNullPointerException> {
+        locationRepository.resolveUserCity()
+      }
     }
   }
 }

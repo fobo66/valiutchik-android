@@ -10,10 +10,11 @@ import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -30,7 +31,7 @@ class CurrencyRateRepositoryTest {
 
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-  @Before
+  @BeforeEach
   fun setUp() {
     currencyRateRepository = CurrencyRateRepositoryImpl(
       bestCourseDataSource,
@@ -41,7 +42,7 @@ class CurrencyRateRepositoryTest {
     )
   }
 
-  @After
+  @AfterEach
   fun tearDown() {
     persistenceDataSource.reset()
     currencyRatesDataSource.reset()
@@ -59,12 +60,14 @@ class CurrencyRateRepositoryTest {
     assertTrue(persistenceDataSource.isSaved)
   }
 
-  @Test(expected = CurrencyRatesLoadFailedException::class)
+  @Test
   fun `do not load exchange rates when there was an error`() {
     currencyRatesDataSource.isError = true
 
     runTest {
-      currencyRateRepository.refreshExchangeRates("Минск", now)
+      assertThrows<CurrencyRatesLoadFailedException> {
+        currencyRateRepository.refreshExchangeRates("Минск", now)
+      }
     }
   }
 }

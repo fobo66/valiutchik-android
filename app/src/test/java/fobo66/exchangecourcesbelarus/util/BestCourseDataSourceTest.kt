@@ -6,8 +6,8 @@ import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.util.CurrencyRatesParser
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 /**
  * Test cases for my algorithm. Check that value resolved as best is correct based on real

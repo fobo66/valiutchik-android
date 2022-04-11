@@ -8,11 +8,11 @@ import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class RefreshExchangeRatesTest {
@@ -24,13 +24,13 @@ class RefreshExchangeRatesTest {
 
   private lateinit var refreshExchangeRates: RefreshExchangeRates
 
-  @Before
+  @BeforeEach
   fun setUp() {
     refreshExchangeRates =
       RefreshExchangeRatesImpl(locationRepository, timestampRepository, currencyRateRepository)
   }
 
-  @After
+  @AfterEach
   fun tearDown() {
     locationRepository.reset()
     timestampRepository.reset()

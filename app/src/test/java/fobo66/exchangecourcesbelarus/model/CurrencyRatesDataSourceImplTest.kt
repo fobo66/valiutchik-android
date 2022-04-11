@@ -7,9 +7,9 @@ import fobo66.valiutchik.core.entities.Currency
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertNotNull
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
 import retrofit2.mock.BehaviorDelegate
 import retrofit2.mock.MockRetrofit
@@ -25,7 +25,7 @@ class CurrencyRatesDataSourceImplTest {
 
   private lateinit var dataSource: CurrencyRatesDataSource
 
-  @Before
+  @BeforeEach
   fun setUp() {
     val retrofit = Retrofit.Builder()
       .baseUrl("http://example.com")

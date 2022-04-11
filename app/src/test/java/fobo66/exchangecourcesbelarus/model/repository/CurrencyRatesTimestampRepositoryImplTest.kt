@@ -2,11 +2,11 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
 import java.time.LocalDateTime
-import org.junit.After
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class CurrencyRatesTimestampRepositoryImplTest {
 
@@ -16,12 +16,12 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   private val now = LocalDateTime.now()
 
-  @Before
+  @BeforeEach
   fun setUp() {
     currencyRatesTimestampRepository = CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
   }
 
-  @After
+  @AfterEach
   fun tearDown() {
     preferencesDataSource.reset()
   }
