@@ -1,12 +1,11 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
+import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.fake.FakeLocationRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
-import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,10 +19,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class RefreshExchangeRatesTest {
   private val locationRepository = FakeLocationRepository()
-  private val timestampRepository: CurrencyRatesTimestampRepository = mockk {
-    every { saveTimestamp(any()) } returns Unit
-    every { isNeededToUpdateCurrencyRates(any()) } returns true
-  }
+  private val timestampRepository = FakeCurrencyRatesTimestampRepository()
   private val currencyRateRepository: CurrencyRateRepository = mockk {
     coEvery { refreshExchangeRates(any(), any()) } returns Unit
   }
@@ -41,6 +37,7 @@ class RefreshExchangeRatesTest {
   @After
   fun tearDown() {
     locationRepository.reset()
+    timestampRepository.reset()
   }
 
   @Test
@@ -53,7 +50,7 @@ class RefreshExchangeRatesTest {
 
   @Test
   fun `do not refresh recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
-    every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
+    timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
     coVerify(inverse = true) {
@@ -63,7 +60,7 @@ class RefreshExchangeRatesTest {
 
   @Test
   fun `do not resolve location for recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
-    every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
+    timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
     assertFalse(locationRepository.isResolved)
