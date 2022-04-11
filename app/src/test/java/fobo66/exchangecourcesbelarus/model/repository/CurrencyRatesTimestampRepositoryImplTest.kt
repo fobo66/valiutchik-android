@@ -1,24 +1,17 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.TIMESTAMP
-import io.mockk.every
-import io.mockk.mockk
+import java.time.LocalDateTime
+import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDateTime
 
 class CurrencyRatesTimestampRepositoryImplTest {
 
   private lateinit var currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 
-  private val preferencesDataSource = mockk<PreferencesDataSource> {
-    every {
-      loadInt(any(), any())
-    } returns 3
-  }
+  private val preferencesDataSource = FakePreferenceDataSource()
 
   private val now = LocalDateTime.now()
 
@@ -27,69 +20,57 @@ class CurrencyRatesTimestampRepositoryImplTest {
     currencyRatesTimestampRepository = CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
   }
 
+  @After
+  fun tearDown() {
+    preferencesDataSource.reset()
+  }
+
   @Test
   fun `no timestamp - need to update`() {
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns ""
+    preferencesDataSource.string = ""
 
     assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
   @Test
   fun `now timestamp - need to update`() {
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns now.toString()
+    preferencesDataSource.string = now.toString()
 
     assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
   @Test
   fun `timestamp is old - need to update`() {
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns now.minusDays(1).toString()
+    preferencesDataSource.string = now.minusDays(1).toString()
 
     assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
   @Test
   fun `timestamp slightly in the past - no need to update`() {
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns now.minusHours(1).toString()
+    preferencesDataSource.string = now.minusHours(1).toString()
 
     assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
   @Test
   fun `timestamp on the limit - no need to update`() {
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns now.minusHours(3).toString()
+    preferencesDataSource.string = now.minusHours(3).toString()
 
     assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
   @Test
   fun `timestamp above customized limit - need to update`() {
-    every {
-      preferencesDataSource.loadInt(any(), any())
-    } returns 2
-
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns now.minusHours(3).toString()
+    preferencesDataSource.int = 2
+    preferencesDataSource.string = now.minusHours(3).toString()
 
     assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }
 
   @Test
   fun `timestamp in the future - no need to update`() {
-    every {
-      preferencesDataSource.loadString(TIMESTAMP)
-    } returns now.plusHours(1).toString()
+    preferencesDataSource.string = now.plusHours(1).toString()
 
     assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
   }

@@ -4,7 +4,6 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.every
@@ -53,16 +52,7 @@ class LocationRepositoryTest {
       }
   }
 
-  private val preferencesDataSource = object : PreferencesDataSource {
-    override fun loadString(key: String, defaultValue: String): String =
-      "default"
-
-    override fun saveString(key: String, value: String) = Unit
-
-    override fun loadInt(key: String, defaultValue: Int): Int = 0
-
-    override fun saveInt(key: String, value: Int) = Unit
-  }
+  private val preferencesDataSource = FakePreferenceDataSource()
 
   @Before
   fun setUp() {
