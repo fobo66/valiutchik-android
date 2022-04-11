@@ -60,7 +60,7 @@ class CurrencyRateRepositoryTest {
 
   @Before
   fun setUp() {
-    currencyRateRepository = CurrencyRateRepository(
+    currencyRateRepository = CurrencyRateRepositoryImpl(
       bestCourseDataSource,
       persistenceDataSource,
       currencyRatesDataSource,

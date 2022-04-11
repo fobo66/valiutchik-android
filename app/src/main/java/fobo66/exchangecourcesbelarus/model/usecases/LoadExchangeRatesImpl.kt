@@ -10,9 +10,9 @@ import fobo66.valiutchik.core.RUR
 import fobo66.valiutchik.core.USD
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class LoadExchangeRatesImpl @Inject constructor(
   private val currencyRateRepository: CurrencyRateRepository
