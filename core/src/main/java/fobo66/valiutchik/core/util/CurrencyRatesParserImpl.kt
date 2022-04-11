@@ -9,11 +9,11 @@ import fobo66.valiutchik.core.TAG_NAME_RUR_SELL
 import fobo66.valiutchik.core.TAG_NAME_USD_BUY
 import fobo66.valiutchik.core.TAG_NAME_USD_SELL
 import fobo66.valiutchik.core.entities.Currency
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
 
 /**
  * XML parser for [MyFIN](myfin.by) feed
