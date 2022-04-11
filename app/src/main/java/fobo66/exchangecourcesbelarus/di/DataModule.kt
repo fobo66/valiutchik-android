@@ -16,6 +16,8 @@ import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.UriDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.UriDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
@@ -86,6 +88,11 @@ abstract class DataModule {
   abstract fun provideIntentDataSource(
     intentDataSourceImpl: IntentDataSourceImpl
   ): IntentDataSource
+
+  @Binds
+  abstract fun provideUriDataSource(
+    uriDataSourceImpl: UriDataSourceImpl
+  ): UriDataSource
 
   @Binds
   abstract fun provideCurrencyRateRepository(

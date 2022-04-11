@@ -3,8 +3,8 @@ package fobo66.exchangecourcesbelarus.model.repository
 import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
-import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.UriDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.repository.MapRepository
 import io.mockk.every
 import io.mockk.mockk
