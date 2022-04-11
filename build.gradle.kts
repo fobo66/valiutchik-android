@@ -21,6 +21,9 @@ allprojects {
     maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+      authentication {
+        create<BasicAuthentication>("basic")
+      }
       credentials {
         username = "mapbox"
         password = loadSecret(rootProject, MAPBOX_REPO_TOKEN)
