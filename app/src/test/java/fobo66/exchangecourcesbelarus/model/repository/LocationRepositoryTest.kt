@@ -1,15 +1,9 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResult
-import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
+import fobo66.exchangecourcesbelarus.model.fake.FakeGeocodingDataSource
+import fobo66.exchangecourcesbelarus.model.fake.FakeLocationDataSource
 import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
-import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
-import io.mockk.every
-import io.mockk.mockk
-import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -26,35 +20,8 @@ class LocationRepositoryTest {
 
   private lateinit var locationRepository: LocationRepository
 
-  private val searchAddress: SearchAddress = mockk {
-    every {
-      locality
-    } returns "test"
-  }
-
-  private val searchResult: SearchResult = mockk {
-    every {
-      address
-    } returns searchAddress
-  }
-
-  private val locationDataSource = object : LocationDataSource {
-    override suspend fun resolveLocation(): Location =
-      Location(0.0, 0.0)
-  }
-
-  private val geocodingDataSource = object : GeocodingDataSource {
-    var showError = false
-    var unexpectedError = false
-
-    override suspend fun resolveUserCity(location: Location): List<SearchResult> =
-      when {
-        showError -> throw IOException("Yikes!")
-        unexpectedError -> throw KotlinNullPointerException("Yikes!")
-        else -> listOf(searchResult)
-      }
-  }
-
+  private val locationDataSource = FakeLocationDataSource()
+  private val geocodingDataSource = FakeGeocodingDataSource()
   private val preferencesDataSource = FakePreferenceDataSource()
 
   @Before
@@ -65,18 +32,15 @@ class LocationRepositoryTest {
 
   @After
   fun tearDown() {
-    geocodingDataSource.apply {
-      showError = false
-      unexpectedError = false
-    }
+    geocodingDataSource.reset()
+    preferencesDataSource.reset()
   }
 
   @Test
   fun `resolve user city`() {
-
     runTest {
       val city = locationRepository.resolveUserCity()
-      assertEquals("test", city)
+      assertEquals("fake", city)
     }
   }
 
