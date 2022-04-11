@@ -117,6 +117,7 @@ android {
     animationsDisabled = true
     unitTests.isIncludeAndroidResources = true
   }
+  namespace = "fobo66.exchangecourcesbelarus"
 }
 
 detekt {
