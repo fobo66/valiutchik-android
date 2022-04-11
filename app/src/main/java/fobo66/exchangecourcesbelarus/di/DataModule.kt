@@ -8,6 +8,8 @@ import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
@@ -79,6 +81,11 @@ abstract class DataModule {
   abstract fun provideBestCourseDataSource(
     bestCourseDataSourceImpl: BestCourseDataSourceImpl
   ): BestCourseDataSource
+
+  @Binds
+  abstract fun provideIntentDataSource(
+    intentDataSourceImpl: IntentDataSourceImpl
+  ): IntentDataSource
 
   @Binds
   abstract fun provideCurrencyRateRepository(
