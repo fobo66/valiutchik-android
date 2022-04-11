@@ -9,7 +9,8 @@ import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.every
 import io.mockk.mockk
 import java.io.IOException
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -19,6 +20,7 @@ import org.junit.Test
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 12/1/19.
  */
+@ExperimentalCoroutinesApi
 class LocationRepositoryTest {
 
   private lateinit var locationRepository: LocationRepository
@@ -71,7 +73,7 @@ class LocationRepositoryTest {
   @Test
   fun `resolve user city`() {
 
-    runBlocking {
+    runTest {
       val city = locationRepository.resolveUserCity()
       assertEquals("test", city)
     }
@@ -81,7 +83,7 @@ class LocationRepositoryTest {
   fun `return default city on HTTP error`() {
     geocodingDataSource.showError = true
 
-    runBlocking {
+    runTest {
       val city = locationRepository.resolveUserCity()
       assertEquals("default", city)
     }
@@ -91,7 +93,7 @@ class LocationRepositoryTest {
   fun `crash on unexpected error`() {
     geocodingDataSource.unexpectedError = true
 
-    runBlocking {
+    runTest {
       val city = locationRepository.resolveUserCity()
       assertEquals("default", city)
     }
