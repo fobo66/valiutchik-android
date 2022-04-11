@@ -1,18 +1,16 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
+import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.fake.FakeLocationRepository
-import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -20,9 +18,7 @@ import org.junit.Test
 class RefreshExchangeRatesTest {
   private val locationRepository = FakeLocationRepository()
   private val timestampRepository = FakeCurrencyRatesTimestampRepository()
-  private val currencyRateRepository: CurrencyRateRepository = mockk {
-    coEvery { refreshExchangeRates(any(), any()) } returns Unit
-  }
+  private val currencyRateRepository = FakeCurrencyRateRepository()
 
   private val now = LocalDateTime.now()
 
@@ -38,14 +34,13 @@ class RefreshExchangeRatesTest {
   fun tearDown() {
     locationRepository.reset()
     timestampRepository.reset()
+    currencyRateRepository.reset()
   }
 
   @Test
   fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     refreshExchangeRates.execute(now)
-    coVerify {
-      currencyRateRepository.refreshExchangeRates(any(), any())
-    }
+    assertTrue(currencyRateRepository.isRefreshed)
   }
 
   @Test
@@ -53,9 +48,7 @@ class RefreshExchangeRatesTest {
     timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
-    coVerify(inverse = true) {
-      currencyRateRepository.refreshExchangeRates(any(), any())
-    }
+    assertFalse(currencyRateRepository.isRefreshed)
   }
 
   @Test
