@@ -21,6 +21,10 @@ android {
     consumerProguardFiles("consumer-rules.pro")
   }
 
+  buildFeatures {
+    buildConfig = false
+  }
+
   buildTypes {
     release {
       isMinifyEnabled = false
@@ -35,7 +39,7 @@ android {
   kotlinOptions {
     jvmTarget = "11"
   }
-    namespace = "fobo66.valiutchik.core"
+  namespace = "fobo66.valiutchik.core"
 }
 
 detekt {
