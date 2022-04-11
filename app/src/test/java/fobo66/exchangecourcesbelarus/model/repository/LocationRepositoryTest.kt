@@ -4,6 +4,7 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
+import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import io.mockk.every

@@ -1,8 +1,8 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.exchangecourcesbelarus.model.fake
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 
-class FakePreferenceDataSource : PreferencesDataSource {
+class FakePreferenceDataSource : PreferencesDataSource, Resettable {
   var string = "default"
   var int = 3
 
@@ -15,7 +15,7 @@ class FakePreferenceDataSource : PreferencesDataSource {
 
   override fun saveInt(key: String, value: Int) = Unit
 
-  fun reset() {
+  override fun reset() {
     string = "default"
     int = 3
   }

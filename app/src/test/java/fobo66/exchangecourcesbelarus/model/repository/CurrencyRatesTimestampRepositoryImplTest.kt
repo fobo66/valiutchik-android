@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
+import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
 import java.time.LocalDateTime
 import org.junit.After
 import org.junit.Assert.assertFalse

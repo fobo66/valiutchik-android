@@ -1,8 +1,8 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
+import fobo66.exchangecourcesbelarus.model.fake.FakeLocationRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
-import fobo66.exchangecourcesbelarus.model.repository.FakeLocationRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -40,7 +40,7 @@ class RefreshExchangeRatesTest {
 
   @After
   fun tearDown() {
-    locationRepository.isResolved = false
+    locationRepository.reset()
   }
 
   @Test
