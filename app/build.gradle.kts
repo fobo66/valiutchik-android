@@ -7,6 +7,7 @@ plugins {
   id("dagger.hilt.android.plugin")
   id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
+  id("de.mannodermaus.android-junit5")
 }
 
 val kotlinCoroutinesVersion = "1.6.1"
@@ -16,6 +17,8 @@ val navVersion = "2.4.2"
 val lifecycleVersion = "2.4.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
+val mockkVersion = "1.12.3"
+val junitVersion = "5.8.2"
 
 android {
   signingConfigs {
@@ -117,6 +120,7 @@ android {
     animationsDisabled = true
     unitTests.isIncludeAndroidResources = true
   }
+  namespace = "fobo66.exchangecourcesbelarus"
 }
 
 detekt {
@@ -196,9 +200,10 @@ dependencies {
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 
   // tests
-  testImplementation("junit:junit:4.13.2")
+  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.3")
+  testImplementation("io.mockk:mockk:$mockkVersion")
+  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")

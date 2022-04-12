@@ -2,15 +2,15 @@ package fobo66.exchangecourcesbelarus.util
 
 import fobo66.valiutchik.core.util.CurrencyBuilder
 import fobo66.valiutchik.core.util.CurrencyBuilderImpl
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class CurrencyBuilderTest {
 
   private lateinit var currencyBuilder: CurrencyBuilder
 
-  @Before
+  @BeforeEach
   fun setUp() {
     currencyBuilder = CurrencyBuilderImpl()
   }

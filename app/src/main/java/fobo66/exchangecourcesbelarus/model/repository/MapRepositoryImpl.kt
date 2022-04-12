@@ -4,8 +4,8 @@ import android.content.Intent
 import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.repository.MapRepository
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 class MapRepositoryImpl @Inject constructor(
   private val uriDataSource: UriDataSource,

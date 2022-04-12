@@ -1,67 +1,61 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
-import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
-import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.model.repository.LocationRepository
+import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRateRepository
+import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesTimestampRepository
+import fobo66.exchangecourcesbelarus.model.fake.FakeLocationRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
-import org.junit.Test
 import java.time.LocalDateTime
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class RefreshExchangeRatesTest {
-  private val locationRepository: LocationRepository = mockk {
-    coEvery { resolveUserCity() } returns "test"
-  }
-  private val timestampRepository: CurrencyRatesTimestampRepository = mockk {
-    every { saveTimestamp(any()) } returns Unit
-    every { isNeededToUpdateCurrencyRates(any()) } returns true
-  }
-  private val currencyRateRepository: CurrencyRateRepository = mockk {
-    coEvery { refreshExchangeRates(any(), any()) } returns Unit
-  }
+  private val locationRepository = FakeLocationRepository()
+  private val timestampRepository = FakeCurrencyRatesTimestampRepository()
+  private val currencyRateRepository = FakeCurrencyRateRepository()
 
   private val now = LocalDateTime.now()
 
   private lateinit var refreshExchangeRates: RefreshExchangeRates
 
-  @Before
+  @BeforeEach
   fun setUp() {
     refreshExchangeRates =
       RefreshExchangeRatesImpl(locationRepository, timestampRepository, currencyRateRepository)
   }
 
-  @Test
-  fun `refresh exchange rates`() = runBlockingTest {
-    refreshExchangeRates.execute(now)
-    coVerify {
-      currencyRateRepository.refreshExchangeRates(any(), any())
-    }
+  @AfterEach
+  fun tearDown() {
+    locationRepository.reset()
+    timestampRepository.reset()
+    currencyRateRepository.reset()
   }
 
   @Test
-  fun `do not refresh recent exchange rates`() = runBlockingTest {
-    every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
-
+  fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     refreshExchangeRates.execute(now)
-    coVerify(inverse = true) {
-      currencyRateRepository.refreshExchangeRates(any(), any())
-    }
+    assertTrue(currencyRateRepository.isRefreshed)
   }
 
   @Test
-  fun `do not resolve location for recent exchange rates`() = runBlockingTest {
-    every { timestampRepository.isNeededToUpdateCurrencyRates(any()) } returns false
+  fun `do not refresh recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
+    timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
-    coVerify(inverse = true) {
-      locationRepository.resolveUserCity()
-    }
+    assertFalse(currencyRateRepository.isRefreshed)
+  }
+
+  @Test
+  fun `do not resolve location for recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
+    timestampRepository.isNeededToUpdateCurrencyRates = false
+
+    refreshExchangeRates.execute(now)
+    assertFalse(locationRepository.isResolved)
   }
 }

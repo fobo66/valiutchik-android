@@ -1,89 +1,47 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResult
-import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.entities.Location
+import fobo66.exchangecourcesbelarus.model.fake.FakeGeocodingDataSource
+import fobo66.exchangecourcesbelarus.model.fake.FakeLocationDataSource
+import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
 import fobo66.valiutchik.core.model.repository.LocationRepository
-import io.mockk.every
-import io.mockk.mockk
-import java.io.IOException
-import kotlinx.coroutines.runBlocking
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 12/1/19.
  */
+@ExperimentalCoroutinesApi
 class LocationRepositoryTest {
 
   private lateinit var locationRepository: LocationRepository
 
-  private val searchAddress: SearchAddress = mockk {
-    every {
-      locality
-    } returns "test"
-  }
+  private val locationDataSource = FakeLocationDataSource()
+  private val geocodingDataSource = FakeGeocodingDataSource()
+  private val preferencesDataSource = FakePreferenceDataSource()
 
-  private val searchResult: SearchResult = mockk {
-    every {
-      address
-    } returns searchAddress
-  }
-
-  private val locationDataSource = object : LocationDataSource {
-    override suspend fun resolveLocation(): Location =
-      Location(0.0, 0.0)
-  }
-
-  private val geocodingDataSource = object : GeocodingDataSource {
-    var showError = false
-    var unexpectedError = false
-
-    override suspend fun resolveUserCity(location: Location): List<SearchResult> =
-      when {
-        showError -> throw IOException("Yikes!")
-        unexpectedError -> throw KotlinNullPointerException("Yikes!")
-        else -> listOf(searchResult)
-      }
-  }
-
-  private val preferencesDataSource = object : PreferencesDataSource {
-    override fun loadString(key: String, defaultValue: String): String =
-      "default"
-
-    override fun saveString(key: String, value: String) = Unit
-
-    override fun loadInt(key: String, defaultValue: Int): Int = 0
-
-    override fun saveInt(key: String, value: Int) = Unit
-  }
-
-  @Before
+  @BeforeEach
   fun setUp() {
     locationRepository =
       LocationRepositoryImpl(locationDataSource, geocodingDataSource, preferencesDataSource)
   }
 
-  @After
+  @AfterEach
   fun tearDown() {
-    geocodingDataSource.apply {
-      showError = false
-      unexpectedError = false
-    }
+    geocodingDataSource.reset()
+    preferencesDataSource.reset()
   }
 
   @Test
   fun `resolve user city`() {
-
-    runBlocking {
+    runTest {
       val city = locationRepository.resolveUserCity()
-      assertEquals("test", city)
+      assertEquals("fake", city)
     }
   }
 
@@ -91,19 +49,20 @@ class LocationRepositoryTest {
   fun `return default city on HTTP error`() {
     geocodingDataSource.showError = true
 
-    runBlocking {
+    runTest {
       val city = locationRepository.resolveUserCity()
       assertEquals("default", city)
     }
   }
 
-  @Test(expected = KotlinNullPointerException::class)
+  @Test
   fun `crash on unexpected error`() {
     geocodingDataSource.unexpectedError = true
 
-    runBlocking {
-      val city = locationRepository.resolveUserCity()
-      assertEquals("default", city)
+    runTest {
+      assertThrows<KotlinNullPointerException> {
+        locationRepository.resolveUserCity()
+      }
     }
   }
 }

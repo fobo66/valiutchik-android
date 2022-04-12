@@ -1,7 +1,3 @@
-import java.net.URI
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
   repositories {
     mavenCentral()
@@ -15,6 +11,7 @@ buildscript {
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.41")
     classpath("com.jaredsburrows:gradle-license-plugin:0.8.91")
     classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
+    classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0")
   }
 }
 
@@ -24,7 +21,7 @@ allprojects {
     google()
     maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
     maven {
-      url = URI.create("https://api.mapbox.com/downloads/v2/releases/maven")
+      url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       authentication {
         create<BasicAuthentication>("basic")
       }

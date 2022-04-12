@@ -27,7 +27,8 @@ class IntentDataSourceTest {
   fun setUp() {
     Intents.init()
 
-    intentDataSource = IntentDataSource(InstrumentationRegistry.getInstrumentation().targetContext)
+    intentDataSource =
+      IntentDataSourceImpl(InstrumentationRegistry.getInstrumentation().targetContext)
   }
 
   @After
