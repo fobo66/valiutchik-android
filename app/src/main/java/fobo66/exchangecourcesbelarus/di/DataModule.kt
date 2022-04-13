@@ -6,12 +6,26 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.datasource.UriDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.UriDataSourceImpl
+import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
+import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.LocationRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.MapRepositoryImpl
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.util.CurrencyRatesParser
@@ -36,6 +50,16 @@ abstract class DataModule {
   ): CurrencyRatesTimestampRepository
 
   @Binds
+  abstract fun provideLocationDataSource(
+    locationDataSourceImpl: LocationDataSourceImpl
+  ): LocationDataSource
+
+  @Binds
+  abstract fun provideGeocodingDataSource(
+    geocodingDataSourceImpl: GeocodingDataSourceImpl
+  ): GeocodingDataSource
+
+  @Binds
   abstract fun provideLocationRepository(
     locationRepositoryImpl: LocationRepositoryImpl
   ): LocationRepository
@@ -49,4 +73,29 @@ abstract class DataModule {
   abstract fun providePreferencesDataSource(
     preferencesDataSourceImpl: PreferencesDataSourceImpl
   ): PreferencesDataSource
+
+  @Binds
+  abstract fun providePersistenceDataSource(
+    persistenceDataSourceImpl: PersistenceDataSourceImpl
+  ): PersistenceDataSource
+
+  @Binds
+  abstract fun provideBestCourseDataSource(
+    bestCourseDataSourceImpl: BestCourseDataSourceImpl
+  ): BestCourseDataSource
+
+  @Binds
+  abstract fun provideIntentDataSource(
+    intentDataSourceImpl: IntentDataSourceImpl
+  ): IntentDataSource
+
+  @Binds
+  abstract fun provideUriDataSource(
+    uriDataSourceImpl: UriDataSourceImpl
+  ): UriDataSource
+
+  @Binds
+  abstract fun provideCurrencyRateRepository(
+    currencyRateRepositoryImpl: CurrencyRateRepositoryImpl
+  ): CurrencyRateRepository
 }

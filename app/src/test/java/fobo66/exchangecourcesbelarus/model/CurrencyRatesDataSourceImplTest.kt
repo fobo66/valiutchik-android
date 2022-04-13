@@ -4,26 +4,28 @@ import fobo66.exchangecourcesbelarus.api.ExchangeRatesApi
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.entities.Currency
-import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertNotNull
-import org.junit.Before
-import org.junit.Test
+import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
 import retrofit2.mock.BehaviorDelegate
 import retrofit2.mock.MockRetrofit
 import retrofit2.mock.NetworkBehavior
-import java.util.concurrent.TimeUnit
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
+@ExperimentalCoroutinesApi
 class CurrencyRatesDataSourceImplTest {
   private lateinit var mockApi: BehaviorDelegate<ExchangeRatesApi>
 
   private lateinit var dataSource: CurrencyRatesDataSource
 
-  @Before
+  @BeforeEach
   fun setUp() {
     val retrofit = Retrofit.Builder()
       .baseUrl("http://example.com")
@@ -43,7 +45,7 @@ class CurrencyRatesDataSourceImplTest {
       mockApi.returningResponse(setOf<Currency>())
     )
 
-    runBlocking {
+    runTest {
       val response = dataSource.loadExchangeRates("Минск")
       assertNotNull(response)
     }

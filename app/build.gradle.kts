@@ -7,17 +7,20 @@ plugins {
   id("dagger.hilt.android.plugin")
   id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
+  id("de.mannodermaus.android-junit5")
 }
 
 val composeVersion = "1.1.1"
-val kotlinCoroutinesVersion = "1.6.0"
+val kotlinCoroutinesVersion = "1.6.1"
 val hiltVersion = "2.41"
 val activityVersion = "1.4.0"
 val roomVersion = "2.4.2"
-val navVersion = "2.5.0-alpha03"
+val navVersion = "2.4.2"
 val lifecycleVersion = "2.4.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
+val mockkVersion = "1.12.3"
+val junitVersion = "5.8.2"
 
 android {
   signingConfigs {
@@ -186,7 +189,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.28")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
@@ -222,9 +225,10 @@ dependencies {
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 
   // tests
-  testImplementation("junit:junit:4.13.2")
+  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.3")
+  testImplementation("io.mockk:mockk:$mockkVersion")
+  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")

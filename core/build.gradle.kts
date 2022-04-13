@@ -4,9 +4,11 @@ plugins {
   id("com.android.library")
   kotlin("android")
   id("io.gitlab.arturbosch.detekt")
+  id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.0"
+val kotlinCoroutinesVersion = "1.6.1"
+val junitVersion = "5.8.2"
 
 android {
   compileSdk = AndroidVersion.VersionCodes.S
@@ -19,6 +21,10 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
+  }
+
+  buildFeatures {
+    buildConfig = false
   }
 
   buildTypes {
@@ -35,7 +41,7 @@ android {
   kotlinOptions {
     jvmTarget = "11"
   }
-    namespace = "fobo66.valiutchik.core"
+  namespace = "fobo66.valiutchik.core"
 }
 
 detekt {
@@ -48,5 +54,5 @@ dependencies {
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
-  testImplementation("junit:junit:4.13.2")
+  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }
