@@ -4,19 +4,17 @@ import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 
 class FakePreferenceDataSource : PreferencesDataSource, Resettable {
   var string = "default"
-  var int = 3
+  var long = 3L
 
-  override fun loadString(key: String, defaultValue: String): String =
+  override suspend fun loadString(key: String, defaultValue: String): String =
     string
 
-  override fun saveString(key: String, value: String) = Unit
+  override suspend fun saveString(key: String, value: String) = Unit
 
-  override fun loadInt(key: String, defaultValue: Int): Int = int
-
-  override fun saveInt(key: String, value: Int) = Unit
+  override suspend fun loadLong(key: String, defaultValue: Long): Long = long
 
   override fun reset() {
     string = "default"
-    int = 3
+    long = 3L
   }
 }
