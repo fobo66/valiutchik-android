@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 
 /**
  * Entities to represent preferences on the screen. Kindly borrowed from
- * [here](https://github.com/Sh4dowSoul/ComposePreferences/blob/main/compose-preferences/src/main/java/de/schnettler/datastore/compose/model/PreferenceItem.kt)
+ * [here](https://github.com/Sh4dowSoul/ComposePreferences)
  */
 sealed class Preference {
   abstract val title: String
