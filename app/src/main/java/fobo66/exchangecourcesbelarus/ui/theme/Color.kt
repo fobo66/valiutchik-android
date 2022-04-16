@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber") // colors here serve as constants, but we can't make them const
+
 package fobo66.exchangecourcesbelarus.ui.theme
 
 import androidx.compose.ui.graphics.Color
