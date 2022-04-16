@@ -41,6 +41,7 @@ class RefreshExchangeRatesTest {
   fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     refreshExchangeRates.execute(now)
     assertTrue(currencyRateRepository.isRefreshed)
+    assertTrue(timestampRepository.isSaveTimestampCalled)
   }
 
   @Test

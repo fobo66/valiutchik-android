@@ -40,7 +40,13 @@ fun TextPreference(
 
 @Composable
 fun EnabledPreference(enabled: Boolean = true, content: @Composable () -> Unit) {
-  CompositionLocalProvider(LocalContentAlpha provides if (enabled) ContentAlpha.high else ContentAlpha.disabled) {
+  CompositionLocalProvider(
+    LocalContentAlpha provides if (enabled) {
+      ContentAlpha.high
+    } else {
+      ContentAlpha.disabled
+    }
+  ) {
     content()
   }
 }
