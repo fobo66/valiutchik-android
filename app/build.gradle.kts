@@ -193,7 +193,7 @@ dependencies {
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
   // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
+  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
