@@ -219,11 +219,11 @@ dependencies {
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
   // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
+  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
