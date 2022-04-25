@@ -9,7 +9,7 @@ buildscript {
     classpath(kotlin("gradle-plugin", version = "1.6.10"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.41")
-    classpath("com.jaredsburrows:gradle-license-plugin:0.8.91")
+    classpath("com.jaredsburrows:gradle-license-plugin:0.9.0")
     classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.20.0")
     classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0")
   }
