@@ -204,7 +204,7 @@ dependencies {
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.6"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.7"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
