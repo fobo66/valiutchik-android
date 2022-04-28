@@ -171,7 +171,7 @@ dependencies {
 
   // compose
   implementation("androidx.compose.ui:ui:$composeVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-alpha09")
+  implementation("androidx.compose.material3:material3:1.0.0-alpha10")
   implementation("androidx.compose.material:material:$composeVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
