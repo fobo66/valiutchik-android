@@ -10,7 +10,7 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.2.0-alpha07"
+val composeVersion = "1.2.0-alpha08"
 val kotlinCoroutinesVersion = "1.6.1"
 val hiltVersion = "2.41"
 val activityVersion = "1.4.0"
