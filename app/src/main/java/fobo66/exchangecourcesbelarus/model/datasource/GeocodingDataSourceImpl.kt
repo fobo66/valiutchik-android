@@ -5,14 +5,14 @@ import com.mapbox.search.Country
 import com.mapbox.search.Language
 import com.mapbox.search.QueryType.PLACE
 import com.mapbox.search.ReverseGeoOptions
-import com.mapbox.search.ReverseGeocodingSearchEngine
+import com.mapbox.search.SearchEngine
 import com.mapbox.search.result.SearchResult
 import fobo66.exchangecourcesbelarus.util.search
 import fobo66.valiutchik.core.entities.Location
 import javax.inject.Inject
 
 class GeocodingDataSourceImpl @Inject constructor(
-  private val geocodingSearchEngine: ReverseGeocodingSearchEngine
+  private val geocodingSearchEngine: SearchEngine
 ) : GeocodingDataSource {
   private val searchLanguages: List<Language> by lazy {
     listOf(Language("ru-RU"))
