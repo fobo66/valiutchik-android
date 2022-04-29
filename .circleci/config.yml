@@ -21,8 +21,8 @@ jobs:
       - android/restore-gradle-cache:
           cache-prefix: v1a
       - restore_cache:
-        keys:
-          - v1a
+          keys:
+            - v1a
       - run: ./gradlew detekt
       - android/save-gradle-cache:
           cache-prefix: v1a
