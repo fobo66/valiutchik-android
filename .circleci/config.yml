@@ -20,9 +20,18 @@ jobs:
       - checkout
       - android/restore-gradle-cache:
           cache-prefix: v1a
+      - restore_cache:
+          keys:
+            - v1a
       - run: ./gradlew detekt
       - android/save-gradle-cache:
           cache-prefix: v1a
+      - save_cache:
+          key: v1a
+          paths: 
+            - "app/build"
+            - "core/build"
+            - "benchmark/build"
   unit-tests:
     # These next lines define the Android machine image executor.
     # See: https://circleci.com/docs/2.0/executor-types/
@@ -38,6 +47,9 @@ jobs:
           cache-prefix: v1a
       - android/restore-gradle-cache:
           cache-prefix: v1a
+      - restore_cache:
+          keys:
+            - v1a
       # The next step will run the unit tests
       - android/run-tests:
           test-command: ./gradlew  testDebug --continue
@@ -47,7 +59,12 @@ jobs:
           cache-prefix: v1a
       - android/save-gradle-cache:
           cache-prefix: v1a
-
+      - save_cache:
+          key: v1a
+          paths: 
+            - "app/build"
+            - "core/build"
+            - "benchmark/build"
   ui-tests:
     executor:
       name: android/android-machine
@@ -62,6 +79,9 @@ jobs:
           system-image: system-images;android-30;google_apis;x86_64
       - android/restore-build-cache:
           cache-prefix: v1a
+      - restore_cache:
+          keys:
+            - v1a
       - android/start-emulator:
           avd-name: myavd
           restore-gradle-cache-prefix: v1a
@@ -75,6 +95,12 @@ jobs:
           cache-prefix: v1a
       - android/save-gradle-cache:
           cache-prefix: v1a
+      - save_cache:
+          key: v1a
+          paths: 
+            - "app/build"
+            - "core/build"
+            - "benchmark/build"
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:

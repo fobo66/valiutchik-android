@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.ReverseGeocodingSearchEngine
+import com.mapbox.search.SearchEngine
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,8 +37,8 @@ object ThirdPartyModule {
 
   @Provides
   @Singleton
-  fun provideReverseGeocodingEngine(): ReverseGeocodingSearchEngine =
-    MapboxSearchSdk.getReverseGeocodingSearchEngine()
+  fun provideReverseGeocodingEngine(): SearchEngine =
+    MapboxSearchSdk.getSearchEngine()
 
   @Provides
   @Singleton
