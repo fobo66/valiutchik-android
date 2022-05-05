@@ -4,8 +4,16 @@
 # https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+registries:
+  mapbox:
+    type: maven-repository
+    url: https://api.mapbox.com/downloads/v2/releases/maven
+    username: mapbox
+    password: ${{secrets.MAPBOX_DOWNLOAD_PASSWORD}}
 updates:
   - package-ecosystem: "gradle"
     directory: "/" # Location of package manifests
+    registries:
+      - mapbox
     schedule:
       interval: "daily"
