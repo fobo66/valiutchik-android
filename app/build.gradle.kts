@@ -16,7 +16,7 @@ val hiltVersion = "2.41"
 val activityVersion = "1.4.0"
 val roomVersion = "2.4.2"
 val navVersion = "2.4.2"
-val lifecycleVersion = "2.4.1"
+val lifecycleVersion = "2.5.0-beta01"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.3"
@@ -101,7 +101,7 @@ android {
   kotlinOptions {
     jvmTarget = "11"
 
-    freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
   }
 
   kapt {
@@ -160,11 +160,11 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.1")
+  implementation("androidx.fragment:fragment-ktx:1.5.0-beta01")
   implementation("androidx.collection:collection-ktx:1.2.0")
-  implementation("androidx.core:core-ktx:1.7.0")
+  implementation("androidx.core:core-ktx:1.8.0-beta01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-  implementation("com.google.android.material:material:1.5.0")
+  implementation("com.google.android.material:material:1.7.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
   implementation("androidx.datastore:datastore-preferences:1.0.0")
@@ -227,7 +227,7 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.4.0")
+  testImplementation("androidx.test:core:1.4.1-alpha06")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
@@ -238,13 +238,13 @@ dependencies {
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.1")
-  androidTestImplementation("app.cash.turbine:turbine:0.7.0")
-  androidTestImplementation("androidx.test:runner:1.4.0")
-  androidTestImplementation("androidx.test:rules:1.4.0")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+  androidTestImplementation("app.cash.turbine:turbine:0.8.0")
+  androidTestImplementation("androidx.test:runner:1.5.0-alpha03")
+  androidTestImplementation("androidx.test:rules:1.4.1-alpha06")
+  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha06")
+  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha06")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha06")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")

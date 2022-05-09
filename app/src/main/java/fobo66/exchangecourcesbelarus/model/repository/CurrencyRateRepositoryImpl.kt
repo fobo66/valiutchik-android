@@ -12,12 +12,12 @@ import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
+import java.io.IOException
 import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -34,7 +34,7 @@ class CurrencyRateRepositoryImpl @Inject constructor(
   override suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
     val currencies = try {
       currencyRatesDataSource.loadExchangeRates(city)
-    } catch (e: HttpException) {
+    } catch (e: IOException) {
       throw CurrencyRatesLoadFailedException(e)
     }
 
