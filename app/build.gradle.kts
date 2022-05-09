@@ -149,7 +149,7 @@ dependencies {
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.5.0-beta01")
   implementation("androidx.collection:collection-ktx:1.2.0")
-  implementation("androidx.core:core-ktx:1.8.0-beta01")
+  implementation("androidx.core:core-ktx:1.9.0-alpha03")
   implementation("androidx.constraintlayout:constraintlayout:2.1.3")
   implementation("com.google.android.material:material:1.7.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
