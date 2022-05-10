@@ -12,11 +12,11 @@ plugins {
 
 val composeVersion = "1.2.0-alpha08"
 val kotlinCoroutinesVersion = "1.6.1"
-val hiltVersion = "2.41"
+val hiltVersion = "2.42"
 val activityVersion = "1.4.0"
 val roomVersion = "2.4.2"
 val navVersion = "2.4.2"
-val lifecycleVersion = "2.5.0-beta01"
+val lifecycleVersion = "2.4.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.3"

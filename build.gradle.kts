@@ -8,7 +8,7 @@ buildscript {
     classpath("com.android.tools.build:gradle:7.3.0-alpha09")
     classpath(kotlin("gradle-plugin", version = "1.6.20"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.41")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.42")
     classpath("com.jaredsburrows:gradle-license-plugin:0.9.0")
     classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.20.0")
     classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0")
