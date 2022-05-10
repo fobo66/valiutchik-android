@@ -74,7 +74,7 @@ fun ListPreference(
 
   if (isDialogShown) {
     AlertDialog(
-      onDismissRequest = { showDialog(!isDialogShown) },
+      onDismissRequest = { showDialog(false) },
       title = { Text(text = preference.title) },
       text = {
         Column(
@@ -85,7 +85,7 @@ fun ListPreference(
             val isSelected = value == current.key
             val onSelected = {
               onValueChange(current.key)
-              showDialog(!isDialogShown)
+              showDialog(false)
             }
             Row(
               verticalAlignment = Alignment.CenterVertically,
