@@ -163,7 +163,7 @@ dependencies {
   implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
   // lifecycle
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-beta01")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
   implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.29")
