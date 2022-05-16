@@ -5,7 +5,7 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:7.3.0-alpha09")
+    classpath("com.android.tools.build:gradle:7.4.0-alpha02")
     classpath(kotlin("gradle-plugin", version = "1.6.20"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.42")
@@ -19,7 +19,6 @@ allprojects {
   repositories {
     mavenCentral()
     google()
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       authentication {

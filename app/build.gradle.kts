@@ -19,7 +19,7 @@ val navVersion = "2.4.2"
 val lifecycleVersion = "2.4.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.3"
+val mockkVersion = "1.12.4"
 val junitVersion = "5.8.2"
 
 android {
@@ -160,7 +160,7 @@ dependencies {
   implementation("androidx.annotation:annotation:1.3.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.5.0-beta01")
+  implementation("androidx.fragment:fragment-ktx:1.5.0-rc01")
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.8.0-beta01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.3")
@@ -217,9 +217,6 @@ dependencies {
 
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
-
-  // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
