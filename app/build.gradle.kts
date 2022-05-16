@@ -192,10 +192,6 @@ dependencies {
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
-  // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10-SNAPSHOT")
-  debugImplementation("com.squareup.leakcanary:leakcanary-object-watcher-android-androidx:2.10-SNAPSHOT")
-
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
