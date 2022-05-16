@@ -20,6 +20,7 @@ allprojects {
     mavenCentral()
     google()
     maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+    maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       authentication {
