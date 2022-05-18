@@ -3,9 +3,10 @@ package fobo66.exchangecourcesbelarus.model.datasource
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import fobo66.exchangecourcesbelarus.di.Io
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import timber.log.Timber
 
 class PreferencesDataSourceImpl @Inject constructor(
   private val preferences: SharedPreferences,
@@ -23,6 +24,11 @@ class PreferencesDataSourceImpl @Inject constructor(
   }
 
   override suspend fun loadLong(key: String, defaultValue: Long): Long = withContext(ioDispatcher) {
-    preferences.getLong(key, defaultValue)
+    try {
+      preferences.getLong(key, defaultValue)
+    } catch (e: ClassCastException) {
+      Timber.e(e, "Migration issue")
+      preferences.getInt(key, defaultValue.toInt()).toLong()
+    }
   }
 }
