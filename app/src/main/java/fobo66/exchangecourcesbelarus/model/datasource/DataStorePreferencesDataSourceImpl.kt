@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.model.datasource
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import javax.inject.Inject
 import kotlinx.coroutines.flow.last
@@ -22,7 +22,7 @@ class DataStorePreferencesDataSourceImpl @Inject constructor(
     }
   }
 
-  override suspend fun loadLong(key: String, defaultValue: Long): Long {
-    return dataStore.data.map { it[longPreferencesKey(key)] }.last() ?: defaultValue
+  override suspend fun loadInt(key: String, defaultValue: Int): Int {
+    return dataStore.data.map { it[intPreferencesKey(key)] }.last() ?: defaultValue
   }
 }

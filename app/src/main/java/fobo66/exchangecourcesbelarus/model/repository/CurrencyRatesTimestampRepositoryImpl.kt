@@ -15,7 +15,7 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     val timestamp = loadTimestamp(now)
     val cachedValueAge = Duration.between(timestamp, now)
     val updateInterval: Duration = Duration.ofHours(
-      preferencesDataSource.loadLong(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+      preferencesDataSource.loadInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL).toLong()
     )
 
     return cachedValueAge == Duration.ZERO || cachedValueAge > updateInterval
@@ -37,6 +37,6 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   }
 
   companion object {
-    private const val DEFAULT_UPDATE_INTERVAL = 3L
+    private const val DEFAULT_UPDATE_INTERVAL = 3
   }
 }

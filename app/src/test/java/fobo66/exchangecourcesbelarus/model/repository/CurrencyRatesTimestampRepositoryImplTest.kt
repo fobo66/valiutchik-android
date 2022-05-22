@@ -76,7 +76,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp above customized limit - need to update`() {
-    preferencesDataSource.long = 2
+    preferencesDataSource.int = 2
     preferencesDataSource.string = now.minusHours(3).toString()
 
     runTest {

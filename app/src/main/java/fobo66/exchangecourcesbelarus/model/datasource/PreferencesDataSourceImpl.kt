@@ -6,7 +6,6 @@ import fobo66.exchangecourcesbelarus.di.Io
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class PreferencesDataSourceImpl @Inject constructor(
   private val preferences: SharedPreferences,
@@ -23,12 +22,7 @@ class PreferencesDataSourceImpl @Inject constructor(
     }
   }
 
-  override suspend fun loadLong(key: String, defaultValue: Long): Long = withContext(ioDispatcher) {
-    try {
-      preferences.getLong(key, defaultValue)
-    } catch (e: ClassCastException) {
-      Timber.e(e, "Migration issue")
-      preferences.getInt(key, defaultValue.toInt()).toLong()
-    }
+  override suspend fun loadInt(key: String, defaultValue: Int): Int = withContext(ioDispatcher) {
+    preferences.getInt(key, defaultValue)
   }
 }
