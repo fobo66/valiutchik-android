@@ -10,7 +10,7 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.1"
+val kotlinCoroutinesVersion = "1.6.2"
 val hiltVersion = "2.42"
 val roomVersion = "2.4.2"
 val navVersion = "2.4.2"
