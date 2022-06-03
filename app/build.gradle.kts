@@ -215,7 +215,7 @@ dependencies {
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha06")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha07")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha06")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha07")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")
