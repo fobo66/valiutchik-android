@@ -198,7 +198,7 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.4.1-alpha06")
+  testImplementation("androidx.test:core:1.4.1-alpha07")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
