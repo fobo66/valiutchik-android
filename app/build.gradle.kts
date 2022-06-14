@@ -11,7 +11,7 @@ plugins {
 }
 
 val composeVersion = "1.2.0-beta01"
-val kotlinCoroutinesVersion = "1.6.1"
+val kotlinCoroutinesVersion = "1.6.2"
 val hiltVersion = "2.42"
 val activityVersion = "1.4.0"
 val roomVersion = "2.4.2"
@@ -164,7 +164,7 @@ dependencies {
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.8.0-beta01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-  implementation("com.google.android.material:material:1.7.0-alpha01")
+  implementation("com.google.android.material:material:1.7.0-alpha02")
   implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
   implementation("androidx.datastore:datastore-preferences:1.0.0")
@@ -190,7 +190,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.29")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.30")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
@@ -204,7 +204,7 @@ dependencies {
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.7"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.8"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -224,7 +224,7 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.4.1-alpha06")
+  testImplementation("androidx.test:core:1.4.1-alpha07")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
@@ -236,12 +236,12 @@ dependencies {
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.1")
   androidTestImplementation("app.cash.turbine:turbine:0.8.0")
-  androidTestImplementation("androidx.test:runner:1.5.0-alpha03")
-  androidTestImplementation("androidx.test:rules:1.4.1-alpha06")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha06")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha06")
+  androidTestImplementation("androidx.test:runner:1.5.0-alpha04")
+  androidTestImplementation("androidx.test:rules:1.4.1-alpha07")
+  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha07")
+  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha07")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha06")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha07")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")
