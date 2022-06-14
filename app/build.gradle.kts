@@ -154,7 +154,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.29")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.30")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
