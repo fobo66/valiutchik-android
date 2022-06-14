@@ -60,18 +60,6 @@ android {
       "apiPassword",
       loadSecret(rootProject, API_PASSWORD)
     )
-
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments.putAll(
-          mapOf(
-            "room.schemaLocation" to "$projectDir/schemas",
-            "room.incremental" to "true",
-            "room.expandProjection" to "true"
-          )
-        )
-      }
-    }
   }
 
   buildTypes {
