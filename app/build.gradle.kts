@@ -10,7 +10,7 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.2.0-beta01"
+val composeVersion = "1.2.0-rc01"
 val kotlinCoroutinesVersion = "1.6.2"
 val hiltVersion = "2.42"
 val activityVersion = "1.4.0"
@@ -35,11 +35,11 @@ android {
     }
   }
 
-  compileSdk = AndroidVersion.VersionCodes.S
+  compileSdk = 32
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = AndroidVersion.VersionCodes.S
+    targetSdk = 32
     versionCode = 18
     versionName = "1.12.1"
     multiDexEnabled = true
