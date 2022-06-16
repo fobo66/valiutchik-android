@@ -132,7 +132,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.3.0")
+  implementation("androidx.annotation:annotation:1.4.0")
   implementation("androidx.activity:activity-ktx:1.4.0")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.5.0-rc01")
