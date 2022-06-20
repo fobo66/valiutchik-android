@@ -7,7 +7,7 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.2"
+val kotlinCoroutinesVersion = "1.6.3"
 val junitVersion = "5.8.2"
 
 android {
