@@ -158,12 +158,12 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.3.0")
+  implementation("androidx.annotation:annotation:1.4.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.5.0-rc01")
   implementation("androidx.collection:collection-ktx:1.2.0")
-  implementation("androidx.core:core-ktx:1.8.0-beta01")
+  implementation("androidx.core:core-ktx:1.8.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
   implementation("com.google.android.material:material:1.7.0-alpha02")
   implementation("androidx.preference:preference-ktx:1.2.0")
@@ -172,7 +172,7 @@ dependencies {
 
   // compose
   implementation("androidx.compose.ui:ui:$composeVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-alpha11")
+  implementation("androidx.compose.material3:material3:1.0.0-alpha13")
   implementation("androidx.compose.material:material:$composeVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
