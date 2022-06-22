@@ -21,6 +21,7 @@ val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.4"
 val junitVersion = "5.8.2"
+val turbineVersion = "0.8.0"
 
 android {
   signingConfigs {
@@ -230,12 +231,13 @@ dependencies {
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  testImplementation("app.cash.turbine:turbine:$turbineVersion")
   androidTestImplementation(
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
   androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.1")
-  androidTestImplementation("app.cash.turbine:turbine:0.8.0")
+  androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
   androidTestImplementation("androidx.test:runner:1.5.0-alpha04")
   androidTestImplementation("androidx.test:rules:1.4.1-alpha07")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha07")
