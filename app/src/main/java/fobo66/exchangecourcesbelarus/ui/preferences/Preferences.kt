@@ -3,8 +3,10 @@ package fobo66.exchangecourcesbelarus.ui.preferences
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
@@ -15,6 +17,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem
 import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.ListPreference
+import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.SeekBarPreference
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -103,7 +107,7 @@ fun ListPreference(
               )
               Text(
                 text = current.value,
-                style = MaterialTheme.typography.bodyLarge.merge(),
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(start = 16.dp)
               )
             }
@@ -115,6 +119,50 @@ fun ListPreference(
       ),
       confirmButton = { }
     )
+  }
+}
+
+@Composable
+internal fun SeekBarPreference(
+  preference: SeekBarPreference,
+  value: Float,
+  onValueChange: (Float) -> Unit,
+) {
+  val currentValue = remember(value) { mutableStateOf(value) }
+
+  TextPreference(
+    preference = preference,
+    summary = {
+      SeekbarPreferenceSummary(
+        preference = preference,
+        sliderValue = currentValue.value,
+        onValueChange = { currentValue.value = it },
+        onValueChangeEnd = { onValueChange(currentValue.value) }
+      )
+    }
+  )
+}
+
+@Composable
+private fun SeekbarPreferenceSummary(
+  preference: SeekBarPreference,
+  sliderValue: Float,
+  onValueChange: (Float) -> Unit,
+  onValueChangeEnd: () -> Unit,
+) {
+  Column {
+    Text(text = preference.summary)
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(text = preference.valueRepresentation(sliderValue))
+      Spacer(modifier = Modifier.width(16.dp))
+      Slider(
+        value = sliderValue,
+        onValueChange = { if (preference.enabled) onValueChange(it) },
+        valueRange = preference.valueRange,
+        steps = preference.steps,
+        onValueChangeFinished = onValueChangeEnd
+      )
+    }
   }
 }
 
