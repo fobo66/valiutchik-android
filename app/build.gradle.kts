@@ -232,6 +232,7 @@ dependencies {
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
+  testImplementation("com.google.truth:truth:1.1.3")
   androidTestImplementation(
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
