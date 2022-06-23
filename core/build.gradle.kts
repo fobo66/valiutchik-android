@@ -7,7 +7,7 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.2"
+val kotlinCoroutinesVersion = "1.6.3"
 val junitVersion = "5.8.2"
 
 android {
@@ -49,7 +49,7 @@ detekt {
 }
 
 dependencies {
-  implementation("androidx.annotation:annotation:1.3.0")
+  implementation("androidx.annotation:annotation:1.4.0")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")

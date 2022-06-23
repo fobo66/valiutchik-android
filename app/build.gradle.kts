@@ -11,7 +11,7 @@ plugins {
 }
 
 val composeVersion = "1.2.0-rc01"
-val kotlinCoroutinesVersion = "1.6.2"
+val kotlinCoroutinesVersion = "1.6.3"
 val hiltVersion = "2.42"
 val activityVersion = "1.4.0"
 val roomVersion = "2.4.2"
@@ -191,7 +191,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.31")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.32")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
@@ -205,7 +205,7 @@ dependencies {
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.8"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.9"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -225,7 +225,7 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.4.1-alpha07")
+  testImplementation("androidx.test:core:1.5.0-alpha01")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
