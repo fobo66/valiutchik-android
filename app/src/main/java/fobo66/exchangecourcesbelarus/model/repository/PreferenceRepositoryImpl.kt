@@ -1,25 +1,27 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.valiutchik.core.KEY_DEFAULT_CITY
+import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class PreferenceRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
-): PreferenceRepository {
-  override fun observeDefaultCityPreference(): Flow<String> {
-    TODO("Not yet implemented")
-  }
+) : PreferenceRepository {
+  override fun observeDefaultCityPreference(): Flow<String> =
+    preferencesDataSource.observeString(KEY_DEFAULT_CITY, "Минск")
 
-  override fun observeUpdateIntervalPreference(): Flow<Float> {
-    TODO("Not yet implemented")
-  }
+  override fun observeUpdateIntervalPreference(): Flow<Float> =
+    preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, 3)
+      .map { it.toFloat() }
 
   override suspend fun updateDefaultCityPreference(newValue: String) {
-    TODO("Not yet implemented")
+    preferencesDataSource.saveString(KEY_DEFAULT_CITY, newValue)
   }
 
   override suspend fun updateUpdateIntervalPreference(newValue: Float) {
-    TODO("Not yet implemented")
+    preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.toInt())
   }
 }
