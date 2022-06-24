@@ -8,8 +8,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 
 class DataStorePreferencesDataSourceImpl @Inject constructor(
@@ -19,7 +17,7 @@ class DataStorePreferencesDataSourceImpl @Inject constructor(
     return dataStore.data.first()[stringPreferencesKey(key)] ?: defaultValue
   }
 
-  fun observeString(key: String, defaultValue: String): Flow<String> {
+  override fun observeString(key: String, defaultValue: String): Flow<String> {
     return dataStore.data.map { it[stringPreferencesKey(key)] ?: defaultValue }
   }
 
@@ -33,11 +31,11 @@ class DataStorePreferencesDataSourceImpl @Inject constructor(
     return dataStore.data.first()[intPreferencesKey(key)] ?: defaultValue
   }
 
-  fun observeInt(key: String, defaultValue: Int): Flow<Int> {
+  override fun observeInt(key: String, defaultValue: Int): Flow<Int> {
     return dataStore.data.map { it[intPreferencesKey(key)] ?: defaultValue }
   }
 
-  suspend fun saveInt(key: String, value: Int) {
+  override suspend fun saveInt(key: String, value: Int) {
     dataStore.edit {
       it[intPreferencesKey(key)] = value
     }

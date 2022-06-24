@@ -5,6 +5,8 @@ import androidx.core.content.edit
 import fobo66.exchangecourcesbelarus.di.Io
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class PreferencesDataSourceImpl @Inject constructor(
@@ -24,5 +26,19 @@ class PreferencesDataSourceImpl @Inject constructor(
 
   override suspend fun loadInt(key: String, defaultValue: Int): Int = withContext(ioDispatcher) {
     preferences.getInt(key, defaultValue)
+  }
+
+  override fun observeString(key: String, defaultValue: String): Flow<String> = flow {
+    loadString(key, defaultValue)
+  }
+
+  override fun observeInt(key: String, defaultValue: Int): Flow<Int> = flow {
+    loadInt(key, defaultValue)
+  }
+
+  override suspend fun saveInt(key: String, value: Int) {
+    preferences.edit {
+      putInt(key, value)
+    }
   }
 }
