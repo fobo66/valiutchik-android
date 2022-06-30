@@ -13,10 +13,10 @@ plugins {
 val composeVersion = "1.2.0-rc02"
 val kotlinCoroutinesVersion = "1.6.3"
 val hiltVersion = "2.42"
-val activityVersion = "1.4.0"
+val activityVersion = "1.5.0"
 val roomVersion = "2.4.2"
-val navVersion = "2.4.2"
-val lifecycleVersion = "2.4.1"
+val navVersion = "2.5.0"
+val lifecycleVersion = "2.5.0"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.4"
@@ -161,7 +161,7 @@ dependencies {
   implementation("androidx.annotation:annotation:1.4.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.5.0-rc01")
+  implementation("androidx.fragment:fragment-ktx:1.5.0")
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.8.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -219,7 +219,7 @@ dependencies {
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
 
