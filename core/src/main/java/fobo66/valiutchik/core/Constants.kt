@@ -16,7 +16,6 @@ const val BUY_COURSE = true
 const val SELL_COURSE = false
 
 const val TIMESTAMP = "fobo66.exchangecourcesbelarus.TIMESTAMP"
-const val USER_CITY_KEY = "fobo66.exchangecourcesbelarus.USER_CITY"
 
 const val KEY_DEFAULT_CITY = "default_city"
 const val KEY_UPDATE_INTERVAL = "update_interval"

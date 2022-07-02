@@ -28,7 +28,7 @@ class LocationRepositoryTest {
   @BeforeEach
   fun setUp() {
     locationRepository =
-      LocationRepositoryImpl(locationDataSource, geocodingDataSource, preferencesDataSource)
+      LocationRepositoryImpl(locationDataSource, geocodingDataSource)
   }
 
   @AfterEach

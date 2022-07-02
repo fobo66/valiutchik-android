@@ -1,5 +1,5 @@
 package fobo66.valiutchik.core.model.repository
 
 interface LocationRepository {
-  suspend fun resolveUserCity(): String
+  suspend fun resolveUserCity(defaultCity: String): String
 }
