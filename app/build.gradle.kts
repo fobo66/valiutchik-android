@@ -10,7 +10,8 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.2.0-rc02"
+val composeVersion = "1.2.0"
+val composeUiVersion = "1.2.0-rc03"
 val kotlinCoroutinesVersion = "1.6.3"
 val hiltVersion = "2.42"
 val activityVersion = "1.5.0"
@@ -171,13 +172,13 @@ dependencies {
   implementation("androidx.datastore:datastore-preferences:1.0.0")
 
   // compose
-  implementation("androidx.compose.ui:ui:$composeVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-alpha13")
-  implementation("androidx.compose.material:material:$composeVersion")
-  implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+  implementation("androidx.compose.ui:ui:$composeUiVersion")
+  implementation("androidx.compose.material3:material3:1.0.0-alpha14")
+  implementation("androidx.compose.material:material:$composeUiVersion")
+  implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-  debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
+  debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
 
   // flowbinding
 
