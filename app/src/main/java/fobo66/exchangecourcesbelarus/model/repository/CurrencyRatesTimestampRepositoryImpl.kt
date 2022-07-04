@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import fobo66.valiutchik.core.TIMESTAMP
 import java.time.Duration
 import java.time.LocalDateTime
@@ -11,14 +10,17 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 
-  override suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
+  override suspend fun isNeededToUpdateCurrencyRates(
+    now: LocalDateTime,
+    updateInterval: Float
+  ): Boolean {
     val timestamp = loadTimestamp(now)
     val cachedValueAge = Duration.between(timestamp, now)
-    val updateInterval: Duration = Duration.ofHours(
-      preferencesDataSource.loadInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL).toLong()
+    val interval: Duration = Duration.ofHours(
+      updateInterval.toLong()
     )
 
-    return cachedValueAge == Duration.ZERO || cachedValueAge > updateInterval
+    return cachedValueAge == Duration.ZERO || cachedValueAge > interval
   }
 
   override suspend fun saveTimestamp(now: LocalDateTime) {
@@ -34,9 +36,5 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     } else {
       LocalDateTime.parse(rawTimestamp)
     }
-  }
-
-  companion object {
-    private const val DEFAULT_UPDATE_INTERVAL = 3
   }
 }

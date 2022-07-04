@@ -34,7 +34,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = ""
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
     }
   }
 
@@ -43,7 +43,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = now.toString()
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
     }
   }
 
@@ -52,7 +52,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = now.minusDays(1).toString()
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
     }
   }
 
@@ -61,7 +61,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = now.minusHours(1).toString()
 
     runTest {
-      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
     }
   }
 
@@ -70,17 +70,16 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = now.minusHours(3).toString()
 
     runTest {
-      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
     }
   }
 
   @Test
   fun `timestamp above customized limit - need to update`() {
-    preferencesDataSource.int = 2
     preferencesDataSource.string = now.minusHours(3).toString()
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 2.0f))
     }
   }
 
@@ -89,7 +88,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = now.plusHours(1).toString()
 
     runTest {
-      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now))
+      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
     }
   }
 }

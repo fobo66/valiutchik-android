@@ -17,7 +17,8 @@ class RefreshExchangeRatesImpl @Inject constructor(
 ) : RefreshExchangeRates {
   override suspend fun execute(now: LocalDateTime) {
     val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
-    if (timestampRepository.isNeededToUpdateCurrencyRates(now)) {
+    val updateInterval = preferenceRepository.observeUpdateIntervalPreference().first()
+    if (timestampRepository.isNeededToUpdateCurrencyRates(now, updateInterval)) {
       val city = locationRepository.resolveUserCity(defaultCity)
 
       currencyRateRepository.refreshExchangeRates(city, now)
