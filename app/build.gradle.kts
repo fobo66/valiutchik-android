@@ -18,7 +18,7 @@ val lifecycleVersion = "2.5.0"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.4"
-val junitVersion = "5.8.2"
+val junitVersion = "5.9.0"
 
 android {
   signingConfigs {

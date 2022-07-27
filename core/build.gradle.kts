@@ -8,7 +8,7 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.8.2"
+val junitVersion = "5.9.0"
 
 android {
   compileSdk = AndroidVersion.VersionCodes.S
