@@ -7,8 +7,8 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.3"
-val junitVersion = "5.8.2"
+val kotlinCoroutinesVersion = "1.6.4"
+val junitVersion = "5.9.0"
 
 android {
   compileSdk = AndroidVersion.VersionCodes.S
@@ -53,6 +53,6 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }

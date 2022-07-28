@@ -12,16 +12,16 @@ plugins {
 
 val composeVersion = "1.2.0"
 val composeUiVersion = "1.2.0-rc03"
-val kotlinCoroutinesVersion = "1.6.3"
-val hiltVersion = "2.42"
+val kotlinCoroutinesVersion = "1.6.4"
+val hiltVersion = "2.43"
 val activityVersion = "1.5.0"
-val roomVersion = "2.4.2"
-val navVersion = "2.5.0"
+val roomVersion = "2.4.3"
+val navVersion = "2.5.1"
 val lifecycleVersion = "2.5.0"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.4"
-val junitVersion = "5.8.2"
+val mockkVersion = "1.12.5"
+val junitVersion = "5.9.0"
 val turbineVersion = "0.8.0"
 
 android {
@@ -222,7 +222,7 @@ dependencies {
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
