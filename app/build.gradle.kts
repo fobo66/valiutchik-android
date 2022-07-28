@@ -17,7 +17,7 @@ val navVersion = "2.5.0"
 val lifecycleVersion = "2.5.0"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.4"
+val mockkVersion = "1.12.5"
 val junitVersion = "5.9.0"
 
 android {
@@ -135,7 +135,7 @@ dependencies {
   implementation("androidx.annotation:annotation:1.4.0")
   implementation("androidx.activity:activity-ktx:1.5.0")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.5.0")
+  implementation("androidx.fragment:fragment-ktx:1.5.1")
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.8.0-beta01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
