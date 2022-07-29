@@ -87,7 +87,7 @@ jobs:
           avd-name: myavd
           restore-gradle-cache-prefix: v1a
       - android/run-tests:
-          test-command: ./gradlew connectedCheck --console=plain
+          test-command: ./gradlew app:connectedCheck --console=plain
       - store_test_results:
           path: app/build/outputs/androidTest-results
       - store_artifacts:
@@ -100,7 +100,6 @@ jobs:
       - save_cache:
           key: v1a
           paths:
-            - ".gradle"
             - "app/build"
             - "core/build"
             - "benchmark/build"
