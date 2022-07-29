@@ -15,7 +15,7 @@ jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
   lint:
     docker:
-      - image: cimg/android:2022.04.1
+      - image: cimg/android:2022.06.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -36,7 +36,7 @@ jobs:
     # These next lines define the Android machine image executor.
     # See: https://circleci.com/docs/2.0/executor-types/
     docker:
-      - image: cimg/android:2022.04.1
+      - image: cimg/android:2022.06.1
 
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
@@ -52,7 +52,7 @@ jobs:
             - v1a
       # The next step will run the unit tests
       - android/run-tests:
-          test-command: ./gradlew  testDebug --continue
+          test-command: ./gradlew testDebug
       - store_test_results:
           path: app/build/test-results/testDebugUnitTest
       - android/save-build-cache:
@@ -61,14 +61,15 @@ jobs:
           cache-prefix: v1a
       - save_cache:
           key: v1a
-          paths: 
+          paths:
+            - ".gradle"
             - "app/build"
             - "core/build"
             - "benchmark/build"
   ui-tests:
     executor:
       name: android/android-machine
-      tag: 2022.03.1
+      tag: 2022.06.1
       resource-class: large
     steps:
       - checkout
@@ -85,7 +86,8 @@ jobs:
       - android/start-emulator:
           avd-name: myavd
           restore-gradle-cache-prefix: v1a
-      - android/run-tests
+      - android/run-tests:
+          test-command: ./gradlew app:connectedCheck --console=plain
       - store_test_results:
           path: app/build/outputs/androidTest-results
       - store_artifacts:
@@ -97,7 +99,7 @@ jobs:
           cache-prefix: v1a
       - save_cache:
           key: v1a
-          paths: 
+          paths:
             - "app/build"
             - "core/build"
             - "benchmark/build"

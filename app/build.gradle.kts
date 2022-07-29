@@ -14,10 +14,10 @@ val composeVersion = "1.2.0"
 val composeUiVersion = "1.2.0"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43"
-val activityVersion = "1.5.0"
+val activityVersion = "1.5.1"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.1"
-val lifecycleVersion = "2.5.0"
+val lifecycleVersion = "2.5.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.5"
@@ -162,7 +162,7 @@ dependencies {
   implementation("androidx.annotation:annotation:1.4.0")
   implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.5.0")
+  implementation("androidx.fragment:fragment-ktx:1.5.1")
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.8.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
