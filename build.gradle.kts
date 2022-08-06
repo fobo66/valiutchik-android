@@ -5,10 +5,10 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:7.4.0-alpha08")
+    classpath("com.android.tools.build:gradle:7.4.0-alpha09")
     classpath(kotlin("gradle-plugin", version = "1.7.0"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.1.0")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.43")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.43.2")
     classpath("com.jaredsburrows:gradle-license-plugin:0.9.0")
     classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.21.0")
     classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1")

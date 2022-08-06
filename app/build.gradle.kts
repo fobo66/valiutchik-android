@@ -13,7 +13,7 @@ plugins {
 val composeVersion = "1.2.0"
 val composeUiVersion = "1.2.0"
 val kotlinCoroutinesVersion = "1.6.4"
-val hiltVersion = "2.43"
+val hiltVersion = "2.43.2"
 val activityVersion = "1.5.1"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.1"
@@ -22,7 +22,7 @@ val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.5"
 val junitVersion = "5.9.0"
-val turbineVersion = "0.8.0"
+val turbineVersion = "0.9.0"
 
 android {
   signingConfigs {
