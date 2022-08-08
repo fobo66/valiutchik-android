@@ -11,10 +11,10 @@ class PreferenceRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
 ) : PreferenceRepository {
   override fun observeDefaultCityPreference(): Flow<String> =
-    preferencesDataSource.observeString(KEY_DEFAULT_CITY, "Минск")
+    preferencesDataSource.observeString(KEY_DEFAULT_CITY, DEFAULT_CITY)
 
   override fun observeUpdateIntervalPreference(): Flow<Float> =
-    preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, 3)
+    preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
       .map { it.toFloat() }
 
   override suspend fun updateDefaultCityPreference(newValue: String) {
@@ -23,5 +23,10 @@ class PreferenceRepositoryImpl @Inject constructor(
 
   override suspend fun updateUpdateIntervalPreference(newValue: Float) {
     preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.toInt())
+  }
+
+  companion object {
+    private const val DEFAULT_UPDATE_INTERVAL = 3
+    private const val DEFAULT_CITY = "Минск"
   }
 }

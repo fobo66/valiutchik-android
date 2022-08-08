@@ -16,7 +16,6 @@ import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.UriDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.UriDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository

@@ -14,9 +14,7 @@ class FakePreferenceRepository : PreferenceRepository {
   override fun observeUpdateIntervalPreference(): Flow<Float> =
     flowOf(updateInterval)
 
-  override suspend fun updateDefaultCityPreference(newValue: String) {
-  }
+  override suspend fun updateDefaultCityPreference(newValue: String) = Unit
 
-  override suspend fun updateUpdateIntervalPreference(newValue: Float) {
-  }
+  override suspend fun updateUpdateIntervalPreference(newValue: Float) = Unit
 }
