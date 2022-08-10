@@ -34,44 +34,44 @@ import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.SeekBarP
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TextPreference(
-  preference: PreferenceItem<*>,
+  title: @Composable () -> Unit,
   modifier: Modifier = Modifier,
+  enabled: Boolean = true,
   onClick: (() -> Unit)? = null,
   summary: @Composable (() -> Unit)? = null,
-  summaryProvider: () -> String? = { null },
+  summaryProvider: () -> String = { "" },
+  icon: @Composable (() -> Unit)? = null,
   trailing: @Composable (() -> Unit)? = null,
 ) {
-  val isEnabled = LocalPreferenceEnabledStatus.current && preference.enabled
+  val isEnabled = LocalPreferenceEnabledStatus.current && enabled
 
   EnabledPreference(isEnabled) {
     ListItem(
-      text = {
-        Text(
-          text = preference.title,
-          maxLines = if (preference.singleLineTitle) 1 else Int.MAX_VALUE
-        )
-      },
-      secondaryText = summary ?: { Text(text = summaryProvider() ?: preference.summary) },
-      icon = preference.icon,
+      text = title,
+      secondaryText = summary ?: { Text(text = summaryProvider()) },
+      icon = icon,
       modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
       trailing = trailing,
     )
   }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ListPreference(
-  preference: ListPreference,
+  title: @Composable () -> Unit,
   value: String,
+  entries: Map<String, String>,
+  modifier: Modifier = Modifier,
+  enabled: Boolean = true,
   onValueChange: (String) -> Unit,
-  modifier: Modifier = Modifier
 ) {
   val (isDialogShown, showDialog) = remember { mutableStateOf(false) }
 
   TextPreference(
-    preference = preference,
-    summaryProvider = { preference.entries[value] },
+    title = title,
+    enabled = enabled,
+    summary = { entries[value] },
     onClick = { showDialog(!isDialogShown) },
     modifier = modifier
   )
@@ -79,13 +79,13 @@ fun ListPreference(
   if (isDialogShown) {
     AlertDialog(
       onDismissRequest = { showDialog(false) },
-      title = { Text(text = preference.title) },
+      title = title,
       text = {
         Column(
           modifier = Modifier
             .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
         ) {
-          preference.entries.forEach { current ->
+          entries.forEach { current ->
             val isSelected = value == current.key
             val onSelected = {
               onValueChange(current.key)
@@ -124,42 +124,54 @@ fun ListPreference(
 
 @Composable
 internal fun SeekBarPreference(
-  preference: SeekBarPreference,
+  title: @Composable () -> Unit,
   value: Float,
+  modifier: Modifier = Modifier,
+  enabled: Boolean = true,
+  valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+  steps: Int = 0,
   onValueChange: (Float) -> Unit,
 ) {
   val currentValue = remember(value) { mutableStateOf(value) }
 
   TextPreference(
-    preference = preference,
+    title = title,
+    enabled = enabled,
     summary = {
       SeekbarPreferenceSummary(
-        preference = preference,
+        enabled = enabled,
         sliderValue = currentValue.value,
+        valueRepresentation = { it.toString() },
         onValueChange = { currentValue.value = it },
-        onValueChangeEnd = { onValueChange(currentValue.value) }
+        onValueChangeEnd = { onValueChange(currentValue.value) },
+        valueRange = valueRange,
+        steps = steps
       )
-    }
+    },
+    modifier = modifier
   )
 }
 
 @Composable
 private fun SeekbarPreferenceSummary(
-  preference: SeekBarPreference,
   sliderValue: Float,
   onValueChange: (Float) -> Unit,
   onValueChangeEnd: () -> Unit,
+  valueRepresentation: (Float) -> String,
+  modifier: Modifier = Modifier,
+  enabled: Boolean = true,
+  valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+  steps: Int = 0,
 ) {
-  Column {
-    Text(text = preference.summary)
+  Column(modifier = modifier) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-      Text(text = preference.valueRepresentation(sliderValue))
+      Text(text = valueRepresentation(sliderValue))
       Spacer(modifier = Modifier.width(16.dp))
       Slider(
         value = sliderValue,
-        onValueChange = { if (preference.enabled) onValueChange(it) },
-        valueRange = preference.valueRange,
-        steps = preference.steps,
+        onValueChange = { if (enabled) onValueChange(it) },
+        valueRange = valueRange,
+        steps = steps,
         onValueChangeFinished = onValueChangeEnd
       )
     }
