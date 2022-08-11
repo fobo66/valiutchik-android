@@ -67,7 +67,10 @@ fun ListPreference(
   TextPreference(
     title = title,
     enabled = enabled,
-    summary = { entries[value] },
+    summary = {
+      val summaryValue = entries.entries.find { it.value == value }?.key
+      Text(text = summaryValue ?: entries.keys.first())
+    },
     onClick = { showDialog(!isDialogShown) },
     modifier = modifier
   )
