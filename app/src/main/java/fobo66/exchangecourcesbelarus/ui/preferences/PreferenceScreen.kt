@@ -12,6 +12,10 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
+const val MIN_UPDATE_INTERVAL_VALUE = 1f
+const val MAX_UPDATE_INTERVAL_VALUE = 24f
+const val UPDATE_INTERVAL_STEPS = 24
+
 @Composable
 fun PreferenceScreen(
   defaultCityValue: String,
@@ -28,19 +32,27 @@ fun PreferenceScreen(
     ListPreference(title = {
       Text(text = stringResource(id = R.string.pref_title_default_city))
     }, value = defaultCityValue, entries = entries, onValueChange = {})
-    SeekBarPreference(title = {
-      Text(text = stringResource(id = R.string.pref_title_update_interval))
-    }, value = updateIntervalValue, valueRange = 1f..24f, steps = 24, onValueChange = {})
+    SeekBarPreference(
+      title = {
+        Text(text = stringResource(id = R.string.pref_title_update_interval))
+      },
+      value = updateIntervalValue,
+      valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
+      steps = UPDATE_INTERVAL_STEPS,
+      onValueChange = {}
+    )
     TextPreference(title = {
       Text(text = stringResource(id = R.string.title_activity_oss_licenses))
     })
   }
 }
 
+private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
+
 @Preview(name = "Preferences", showBackground = true)
 @Composable
 fun PreferenceScreenPreview() {
   ValiutchikTheme {
-    PreferenceScreen("Минск", 3f)
+    PreferenceScreen("Минск", PREVIEW_UPDATE_INTERVAL_VALUE)
   }
 }
