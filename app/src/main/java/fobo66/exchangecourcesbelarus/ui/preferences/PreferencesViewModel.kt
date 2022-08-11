@@ -1,23 +1,17 @@
 package fobo66.exchangecourcesbelarus.ui.preferences
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fobo66.exchangecourcesbelarus.entities.PreferenceScreenState
+import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
+import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 @HiltViewModel
-class PreferencesViewModel @Inject constructor() : ViewModel() {
-  fun loadPreferences() = viewModelScope.launch {
-    _state.emit(PreferenceScreenState.LoadedPreferences(emptyList()))
-  }
+class PreferencesViewModel @Inject constructor(
+  private val loadDefaultCityPreference: LoadDefaultCityPreference,
+  private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
+) : ViewModel() {
 
-  val state: StateFlow<PreferenceScreenState>
-    get() = _state
-
-  private val _state: MutableStateFlow<PreferenceScreenState> =
-    MutableStateFlow(PreferenceScreenState.Loading)
+  val defaultCityPreference = loadDefaultCityPreference.execute()
+  val updateIntervalPreference = loadUpdateIntervalPreference.execute()
 }

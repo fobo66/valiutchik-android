@@ -6,11 +6,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import fobo66.exchangecourcesbelarus.model.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.exchangecourcesbelarus.model.usecases.FindBankOnMapImpl
+import fobo66.exchangecourcesbelarus.model.usecases.LoadDefaultCityPreferenceImpl
 import fobo66.exchangecourcesbelarus.model.usecases.LoadExchangeRatesImpl
+import fobo66.exchangecourcesbelarus.model.usecases.LoadUpdateIntervalPreferenceImpl
 import fobo66.exchangecourcesbelarus.model.usecases.RefreshExchangeRatesImpl
 import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.core.usecases.FindBankOnMap
+import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
+import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 
 /**
@@ -40,4 +44,13 @@ abstract class CurrencyRatesModule {
   abstract fun provideFindBankOnMap(
     findBankOnMapImpl: FindBankOnMapImpl
   ): FindBankOnMap
+
+  @Binds
+  abstract fun provideLoadUpdateIntervalPreference(
+    loadDefaultCityPreferenceImpl: LoadDefaultCityPreferenceImpl
+  ): LoadDefaultCityPreference
+  @Binds
+  abstract fun provideLoadDefaultCityPreference(
+    loadUpdateIntervalPreferenceImpl: LoadUpdateIntervalPreferenceImpl
+  ): LoadUpdateIntervalPreference
 }
