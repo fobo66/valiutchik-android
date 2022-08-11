@@ -14,7 +14,6 @@ import androidx.compose.material.ListItem
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
@@ -27,9 +26,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem
-import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.ListPreference
-import fobo66.exchangecourcesbelarus.entities.Preference.PreferenceItem.SeekBarPreference
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
