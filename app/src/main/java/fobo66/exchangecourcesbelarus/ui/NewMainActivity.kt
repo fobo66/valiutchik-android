@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
@@ -45,16 +46,18 @@ class NewMainActivity : ComponentActivity() {
               val preferencesViewModel: PreferencesViewModel = hiltViewModel()
 
               val defaultCity by preferencesViewModel.defaultCityPreference.collectAsState(
-                initial = ""
+                initial = "Minsk"
               )
 
               val updateInterval by preferencesViewModel.updateIntervalPreference.collectAsState(
-                initial = 1f
+                initial = MIN_UPDATE_INTERVAL_VALUE
               )
 
               PreferenceScreen(
                 defaultCity,
-                updateInterval
+                updateInterval,
+                preferencesViewModel::updateDefaultCity,
+                preferencesViewModel::updateUpdateInterval
               )
             }
           }

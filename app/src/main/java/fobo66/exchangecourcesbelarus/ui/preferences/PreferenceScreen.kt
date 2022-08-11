@@ -20,6 +20,8 @@ const val UPDATE_INTERVAL_STEPS = 24
 fun PreferenceScreen(
   defaultCityValue: String,
   updateIntervalValue: Float,
+  onDefaultCityChange: (String) -> Unit,
+  onUpdateIntervalChange: (Float) -> Unit,
   modifier: Modifier = Modifier
 ) {
   val citiesKeys = stringArrayResource(id = array.pref_cities_list)
@@ -31,7 +33,7 @@ fun PreferenceScreen(
   Column(modifier = modifier) {
     ListPreference(title = {
       Text(text = stringResource(id = R.string.pref_title_default_city))
-    }, value = defaultCityValue, entries = entries, onValueChange = {})
+    }, value = defaultCityValue, entries = entries, onValueChange = onDefaultCityChange)
     SeekBarPreference(
       title = {
         Text(text = stringResource(id = R.string.pref_title_update_interval))
@@ -39,7 +41,7 @@ fun PreferenceScreen(
       value = updateIntervalValue,
       valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
       steps = UPDATE_INTERVAL_STEPS,
-      onValueChange = {}
+      onValueChange = onUpdateIntervalChange
     )
     TextPreference(title = {
       Text(text = stringResource(id = R.string.title_activity_oss_licenses))
@@ -53,6 +55,6 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 @Composable
 fun PreferenceScreenPreview() {
   ValiutchikTheme {
-    PreferenceScreen("Минск", PREVIEW_UPDATE_INTERVAL_VALUE)
+    PreferenceScreen("Минск", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {})
   }
 }
