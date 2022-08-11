@@ -37,7 +37,7 @@ fun TextPreference(
   summary: @Composable (() -> Unit)? = null,
   summaryProvider: () -> String = { "" },
   icon: @Composable (() -> Unit)? = null,
-  trailing: @Composable (() -> Unit)? = null,
+  trailing: @Composable (() -> Unit)? = null
 ) {
   val isEnabled = LocalPreferenceEnabledStatus.current && enabled
 
@@ -47,7 +47,7 @@ fun TextPreference(
       secondaryText = summary ?: { Text(text = summaryProvider()) },
       icon = icon,
       modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
-      trailing = trailing,
+      trailing = trailing
     )
   }
 }
@@ -60,7 +60,7 @@ fun ListPreference(
   entries: Map<String, String>,
   modifier: Modifier = Modifier,
   enabled: Boolean = true,
-  onValueChange: (String) -> Unit,
+  onValueChange: (String) -> Unit
 ) {
   val (isDialogShown, showDialog) = remember { mutableStateOf(false) }
 
@@ -129,7 +129,7 @@ internal fun SeekBarPreference(
   enabled: Boolean = true,
   valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
   steps: Int = 0,
-  onValueChange: (Float) -> Unit,
+  onValueChange: (Float) -> Unit
 ) {
   val currentValue = remember(value) { mutableStateOf(value) }
 
@@ -160,7 +160,7 @@ private fun SeekbarPreferenceSummary(
   modifier: Modifier = Modifier,
   enabled: Boolean = true,
   valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
-  steps: Int = 0,
+  steps: Int = 0
 ) {
   Column(modifier = modifier) {
     Row(verticalAlignment = Alignment.CenterVertically) {
