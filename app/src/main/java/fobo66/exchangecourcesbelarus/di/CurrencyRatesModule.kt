@@ -10,12 +10,16 @@ import fobo66.exchangecourcesbelarus.model.usecases.LoadDefaultCityPreferenceImp
 import fobo66.exchangecourcesbelarus.model.usecases.LoadExchangeRatesImpl
 import fobo66.exchangecourcesbelarus.model.usecases.LoadUpdateIntervalPreferenceImpl
 import fobo66.exchangecourcesbelarus.model.usecases.RefreshExchangeRatesImpl
+import fobo66.exchangecourcesbelarus.model.usecases.UpdateDefaultCityPreferenceImpl
+import fobo66.exchangecourcesbelarus.model.usecases.UpdateUpdateIntervalPreferenceImpl
 import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.core.usecases.FindBankOnMap
 import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
+import fobo66.valiutchik.core.usecases.UpdateDefaultCityPreference
+import fobo66.valiutchik.core.usecases.UpdateUpdateIntervalPreference
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -46,11 +50,22 @@ abstract class CurrencyRatesModule {
   ): FindBankOnMap
 
   @Binds
-  abstract fun provideLoadUpdateIntervalPreference(
+  abstract fun provideLoadDefaultCityPreference(
     loadDefaultCityPreferenceImpl: LoadDefaultCityPreferenceImpl
   ): LoadDefaultCityPreference
+
   @Binds
-  abstract fun provideLoadDefaultCityPreference(
+  abstract fun provideLoadUpdateIntervalPreference(
     loadUpdateIntervalPreferenceImpl: LoadUpdateIntervalPreferenceImpl
   ): LoadUpdateIntervalPreference
+
+  @Binds
+  abstract fun provideUpdateDefaultCityPreference(
+    updateDefaultCityPreferenceImpl: UpdateDefaultCityPreferenceImpl
+  ): UpdateDefaultCityPreference
+
+  @Binds
+  abstract fun provideUpdatUpdateIntervalPreference(
+    updateUpdateIntervalPreferenceImpl: UpdateUpdateIntervalPreferenceImpl
+  ): UpdateUpdateIntervalPreference
 }
