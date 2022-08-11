@@ -15,6 +15,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 @Composable
 fun PreferenceScreen(
   defaultCityValue: String,
+  updateIntervalValue: Float,
   modifier: Modifier = Modifier
 ) {
   val citiesKeys = stringArrayResource(id = array.pref_cities_list)
@@ -27,6 +28,9 @@ fun PreferenceScreen(
     ListPreference(title = {
       Text(text = stringResource(id = R.string.pref_title_default_city))
     }, value = defaultCityValue, entries = entries, onValueChange = {})
+    SeekBarPreference(title = {
+      Text(text = stringResource(id = R.string.pref_title_update_interval))
+    }, value = updateIntervalValue, valueRange = 1f..24f, steps = 24, onValueChange = {})
     TextPreference(title = {
       Text(text = stringResource(id = R.string.title_activity_oss_licenses))
     })
@@ -37,6 +41,6 @@ fun PreferenceScreen(
 @Composable
 fun PreferenceScreenPreview() {
   ValiutchikTheme {
-    PreferenceScreen("Минск")
+    PreferenceScreen("Минск", 3f)
   }
 }
