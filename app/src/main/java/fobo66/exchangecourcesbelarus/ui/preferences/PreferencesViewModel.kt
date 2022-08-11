@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PreferencesViewModel @Inject constructor(
-  private val loadDefaultCityPreference: LoadDefaultCityPreference,
-  private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
+  loadDefaultCityPreference: LoadDefaultCityPreference,
+  loadUpdateIntervalPreference: LoadUpdateIntervalPreference
 ) : ViewModel() {
 
   val defaultCityPreference = loadDefaultCityPreference.execute()

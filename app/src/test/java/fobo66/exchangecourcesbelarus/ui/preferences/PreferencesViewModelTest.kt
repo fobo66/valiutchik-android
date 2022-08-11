@@ -47,4 +47,13 @@ class PreferencesViewModelTest {
       assertEquals("test", awaitItem)
     }
   }
+
+  @Test
+  fun `load update interval pref`() = runTest {
+    viewModel.updateIntervalPreference.test {
+      val awaitItem = awaitItem()
+      awaitComplete()
+      assertEquals(1f, awaitItem)
+    }
+  }
 }
