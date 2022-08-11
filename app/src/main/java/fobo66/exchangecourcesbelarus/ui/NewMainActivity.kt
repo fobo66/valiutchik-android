@@ -57,7 +57,8 @@ class NewMainActivity : ComponentActivity() {
                 defaultCity,
                 updateInterval,
                 preferencesViewModel::updateDefaultCity,
-                preferencesViewModel::updateUpdateInterval
+                preferencesViewModel::updateUpdateInterval,
+                {}
               )
             }
           }

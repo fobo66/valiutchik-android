@@ -22,6 +22,7 @@ fun PreferenceScreen(
   updateIntervalValue: Float,
   onDefaultCityChange: (String) -> Unit,
   onUpdateIntervalChange: (Float) -> Unit,
+  onOpenSourceLicensesClick: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   val citiesKeys = stringArrayResource(id = array.pref_cities_list)
@@ -45,7 +46,8 @@ fun PreferenceScreen(
     )
     TextPreference(title = {
       Text(text = stringResource(id = R.string.title_activity_oss_licenses))
-    })
+    },
+    onClick = onOpenSourceLicensesClick)
   }
 }
 
@@ -55,6 +57,6 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 @Composable
 fun PreferenceScreenPreview() {
   ValiutchikTheme {
-    PreferenceScreen("Минск", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {})
+    PreferenceScreen("Минск", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {}, {})
   }
 }
