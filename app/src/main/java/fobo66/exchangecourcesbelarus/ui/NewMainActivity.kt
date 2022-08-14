@@ -46,13 +46,15 @@ class NewMainActivity : ComponentActivity() {
             composable("prefs") {
               val preferencesViewModel: PreferencesViewModel = hiltViewModel()
 
-              val defaultCity by preferencesViewModel.defaultCityPreference.collectAsStateWithLifecycle(
-                initialValue = "Minsk"
-              )
+              val defaultCity by preferencesViewModel.defaultCityPreference
+                .collectAsStateWithLifecycle(
+                  initialValue = "Minsk"
+                )
 
-              val updateInterval by preferencesViewModel.updateIntervalPreference.collectAsStateWithLifecycle(
-                initialValue = MIN_UPDATE_INTERVAL_VALUE
-              )
+              val updateInterval by preferencesViewModel.updateIntervalPreference
+                .collectAsStateWithLifecycle(
+                  initialValue = MIN_UPDATE_INTERVAL_VALUE
+                )
 
               PreferenceScreen(
                 defaultCity,
