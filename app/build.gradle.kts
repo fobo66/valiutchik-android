@@ -17,7 +17,7 @@ val hiltVersion = "2.43.2"
 val activityVersion = "1.6.0-alpha05"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.1"
-val lifecycleVersion = "2.5.1"
+val lifecycleVersion = "2.6.0-alpha01"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.5"
@@ -166,14 +166,14 @@ dependencies {
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.8.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-  implementation("com.google.android.material:material:1.7.0-alpha03")
+  implementation("com.google.android.material:material:1.7.0-beta01")
   implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
   implementation("androidx.datastore:datastore-preferences:1.0.0")
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-alpha15")
+  implementation("androidx.compose.material3:material3:1.0.0-alpha16")
   implementation("androidx.compose.material:material:$composeUiVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
@@ -189,6 +189,7 @@ dependencies {
 
   // lifecycle
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+  implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location

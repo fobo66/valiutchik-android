@@ -8,11 +8,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -25,7 +26,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @AndroidEntryPoint
 class NewMainActivity : ComponentActivity() {
-  @OptIn(ExperimentalMaterial3Api::class)
+  @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -45,12 +46,12 @@ class NewMainActivity : ComponentActivity() {
             composable("prefs") {
               val preferencesViewModel: PreferencesViewModel = hiltViewModel()
 
-              val defaultCity by preferencesViewModel.defaultCityPreference.collectAsState(
-                initial = "Minsk"
+              val defaultCity by preferencesViewModel.defaultCityPreference.collectAsStateWithLifecycle(
+                initialValue = "Minsk"
               )
 
-              val updateInterval by preferencesViewModel.updateIntervalPreference.collectAsState(
-                initial = MIN_UPDATE_INTERVAL_VALUE
+              val updateInterval by preferencesViewModel.updateIntervalPreference.collectAsStateWithLifecycle(
+                initialValue = MIN_UPDATE_INTERVAL_VALUE
               )
 
               PreferenceScreen(
