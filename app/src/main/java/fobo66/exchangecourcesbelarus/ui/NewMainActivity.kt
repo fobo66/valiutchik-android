@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
@@ -61,8 +62,13 @@ class NewMainActivity : ComponentActivity() {
                 updateInterval,
                 preferencesViewModel::updateDefaultCity,
                 preferencesViewModel::updateUpdateInterval,
-                {}
+                {
+                  navController.navigate("licenses")
+                }
               )
+            }
+            composable("licenses") {
+              OpenSourceLicensesScreen()
             }
           }
         }
