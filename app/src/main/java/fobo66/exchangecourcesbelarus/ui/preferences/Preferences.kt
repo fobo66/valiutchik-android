@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
@@ -27,27 +27,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextPreference(
   title: @Composable () -> Unit,
   modifier: Modifier = Modifier,
   enabled: Boolean = true,
   onClick: (() -> Unit)? = null,
-  summary: @Composable (() -> Unit)? = null,
+  summary: @Composable() (() -> Unit)? = null,
   summaryProvider: () -> String = { "" },
-  icon: @Composable (() -> Unit)? = null,
-  trailing: @Composable (() -> Unit)? = null
+  trailing: @Composable() (() -> Unit)? = null
 ) {
   val isEnabled = LocalPreferenceEnabledStatus.current && enabled
 
   EnabledPreference(isEnabled) {
     ListItem(
-      text = title,
-      secondaryText = summary ?: { Text(text = summaryProvider()) },
-      icon = icon,
+      headlineText = title,
+      supportingText = summary ?: { Text(text = summaryProvider()) },
       modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
-      trailing = trailing
+      trailingContent = trailing
     )
   }
 }
@@ -66,13 +64,13 @@ fun ListPreference(
 
   TextPreference(
     title = title,
+    modifier = modifier,
     enabled = enabled,
+    onClick = { showDialog(!isDialogShown) },
     summary = {
       val summaryValue = entries.entries.find { it.value == value }?.key
       Text(text = summaryValue ?: entries.keys.first())
-    },
-    onClick = { showDialog(!isDialogShown) },
-    modifier = modifier
+    }
   )
 
   if (isDialogShown) {
@@ -135,6 +133,7 @@ internal fun SeekBarPreference(
 
   TextPreference(
     title = title,
+    modifier = modifier,
     enabled = enabled,
     summary = {
       SeekbarPreferenceSummary(
@@ -146,8 +145,7 @@ internal fun SeekBarPreference(
         valueRange = valueRange,
         steps = steps
       )
-    },
-    modifier = modifier
+    }
   )
 }
 
