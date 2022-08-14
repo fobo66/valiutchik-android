@@ -1,10 +1,12 @@
 package fobo66.exchangecourcesbelarus.ui
 
+import android.Manifest
 import android.content.Intent
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.rule.GrantPermissionRule
 import com.kaspersky.kaspresso.testcases.api.testcaserule.TestCaseRule
 import fobo66.valiutchik.core.UNKNOWN_COURSE
 import org.junit.Rule
@@ -14,6 +16,10 @@ class MainActivityTest {
 
   @get:Rule
   val activityScenario = ActivityScenarioRule(MainActivity::class.java)
+
+  @get:Rule
+  val grantPermissionsRule: GrantPermissionRule =
+    GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
 
   @get:Rule
   val testCaseRule = TestCaseRule(javaClass.simpleName)
@@ -67,23 +73,23 @@ class MainActivityTest {
 
   @Test
   fun copyToClipboard() = testCaseRule.run {
-      step("long press on list item") {
-        MainScreen {
-          flakySafely {
-            coursesList.firstChild<CoursesListItem> {
-              longClick()
-            }
+    step("long press on list item") {
+      MainScreen {
+        flakySafely {
+          coursesList.firstChild<CoursesListItem> {
+            longClick()
           }
         }
       }
-      step("check snackbar is shown") {
-       MainScreen {
-         flakySafely {
-           snackbar.isDisplayed()
-         }
-       }
+    }
+    step("check snackbar is shown") {
+      MainScreen {
+        flakySafely {
+          snackbar.isDisplayed()
+        }
       }
     }
+  }
 
   @Test
   fun showSettings() = testCaseRule.run {

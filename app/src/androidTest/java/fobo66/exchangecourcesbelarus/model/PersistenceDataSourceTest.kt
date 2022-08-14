@@ -7,12 +7,12 @@ import app.cash.turbine.test
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
+import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.EUR
 import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.USD
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -20,8 +20,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.io.IOException
-import kotlin.time.ExperimentalTime
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -42,11 +40,10 @@ class PersistenceDataSourceTest {
       context, CurrencyRatesDatabase::class.java
     ).build()
     persistenceDataSource =
-      PersistenceDataSource(db)
+      PersistenceDataSourceImpl(db)
   }
 
   @After
-  @Throws(IOException::class)
   fun tearDown() {
     db.close()
   }
@@ -106,8 +103,6 @@ class PersistenceDataSourceTest {
     }
   }
 
-  @ExperimentalTime
-  @ExperimentalCoroutinesApi
   @Test
   fun loadOnlySellCoursesFromMixedCourses() {
     runBlocking {
@@ -123,7 +118,7 @@ class PersistenceDataSourceTest {
       db.currencyRatesDao().loadLatestBestCurrencyRates()
         .map { courses -> courses.filter { !it.isBuy } }
         .test {
-          assertEquals(2, expectItem().size)
+          assertEquals(2, awaitItem().size)
         }
     }
   }

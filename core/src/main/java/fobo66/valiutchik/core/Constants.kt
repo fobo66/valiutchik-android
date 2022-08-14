@@ -16,7 +16,10 @@ const val BUY_COURSE = true
 const val SELL_COURSE = false
 
 const val TIMESTAMP = "fobo66.exchangecourcesbelarus.TIMESTAMP"
-const val USER_CITY_KEY = "fobo66.exchangecourcesbelarus.USER_CITY"
+
+const val KEY_DEFAULT_CITY = "default_city"
+const val KEY_UPDATE_INTERVAL = "update_interval"
+const val KEY_OPEN_SOURCE_LICENSES = "oss_licenses"
 
 const val TAG_NAME_BANKNAME = "bankname"
 const val TAG_NAME_USD_BUY = "usd_buy"

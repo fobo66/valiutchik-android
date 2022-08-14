@@ -1,46 +1,35 @@
 package fobo66.exchangecourcesbelarus.util
 
-import com.mapbox.api.geocoding.v5.MapboxGeocoding
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse
-import kotlinx.coroutines.suspendCancellableCoroutine
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.HttpException
-import retrofit2.Response
+import com.mapbox.search.ResponseInfo
+import com.mapbox.search.ReverseGeoOptions
+import com.mapbox.search.SearchCallback
+import com.mapbox.search.SearchEngine
+import com.mapbox.search.result.SearchResult
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlinx.coroutines.suspendCancellableCoroutine
 
-internal suspend fun MapboxGeocoding.await(): GeocodingResponse =
+internal suspend fun SearchEngine.search(
+  options: ReverseGeoOptions
+): List<SearchResult> =
   suspendCancellableCoroutine { continuation ->
-    enqueueCall(object : Callback<GeocodingResponse> {
-      override fun onResponse(
-        call: Call<GeocodingResponse>,
-        response: Response<GeocodingResponse>
-      ) {
-        if (response.isSuccessful) {
-          val body = response.body()
-          if (body == null) {
-            val e =
-              KotlinNullPointerException(
-                "Response from Mapbox was null but response body type was declared as non-null"
-              )
-            continuation.resumeWithException(e)
-          } else {
-            continuation.resume(body)
+    val task = search(
+      options,
+      object : SearchCallback {
+        override fun onError(e: Exception) {
+          if (continuation.isCancelled) {
+            return
           }
-        } else {
-          continuation.resumeWithException(HttpException(response))
+          continuation.resumeWithException(e)
+        }
+
+        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+          continuation.resume(results)
         }
       }
-
-      override fun onFailure(call: Call<GeocodingResponse>, t: Throwable) {
-        // Don't bother with resuming the continuation if it is already cancelled.
-        if (continuation.isCancelled) return
-        continuation.resumeWithException(t)
-      }
-    })
+    )
 
     continuation.invokeOnCancellation {
-      cancelCall()
+      task.cancel()
     }
   }

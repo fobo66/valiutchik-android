@@ -2,7 +2,6 @@ package fobo66.exchangecourcesbelarus.model.datasource
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import fobo66.exchangecourcesbelarus.model.repository.MapRepositoryImpl
-import fobo66.exchangecourcesbelarus.model.repository.MapRepositoryImpl.Companion
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -15,7 +14,7 @@ class UriDataSourceTest {
 
   @Before
   fun setUp() {
-    uriDataSource = UriDataSource()
+    uriDataSource = UriDataSourceImpl()
   }
 
   @Test

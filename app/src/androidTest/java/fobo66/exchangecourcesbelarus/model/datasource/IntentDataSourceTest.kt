@@ -2,14 +2,11 @@ package fobo66.exchangecourcesbelarus.model.datasource
 
 import android.content.Intent
 import android.net.Uri
-import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.exchangecourcesbelarus.ui.MainActivity
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -21,7 +18,7 @@ import org.junit.runner.RunWith
 class IntentDataSourceTest {
 
   private val uri: Uri by lazy {
-    Uri.parse("geo:0,0")
+    Uri.parse("geo:0,0?q=test")
   }
 
   private lateinit var intentDataSource: IntentDataSource
@@ -30,7 +27,8 @@ class IntentDataSourceTest {
   fun setUp() {
     Intents.init()
 
-    intentDataSource = IntentDataSource(InstrumentationRegistry.getInstrumentation().targetContext)
+    intentDataSource =
+      IntentDataSourceImpl(InstrumentationRegistry.getInstrumentation().targetContext)
   }
 
   @After
@@ -47,7 +45,7 @@ class IntentDataSourceTest {
   @Test
   fun canResolveIntent() {
     val intent = intentDataSource.createIntent(uri)
-    assertNotNull(intentDataSource.resolveIntent(intent))
+    assertNotNull("Can resolve intent", intentDataSource.resolveIntent(intent))
   }
 
   @Test

@@ -7,56 +7,62 @@ plugins {
   id("dagger.hilt.android.plugin")
   id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
+  id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.0.0"
-val kotlinCoroutinesVersion = "1.5.1"
-val hiltVersion = "2.38.1"
-val roomVersion = "2.4.0-alpha04"
-val navVersion = "2.4.0-alpha05"
-val lifecycleVersion = "2.3.1"
+val composeVersion = "1.3.0"
+val composeUiVersion = "1.3.0-alpha02"
+val kotlinCoroutinesVersion = "1.6.4"
+val hiltVersion = "2.43.2"
+val activityVersion = "1.6.0-alpha05"
+val roomVersion = "2.4.3"
+val navVersion = "2.5.1"
+val lifecycleVersion = "2.6.0-alpha01"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
+val mockkVersion = "1.12.5"
+val junitVersion = "5.9.0"
+val turbineVersion = "0.9.0"
 
 android {
   signingConfigs {
     create("releaseSignConfig") {
-      keyAlias = loadSecret(KEY_ALIAS)
-      keyPassword = loadSecret(KEY_PASSWORD)
-      storeFile = file(loadSecret(STORE_FILE))
-      storePassword = loadSecret(STORE_PASSWORD)
+      keyAlias = loadSecret(rootProject, KEY_ALIAS)
+      keyPassword = loadSecret(rootProject, KEY_PASSWORD)
+      storeFile = file(loadSecret(rootProject, STORE_FILE))
+      storePassword = loadSecret(rootProject, STORE_PASSWORD)
 
       enableV3Signing = true
       enableV4Signing = true
     }
   }
 
-  compileSdk = AndroidVersion.VersionCodes.S
+  compileSdk = 33
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = AndroidVersion.VersionCodes.S
-    versionCode = 17
-    versionName = "1.12"
+    targetSdk = 33
+    versionCode = 18
+    versionName = "1.12.1"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     resValue(
       "string",
       "mapboxGeocoderAccessToken",
-      loadSecret(MAPBOX_TOKEN)
+      loadSecret(rootProject, MAPBOX_TOKEN)
     )
 
     resValue(
       "string",
       "apiUsername",
-      loadSecret(API_USERNAME)
+      loadSecret(rootProject, API_USERNAME)
     )
 
     resValue(
       "string",
       "apiPassword",
-      loadSecret(API_PASSWORD)
+      loadSecret(rootProject, API_PASSWORD)
     )
 
     vectorDrawables {
@@ -96,6 +102,8 @@ android {
 
   kotlinOptions {
     jvmTarget = "11"
+
+    freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
   }
 
   kapt {
@@ -119,11 +127,15 @@ android {
     }
   }
 
-  testOptions.unitTests.isIncludeAndroidResources = true
+  testOptions {
+    animationsDisabled = true
+    unitTests.isIncludeAndroidResources = true
+  }
 
   composeOptions {
     kotlinCompilerExtensionVersion = composeVersion
   }
+  namespace = "fobo66.exchangecourcesbelarus"
 }
 
 detekt {
@@ -147,16 +159,26 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.3.0-alpha01")
-  implementation("androidx.activity:activity-ktx:1.3.0")
+  implementation("androidx.annotation:annotation:1.4.0")
+  implementation("androidx.activity:activity-ktx:$activityVersion")
   implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.4.0-alpha05")
-  implementation("androidx.collection:collection-ktx:1.2.0-alpha01")
-  implementation("androidx.core:core-ktx:1.7.0-alpha01")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.0")
-  implementation("com.google.android.material:material:1.4.0")
-  implementation("androidx.preference:preference-ktx:1.1.1")
+  implementation("androidx.fragment:fragment-ktx:1.5.2")
+  implementation("androidx.collection:collection-ktx:1.2.0")
+  implementation("androidx.core:core-ktx:1.8.0")
+  implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+  implementation("com.google.android.material:material:1.7.0-beta01")
+  implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+  implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+  // compose
+  implementation("androidx.compose.ui:ui:$composeUiVersion")
+  implementation("androidx.compose.material3:material3:1.0.0-alpha16")
+  implementation("androidx.compose.material:material:$composeUiVersion")
+  implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
+  implementation("androidx.activity:activity-compose:$activityVersion")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
+  debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
 
   // flowbinding
 
@@ -166,29 +188,26 @@ dependencies {
   implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
   // lifecycle
+  implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+  implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:5.9.0-alpha.1")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.32")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
-  implementation("androidx.compose.ui:ui:$composeVersion")
-  implementation("androidx.compose.material:material:$composeVersion")
-  implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-  implementation("androidx.activity:activity-compose:1.3.0")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-  debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
   kapt("androidx.room:room-compiler:$roomVersion")
 
   // nav
   implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+  implementation("androidx.navigation:navigation-compose:$navVersion")
+  implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.9"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -197,36 +216,37 @@ dependencies {
   implementation("androidx.multidex:multidex:2.0.1")
 
   // timber
-  implementation("com.jakewharton.timber:timber:4.7.1")
+  implementation("com.jakewharton.timber:timber:5.0.1")
 
   // insets
-  implementation("dev.chrisbanes.insetter:insetter:0.6.0")
+  implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
-  // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
-
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
   // tests
-  testImplementation("junit:junit:4.13.2")
-  testImplementation("androidx.test:core:1.4.0")
-  testImplementation("io.mockk:mockk:1.12.0")
+  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+  testImplementation("androidx.test:core:1.5.0-alpha01")
+  testImplementation("io.mockk:mockk:$mockkVersion")
+  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  testImplementation("app.cash.turbine:turbine:$turbineVersion")
+  testImplementation("com.google.truth:truth:1.1.3")
   androidTestImplementation(
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.2.1")
-  androidTestImplementation("app.cash.turbine:turbine:0.6.0")
-  androidTestImplementation("androidx.test:runner:1.4.0")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.1")
+  androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
+  androidTestImplementation("androidx.test:runner:1.5.0-alpha04")
+  androidTestImplementation("androidx.test:rules:1.4.1-alpha07")
+  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha07")
+  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha07")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha07")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")

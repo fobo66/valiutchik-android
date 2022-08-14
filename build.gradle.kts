@@ -1,5 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
   repositories {
     mavenCentral()
@@ -7,12 +5,13 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:7.1.0-alpha06")
-    classpath(kotlin("gradle-plugin", version = "1.5.21"))
-    classpath("androidx.benchmark:benchmark-gradle-plugin:1.0.0")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
-    classpath("com.jaredsburrows:gradle-license-plugin:0.8.90")
-    classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
+    classpath("com.android.tools.build:gradle:7.4.0-alpha09")
+    classpath(kotlin("gradle-plugin", version = "1.7.10"))
+    classpath("androidx.benchmark:benchmark-gradle-plugin:1.1.0")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.43.2")
+    classpath("com.jaredsburrows:gradle-license-plugin:0.9.0")
+    classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.21.0")
+    classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1")
   }
 }
 
@@ -20,7 +19,16 @@ allprojects {
   repositories {
     mavenCentral()
     google()
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+    maven {
+      url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+      authentication {
+        create<BasicAuthentication>("basic")
+      }
+      credentials {
+        username = "mapbox"
+        password = loadSecret(rootProject, MAPBOX_REPO_TOKEN)
+      }
+    }
   }
 }
 

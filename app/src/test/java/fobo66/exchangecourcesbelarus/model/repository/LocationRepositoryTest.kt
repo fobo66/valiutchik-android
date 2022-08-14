@@ -1,112 +1,65 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse
-import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.USER_CITY_KEY
-import fobo66.valiutchik.core.entities.Location
+import fobo66.exchangecourcesbelarus.model.fake.FakeGeocodingDataSource
+import fobo66.exchangecourcesbelarus.model.fake.FakeLocationDataSource
 import fobo66.valiutchik.core.model.repository.LocationRepository
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
-import okhttp3.ResponseBody.Companion.toResponseBody
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
-import retrofit2.HttpException
-import retrofit2.Response
-import javax.net.ssl.HttpsURLConnection
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 12/1/19.
  */
+@ExperimentalCoroutinesApi
 class LocationRepositoryTest {
 
   private lateinit var locationRepository: LocationRepository
 
-  private val locationDataSource: LocationDataSource = mockk {
-    coEvery {
-      resolveUserCity(any())
-    } returns GeocodingResponse.fromJson(
-      """
-      {
-        "type": "Feature",
-        "query": ["aaa"],
-        "features": [{
-          "type": "place",
-          "text": "test"
-        }],
-        "attribution": "aaa",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [125.6, 10.1]
-        },
-        "properties": {
-          "name": "Dinagat Islands"
-        }
-      }
-      """.trimIndent()
-    )
+  private val locationDataSource = FakeLocationDataSource()
+  private val geocodingDataSource = FakeGeocodingDataSource()
 
-    coEvery {
-      resolveLocation()
-    } returns Location(0.0, 0.0)
-  }
-
-  private val preferencesDataSource: PreferencesDataSource = mockk {
-    every {
-      saveString(USER_CITY_KEY, any())
-    } returns Unit
-
-    every {
-      loadString("default_city", "Минск")
-    } returns "default"
-  }
-
-  @Before
+  @BeforeEach
   fun setUp() {
-    locationRepository = LocationRepositoryImpl(locationDataSource, preferencesDataSource)
+    locationRepository =
+      LocationRepositoryImpl(locationDataSource, geocodingDataSource)
+  }
+
+  @AfterEach
+  fun tearDown() {
+    geocodingDataSource.reset()
   }
 
   @Test
   fun `resolve user city`() {
-
-    runBlocking {
-      val city = locationRepository.resolveUserCity()
-      assertEquals("test", city)
+    runTest {
+      val city = locationRepository.resolveUserCity("default")
+      assertEquals("fake", city)
     }
   }
 
   @Test
   fun `return default city on HTTP error`() {
+    geocodingDataSource.showError = true
 
-    coEvery {
-      locationDataSource.resolveUserCity(any())
-    } throws HttpException(
-      Response.error<GeocodingResponse>(
-        HttpsURLConnection.HTTP_INTERNAL_ERROR,
-        "".toResponseBody()
-      )
-    )
-
-    runBlocking {
-      val city = locationRepository.resolveUserCity()
+    runTest {
+      val city = locationRepository.resolveUserCity("default")
       assertEquals("default", city)
     }
   }
 
-  @Test(expected = KotlinNullPointerException::class)
+  @Test
   fun `crash on unexpected error`() {
+    geocodingDataSource.unexpectedError = true
 
-    coEvery {
-      locationDataSource.resolveUserCity(any())
-    } throws KotlinNullPointerException("test")
-
-    runBlocking {
-      val city = locationRepository.resolveUserCity()
-      assertEquals("default", city)
+    runTest {
+      assertThrows<KotlinNullPointerException> {
+        locationRepository.resolveUserCity("default")
+      }
     }
   }
 }

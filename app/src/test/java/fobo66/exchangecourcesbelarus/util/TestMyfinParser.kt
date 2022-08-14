@@ -11,11 +11,11 @@ import fobo66.valiutchik.core.entities.Currency
 import fobo66.valiutchik.core.util.CurrencyBuilder
 import fobo66.valiutchik.core.util.CurrencyBuilderImpl
 import fobo66.valiutchik.core.util.CurrencyRatesParser
-import org.w3c.dom.Document
-import org.w3c.dom.NodeList
 import java.io.IOException
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
+import org.w3c.dom.Document
+import org.w3c.dom.NodeList
 
 class TestMyfinParser : CurrencyRatesParser {
 

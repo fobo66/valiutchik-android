@@ -5,7 +5,7 @@ import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.util.CurrencyRatesParserImpl
 import org.junit.Before
 import org.junit.Rule
@@ -23,7 +23,7 @@ class BestCourseDataSourceBenchmark {
 
   private val parser = CurrencyRatesParserImpl()
 
-  private val bestCourseDataSource = BestCourseDataSource()
+  private val bestCourseDataSource = BestCourseDataSourceImpl()
 
   private var currencies: Set<Currency> = setOf()
 
