@@ -97,3 +97,11 @@ fun OpenSourceLicensePreview() {
     )
   }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun OpenSourceLicensesPreview() {
+  ValiutchikTheme {
+    AlternativeOpenSourceLicensesScreen(licenses = emptyList(), onItemClick = {})
+  }
+}
