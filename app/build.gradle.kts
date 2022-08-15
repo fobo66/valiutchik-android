@@ -145,10 +145,10 @@ detekt {
 licenseReport {
   generateCsvReport = false
   generateHtmlReport = true
-  generateJsonReport = false
+  generateJsonReport = true
 
   copyHtmlReportToAssets = true
-  copyJsonReportToAssets = false
+  copyJsonReportToAssets = true
 }
 
 dependencies {
@@ -183,7 +183,9 @@ dependencies {
   // flowbinding
 
   implementation("io.github.reactivecircus.flowbinding:flowbinding-android:$flowBindingVersion")
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion")
+  implementation(
+    "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
+  )
   implementation("io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion")
   implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
