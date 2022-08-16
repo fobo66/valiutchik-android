@@ -21,7 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.ui.licenses.AlternativeOpenSourceLicensesScreen
+import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
@@ -77,7 +77,7 @@ class NewMainActivity : ComponentActivity() {
                 initialValue = emptyList()
               )
 
-              AlternativeOpenSourceLicensesScreen(licenses = licenses, onItemClick = { licenseUrl ->
+              OpenSourceLicensesScreen(licenses = licenses, onItemClick = { licenseUrl ->
                 startActivity(Intent(Intent.ACTION_VIEW, licenseUrl.toUri()))
               })
             }

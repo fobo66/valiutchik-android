@@ -222,7 +222,6 @@ dependencies {
 
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
-  implementation("com.google.accompanist:accompanist-webview:0.26.1-alpha")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
 

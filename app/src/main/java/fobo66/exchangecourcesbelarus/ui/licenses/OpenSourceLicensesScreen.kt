@@ -14,20 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.rememberWebViewState
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.core.entities.License
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 
 @Composable
-fun OpenSourceLicensesScreen(modifier: Modifier = Modifier) {
-  val webViewState = rememberWebViewState("file:///android_asset/open_source_licenses.html")
-  WebView(webViewState, modifier)
-}
-
-@Composable
-fun AlternativeOpenSourceLicensesScreen(
+fun OpenSourceLicensesScreen(
   licenses: List<OpenSourceLicensesItem>,
   onItemClick: (String) -> Unit,
   modifier: Modifier = Modifier
@@ -102,6 +94,6 @@ fun OpenSourceLicensePreview() {
 @Composable
 fun OpenSourceLicensesPreview() {
   ValiutchikTheme {
-    AlternativeOpenSourceLicensesScreen(licenses = emptyList(), onItemClick = {})
+    OpenSourceLicensesScreen(licenses = emptyList(), onItemClick = {})
   }
 }
