@@ -152,7 +152,7 @@ licenseReport {
 }
 
 dependencies {
-  implementation(project(":core"))
+  api(project(":core"))
 
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
