@@ -30,9 +30,6 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
-import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @AndroidEntryPoint
@@ -69,29 +66,7 @@ class NewMainActivity : ComponentActivity() {
             startDestination = "prefs",
             modifier = Modifier.padding(it)
           ) {
-            composable("prefs") {
-              val preferencesViewModel: PreferencesViewModel = hiltViewModel()
-
-              val defaultCity by preferencesViewModel.defaultCityPreference
-                .collectAsStateWithLifecycle(
-                  initialValue = "Minsk"
-                )
-
-              val updateInterval by preferencesViewModel.updateIntervalPreference
-                .collectAsStateWithLifecycle(
-                  initialValue = MIN_UPDATE_INTERVAL_VALUE
-                )
-
-              PreferenceScreen(
-                defaultCity,
-                updateInterval,
-                preferencesViewModel::updateDefaultCity,
-                preferencesViewModel::updateUpdateInterval,
-                {
-                  navController.navigate("licenses")
-                }
-              )
-            }
+            preferenceScreen(navController)
             composable("licenses") {
               val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()
 
@@ -104,11 +79,13 @@ class NewMainActivity : ComponentActivity() {
               })
             }
           }
-          AboutAppDialog(
-            onDismiss = {
-              isAboutDialogShown = false
-            }
-          )
+          if (isAboutDialogShown) {
+            AboutAppDialog(
+              onDismiss = {
+                isAboutDialogShown = false
+              }
+            )
+          }
         }
       }
     }
