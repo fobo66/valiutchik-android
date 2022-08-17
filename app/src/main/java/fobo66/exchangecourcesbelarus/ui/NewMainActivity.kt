@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -19,6 +21,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
+import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
@@ -61,8 +65,21 @@ class NewMainActivity : ComponentActivity() {
                 updateInterval,
                 preferencesViewModel::updateDefaultCity,
                 preferencesViewModel::updateUpdateInterval,
-                {}
+                {
+                  navController.navigate("licenses")
+                }
               )
+            }
+            composable("licenses") {
+              val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()
+
+              val licenses by openSourceLicensesViewModel.licenses.collectAsStateWithLifecycle(
+                initialValue = emptyList()
+              )
+
+              OpenSourceLicensesScreen(licenses = licenses, onItemClick = { licenseUrl ->
+                startActivity(Intent(Intent.ACTION_VIEW, licenseUrl.toUri()))
+              })
             }
           }
         }

@@ -16,6 +16,8 @@ import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.core.usecases.FindBankOnMap
 import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
+import fobo66.valiutchik.core.usecases.LoadOpenSourceLicenses
+import fobo66.valiutchik.core.usecases.LoadOpenSourceLicensesImpl
 import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import fobo66.valiutchik.core.usecases.UpdateDefaultCityPreference
@@ -65,7 +67,12 @@ abstract class CurrencyRatesModule {
   ): UpdateDefaultCityPreference
 
   @Binds
-  abstract fun provideUpdatUpdateIntervalPreference(
+  abstract fun provideUpdateUpdateIntervalPreference(
     updateUpdateIntervalPreferenceImpl: UpdateUpdateIntervalPreferenceImpl
   ): UpdateUpdateIntervalPreference
+
+  @Binds
+  abstract fun provideLoadOpenSourceLicenses(
+    loadOpenSourceLicensesImpl: LoadOpenSourceLicensesImpl
+  ): LoadOpenSourceLicenses
 }

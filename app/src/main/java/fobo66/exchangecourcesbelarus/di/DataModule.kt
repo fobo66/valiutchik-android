@@ -26,8 +26,12 @@ import fobo66.exchangecourcesbelarus.model.repository.LocationRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.MapRepositoryImpl
 import fobo66.exchangecourcesbelarus.model.repository.PreferenceRepository
 import fobo66.exchangecourcesbelarus.model.repository.PreferenceRepositoryImpl
+import fobo66.valiutchik.core.model.datasource.AssetsDataSource
+import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
+import fobo66.valiutchik.core.model.repository.LicensesRepository
+import fobo66.valiutchik.core.model.repository.LicensesRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.util.CurrencyRatesParser
@@ -105,4 +109,14 @@ abstract class DataModule {
   abstract fun providePreferenceRepository(
     preferenceRepositoryImpl: PreferenceRepositoryImpl
   ): PreferenceRepository
+
+  @Binds
+  abstract fun provideAssetsDataSource(
+    assetsDataSourceImpl: AssetsDataSourceImpl
+  ): AssetsDataSource
+
+  @Binds
+  abstract fun provideLicensesRepository(
+    licensesRepositoryImpl: LicensesRepositoryImpl
+  ): LicensesRepository
 }

@@ -44,10 +44,12 @@ fun PreferenceScreen(
       steps = UPDATE_INTERVAL_STEPS,
       onValueChange = onUpdateIntervalChange
     )
-    TextPreference(title = {
-      Text(text = stringResource(id = R.string.title_activity_oss_licenses))
-    },
-    onClick = onOpenSourceLicensesClick)
+    TextPreference(
+      title = {
+        Text(text = stringResource(id = R.string.title_activity_oss_licenses))
+      },
+      onClick = onOpenSourceLicensesClick
+    )
   }
 }
 

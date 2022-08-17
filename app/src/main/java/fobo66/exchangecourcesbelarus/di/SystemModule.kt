@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.AssetManager
 import androidx.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
@@ -21,6 +22,9 @@ object SystemModule {
   @Provides
   fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
     PreferenceManager.getDefaultSharedPreferences(context)
+
+  @Provides
+  fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
 
   @GeocoderAccessToken
   @Provides
