@@ -12,6 +12,7 @@ plugins {
 
 val composeVersion = "1.3.0"
 val composeUiVersion = "1.3.0-alpha02"
+val accompanistVersion = "0.26.1-alpha"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43.2"
 val activityVersion = "1.6.0-alpha05"
@@ -179,6 +180,9 @@ dependencies {
   implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+
+  implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
+  implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
 
   // flowbinding
 
