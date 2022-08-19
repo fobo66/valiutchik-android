@@ -15,11 +15,6 @@ open class App : MultiDexApplication() {
 
   override fun onCreate() {
     super.onCreate()
-    MapboxSearchSdk.initialize(
-      this,
-      getString(R.string.mapboxGeocoderAccessToken),
-      LocationEngineProvider.getBestLocationEngine(this)
-    )
     Timber.plant(Timber.DebugTree())
   }
 }
