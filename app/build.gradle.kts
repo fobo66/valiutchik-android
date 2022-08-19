@@ -195,7 +195,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.32")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.35")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
@@ -209,7 +209,7 @@ dependencies {
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.9"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.10"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
