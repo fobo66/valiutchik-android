@@ -1,19 +1,16 @@
 package fobo66.exchangecourcesbelarus.ui.licenses
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.core.entities.License
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
@@ -27,9 +24,7 @@ fun OpenSourceLicensesScreen(
   LazyColumn(modifier = modifier) {
     if (licenses.isEmpty()) {
       item {
-        Box(modifier = Modifier.fillMaxSize()) {
-          CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
+        EmptyListIndicator()
       }
     } else {
       items(licenses) {

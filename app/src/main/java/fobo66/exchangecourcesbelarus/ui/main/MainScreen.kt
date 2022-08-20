@@ -7,11 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -21,6 +22,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 
@@ -39,12 +41,18 @@ fun MainScreen(
     swipeRefreshState.isRefreshing = false
   }, modifier = modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-      items(bestCurrencyRates) {
-        BestCurrencyRateCard(
-          bestCurrencyRate = it,
-          onClick = onBestRateClick,
-          onLongClick = onBestRateLongClick
-        )
+      if (bestCurrencyRates.isEmpty()) {
+        item {
+          EmptyListIndicator()
+        }
+      } else {
+        items(items = bestCurrencyRates, key = { it.id }) {
+          BestCurrencyRateCard(
+            bestCurrencyRate = it,
+            onClick = onBestRateClick,
+            onLongClick = onBestRateLongClick
+          )
+        }
       }
     }
   }
@@ -58,7 +66,7 @@ fun BestCurrencyRateCard(
   onLongClick: () -> Unit,
   modifier: Modifier = Modifier
 ) {
-  Card(
+  ElevatedCard(
     modifier = modifier
       .combinedClickable(onLongClick = onLongClick, onClick = onClick)
   ) {
@@ -73,7 +81,11 @@ fun BestCurrencyRateCard(
       modifier = Modifier.padding(top = 16.dp, start = 24.dp)
     )
     Row(modifier = Modifier.padding(all = 24.dp)) {
-      Icon(painter = painterResource(id = R.drawable.ic_bank), contentDescription = "Bank name")
+      Icon(
+        painter = painterResource(id = R.drawable.ic_bank),
+        contentDescription = "Bank name",
+        modifier = Modifier.align(Alignment.CenterVertically)
+      )
       Text(
         text = bestCurrencyRate.bank,
         style = MaterialTheme.typography.bodyMedium,
