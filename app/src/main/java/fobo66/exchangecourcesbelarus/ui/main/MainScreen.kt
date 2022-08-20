@@ -33,7 +33,11 @@ fun MainScreen(
   modifier: Modifier = Modifier
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true)
-  SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
+  SwipeRefresh(state = swipeRefreshState, onRefresh = {
+    swipeRefreshState.isRefreshing = true
+    onRefresh()
+    swipeRefreshState.isRefreshing = false
+  }, modifier = modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
       items(bestCurrencyRates) {
         BestCurrencyRateCard(
