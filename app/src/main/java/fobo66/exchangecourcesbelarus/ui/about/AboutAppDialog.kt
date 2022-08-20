@@ -53,7 +53,12 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
 
       val uriHandler = LocalUriHandler.current
 
-      ClickableText(text = descriptionAnnotatedText) {
+      ClickableText(
+        text = descriptionAnnotatedText,
+        style = MaterialTheme.typography.bodyMedium.copy(
+          color = MaterialTheme.colorScheme.onSurface
+        )
+      ) {
         descriptionAnnotatedText.getUrlAnnotations(it, it)
           .firstOrNull()?.let { range ->
             uriHandler.openUri(range.item.url)
