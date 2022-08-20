@@ -29,17 +29,14 @@ import fobo66.valiutchik.core.entities.BestCurrencyRate
 @Composable
 fun MainScreen(
   bestCurrencyRates: List<BestCurrencyRate>,
+  isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onBestRateClick: () -> Unit,
   onBestRateLongClick: () -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true)
-  SwipeRefresh(state = swipeRefreshState, onRefresh = {
-    swipeRefreshState.isRefreshing = true
-    onRefresh()
-    swipeRefreshState.isRefreshing = false
-  }, modifier = modifier) {
+  val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+  SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
       if (bestCurrencyRates.isEmpty()) {
         item {
@@ -68,6 +65,7 @@ fun BestCurrencyRateCard(
 ) {
   ElevatedCard(
     modifier = modifier
+      .padding(8.dp)
       .combinedClickable(onLongClick = onLongClick, onClick = onClick)
   ) {
     Text(

@@ -94,8 +94,13 @@ class NewMainActivity : ComponentActivity() {
                 initialValue = emptyList()
               )
 
+              val isRefreshing by mainViewModel.progress.collectAsStateWithLifecycle(
+                initialValue = true
+              )
+
               MainScreen(
                 bestCurrencyRates = bestCurrencyRates,
+                isRefreshing = isRefreshing,
                 onRefresh = { /*TODO*/ },
                 onBestRateClick = { /*TODO*/ },
                 onBestRateLongClick = { /*TODO*/ }
