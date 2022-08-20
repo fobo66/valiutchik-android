@@ -11,7 +11,9 @@ import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 
+const val DESTINATION_MAIN = "main"
 const val DESTINATION_PREFERENCES = "prefs"
+const val DESTINATION_LICENSES = "licenses"
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 fun NavGraphBuilder.preferenceScreen(navController: NavController) {
@@ -34,7 +36,7 @@ fun NavGraphBuilder.preferenceScreen(navController: NavController) {
       preferencesViewModel::updateDefaultCity,
       preferencesViewModel::updateUpdateInterval,
       {
-        navController.navigate("licenses")
+        navController.navigate(DESTINATION_LICENSES)
       }
     )
   }
