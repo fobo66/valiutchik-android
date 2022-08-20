@@ -1,5 +1,7 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,20 +25,39 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 @Composable
-fun MainScreen(bestCurrencyRates: List<BestCurrencyRate>) {
+fun MainScreen(
+  bestCurrencyRates: List<BestCurrencyRate>,
+  onRefresh: () -> Unit,
+  onBestRateClick: () -> Unit,
+  onBestRateLongClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true)
-  SwipeRefresh(state = swipeRefreshState, onRefresh = { /*TODO*/ }) {
+  SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
       items(bestCurrencyRates) {
-        BestCurrencyRateCard(bestCurrencyRate = it)
+        BestCurrencyRateCard(
+          bestCurrencyRate = it,
+          onClick = onBestRateClick,
+          onLongClick = onBestRateLongClick
+        )
       }
     }
   }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BestCurrencyRateCard(bestCurrencyRate: BestCurrencyRate, modifier: Modifier = Modifier) {
-  Card(modifier = modifier) {
+fun BestCurrencyRateCard(
+  bestCurrencyRate: BestCurrencyRate,
+  onClick: () -> Unit,
+  onLongClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .combinedClickable(onLongClick = onLongClick, onClick = onClick)
+  ) {
     Text(
       text = stringResource(id = bestCurrencyRate.currencyNameRes),
       style = MaterialTheme.typography.headlineSmall,
@@ -68,7 +89,9 @@ fun BestCurrencyRatePreview() {
         "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
         string.currency_name_usd_buy,
         "2.56"
-      )
+      ),
+      onClick = {},
+      onLongClick = {}
     )
   }
 }
