@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,17 +28,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.MainScreen
+import fobo66.exchangecourcesbelarus.ui.main.MainScreenNoPermission
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @AndroidEntryPoint
 class NewMainActivity : ComponentActivity() {
-  @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
+  @OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalLifecycleComposeApi::class,
+    ExperimentalPermissionsApi::class
+  )
   override fun onCreate(savedInstanceState: Bundle?) {
     setTheme(R.style.ExchangeCoursesTheme)
     super.onCreate(savedInstanceState)
@@ -98,16 +108,38 @@ class NewMainActivity : ComponentActivity() {
                 initialValue = true
               )
 
-              MainScreen(
-                bestCurrencyRates = bestCurrencyRates,
-                isRefreshing = isRefreshing,
-                onRefresh = { /*TODO*/ },
-                onBestRateClick = { /*TODO*/ },
-                onBestRateLongClick = { /*TODO*/ }
+              val locationPermissionState = rememberPermissionState(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
               )
+
+              when (locationPermissionState.status) {
+                is PermissionStatus.Granted -> {
+                  MainScreen(
+                    bestCurrencyRates = bestCurrencyRates,
+                    isRefreshing = isRefreshing,
+                    onRefresh = { mainViewModel.refreshExchangeRates() },
+                    onBestRateClick = { /*TODO*/ },
+                    onBestRateLongClick = { /*TODO*/ }
+                  )
+                }
+                is PermissionStatus.Denied -> {
+                  val textToShow = stringResource(
+                    id = if (locationPermissionState.status.shouldShowRationale) {
+                      R.string.permission_description_rationale
+                    } else {
+                      R.string.permission_description
+                    }
+                  )
+                  MainScreenNoPermission(
+                    textToShow = textToShow,
+                    onRequestPermission = { locationPermissionState.launchPermissionRequest() },
+                    modifier = Modifier.fillMaxSize()
+                  )
+                }
+              }
             }
             preferenceScreen(navController)
-            composable("licenses") {
+            composable(DESTINATION_LICENSES) {
               val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()
 
               val licenses by openSourceLicensesViewModel.licenses.collectAsStateWithLifecycle(

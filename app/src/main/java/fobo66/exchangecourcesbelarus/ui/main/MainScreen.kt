@@ -2,11 +2,14 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -89,6 +92,28 @@ fun BestCurrencyRateCard(
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.padding(start = 8.dp)
       )
+    }
+  }
+}
+
+@Composable
+fun MainScreenNoPermission(
+  textToShow: String,
+  onRequestPermission: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Box(modifier = modifier) {
+    Column(modifier = Modifier.align(Alignment.Center)) {
+      Text(
+        text = textToShow,
+        modifier = Modifier.padding(16.dp)
+      )
+      Button(
+        onClick = onRequestPermission,
+        modifier = Modifier.align(Alignment.CenterHorizontally)
+      ) {
+        Text(stringResource(id = string.request_permission))
+      }
     }
   }
 }
