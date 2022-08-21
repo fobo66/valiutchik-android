@@ -74,11 +74,11 @@ fun BestCurrencyRateCard(
     Text(
       text = stringResource(id = bestCurrencyRate.currencyNameRes),
       style = MaterialTheme.typography.headlineSmall,
-      modifier = Modifier.padding(top = 24.dp, start = 24.dp)
+      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
     )
     Text(
       text = bestCurrencyRate.currencyValue,
-      style = MaterialTheme.typography.displayLarge,
+      style = MaterialTheme.typography.displayMedium,
       modifier = Modifier.padding(top = 16.dp, start = 24.dp)
     )
     Row(modifier = Modifier.padding(all = 24.dp)) {
