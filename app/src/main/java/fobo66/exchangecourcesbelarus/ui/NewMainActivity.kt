@@ -13,6 +13,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -114,6 +115,9 @@ class NewMainActivity : ComponentActivity() {
 
               when (locationPermissionState.status) {
                 is PermissionStatus.Granted -> {
+                  LaunchedEffect(locationPermissionState) {
+                    mainViewModel.refreshExchangeRates()
+                  }
                   MainScreen(
                     bestCurrencyRates = bestCurrencyRates,
                     isRefreshing = isRefreshing,
