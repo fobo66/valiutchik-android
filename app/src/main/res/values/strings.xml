@@ -23,6 +23,7 @@
   <string name="permission_description">We need location permission to determine your location, so we can determine your location and show you the closest available currency rates. Please give it to us.</string>
   <string name="permission_description_rationale">We need location permission to determine your location, so we can determine your location and show you the closest available currency rates.</string>
   <string name="request_permission">Request permission</string>
+  <string name="no_rates_indicator">No rates available yet</string>
   <string-array name="pref_cities_list">
     <item>Minsk</item>
     <item>Brest</item>

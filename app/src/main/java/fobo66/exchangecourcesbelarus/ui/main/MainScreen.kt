@@ -25,7 +25,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
+import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 
@@ -43,7 +43,7 @@ fun MainScreen(
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
       if (bestCurrencyRates.isEmpty()) {
         item {
-          EmptyListIndicator()
+          NoRatesIndicator()
         }
       } else {
         items(items = bestCurrencyRates, key = { it.id }) {
