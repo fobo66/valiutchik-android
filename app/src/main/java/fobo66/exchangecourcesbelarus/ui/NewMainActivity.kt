@@ -106,7 +106,7 @@ class NewMainActivity : ComponentActivity() {
               )
 
               val isRefreshing by mainViewModel.progress.collectAsStateWithLifecycle(
-                initialValue = true
+                initialValue = false
               )
 
               val locationPermissionState = rememberPermissionState(
