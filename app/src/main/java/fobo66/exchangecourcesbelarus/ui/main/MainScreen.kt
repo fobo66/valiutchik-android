@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
@@ -34,15 +35,15 @@ fun MainScreen(
   bestCurrencyRates: List<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
-  onBestRateClick: () -> Unit,
-  onBestRateLongClick: () -> Unit,
+  onBestRateClick: (String) -> Unit,
+  onBestRateLongClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
       if (bestCurrencyRates.isEmpty()) {
-        item {
+        item(span = { GridItemSpan(2) }) {
           NoRatesIndicator()
         }
       } else {
@@ -62,14 +63,17 @@ fun MainScreen(
 @Composable
 fun BestCurrencyRateCard(
   bestCurrencyRate: BestCurrencyRate,
-  onClick: () -> Unit,
-  onLongClick: () -> Unit,
+  onClick: (String) -> Unit,
+  onLongClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
   ElevatedCard(
     modifier = modifier
       .padding(8.dp)
-      .combinedClickable(onLongClick = onLongClick, onClick = onClick)
+      .combinedClickable(
+        onLongClick = { onLongClick(bestCurrencyRate.currencyValue) },
+        onClick = { onClick(bestCurrencyRate.bank) }
+      )
   ) {
     Text(
       text = stringResource(id = bestCurrencyRate.currencyNameRes),

@@ -3,11 +3,24 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,6 +33,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import fobo66.exchangecourcesbelarus.R.drawable
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
@@ -28,15 +42,46 @@ import fobo66.exchangecourcesbelarus.ui.main.MainScreenNoPermission
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
+import kotlinx.coroutines.launch
 
 const val DESTINATION_MAIN = "main"
 const val DESTINATION_PREFERENCES = "prefs"
 const val DESTINATION_LICENSES = "licenses"
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
+  SmallTopAppBar(
+    title = {
+      Text(text = stringResource(id = string.app_name))
+    },
+    actions = {
+      IconButton(onClick = onAboutClick) {
+        Icon(
+          painterResource(id = drawable.ic_about),
+          contentDescription = stringResource(
+            id = string.action_about
+          )
+        )
+      }
+      IconButton(onClick = onSettingsClicked) {
+        Icon(
+          painterResource(id = drawable.ic_settings),
+          contentDescription = stringResource(
+            id = string.action_settings
+          )
+        )
+      }
+    },
+    modifier = Modifier.statusBarsPadding()
+  )
+}
+
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalPermissionsApi::class)
-fun NavGraphBuilder.mainScreen() {
+fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
   composable(DESTINATION_MAIN) {
     val mainViewModel: MainViewModel = hiltViewModel()
+    val context = LocalContext.current
 
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle(
       initialValue = emptyList()
@@ -50,6 +95,8 @@ fun NavGraphBuilder.mainScreen() {
       permission.ACCESS_COARSE_LOCATION
     )
 
+    val scope = rememberCoroutineScope()
+
     when (locationPermissionState.status) {
       is PermissionStatus.Granted -> {
         LaunchedEffect(locationPermissionState) {
@@ -59,8 +106,25 @@ fun NavGraphBuilder.mainScreen() {
           bestCurrencyRates = bestCurrencyRates,
           isRefreshing = isRefreshing,
           onRefresh = { mainViewModel.refreshExchangeRates() },
-          onBestRateClick = { /*TODO*/ },
-          onBestRateLongClick = { /*TODO*/ }
+          onBestRateClick = { bankName ->
+            val mapIntent = mainViewModel.findBankOnMap(bankName)
+
+            if (mapIntent != null) {
+              ActivityCompat.startActivity(
+                context,
+                Intent.createChooser(mapIntent, context.getString(string.open_map)),
+                ActivityOptionsCompat.makeBasic().toBundle()
+              )
+            } else {
+              scope.launch {
+                snackbarHostState.showSnackbar(
+                  message = context.getString(string.maps_app_required),
+                  duration = SnackbarDuration.Short
+                )
+              }
+            }
+          },
+          onBestRateLongClick = {}
         )
       }
       is PermissionStatus.Denied -> {
