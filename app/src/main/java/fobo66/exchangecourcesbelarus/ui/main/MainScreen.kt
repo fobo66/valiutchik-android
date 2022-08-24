@@ -37,7 +37,7 @@ fun MainScreen(
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onBestRateClick: (String) -> Unit,
-  onBestRateLongClick: (String) -> Unit,
+  onBestRateLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
@@ -67,19 +67,21 @@ fun MainScreen(
 fun BestCurrencyRateCard(
   bestCurrencyRate: BestCurrencyRate,
   onClick: (String) -> Unit,
-  onLongClick: (String) -> Unit,
+  onLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier
 ) {
+  val currencyName = stringResource(id = bestCurrencyRate.currencyNameRes)
+
   ElevatedCard(
     modifier = modifier
       .padding(8.dp)
       .combinedClickable(
-        onLongClick = { onLongClick(bestCurrencyRate.currencyValue) },
+        onLongClick = { onLongClick(currencyName, bestCurrencyRate.currencyValue) },
         onClick = { onClick(bestCurrencyRate.bank) }
       )
   ) {
     Text(
-      text = stringResource(id = bestCurrencyRate.currencyNameRes),
+      text = currencyName,
       style = MaterialTheme.typography.headlineSmall,
       modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
     )
@@ -137,7 +139,7 @@ fun BestCurrencyRatePreview() {
         "2.56"
       ),
       onClick = {},
-      onLongClick = {}
+      onLongClick = { _, _ -> }
     )
   }
 }

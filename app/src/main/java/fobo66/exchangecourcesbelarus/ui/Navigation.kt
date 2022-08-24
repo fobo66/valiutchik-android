@@ -124,7 +124,15 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
               }
             }
           },
-          onBestRateLongClick = {}
+          onBestRateLongClick = { currencyName, currencyValue ->
+            mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+            scope.launch {
+              snackbarHostState.showSnackbar(
+                message = context.getString(string.currency_value_copied),
+                duration = SnackbarDuration.Short
+              )
+            }
+          }
         )
       }
       is PermissionStatus.Denied -> {
