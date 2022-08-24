@@ -91,7 +91,7 @@ fun BestCurrencyRateCard(
     Row(modifier = Modifier.padding(all = 24.dp)) {
       Icon(
         painter = painterResource(id = R.drawable.ic_bank),
-        contentDescription = "Bank name",
+        contentDescription = stringResource(id = string.bank_name_indicator),
         modifier = Modifier.align(Alignment.CenterVertically)
       )
       Text(
