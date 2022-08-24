@@ -30,6 +30,7 @@ import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(
   bestCurrencyRates: List<BestCurrencyRate>,
@@ -51,7 +52,9 @@ fun MainScreen(
           BestCurrencyRateCard(
             bestCurrencyRate = it,
             onClick = onBestRateClick,
-            onLongClick = onBestRateLongClick
+            onLongClick = onBestRateLongClick,
+            modifier = Modifier
+              .animateItemPlacement()
           )
         }
       }
