@@ -11,7 +11,7 @@ val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.0"
 
 android {
-  compileSdk = AndroidVersion.VersionCodes.S
+  compileSdk = 33
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
