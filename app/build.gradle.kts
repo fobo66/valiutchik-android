@@ -21,7 +21,7 @@ val navVersion = "2.5.1"
 val lifecycleVersion = "2.6.0-alpha01"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.5"
+val mockkVersion = "1.12.7"
 val junitVersion = "5.9.0"
 val turbineVersion = "0.9.0"
 
@@ -227,13 +227,13 @@ dependencies {
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.5.0-alpha01")
+  testImplementation("androidx.test:core:1.5.0-alpha02")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
