@@ -11,11 +11,11 @@ plugins {
 }
 
 val composeVersion = "1.3.0"
-val composeUiVersion = "1.3.0-alpha02"
+val composeUiVersion = "1.3.0-beta01"
 val accompanistVersion = "0.26.1-alpha"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43.2"
-val activityVersion = "1.6.0-alpha05"
+val activityVersion = "1.6.0-beta01"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.1"
 val lifecycleVersion = "2.6.0-alpha01"
@@ -174,7 +174,7 @@ dependencies {
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-alpha16")
+  implementation("androidx.compose.material3:material3:1.0.0-beta01")
   implementation("androidx.compose.material:material:$composeUiVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
