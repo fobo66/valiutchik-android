@@ -72,8 +72,7 @@ fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
           )
         )
       }
-    },
-    modifier = Modifier.statusBarsPadding()
+    }
   )
 }
 
