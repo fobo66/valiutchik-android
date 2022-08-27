@@ -23,11 +23,11 @@
         android:name=".ui.NewMainActivity"
         android:exported="true"
         android:label="string/app_name"
-        android:theme="@style/ExchangeCoursesTheme" />
+        android:theme="@style/Splash" />
     <activity
         android:name=".ui.MainActivity"
         android:exported="true"
-        android:theme="@style/ExchangeCoursesTheme.Splash">
+        android:theme="@style/Splash">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

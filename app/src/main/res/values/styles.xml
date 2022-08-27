@@ -17,7 +17,9 @@
     <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
-  <style name="ExchangeCoursesTheme.Splash">
-    <item name="android:windowBackground">@drawable/splash</item>
+  <style name="Splash" parent="Theme.SplashScreen">
+    <item name="windowSplashScreenBackground">@color/primary_color</item>
+    <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+    <item name="postSplashScreenTheme">@style/ExchangeCoursesTheme</item>
   </style>
 </resources>
