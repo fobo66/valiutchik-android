@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -33,8 +32,9 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import fobo66.exchangecourcesbelarus.R.drawable
 import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.ui.icons.Info
+import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.MainScreen
@@ -58,7 +58,7 @@ fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
     actions = {
       IconButton(onClick = onAboutClick) {
         Icon(
-          painterResource(id = drawable.ic_about),
+          Info,
           contentDescription = stringResource(
             id = string.action_about
           )
@@ -66,7 +66,7 @@ fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
       }
       IconButton(onClick = onSettingsClicked) {
         Icon(
-          painterResource(id = drawable.ic_settings),
+          Settings,
           contentDescription = stringResource(
             id = string.action_settings
           )
