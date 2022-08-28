@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.filled.Settings
@@ -9,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +44,7 @@ import fobo66.exchangecourcesbelarus.ui.main.MainScreenNoPermission
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 const val DESTINATION_MAIN = "main"
@@ -106,29 +109,14 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
           isRefreshing = isRefreshing,
           onRefresh = { mainViewModel.refreshExchangeRates() },
           onBestRateClick = { bankName ->
-            val mapIntent = mainViewModel.findBankOnMap(bankName)
-
-            if (mapIntent != null) {
-              ActivityCompat.startActivity(
-                context,
-                Intent.createChooser(mapIntent, context.getString(string.open_map)),
-                ActivityOptionsCompat.makeBasic().toBundle()
-              )
-            } else {
-              scope.launch {
-                snackbarHostState.showSnackbar(
-                  message = context.getString(string.maps_app_required),
-                  duration = SnackbarDuration.Short
-                )
-              }
-            }
+            findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
           },
           onBestRateLongClick = { currencyName, currencyValue ->
             mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
             scope.launch {
               snackbarHostState.showSnackbar(
                 message = context.getString(string.currency_value_copied),
-                duration = SnackbarDuration.Short
+                duration = Short
               )
             }
           }
@@ -148,6 +136,31 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
           modifier = Modifier.fillMaxSize()
         )
       }
+    }
+  }
+}
+
+private fun findBankOnMap(
+  mainViewModel: MainViewModel,
+  bankName: String,
+  context: Context,
+  scope: CoroutineScope,
+  snackbarHostState: SnackbarHostState
+) {
+  val mapIntent = mainViewModel.findBankOnMap(bankName)
+
+  if (mapIntent != null) {
+    startActivity(
+      context,
+      Intent.createChooser(mapIntent, context.getString(string.open_map)),
+      ActivityOptionsCompat.makeBasic().toBundle()
+    )
+  } else {
+    scope.launch {
+      snackbarHostState.showSnackbar(
+        message = context.getString(string.maps_app_required),
+        duration = Short
+      )
     }
   }
 }
