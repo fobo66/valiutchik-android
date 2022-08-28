@@ -47,7 +47,6 @@ class MainViewModel @Inject constructor(
       try {
         showProgress()
         refreshExchangeRates.execute(LocalDateTime.now())
-        hideProgress()
       } catch (e: CurrencyRatesLoadFailedException) {
         Timber.e(e, "Error happened when refreshing currency rates")
         _errors.emit(Unit)
@@ -64,9 +63,7 @@ class MainViewModel @Inject constructor(
     _progress.emit(true)
   }
 
-  fun hideProgress() {
-    viewModelScope.launch {
-      _progress.emit(false)
-    }
+  suspend fun hideProgress() {
+    _progress.emit(false)
   }
 }
