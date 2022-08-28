@@ -34,16 +34,23 @@ fun TextPreference(
   modifier: Modifier = Modifier,
   enabled: Boolean = true,
   onClick: (() -> Unit)? = null,
-  summary: @Composable() (() -> Unit)? = null,
+  summary: @Composable (() -> Unit)? = null,
   summaryProvider: () -> String = { "" },
-  trailing: @Composable() (() -> Unit)? = null
+  trailing: @Composable (() -> Unit)? = null
 ) {
   val isEnabled = LocalPreferenceEnabledStatus.current && enabled
 
   EnabledPreference(isEnabled) {
     ListItem(
       headlineText = title,
-      supportingText = summary ?: { Text(text = summaryProvider()) },
+      supportingText = summary ?: {
+        Text(
+          text = summaryProvider(),
+          style = MaterialTheme.typography.bodyMedium.copy(
+            color = MaterialTheme.colorScheme.onSurface
+          )
+        )
+      },
       modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
       trailingContent = trailing
     )
@@ -69,7 +76,12 @@ fun ListPreference(
     onClick = { showDialog(!isDialogShown) },
     summary = {
       val summaryValue = entries.entries.find { it.value == value }?.key
-      Text(text = summaryValue ?: entries.keys.first())
+      Text(
+        text = summaryValue ?: entries.keys.first(),
+        style = MaterialTheme.typography.bodyMedium.copy(
+          color = MaterialTheme.colorScheme.onSurface
+        )
+      )
     }
   )
 
@@ -83,9 +95,9 @@ fun ListPreference(
             .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
         ) {
           entries.forEach { current ->
-            val isSelected = value == current.key
+            val isSelected = value == current.value
             val onSelected = {
-              onValueChange(current.key)
+              onValueChange(current.value)
               showDialog(false)
             }
             Row(
@@ -103,9 +115,11 @@ fun ListPreference(
                 onClick = { if (!isSelected) onSelected() }
               )
               Text(
-                text = current.value,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 16.dp)
+                text = current.key,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                  color = MaterialTheme.colorScheme.onSurface
+                ),
+                modifier = Modifier.padding(start = 8.dp)
               )
             }
           }
@@ -162,7 +176,12 @@ private fun SeekbarPreferenceSummary(
 ) {
   Column(modifier = modifier) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-      Text(text = valueRepresentation(sliderValue))
+      Text(
+        text = valueRepresentation(sliderValue),
+        style = MaterialTheme.typography.bodyMedium.copy(
+          color = MaterialTheme.colorScheme.onSurface
+        )
+      )
       Spacer(modifier = Modifier.width(16.dp))
       Slider(
         value = sliderValue,
