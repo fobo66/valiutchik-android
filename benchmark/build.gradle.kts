@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-  compileSdk = com.android.sdklib.AndroidVersion.VersionCodes.S
+  compileSdk = 33
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11

@@ -10,11 +10,13 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import javax.inject.Singleton
 
@@ -37,8 +39,12 @@ object ThirdPartyModule {
 
   @Provides
   @Singleton
-  fun provideReverseGeocodingEngine(): SearchEngine =
-    MapboxSearchSdk.getSearchEngine()
+  fun provideReverseGeocodingEngine(@ApplicationContext context: Context): SearchEngine =
+    MapboxSearchSdk.createSearchEngine(
+      SearchEngineSettings(
+        accessToken = context.getString(R.string.mapboxGeocoderAccessToken)
+      )
+    )
 
   @Provides
   @Singleton

@@ -11,16 +11,17 @@ plugins {
 }
 
 val composeVersion = "1.3.0"
-val composeUiVersion = "1.3.0-alpha02"
+val composeUiVersion = "1.3.0-beta01"
+val accompanistVersion = "0.26.2-beta"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43.2"
-val activityVersion = "1.6.0-alpha05"
+val activityVersion = "1.6.0-beta01"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.1"
 val lifecycleVersion = "2.6.0-alpha01"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.5"
+val mockkVersion = "1.12.7"
 val junitVersion = "5.9.0"
 val turbineVersion = "0.9.0"
 
@@ -67,18 +68,6 @@ android {
 
     vectorDrawables {
       useSupportLibrary = true
-    }
-
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments.putAll(
-          mapOf(
-            "room.schemaLocation" to "$projectDir/schemas",
-            "room.incremental" to "true",
-            "room.expandProjection" to "true"
-          )
-        )
-      }
     }
   }
 
@@ -170,15 +159,20 @@ dependencies {
   implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
   implementation("androidx.datastore:datastore-preferences:1.0.0")
+  implementation("androidx.core:core-splashscreen:1.0.0")
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-alpha16")
+  implementation("androidx.compose.material3:material3:1.0.0-beta01")
   implementation("androidx.compose.material:material:$composeUiVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+
+  implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
+  implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
+  implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
 
   // flowbinding
 
@@ -195,7 +189,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
   // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.32")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.35")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")
@@ -209,7 +203,7 @@ dependencies {
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.9"))
+  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.10"))
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -223,13 +217,13 @@ dependencies {
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.0")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.5.0-alpha01")
+  testImplementation("androidx.test:core:1.5.0-alpha02")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
