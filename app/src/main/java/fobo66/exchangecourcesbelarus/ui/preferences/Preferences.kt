@@ -26,6 +26,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,7 +154,7 @@ internal fun SeekBarPreference(
       SeekbarPreferenceSummary(
         enabled = enabled,
         sliderValue = currentValue.value,
-        valueRepresentation = { it.toString() },
+        valueRepresentation = { it.roundToInt().toString() },
         onValueChange = { currentValue.value = it },
         onValueChangeEnd = { onValueChange(currentValue.value) },
         valueRange = valueRange,
