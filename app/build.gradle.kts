@@ -12,7 +12,7 @@ plugins {
 
 val composeVersion = "1.3.0"
 val composeUiVersion = "1.3.0-beta01"
-val accompanistVersion = "0.26.1-alpha"
+val accompanistVersion = "0.26.2-beta"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43.2"
 val activityVersion = "1.6.0-beta01"
