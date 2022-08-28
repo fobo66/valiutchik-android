@@ -172,6 +172,7 @@ dependencies {
 
   implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
   implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
+  implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
 
   // flowbinding
 
