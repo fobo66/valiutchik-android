@@ -10,13 +10,15 @@ import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.core.usecases.FindBankOnMap
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -32,11 +34,9 @@ class MainViewModel @Inject constructor(
   val errors: SharedFlow<Unit>
     get() = _errors
 
-  val progress: SharedFlow<Boolean>
-    get() = _progress
-
   private val _errors = MutableSharedFlow<Unit>()
-  private val _progress = MutableSharedFlow<Boolean>()
+  private val _progress = MutableStateFlow(false)
+  val progress = _progress.asStateFlow()
 
   fun findBankOnMap(bankName: CharSequence): Intent? {
     return findBankOnMap.execute(bankName)
