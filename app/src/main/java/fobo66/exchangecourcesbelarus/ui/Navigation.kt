@@ -4,12 +4,10 @@ import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -20,7 +18,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
@@ -203,7 +200,11 @@ fun NavGraphBuilder.licensesScreen() {
     )
 
     OpenSourceLicensesScreen(licenses = licenses, onItemClick = { licenseUrl ->
-      startActivity(context, Intent(Intent.ACTION_VIEW, licenseUrl.toUri()), null)
+      startActivity(
+        context,
+        Intent(Intent.ACTION_VIEW, licenseUrl.toUri()),
+        ActivityOptionsCompat.makeBasic().toBundle()
+      )
     })
   }
 }
