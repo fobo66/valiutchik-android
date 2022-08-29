@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
   repositories {
@@ -29,6 +30,25 @@ allprojects {
       credentials {
         username = "mapbox"
         password = loadSecret(rootProject, MAPBOX_REPO_TOKEN)
+      }
+    }
+  }
+}
+
+subprojects {
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+      if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
+        freeCompilerArgs = freeCompilerArgs + listOf(
+          "-P",
+          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+            project.buildDir.absolutePath + "/compose_metrics"
+        )
+        freeCompilerArgs = freeCompilerArgs + listOf(
+          "-P",
+          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+            project.buildDir.absolutePath + "/compose_metrics"
+        )
       }
     }
   }
