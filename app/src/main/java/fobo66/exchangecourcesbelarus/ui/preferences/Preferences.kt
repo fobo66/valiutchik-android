@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import kotlin.math.roundToInt
+import okhttp3.internal.format
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -181,7 +182,8 @@ private fun SeekbarPreferenceSummary(
         text = valueRepresentation(sliderValue),
         style = MaterialTheme.typography.bodyMedium.copy(
           color = MaterialTheme.colorScheme.onSurface
-        )
+        ),
+        modifier = Modifier.width(24.dp)
       )
       Spacer(modifier = Modifier.width(16.dp))
       Slider(
