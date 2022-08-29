@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import kotlin.math.roundToInt
-import okhttp3.internal.format
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +58,6 @@ fun TextPreference(
   }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ListPreference(
   title: @Composable () -> Unit,
@@ -88,51 +86,69 @@ fun ListPreference(
   )
 
   if (isDialogShown) {
-    AlertDialog(
-      onDismissRequest = { showDialog(false) },
+    ListPreferenceDialog(
+      onDismiss = { showDialog(false) },
       title = title,
-      text = {
-        Column(
-          modifier = Modifier
-            .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
-        ) {
-          entries.forEach { current ->
-            val isSelected = value == current.value
-            val onSelected = {
-              onValueChange(current.value)
-              showDialog(false)
-            }
-            Row(
-              verticalAlignment = Alignment.CenterVertically,
-              modifier = Modifier
-                .fillMaxWidth()
-                .selectable(
-                  selected = isSelected,
-                  onClick = { if (!isSelected) onSelected() }
-                )
-                .padding(4.dp)
-            ) {
-              RadioButton(
+      entries = entries,
+      value = value,
+      onValueChange = onValueChange
+    )
+  }
+}
+
+@Composable
+@OptIn(ExperimentalComposeUiApi::class)
+private fun ListPreferenceDialog(
+  onDismiss: () -> Unit,
+  title: @Composable () -> Unit,
+  entries: Map<String, String>,
+  value: String,
+  onValueChange: (String) -> Unit
+) {
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    title = title,
+    text = {
+      Column(
+        modifier = Modifier
+          .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
+      ) {
+        entries.forEach { current ->
+          val isSelected = value == current.value
+          val onSelected = {
+            onValueChange(current.value)
+            onDismiss()
+          }
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+              .fillMaxWidth()
+              .selectable(
                 selected = isSelected,
                 onClick = { if (!isSelected) onSelected() }
               )
-              Text(
-                text = current.key,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                  color = MaterialTheme.colorScheme.onSurface
-                ),
-                modifier = Modifier.padding(start = 8.dp)
-              )
-            }
+              .padding(4.dp)
+          ) {
+            RadioButton(
+              selected = isSelected,
+              onClick = { if (!isSelected) onSelected() }
+            )
+            Text(
+              text = current.key,
+              style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSurface
+              ),
+              modifier = Modifier.padding(start = 8.dp)
+            )
           }
         }
-      },
-      properties = DialogProperties(
-        usePlatformDefaultWidth = true
-      ),
-      confirmButton = { }
-    )
-  }
+      }
+    },
+    properties = DialogProperties(
+      usePlatformDefaultWidth = true
+    ),
+    confirmButton = { }
+  )
 }
 
 @Composable
