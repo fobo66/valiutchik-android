@@ -139,7 +139,7 @@ dependencies {
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.9.0-rc01")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-  implementation("com.google.android.material:material:1.7.0-beta01")
+  implementation("com.google.android.material:material:1.7.0-rc01")
   implementation("androidx.preference:preference-ktx:1.2.0")
   implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
