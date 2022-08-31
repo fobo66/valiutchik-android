@@ -43,7 +43,10 @@ fun MainScreen(
     LazyColumn {
       if (bestCurrencyRates.isEmpty()) {
         item {
-          NoRatesIndicator()
+          NoRatesIndicator(
+            modifier = Modifier
+              .animateItemPlacement()
+          )
         }
       } else {
         items(items = bestCurrencyRates, key = { it.id }) {
