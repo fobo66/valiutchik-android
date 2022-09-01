@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
+import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
@@ -28,7 +29,9 @@ fun PreferenceScreen(
   val citiesKeys = stringArrayResource(id = array.pref_cities_list)
   val citiesValues = stringArrayResource(id = array.pref_cities_values)
   val entries = remember {
-    citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap()
+    ListPreferenceEntries(
+      citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap()
+    )
   }
 
   Column(modifier = modifier) {

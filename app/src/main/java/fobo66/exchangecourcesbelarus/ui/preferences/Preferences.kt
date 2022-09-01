@@ -26,6 +26,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +63,7 @@ fun TextPreference(
 fun ListPreference(
   title: @Composable () -> Unit,
   value: String,
-  entries: Map<String, String>,
+  entries: ListPreferenceEntries,
   modifier: Modifier = Modifier,
   enabled: Boolean = true,
   onValueChange: (String) -> Unit
@@ -75,9 +76,9 @@ fun ListPreference(
     enabled = enabled,
     onClick = { showDialog(!isDialogShown) },
     summary = {
-      val summaryValue = entries.entries.find { it.value == value }?.key
+      val summaryValue = entries.entries.entries.find { it.value == value }?.key
       Text(
-        text = summaryValue ?: entries.keys.first(),
+        text = summaryValue ?: entries.entries.keys.first(),
         style = MaterialTheme.typography.bodyMedium.copy(
           color = MaterialTheme.colorScheme.onSurface
         )
@@ -101,7 +102,7 @@ fun ListPreference(
 private fun ListPreferenceDialog(
   onDismiss: () -> Unit,
   title: @Composable () -> Unit,
-  entries: Map<String, String>,
+  entries: ListPreferenceEntries,
   value: String,
   onValueChange: (String) -> Unit
 ) {
@@ -113,7 +114,7 @@ private fun ListPreferenceDialog(
         modifier = Modifier
           .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
       ) {
-        entries.forEach { current ->
+        entries.entries.forEach { current ->
           val isSelected = value == current.value
           val onSelected = {
             onValueChange(current.value)
