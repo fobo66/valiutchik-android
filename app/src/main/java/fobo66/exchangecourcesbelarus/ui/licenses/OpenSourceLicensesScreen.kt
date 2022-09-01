@@ -10,24 +10,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import fobo66.exchangecourcesbelarus.entities.LicenseItem
+import fobo66.exchangecourcesbelarus.entities.Licenses
 import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
-import fobo66.valiutchik.core.entities.License
-import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 
 @Composable
 fun OpenSourceLicensesScreen(
-  licenses: List<OpenSourceLicensesItem>,
+  licenses: Licenses,
   onItemClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
   LazyColumn(modifier = modifier) {
-    if (licenses.isEmpty()) {
+    if (licenses.licenses.isEmpty()) {
       item {
         EmptyListIndicator()
       }
     } else {
-      items(licenses) {
+      items(licenses.licenses) {
         OpenSourceLicense(item = it, onItemClick = onItemClick)
       }
     }
@@ -37,7 +37,7 @@ fun OpenSourceLicensesScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OpenSourceLicense(
-  item: OpenSourceLicensesItem,
+  item: LicenseItem,
   onItemClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
@@ -47,8 +47,8 @@ fun OpenSourceLicense(
     },
     supportingText = {
       Column {
-        Text(text = item.licenses.firstOrNull()?.license ?: "")
-        Text(text = "Copyright © ${item.year.orEmpty()} ${item.developers.joinToString()}")
+        Text(text = item.licenses)
+        Text(text = "Copyright © ${item.year} ${item.authors}")
       }
     },
     modifier = modifier
@@ -65,20 +65,12 @@ fun OpenSourceLicense(
 fun OpenSourceLicensePreview() {
   ValiutchikTheme {
     OpenSourceLicense(
-      item = OpenSourceLicensesItem(
-        dependency = "androidx.activity:activity-compose:1.6.0-alpha05",
-        description = "Compose integration with Activity",
-        developers = listOf("The Android Open Source Project"),
-        licenses = listOf(
-          License(
-            "The Apache Software License, Version 2.0",
-            "http://www.apache.org/licenses/LICENSE-2.0.txt"
-          )
-        ),
+      item = LicenseItem(
+        authors = "The Android Open Source Project",
+        licenses = "The Apache Software License, Version 2.0",
         project = "Activity Compose",
-        version = "1.6.0-alpha05",
         url = null,
-        year = null
+        year = "2019"
       ),
       onItemClick = {}
     )
@@ -89,6 +81,6 @@ fun OpenSourceLicensePreview() {
 @Composable
 fun OpenSourceLicensesPreview() {
   ValiutchikTheme {
-    OpenSourceLicensesScreen(licenses = emptyList(), onItemClick = {})
+    OpenSourceLicensesScreen(licenses = Licenses(emptyList()), onItemClick = {})
   }
 }
