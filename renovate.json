@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "hostRules": [
+    {
+      "matchHost": "https://api.mapbox.com/downloads/v2/releases/maven",
+      "encrypted": {
+        "token": "wcFMA/xDdHCJBTolAQ/8DnOmbeRG4bY0o2NmTahaCfrXguZ+8SfhAIt6J3KQ8LXL5Kge35MrK3LjwmtOxTBqlrd24dqkSQ5CbpS1meQA+4Pburo082oAj7m8YQfSTC9OJbB9wvNeFrA6tEfcXSXT6EPR02nfcFTXpHcxJFwjbPqvFsLyQ+tucfTRPuJ94M5E6Cxa/iJSd14hLyLaO+IJAiZs/qfd6b4Klsar6MJgZJoyN7Qha+AwebrfMJSCeW/MQMLvpjHBZo8m3+304k7beDJJDapNA7m3g1QiFYHU4+sEV1tz1hrpAf2zlk8fvWT6Jz0k5tDXZeqkaT/uZCremTW9gHli/Hnw0jvhwGSFF44c508UDPelRxhiR0gE3QfJi3M5G0FsHkmeafaRaytH9r+OjTyQx6E0lMJ2d/Pflhdb3+1U0ZYbQM6DUh6T8wuRVJuxI+qR+BswZhuXofNmlV8ViwHeV/swhEhSywU56H6jhUZUU0TjpB6RhGGFFIUOHux7RrjX49mUM+keVsB3mN3smiWhyHdla/DVBWCDE6PT50IkA3+/4Mj6LKO3z5/YymucnU+Yu0NAMAMSuT77d4BakKw5J6zel0HMbJi79CMQDT0fs+Hevja3OBizb+JHD754hqcIbx7QXBPoH3eijfjJIsv+RxGHBB9bHOlegqFbC7gStcGyoY1Ocw9MdKPStwG+CaGI8gc/BdcrtWsFDz36x0Ce7gDkS8OSWIODJtIgB64qgOHIDm2AYViexh1tErUmckEm8c9ToL/xKkfc054WgObjYemmjfgew044YCFgj3a0QxCM5c0n6ikvAc8fr2k+B5vvZglJPbwEeY4/4r1QJ1//8XTUWuncdA/0MbC3ZUkuhxFxwL5dNCxQmcJMDlJt9DR9Dq1EyB48SEzVocXrs/pEHANAJRRmYjtL7DaZ8xTwqL4Scg"
+      }
+    }
+  ]
+}
