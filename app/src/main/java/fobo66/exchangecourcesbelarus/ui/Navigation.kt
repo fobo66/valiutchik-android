@@ -32,7 +32,7 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.entities.Licenses
+import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.icons.Info
 import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
@@ -196,11 +196,11 @@ fun NavGraphBuilder.licensesScreen() {
     val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()
     val context = LocalContext.current
 
-    val licenses by openSourceLicensesViewModel.licenses.collectAsStateWithLifecycle(
-      initialValue = Licenses(emptyList())
+    val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle(
+      initialValue = LicensesState(emptyList())
     )
 
-    OpenSourceLicensesScreen(licenses = licenses, onItemClick = { licenseUrl ->
+    OpenSourceLicensesScreen(licensesState = licensesState, onItemClick = { licenseUrl ->
       startActivity(
         context,
         Intent(Intent.ACTION_VIEW, licenseUrl.toUri()),

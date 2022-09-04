@@ -3,7 +3,7 @@ package fobo66.exchangecourcesbelarus.ui.licenses
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
-import fobo66.exchangecourcesbelarus.entities.Licenses
+import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.valiutchik.core.usecases.LoadOpenSourceLicenses
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 class OpenSourceLicensesViewModel @Inject constructor(
   loadOpenSourceLicenses: LoadOpenSourceLicenses
 ) : ViewModel() {
-  val licenses = loadOpenSourceLicenses.execute()
+  val licensesState = loadOpenSourceLicenses.execute()
     .map {
       it.map { item ->
         LicenseItem(
@@ -24,5 +24,5 @@ class OpenSourceLicensesViewModel @Inject constructor(
         )
       }
     }
-    .map { Licenses(it) }
+    .map { LicensesState(it) }
 }

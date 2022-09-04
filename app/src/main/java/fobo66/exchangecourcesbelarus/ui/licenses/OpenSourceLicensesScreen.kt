@@ -11,23 +11,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
-import fobo66.exchangecourcesbelarus.entities.Licenses
+import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @Composable
 fun OpenSourceLicensesScreen(
-  licenses: Licenses,
+  licensesState: LicensesState,
   onItemClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
   LazyColumn(modifier = modifier) {
-    if (licenses.licenses.isEmpty()) {
+    if (licensesState.licenses.isEmpty()) {
       item {
         EmptyListIndicator()
       }
     } else {
-      items(licenses.licenses) {
+      items(licensesState.licenses) {
         OpenSourceLicense(item = it, onItemClick = onItemClick)
       }
     }
@@ -81,6 +81,6 @@ fun OpenSourceLicensePreview() {
 @Composable
 fun OpenSourceLicensesPreview() {
   ValiutchikTheme {
-    OpenSourceLicensesScreen(licenses = Licenses(emptyList()), onItemClick = {})
+    OpenSourceLicensesScreen(licensesState = LicensesState(emptyList()), onItemClick = {})
   }
 }
