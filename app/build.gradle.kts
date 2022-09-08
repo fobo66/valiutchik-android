@@ -10,8 +10,8 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.3.0"
-val composeUiVersion = "1.3.0-beta01"
+val composeVersion = "1.3.1"
+val composeUiVersion = "1.3.0-beta02"
 val accompanistVersion = "0.26.2-beta"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43.2"
@@ -24,6 +24,7 @@ val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.7"
 val junitVersion = "5.9.0"
 val turbineVersion = "0.9.0"
+val kaspressoVersion = "1.4.1"
 
 android {
   signingConfigs {
@@ -163,7 +164,7 @@ dependencies {
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-beta01")
+  implementation("androidx.compose.material3:material3:1.0.0-beta02")
   implementation("androidx.compose.material:material:$composeUiVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
@@ -235,7 +236,11 @@ dependencies {
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
   androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:1.4.1")
+  androidTestImplementation("com.kaspersky.android-components:kaspresso:$kaspressoVersion")
+  androidTestImplementation(
+    "com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVersion"
+  )
+  androidTestImplementation("io.github.kakaocup:compose:0.1.0")
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
   androidTestImplementation("androidx.test:runner:1.5.0-alpha04")
   androidTestImplementation("androidx.test:rules:1.4.1-alpha07")
@@ -243,6 +248,8 @@ dependencies {
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha07")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
   androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-alpha07")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
+  debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
   // dagger
   implementation("com.google.dagger:hilt-android:$hiltVersion")
