@@ -33,6 +33,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.LicensesState
+import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.icons.Info
 import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
@@ -87,8 +88,8 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       initialValue = emptyList()
     )
 
-    val isRefreshing by mainViewModel.progress.collectAsStateWithLifecycle(
-      initialValue = false
+    val viewState by mainViewModel.mainScreenState.collectAsStateWithLifecycle(
+      initialValue = MainScreenState.Loading
     )
 
     val locationPermissionState = rememberPermissionState(
@@ -102,9 +103,17 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
         LaunchedEffect(locationPermissionState) {
           mainViewModel.refreshExchangeRates()
         }
+        LaunchedEffect(viewState) {
+          if (viewState is MainScreenState.Error) {
+            snackbarHostState.showSnackbar(
+              message = context.getString(string.get_data_error),
+              duration = Short
+            )
+          }
+        }
         MainScreen(
           bestCurrencyRates = bestCurrencyRates,
-          isRefreshing = isRefreshing,
+          isRefreshing = viewState.isInProgress,
           onRefresh = { mainViewModel.refreshExchangeRates() },
           onBestRateClick = { bankName ->
             findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
@@ -121,15 +130,8 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
         )
       }
       is PermissionStatus.Denied -> {
-        val textToShow = stringResource(
-          id = if (locationPermissionState.status.shouldShowRationale) {
-            string.permission_description_rationale
-          } else {
-            string.permission_description
-          }
-        )
         MainScreenNoPermission(
-          textToShow = textToShow,
+          shouldShowRationale = locationPermissionState.status.shouldShowRationale,
           onRequestPermission = { locationPermissionState.launchPermissionRequest() },
           modifier = Modifier.fillMaxSize()
         )
