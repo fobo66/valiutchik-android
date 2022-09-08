@@ -109,10 +109,17 @@ fun BestCurrencyRateCard(
 
 @Composable
 fun MainScreenNoPermission(
-  textToShow: String,
+  shouldShowRationale: Boolean,
   onRequestPermission: () -> Unit,
   modifier: Modifier = Modifier
 ) {
+  val textToShow = stringResource(
+    id = if (shouldShowRationale) {
+      string.permission_description_rationale
+    } else {
+      string.permission_description
+    }
+  )
   Box(modifier = modifier) {
     Column(modifier = Modifier.align(Alignment.Center)) {
       Text(
