@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -76,7 +77,11 @@ class MainActivity : ComponentActivity() {
             )
           },
           snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState, modifier = Modifier.navigationBarsPadding())
+            SnackbarHost(
+              hostState = snackbarHostState,
+              modifier = Modifier.navigationBarsPadding()
+                .testTag("Snackbar")
+            )
           }
         ) {
           NavHost(

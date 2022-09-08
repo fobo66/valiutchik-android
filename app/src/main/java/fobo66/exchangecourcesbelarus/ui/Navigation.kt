@@ -7,16 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -53,12 +54,12 @@ const val DESTINATION_LICENSES = "licenses"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
-  SmallTopAppBar(
+  TopAppBar(
     title = {
       Text(text = stringResource(id = string.app_name))
     },
     actions = {
-      IconButton(onClick = onAboutClick) {
+      IconButton(onClick = onAboutClick, modifier = Modifier.testTag("About")) {
         Icon(
           Info,
           contentDescription = stringResource(
@@ -66,7 +67,7 @@ fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
           )
         )
       }
-      IconButton(onClick = onSettingsClicked) {
+      IconButton(onClick = onSettingsClicked, modifier = Modifier.testTag("Settings")) {
         Icon(
           Settings,
           contentDescription = stringResource(

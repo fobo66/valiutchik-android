@@ -30,7 +30,9 @@ class MainActivityScreen(semanticsProvider: SemanticsNodeInteractionsProvider) :
 
   val coursesList = KLazyListNode(
     semanticsProvider = semanticsProvider,
-    viewBuilderAction = {},
+    viewBuilderAction = {
+      hasTestTag("Courses")
+    },
     itemTypeBuilder = {
       itemType(::CoursesListItem)
     },
