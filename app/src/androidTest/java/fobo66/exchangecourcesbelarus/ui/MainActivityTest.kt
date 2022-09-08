@@ -2,37 +2,47 @@ package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest
 import android.content.Intent
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.test.espresso.action.ViewActions.longClick
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
-import com.kaspersky.kaspresso.testcases.api.testcaserule.TestCaseRule
+import com.kaspersky.components.composesupport.config.withComposeSupport
+import com.kaspersky.kaspresso.kaspresso.Kaspresso
+import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
+import fobo66.exchangecourcesbelarus.ui.MainActivityScreen.CoursesListItem
 import fobo66.valiutchik.core.UNKNOWN_COURSE
+import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
-class MainActivityTest {
+@RunWith(AndroidJUnit4::class)
+class MainActivityTest : TestCase(
+  kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
+) {
 
   @get:Rule
-  val activityScenario = ActivityScenarioRule(OldMainActivity::class.java)
+  val composeTestRule = createAndroidComposeRule<MainActivity>()
 
   @get:Rule
   val grantPermissionsRule: GrantPermissionRule =
     GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-  @get:Rule
-  val testCaseRule = TestCaseRule(javaClass.simpleName)
-
+  @OptIn(ExperimentalTestApi::class)
   @Test
-  fun noDashesInCurrenciesValues() = testCaseRule.run {
+  fun noDashesInCurrenciesValues() = run {
     step("check for no dashes in list") {
-      MainScreen.coursesList {
-        flakySafely {
-          for (position in 0 until getSize()) {
-            scrollTo(position)
-            childAt<CoursesListItem>(position) {
-              value.hasNoText(UNKNOWN_COURSE)
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        coursesList {
+          flakySafely {
+            childWith<CoursesListItem> {
+              hasAnyChild(androidx.compose.ui.test.hasText(UNKNOWN_COURSE))
+            } perform {
+              assertDoesNotExist()
             }
           }
         }
@@ -41,40 +51,45 @@ class MainActivityTest {
   }
 
   @Test
-  fun showAboutDialog() = testCaseRule.run {
+  fun showAboutDialog() = run {
     step("click on About icon") {
-      MainScreen.aboutIcon.click()
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        aboutIcon.performClick()
+      }
     }
     step("check if about info is displayed") {
-      MainScreen.aboutDialog.isDisplayed()
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        aboutDialog.assertIsDisplayed()
+      }
     }
   }
 
+  @OptIn(ExperimentalTestApi::class)
   @Test
-  fun showMaps() = testCaseRule
-    .before {
-      Intents.init()
-    }.after {
-      Intents.release()
-    }.run {
-      step("click on list item") {
-        MainScreen {
-          flakySafely {
-            coursesList.firstChild<CoursesListItem> {
-              click()
-            }
+  fun showMaps() = before {
+    Intents.init()
+  }.after {
+    Intents.release()
+  }.run {
+    step("click on list item") {
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        flakySafely {
+          coursesList.firstChild<CoursesListItem> {
+            performClick()
           }
         }
       }
-      step("check chooser is shown") {
-        intended(hasAction(Intent.ACTION_CHOOSER))
-      }
     }
+    step("check chooser is shown") {
+      intended(hasAction(Intent.ACTION_CHOOSER))
+    }
+  }
 
+  @OptIn(ExperimentalTestApi::class)
   @Test
-  fun copyToClipboard() = testCaseRule.run {
+  fun copyToClipboard() = run {
     step("long press on list item") {
-      MainScreen {
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
             longClick()
@@ -83,26 +98,24 @@ class MainActivityTest {
       }
     }
     step("check snackbar is shown") {
-      MainScreen {
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
         flakySafely {
-          snackbar.isDisplayed()
+          snackbar.assertIsDisplayed()
         }
       }
     }
   }
 
   @Test
-  fun showSettings() = testCaseRule.run {
-    step("open settings") {
-      MainScreen {
-        settingsIcon.click()
-      }
+  fun showSettings() = run {
+    onComposeScreen<MainActivityScreen>(composeTestRule) {
+      settingsIcon.performClick()
     }
 
     step("check settings screen") {
-      SettingsScreen {
+      onComposeScreen<SettingsScreen>(composeTestRule) {
         flakySafely {
-          settings.isDisplayed()
+          settings.assertIsDisplayed()
         }
       }
     }
