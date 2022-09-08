@@ -10,5 +10,5 @@ object SettingsScreen : KScreen<SettingsScreen>() {
   }
 
   override val layoutId = R.layout.activity_main
-  override val viewClass = MainActivity::class.java
+  override val viewClass = OldMainActivity::class.java
 }

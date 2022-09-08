@@ -15,7 +15,7 @@ import org.junit.Test
 class MainActivityTest {
 
   @get:Rule
-  val activityScenario = ActivityScenarioRule(MainActivity::class.java)
+  val activityScenario = ActivityScenarioRule(OldMainActivity::class.java)
 
   @get:Rule
   val grantPermissionsRule: GrantPermissionRule =

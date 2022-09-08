@@ -1,96 +1,100 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
-import android.view.MenuItem
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.insetter.applyInsetter
-import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.databinding.ActivityMainBinding
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import reactivecircus.flowbinding.appcompat.itemClicks
-import kotlin.LazyThreadSafetyMode.NONE
+import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
+import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-  private lateinit var binding: ActivityMainBinding
-
-  private var aboutDialog: AlertDialog? = null
-
-  private val navController: NavController by lazy(mode = NONE) {
-    val navHostFragment =
-      supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-    navHostFragment.navController
-  }
-
+class MainActivity : ComponentActivity() {
+  @OptIn(
+    ExperimentalMaterial3Api::class
+  )
   override fun onCreate(savedInstanceState: Bundle?) {
     installSplashScreen()
-
     super.onCreate(savedInstanceState)
-    binding = ActivityMainBinding.inflate(layoutInflater)
-    setContentView(binding.root)
 
-    setupLayout()
-  }
-
-  override fun onStop() {
-    super.onStop()
-
-    aboutDialog = null
-  }
-
-  private fun processMenuItemClick(item: MenuItem): Boolean =
-    when (item.itemId) {
-      R.id.action_settings -> {
-        navController.navigate(R.id.settingsFragment)
-        true
-      }
-      R.id.action_about -> {
-        if (aboutDialog == null) {
-          aboutDialog = AlertDialog.Builder(this)
-            .setTitle(R.string.title_about)
-            .setMessage(R.string.about_app_description)
-            .setPositiveButton(android.R.string.ok) { dialog, _ ->
-              dialog.dismiss()
-            }
-            .create()
-        }
-
-        if (aboutDialog?.isShowing == false) {
-          aboutDialog?.show()
-          aboutDialog?.findViewById<TextView>(android.R.id.message)?.movementMethod =
-            LinkMovementMethod.getInstance()
-        }
-        true
-      }
-      else -> false
-    }
-
-  private fun setupLayout() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
-    binding.toolbar.applyInsetter {
-      type(ime = true, statusBars = true, navigationBars = true) {
-        margin(left = true, right = true, top = true)
+    setContent {
+      val navController = rememberNavController()
+
+      // Remember a SystemUiController
+      val systemUiController = rememberSystemUiController()
+
+      var isAboutDialogShown by remember {
+        mutableStateOf(false)
+      }
+
+      val snackbarHostState = remember {
+        SnackbarHostState()
+      }
+
+      ValiutchikTheme {
+        val useDarkIcons = !isSystemInDarkTheme()
+
+        DisposableEffect(systemUiController, useDarkIcons) {
+          // Update all of the system bar colors to be transparent, and use
+          // dark icons if we're in light theme
+          systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = useDarkIcons
+          )
+          onDispose {}
+        }
+
+        Scaffold(
+          topBar = {
+            ValiutchikTopBar(
+              onAboutClick = {
+                isAboutDialogShown = true
+              },
+              onSettingsClicked = {
+                navController.navigate(DESTINATION_PREFERENCES)
+              }
+            )
+          },
+          snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState, modifier = Modifier.navigationBarsPadding())
+          }
+        ) {
+          NavHost(
+            navController = navController,
+            startDestination = DESTINATION_MAIN,
+            modifier = Modifier.padding(it)
+          ) {
+            mainScreen(snackbarHostState)
+            preferenceScreen(navController)
+            licensesScreen()
+          }
+          if (isAboutDialogShown) {
+            AboutAppDialog(
+              onDismiss = { isAboutDialogShown = false }
+            )
+          }
+        }
       }
     }
-
-    binding.toolbar.itemClicks()
-      .onEach { processMenuItemClick(it) }
-      .launchIn(lifecycleScope)
-
-    val appBarConfiguration = AppBarConfiguration(navController.graph)
-    binding.toolbar.setupWithNavController(navController, appBarConfiguration)
   }
 }

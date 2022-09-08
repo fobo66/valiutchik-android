@@ -30,7 +30,7 @@ object MainScreen : KScreen<MainScreen>() {
     itemTypeBuilder = { itemType(::CoursesListItem) }
   )
   override val layoutId = R.layout.activity_main
-  override val viewClass = MainActivity::class.java
+  override val viewClass = OldMainActivity::class.java
 }
 
 class CoursesListItem(parent: Matcher<View>) : KRecyclerItem<CoursesListItem>(parent) {
