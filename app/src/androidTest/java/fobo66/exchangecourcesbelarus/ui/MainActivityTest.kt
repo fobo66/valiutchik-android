@@ -62,7 +62,9 @@ class MainActivityTest : TestCase(
       }
     }
     step("check chooser is shown") {
-      intended(hasAction(Intent.ACTION_CHOOSER))
+      flakySafely {
+        intended(hasAction(Intent.ACTION_CHOOSER))
+      }
     }
   }
 
