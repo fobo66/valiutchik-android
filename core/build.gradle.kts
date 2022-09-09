@@ -10,7 +10,7 @@ plugins {
 
 val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.0"
-val moshiVersion = "1.13.0"
+val moshiVersion = "1.14.0"
 
 android {
   compileSdk = 33
