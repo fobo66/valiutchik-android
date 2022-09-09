@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,8 +43,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       val navController = rememberNavController()
 
-      // Remember a SystemUiController
-      val systemUiController = rememberSystemUiController()
+      SystemBarColors()
 
       var isAboutDialogShown by remember {
         mutableStateOf(false)
@@ -54,18 +54,6 @@ class MainActivity : ComponentActivity() {
       }
 
       ValiutchikTheme {
-        val useDarkIcons = !isSystemInDarkTheme()
-
-        DisposableEffect(systemUiController, useDarkIcons) {
-          // Update all of the system bar colors to be transparent, and use
-          // dark icons if we're in light theme
-          systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons
-          )
-          onDispose {}
-        }
-
         Scaffold(
           topBar = {
             ValiutchikTopBar(
@@ -103,6 +91,21 @@ class MainActivity : ComponentActivity() {
           }
         }
       }
+    }
+  }
+
+  @Composable
+  private fun SystemBarColors() {
+    val systemUiController = rememberSystemUiController()
+
+    val useDarkIcons = !isSystemInDarkTheme()
+
+    DisposableEffect(systemUiController, useDarkIcons) {
+      systemUiController.setSystemBarsColor(
+        color = Color.Transparent,
+        darkIcons = useDarkIcons
+      )
+      onDispose {}
     }
   }
 }

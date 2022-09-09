@@ -1,7 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsProperties.TestTag
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
 import fobo66.exchangecourcesbelarus.util.LazyListItemPosition
