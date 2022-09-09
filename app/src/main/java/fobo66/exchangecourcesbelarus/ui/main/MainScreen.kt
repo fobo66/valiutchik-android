@@ -53,7 +53,9 @@ fun MainScreen(
       } else {
         itemsIndexed(items = bestCurrencyRates, key = { _, item -> item.id }) { index, item ->
           BestCurrencyRateCard(
-            bestCurrencyRate = item,
+            currencyName = stringResource(id = item.currencyNameRes),
+            currencyValue = item.currencyValue,
+            bankName = item.bank,
             onClick = onBestRateClick,
             onLongClick = onBestRateLongClick,
             modifier = Modifier
@@ -70,19 +72,19 @@ fun MainScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
-  bestCurrencyRate: BestCurrencyRate,
+  currencyName: String,
+  currencyValue: String,
+  bankName: String,
   onClick: (String) -> Unit,
   onLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val currencyName = stringResource(id = bestCurrencyRate.currencyNameRes)
-
   ElevatedCard(
     modifier = modifier
       .padding(8.dp)
       .combinedClickable(
-        onLongClick = { onLongClick(currencyName, bestCurrencyRate.currencyValue) },
-        onClick = { onClick(bestCurrencyRate.bank) }
+        onLongClick = { onLongClick(currencyName, currencyValue) },
+        onClick = { onClick(bankName) }
       )
   ) {
     Text(
@@ -91,9 +93,10 @@ fun BestCurrencyRateCard(
       modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
     )
     Text(
-      text = bestCurrencyRate.currencyValue,
+      text = currencyValue,
       style = MaterialTheme.typography.displayLarge,
-      modifier = Modifier.padding(top = 16.dp, start = 24.dp)
+      modifier = Modifier
+        .padding(top = 16.dp, start = 24.dp)
         .testTag("Currency value")
     )
     Row(modifier = Modifier.padding(all = 24.dp)) {
@@ -103,7 +106,7 @@ fun BestCurrencyRateCard(
         modifier = Modifier.align(Alignment.CenterVertically)
       )
       Text(
-        text = bestCurrencyRate.bank,
+        text = bankName,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.padding(start = 8.dp)
       )
@@ -145,12 +148,9 @@ fun MainScreenNoPermission(
 fun BestCurrencyRatePreview() {
   ValiutchikTheme {
     BestCurrencyRateCard(
-      bestCurrencyRate = BestCurrencyRate(
-        0L,
-        "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
-        string.currency_name_usd_buy,
-        "2.56"
-      ),
+      currencyName = stringResource(id = string.currency_name_usd_buy),
+      bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
+      currencyValue = "2.56",
       onClick = {},
       onLongClick = { _, _ -> }
     )
