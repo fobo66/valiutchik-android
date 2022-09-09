@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Intent
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.espresso.action.ViewActions.longClick
+import androidx.compose.ui.test.longClick
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
@@ -14,7 +14,6 @@ import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import fobo66.exchangecourcesbelarus.ui.MainActivityScreen.CoursesListItem
-import fobo66.valiutchik.core.UNKNOWN_COURSE
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import org.junit.Rule
 import org.junit.Test
@@ -31,24 +30,6 @@ class MainActivityTest : TestCase(
   @get:Rule
   val grantPermissionsRule: GrantPermissionRule =
     GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-  @OptIn(ExperimentalTestApi::class)
-  @Test
-  fun noDashesInCurrenciesValues() = run {
-    step("check for no dashes in list") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        coursesList {
-          flakySafely {
-            childWith<CoursesListItem> {
-              hasAnyChild(androidx.compose.ui.test.hasText(UNKNOWN_COURSE))
-            } perform {
-              assertDoesNotExist()
-            }
-          }
-        }
-      }
-    }
-  }
 
   @Test
   fun showAboutDialog() = run {
@@ -92,7 +73,9 @@ class MainActivityTest : TestCase(
       onComposeScreen<MainActivityScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
-            longClick()
+            performGesture {
+              longClick()
+            }
           }
         }
       }
