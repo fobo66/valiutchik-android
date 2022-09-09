@@ -17,7 +17,7 @@ val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.43.2"
 val activityVersion = "1.6.0-beta01"
 val roomVersion = "2.4.3"
-val navVersion = "2.5.1"
+val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha01"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
@@ -154,7 +154,7 @@ dependencies {
   implementation("androidx.recyclerview:recyclerview:1.2.1")
   implementation("androidx.fragment:fragment-ktx:1.5.2")
   implementation("androidx.collection:collection-ktx:1.2.0")
-  implementation("androidx.core:core-ktx:1.9.0-rc01")
+  implementation("androidx.core:core-ktx:1.9.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
   implementation("com.google.android.material:material:1.8.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
