@@ -9,4 +9,16 @@ class SettingsScreen(semanticsProvider: SemanticsNodeInteractionsProvider) :
   val settings: KNode = child {
     hasTestTag("Settings")
   }
+  val defaultCityPreference: KNode = child {
+    hasTestTag("Default city")
+  }
+  val updateIntervalPreference: KNode = child {
+    hasTestTag("Update interval")
+  }
+  val licensesPreference: KNode = child {
+    hasTestTag("Licenses")
+  }
+  val defaultCityPreferenceDialog: KNode = child {
+    isDialog()
+  }
 }

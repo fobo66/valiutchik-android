@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
@@ -208,7 +209,8 @@ private fun SeekbarPreferenceSummary(
         onValueChange = { if (enabled) onValueChange(it) },
         valueRange = valueRange,
         steps = steps,
-        onValueChangeFinished = onValueChangeEnd
+        onValueChangeFinished = onValueChangeEnd,
+        modifier = Modifier.testTag("Slider")
       )
     }
   }

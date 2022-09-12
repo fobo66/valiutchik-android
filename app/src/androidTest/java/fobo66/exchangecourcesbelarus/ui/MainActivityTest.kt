@@ -93,8 +93,10 @@ class MainActivityTest : TestCase(
 
   @Test
   fun showSettings() = run {
-    onComposeScreen<MainActivityScreen>(composeTestRule) {
-      settingsIcon.performClick()
+    step("go to settings screen") {
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        settingsIcon.performClick()
+      }
     }
 
     step("check settings screen") {

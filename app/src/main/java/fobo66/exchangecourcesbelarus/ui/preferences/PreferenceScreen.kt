@@ -39,9 +39,15 @@ fun PreferenceScreen(
     modifier = modifier
       .testTag("Settings")
   ) {
-    ListPreference(title = {
-      Text(text = stringResource(id = R.string.pref_title_default_city))
-    }, value = defaultCityValue, entries = entries, onValueChange = onDefaultCityChange)
+    ListPreference(
+      title = {
+        Text(text = stringResource(id = R.string.pref_title_default_city))
+      },
+      value = defaultCityValue,
+      entries = entries,
+      onValueChange = onDefaultCityChange,
+      modifier = Modifier.testTag("Default city")
+    )
     SeekBarPreference(
       title = {
         Text(text = stringResource(id = R.string.pref_title_update_interval))
@@ -49,13 +55,15 @@ fun PreferenceScreen(
       value = updateIntervalValue,
       valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
       steps = UPDATE_INTERVAL_STEPS,
-      onValueChange = onUpdateIntervalChange
+      onValueChange = onUpdateIntervalChange,
+      modifier = Modifier.testTag("Update interval")
     )
     TextPreference(
       title = {
         Text(text = stringResource(id = R.string.title_activity_oss_licenses))
       },
-      onClick = onOpenSourceLicensesClick
+      onClick = onOpenSourceLicensesClick,
+      modifier = Modifier.testTag("Licenses")
     )
   }
 }
