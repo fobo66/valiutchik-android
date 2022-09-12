@@ -13,6 +13,7 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import kotlinx.collections.immutable.toImmutableMap
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
@@ -31,7 +32,7 @@ fun PreferenceScreen(
   val citiesValues = stringArrayResource(id = array.pref_cities_values)
   val entries = remember {
     ListPreferenceEntries(
-      citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap()
+      citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap().toImmutableMap()
     )
   }
 

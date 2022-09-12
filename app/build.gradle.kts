@@ -147,6 +147,7 @@ dependencies {
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
+  implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
   // androidx
   implementation("androidx.annotation:annotation:1.4.0")

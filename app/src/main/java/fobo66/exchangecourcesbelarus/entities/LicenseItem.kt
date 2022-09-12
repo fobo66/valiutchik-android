@@ -1,8 +1,8 @@
 package fobo66.exchangecourcesbelarus.entities
 
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 
-@Stable
+@Immutable
 data class LicenseItem(
   val project: String,
   val licenses: String,

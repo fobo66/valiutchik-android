@@ -44,6 +44,7 @@ import fobo66.exchangecourcesbelarus.ui.main.MainScreenNoPermission
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -200,7 +201,7 @@ fun NavGraphBuilder.licensesScreen() {
     val context = LocalContext.current
 
     val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle(
-      initialValue = LicensesState(emptyList())
+      initialValue = LicensesState(persistentListOf())
     )
 
     OpenSourceLicensesScreen(licensesState = licensesState, onItemClick = { licenseUrl ->
