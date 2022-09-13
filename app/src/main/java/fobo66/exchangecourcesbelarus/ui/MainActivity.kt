@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +57,13 @@ class MainActivity : ComponentActivity() {
       ValiutchikTheme {
         Scaffold(
           topBar = {
+            val currentDestination by navController.currentBackStackEntryAsState()
+
             ValiutchikTopBar(
+              currentPosition = currentDestination,
+              onBackClick = {
+                navController.popBackStack()
+              },
               onAboutClick = {
                 isAboutDialogShown = true
               },

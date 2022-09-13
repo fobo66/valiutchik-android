@@ -3,7 +3,10 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,6 +28,7 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -54,8 +58,20 @@ const val DESTINATION_LICENSES = "licenses"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
+fun ValiutchikTopBar(
+  currentPosition: NavBackStackEntry?,
+  onBackClick: () -> Unit,
+  onAboutClick: () -> Unit,
+  onSettingsClicked: () -> Unit
+) {
   TopAppBar(
+    navigationIcon = {
+      AnimatedVisibility(currentPosition?.destination?.route != DESTINATION_MAIN) {
+        IconButton(onClick = onBackClick) {
+          Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+        }
+      }
+    },
     title = {
       Text(text = stringResource(id = string.app_name))
     },
@@ -68,13 +84,15 @@ fun ValiutchikTopBar(onAboutClick: () -> Unit, onSettingsClicked: () -> Unit) {
           )
         )
       }
-      IconButton(onClick = onSettingsClicked, modifier = Modifier.testTag("Settings")) {
-        Icon(
-          Settings,
-          contentDescription = stringResource(
-            id = string.action_settings
+      AnimatedVisibility(currentPosition?.destination?.route == DESTINATION_MAIN) {
+        IconButton(onClick = onSettingsClicked, modifier = Modifier.testTag("Settings")) {
+          Icon(
+            Settings,
+            contentDescription = stringResource(
+              id = string.action_settings
+            )
           )
-        )
+        }
       }
     }
   )
