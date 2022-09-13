@@ -105,7 +105,7 @@ android {
   }
 
   buildFeatures {
-    viewBinding = true
+    viewBinding = false
     buildConfig = false
     compose = true
   }
@@ -151,15 +151,11 @@ dependencies {
 
   // androidx
   implementation("androidx.annotation:annotation:1.4.0")
-  implementation("androidx.activity:activity-ktx:$activityVersion")
-  implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.5.2")
+  implementation("androidx.activity:activity-compose:$activityVersion")
   implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.9.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.4")
   implementation("com.google.android.material:material:1.8.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
-  implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
   implementation("androidx.datastore:datastore-preferences:1.0.0")
   implementation("androidx.core:core-splashscreen:1.0.0")
 
@@ -175,15 +171,6 @@ dependencies {
   implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
   implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
   implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
-
-  // flowbinding
-
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-android:$flowBindingVersion")
-  implementation(
-    "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
-  )
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion")
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
   // lifecycle
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
@@ -215,9 +202,6 @@ dependencies {
 
   // timber
   implementation("com.jakewharton.timber:timber:5.0.1")
-
-  // insets
-  implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 
