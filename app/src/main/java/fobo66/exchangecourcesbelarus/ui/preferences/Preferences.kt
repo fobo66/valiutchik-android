@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
@@ -76,9 +77,9 @@ fun ListPreference(
     enabled = enabled,
     onClick = { showDialog(!isDialogShown) },
     summary = {
-      val summaryValue = entries.entries.entries.find { it.value == value }?.key
+      val summaryValue = entries.preferenceEntries.entries.find { it.value == value }?.key
       Text(
-        text = summaryValue ?: entries.entries.keys.first(),
+        text = summaryValue ?: entries.preferenceEntries.keys.first(),
         style = MaterialTheme.typography.bodyMedium.copy(
           color = MaterialTheme.colorScheme.onSurface
         )
@@ -114,7 +115,7 @@ private fun ListPreferenceDialog(
         modifier = Modifier
           .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
       ) {
-        entries.entries.forEach { current ->
+        entries.preferenceEntries.forEach { current ->
           val isSelected = value == current.value
           val onSelected = {
             onValueChange(current.value)
@@ -208,7 +209,8 @@ private fun SeekbarPreferenceSummary(
         onValueChange = { if (enabled) onValueChange(it) },
         valueRange = valueRange,
         steps = steps,
-        onValueChangeFinished = onValueChangeEnd
+        onValueChangeFinished = onValueChangeEnd,
+        modifier = Modifier.testTag("Slider")
       )
     }
   }

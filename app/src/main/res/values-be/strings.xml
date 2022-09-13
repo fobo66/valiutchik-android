@@ -28,4 +28,9 @@
   <string name="currency_name_rub_sell">Расійскі рубль курс прадажы</string>
   <string name="open_map">Шукаць абменнікі на мапе</string>
   <string name="pref_title_update_interval">Час аднаўлення, гадзін</string>
+  <string name="permission_description">Нам неабходны дазвол скарыстаць вашае месцазнаходжанне, каб мы маглі вызначыць ваш горад і паказаць курсы там. Калі ласка дайце нам дазвол.</string>
+  <string name="permission_description_rationale">Нам неабходны дазвол скарыстаць вашае месцазнаходжанне, каб мы маглі вызначыць ваш горад і паказаць курсы тамю</string>
+  <string name="request_permission">Даць дазвол</string>
+  <string name="no_rates_indicator">Пакуль што няма курсаў</string>
+  <string name="bank_name_indicator">Назва банка</string>
 </resources>

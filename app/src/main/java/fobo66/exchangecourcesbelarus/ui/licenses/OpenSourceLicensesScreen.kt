@@ -14,6 +14,7 @@ import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun OpenSourceLicensesScreen(
@@ -81,6 +82,6 @@ fun OpenSourceLicensePreview() {
 @Composable
 fun OpenSourceLicensesPreview() {
   ValiutchikTheme {
-    OpenSourceLicensesScreen(licensesState = LicensesState(emptyList()), onItemClick = {})
+    OpenSourceLicensesScreen(licensesState = LicensesState(persistentListOf()), onItemClick = {})
   }
 }

@@ -1,38 +1,51 @@
 package fobo66.exchangecourcesbelarus.ui
 
-import android.view.View
-import com.kaspersky.kaspresso.screens.KScreen
-import fobo66.exchangecourcesbelarus.R
-import io.github.kakaocup.kakao.common.views.KView
-import io.github.kakaocup.kakao.dialog.KAlertDialog
-import io.github.kakaocup.kakao.recycler.KRecyclerItem
-import io.github.kakaocup.kakao.recycler.KRecyclerView
-import io.github.kakaocup.kakao.text.KSnackbar
-import io.github.kakaocup.kakao.text.KTextView
-import org.hamcrest.Matcher
+import androidx.compose.ui.semantics.SemanticsNode
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
+import fobo66.exchangecourcesbelarus.util.LazyListItemPosition
+import io.github.kakaocup.compose.node.element.ComposeScreen
+import io.github.kakaocup.compose.node.element.KNode
+import io.github.kakaocup.compose.node.element.lazylist.KLazyListItemNode
+import io.github.kakaocup.compose.node.element.lazylist.KLazyListNode
 
-object MainScreen : KScreen<MainScreen>() {
+class MainActivityScreen(semanticsProvider: SemanticsNodeInteractionsProvider) :
+  ComposeScreen<MainActivityScreen>(semanticsProvider) {
 
-  val aboutIcon = KView {
-    withId(R.id.action_about)
+  val aboutIcon: KNode = child {
+    hasTestTag("About")
   }
 
-  val settingsIcon = KView {
-    withId(R.id.action_settings)
+  val settingsIcon: KNode = child {
+    hasTestTag("Settings")
   }
 
-  val aboutDialog = KAlertDialog()
+  val aboutDialog: KNode = child {
+    isDialog()
+  }
 
-  val snackbar = KSnackbar()
+  val snackbar: KNode = child {
+    hasTestTag("Snackbar")
+  }
 
-  val coursesList = KRecyclerView(
-    builder = { this.withId(R.id.courses_list) },
-    itemTypeBuilder = { itemType(::CoursesListItem) }
+  val coursesList = KLazyListNode(
+    semanticsProvider = semanticsProvider,
+    viewBuilderAction = {
+      hasTestTag("Courses")
+    },
+    itemTypeBuilder = {
+      itemType(::CoursesListItem)
+    },
+    positionMatcher = { position -> SemanticsMatcher.expectValue(LazyListItemPosition, position) }
   )
-  override val layoutId = R.layout.activity_main
-  override val viewClass = MainActivity::class.java
-}
 
-class CoursesListItem(parent: Matcher<View>) : KRecyclerItem<CoursesListItem>(parent) {
-  val value: KTextView = KTextView(parent) { withId(R.id.currency_value) }
+  class CoursesListItem(
+    semanticsNode: SemanticsNode,
+    semanticsProvider: SemanticsNodeInteractionsProvider
+  ) : KLazyListItemNode<CoursesListItem>(semanticsNode, semanticsProvider) {
+
+    val value: KNode = child {
+      hasTestTag("Currency value")
+    }
+  }
 }

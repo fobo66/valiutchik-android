@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,7 @@ import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import fobo66.exchangecourcesbelarus.util.lazyListItemPosition
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,7 +42,7 @@ fun MainScreen(
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
-    LazyColumn {
+    LazyColumn(modifier = Modifier.testTag("Courses")) {
       if (bestCurrencyRates.isEmpty()) {
         item {
           NoRatesIndicator(
@@ -49,14 +51,17 @@ fun MainScreen(
           )
         }
       } else {
-        items(items = bestCurrencyRates, key = { it.id }) {
+        itemsIndexed(items = bestCurrencyRates, key = { _, item -> item.id }) { index, item ->
           BestCurrencyRateCard(
-            bestCurrencyRate = it,
+            currencyName = stringResource(id = item.currencyNameRes),
+            currencyValue = item.currencyValue,
+            bankName = item.bank,
             onClick = onBestRateClick,
             onLongClick = onBestRateLongClick,
             modifier = Modifier
               .fillMaxWidth()
               .animateItemPlacement()
+              .lazyListItemPosition(index)
           )
         }
       }
@@ -67,19 +72,19 @@ fun MainScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
-  bestCurrencyRate: BestCurrencyRate,
+  currencyName: String,
+  currencyValue: String,
+  bankName: String,
   onClick: (String) -> Unit,
   onLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val currencyName = stringResource(id = bestCurrencyRate.currencyNameRes)
-
   ElevatedCard(
     modifier = modifier
       .padding(8.dp)
       .combinedClickable(
-        onLongClick = { onLongClick(currencyName, bestCurrencyRate.currencyValue) },
-        onClick = { onClick(bestCurrencyRate.bank) }
+        onLongClick = { onLongClick(currencyName, currencyValue) },
+        onClick = { onClick(bankName) }
       )
   ) {
     Text(
@@ -88,9 +93,11 @@ fun BestCurrencyRateCard(
       modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
     )
     Text(
-      text = bestCurrencyRate.currencyValue,
+      text = currencyValue,
       style = MaterialTheme.typography.displayLarge,
-      modifier = Modifier.padding(top = 16.dp, start = 24.dp)
+      modifier = Modifier
+        .padding(top = 16.dp, start = 24.dp)
+        .testTag("Currency value")
     )
     Row(modifier = Modifier.padding(all = 24.dp)) {
       Icon(
@@ -99,7 +106,7 @@ fun BestCurrencyRateCard(
         modifier = Modifier.align(Alignment.CenterVertically)
       )
       Text(
-        text = bestCurrencyRate.bank,
+        text = bankName,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.padding(start = 8.dp)
       )
@@ -141,12 +148,9 @@ fun MainScreenNoPermission(
 fun BestCurrencyRatePreview() {
   ValiutchikTheme {
     BestCurrencyRateCard(
-      bestCurrencyRate = BestCurrencyRate(
-        0L,
-        "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
-        string.currency_name_usd_buy,
-        "2.56"
-      ),
+      currencyName = stringResource(id = string.currency_name_usd_buy),
+      bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
+      currencyValue = "2.56",
       onClick = {},
       onLongClick = { _, _ -> }
     )

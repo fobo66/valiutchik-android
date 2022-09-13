@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,6 +13,7 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import kotlinx.collections.immutable.toImmutableMap
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
@@ -30,14 +32,23 @@ fun PreferenceScreen(
   val citiesValues = stringArrayResource(id = array.pref_cities_values)
   val entries = remember {
     ListPreferenceEntries(
-      citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap()
+      citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap().toImmutableMap()
     )
   }
 
-  Column(modifier = modifier) {
-    ListPreference(title = {
-      Text(text = stringResource(id = R.string.pref_title_default_city))
-    }, value = defaultCityValue, entries = entries, onValueChange = onDefaultCityChange)
+  Column(
+    modifier = modifier
+      .testTag("Settings")
+  ) {
+    ListPreference(
+      title = {
+        Text(text = stringResource(id = R.string.pref_title_default_city))
+      },
+      value = defaultCityValue,
+      entries = entries,
+      onValueChange = onDefaultCityChange,
+      modifier = Modifier.testTag("Default city")
+    )
     SeekBarPreference(
       title = {
         Text(text = stringResource(id = R.string.pref_title_update_interval))
@@ -45,13 +56,15 @@ fun PreferenceScreen(
       value = updateIntervalValue,
       valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
       steps = UPDATE_INTERVAL_STEPS,
-      onValueChange = onUpdateIntervalChange
+      onValueChange = onUpdateIntervalChange,
+      modifier = Modifier.testTag("Update interval")
     )
     TextPreference(
       title = {
         Text(text = stringResource(id = R.string.title_activity_oss_licenses))
       },
-      onClick = onOpenSourceLicensesClick
+      onClick = onOpenSourceLicensesClick,
+      modifier = Modifier.testTag("Licenses")
     )
   }
 }

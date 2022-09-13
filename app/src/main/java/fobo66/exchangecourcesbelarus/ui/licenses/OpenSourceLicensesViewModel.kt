@@ -6,6 +6,7 @@ import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.valiutchik.core.usecases.LoadOpenSourceLicenses
 import javax.inject.Inject
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 
 @HiltViewModel
@@ -24,5 +25,5 @@ class OpenSourceLicensesViewModel @Inject constructor(
         )
       }
     }
-    .map { LicensesState(it) }
+    .map { LicensesState(it.toImmutableList()) }
 }

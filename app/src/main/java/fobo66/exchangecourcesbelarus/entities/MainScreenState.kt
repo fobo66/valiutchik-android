@@ -1,14 +1,14 @@
 package fobo66.exchangecourcesbelarus.entities
 
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 
 sealed class MainScreenState(val isInProgress: Boolean = true) {
-  @Stable
+  @Immutable
   object Loading : MainScreenState()
 
-  @Stable
+  @Immutable
   object LoadedRates : MainScreenState(false)
 
-  @Stable
+  @Immutable
   object Error : MainScreenState(false)
 }
