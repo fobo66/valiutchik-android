@@ -3,32 +3,20 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -39,8 +27,6 @@ import com.google.accompanist.permissions.shouldShowRationale
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
-import fobo66.exchangecourcesbelarus.ui.icons.Info
-import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.MainScreen
@@ -55,48 +41,6 @@ import kotlinx.coroutines.launch
 const val DESTINATION_MAIN = "main"
 const val DESTINATION_PREFERENCES = "prefs"
 const val DESTINATION_LICENSES = "licenses"
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ValiutchikTopBar(
-  currentPosition: NavBackStackEntry?,
-  onBackClick: () -> Unit,
-  onAboutClick: () -> Unit,
-  onSettingsClicked: () -> Unit
-) {
-  TopAppBar(
-    navigationIcon = {
-      AnimatedVisibility(currentPosition?.destination?.route != DESTINATION_MAIN) {
-        IconButton(onClick = onBackClick) {
-          Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-        }
-      }
-    },
-    title = {
-      Text(text = stringResource(id = string.app_name))
-    },
-    actions = {
-      IconButton(onClick = onAboutClick, modifier = Modifier.testTag("About")) {
-        Icon(
-          Info,
-          contentDescription = stringResource(
-            id = string.action_about
-          )
-        )
-      }
-      AnimatedVisibility(currentPosition?.destination?.route == DESTINATION_MAIN) {
-        IconButton(onClick = onSettingsClicked, modifier = Modifier.testTag("Settings")) {
-          Icon(
-            Settings,
-            contentDescription = stringResource(
-              id = string.action_settings
-            )
-          )
-        }
-      }
-    }
-  )
-}
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalPermissionsApi::class)
 fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
