@@ -122,7 +122,7 @@ fun ValiutchikTopBar(
   TopAppBar(
     navigationIcon = {
       AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
-        IconButton(onClick = onBackClick) {
+        IconButton(onClick = onBackClick, modifier = Modifier.testTag("Back")) {
           Icon(Icons.Default.ArrowBack, contentDescription = "Back")
         }
       }
