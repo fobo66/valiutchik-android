@@ -66,20 +66,19 @@ fun MainActivityContent() {
             currentDestination?.destination?.route
           }
         }
-        val title = resolveTitle(currentRoute)
 
         ValiutchikTopBar(
-          title = title,
           currentRoute = currentRoute,
           onBackClick = {
             navController.popBackStack()
           },
           onAboutClick = {
             isAboutDialogShown = true
+          },
+          onSettingsClicked = {
+            navController.navigate(DESTINATION_PREFERENCES)
           }
-        ) {
-          navController.navigate(DESTINATION_PREFERENCES)
-        }
+        )
       },
       snackbarHost = {
         SnackbarHost(
@@ -112,12 +111,14 @@ fun MainActivityContent() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValiutchikTopBar(
-  title: String,
   currentRoute: String?,
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
-  onSettingsClicked: () -> Unit
+  onSettingsClicked: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
+  val title = resolveTitle(currentRoute)
+
   TopAppBar(
     navigationIcon = {
       AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
@@ -127,7 +128,7 @@ fun ValiutchikTopBar(
       }
     },
     title = {
-      Text(title)
+      Text(title, modifier = Modifier.testTag("Title"))
     },
     actions = {
       IconButton(onClick = onAboutClick, modifier = Modifier.testTag("About")) {
@@ -148,7 +149,8 @@ fun ValiutchikTopBar(
           )
         }
       }
-    }
+    },
+    modifier = modifier
   )
 }
 
