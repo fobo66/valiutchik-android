@@ -23,7 +23,7 @@ val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.7"
 val junitVersion = "5.9.0"
-val turbineVersion = "0.9.0"
+val turbineVersion = "0.10.0"
 val kaspressoVersion = "1.4.1"
 
 android {
