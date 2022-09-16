@@ -19,7 +19,6 @@ val activityVersion = "1.6.0-rc02"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
-val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.7"
 val junitVersion = "5.9.0"
@@ -105,7 +104,6 @@ android {
   }
 
   buildFeatures {
-    viewBinding = false
     buildConfig = false
     compose = true
   }
@@ -134,10 +132,9 @@ detekt {
 
 licenseReport {
   generateCsvReport = false
-  generateHtmlReport = true
-  generateJsonReport = true
+  generateHtmlReport = false
 
-  copyHtmlReportToAssets = true
+  copyHtmlReportToAssets = false
   copyJsonReportToAssets = true
 }
 
