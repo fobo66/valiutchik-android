@@ -147,9 +147,8 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.4.0")
+  implementation("androidx.annotation:annotation:1.5.0-rc01")
   implementation("androidx.activity:activity-compose:$activityVersion")
-  implementation("androidx.collection:collection-ktx:1.2.0")
   implementation("androidx.core:core-ktx:1.9.0")
   implementation("com.google.android.material:material:1.8.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
@@ -206,7 +205,6 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.5.0-alpha02")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
@@ -214,6 +212,7 @@ dependencies {
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")
+  androidTestImplementation("androidx.test:core:1.5.0-alpha02")
   androidTestImplementation(
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
