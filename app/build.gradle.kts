@@ -65,10 +65,6 @@ android {
       "apiPassword",
       loadSecret(rootProject, API_PASSWORD)
     )
-
-    vectorDrawables {
-      useSupportLibrary = true
-    }
   }
 
   buildTypes {
