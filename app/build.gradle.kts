@@ -19,11 +19,10 @@ val activityVersion = "1.6.0-rc02"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
-val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
 val mockkVersion = "1.12.7"
 val junitVersion = "5.9.0"
-val turbineVersion = "0.9.0"
+val turbineVersion = "0.10.0"
 val kaspressoVersion = "1.4.1"
 
 android {
@@ -66,10 +65,6 @@ android {
       "apiPassword",
       loadSecret(rootProject, API_PASSWORD)
     )
-
-    vectorDrawables {
-      useSupportLibrary = true
-    }
   }
 
   buildTypes {
@@ -105,7 +100,6 @@ android {
   }
 
   buildFeatures {
-    viewBinding = true
     buildConfig = false
     compose = true
   }
@@ -134,10 +128,9 @@ detekt {
 
 licenseReport {
   generateCsvReport = false
-  generateHtmlReport = true
-  generateJsonReport = true
+  generateHtmlReport = false
 
-  copyHtmlReportToAssets = true
+  copyHtmlReportToAssets = false
   copyJsonReportToAssets = true
 }
 
@@ -150,16 +143,11 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.4.0")
-  implementation("androidx.activity:activity-ktx:$activityVersion")
-  implementation("androidx.recyclerview:recyclerview:1.2.1")
-  implementation("androidx.fragment:fragment-ktx:1.5.2")
-  implementation("androidx.collection:collection-ktx:1.2.0")
+  implementation("androidx.annotation:annotation:1.5.0-rc01")
+  implementation("androidx.activity:activity-compose:$activityVersion")
   implementation("androidx.core:core-ktx:1.9.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.4")
   implementation("com.google.android.material:material:1.8.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
-  implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
   implementation("androidx.datastore:datastore-preferences:1.0.0")
   implementation("androidx.core:core-splashscreen:1.0.0")
 
@@ -175,15 +163,6 @@ dependencies {
   implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
   implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
   implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
-
-  // flowbinding
-
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-android:$flowBindingVersion")
-  implementation(
-    "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
-  )
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion")
-  implementation("io.github.reactivecircus.flowbinding:flowbinding-material:$flowBindingVersion")
 
   // lifecycle
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
@@ -216,16 +195,12 @@ dependencies {
   // timber
   implementation("com.jakewharton.timber:timber:5.0.1")
 
-  // insets
-  implementation("dev.chrisbanes.insetter:insetter:0.6.1")
-
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("androidx.test:core:1.5.0-alpha02")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
@@ -233,6 +208,7 @@ dependencies {
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")
+  androidTestImplementation("androidx.test:core:1.5.0-alpha02")
   androidTestImplementation(
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
