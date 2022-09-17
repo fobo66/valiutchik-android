@@ -71,6 +71,11 @@ android {
     debug {
       applicationIdSuffix = ".debug"
     }
+    create("benchmark") {
+      signingConfig = signingConfigs.getByName("debug")
+      matchingFallbacks += listOf("release")
+      isDebuggable = false
+    }
 
     release {
       isMinifyEnabled = true

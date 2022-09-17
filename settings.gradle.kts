@@ -1,1 +1,1 @@
-include(":app", ":benchmark", ":core")
+include(":app", ":benchmark", ":core", ":macrobenchmark")
