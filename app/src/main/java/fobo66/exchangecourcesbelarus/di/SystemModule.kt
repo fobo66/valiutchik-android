@@ -15,8 +15,8 @@ import fobo66.exchangecourcesbelarus.R
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/8/19.
  */
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 object SystemModule {
 
   @Provides

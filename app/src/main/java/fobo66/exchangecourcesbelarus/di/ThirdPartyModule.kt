@@ -38,7 +38,6 @@ object ThirdPartyModule {
     ).build()
 
   @Provides
-  @Singleton
   fun provideReverseGeocodingEngine(@ApplicationContext context: Context): SearchEngine =
     MapboxSearchSdk.createSearchEngine(
       SearchEngineSettings(
