@@ -180,7 +180,7 @@ dependencies {
   // insets
   implementation("dev.chrisbanes.insetter:insetter:0.6.1")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
