@@ -200,6 +200,9 @@ dependencies {
   // timber
   implementation("com.jakewharton.timber:timber:5.0.1")
 
+  // leakcanary
+  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
+
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
