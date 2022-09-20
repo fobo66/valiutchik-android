@@ -27,7 +27,7 @@ val kaspressoVersion = "1.4.1"
 
 android {
   signingConfigs {
-    create("releaseSignConfig") {
+    register("releaseSignConfig") {
       keyAlias = loadSecret(rootProject, KEY_ALIAS)
       keyPassword = loadSecret(rootProject, KEY_PASSWORD)
       storeFile = file(loadSecret(rootProject, STORE_FILE))
@@ -71,7 +71,7 @@ android {
     debug {
       applicationIdSuffix = ".debug"
     }
-    create("benchmark") {
+    register("benchmark") {
       signingConfig = signingConfigs.getByName("debug")
       matchingFallbacks += listOf("release")
       isDebuggable = false
