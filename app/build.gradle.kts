@@ -20,7 +20,7 @@ val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.7"
+val mockkVersion = "1.12.8"
 val junitVersion = "5.9.0"
 val turbineVersion = "0.10.0"
 val kaspressoVersion = "1.4.1"
@@ -200,7 +200,7 @@ dependencies {
   // timber
   implementation("com.jakewharton.timber:timber:5.0.1")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
