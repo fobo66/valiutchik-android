@@ -7,6 +7,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
+import fobo66.exchangecourcesbelarus.ui.main.SystemBarColors
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
     setContent {
+      SystemBarColors()
       MainActivityContent()
     }
   }

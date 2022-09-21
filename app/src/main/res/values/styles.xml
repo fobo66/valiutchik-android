@@ -7,14 +7,11 @@
     <item name="colorSecondary">@color/accent_color</item>
     <item name="android:textColorSecondary">@color/text_color</item>
     <item name="android:textColorPrimary">@color/text_color</item>
-    <item name="android:navigationBarColor">
-      @android:color/transparent
-    </item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
     <item name="android:windowActivityTransitions">true</item>
     <item name="android:windowEnterTransition">@android:transition/explode</item>
     <item name="android:windowExitTransition">@android:transition/explode</item>
-    <item name="android:windowTranslucentStatus">true</item>
-    <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
   <style name="Splash" parent="Theme.SplashScreen">

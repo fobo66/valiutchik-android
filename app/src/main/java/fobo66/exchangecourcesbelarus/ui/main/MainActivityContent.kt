@@ -16,7 +16,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,8 +46,6 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 @Composable
 fun MainActivityContent() {
   val navController = rememberNavController()
-
-  SystemBarColors()
 
   var isAboutDialogShown by remember {
     mutableStateOf(false)
@@ -169,11 +167,11 @@ fun SystemBarColors() {
 
   val useDarkIcons = !isSystemInDarkTheme()
 
-  DisposableEffect(systemUiController, useDarkIcons) {
+  SideEffect {
     systemUiController.setSystemBarsColor(
       color = Color.Transparent,
-      darkIcons = useDarkIcons
+      darkIcons = useDarkIcons,
+      isNavigationBarContrastEnforced = false
     )
-    onDispose {}
   }
 }
