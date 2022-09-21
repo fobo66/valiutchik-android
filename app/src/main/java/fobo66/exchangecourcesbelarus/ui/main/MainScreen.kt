@@ -1,5 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -42,15 +43,11 @@ fun MainScreen(
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
-    LazyColumn(modifier = Modifier.testTag("Courses")) {
-      if (bestCurrencyRates.isEmpty()) {
-        item {
-          NoRatesIndicator(
-            modifier = Modifier
-              .animateItemPlacement()
-          )
-        }
-      } else {
+    AnimatedVisibility(bestCurrencyRates.isEmpty()) {
+      NoRatesIndicator()
+    }
+    AnimatedVisibility(bestCurrencyRates.isNotEmpty()) {
+      LazyColumn(modifier = Modifier.testTag("Courses")) {
         itemsIndexed(items = bestCurrencyRates, key = { _, item -> item.id }) { index, item ->
           BestCurrencyRateCard(
             currencyName = stringResource(id = item.currencyNameRes),
