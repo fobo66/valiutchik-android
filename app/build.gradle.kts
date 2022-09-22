@@ -160,7 +160,6 @@ dependencies {
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
   implementation("androidx.compose.material3:material3:1.0.0-beta03")
-  implementation("androidx.compose.material:material:$composeUiVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
