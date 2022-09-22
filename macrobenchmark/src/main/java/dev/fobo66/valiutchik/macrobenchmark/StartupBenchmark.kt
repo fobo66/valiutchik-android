@@ -27,7 +27,7 @@ class StartupBenchmark {
 
   @Test
   fun startup() = benchmarkRule.measureRepeated(
-    packageName = "fobo66.exchangecourcesbelarus.debug",
+    packageName = "fobo66.exchangecourcesbelarus",
     metrics = listOf(StartupTimingMetric()),
     iterations = 5,
     startupMode = StartupMode.COLD
