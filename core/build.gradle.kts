@@ -9,7 +9,7 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.9.0"
+val junitVersion = "5.9.1"
 val moshiVersion = "1.14.0"
 
 android {
@@ -56,7 +56,7 @@ detekt {
 }
 
 dependencies {
-  implementation("androidx.annotation:annotation:1.4.0")
+  implementation("androidx.annotation:annotation:1.5.0")
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
