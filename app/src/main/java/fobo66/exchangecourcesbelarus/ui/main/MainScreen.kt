@@ -1,6 +1,8 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -67,7 +69,7 @@ fun MainScreen(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun BestCurrencyRateCard(
   currencyName: String,
@@ -90,24 +92,28 @@ fun BestCurrencyRateCard(
       style = MaterialTheme.typography.headlineSmall,
       modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
     )
-    Text(
-      text = currencyValue,
-      style = MaterialTheme.typography.displayLarge,
-      modifier = Modifier
-        .padding(top = 16.dp, start = 24.dp)
-        .testTag("Currency value")
-    )
+    AnimatedContent(currencyValue) {
+      Text(
+        text = it,
+        style = MaterialTheme.typography.displayLarge,
+        modifier = Modifier
+          .padding(top = 16.dp, start = 24.dp)
+          .testTag("Currency value")
+      )
+    }
     Row(modifier = Modifier.padding(all = 24.dp)) {
       Icon(
         imageVector = Bank,
         contentDescription = stringResource(id = string.bank_name_indicator),
         modifier = Modifier.align(Alignment.CenterVertically)
       )
-      Text(
-        text = bankName,
-        style = MaterialTheme.typography.bodyMedium,
-        modifier = Modifier.padding(start = 8.dp)
-      )
+      AnimatedContent(bankName) {
+        Text(
+          text = it,
+          style = MaterialTheme.typography.bodyMedium,
+          modifier = Modifier.padding(start = 8.dp)
+        )
+      }
     }
   }
 }
