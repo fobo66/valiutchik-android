@@ -44,7 +44,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityContent(reportFullyDrawn: () -> Unit) {
+fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modifier) {
   val navController = rememberNavController()
 
   var isAboutDialogShown by remember {
@@ -81,7 +81,8 @@ fun MainActivityContent(reportFullyDrawn: () -> Unit) {
             Snackbar(snackbarData = it, modifier = Modifier.testTag("Snackbar"))
           }
         )
-      }
+      },
+      modifier = modifier
     ) {
       NavHost(
         navController = navController,
