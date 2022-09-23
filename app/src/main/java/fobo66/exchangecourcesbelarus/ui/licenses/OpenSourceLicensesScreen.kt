@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui.licenses
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -25,17 +25,18 @@ fun OpenSourceLicensesScreen(
   onItemClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  AnimatedVisibility(licensesState.licenses.isEmpty()) {
-    EmptyListIndicator()
-  }
-  AnimatedVisibility(licensesState.licenses.isNotEmpty()) {
-    LazyColumn(modifier = modifier) {
-      items(licensesState.licenses) {
-        OpenSourceLicense(
-          item = it,
-          onItemClick = onItemClick,
-          modifier = Modifier.animateItemPlacement()
-        )
+  Crossfade(licensesState) {
+    if (it.licenses.isEmpty()) {
+      EmptyListIndicator()
+    } else {
+      LazyColumn(modifier = modifier) {
+        items(licensesState.licenses) { item ->
+          OpenSourceLicense(
+            item = item,
+            onItemClick = onItemClick,
+            modifier = Modifier.animateItemPlacement()
+          )
+        }
       }
     }
   }
