@@ -18,7 +18,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,14 +59,9 @@ fun MainActivityContent(reportFullyDrawn: () -> Unit) {
     Scaffold(
       topBar = {
         val currentDestination by navController.currentBackStackEntryAsState()
-        val currentRoute by remember(currentDestination) {
-          derivedStateOf {
-            currentDestination?.destination?.route
-          }
-        }
 
         ValiutchikTopBar(
-          currentRoute = currentRoute,
+          currentRoute = currentDestination?.destination?.route,
           onBackClick = {
             navController.popBackStack()
           },
