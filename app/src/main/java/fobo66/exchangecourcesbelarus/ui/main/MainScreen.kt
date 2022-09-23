@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -43,23 +43,24 @@ fun MainScreen(
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
-    AnimatedVisibility(bestCurrencyRates.isEmpty()) {
-      NoRatesIndicator()
-    }
-    AnimatedVisibility(bestCurrencyRates.isNotEmpty()) {
-      LazyColumn(modifier = Modifier.testTag("Courses")) {
-        itemsIndexed(items = bestCurrencyRates, key = { _, item -> item.id }) { index, item ->
-          BestCurrencyRateCard(
-            currencyName = stringResource(id = item.currencyNameRes),
-            currencyValue = item.currencyValue,
-            bankName = item.bank,
-            onClick = onBestRateClick,
-            onLongClick = onBestRateLongClick,
-            modifier = Modifier
-              .fillMaxWidth()
-              .animateItemPlacement()
-              .lazyListItemPosition(index)
-          )
+    Crossfade(bestCurrencyRates) {
+      if (it.isEmpty()) {
+        NoRatesIndicator()
+      } else {
+        LazyColumn(modifier = Modifier.testTag("Courses")) {
+          itemsIndexed(items = bestCurrencyRates, key = { _, item -> item.id }) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItemPlacement()
+                .lazyListItemPosition(index)
+            )
+          }
         }
       }
     }
