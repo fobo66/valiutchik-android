@@ -17,7 +17,7 @@ val navVersion = "2.5.2"
 val lifecycleVersion = "2.5.1"
 val flowBindingVersion = "1.2.0"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.13.1"
+val mockkVersion = "1.13.2"
 val junitVersion = "5.9.1"
 
 android {
