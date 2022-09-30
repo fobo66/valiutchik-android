@@ -16,7 +16,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import javax.inject.Singleton
 
@@ -38,10 +37,10 @@ object ThirdPartyModule {
     ).build()
 
   @Provides
-  fun provideReverseGeocodingEngine(@ApplicationContext context: Context): SearchEngine =
+  fun provideReverseGeocodingEngine(@GeocoderAccessToken geocoderAccessToken: String): SearchEngine =
     MapboxSearchSdk.createSearchEngine(
       SearchEngineSettings(
-        accessToken = context.getString(R.string.mapboxGeocoderAccessToken)
+        accessToken = geocoderAccessToken
       )
     )
 

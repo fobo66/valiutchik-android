@@ -8,17 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.Text
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -43,21 +39,16 @@ fun TextPreference(
 ) {
   val isEnabled = LocalPreferenceEnabledStatus.current && enabled
 
-  EnabledPreference(isEnabled) {
-    ListItem(
-      headlineText = title,
-      supportingText = summary ?: {
-        Text(
-          text = summaryProvider(),
-          style = MaterialTheme.typography.bodyMedium.copy(
-            color = MaterialTheme.colorScheme.onSurface
-          )
-        )
-      },
-      modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
-      trailingContent = trailing
-    )
-  }
+  ListItem(
+    headlineText = title,
+    supportingText = summary ?: {
+      Text(
+        text = summaryProvider()
+      )
+    },
+    modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
+    trailingContent = trailing
+  )
 }
 
 @Composable
@@ -79,10 +70,7 @@ fun ListPreference(
     summary = {
       val summaryValue = entries.preferenceEntries.entries.find { it.value == value }?.key
       Text(
-        text = summaryValue ?: entries.preferenceEntries.keys.first(),
-        style = MaterialTheme.typography.bodyMedium.copy(
-          color = MaterialTheme.colorScheme.onSurface
-        )
+        text = summaryValue ?: entries.preferenceEntries.keys.first()
       )
     }
   )
@@ -137,9 +125,6 @@ private fun ListPreferenceDialog(
             )
             Text(
               text = current.key,
-              style = MaterialTheme.typography.bodyLarge.copy(
-                color = MaterialTheme.colorScheme.onSurface
-              ),
               modifier = Modifier.padding(start = 8.dp)
             )
           }
@@ -198,9 +183,6 @@ private fun SeekbarPreferenceSummary(
     Row(verticalAlignment = Alignment.CenterVertically) {
       Text(
         text = valueRepresentation(sliderValue),
-        style = MaterialTheme.typography.bodyMedium.copy(
-          color = MaterialTheme.colorScheme.onSurface
-        ),
         modifier = Modifier.width(24.dp)
       )
       Spacer(modifier = Modifier.width(16.dp))
@@ -213,18 +195,5 @@ private fun SeekbarPreferenceSummary(
         modifier = Modifier.testTag("Slider")
       )
     }
-  }
-}
-
-@Composable
-fun EnabledPreference(enabled: Boolean = true, content: @Composable () -> Unit) {
-  CompositionLocalProvider(
-    LocalContentAlpha provides if (enabled) {
-      ContentAlpha.high
-    } else {
-      ContentAlpha.disabled
-    }
-  ) {
-    content()
   }
 }

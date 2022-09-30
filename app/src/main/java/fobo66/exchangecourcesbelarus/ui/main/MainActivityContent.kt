@@ -16,8 +16,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,10 +44,8 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityContent() {
+fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modifier) {
   val navController = rememberNavController()
-
-  SystemBarColors()
 
   var isAboutDialogShown by remember {
     mutableStateOf(false)
@@ -61,14 +59,9 @@ fun MainActivityContent() {
     Scaffold(
       topBar = {
         val currentDestination by navController.currentBackStackEntryAsState()
-        val currentRoute by remember(currentDestination) {
-          derivedStateOf {
-            currentDestination?.destination?.route
-          }
-        }
 
         ValiutchikTopBar(
-          currentRoute = currentRoute,
+          currentRoute = currentDestination?.destination?.route,
           onBackClick = {
             navController.popBackStack()
           },
@@ -88,7 +81,8 @@ fun MainActivityContent() {
             Snackbar(snackbarData = it, modifier = Modifier.testTag("Snackbar"))
           }
         )
-      }
+      },
+      modifier = modifier
     ) {
       NavHost(
         navController = navController,
@@ -103,6 +97,9 @@ fun MainActivityContent() {
         AboutAppDialog(
           onDismiss = { isAboutDialogShown = false }
         )
+      }
+      LaunchedEffect(Unit) {
+        reportFullyDrawn()
       }
     }
   }
@@ -169,11 +166,11 @@ fun SystemBarColors() {
 
   val useDarkIcons = !isSystemInDarkTheme()
 
-  DisposableEffect(systemUiController, useDarkIcons) {
+  SideEffect {
     systemUiController.setSystemBarsColor(
       color = Color.Transparent,
-      darkIcons = useDarkIcons
+      darkIcons = useDarkIcons,
+      isNavigationBarContrastEnforced = false
     )
-    onDispose {}
   }
 }

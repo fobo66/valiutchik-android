@@ -9,7 +9,7 @@ plugins {
 }
 
 val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.9.0"
+val junitVersion = "5.9.1"
 val moshiVersion = "1.14.0"
 
 android {
@@ -30,8 +30,14 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    register("benchmark") {
+      initWith(getByName("release"))
+      signingConfig = signingConfigs.getByName("debug")
+
+      matchingFallbacks += listOf("release")
     }
   }
   compileOptions {
@@ -50,12 +56,12 @@ detekt {
 }
 
 dependencies {
-  implementation("androidx.annotation:annotation:1.4.0")
+  implementation("androidx.annotation:annotation:1.5.0")
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }

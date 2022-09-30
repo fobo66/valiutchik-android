@@ -11,23 +11,23 @@ plugins {
 }
 
 val composeVersion = "1.3.1"
-val composeUiVersion = "1.3.0-beta02"
-val accompanistVersion = "0.26.3-beta"
+val composeUiVersion = "1.3.0-beta03"
+val accompanistVersion = "0.26.4-beta"
 val kotlinCoroutinesVersion = "1.6.4"
-val hiltVersion = "2.43.2"
-val activityVersion = "1.6.0-rc02"
+val hiltVersion = "2.44"
+val activityVersion = "1.6.0"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
 val retrofitVersion = "2.9.0"
-val mockkVersion = "1.12.7"
-val junitVersion = "5.9.0"
-val turbineVersion = "0.10.0"
+val mockkVersion = "1.13.2"
+val junitVersion = "5.9.1"
+val turbineVersion = "0.11.0"
 val kaspressoVersion = "1.4.1"
 
 android {
   signingConfigs {
-    create("releaseSignConfig") {
+    register("releaseSignConfig") {
       keyAlias = loadSecret(rootProject, KEY_ALIAS)
       keyPassword = loadSecret(rootProject, KEY_PASSWORD)
       storeFile = file(loadSecret(rootProject, STORE_FILE))
@@ -70,6 +70,12 @@ android {
   buildTypes {
     debug {
       applicationIdSuffix = ".debug"
+    }
+    register("benchmark") {
+      applicationIdSuffix = ".benchmark"
+      signingConfig = signingConfigs.getByName("debug")
+      matchingFallbacks += listOf("release")
+      isDebuggable = false
     }
 
     release {
@@ -143,7 +149,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.5.0-rc01")
+  implementation("androidx.annotation:annotation:1.5.0")
   implementation("androidx.activity:activity-compose:$activityVersion")
   implementation("androidx.core:core-ktx:1.9.0")
   implementation("com.google.android.material:material:1.8.0-alpha01")
@@ -153,8 +159,7 @@ dependencies {
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-beta02")
-  implementation("androidx.compose.material:material:$composeUiVersion")
+  implementation("androidx.compose.material3:material3:1.0.0-beta03")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
@@ -195,9 +200,13 @@ dependencies {
   // timber
   implementation("com.jakewharton.timber:timber:5.0.1")
 
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
+  // leakcanary
+  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
+
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
+  detektPlugins("com.twitter.compose.rules:detekt:0.0.14")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")

@@ -733,3 +733,35 @@ style:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     excludeImports: [ 'java.util.*', 'kotlinx.android.synthetic.*' ]
+
+TwitterCompose:
+  ContentEmitterReturningValues:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: true
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  MutableParams:
+    active: true
+  ComposableNaming:
+    active: true
+  ComposableParamOrder:
+    active: true
+  PreviewPublic:
+    active: true
+  RememberMissing:
+    active: true
+  ViewModelForwarding:
+    active: true
+  ViewModelInjection:
+    active: true
