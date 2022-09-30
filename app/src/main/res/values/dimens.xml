@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="currency_name_value_size">25sp</dimen>
-    <dimen name="currency_card_margin">24dp</dimen>
-</resources>
