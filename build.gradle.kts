@@ -1,3 +1,6 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
   repositories {
     mavenCentral()
@@ -5,7 +8,7 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:7.4.0-beta01")
+    classpath("com.android.tools.build:gradle:8.0.0-alpha02")
     classpath(kotlin("gradle-plugin", version = "1.7.10"))
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.1.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.44")
@@ -32,11 +35,30 @@ allprojects {
   }
 }
 
-tasks.register("clean", Delete::class) {
+subprojects {
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+      if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
+        freeCompilerArgs = freeCompilerArgs + listOf(
+          "-P",
+          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+            project.buildDir.absolutePath + "/compose_metrics"
+        )
+        freeCompilerArgs = freeCompilerArgs + listOf(
+          "-P",
+          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+            project.buildDir.absolutePath + "/compose_metrics"
+        )
+      }
+    }
+  }
+}
+
+tasks.register<Delete>("clean") {
   delete(rootProject.buildDir)
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+tasks.withType<Detekt>().configureEach {
   // Target version of the generated JVM bytecode. It is used for type resolution.
   jvmTarget = "11"
 }

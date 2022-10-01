@@ -3,6 +3,7 @@ package fobo66.exchangecourcesbelarus.model.usecases
 import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.fake.FakeLocationRepository
+import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceRepository
 import fobo66.valiutchik.core.usecases.RefreshExchangeRates
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,6 +20,7 @@ class RefreshExchangeRatesTest {
   private val locationRepository = FakeLocationRepository()
   private val timestampRepository = FakeCurrencyRatesTimestampRepository()
   private val currencyRateRepository = FakeCurrencyRateRepository()
+  private val preferenceRepository = FakePreferenceRepository()
 
   private val now = LocalDateTime.now()
 
@@ -27,7 +29,12 @@ class RefreshExchangeRatesTest {
   @BeforeEach
   fun setUp() {
     refreshExchangeRates =
-      RefreshExchangeRatesImpl(locationRepository, timestampRepository, currencyRateRepository)
+      RefreshExchangeRatesImpl(
+        locationRepository,
+        timestampRepository,
+        currencyRateRepository,
+        preferenceRepository
+      )
   }
 
   @AfterEach
@@ -41,6 +48,7 @@ class RefreshExchangeRatesTest {
   fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
     refreshExchangeRates.execute(now)
     assertTrue(currencyRateRepository.isRefreshed)
+    assertTrue(timestampRepository.isSaveTimestampCalled)
   }
 
   @Test

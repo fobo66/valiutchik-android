@@ -7,10 +7,10 @@ class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository, R
   var isNeededToUpdateCurrencyRates = true
   var isSaveTimestampCalled = false
 
-  override fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean =
+  override suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime, updateInterval: Float): Boolean =
     isNeededToUpdateCurrencyRates
 
-  override fun saveTimestamp(now: LocalDateTime) {
+  override suspend fun saveTimestamp(now: LocalDateTime) {
     isSaveTimestampCalled = true
   }
 

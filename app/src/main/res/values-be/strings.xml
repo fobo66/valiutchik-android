@@ -5,8 +5,6 @@
   <string name="action_buysell">Купіць/Прадаць</string>
   <string name="action_settings">Налады</string>
   <string name="about_app_description">Прылада дазваляе хутка палучыць інфармацыю пра найлепшыя курсы валют у абласных центрах Беларусі. Па націску па картачцы курса вы можаце знайсці бліжэйшае аддзяленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе ў вашым горадзе. По доўгім націску вы можаце скапіяваць курс у буфер абмену. Таксама ў наладах вы можаце памяняць інтэрвал аднаўлення курсаў ці змяніць горад па змаўчанні. Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банке. Інфармацыя прапанована сайтам <a href="myfin.by">myfin.by</a></string>
-  <string name="buy">Купіць</string>
-  <string name="sell">Прадаць</string>
   <string name="title_about">Інфармацыя пра прыладу</string>
   <string name="title_activity_settings">Налады</string>
   <string-array name="pref_cities_list">
@@ -30,4 +28,9 @@
   <string name="currency_name_rub_sell">Расійскі рубль курс прадажы</string>
   <string name="open_map">Шукаць абменнікі на мапе</string>
   <string name="pref_title_update_interval">Час аднаўлення, гадзін</string>
+  <string name="permission_description">Нам неабходны дазвол скарыстаць вашае месцазнаходжанне, каб мы маглі вызначыць ваш горад і паказаць курсы там. Калі ласка дайце нам дазвол.</string>
+  <string name="permission_description_rationale">Нам неабходны дазвол скарыстаць вашае месцазнаходжанне, каб мы маглі вызначыць ваш горад і паказаць курсы тамю</string>
+  <string name="request_permission">Даць дазвол</string>
+  <string name="no_rates_indicator">Пакуль што няма курсаў</string>
+  <string name="bank_name_indicator">Назва банка</string>
 </resources>

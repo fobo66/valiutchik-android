@@ -3,8 +3,6 @@
   <string name="action_settings">Настройки</string>
   <string name="action_buysell">Купить/Продать</string>
   <string name="action_about">О приложении</string>
-  <string name="buy">Купить</string>
-  <string name="sell">Продать</string>
   <string name="title_about">О приложении</string>
   <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. По нажатию на карточку курса валюты вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте в вашем городе. По долгому нажатию на карточку вы можете скопировать курс в буфер обмена. Также вы можете настроить интервал обновления курсов или поменять город по умолчанию. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
   <string name="title_activity_settings">Настройки</string>
@@ -29,4 +27,9 @@
   <string name="currency_name_rub_sell">Российский рубль курс продажи</string>
   <string name="open_map">Искать обменники на карте</string>
   <string name="pref_title_update_interval">Время обновления, ч</string>
+  <string name="permission_description">Нам необходимо разрешение на использование местоположения, чтобы узнать ваш город и показать курсы валют в нём. Пожалуйста, дайте нам разрешение.</string>
+  <string name="permission_description_rationale">Нам необходимо разрешение на использование местоположения, чтобы узнать ваш город и показать курсы валют в нём.</string>
+  <string name="request_permission">Дать разрешение</string>
+  <string name="no_rates_indicator">Пока нет курсов</string>
+  <string name="bank_name_indicator">Название банка</string>
 </resources>

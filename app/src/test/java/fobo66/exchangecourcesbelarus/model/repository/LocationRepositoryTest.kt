@@ -2,7 +2,6 @@ package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.fake.FakeGeocodingDataSource
 import fobo66.exchangecourcesbelarus.model.fake.FakeLocationDataSource
-import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -23,24 +22,22 @@ class LocationRepositoryTest {
 
   private val locationDataSource = FakeLocationDataSource()
   private val geocodingDataSource = FakeGeocodingDataSource()
-  private val preferencesDataSource = FakePreferenceDataSource()
 
   @BeforeEach
   fun setUp() {
     locationRepository =
-      LocationRepositoryImpl(locationDataSource, geocodingDataSource, preferencesDataSource)
+      LocationRepositoryImpl(locationDataSource, geocodingDataSource)
   }
 
   @AfterEach
   fun tearDown() {
     geocodingDataSource.reset()
-    preferencesDataSource.reset()
   }
 
   @Test
   fun `resolve user city`() {
     runTest {
-      val city = locationRepository.resolveUserCity()
+      val city = locationRepository.resolveUserCity("default")
       assertEquals("fake", city)
     }
   }
@@ -50,7 +47,7 @@ class LocationRepositoryTest {
     geocodingDataSource.showError = true
 
     runTest {
-      val city = locationRepository.resolveUserCity()
+      val city = locationRepository.resolveUserCity("default")
       assertEquals("default", city)
     }
   }
@@ -61,7 +58,7 @@ class LocationRepositoryTest {
 
     runTest {
       assertThrows<KotlinNullPointerException> {
-        locationRepository.resolveUserCity()
+        locationRepository.resolveUserCity("default")
       }
     }
   }

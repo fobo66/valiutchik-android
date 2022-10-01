@@ -10,25 +10,25 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 
-  private val updateInterval: Duration by lazy {
-    Duration.ofHours(
-      preferencesDataSource.loadInt("update_interval", DEFAULT_UPDATE_INTERVAL).toLong()
-    )
-  }
-
-  override fun isNeededToUpdateCurrencyRates(now: LocalDateTime): Boolean {
+  override suspend fun isNeededToUpdateCurrencyRates(
+    now: LocalDateTime,
+    updateInterval: Float
+  ): Boolean {
     val timestamp = loadTimestamp(now)
     val cachedValueAge = Duration.between(timestamp, now)
+    val interval: Duration = Duration.ofHours(
+      updateInterval.toLong()
+    )
 
-    return cachedValueAge == Duration.ZERO || cachedValueAge > updateInterval
+    return cachedValueAge == Duration.ZERO || cachedValueAge > interval
   }
 
-  override fun saveTimestamp(now: LocalDateTime) {
+  override suspend fun saveTimestamp(now: LocalDateTime) {
     val nowString = now.toString()
     preferencesDataSource.saveString(TIMESTAMP, nowString)
   }
 
-  private fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {
+  private suspend fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {
     val rawTimestamp: String = preferencesDataSource.loadString(TIMESTAMP)
 
     return if (rawTimestamp.isEmpty()) {
@@ -36,9 +36,5 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     } else {
       LocalDateTime.parse(rawTimestamp)
     }
-  }
-
-  companion object {
-    private const val DEFAULT_UPDATE_INTERVAL = 3
   }
 }

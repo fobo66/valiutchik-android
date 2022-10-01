@@ -3,19 +3,20 @@ import com.android.sdklib.AndroidVersion
 plugins {
   id("com.android.library")
   kotlin("android")
+  kotlin("kapt")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
 }
 
 val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.1"
+val moshiVersion = "1.14.0"
 
 android {
   compileSdk = 33
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = AndroidVersion.VersionCodes.S
     version = 1
 
     multiDexEnabled = true
@@ -29,8 +30,14 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    register("benchmark") {
+      initWith(getByName("release"))
+      signingConfig = signingConfigs.getByName("debug")
+
+      matchingFallbacks += listOf("release")
     }
   }
   compileOptions {
@@ -50,6 +57,8 @@ detekt {
 
 dependencies {
   implementation("androidx.annotation:annotation:1.5.0")
+  implementation("com.squareup.moshi:moshi:$moshiVersion")
+  kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")

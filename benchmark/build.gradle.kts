@@ -18,7 +18,6 @@ android {
 
   defaultConfig {
     minSdk = com.android.sdklib.AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = com.android.sdklib.AndroidVersion.VersionCodes.S
     version = 1
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"

@@ -1,14 +1,24 @@
 package fobo66.exchangecourcesbelarus.ui
 
-import com.kaspersky.kaspresso.screens.KScreen
-import fobo66.exchangecourcesbelarus.R
-import io.github.kakaocup.kakao.common.views.KView
+import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
+import io.github.kakaocup.compose.node.element.ComposeScreen
+import io.github.kakaocup.compose.node.element.KNode
 
-object SettingsScreen : KScreen<SettingsScreen>() {
-  val settings = KView {
-    withId(android.R.id.list_container)
+class SettingsScreen(semanticsProvider: SemanticsNodeInteractionsProvider) :
+  ComposeScreen<SettingsScreen>(semanticsProvider) {
+  val settings: KNode = child {
+    hasTestTag("Settings")
   }
-
-  override val layoutId = R.layout.activity_main
-  override val viewClass = MainActivity::class.java
+  val defaultCityPreference: KNode = child {
+    hasTestTag("Default city")
+  }
+  val updateIntervalPreference: KNode = child {
+    hasTestTag("Update interval")
+  }
+  val licensesPreference: KNode = child {
+    hasTestTag("Licenses")
+  }
+  val defaultCityPreferenceDialog: KNode = child {
+    isDialog()
+  }
 }
