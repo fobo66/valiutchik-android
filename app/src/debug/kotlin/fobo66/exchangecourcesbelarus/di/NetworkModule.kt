@@ -11,13 +11,13 @@ import fobo66.exchangecourcesbelarus.api.RequestConfigInterceptor
 import fobo66.exchangecourcesbelarus.util.XmlConverterFactory
 import fobo66.valiutchik.core.BASE_URL
 import fobo66.valiutchik.core.CACHE_SIZE
+import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.create
 import timber.log.Timber
-import javax.inject.Singleton
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -46,7 +46,6 @@ object NetworkModule {
     loggingInterceptor: HttpLoggingInterceptor,
     requestConfigInterceptor: RequestConfigInterceptor
   ): OkHttpClient {
-
     return OkHttpClient.Builder().cache(Cache(context.cacheDir, CACHE_SIZE))
       .addInterceptor(requestConfigInterceptor)
       .addInterceptor(loggingInterceptor)

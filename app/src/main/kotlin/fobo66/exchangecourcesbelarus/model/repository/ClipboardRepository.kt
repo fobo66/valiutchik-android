@@ -1,8 +1,8 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.datasource.ClipboardDataSource
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 class ClipboardRepository @Inject constructor(
   private val clipboardDataSource: ClipboardDataSource

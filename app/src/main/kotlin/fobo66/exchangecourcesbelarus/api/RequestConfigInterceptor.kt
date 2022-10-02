@@ -2,13 +2,13 @@ package fobo66.exchangecourcesbelarus.api
 
 import fobo66.exchangecourcesbelarus.di.ApiPassword
 import fobo66.exchangecourcesbelarus.di.ApiUsername
+import java.util.concurrent.TimeUnit.HOURS
+import javax.inject.Inject
 import okhttp3.CacheControl
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
-import java.util.concurrent.TimeUnit.HOURS
-import javax.inject.Inject
 
 class RequestConfigInterceptor @Inject constructor(
   @ApiUsername private val username: String,
