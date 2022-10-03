@@ -63,6 +63,6 @@ dependencies {
   implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.17")
+  detektPlugins("com.twitter.compose.rules:detekt:0.0.18")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }
