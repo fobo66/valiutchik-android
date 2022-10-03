@@ -1,4 +1,4 @@
-package fobo66.valiutchik.core.usecases
+package fobo66.valiutchik.domain.usecases
 
 interface UpdateDefaultCityPreference {
   suspend fun execute(newDefaultCity: String)

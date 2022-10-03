@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
 import fobo66.exchangecourcesbelarus.model.repository.PreferenceRepository
-import fobo66.valiutchik.core.usecases.UpdateDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import javax.inject.Inject
 import timber.log.Timber
 

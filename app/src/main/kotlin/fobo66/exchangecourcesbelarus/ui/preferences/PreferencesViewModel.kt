@@ -3,19 +3,19 @@ package fobo66.exchangecourcesbelarus.ui.preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
-import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
-import fobo66.valiutchik.core.usecases.UpdateDefaultCityPreference
-import fobo66.valiutchik.core.usecases.UpdateUpdateIntervalPreference
+import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
+import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PreferencesViewModel @Inject constructor(
-  loadDefaultCityPreference: LoadDefaultCityPreference,
-  loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
-  private val updateDefaultCityPreference: UpdateDefaultCityPreference,
-  private val updateUpdateIntervalPreference: UpdateUpdateIntervalPreference
+    loadDefaultCityPreference: LoadDefaultCityPreference,
+    loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
+    private val updateDefaultCityPreference: UpdateDefaultCityPreference,
+    private val updateUpdateIntervalPreference: UpdateUpdateIntervalPreference
 ) : ViewModel() {
 
   val defaultCityPreference = loadDefaultCityPreference.execute()

@@ -4,7 +4,7 @@ import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.exchangecourcesbelarus.model.repository.CurrencyRatesTimestampRepository
 import fobo66.exchangecourcesbelarus.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.LocationRepository
-import fobo66.valiutchik.core.usecases.RefreshExchangeRates
+import fobo66.valiutchik.domain.usecases.RefreshExchangeRates
 import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first

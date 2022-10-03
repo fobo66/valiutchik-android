@@ -1,10 +1,10 @@
 package fobo66.exchangecourcesbelarus.ui.preferences
 
 import app.cash.turbine.test
-import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
-import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
-import fobo66.valiutchik.core.usecases.UpdateDefaultCityPreference
-import fobo66.valiutchik.core.usecases.UpdateUpdateIntervalPreference
+import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
+import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

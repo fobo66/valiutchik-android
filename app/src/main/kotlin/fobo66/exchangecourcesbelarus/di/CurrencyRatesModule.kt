@@ -12,16 +12,16 @@ import fobo66.exchangecourcesbelarus.model.usecases.LoadUpdateIntervalPreference
 import fobo66.exchangecourcesbelarus.model.usecases.RefreshExchangeRatesImpl
 import fobo66.exchangecourcesbelarus.model.usecases.UpdateDefaultCityPreferenceImpl
 import fobo66.exchangecourcesbelarus.model.usecases.UpdateUpdateIntervalPreferenceImpl
-import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
-import fobo66.valiutchik.core.usecases.FindBankOnMap
-import fobo66.valiutchik.core.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.core.usecases.LoadOpenSourceLicenses
 import fobo66.valiutchik.core.usecases.LoadOpenSourceLicensesImpl
-import fobo66.valiutchik.core.usecases.LoadUpdateIntervalPreference
-import fobo66.valiutchik.core.usecases.RefreshExchangeRates
-import fobo66.valiutchik.core.usecases.UpdateDefaultCityPreference
-import fobo66.valiutchik.core.usecases.UpdateUpdateIntervalPreference
+import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
+import fobo66.valiutchik.domain.usecases.FindBankOnMap
+import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
+import fobo66.valiutchik.domain.usecases.RefreshExchangeRates
+import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
+import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

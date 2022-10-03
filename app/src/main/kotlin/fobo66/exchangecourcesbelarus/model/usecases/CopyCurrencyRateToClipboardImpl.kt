@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
 import fobo66.exchangecourcesbelarus.model.repository.ClipboardRepository
-import fobo66.valiutchik.core.usecases.CopyCurrencyRateToClipboard
+import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import javax.inject.Inject
 
 class CopyCurrencyRateToClipboardImpl @Inject constructor(

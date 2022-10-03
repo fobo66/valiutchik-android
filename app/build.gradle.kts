@@ -142,6 +142,7 @@ licenseReport {
 
 dependencies {
   api(project(":core"))
+  api(project(":domain"))
 
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
