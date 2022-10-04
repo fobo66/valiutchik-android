@@ -48,7 +48,7 @@ jobs:
   ui-tests:
     executor:
       name: android/android-machine
-      tag: 2022.09.2
+      tag: 2022.06.1
       resource-class: large
     steps:
       - checkout
@@ -56,11 +56,13 @@ jobs:
       - android/create-avd:
           avd-name: myavd
           install: true
-          system-image: system-images;android-33;google_apis;x86_64
+          system-image: system-images;android-32;google_apis;x86_64
       - android/restore-build-cache:
           cache-prefix: v1a
       - android/start-emulator:
           avd-name: myavd
+          no-boot-anim: true
+          wait-for-emulator: false
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest --console=plain
           restore-gradle-cache-prefix: v1a
       - android/run-tests:
