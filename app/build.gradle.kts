@@ -50,12 +50,6 @@ android {
 
     resValue(
       "string",
-      "mapboxGeocoderAccessToken",
-      loadSecret(rootProject, MAPBOX_TOKEN)
-    )
-
-    resValue(
-      "string",
       "apiUsername",
       loadSecret(rootProject, API_USERNAME)
     )
@@ -174,9 +168,6 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-
-  // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.36")
 
   // room
   implementation("androidx.room:room-runtime:$roomVersion")

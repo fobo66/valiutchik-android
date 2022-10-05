@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
 import android.Manifest
 import android.content.Context
@@ -8,7 +8,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import fobo66.exchangecourcesbelarus.di.Io
+import fobo66.valiutchik.core.di.Io
 import fobo66.valiutchik.core.entities.Location
 import java.time.Duration
 import javax.inject.Inject

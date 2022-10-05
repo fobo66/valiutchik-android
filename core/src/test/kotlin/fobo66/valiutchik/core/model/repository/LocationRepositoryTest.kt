@@ -1,13 +1,10 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
-import fobo66.exchangecourcesbelarus.model.fake.FakeGeocodingDataSource
-import fobo66.exchangecourcesbelarus.model.fake.FakeLocationDataSource
-import fobo66.valiutchik.core.model.repository.LocationRepository
+import fobo66.valiutchik.core.fake.FakeGeocodingDataSource
+import fobo66.valiutchik.core.fake.FakeLocationDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -18,28 +15,16 @@ import org.junit.jupiter.api.assertThrows
 @ExperimentalCoroutinesApi
 class LocationRepositoryTest {
 
-  private lateinit var locationRepository: LocationRepository
-
   private val locationDataSource = FakeLocationDataSource()
   private val geocodingDataSource = FakeGeocodingDataSource()
 
-  @BeforeEach
-  fun setUp() {
-    locationRepository =
-      LocationRepositoryImpl(locationDataSource, geocodingDataSource)
-  }
-
-  @AfterEach
-  fun tearDown() {
-    geocodingDataSource.reset()
-  }
+  private val locationRepository: LocationRepository =
+    LocationRepositoryImpl(locationDataSource, geocodingDataSource)
 
   @Test
-  fun `resolve user city`() {
-    runTest {
-      val city = locationRepository.resolveUserCity("default")
-      assertEquals("fake", city)
-    }
+  fun `resolve user city`() = runTest {
+    val city = locationRepository.resolveUserCity("default")
+    assertEquals("fake", city)
   }
 
   @Test

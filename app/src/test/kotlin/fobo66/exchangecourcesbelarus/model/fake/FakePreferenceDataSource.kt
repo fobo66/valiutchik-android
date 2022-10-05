@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.fake
 
 import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
+import fobo66.valiutchik.core.util.Resettable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

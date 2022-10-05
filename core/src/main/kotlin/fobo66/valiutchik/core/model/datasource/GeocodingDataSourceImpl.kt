@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.Country
@@ -7,7 +7,6 @@ import com.mapbox.search.QueryType.PLACE
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.result.SearchResult
-import fobo66.exchangecourcesbelarus.util.search
 import fobo66.valiutchik.core.entities.Location
 import javax.inject.Inject
 

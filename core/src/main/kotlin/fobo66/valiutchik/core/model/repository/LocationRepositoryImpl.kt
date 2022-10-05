@@ -1,10 +1,9 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
 import android.Manifest
 import androidx.annotation.RequiresPermission
-import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
-import fobo66.valiutchik.core.model.repository.LocationRepository
+import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
+import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import java.io.IOException
 import javax.inject.Inject
 import timber.log.Timber

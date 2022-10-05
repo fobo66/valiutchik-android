@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.core.util
 
 /**
  * Indicates that the given fake's state can be reset to default values

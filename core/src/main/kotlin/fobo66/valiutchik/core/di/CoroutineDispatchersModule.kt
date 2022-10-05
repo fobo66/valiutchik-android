@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.di
+package fobo66.valiutchik.core.di
 
 import dagger.Module
 import dagger.Provides

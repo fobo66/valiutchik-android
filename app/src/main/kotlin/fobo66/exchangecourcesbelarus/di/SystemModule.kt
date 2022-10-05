@@ -26,11 +26,6 @@ object SystemModule {
   @Provides
   fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
 
-  @GeocoderAccessToken
-  @Provides
-  fun provideGeocoderAccessToken(@ApplicationContext context: Context): String =
-    context.getString(R.string.mapboxGeocoderAccessToken)
-
   @ApiUsername
   @Provides
   fun provideUsername(@ApplicationContext context: Context): String =

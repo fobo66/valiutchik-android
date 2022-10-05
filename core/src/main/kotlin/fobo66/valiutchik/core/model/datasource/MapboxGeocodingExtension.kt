@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.model.datasource
 
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions

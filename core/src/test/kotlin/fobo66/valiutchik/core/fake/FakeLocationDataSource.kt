@@ -1,7 +1,7 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.core.fake
 
-import fobo66.exchangecourcesbelarus.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.datasource.LocationDataSource
 
 class FakeLocationDataSource : LocationDataSource {
   override suspend fun resolveLocation(): Location =

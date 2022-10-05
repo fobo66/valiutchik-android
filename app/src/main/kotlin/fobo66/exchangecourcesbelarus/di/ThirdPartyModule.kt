@@ -8,9 +8,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.SearchEngine
-import com.mapbox.search.SearchEngineSettings
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,14 +32,6 @@ object ThirdPartyModule {
       CurrencyRatesDatabase::class.java,
       "currency-rates"
     ).build()
-
-  @Provides
-  fun provideReverseGeocodingEngine(@GeocoderAccessToken geocoderAccessToken: String): SearchEngine =
-    MapboxSearchSdk.createSearchEngine(
-      SearchEngineSettings(
-        accessToken = geocoderAccessToken
-      )
-    )
 
   @Provides
   @Singleton

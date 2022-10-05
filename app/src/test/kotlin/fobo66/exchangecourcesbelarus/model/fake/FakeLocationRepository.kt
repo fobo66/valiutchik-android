@@ -1,6 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.fake
 
 import fobo66.valiutchik.core.model.repository.LocationRepository
+import fobo66.valiutchik.core.util.Resettable
 
 /**
  * Fake location repo implementation for tests

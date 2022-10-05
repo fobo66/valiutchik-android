@@ -1,9 +1,10 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.core.fake
 
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import fobo66.exchangecourcesbelarus.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
+import fobo66.valiutchik.core.util.Resettable
 import io.mockk.every
 import io.mockk.mockk
 import java.io.IOException
@@ -12,11 +13,7 @@ class FakeGeocodingDataSource : GeocodingDataSource, Resettable {
   var showError = false
   var unexpectedError = false
 
-  private val searchAddress: SearchAddress = mockk {
-    every {
-      locality
-    } returns "fake"
-  }
+  private val searchAddress: SearchAddress = SearchAddress(locality = "fake")
 
   private val searchResult: SearchResult = mockk {
     every {

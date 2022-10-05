@@ -12,6 +12,7 @@ val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.1"
 val moshiVersion = "1.14.0"
 val hiltVersion = "2.44"
+val mockkVersion = "1.13.2"
 
 android {
   compileSdk = 33
@@ -23,6 +24,12 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
+
+    resValue(
+      "string",
+      "mapboxGeocoderAccessToken",
+      loadSecret(rootProject, MAPBOX_TOKEN)
+    )
   }
 
   buildFeatures {
@@ -62,9 +69,14 @@ dependencies {
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
+  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.37")
+  implementation("com.jakewharton.timber:timber:5.0.1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
   detektPlugins("com.twitter.compose.rules:detekt:0.0.17")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+  testImplementation("io.mockk:mockk:$mockkVersion")
+  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
+  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
 }
