@@ -1,12 +1,14 @@
 plugins {
   id("com.android.library")
   kotlin("android")
+  kotlin("kapt")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
 }
 
 val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.1"
+val hiltVersion = "2.44"
 
 android {
   namespace = "fobo66.valiutchik.domain"
@@ -45,7 +47,8 @@ detekt {
 dependencies {
   implementation("androidx.annotation:annotation:1.5.0")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-  implementation("javax.inject:javax.inject:1")
+  implementation("com.google.dagger:hilt-android:$hiltVersion")
+  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
   detektPlugins("com.twitter.compose.rules:detekt:0.0.17")

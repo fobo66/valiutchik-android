@@ -11,6 +11,7 @@ plugins {
 val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.1"
 val moshiVersion = "1.14.0"
+val hiltVersion = "2.44"
 
 android {
   compileSdk = 33
@@ -57,10 +58,11 @@ detekt {
 
 dependencies {
   implementation("androidx.annotation:annotation:1.5.0")
+  implementation("com.google.dagger:hilt-android:$hiltVersion")
+  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-  implementation("javax.inject:javax.inject:1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
   detektPlugins("com.twitter.compose.rules:detekt:0.0.17")
