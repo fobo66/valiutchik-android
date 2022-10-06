@@ -2,6 +2,7 @@ package fobo66.valiutchik.core.di
 
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,4 +21,7 @@ object ThirdPartyModule {
         accessToken = geocoderAccessToken
       )
     )
+
+  @Provides
+  fun provideMoshi(): Moshi = Moshi.Builder().build()
 }

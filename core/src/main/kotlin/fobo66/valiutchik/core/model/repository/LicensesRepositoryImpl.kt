@@ -9,12 +9,13 @@ import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import javax.inject.Inject
 
 class LicensesRepositoryImpl @Inject constructor(
-  private val assetsDataSource: AssetsDataSource
+  private val assetsDataSource: AssetsDataSource,
+  private val moshi: Moshi
 ) : LicensesRepository {
 
   @OptIn(ExperimentalStdlibApi::class)
   private val jsonAdapter: JsonAdapter<OpenSourceLicenses> by lazy {
-    Moshi.Builder().build().adapter()
+    moshi.adapter()
   }
 
   override fun loadLicenses(): List<OpenSourceLicensesItem> {
