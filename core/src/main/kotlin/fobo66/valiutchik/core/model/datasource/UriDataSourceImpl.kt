@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
 import android.net.Uri
 import javax.inject.Inject

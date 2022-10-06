@@ -5,9 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.exchangecourcesbelarus.model.datasource.IntentDataSource
-import fobo66.exchangecourcesbelarus.model.datasource.UriDataSource
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
+import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.repository.MapRepository
+import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull

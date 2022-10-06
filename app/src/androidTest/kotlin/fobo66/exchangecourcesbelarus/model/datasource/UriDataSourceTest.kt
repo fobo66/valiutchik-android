@@ -1,7 +1,9 @@
 package fobo66.exchangecourcesbelarus.model.datasource
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import fobo66.exchangecourcesbelarus.model.repository.MapRepositoryImpl
+import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
+import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
