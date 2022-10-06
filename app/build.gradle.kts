@@ -154,7 +154,7 @@ dependencies {
   implementation("androidx.core:core-ktx:1.9.0")
   implementation("com.google.android.material:material:1.8.0-alpha01")
   implementation("androidx.preference:preference-ktx:1.2.0")
-  implementation("androidx.datastore:datastore-preferences:1.0.0")
+  implementation("androidx.datastore:datastore-preferences:1.1.0-dev01")
   implementation("androidx.core:core-splashscreen:1.0.0")
 
   // compose
