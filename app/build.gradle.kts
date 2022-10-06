@@ -11,7 +11,7 @@ plugins {
 }
 
 val composeVersion = "1.3.1"
-val composeUiVersion = "1.3.0-beta03"
+val composeUiVersion = "1.3.0-rc01"
 val accompanistVersion = "0.26.4-beta"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
