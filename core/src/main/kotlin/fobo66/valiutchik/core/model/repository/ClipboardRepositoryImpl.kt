@@ -1,14 +1,14 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
-import fobo66.exchangecourcesbelarus.model.datasource.ClipboardDataSource
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import javax.inject.Inject
 import timber.log.Timber
 
-class ClipboardRepository @Inject constructor(
+class ClipboardRepositoryImpl @Inject constructor(
   private val clipboardDataSource: ClipboardDataSource
-) {
+) : ClipboardRepository {
 
-  fun copyToClipboard(label: CharSequence, value: CharSequence) {
+  override fun copyToClipboard(label: CharSequence, value: CharSequence) {
     Timber.v("Copying to clipboard: label = %s, value = %s", label, value)
     if (clipboardDataSource.copyToClipboard(label, value)) {
       Timber.v("Copied successfully")

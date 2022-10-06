@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -7,11 +7,11 @@ import androidx.core.content.getSystemService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class ClipboardDataSource @Inject constructor(
+class ClipboardDataSourceImpl @Inject constructor(
   @ApplicationContext private val context: Context
-) {
+) : ClipboardDataSource {
 
-  fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
+  override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
     val clipData = ClipData.newPlainText(label, value)
     val clipboardManager = context.getSystemService<ClipboardManager>()
     return clipboardManager?.let {

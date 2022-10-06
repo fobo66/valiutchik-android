@@ -25,10 +25,14 @@ import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
+import fobo66.valiutchik.core.model.repository.ClipboardRepository
+import fobo66.valiutchik.core.model.repository.ClipboardRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.core.model.repository.LicensesRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
@@ -114,6 +118,16 @@ abstract class DataModule {
   abstract fun provideAssetsDataSource(
     assetsDataSourceImpl: AssetsDataSourceImpl
   ): AssetsDataSource
+
+  @Binds
+  abstract fun provideClipboardDataSource(
+    clipboardDataSourceImpl: ClipboardDataSourceImpl
+  ): ClipboardDataSource
+
+  @Binds
+  abstract fun provideClipboardRepository(
+    clipboardRepositoryImpl: ClipboardRepositoryImpl
+  ): ClipboardRepository
 
   @Binds
   abstract fun provideLicensesRepository(
