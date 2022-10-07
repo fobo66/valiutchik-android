@@ -11,7 +11,7 @@ plugins {
 }
 
 val composeVersion = "1.3.1"
-val composeUiVersion = "1.3.0-beta03"
+val composeUiVersion = "1.3.0-rc01"
 val accompanistVersion = "0.26.4-beta"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
@@ -23,7 +23,7 @@ val retrofitVersion = "2.9.0"
 val mockkVersion = "1.13.2"
 val junitVersion = "5.9.1"
 val turbineVersion = "0.11.0"
-val kaspressoVersion = "1.4.1"
+val kaspressoVersion = "1.4.2"
 
 android {
   signingConfigs {
@@ -154,7 +154,7 @@ dependencies {
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0-beta03")
+  implementation("androidx.compose.material3:material3:1.0.0-rc01")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
   implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
@@ -198,7 +198,7 @@ dependencies {
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.17")
+  detektPlugins("com.twitter.compose.rules:detekt:0.0.18")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
@@ -209,7 +209,7 @@ dependencies {
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")
-  androidTestImplementation("androidx.test:core:1.5.0-alpha02")
+  androidTestImplementation("androidx.test:core:1.5.0-beta01")
   androidTestImplementation(
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
   )
@@ -220,7 +220,7 @@ dependencies {
   )
   androidTestImplementation("io.github.kakaocup:compose:0.1.0")
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
-  androidTestImplementation("androidx.test:runner:1.5.0-alpha04")
+  androidTestImplementation("androidx.test:runner:1.5.0-beta01")
   androidTestImplementation("androidx.test:rules:1.4.1-alpha07")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-alpha07")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-alpha07")
