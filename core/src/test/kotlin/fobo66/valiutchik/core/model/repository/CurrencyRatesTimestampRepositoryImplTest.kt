@@ -1,8 +1,6 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
-import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepositoryImpl
+import fobo66.valiutchik.core.fake.FakePreferenceDataSource
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

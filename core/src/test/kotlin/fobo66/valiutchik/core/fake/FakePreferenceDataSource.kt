@@ -1,11 +1,10 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.core.fake
 
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.util.Resettable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakePreferenceDataSource : PreferencesDataSource, Resettable {
+class FakePreferenceDataSource : PreferencesDataSource {
   var string = "default"
   var int = 3
 
@@ -23,9 +22,4 @@ class FakePreferenceDataSource : PreferencesDataSource, Resettable {
     flowOf(int)
 
   override suspend fun saveInt(key: String, value: Int) = Unit
-
-  override fun reset() {
-    string = "default"
-    int = 3
-  }
 }
