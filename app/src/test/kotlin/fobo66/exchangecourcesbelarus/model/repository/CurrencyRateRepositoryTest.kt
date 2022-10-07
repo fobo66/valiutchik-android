@@ -4,7 +4,7 @@ import fobo66.exchangecourcesbelarus.model.fake.FakeBestCourseDataSource
 import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.fake.FakePersistenceDataSource
 import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
-import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import java.time.LocalDateTime
 import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,8 +1,9 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
-import fobo66.exchangecourcesbelarus.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
+import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

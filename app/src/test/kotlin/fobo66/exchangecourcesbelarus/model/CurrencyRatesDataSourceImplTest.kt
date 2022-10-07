@@ -1,9 +1,9 @@
 package fobo66.exchangecourcesbelarus.model
 
 import fobo66.exchangecourcesbelarus.api.ExchangeRatesApi
-import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

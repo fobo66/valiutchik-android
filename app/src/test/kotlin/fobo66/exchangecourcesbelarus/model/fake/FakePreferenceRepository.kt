@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.fake
 
-import fobo66.exchangecourcesbelarus.model.repository.PreferenceRepository
+import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

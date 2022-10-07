@@ -1,7 +1,7 @@
 package fobo66.exchangecourcesbelarus.model.fake
 
-import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSource
 import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
 import fobo66.valiutchik.core.util.Resettable
 import java.io.IOException
 

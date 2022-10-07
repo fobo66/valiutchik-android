@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
-import fobo66.exchangecourcesbelarus.model.repository.PreferenceRepository
+import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import javax.inject.Inject
 import timber.log.Timber

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
-import fobo66.exchangecourcesbelarus.util.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap

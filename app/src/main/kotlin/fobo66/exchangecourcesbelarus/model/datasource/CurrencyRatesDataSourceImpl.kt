@@ -2,6 +2,7 @@ package fobo66.exchangecourcesbelarus.model.datasource
 
 import fobo66.exchangecourcesbelarus.api.ExchangeRatesApi
 import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
 import javax.inject.Inject
 
 /**

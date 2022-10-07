@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
 import java.time.LocalDateTime
 
