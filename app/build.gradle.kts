@@ -23,7 +23,7 @@ val retrofitVersion = "2.9.0"
 val mockkVersion = "1.13.2"
 val junitVersion = "5.9.1"
 val turbineVersion = "0.11.0"
-val kaspressoVersion = "1.4.1"
+val kaspressoVersion = "1.4.2"
 
 android {
   signingConfigs {
