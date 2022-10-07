@@ -41,6 +41,8 @@ jobs:
           test-command: ./gradlew testDebug
       - store_test_results:
           path: app/build/test-results/testDebugUnitTest
+      - store_test_results:
+          path: core/build/test-results/testDebugUnitTest
       - android/save-build-cache:
           cache-prefix: v1a
       - android/save-gradle-cache:
@@ -56,7 +58,7 @@ jobs:
       - android/create-avd:
           avd-name: myavd
           install: true
-          system-image: system-images;android-33;google_apis;x86_64
+          system-image: system-images;android-30;google_apis;x86_64
       - android/restore-build-cache:
           cache-prefix: v1a
       - android/start-emulator:
@@ -66,7 +68,7 @@ jobs:
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest --console=plain
           restore-gradle-cache-prefix: v1a
       - android/run-tests:
-          test-command: ./gradlew app:connectedCheck --console=plain
+          test-command: ./gradlew connectedCheck --console=plain
       - store_test_results:
           path: app/build/outputs/androidTest-results
       - store_artifacts:
