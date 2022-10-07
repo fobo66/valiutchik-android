@@ -53,8 +53,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: 'gradle'
-      - name: Setup G services
-        run: cp app/google-services.json.example app/google-services.json
       - name: Check Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Run tests
