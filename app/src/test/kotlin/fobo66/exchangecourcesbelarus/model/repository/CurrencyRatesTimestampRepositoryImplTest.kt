@@ -1,33 +1,22 @@
 package fobo66.exchangecourcesbelarus.model.repository
 
 import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceDataSource
+import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
+import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepositoryImpl
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class CurrencyRatesTimestampRepositoryImplTest {
 
-  private lateinit var currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
-
   private val preferencesDataSource = FakePreferenceDataSource()
-
   private val now = LocalDateTime.now()
-
-  @BeforeEach
-  fun setUp() {
-    currencyRatesTimestampRepository = CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
-  }
-
-  @AfterEach
-  fun tearDown() {
-    preferencesDataSource.reset()
-  }
+  private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository =
+    CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
 
   @Test
   fun `no timestamp - need to update`() {
