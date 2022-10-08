@@ -1,17 +1,11 @@
 package fobo66.valiutchik.api
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CurrencyBuilderTest {
 
-  private lateinit var currencyBuilder: fobo66.valiutchik.api.CurrencyBuilder
-
-  @BeforeEach
-  fun setUp() {
-    currencyBuilder = fobo66.valiutchik.api.CurrencyBuilderImpl()
-  }
+  private val currencyBuilder: CurrencyBuilder = CurrencyBuilderImpl()
 
   @Test
   fun `for correct field name value is present`() {
