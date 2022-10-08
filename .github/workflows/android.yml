@@ -58,10 +58,10 @@ jobs:
       - name: Run tests
         uses: reactivecircus/android-emulator-runner@v2.26.0
         with:
-          script: ./gradlew connectedDebugAndroidTest
+          script: ./gradlew connectedCheck
           arch: x86_64
-          tag: google_apis
-          disableAnimations: true
+          target: google_apis
+          disable-animations: true
           api-level: 33
   unit-tests:
     runs-on: ubuntu-latest
