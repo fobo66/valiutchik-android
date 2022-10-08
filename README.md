@@ -1,6 +1,6 @@
 # Valiutchik
 
-[![Build status](https://circleci.com/gh/fobo66/valiutchik-android/tree/main.svg?style=svg&circle-token=821d930ba4138c85d41addb42424f4cd465f96f1)](https://circleci.com/gh/fobo66/valiutchik-android/tree/main)
+[![Android CI](https://github.com/fobo66/valiutchik-android/actions/workflows/android.yml/badge.svg)](https://github.com/fobo66/valiutchik-android/actions/workflows/android.yml)
 
 This is an Android app for finding best exchange rates in Belarus. Available
 on [Google Play](https://play.google.com/store/apps/details?id=fobo66.exchangecourcesbelarus)
