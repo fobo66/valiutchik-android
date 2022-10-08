@@ -1,12 +1,12 @@
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.EUR
-import fobo66.valiutchik.core.RUB
+import fobo66.valiutchik.api.Currency
+import fobo66.valiutchik.api.EUR
+import fobo66.valiutchik.api.RUB
+import fobo66.valiutchik.api.USD
+import fobo66.valiutchik.api.resolveCurrencyBuyRate
+import fobo66.valiutchik.api.resolveCurrencySellRate
 import fobo66.valiutchik.core.UNKNOWN_COURSE
-import fobo66.valiutchik.core.USD
-import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
-import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import javax.inject.Inject
 import javax.inject.Singleton
 

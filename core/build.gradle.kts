@@ -64,6 +64,7 @@ detekt {
 }
 
 dependencies {
+  api(project(":api"))
   implementation("androidx.annotation:annotation:1.5.0")
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")

@@ -1,6 +1,5 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.core.util.CurrencyRatesParser
 import java.lang.reflect.Type
 import javax.inject.Inject
 import okhttp3.ResponseBody

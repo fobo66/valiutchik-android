@@ -1,6 +1,5 @@
-package fobo66.exchangecourcesbelarus.api
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.core.entities.Currency
 import retrofit2.http.GET
 import retrofit2.http.Path
 

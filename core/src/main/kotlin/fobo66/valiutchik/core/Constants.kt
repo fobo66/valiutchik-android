@@ -1,17 +1,9 @@
 package fobo66.valiutchik.core
 
-import androidx.annotation.StringDef
-import kotlin.annotation.AnnotationRetention.SOURCE
-
 /**
  * Constants used in project
  * Created by fobo66 on 09.08.2015.
  */
-const val BASE_URL = "https://admin.myfin.by/"
-const val USD = "USD"
-const val EUR = "EUR"
-const val RUB = "RUB"
-const val RUR = "RUR"
 const val BUY_COURSE = true
 const val SELL_COURSE = false
 
@@ -31,8 +23,3 @@ const val TAG_NAME_RUR_SELL = "rub_sell"
 
 const val UNKNOWN_COURSE = "-"
 
-const val CACHE_SIZE = 1024L * 1024L * 5L
-
-@Retention(SOURCE)
-@StringDef(value = [USD, EUR, RUB, RUR])
-annotation class CurrencyName

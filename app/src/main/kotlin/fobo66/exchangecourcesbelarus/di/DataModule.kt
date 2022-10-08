@@ -4,7 +4,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.DataStorePreferencesDataSourceImpl
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSourceImpl
@@ -18,6 +17,7 @@ import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
+import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
@@ -38,16 +38,14 @@ import fobo66.valiutchik.core.model.repository.LocationRepositoryImpl
 import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import fobo66.valiutchik.core.util.CurrencyRatesParser
-import fobo66.valiutchik.core.util.CurrencyRatesParserImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataModule {
   @Binds
   abstract fun provideCurrencyRatesParser(
-    currencyRatesParserImpl: CurrencyRatesParserImpl
-  ): CurrencyRatesParser
+    currencyRatesParserImpl: fobo66.valiutchik.api.CurrencyRatesParserImpl
+  ): fobo66.valiutchik.api.CurrencyRatesParser
 
   @Binds
   abstract fun provideCurrencyRatesDataSource(

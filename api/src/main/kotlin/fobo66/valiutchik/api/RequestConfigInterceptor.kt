@@ -1,7 +1,7 @@
-package fobo66.exchangecourcesbelarus.api
+package fobo66.valiutchik.api
 
-import fobo66.exchangecourcesbelarus.di.ApiPassword
-import fobo66.exchangecourcesbelarus.di.ApiUsername
+import fobo66.valiutchik.api.di.ApiPassword
+import fobo66.valiutchik.api.di.ApiUsername
 import java.util.concurrent.TimeUnit.HOURS
 import javax.inject.Inject
 import okhttp3.CacheControl

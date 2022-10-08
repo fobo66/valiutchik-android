@@ -8,11 +8,11 @@ import fobo66.exchangecourcesbelarus.db.CurrencyRatesDatabase
 import fobo66.exchangecourcesbelarus.entities.BestCourse
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSource
 import fobo66.exchangecourcesbelarus.model.datasource.PersistenceDataSourceImpl
+import fobo66.valiutchik.api.EUR
+import fobo66.valiutchik.api.RUB
+import fobo66.valiutchik.api.USD
 import fobo66.valiutchik.core.BUY_COURSE
-import fobo66.valiutchik.core.EUR
-import fobo66.valiutchik.core.RUB
 import fobo66.valiutchik.core.SELL_COURSE
-import fobo66.valiutchik.core.USD
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -37,7 +37,8 @@ class PersistenceDataSourceTest {
   fun setUp() {
     val context = InstrumentationRegistry.getInstrumentation().targetContext
     db = Room.inMemoryDatabaseBuilder(
-      context, CurrencyRatesDatabase::class.java
+      context,
+      CurrencyRatesDatabase::class.java
     ).build()
     persistenceDataSource =
       PersistenceDataSourceImpl(db)
@@ -50,7 +51,6 @@ class PersistenceDataSourceTest {
 
   @Test
   fun saveBestBuyCourses() {
-
     val bestCourses = listOf(
       BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
       BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE)
@@ -68,7 +68,6 @@ class PersistenceDataSourceTest {
 
   @Test
   fun saveBestSellCourses() {
-
     val bestCourses = listOf(
       BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
       BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE)
@@ -86,7 +85,6 @@ class PersistenceDataSourceTest {
 
   @Test
   fun saveMixedCourses() {
-
     val bestCourses = listOf(
       BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
       BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),

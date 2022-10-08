@@ -12,7 +12,7 @@ plugins {
 
 val composeVersion = "1.3.2"
 val composeUiVersion = "1.3.0-rc01"
-val accompanistVersion = "0.26.4-beta"
+val accompanistVersion = "0.26.5-beta"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
 val activityVersion = "1.6.0"
@@ -179,12 +179,6 @@ dependencies {
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
   implementation("androidx.navigation:navigation-compose:$navVersion")
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-  // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.10"))
-  implementation("com.squareup.okhttp3:okhttp")
-  debugImplementation("com.squareup.okhttp3:logging-interceptor")
-  implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 
   // multidex
   implementation("androidx.multidex:multidex:2.0.1")

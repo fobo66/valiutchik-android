@@ -9,7 +9,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.R
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -25,14 +24,4 @@ object SystemModule {
 
   @Provides
   fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
-
-  @ApiUsername
-  @Provides
-  fun provideUsername(@ApplicationContext context: Context): String =
-    context.getString(R.string.apiUsername)
-
-  @ApiPassword
-  @Provides
-  fun providePassword(@ApplicationContext context: Context): String =
-    context.getString(R.string.apiPassword)
 }

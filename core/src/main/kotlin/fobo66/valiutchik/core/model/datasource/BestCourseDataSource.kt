@@ -1,6 +1,6 @@
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.api.Currency
 
 interface BestCourseDataSource {
   fun findBestBuyCurrencies(

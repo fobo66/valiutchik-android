@@ -7,17 +7,13 @@ import fobo66.valiutchik.core.TAG_NAME_RUR_BUY
 import fobo66.valiutchik.core.TAG_NAME_RUR_SELL
 import fobo66.valiutchik.core.TAG_NAME_USD_BUY
 import fobo66.valiutchik.core.TAG_NAME_USD_SELL
-import fobo66.valiutchik.core.entities.Currency
-import fobo66.valiutchik.core.util.CurrencyBuilder
-import fobo66.valiutchik.core.util.CurrencyBuilderImpl
-import fobo66.valiutchik.core.util.CurrencyRatesParser
 import java.io.IOException
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Document
 import org.w3c.dom.NodeList
 
-class TestMyfinParser : CurrencyRatesParser {
+class TestMyfinParser : fobo66.valiutchik.api.CurrencyRatesParser {
 
   private val neededTagNames by lazy {
     setOf(
@@ -31,7 +27,7 @@ class TestMyfinParser : CurrencyRatesParser {
     )
   }
 
-  override fun parse(inputStream: InputStream): Set<Currency> {
+  override fun parse(inputStream: InputStream): Set<fobo66.valiutchik.api.Currency> {
     val dbFactory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
     val documentBuilder = dbFactory.newDocumentBuilder()
     val document = documentBuilder.parse(inputStream)
@@ -40,8 +36,8 @@ class TestMyfinParser : CurrencyRatesParser {
     return readCurrencies(document)
   }
 
-  private fun readCurrencies(document: Document): Set<Currency> {
-    val currencies = mutableSetOf<Currency>()
+  private fun readCurrencies(document: Document): Set<fobo66.valiutchik.api.Currency> {
+    val currencies = mutableSetOf<fobo66.valiutchik.api.Currency>()
 
     val nodes = document.getElementsByTagName(ENTRY_TAG_NAME)
 
@@ -55,9 +51,10 @@ class TestMyfinParser : CurrencyRatesParser {
   }
 
   @Throws(IOException::class)
-  private fun readCurrency(nodes: NodeList): Currency {
+  private fun readCurrency(nodes: NodeList): fobo66.valiutchik.api.Currency {
     var fieldName: String
-    var currencyBuilder: CurrencyBuilder = CurrencyBuilderImpl()
+    var currencyBuilder: fobo66.valiutchik.api.CurrencyBuilder =
+      fobo66.valiutchik.api.CurrencyBuilderImpl()
     for (index in 0 until nodes.length) {
       val node = nodes.item(index)
       fieldName = node?.nodeName.orEmpty()

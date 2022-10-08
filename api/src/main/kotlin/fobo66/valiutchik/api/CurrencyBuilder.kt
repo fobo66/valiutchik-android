@@ -1,6 +1,4 @@
-package fobo66.valiutchik.core.util
-
-import fobo66.valiutchik.core.entities.Currency
+package fobo66.valiutchik.api
 
 /**
  * (c) 2017 Andrey Mukamolov aka fobo66

@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.di
+package fobo66.valiutchik.api.di
 
 import android.content.Context
 import dagger.Module
@@ -6,11 +6,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import fobo66.exchangecourcesbelarus.api.ExchangeRatesApi
-import fobo66.exchangecourcesbelarus.api.RequestConfigInterceptor
-import fobo66.exchangecourcesbelarus.util.XmlConverterFactory
-import fobo66.valiutchik.core.BASE_URL
-import fobo66.valiutchik.core.CACHE_SIZE
+import fobo66.valiutchik.api.ExchangeRatesApi
+import fobo66.valiutchik.api.RequestConfigInterceptor
+import fobo66.valiutchik.api.XmlConverterFactory
 import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -23,6 +21,10 @@ import timber.log.Timber
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
+
+const val BASE_URL = "https://admin.myfin.by/"
+const val CACHE_SIZE = 1024L * 1024L * 2L
+
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {

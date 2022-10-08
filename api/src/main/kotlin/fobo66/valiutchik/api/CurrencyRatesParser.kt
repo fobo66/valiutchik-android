@@ -1,6 +1,5 @@
-package fobo66.valiutchik.core.util
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.core.entities.Currency
 import java.io.InputStream
 
 /**

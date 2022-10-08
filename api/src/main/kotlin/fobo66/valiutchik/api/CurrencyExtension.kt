@@ -1,11 +1,4 @@
-package fobo66.valiutchik.core.util
-
-import fobo66.valiutchik.core.CurrencyName
-import fobo66.valiutchik.core.EUR
-import fobo66.valiutchik.core.RUB
-import fobo66.valiutchik.core.RUR
-import fobo66.valiutchik.core.USD
-import fobo66.valiutchik.core.entities.Currency
+package fobo66.valiutchik.api
 
 /**
  * Method to figure out which currency will be used depends on the context

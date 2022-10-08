@@ -20,6 +20,18 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
+
+    resValue(
+      "string",
+      "apiUsername",
+      loadSecret(rootProject, API_USERNAME)
+    )
+
+    resValue(
+      "string",
+      "apiPassword",
+      loadSecret(rootProject, API_PASSWORD)
+    )
   }
 
   buildTypes {
@@ -49,6 +61,7 @@ dependencies {
   implementation("com.squareup.okhttp3:okhttp")
   debugImplementation("com.squareup.okhttp3:logging-interceptor")
   implementation("com.squareup.retrofit2:retrofit:2.9.0")
+  implementation("com.jakewharton.timber:timber:5.0.1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
   detektPlugins("com.twitter.compose.rules:detekt:0.0.18")

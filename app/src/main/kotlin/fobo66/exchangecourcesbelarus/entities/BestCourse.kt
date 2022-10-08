@@ -5,8 +5,8 @@ import androidx.compose.runtime.Immutable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import fobo66.valiutchik.core.CurrencyName
-import fobo66.valiutchik.core.USD
+import fobo66.valiutchik.api.CurrencyName
+import fobo66.valiutchik.api.USD
 import fobo66.valiutchik.core.entities.BestCurrencyRate
 
 /**

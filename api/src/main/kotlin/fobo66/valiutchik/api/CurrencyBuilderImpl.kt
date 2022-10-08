@@ -1,13 +1,12 @@
-package fobo66.valiutchik.core.util
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.core.TAG_NAME_BANKNAME
-import fobo66.valiutchik.core.TAG_NAME_EUR_BUY
-import fobo66.valiutchik.core.TAG_NAME_EUR_SELL
-import fobo66.valiutchik.core.TAG_NAME_RUR_BUY
-import fobo66.valiutchik.core.TAG_NAME_RUR_SELL
-import fobo66.valiutchik.core.TAG_NAME_USD_BUY
-import fobo66.valiutchik.core.TAG_NAME_USD_SELL
-import fobo66.valiutchik.core.entities.Currency
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_BANKNAME
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_EUR_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_EUR_SELL
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_RUR_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_RUR_SELL
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_USD_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_USD_SELL
 
 /**
  * (c) 2017 Andrey Mukamolov aka fobo66
