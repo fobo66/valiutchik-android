@@ -1,0 +1,81 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+env:
+  BITRISEIO_ANDROID_KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
+  BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{secrets.KEYSTORE_PRIVATE_KEY_PASSWORD}}
+  BITRISEIO_ANDROID_KEYSTORE_URL: ${{secrets.KEYSTORE_FILE}}
+  BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
+  MAPBOX_GEOCODER_ACCESS_TOKEN: ${{secrets.MAPBOX_GEOCODER_ACCESS_TOKEN}}
+  MAPBOX_DOWNLOAD_ACCESS_TOKEN: ${{secrets.MAPBOX_DOWNLOAD_ACCESS_TOKEN}}
+  API_USERNAME: ${{secrets.VALIUTCHIK_API_USERNAME}}
+  API_PASSWORD: ${{secrets.VALIUTCHIK_API_PASSWORD}}
+  
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Check Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Detekt
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: detekt
+      - name: Upload build reports
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: detekt
+          path: |
+            app/build/reports/detekt/detekt.html
+            data/build/reports/detekt/detekt.html
+            domain/build/reports/detekt/detekt.html
+  ui-tests:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Check Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Run tests
+        uses: reactivecircus/android-emulator-runner@v2.26.0
+        with:
+          script: ./gradlew app:connectedDebugAndroidTest
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          api-level: 33
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Check Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Run tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: testDebugUnitTest
