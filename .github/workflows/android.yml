@@ -56,10 +56,13 @@ jobs:
       - name: Check Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Run tests
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: reactivecircus/android-emulator-runner@v2.26.0
         with:
           script: ./gradlew connectedDebugAndroidTest
-          api-level: 30
+          arch: x86_64
+          tag: google_apis
+          disableAnimations: true
+          api-level: 33
   unit-tests:
     runs-on: ubuntu-latest
 
