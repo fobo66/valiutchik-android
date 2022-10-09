@@ -38,10 +38,11 @@ android {
       isDefault = true
     }
   }
-    namespace = "fobo66.valiutchik.benchmark"
+  namespace = "fobo66.valiutchik.benchmark"
 }
 
 dependencies {
+  implementation(project(":api"))
   implementation(project(":core"))
   androidTestImplementation("androidx.test:runner:1.5.0-beta01")
   androidTestImplementation("androidx.test.ext:junit:1.1.3")
