@@ -4,6 +4,7 @@ plugins {
   id("com.android.library")
   kotlin("android")
   kotlin("kapt")
+  id("dagger.hilt.android.plugin")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
 }
@@ -65,6 +66,7 @@ detekt {
 
 dependencies {
   api(project(":api"))
+  api(project(":storage"))
   implementation("androidx.annotation:annotation:1.5.0")
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
