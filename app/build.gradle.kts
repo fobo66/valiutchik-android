@@ -16,7 +16,6 @@ val accompanistVersion = "0.26.5-rc"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
 val activityVersion = "1.6.0"
-val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
 val mockkVersion = "1.13.2"
@@ -46,18 +45,6 @@ android {
     versionName = "1.12.1"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-    resValue(
-      "string",
-      "apiUsername",
-      loadSecret(rootProject, API_USERNAME)
-    )
-
-    resValue(
-      "string",
-      "apiPassword",
-      loadSecret(rootProject, API_PASSWORD)
-    )
   }
 
   buildTypes {
@@ -88,14 +75,6 @@ android {
     jvmTarget = "11"
 
     freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
-  }
-
-  kapt {
-    arguments {
-      arg("room.schemaLocation", "$projectDir/schemas")
-      arg("room.incremental", "true")
-      arg("room.expandProjection", "true")
-    }
   }
 
   buildFeatures {
@@ -168,11 +147,6 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
-  // room
-  implementation("androidx.room:room-runtime:$roomVersion")
-  implementation("androidx.room:room-ktx:$roomVersion")
-  kapt("androidx.room:room-compiler:$roomVersion")
-
   // nav
   implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
@@ -197,7 +171,6 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
-  testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")

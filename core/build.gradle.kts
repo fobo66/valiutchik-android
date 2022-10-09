@@ -61,6 +61,14 @@ android {
   namespace = "fobo66.valiutchik.core"
 }
 
+kapt {
+  arguments {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+  }
+}
+
 detekt {
   autoCorrect = true
 }

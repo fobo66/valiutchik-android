@@ -1,3 +1,5 @@
+import com.android.sdklib.AndroidVersion
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -13,10 +15,10 @@ val hiltVersion = "2.44"
 
 android {
   namespace = "fobo66.valiutchik.api"
-  compileSdk = 33
+  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   defaultConfig {
-    minSdk = 21
+    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
