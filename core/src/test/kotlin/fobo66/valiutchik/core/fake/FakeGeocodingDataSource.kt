@@ -4,12 +4,11 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
-import fobo66.valiutchik.core.util.Resettable
 import io.mockk.every
 import io.mockk.mockk
 import java.io.IOException
 
-class FakeGeocodingDataSource : GeocodingDataSource, Resettable {
+class FakeGeocodingDataSource : GeocodingDataSource {
   var showError = false
   var unexpectedError = false
 
@@ -27,9 +26,4 @@ class FakeGeocodingDataSource : GeocodingDataSource, Resettable {
       unexpectedError -> throw KotlinNullPointerException("Yikes!")
       else -> listOf(searchResult)
     }
-
-  override fun reset() {
-    showError = false
-    unexpectedError = false
-  }
 }

@@ -9,10 +9,8 @@ import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
@@ -24,25 +22,13 @@ class RefreshExchangeRatesTest {
 
   private val now = LocalDateTime.now()
 
-  private lateinit var refreshExchangeRates: RefreshExchangeRates
-
-  @BeforeEach
-  fun setUp() {
-    refreshExchangeRates =
-      RefreshExchangeRatesImpl(
-        locationRepository,
-        timestampRepository,
-        currencyRateRepository,
-        preferenceRepository
-      )
-  }
-
-  @AfterEach
-  fun tearDown() {
-    locationRepository.reset()
-    timestampRepository.reset()
-    currencyRateRepository.reset()
-  }
+  private val refreshExchangeRates: RefreshExchangeRates =
+    RefreshExchangeRatesImpl(
+      locationRepository,
+      timestampRepository,
+      currencyRateRepository,
+      preferenceRepository
+    )
 
   @Test
   fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
