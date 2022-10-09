@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.di
+package fobo66.valiutchik.core.di
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,10 +1,9 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.core.fake
 
 import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
-import fobo66.valiutchik.core.util.Resettable
 import java.io.IOException
 
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource, Resettable {
+class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
   var isError = false
   override suspend fun loadExchangeRates(city: String): Set<fobo66.valiutchik.api.Currency> =
     if (isError) {
@@ -12,8 +11,4 @@ class FakeCurrencyRatesDataSource : CurrencyRatesDataSource, Resettable {
     } else {
       setOf(fobo66.valiutchik.api.Currency())
     }
-
-  override fun reset() {
-    isError = false
-  }
 }

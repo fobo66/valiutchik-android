@@ -1,6 +1,6 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.valiutchik.core.entities.BestCourse
 import kotlinx.coroutines.flow.Flow
 
 interface PersistenceDataSource {

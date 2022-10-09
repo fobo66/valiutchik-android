@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.util
 
 import javax.inject.Inject
 
@@ -15,7 +15,8 @@ class BankNameNormalizer @Inject constructor() {
     }
 
     val canonicalBankName = if (startTypographicalQuotePosition == -1 ||
-      (startQuotePosition in 1 until startTypographicalQuotePosition)) {
+      (startQuotePosition in 1 until startTypographicalQuotePosition)
+    ) {
       val endQuotePosition = bankName.indexOf('\"', startQuotePosition + 1)
       bankName.substring(startQuotePosition + 1, endQuotePosition)
     } else {

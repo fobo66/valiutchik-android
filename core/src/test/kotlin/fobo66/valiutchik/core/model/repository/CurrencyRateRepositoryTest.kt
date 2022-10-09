@@ -1,10 +1,10 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
-import fobo66.exchangecourcesbelarus.model.fake.FakeBestCourseDataSource
-import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesDataSource
-import fobo66.exchangecourcesbelarus.model.fake.FakePersistenceDataSource
-import fobo66.exchangecourcesbelarus.util.BankNameNormalizer
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
+import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
+import fobo66.valiutchik.core.fake.FakePersistenceDataSource
+import fobo66.valiutchik.core.util.BankNameNormalizer
 import java.time.LocalDateTime
 import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,7 +12,6 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -23,29 +22,21 @@ import org.junit.jupiter.api.assertThrows
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
 
-  private lateinit var currencyRateRepository: CurrencyRateRepository
-
   private val bestCourseDataSource = FakeBestCourseDataSource()
   private val persistenceDataSource = FakePersistenceDataSource()
   private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
-
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-  @BeforeEach
-  fun setUp() {
-    currencyRateRepository = CurrencyRateRepositoryImpl(
-      bestCourseDataSource,
-      persistenceDataSource,
-      currencyRatesDataSource,
-      BankNameNormalizer(),
-      ioDispatcher
-    )
-  }
+  private val currencyRateRepository: CurrencyRateRepository = CurrencyRateRepositoryImpl(
+    bestCourseDataSource,
+    persistenceDataSource,
+    currencyRatesDataSource,
+    BankNameNormalizer(),
+    ioDispatcher
+  )
 
   @AfterEach
   fun tearDown() {
-    persistenceDataSource.reset()
-    currencyRatesDataSource.reset()
     ioDispatcher.close()
   }
 

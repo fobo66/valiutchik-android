@@ -1,6 +1,6 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
-import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.valiutchik.core.entities.BestCourse
 import java.time.LocalDateTime
 import kotlinx.coroutines.flow.Flow
 

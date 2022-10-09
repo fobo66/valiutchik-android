@@ -1,10 +1,10 @@
-package fobo66.exchangecourcesbelarus.db
+package fobo66.valiutchik.core.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.valiutchik.core.entities.BestCourse
 import kotlinx.coroutines.flow.Flow
 
 /**

@@ -19,7 +19,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.M
     targetSdk = AndroidVersion.VersionCodes.TIRAMISU
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

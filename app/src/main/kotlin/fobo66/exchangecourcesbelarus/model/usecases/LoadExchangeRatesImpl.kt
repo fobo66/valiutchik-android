@@ -2,12 +2,13 @@ package fobo66.exchangecourcesbelarus.model.usecases
 
 import androidx.annotation.StringRes
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.api.CurrencyName
 import fobo66.valiutchik.api.EUR
 import fobo66.valiutchik.api.RUB
 import fobo66.valiutchik.api.RUR
 import fobo66.valiutchik.api.USD
+import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import javax.inject.Inject
@@ -42,3 +43,6 @@ class LoadExchangeRatesImpl @Inject constructor(
       else -> 0
     }
 }
+
+private fun BestCourse.toBestCurrencyRate(@StringRes currencyNameRes: Int): BestCurrencyRate =
+  BestCurrencyRate(id, bank, currencyNameRes, currencyValue)

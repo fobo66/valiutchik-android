@@ -1,6 +1,6 @@
 package fobo66.exchangecourcesbelarus.model.usecases
 
-import fobo66.exchangecourcesbelarus.model.repository.CurrencyRateRepository
+import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository

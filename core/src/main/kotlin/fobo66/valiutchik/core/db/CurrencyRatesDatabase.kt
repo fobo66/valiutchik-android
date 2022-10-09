@@ -1,8 +1,8 @@
-package fobo66.exchangecourcesbelarus.db
+package fobo66.valiutchik.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import fobo66.exchangecourcesbelarus.entities.BestCourse
+import fobo66.valiutchik.core.entities.BestCourse
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>

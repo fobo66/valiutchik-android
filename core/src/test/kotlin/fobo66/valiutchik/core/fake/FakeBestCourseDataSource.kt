@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.core.fake
 
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 
