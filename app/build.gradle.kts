@@ -19,7 +19,6 @@ val activityVersion = "1.6.0"
 val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
-val retrofitVersion = "2.9.0"
 val mockkVersion = "1.13.2"
 val junitVersion = "5.9.1"
 val turbineVersion = "0.11.0"
@@ -38,11 +37,11 @@ android {
     }
   }
 
-  compileSdk = 33
+  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = 33
+    targetSdk = AndroidVersion.VersionCodes.TIRAMISU
     versionCode = 18
     versionName = "1.12.1"
     multiDexEnabled = true
@@ -198,7 +197,6 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
-  testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")

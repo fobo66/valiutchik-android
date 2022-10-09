@@ -15,7 +15,7 @@ val hiltVersion = "2.44"
 val mockkVersion = "1.13.2"
 
 android {
-  compileSdk = 33
+  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP

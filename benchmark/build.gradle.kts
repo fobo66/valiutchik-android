@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-  compileSdk = 33
+  compileSdk = com.android.sdklib.AndroidVersion.VersionCodes.TIRAMISU
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
