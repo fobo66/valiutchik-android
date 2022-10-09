@@ -44,6 +44,7 @@ jobs:
             domain/build/reports/detekt/detekt.html
   ui-tests:
     runs-on: macos-latest
+    if: ${{ false }}  # disable for now due ti high resource usage
 
     steps:
       - uses: actions/checkout@v3.1.0
