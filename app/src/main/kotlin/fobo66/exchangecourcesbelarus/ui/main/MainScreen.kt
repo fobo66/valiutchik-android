@@ -31,7 +31,7 @@ import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.exchangecourcesbelarus.util.lazyListItemPosition
-import fobo66.valiutchik.core.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

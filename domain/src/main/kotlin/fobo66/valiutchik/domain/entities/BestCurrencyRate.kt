@@ -1,4 +1,4 @@
-package fobo66.valiutchik.core.entities
+package fobo66.valiutchik.domain.entities
 
 import androidx.annotation.StringRes
 

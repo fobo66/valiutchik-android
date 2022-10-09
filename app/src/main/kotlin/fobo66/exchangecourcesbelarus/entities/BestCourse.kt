@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import fobo66.valiutchik.api.CurrencyName
 import fobo66.valiutchik.api.USD
-import fobo66.valiutchik.core.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 
 /**
  * Model for best available exchange courses to put into cardview

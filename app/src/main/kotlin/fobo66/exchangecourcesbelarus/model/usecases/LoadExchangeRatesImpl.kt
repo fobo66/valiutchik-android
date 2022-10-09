@@ -8,8 +8,8 @@ import fobo66.valiutchik.api.EUR
 import fobo66.valiutchik.api.RUB
 import fobo66.valiutchik.api.RUR
 import fobo66.valiutchik.api.USD
-import fobo66.valiutchik.core.entities.BestCurrencyRate
-import fobo66.valiutchik.core.usecases.LoadExchangeRates
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

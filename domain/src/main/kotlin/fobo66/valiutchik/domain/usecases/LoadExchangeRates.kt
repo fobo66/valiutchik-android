@@ -1,6 +1,6 @@
-package fobo66.valiutchik.core.usecases
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.core.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.flow.Flow
 
 interface LoadExchangeRates {
