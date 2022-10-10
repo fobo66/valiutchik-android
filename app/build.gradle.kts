@@ -226,7 +226,7 @@ dependencies {
   androidTestImplementation(
     "com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVersion"
   )
-  androidTestImplementation("io.github.kakaocup:compose:0.1.0")
+  androidTestImplementation("io.github.kakaocup:compose:0.1.1")
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
   androidTestImplementation("androidx.test:runner:1.5.0-beta01")
   androidTestImplementation("androidx.test:rules:1.4.1-beta01")
