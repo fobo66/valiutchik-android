@@ -43,7 +43,7 @@ android {
 
 dependencies {
   implementation(project(":api"))
-  implementation(project(":core"))
+  implementation(project(":data"))
   androidTestImplementation("androidx.test:runner:1.5.0-beta01")
   androidTestImplementation("androidx.test.ext:junit:1.1.3")
   androidTestImplementation("junit:junit:4.13.2")

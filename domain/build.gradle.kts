@@ -48,7 +48,7 @@ detekt {
 }
 
 dependencies {
-  api(project(":core"))
+  api(project(":data"))
   implementation("androidx.annotation:annotation:1.5.0")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
   implementation("com.google.dagger:hilt-android:$hiltVersion")
