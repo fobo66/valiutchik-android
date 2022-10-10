@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="currency_name_usd_buy">US Dollar buy rate</string>
+  <string name="currency_name_usd_sell">US Dollar sell rate</string>
+  <string name="currency_name_eur_buy">Euro buy rate</string>
+  <string name="currency_name_eur_sell">Euro sell rate</string>
+  <string name="currency_name_rub_buy">Russian ruble buy rate</string>
+  <string name="currency_name_rub_sell">Russian ruble sell rate</string>
+</resources>

@@ -1,7 +1,6 @@
-package fobo66.exchangecourcesbelarus.model.usecases
+package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 

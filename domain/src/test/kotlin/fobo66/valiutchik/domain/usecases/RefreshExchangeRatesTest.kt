@@ -1,10 +1,9 @@
-package fobo66.exchangecourcesbelarus.model.usecases
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRateRepository
-import fobo66.exchangecourcesbelarus.model.fake.FakeCurrencyRatesTimestampRepository
-import fobo66.exchangecourcesbelarus.model.fake.FakeLocationRepository
-import fobo66.exchangecourcesbelarus.model.fake.FakePreferenceRepository
-import fobo66.valiutchik.domain.usecases.RefreshExchangeRates
+import fobo66.valiutchik.domain.fake.FakeCurrencyRateRepository
+import fobo66.valiutchik.domain.fake.FakeCurrencyRatesTimestampRepository
+import fobo66.valiutchik.domain.fake.FakeLocationRepository
+import fobo66.valiutchik.domain.fake.FakePreferenceRepository
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

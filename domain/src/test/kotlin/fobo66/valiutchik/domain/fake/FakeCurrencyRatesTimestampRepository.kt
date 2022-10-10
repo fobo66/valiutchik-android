@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.model.fake
+package fobo66.valiutchik.domain.fake
 
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import java.time.LocalDateTime
