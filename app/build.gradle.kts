@@ -162,7 +162,7 @@ dependencies {
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
 
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.18")
+  detektPlugins("com.twitter.compose.rules:detekt:0.0.19")
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
@@ -180,7 +180,7 @@ dependencies {
   androidTestImplementation(
     "com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVersion"
   )
-  androidTestImplementation("io.github.kakaocup:compose:0.1.0")
+  androidTestImplementation("io.github.kakaocup:compose:0.1.1")
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
   androidTestImplementation("androidx.test:runner:1.5.0-beta01")
   androidTestImplementation("androidx.test:rules:1.4.1-beta01")

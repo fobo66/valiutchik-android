@@ -56,7 +56,7 @@ dependencies {
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.18")
+  detektPlugins("com.twitter.compose.rules:detekt:0.0.19")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
 }
