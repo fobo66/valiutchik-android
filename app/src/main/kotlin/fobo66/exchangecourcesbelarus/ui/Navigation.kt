@@ -25,7 +25,6 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
@@ -34,7 +33,6 @@ import fobo66.exchangecourcesbelarus.ui.main.MainScreenNoPermission
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -162,9 +160,7 @@ fun NavGraphBuilder.licensesScreen() {
     val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()
     val context = LocalContext.current
 
-    val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle(
-      initialValue = LicensesState(persistentListOf())
-    )
+    val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle()
 
     OpenSourceLicensesScreen(licensesState = licensesState, onItemClick = { licenseUrl ->
       startActivity(

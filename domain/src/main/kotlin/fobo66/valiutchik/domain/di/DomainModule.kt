@@ -4,8 +4,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import fobo66.valiutchik.core.usecases.LoadOpenSourceLicenses
-import fobo66.valiutchik.core.usecases.LoadOpenSourceLicensesImpl
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
@@ -14,6 +12,8 @@ import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRatesImpl
+import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
+import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicensesImpl
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreferenceImpl
 import fobo66.valiutchik.domain.usecases.RefreshExchangeRates

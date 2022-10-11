@@ -22,4 +22,3 @@ const val TAG_NAME_RUR_BUY = "rub_buy"
 const val TAG_NAME_RUR_SELL = "rub_sell"
 
 const val UNKNOWN_COURSE = "-"
-
