@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
   val bestCurrencyRates = loadExchangeRates.execute()
     .stateIn(
       scope = viewModelScope,
-      started = SharingStarted.Lazily,
+      started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
       initialValue = emptyList()
     )
     .filter { it.isNotEmpty() }
