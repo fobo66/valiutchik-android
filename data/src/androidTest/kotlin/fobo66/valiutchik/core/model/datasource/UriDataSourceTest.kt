@@ -1,15 +1,10 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import fobo66.valiutchik.core.model.datasource.UriDataSource
-import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class UriDataSourceTest {
 
   private lateinit var uriDataSource: UriDataSource

@@ -1,4 +1,6 @@
-package fobo66.valiutchik.api
+package fobo66.valiutchik.core.util
+
+import fobo66.valiutchik.api.Currency
 
 /**
  * Method to figure out which currency will be used depends on the context

@@ -3,8 +3,8 @@ package fobo66.valiutchik.core.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import fobo66.valiutchik.api.CurrencyName
-import fobo66.valiutchik.api.USD
+import fobo66.valiutchik.core.util.CurrencyName
+import fobo66.valiutchik.core.util.USD
 
 /**
  * Model for best available exchange courses to put into cardview

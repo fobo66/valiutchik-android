@@ -1,13 +1,13 @@
 package fobo66.valiutchik.domain.usecases
 
 import androidx.annotation.StringRes
-import fobo66.valiutchik.api.CurrencyName
-import fobo66.valiutchik.api.EUR
-import fobo66.valiutchik.api.RUB
-import fobo66.valiutchik.api.RUR
-import fobo66.valiutchik.api.USD
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import fobo66.valiutchik.core.util.CurrencyName
+import fobo66.valiutchik.core.util.EUR
+import fobo66.valiutchik.core.util.RUB
+import fobo66.valiutchik.core.util.RUR
+import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import javax.inject.Inject

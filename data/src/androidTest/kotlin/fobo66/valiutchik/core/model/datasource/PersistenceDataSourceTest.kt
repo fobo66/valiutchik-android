@@ -1,18 +1,16 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.valiutchik.core.model.datasource
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
-import fobo66.valiutchik.api.EUR
-import fobo66.valiutchik.api.RUB
-import fobo66.valiutchik.api.USD
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
+import fobo66.valiutchik.core.util.EUR
+import fobo66.valiutchik.core.util.RUB
+import fobo66.valiutchik.core.util.USD
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After

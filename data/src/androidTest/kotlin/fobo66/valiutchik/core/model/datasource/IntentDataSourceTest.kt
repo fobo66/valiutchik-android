@@ -1,22 +1,17 @@
-package fobo66.exchangecourcesbelarus.model.datasource
+package fobo66.valiutchik.core.model.datasource
 
 import android.content.Intent
 import android.net.Uri
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.core.model.datasource.IntentDataSource
-import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class IntentDataSourceTest {
 
   private val uri: Uri by lazy {

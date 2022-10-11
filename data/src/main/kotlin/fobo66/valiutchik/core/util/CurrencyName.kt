@@ -1,4 +1,4 @@
-package fobo66.valiutchik.api
+package fobo66.valiutchik.core.util
 
 import androidx.annotation.StringDef
 

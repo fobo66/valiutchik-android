@@ -1,22 +1,17 @@
-package fobo66.exchangecourcesbelarus.model.repository
+package fobo66.valiutchik.core.model.repository
 
 import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
-import fobo66.valiutchik.core.model.repository.MapRepository
-import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class MapRepositoryImplTest {
 
   private val uriDataSource = object : UriDataSource {

@@ -74,14 +74,14 @@ detekt {
 }
 
 dependencies {
-  api(project(":api"))
+  implementation(project(":api"))
   implementation("androidx.annotation:annotation:1.5.0")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02")
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
-  implementation("androidx.room:room-runtime:$roomVersion")
   implementation("androidx.room:room-ktx:$roomVersion")
   kapt("androidx.room:room-compiler:$roomVersion")
   implementation("androidx.preference:preference-ktx:1.2.0")
@@ -96,4 +96,14 @@ dependencies {
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  androidTestImplementation("androidx.test:core:1.5.0-beta01")
+  androidTestImplementation(
+    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
+  )
+  androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+  androidTestImplementation("app.cash.turbine:turbine:0.11.0")
+  androidTestImplementation("androidx.test:runner:1.5.0-beta01")
+  androidTestImplementation("androidx.test:rules:1.4.1-beta01")
+  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-beta01")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-beta01")
 }

@@ -139,7 +139,6 @@ dependencies {
   implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
 
   // lifecycle
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 

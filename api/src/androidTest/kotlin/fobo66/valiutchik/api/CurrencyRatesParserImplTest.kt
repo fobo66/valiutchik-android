@@ -1,18 +1,12 @@
-package fobo66.exchangecourcesbelarus.model
+package fobo66.valiutchik.api
 
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import org.xmlpull.v1.XmlPullParserException
 
 class CurrencyRatesParserImplTest {
 
-  private lateinit var parser: fobo66.valiutchik.api.CurrencyRatesParser
-
-  @Before
-  fun setUp() {
-    parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
-  }
+  private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
 
   @Test
   fun singleCurrency() {
