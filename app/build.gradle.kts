@@ -18,7 +18,6 @@ val hiltVersion = "2.44"
 val activityVersion = "1.6.0"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
-val mockkVersion = "1.13.2"
 val junitVersion = "5.9.1"
 val turbineVersion = "0.11.0"
 val kaspressoVersion = "1.4.2"
@@ -166,8 +165,6 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("io.mockk:mockk:$mockkVersion")
-  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")
