@@ -10,17 +10,14 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.3.1"
+val composeVersion = "1.3.2"
 val composeUiVersion = "1.3.0-rc01"
-val accompanistVersion = "0.26.4-beta"
+val accompanistVersion = "0.26.5-rc"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
 val activityVersion = "1.6.0"
-val roomVersion = "2.4.3"
 val navVersion = "2.5.2"
 val lifecycleVersion = "2.6.0-alpha02"
-val retrofitVersion = "2.9.0"
-val mockkVersion = "1.13.2"
 val junitVersion = "5.9.1"
 val turbineVersion = "0.11.0"
 val kaspressoVersion = "1.4.2"
@@ -38,33 +35,15 @@ android {
     }
   }
 
-  compileSdk = 33
+  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.LOLLIPOP
-    targetSdk = 33
+    targetSdk = AndroidVersion.VersionCodes.TIRAMISU
     versionCode = 18
     versionName = "1.12.1"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-    resValue(
-      "string",
-      "mapboxGeocoderAccessToken",
-      loadSecret(rootProject, MAPBOX_TOKEN)
-    )
-
-    resValue(
-      "string",
-      "apiUsername",
-      loadSecret(rootProject, API_USERNAME)
-    )
-
-    resValue(
-      "string",
-      "apiPassword",
-      loadSecret(rootProject, API_PASSWORD)
-    )
   }
 
   buildTypes {
@@ -95,14 +74,6 @@ android {
     jvmTarget = "11"
 
     freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
-  }
-
-  kapt {
-    arguments {
-      arg("room.schemaLocation", "$projectDir/schemas")
-      arg("room.incremental", "true")
-      arg("room.expandProjection", "true")
-    }
   }
 
   buildFeatures {
@@ -141,7 +112,7 @@ licenseReport {
 }
 
 dependencies {
-  api(project(":core"))
+  api(project(":domain"))
 
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
@@ -153,8 +124,6 @@ dependencies {
   implementation("androidx.activity:activity-compose:$activityVersion")
   implementation("androidx.core:core-ktx:1.9.0")
   implementation("com.google.android.material:material:1.8.0-alpha01")
-  implementation("androidx.preference:preference-ktx:1.2.0")
-  implementation("androidx.datastore:datastore-preferences:1.0.0")
   implementation("androidx.core:core-splashscreen:1.0.0")
 
   // compose
@@ -170,29 +139,14 @@ dependencies {
   implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
 
   // lifecycle
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-
-  // location
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.36")
-
-  // room
-  implementation("androidx.room:room-runtime:$roomVersion")
-  implementation("androidx.room:room-ktx:$roomVersion")
-  kapt("androidx.room:room-compiler:$roomVersion")
 
   // nav
   implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
   implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
   implementation("androidx.navigation:navigation-compose:$navVersion")
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-  // http
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.10"))
-  implementation("com.squareup.okhttp3:okhttp")
-  debugImplementation("com.squareup.okhttp3:logging-interceptor")
-  implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 
   // multidex
   implementation("androidx.multidex:multidex:2.0.1")
@@ -210,10 +164,6 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("io.mockk:mockk:$mockkVersion")
-  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
-  testImplementation("com.squareup.retrofit2:retrofit-mock:$retrofitVersion")
-  testImplementation("androidx.room:room-testing:$roomVersion")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")

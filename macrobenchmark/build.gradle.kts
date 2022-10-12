@@ -1,3 +1,5 @@
+import com.android.sdklib.AndroidVersion
+
 plugins {
   id("com.android.test")
   id("org.jetbrains.kotlin.android")
@@ -5,7 +7,7 @@ plugins {
 
 android {
   namespace = "dev.fobo66.valiutchik.macrobenchmark"
-  compileSdk = 33
+  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -17,8 +19,8 @@ android {
   }
 
   defaultConfig {
-    minSdk = 24
-    targetSdk = 33
+    minSdk = AndroidVersion.VersionCodes.M
+    targetSdk = AndroidVersion.VersionCodes.TIRAMISU
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }

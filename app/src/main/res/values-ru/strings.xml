@@ -19,12 +19,6 @@
   <string name="maps_app_required">Невозможно показать отделения банка на карте: не найдено приложение карт</string>
   <string name="currency_value_copied">Курс валюты скопирован в буфер обмена</string>
   <string name="title_activity_oss_licenses">Лизензии открытого ПО</string>
-  <string name="currency_name_usd_buy">Доллар США курс покупки</string>
-  <string name="currency_name_usd_sell">Доллар США курс продажи</string>
-  <string name="currency_name_eur_buy">Евро курс покупки</string>
-  <string name="currency_name_eur_sell">Евро курс продажи</string>
-  <string name="currency_name_rub_buy">Российский рубль курс покупки</string>
-  <string name="currency_name_rub_sell">Российский рубль курс продажи</string>
   <string name="open_map">Искать обменники на карте</string>
   <string name="pref_title_update_interval">Время обновления, ч</string>
   <string name="permission_description">Нам необходимо разрешение на использование местоположения, чтобы узнать ваш город и показать курсы валют в нём. Пожалуйста, дайте нам разрешение.</string>

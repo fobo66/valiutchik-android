@@ -13,12 +13,6 @@
   <string name="about_app_description">App allows to quickly load the best exchange rates in the big cities of Belarus. By clicking on list item you can find nearest bank offices with best rates on the map in your city. By long pressing on the item you can copy rate to clipboard. You can also customize update interval to refresh rates in timely fashion, or change your default city. Please mind that info about exchange rates may be out of date. Please clarify in banks. Info about exchange rates provided by <a href="https://myfin.by">myfin.by</a></string>
   <string name="currency_value_copied">Currency rate was copied to clipboard</string>
   <string name="title_activity_oss_licenses">Open source licenses</string>
-  <string name="currency_name_usd_buy">US Dollar buy rate</string>
-  <string name="currency_name_usd_sell">US Dollar sell rate</string>
-  <string name="currency_name_eur_buy">Euro buy rate</string>
-  <string name="currency_name_eur_sell">Euro sell rate</string>
-  <string name="currency_name_rub_buy">Russian ruble buy rate</string>
-  <string name="currency_name_rub_sell">Russian ruble sell rate</string>
   <string name="open_map">Search for exchange offices on map</string>
   <string name="permission_description">We need location permission to determine your location, so we can determine your location and show you the closest available currency rates. Please give it to us.</string>
   <string name="permission_description_rationale">We need location permission to determine your location, so we can determine your location and show you the closest available currency rates.</string>

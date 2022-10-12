@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-  compileSdk = 33
+  compileSdk = com.android.sdklib.AndroidVersion.VersionCodes.TIRAMISU
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -38,11 +38,12 @@ android {
       isDefault = true
     }
   }
-    namespace = "fobo66.valiutchik.benchmark"
+  namespace = "fobo66.valiutchik.benchmark"
 }
 
 dependencies {
-  implementation(project(":core"))
+  implementation(project(":api"))
+  implementation(project(":data"))
   androidTestImplementation("androidx.test:runner:1.5.0-beta01")
   androidTestImplementation("androidx.test.ext:junit:1.1.3")
   androidTestImplementation("junit:junit:4.13.2")
