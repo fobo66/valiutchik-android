@@ -1,4 +1,4 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.core.TAG_NAME_BANKNAME
 import fobo66.valiutchik.core.TAG_NAME_EUR_BUY

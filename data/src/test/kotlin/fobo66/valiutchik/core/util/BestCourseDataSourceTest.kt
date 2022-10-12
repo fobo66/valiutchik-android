@@ -1,9 +1,6 @@
-package fobo66.exchangecourcesbelarus.util
+package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.api.CurrencyRatesParser
-import fobo66.valiutchik.api.EUR
-import fobo66.valiutchik.api.RUB
-import fobo66.valiutchik.api.USD
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
