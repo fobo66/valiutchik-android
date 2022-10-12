@@ -44,7 +44,6 @@ jobs:
             domain/build/reports/detekt/detekt.html
   ui-tests:
     runs-on: macos-latest
-    if: ${{ false }}  # disable for now due ti high resource usage
 
     steps:
       - uses: actions/checkout@v3.1.0
@@ -59,7 +58,7 @@ jobs:
       - name: Run tests
         uses: reactivecircus/android-emulator-runner@v2.26.0
         with:
-          script: ./gradlew app:connectedDebugAndroidTest
+          script: ./gradlew connectedDebugAndroidTest
           arch: x86_64
           target: google_apis
           disable-animations: true
