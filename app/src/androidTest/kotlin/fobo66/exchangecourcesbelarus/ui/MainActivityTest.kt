@@ -46,20 +46,6 @@ class MainActivityTest : TestCase(
   val grantPermissionsRule: GrantPermissionRule =
     GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-  @Test
-  fun showAboutDialog() = run {
-    step("click on About icon") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        aboutIcon.performClick()
-      }
-    }
-    step("check if about info is displayed") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        aboutDialog.assertIsDisplayed()
-      }
-    }
-  }
-
   @OptIn(ExperimentalTestApi::class)
   @Test
   fun showMaps() = before {

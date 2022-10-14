@@ -30,6 +30,7 @@ import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.main.ValiutchikTopBar
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -142,6 +143,29 @@ class ToolbarTest : TestCase(
       onComposeScreen<ToolbarScreen>(composeRule) {
         settingsIcon.assertDoesNotExist()
       }
+    }
+  }
+
+  @Test
+  fun showAboutDialog() = run {
+    var isAboutDialogShown = false
+    step("setup about icon") {
+      composeRule.setContent {
+        ValiutchikTopBar(
+          currentRoute = DESTINATION_MAIN,
+          onBackClick = {},
+          onAboutClick = { isAboutDialogShown = true },
+          onSettingsClicked = {}
+        )
+      }
+    }
+    step("click about icon") {
+      onComposeScreen<ToolbarScreen>(composeRule) {
+        aboutIcon.performClick()
+      }
+    }
+    step("check dialog") {
+      assertTrue(isAboutDialogShown)
     }
   }
 }
