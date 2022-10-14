@@ -16,11 +16,13 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import androidx.test.filters.SmallTest
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+@SmallTest
 class UriDataSourceTest {
 
   private lateinit var uriDataSource: UriDataSource
