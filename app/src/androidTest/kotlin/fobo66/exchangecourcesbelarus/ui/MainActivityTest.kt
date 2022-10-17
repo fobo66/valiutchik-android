@@ -29,7 +29,7 @@ import androidx.test.rule.GrantPermissionRule
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import fobo66.exchangecourcesbelarus.ui.MainActivityScreen.CoursesListItem
+import fobo66.exchangecourcesbelarus.ui.CurrenciesScreen.CoursesListItem
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +46,20 @@ class MainActivityTest : TestCase(
   val grantPermissionsRule: GrantPermissionRule =
     GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
 
+  @Test
+  fun showAboutDialog() = run {
+    step("click on About icon") {
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        aboutIcon.performClick()
+      }
+    }
+    step("check if about info is displayed") {
+      onComposeScreen<MainActivityScreen>(composeTestRule) {
+        aboutDialog.assertIsDisplayed()
+      }
+    }
+  }
+
   @OptIn(ExperimentalTestApi::class)
   @Test
   fun showMaps() = before {
@@ -54,7 +68,7 @@ class MainActivityTest : TestCase(
     Intents.release()
   }.run {
     step("click on list item") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
+      onComposeScreen<CurrenciesScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
             performClick()
@@ -73,7 +87,7 @@ class MainActivityTest : TestCase(
   @Test
   fun copyToClipboard() = run {
     step("long press on list item") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
+      onComposeScreen<CurrenciesScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
             performGesture {
