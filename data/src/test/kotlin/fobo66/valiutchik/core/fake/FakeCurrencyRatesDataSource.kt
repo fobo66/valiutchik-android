@@ -16,15 +16,16 @@
 
 package fobo66.valiutchik.core.fake
 
-import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
+import fobo66.valiutchik.api.Currency
+import fobo66.valiutchik.api.CurrencyRatesDataSource
 import java.io.IOException
 
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
   var isError = false
-  override suspend fun loadExchangeRates(city: String): Set<fobo66.valiutchik.api.Currency> =
+  override suspend fun loadExchangeRates(city: String): Set<Currency> =
     if (isError) {
       throw IOException("test")
     } else {
-      setOf(fobo66.valiutchik.api.Currency())
+      setOf(Currency())
     }
 }

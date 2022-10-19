@@ -14,11 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.Currency
-import fobo66.valiutchik.api.ExchangeRatesApi
+import java.io.IOException
 import javax.inject.Inject
+import retrofit2.HttpException
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
@@ -42,6 +42,10 @@ class CurrencyRatesDataSourceImpl @Inject constructor(
   override suspend fun loadExchangeRates(city: String): Set<Currency> {
     val cityIndex = citiesMap[city] ?: "1"
 
-    return exchangeRatesApi.loadExchangeRates(cityIndex)
+    return try {
+      exchangeRatesApi.loadExchangeRates(cityIndex)
+    } catch (e: HttpException) {
+      throw IOException(e)
+    }
   }
 }
