@@ -66,7 +66,7 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       initialValue = emptyList()
     )
 
-    val viewState by mainViewModel.mainScreenState.collectAsStateWithLifecycle(
+    val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
       initialValue = MainScreenState.Loading
     )
 
