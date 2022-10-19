@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
 import fobo66.valiutchik.core.BUY_COURSE
@@ -35,10 +36,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/19/19.
- */
+@SmallTest
 class PersistenceDataSourceTest {
 
   private lateinit var db: CurrencyRatesDatabase

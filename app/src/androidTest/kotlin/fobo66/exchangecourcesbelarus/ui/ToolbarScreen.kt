@@ -27,6 +27,10 @@ class ToolbarScreen(semanticsProvider: SemanticsNodeInteractionsProvider) :
     hasTestTag("Back")
   }
 
+  val aboutIcon: KNode = child {
+    hasTestTag("About")
+  }
+
   val settingsIcon: KNode = child {
     hasTestTag("Settings")
   }

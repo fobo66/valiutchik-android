@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import java.util.concurrent.Executors
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -24,6 +25,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+@SmallTest
 class LocationDataSourceTest {
 
   private val context = InstrumentationRegistry.getInstrumentation().targetContext

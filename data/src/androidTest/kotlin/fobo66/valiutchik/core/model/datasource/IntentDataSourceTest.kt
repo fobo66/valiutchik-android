@@ -21,6 +21,7 @@ import android.net.Uri
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.After
 import org.junit.Assert.assertNotNull
@@ -28,6 +29,7 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
+@SmallTest
 class IntentDataSourceTest {
 
   private val uri: Uri by lazy {

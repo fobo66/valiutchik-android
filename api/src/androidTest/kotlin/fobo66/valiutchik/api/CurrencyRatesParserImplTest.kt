@@ -16,10 +16,12 @@
 
 package fobo66.valiutchik.api
 
+import androidx.test.filters.SmallTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.xmlpull.v1.XmlPullParserException
 
+@SmallTest
 class CurrencyRatesParserImplTest {
 
   private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
