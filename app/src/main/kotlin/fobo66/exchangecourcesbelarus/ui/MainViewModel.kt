@@ -58,11 +58,11 @@ class MainViewModel @Inject constructor(
       it.toImmutableList()
     }
     .onEach {
-      _mainScreenState.emit(MainScreenState.LoadedRates)
+      state.emit(MainScreenState.LoadedRates)
     }
 
-  private val _mainScreenState = MutableStateFlow<MainScreenState>(MainScreenState.Loading)
-  val mainScreenState = _mainScreenState.asStateFlow()
+  private val state = MutableStateFlow<MainScreenState>(MainScreenState.Loading)
+  val screenState = state.asStateFlow()
 
   fun findBankOnMap(bankName: CharSequence): Intent? {
     return findBankOnMap.execute(bankName)
@@ -71,12 +71,12 @@ class MainViewModel @Inject constructor(
   fun refreshExchangeRates() =
     viewModelScope.launch {
       try {
-        _mainScreenState.emit(MainScreenState.Loading)
+        state.emit(MainScreenState.Loading)
         refreshExchangeRates.execute(LocalDateTime.now())
-        _mainScreenState.emit(MainScreenState.LoadedRates)
+        state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
         Timber.e(e, "Error happened when refreshing currency rates")
-        _mainScreenState.emit(MainScreenState.Error)
+        state.emit(MainScreenState.Error)
       }
     }
 

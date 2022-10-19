@@ -20,14 +20,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
-import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSourceImpl

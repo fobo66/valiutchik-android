@@ -14,18 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package fobo66.exchangecourcesbelarus.fake
 
-import fobo66.valiutchik.api.Currency
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import java.io.IOException
+import android.content.Intent
+import fobo66.valiutchik.domain.usecases.FindBankOnMap
 
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-  var isError = false
-  override suspend fun loadExchangeRates(city: String): Set<Currency> =
-    if (isError) {
-      throw IOException("test")
-    } else {
-      setOf(Currency())
-    }
+class FakeFindBankOnMap : FindBankOnMap {
+  var isFindBankOnMapRequested = false
+  override fun execute(bankName: CharSequence): Intent? {
+    isFindBankOnMapRequested = true
+    return null
+  }
 }

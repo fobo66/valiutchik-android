@@ -14,18 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package fobo66.exchangecourcesbelarus.fake
 
-import fobo66.valiutchik.api.Currency
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import java.io.IOException
+import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-  var isError = false
-  override suspend fun loadExchangeRates(city: String): Set<Currency> =
-    if (isError) {
-      throw IOException("test")
-    } else {
-      setOf(Currency())
-    }
+class FakeCopyCurrencyRateToClipboard : CopyCurrencyRateToClipboard {
+  var isCopied = false
+  override fun execute(currencyName: CharSequence, currencyValue: CharSequence) {
+    isCopied = true
+  }
 }

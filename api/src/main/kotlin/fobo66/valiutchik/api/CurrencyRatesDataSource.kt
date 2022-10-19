@@ -14,18 +14,8 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.Currency
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import java.io.IOException
-
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-  var isError = false
-  override suspend fun loadExchangeRates(city: String): Set<Currency> =
-    if (isError) {
-      throw IOException("test")
-    } else {
-      setOf(Currency())
-    }
+interface CurrencyRatesDataSource {
+  suspend fun loadExchangeRates(city: String): Set<Currency>
 }

@@ -14,10 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.exchangecourcesbelarus.fake
 
-import fobo66.valiutchik.api.Currency
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-interface CurrencyRatesDataSource {
-  suspend fun loadExchangeRates(city: String): Set<Currency>
+class FakeLoadExchangeRates : LoadExchangeRates {
+  val bestCourses = MutableStateFlow(emptyList<BestCurrencyRate>())
+
+  override fun execute(): Flow<List<BestCurrencyRate>> = bestCourses
 }

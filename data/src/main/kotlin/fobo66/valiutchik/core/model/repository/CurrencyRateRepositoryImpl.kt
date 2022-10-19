@@ -17,13 +17,13 @@
 package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.api.Currency
+import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.di.Io
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.model.datasource.CurrencyRatesDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
