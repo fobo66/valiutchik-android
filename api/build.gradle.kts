@@ -82,7 +82,7 @@ dependencies {
   implementation("com.jakewharton.timber:timber:5.0.1")
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.20")
+  detektPlugins("com.twitter.compose.rules:detekt:0.0.21")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   androidTestImplementation("androidx.test:core:1.5.0-beta01")
   androidTestImplementation("androidx.test:runner:1.5.0-beta01")
