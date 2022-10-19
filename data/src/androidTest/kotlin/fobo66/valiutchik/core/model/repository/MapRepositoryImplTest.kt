@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
@@ -28,6 +29,7 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
+@SmallTest
 class MapRepositoryImplTest {
 
   private val uriDataSource = object : UriDataSource {

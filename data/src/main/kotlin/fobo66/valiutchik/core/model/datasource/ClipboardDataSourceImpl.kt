@@ -32,7 +32,7 @@ class ClipboardDataSourceImpl @Inject constructor(
     val clipboardManager = context.getSystemService<ClipboardManager>()
     return clipboardManager?.let {
       it.setPrimaryClip(clipData)
-      true
+      it.hasPrimaryClip()
     } ?: false
   }
 }

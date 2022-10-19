@@ -66,7 +66,10 @@ fun MainScreen(
         NoRatesIndicator()
       } else {
         LazyColumn(modifier = Modifier.testTag("Courses")) {
-          itemsIndexed(items = bestCurrencyRates, key = { _, item -> item.id }) { index, item ->
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
             BestCurrencyRateCard(
               currencyName = stringResource(id = item.currencyNameRes),
               currencyValue = item.currencyValue,

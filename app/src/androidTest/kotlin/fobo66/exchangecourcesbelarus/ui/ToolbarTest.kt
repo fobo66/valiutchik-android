@@ -22,7 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
@@ -30,11 +30,11 @@ import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.main.ValiutchikTopBar
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@MediumTest
 class ToolbarTest : TestCase(
   kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
 ) {
@@ -143,6 +143,29 @@ class ToolbarTest : TestCase(
       onComposeScreen<ToolbarScreen>(composeRule) {
         settingsIcon.assertDoesNotExist()
       }
+    }
+  }
+
+  @Test
+  fun showAboutDialog() = run {
+    var isAboutDialogShown = false
+    step("setup about icon") {
+      composeRule.setContent {
+        ValiutchikTopBar(
+          currentRoute = DESTINATION_MAIN,
+          onBackClick = {},
+          onAboutClick = { isAboutDialogShown = true },
+          onSettingsClicked = {}
+        )
+      }
+    }
+    step("click about icon") {
+      onComposeScreen<ToolbarScreen>(composeRule) {
+        aboutIcon.performClick()
+      }
+    }
+    step("check dialog") {
+      assertTrue(isAboutDialogShown)
     }
   }
 }

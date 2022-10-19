@@ -24,18 +24,17 @@ import androidx.compose.ui.test.longClick
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
 import androidx.test.rule.GrantPermissionRule
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import fobo66.exchangecourcesbelarus.ui.MainActivityScreen.CoursesListItem
+import fobo66.exchangecourcesbelarus.ui.CurrenciesScreen.CoursesListItem
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@LargeTest
 class MainActivityTest : TestCase(
   kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
 ) {
@@ -69,7 +68,7 @@ class MainActivityTest : TestCase(
     Intents.release()
   }.run {
     step("click on list item") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
+      onComposeScreen<CurrenciesScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
             performClick()
@@ -88,7 +87,7 @@ class MainActivityTest : TestCase(
   @Test
   fun copyToClipboard() = run {
     step("long press on list item") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
+      onComposeScreen<CurrenciesScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
             performGesture {
