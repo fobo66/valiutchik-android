@@ -24,6 +24,7 @@ import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.RefreshExchangeRates
 import java.time.LocalDateTime
@@ -42,6 +43,7 @@ import timber.log.Timber
 @HiltViewModel
 class MainViewModel @Inject constructor(
   private val refreshExchangeRates: RefreshExchangeRates,
+  private val forceRefreshExchangeRates: ForceRefreshExchangeRates,
   loadExchangeRates: LoadExchangeRates,
   private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
   private val findBankOnMap: FindBankOnMap
@@ -73,6 +75,18 @@ class MainViewModel @Inject constructor(
       try {
         state.emit(MainScreenState.Loading)
         refreshExchangeRates.execute(LocalDateTime.now())
+        state.emit(MainScreenState.LoadedRates)
+      } catch (e: CurrencyRatesLoadFailedException) {
+        Timber.e(e, "Error happened when refreshing currency rates")
+        state.emit(MainScreenState.Error)
+      }
+    }
+
+  fun forceRefreshExchangeRates() =
+    viewModelScope.launch {
+      try {
+        state.emit(MainScreenState.Loading)
+        forceRefreshExchangeRates.execute(LocalDateTime.now())
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
         Timber.e(e, "Error happened when refreshing currency rates")
