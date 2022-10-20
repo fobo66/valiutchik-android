@@ -22,7 +22,6 @@ import fobo66.valiutchik.domain.fake.FakeLocationRepository
 import fobo66.valiutchik.domain.fake.FakePreferenceRepository
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -46,14 +45,14 @@ class RefreshExchangeRatesTest {
     )
 
   @Test
-  fun `refresh exchange rates`() = runTest(UnconfinedTestDispatcher()) {
+  fun `refresh exchange rates`() = runTest {
     refreshExchangeRates.execute(now)
     assertTrue(currencyRateRepository.isRefreshed)
     assertTrue(timestampRepository.isSaveTimestampCalled)
   }
 
   @Test
-  fun `do not refresh recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
+  fun `do not refresh recent exchange rates`() = runTest {
     timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
@@ -61,7 +60,7 @@ class RefreshExchangeRatesTest {
   }
 
   @Test
-  fun `do not resolve location for recent exchange rates`() = runTest(UnconfinedTestDispatcher()) {
+  fun `do not resolve location for recent exchange rates`() = runTest {
     timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
