@@ -24,6 +24,8 @@ import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.FindBankOnMapImpl
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesImpl
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
@@ -51,6 +53,11 @@ abstract class DomainModule {
   abstract fun provideRefreshExchangeRates(
     refreshExchangeRatesImpl: RefreshExchangeRatesImpl
   ): RefreshExchangeRates
+
+  @Binds
+  abstract fun provideForceRefreshExchangeRates(
+    forceRefreshExchangeRatesImpl: ForceRefreshExchangeRatesImpl
+  ): ForceRefreshExchangeRates
 
   @Binds
   abstract fun provideLoadExchangeRates(

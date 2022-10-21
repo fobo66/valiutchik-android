@@ -92,7 +92,7 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
         MainScreen(
           bestCurrencyRates = bestCurrencyRates,
           isRefreshing = viewState.isInProgress,
-          onRefresh = { mainViewModel.refreshExchangeRates() },
+          onRefresh = { mainViewModel.forceRefreshExchangeRates() },
           onBestRateClick = { bankName ->
             findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
           },

@@ -23,12 +23,11 @@ import fobo66.valiutchik.domain.fake.FakePreferenceRepository
 import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
-class RefreshExchangeRatesTest {
+class ForceRefreshExchangeRatesTest {
   private val locationRepository = FakeLocationRepository()
   private val timestampRepository = FakeCurrencyRatesTimestampRepository()
   private val currencyRateRepository = FakeCurrencyRateRepository()
@@ -36,8 +35,8 @@ class RefreshExchangeRatesTest {
 
   private val now = LocalDateTime.now()
 
-  private val refreshExchangeRates: RefreshExchangeRates =
-    RefreshExchangeRatesImpl(
+  private val refreshExchangeRates: ForceRefreshExchangeRates =
+    ForceRefreshExchangeRatesImpl(
       locationRepository,
       timestampRepository,
       currencyRateRepository,
@@ -52,18 +51,18 @@ class RefreshExchangeRatesTest {
   }
 
   @Test
-  fun `do not refresh recent exchange rates`() = runTest {
+  fun `refresh even recent exchange rates`() = runTest {
     timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
-    assertFalse(currencyRateRepository.isRefreshed)
+    assertTrue(currencyRateRepository.isRefreshed)
   }
 
   @Test
-  fun `do not resolve location for recent exchange rates`() = runTest {
+  fun `resolve location for recent exchange rates`() = runTest {
     timestampRepository.isNeededToUpdateCurrencyRates = false
 
     refreshExchangeRates.execute(now)
-    assertFalse(locationRepository.isResolved)
+    assertTrue(locationRepository.isResolved)
   }
 }
