@@ -92,7 +92,7 @@ detekt {
 dependencies {
   implementation(project(":api"))
   implementation("androidx.annotation:annotation:1.5.0")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha03")
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   implementation("com.squareup.moshi:moshi:$moshiVersion")
