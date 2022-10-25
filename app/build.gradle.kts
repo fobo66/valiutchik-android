@@ -194,7 +194,7 @@ dependencies {
   )
   androidTestImplementation("io.github.kakaocup:compose:0.1.1")
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
-  androidTestImplementation("androidx.test:runner:1.5.0-beta01")
+  androidTestImplementation("androidx.test:runner:1.5.0-beta02")
   androidTestImplementation("androidx.test:rules:1.4.1-beta01")
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-beta01")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-beta01")
