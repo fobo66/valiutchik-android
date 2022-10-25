@@ -25,6 +25,8 @@ import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.FindBankOnMapImpl
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCityImpl
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesImpl
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceImpl
@@ -35,6 +37,8 @@ import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicensesImpl
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreferenceImpl
 import fobo66.valiutchik.domain.usecases.RefreshExchangeRates
+import fobo66.valiutchik.domain.usecases.RefreshExchangeRatesForDefaultCity
+import fobo66.valiutchik.domain.usecases.RefreshExchangeRatesForDefaultCityImpl
 import fobo66.valiutchik.domain.usecases.RefreshExchangeRatesImpl
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreferenceImpl
@@ -58,6 +62,16 @@ abstract class DomainModule {
   abstract fun provideForceRefreshExchangeRates(
     forceRefreshExchangeRatesImpl: ForceRefreshExchangeRatesImpl
   ): ForceRefreshExchangeRates
+
+  @Binds
+  abstract fun provideRefreshExchangeRatesForDefaultCity(
+    refreshExchangeRatesForDefaultCityImpl: RefreshExchangeRatesForDefaultCityImpl
+  ): RefreshExchangeRatesForDefaultCity
+
+  @Binds
+  abstract fun provideForceRefreshExchangeRatesForDefaultCity(
+    forceRefreshExchangeRatesForDefaultCityImpl: ForceRefreshExchangeRatesForDefaultCityImpl
+  ): ForceRefreshExchangeRatesForDefaultCity
 
   @Binds
   abstract fun provideLoadExchangeRates(
