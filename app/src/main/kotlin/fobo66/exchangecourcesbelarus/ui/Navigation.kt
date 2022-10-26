@@ -80,19 +80,13 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       if (locationPermissionState.status is PermissionStatus.Granted) {
         mainViewModel.refreshExchangeRates()
       } else {
-        snackbarHostState.showSnackbar(
-          message = context.getString(string.permission_description),
-          duration = Short
-        )
+        showSnackbar(snackbarHostState, context.getString(string.permission_description))
         mainViewModel.refreshExchangeRatesForDefaultCity()
       }
     }
     LaunchedEffect(viewState) {
       if (viewState is MainScreenState.Error) {
-        snackbarHostState.showSnackbar(
-          message = context.getString(string.get_data_error),
-          duration = Short
-        )
+        showSnackbar(snackbarHostState, context.getString(string.get_data_error))
       }
     }
     MainScreen(
@@ -111,14 +105,21 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       onBestRateLongClick = { currencyName, currencyValue ->
         mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
         scope.launch {
-          snackbarHostState.showSnackbar(
-            message = context.getString(string.currency_value_copied),
-            duration = Short
-          )
+          showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
         }
       }
     )
   }
+}
+
+private suspend fun showSnackbar(
+  snackbarHostState: SnackbarHostState,
+  message: String
+) {
+  snackbarHostState.showSnackbar(
+    message = message,
+    duration = Short
+  )
 }
 
 private fun findBankOnMap(
