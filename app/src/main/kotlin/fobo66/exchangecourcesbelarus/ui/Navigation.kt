@@ -76,73 +76,48 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       locationPermissionState.launchPermissionRequest()
     }
 
-    when (locationPermissionState.status) {
-      is PermissionStatus.Granted -> {
-        LaunchedEffect(locationPermissionState) {
-          mainViewModel.refreshExchangeRates()
-        }
-        LaunchedEffect(viewState) {
-          if (viewState is MainScreenState.Error) {
-            snackbarHostState.showSnackbar(
-              message = context.getString(string.get_data_error),
-              duration = Short
-            )
-          }
-        }
-        MainScreen(
-          bestCurrencyRates = bestCurrencyRates,
-          isRefreshing = viewState.isInProgress,
-          onRefresh = { mainViewModel.forceRefreshExchangeRates() },
-          onBestRateClick = { bankName ->
-            findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
-          },
-          onBestRateLongClick = { currencyName, currencyValue ->
-            mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-            scope.launch {
-              snackbarHostState.showSnackbar(
-                message = context.getString(string.currency_value_copied),
-                duration = Short
-              )
-            }
-          }
+    LaunchedEffect(locationPermissionState) {
+      if (locationPermissionState.status is PermissionStatus.Granted) {
+        mainViewModel.refreshExchangeRates()
+      } else {
+        snackbarHostState.showSnackbar(
+          message = context.getString(string.permission_description),
+          duration = Short
         )
+        mainViewModel.refreshExchangeRatesForDefaultCity()
       }
-
-      is PermissionStatus.Denied -> {
-        LaunchedEffect(locationPermissionState) {
-          snackbarHostState.showSnackbar(
-            message = context.getString(string.permission_description),
-            duration = Short
-          )
-          mainViewModel.refreshExchangeRatesForDefaultCity()
-        }
-        LaunchedEffect(viewState) {
-          if (viewState is MainScreenState.Error) {
-            snackbarHostState.showSnackbar(
-              message = context.getString(string.get_data_error),
-              duration = Short
-            )
-          }
-        }
-        MainScreen(
-          bestCurrencyRates = bestCurrencyRates,
-          isRefreshing = viewState.isInProgress,
-          onRefresh = { mainViewModel.forceRefreshExchangeRatesForDefaultCity() },
-          onBestRateClick = { bankName ->
-            findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
-          },
-          onBestRateLongClick = { currencyName, currencyValue ->
-            mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-            scope.launch {
-              snackbarHostState.showSnackbar(
-                message = context.getString(string.currency_value_copied),
-                duration = Short
-              )
-            }
-          }
+    }
+    LaunchedEffect(viewState) {
+      if (viewState is MainScreenState.Error) {
+        snackbarHostState.showSnackbar(
+          message = context.getString(string.get_data_error),
+          duration = Short
         )
       }
     }
+    MainScreen(
+      bestCurrencyRates = bestCurrencyRates,
+      isRefreshing = viewState.isInProgress,
+      onRefresh = {
+        if (locationPermissionState.status is PermissionStatus.Granted) {
+          mainViewModel.forceRefreshExchangeRates()
+        } else {
+          mainViewModel.forceRefreshExchangeRatesForDefaultCity()
+        }
+      },
+      onBestRateClick = { bankName ->
+        findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
+      },
+      onBestRateLongClick = { currencyName, currencyValue ->
+        mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+        scope.launch {
+          snackbarHostState.showSnackbar(
+            message = context.getString(string.currency_value_copied),
+            duration = Short
+          )
+        }
+      }
+    )
   }
 }
 
