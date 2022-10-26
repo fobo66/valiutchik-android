@@ -14,15 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.fake
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import java.time.LocalDateTime
 
-class FakeLoadExchangeRates : LoadExchangeRates {
-  val bestCourses = MutableStateFlow(emptyList<BestCurrencyRate>())
-
-  override fun execute(): Flow<List<BestCurrencyRate>> = bestCourses
+interface ForceRefreshExchangeRatesForDefaultCity {
+  suspend fun execute(now: LocalDateTime)
 }

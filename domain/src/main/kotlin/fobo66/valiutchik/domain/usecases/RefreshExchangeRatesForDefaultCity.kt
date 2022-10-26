@@ -14,14 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.fake
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import java.time.LocalDateTime
 
-class FakeForceRefreshExchangeRates : ForceRefreshExchangeRates {
-  var isRefreshed = false
-  override suspend fun execute(now: LocalDateTime) {
-    isRefreshed = true
-  }
+interface RefreshExchangeRatesForDefaultCity {
+  suspend fun execute(now: LocalDateTime)
 }

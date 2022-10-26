@@ -19,13 +19,16 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -39,13 +42,11 @@ import androidx.navigation.compose.composable
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.MainScreen
-import fobo66.exchangecourcesbelarus.ui.main.MainScreenNoPermission
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
@@ -74,49 +75,64 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       permission.ACCESS_COARSE_LOCATION
     )
 
+    var isLocationPermissionPromptShown by rememberSaveable {
+      mutableStateOf(false)
+    }
+
     val scope = rememberCoroutineScope()
 
-    when (locationPermissionState.status) {
-      is PermissionStatus.Granted -> {
-        LaunchedEffect(locationPermissionState) {
-          mainViewModel.refreshExchangeRates()
-        }
-        LaunchedEffect(viewState) {
-          if (viewState is MainScreenState.Error) {
-            snackbarHostState.showSnackbar(
-              message = context.getString(string.get_data_error),
-              duration = Short
-            )
-          }
-        }
-        MainScreen(
-          bestCurrencyRates = bestCurrencyRates,
-          isRefreshing = viewState.isInProgress,
-          onRefresh = { mainViewModel.forceRefreshExchangeRates() },
-          onBestRateClick = { bankName ->
-            findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
-          },
-          onBestRateLongClick = { currencyName, currencyValue ->
-            mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-            scope.launch {
-              snackbarHostState.showSnackbar(
-                message = context.getString(string.currency_value_copied),
-                duration = Short
-              )
-            }
-          }
-        )
-      }
+    LaunchedEffect(Unit) {
+      locationPermissionState.launchPermissionRequest()
+    }
 
-      is PermissionStatus.Denied -> {
-        MainScreenNoPermission(
-          shouldShowRationale = locationPermissionState.status.shouldShowRationale,
-          onRequestPermission = { locationPermissionState.launchPermissionRequest() },
-          modifier = Modifier.fillMaxSize()
-        )
+    LaunchedEffect(locationPermissionState) {
+      if (locationPermissionState.status is PermissionStatus.Granted) {
+        mainViewModel.refreshExchangeRates()
+      } else {
+        if (!isLocationPermissionPromptShown) {
+          isLocationPermissionPromptShown = true
+          showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
+        }
+        mainViewModel.refreshExchangeRatesForDefaultCity()
       }
     }
+    LaunchedEffect(viewState) {
+      if (viewState is MainScreenState.Error) {
+        showSnackbar(snackbarHostState, context.getString(string.get_data_error))
+      }
+    }
+    MainScreen(
+      bestCurrencyRates = bestCurrencyRates,
+      isRefreshing = viewState.isInProgress,
+      onRefresh = {
+        if (locationPermissionState.status is PermissionStatus.Granted) {
+          mainViewModel.forceRefreshExchangeRates()
+        } else {
+          mainViewModel.forceRefreshExchangeRatesForDefaultCity()
+        }
+      },
+      onBestRateClick = { bankName ->
+        findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
+      },
+      onBestRateLongClick = { currencyName, currencyValue ->
+        mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+        scope.launch {
+          showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
+        }
+      }
+    )
   }
+}
+
+private suspend fun showSnackbar(
+  snackbarHostState: SnackbarHostState,
+  message: String,
+  duration: SnackbarDuration = Short
+) {
+  snackbarHostState.showSnackbar(
+    message = message,
+    duration = duration
+  )
 }
 
 private fun findBankOnMap(
@@ -136,10 +152,7 @@ private fun findBankOnMap(
     )
   } else {
     scope.launch {
-      snackbarHostState.showSnackbar(
-        message = context.getString(string.maps_app_required),
-        duration = Short
-      )
+      showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
     }
   }
 }

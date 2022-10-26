@@ -14,14 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.fake
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.usecases.RefreshExchangeRates
-import java.time.LocalDateTime
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlinx.coroutines.flow.Flow
 
-class FakeRefreshExchangeRates : RefreshExchangeRates {
-  var isRefreshed = false
-  override suspend fun execute(now: LocalDateTime) {
-    isRefreshed = true
-  }
+interface CurrencyRatesInteractor {
+  suspend fun refreshExchangeRates()
+  suspend fun forceRefreshExchangeRates()
+  suspend fun refreshExchangeRatesForDefaultCity()
+  suspend fun forceRefreshExchangeRatesForDefaultCity()
+  fun loadExchangeRates(): Flow<List<BestCurrencyRate>>
 }

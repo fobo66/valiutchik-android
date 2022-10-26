@@ -21,14 +21,11 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -132,35 +129,6 @@ fun BestCurrencyRateCard(
           style = MaterialTheme.typography.bodyMedium,
           modifier = Modifier.padding(start = 8.dp)
         )
-      }
-    }
-  }
-}
-
-@Composable
-fun MainScreenNoPermission(
-  shouldShowRationale: Boolean,
-  onRequestPermission: () -> Unit,
-  modifier: Modifier = Modifier
-) {
-  val textToShow = stringResource(
-    id = if (shouldShowRationale) {
-      string.permission_description_rationale
-    } else {
-      string.permission_description
-    }
-  )
-  Box(modifier = modifier) {
-    Column(modifier = Modifier.align(Alignment.Center)) {
-      Text(
-        text = textToShow,
-        modifier = Modifier.padding(16.dp)
-      )
-      Button(
-        onClick = onRequestPermission,
-        modifier = Modifier.align(Alignment.CenterHorizontally)
-      ) {
-        Text(stringResource(id = string.request_permission))
       }
     }
   }
