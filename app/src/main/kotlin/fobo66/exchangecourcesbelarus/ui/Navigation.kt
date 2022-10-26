@@ -19,6 +19,8 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
@@ -80,7 +82,7 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       if (locationPermissionState.status is PermissionStatus.Granted) {
         mainViewModel.refreshExchangeRates()
       } else {
-        showSnackbar(snackbarHostState, context.getString(string.permission_description))
+        showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
         mainViewModel.refreshExchangeRatesForDefaultCity()
       }
     }
@@ -114,11 +116,12 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
 
 private suspend fun showSnackbar(
   snackbarHostState: SnackbarHostState,
-  message: String
+  message: String,
+  duration: SnackbarDuration = Short
 ) {
   snackbarHostState.showSnackbar(
     message = message,
-    duration = Short
+    duration = duration
   )
 }
 
