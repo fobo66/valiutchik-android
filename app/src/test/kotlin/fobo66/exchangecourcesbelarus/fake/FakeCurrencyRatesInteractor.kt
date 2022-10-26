@@ -26,6 +26,8 @@ class FakeCurrencyRatesInteractor : CurrencyRatesInteractor {
 
   var isRefreshed = false
   var isForceRefreshed = false
+  var isDefaultRefreshed = false
+  var isDefaultForceRefreshed = false
 
   override suspend fun refreshExchangeRates() {
     isRefreshed = true
@@ -36,11 +38,11 @@ class FakeCurrencyRatesInteractor : CurrencyRatesInteractor {
   }
 
   override suspend fun refreshExchangeRatesForDefaultCity() {
-    TODO("Not yet implemented")
+    isDefaultRefreshed = true
   }
 
   override suspend fun forceRefreshExchangeRatesForDefaultCity() {
-    TODO("Not yet implemented")
+    isDefaultForceRefreshed = true
   }
 
   override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = bestCourses

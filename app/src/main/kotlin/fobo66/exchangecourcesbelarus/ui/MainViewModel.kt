@@ -84,7 +84,31 @@ class MainViewModel @Inject constructor(
         currencyRatesInteractor.forceRefreshExchangeRates()
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
-        Timber.e(e, "Error happened when refreshing currency rates")
+        Timber.e(e, "Error happened when force refreshing currency rates")
+        state.emit(MainScreenState.Error)
+      }
+    }
+
+  fun refreshExchangeRatesForDefaultCity() =
+    viewModelScope.launch {
+      try {
+        state.emit(MainScreenState.Loading)
+        currencyRatesInteractor.refreshExchangeRatesForDefaultCity()
+        state.emit(MainScreenState.LoadedRates)
+      } catch (e: CurrencyRatesLoadFailedException) {
+        Timber.e(e, "Error happened when refreshing currency rates in default city")
+        state.emit(MainScreenState.Error)
+      }
+    }
+
+  fun forceRefreshExchangeRatesForDefaultCity() =
+    viewModelScope.launch {
+      try {
+        state.emit(MainScreenState.Loading)
+        currencyRatesInteractor.forceRefreshExchangeRatesForDefaultCity()
+        state.emit(MainScreenState.LoadedRates)
+      } catch (e: CurrencyRatesLoadFailedException) {
+        Timber.e(e, "Error happened when refreshing currency rates in default city")
         state.emit(MainScreenState.Error)
       }
     }

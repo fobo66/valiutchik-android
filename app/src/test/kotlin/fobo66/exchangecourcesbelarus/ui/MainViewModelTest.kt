@@ -87,6 +87,24 @@ class MainViewModelTest {
   }
 
   @Test
+  fun `change view state after default refresh`() = runTest {
+    viewModel.refreshExchangeRatesForDefaultCity()
+    viewModel.screenState.test {
+      val state = awaitItem()
+      assertEquals(LoadedRates, state)
+    }
+  }
+
+  @Test
+  fun `change view state after default force refresh`() = runTest {
+    viewModel.forceRefreshExchangeRatesForDefaultCity()
+    viewModel.screenState.test {
+      val state = awaitItem()
+      assertEquals(LoadedRates, state)
+    }
+  }
+
+  @Test
   fun `change view state after loading rates`() = runTest {
     val rates = listOf(BestCurrencyRate(0, "test", 0, "test"))
     currencyRatesInteractor.bestCourses.emit(rates)
@@ -124,5 +142,23 @@ class MainViewModelTest {
     viewModel.forceRefreshExchangeRates()
     assertTrue(currencyRatesInteractor.isForceRefreshed)
     assertFalse(currencyRatesInteractor.isRefreshed)
+  }
+
+  @Test
+  fun `refresh exchange rates for default city`() = runTest {
+    viewModel.refreshExchangeRatesForDefaultCity()
+    assertTrue(currencyRatesInteractor.isDefaultRefreshed)
+    assertFalse(currencyRatesInteractor.isRefreshed)
+    assertFalse(currencyRatesInteractor.isForceRefreshed)
+    assertFalse(currencyRatesInteractor.isDefaultForceRefreshed)
+  }
+
+  @Test
+  fun `force refresh exchange rates for default city`() = runTest {
+    viewModel.forceRefreshExchangeRatesForDefaultCity()
+    assertTrue(currencyRatesInteractor.isDefaultForceRefreshed)
+    assertFalse(currencyRatesInteractor.isDefaultRefreshed)
+    assertFalse(currencyRatesInteractor.isRefreshed)
+    assertFalse(currencyRatesInteractor.isForceRefreshed)
   }
 }
