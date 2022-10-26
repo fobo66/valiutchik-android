@@ -22,6 +22,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
+import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
+import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractorImpl
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.FindBankOnMapImpl
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
@@ -77,6 +79,11 @@ abstract class DomainModule {
   abstract fun provideLoadExchangeRates(
     loadExchangeRatesImpl: LoadExchangeRatesImpl
   ): LoadExchangeRates
+
+  @Binds
+  abstract fun provideCurrencyRatesInteractor(
+    currencyRatesInteractorImpl: CurrencyRatesInteractorImpl
+  ): CurrencyRatesInteractor
 
   @Binds
   abstract fun provideCopyCurrencyRateToClipboard(

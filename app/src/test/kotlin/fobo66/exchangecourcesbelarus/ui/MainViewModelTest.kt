@@ -21,10 +21,8 @@ import com.google.common.truth.Truth.assertThat
 import fobo66.exchangecourcesbelarus.entities.MainScreenState.LoadedRates
 import fobo66.exchangecourcesbelarus.entities.MainScreenState.Loading
 import fobo66.exchangecourcesbelarus.fake.FakeCopyCurrencyRateToClipboard
+import fobo66.exchangecourcesbelarus.fake.FakeCurrencyRatesInteractor
 import fobo66.exchangecourcesbelarus.fake.FakeFindBankOnMap
-import fobo66.exchangecourcesbelarus.fake.FakeForceRefreshExchangeRates
-import fobo66.exchangecourcesbelarus.fake.FakeLoadExchangeRates
-import fobo66.exchangecourcesbelarus.fake.FakeRefreshExchangeRates
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,9 +39,7 @@ import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
-  private val refreshExchangeRates = FakeRefreshExchangeRates()
-  private val forceRefreshExchangeRates = FakeForceRefreshExchangeRates()
-  private val loadExchangeRates = FakeLoadExchangeRates()
+  private val currencyRatesInteractor = FakeCurrencyRatesInteractor()
   private val copyCurrencyRateToClipboard = FakeCopyCurrencyRateToClipboard()
   private val findBankOnMap = FakeFindBankOnMap()
 
@@ -53,9 +49,7 @@ class MainViewModelTest {
   fun setUp() {
     Dispatchers.setMain(UnconfinedTestDispatcher())
     viewModel = MainViewModel(
-      refreshExchangeRates,
-      forceRefreshExchangeRates,
-      loadExchangeRates,
+      currencyRatesInteractor,
       copyCurrencyRateToClipboard,
       findBankOnMap
     )
@@ -95,7 +89,7 @@ class MainViewModelTest {
   @Test
   fun `change view state after loading rates`() = runTest {
     val rates = listOf(BestCurrencyRate(0, "test", 0, "test"))
-    loadExchangeRates.bestCourses.emit(rates)
+    currencyRatesInteractor.bestCourses.emit(rates)
     viewModel.bestCurrencyRates.test {
       val actualRates = awaitItem()
       assertThat(actualRates).containsExactlyElementsIn(rates)
@@ -121,14 +115,14 @@ class MainViewModelTest {
   @Test
   fun `refresh exchange rates`() = runTest {
     viewModel.refreshExchangeRates()
-    assertTrue(refreshExchangeRates.isRefreshed)
-    assertFalse(forceRefreshExchangeRates.isRefreshed)
+    assertTrue(currencyRatesInteractor.isRefreshed)
+    assertFalse(currencyRatesInteractor.isForceRefreshed)
   }
 
   @Test
   fun `force refresh exchange rates`() = runTest {
     viewModel.forceRefreshExchangeRates()
-    assertTrue(forceRefreshExchangeRates.isRefreshed)
-    assertFalse(refreshExchangeRates.isRefreshed)
+    assertTrue(currencyRatesInteractor.isForceRefreshed)
+    assertFalse(currencyRatesInteractor.isRefreshed)
   }
 }

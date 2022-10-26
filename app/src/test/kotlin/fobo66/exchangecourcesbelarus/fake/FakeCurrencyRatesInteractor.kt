@@ -17,12 +17,31 @@
 package fobo66.exchangecourcesbelarus.fake
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class FakeLoadExchangeRates : LoadExchangeRates {
+class FakeCurrencyRatesInteractor : CurrencyRatesInteractor {
   val bestCourses = MutableStateFlow(emptyList<BestCurrencyRate>())
 
-  override fun execute(): Flow<List<BestCurrencyRate>> = bestCourses
+  var isRefreshed = false
+  var isForceRefreshed = false
+
+  override suspend fun refreshExchangeRates() {
+    isRefreshed = true
+  }
+
+  override suspend fun forceRefreshExchangeRates() {
+    isForceRefreshed = true
+  }
+
+  override suspend fun refreshExchangeRatesForDefaultCity() {
+    TODO("Not yet implemented")
+  }
+
+  override suspend fun forceRefreshExchangeRatesForDefaultCity() {
+    TODO("Not yet implemented")
+  }
+
+  override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = bestCourses
 }
