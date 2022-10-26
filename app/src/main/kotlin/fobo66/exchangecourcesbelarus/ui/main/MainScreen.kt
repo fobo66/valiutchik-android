@@ -137,35 +137,6 @@ fun BestCurrencyRateCard(
   }
 }
 
-@Composable
-fun MainScreenNoPermission(
-  shouldShowRationale: Boolean,
-  onRequestPermission: () -> Unit,
-  modifier: Modifier = Modifier
-) {
-  val textToShow = stringResource(
-    id = if (shouldShowRationale) {
-      string.permission_description_rationale
-    } else {
-      string.permission_description
-    }
-  )
-  Box(modifier = modifier) {
-    Column(modifier = Modifier.align(Alignment.Center)) {
-      Text(
-        text = textToShow,
-        modifier = Modifier.padding(16.dp)
-      )
-      Button(
-        onClick = onRequestPermission,
-        modifier = Modifier.align(Alignment.CenterHorizontally)
-      ) {
-        Text(stringResource(id = string.request_permission))
-      }
-    }
-  }
-}
-
 @Preview
 @Composable
 fun BestCurrencyRatePreview() {
