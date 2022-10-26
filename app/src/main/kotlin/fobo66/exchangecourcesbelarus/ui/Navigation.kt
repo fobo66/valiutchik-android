@@ -25,7 +25,10 @@ import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -72,6 +75,10 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       permission.ACCESS_COARSE_LOCATION
     )
 
+    var isLocationPermissionPromptShown by rememberSaveable {
+      mutableStateOf(false)
+    }
+
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
@@ -82,7 +89,10 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
       if (locationPermissionState.status is PermissionStatus.Granted) {
         mainViewModel.refreshExchangeRates()
       } else {
-        showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
+        if (!isLocationPermissionPromptShown) {
+          isLocationPermissionPromptShown = true
+          showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
+        }
         mainViewModel.refreshExchangeRatesForDefaultCity()
       }
     }
