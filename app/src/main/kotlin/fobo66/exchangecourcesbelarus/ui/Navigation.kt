@@ -152,10 +152,7 @@ private fun findBankOnMap(
     )
   } else {
     scope.launch {
-      snackbarHostState.showSnackbar(
-        message = context.getString(string.maps_app_required),
-        duration = Short
-      )
+      showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
     }
   }
 }
