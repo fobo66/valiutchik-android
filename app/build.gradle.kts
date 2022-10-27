@@ -196,7 +196,7 @@ dependencies {
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
   androidTestImplementation("androidx.test:runner:1.5.0-rc01")
   androidTestImplementation("androidx.test:rules:1.4.1-beta01")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-beta01")
+  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-rc01")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-rc01")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
   androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
