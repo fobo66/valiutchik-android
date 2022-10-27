@@ -199,7 +199,7 @@ dependencies {
   androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-beta01")
   androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-rc01")
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-beta01")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
