@@ -87,5 +87,5 @@ dependencies {
   androidTestImplementation("androidx.test:core:1.5.0-rc01")
   androidTestImplementation("androidx.test:runner:1.5.0-rc01")
   androidTestImplementation("androidx.test:rules:1.4.1-beta01")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-beta01")
+  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
 }
