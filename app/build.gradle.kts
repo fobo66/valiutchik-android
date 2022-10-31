@@ -119,6 +119,11 @@ detekt {
   autoCorrect = true
 }
 
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "11"
+}
+
 licenseReport {
   generateCsvReport = false
   generateHtmlReport = false

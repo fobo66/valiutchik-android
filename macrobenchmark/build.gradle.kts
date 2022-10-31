@@ -18,7 +18,7 @@ import com.android.sdklib.AndroidVersion
 
 plugins {
   id("com.android.test")
-  id("org.jetbrains.kotlin.android")
+  kotlin("android")
 }
 
 android {

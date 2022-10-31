@@ -15,6 +15,7 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
   id("com.android.library")
@@ -70,6 +71,16 @@ android {
     jvmTarget = "11"
   }
 }
+
+detekt {
+  autoCorrect = true
+}
+
+tasks.withType<Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "11"
+}
+
 
 dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
