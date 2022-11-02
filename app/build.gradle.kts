@@ -180,8 +180,8 @@ dependencies {
 
   coreLibraryDesugaring(libs.desugar)
 
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.22")
+  detektPlugins(detektRules.formatting)
+  detektPlugins(detektRules.compose)
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")

@@ -71,13 +71,15 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 dependencies {
   api(project(":data"))
   implementation("androidx.annotation:annotation:1.5.0")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+  implementation(libs.coroutines.core)
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   implementation(libs.timber)
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   coreLibraryDesugaring(libs.desugar)
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.22")
+
+  detektPlugins(detektRules.formatting)
+  detektPlugins(detektRules.compose)
+
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  testImplementation(libs.coroutines.test)
 }

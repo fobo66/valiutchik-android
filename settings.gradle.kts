@@ -39,6 +39,12 @@ dependencyResolutionManagement {
       )
         .versionRef("coroutines")
       library(
+        "coroutines.core",
+        "org.jetbrains.kotlinx",
+        "kotlinx-coroutines-core"
+      )
+        .versionRef("coroutines")
+      library(
         "coroutines-test",
         "org.jetbrains.kotlinx",
         "kotlinx-coroutines-test"
@@ -68,6 +74,11 @@ dependencyResolutionManagement {
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")
+    }
+
+    register("detektRules") {
+      library("formatting", "io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
+      library("compose", "com.twitter.compose.rules:detekt:0.0.22")
     }
   }
 }

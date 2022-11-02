@@ -110,8 +110,10 @@ dependencies {
   implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.38.1")
   implementation(libs.timber)
   coreLibraryDesugaring(libs.desugar)
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.22")
+
+  detektPlugins(detektRules.formatting)
+  detektPlugins(detektRules.compose)
+
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
