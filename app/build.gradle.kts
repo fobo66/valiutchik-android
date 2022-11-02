@@ -32,7 +32,6 @@ val accompanistVersion = "0.27.0"
 val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
 val activityVersion = "1.6.1"
-val navVersion = "2.5.3"
 val lifecycleVersion = "2.6.0-alpha03"
 val junitVersion = "5.9.1"
 val turbineVersion = "0.12.0"
@@ -136,16 +135,15 @@ dependencies {
   api(project(":domain"))
 
   // kotlin
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
+  implementation(libs.coroutines)
   implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
   // androidx
-  implementation("androidx.annotation:annotation:1.5.0")
-  implementation("androidx.activity:activity-compose:$activityVersion")
-  implementation("androidx.core:core-ktx:1.9.0")
-  implementation("com.google.android.material:material:1.8.0-alpha02")
-  implementation("androidx.core:core-splashscreen:1.0.0")
+  implementation(androidx.annotations)
+  implementation(androidx.activity)
+  implementation(androidx.core)
+  implementation(androidx.splashscreen)
+  implementation(libs.material)
 
   // compose
   implementation("androidx.compose.ui:ui:$composeUiVersion")
@@ -160,17 +158,15 @@ dependencies {
   implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
 
   // lifecycle
-  implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+  implementation(androidx.lifecycle)
+  implementation(androidx.viewmodel)
 
   // nav
-  implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-  implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-  implementation("androidx.navigation:navigation-compose:$navVersion")
+  implementation(androidx.navigation)
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
   // multidex
-  implementation("androidx.multidex:multidex:2.0.1")
+  implementation(androidx.multidex)
 
   // timber
   implementation(libs.timber)
@@ -185,26 +181,23 @@ dependencies {
 
   // tests
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  testImplementation(libs.coroutines.test)
   testImplementation("app.cash.turbine:turbine:$turbineVersion")
   testImplementation("com.google.truth:truth:1.1.3")
-  androidTestImplementation("androidx.test:core:1.5.0-rc01")
-  androidTestImplementation(
-    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
-  )
-  androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+  androidTestImplementation(androidx.uitest.core)
+  androidTestImplementation(libs.coroutines.test)
   androidTestImplementation("com.kaspersky.android-components:kaspresso:$kaspressoVersion")
   androidTestImplementation(
     "com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVersion"
   )
   androidTestImplementation("io.github.kakaocup:compose:0.1.1")
   androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
-  androidTestImplementation("androidx.test:runner:1.5.0-rc01")
-  androidTestImplementation("androidx.test:rules:1.5.0-rc01")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-rc01")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-rc01")
+  androidTestImplementation(androidx.uitest.runner)
+  androidTestImplementation(androidx.uitest.rules)
+  androidTestImplementation(androidx.uitest.espresso.contrib)
+  androidTestImplementation(androidx.uitest.espresso.intents)
   androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
+  androidTestImplementation(androidx.uitest.junit)
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 

@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -33,7 +32,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
 @SmallTest
@@ -41,9 +39,6 @@ class PersistenceDataSourceTest {
 
   private lateinit var db: CurrencyRatesDatabase
   private lateinit var persistenceDataSource: PersistenceDataSource
-
-  @get:Rule
-  val liveDataRule = InstantTaskExecutorRule()
 
   @Before
   fun setUp() {

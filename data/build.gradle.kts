@@ -25,7 +25,6 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.4"
 val junitVersion = "5.9.1"
 val moshiVersion = "1.14.0"
 val roomVersion = "2.4.3"
@@ -96,18 +95,18 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 
 dependencies {
   implementation(project(":api"))
-  implementation("androidx.annotation:annotation:1.5.0")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha03")
+  implementation(androidx.annotations)
+  implementation(androidx.viewmodel)
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-  implementation("com.squareup.moshi:moshi:$moshiVersion")
-  kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
-  implementation("androidx.room:room-ktx:$roomVersion")
-  kapt("androidx.room:room-compiler:$roomVersion")
-  implementation("androidx.preference:preference-ktx:1.2.0")
-  implementation("androidx.datastore:datastore-preferences:1.0.0")
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.38.1")
+  implementation(libs.moshi)
+  kapt(libs.moshi.codegen)
+  implementation(libs.coroutines)
+  implementation(room.ktx)
+  kapt(room.compiler)
+  implementation(androidx.preference)
+  implementation(androidx.datastore)
+  implementation(libs.mapbox)
   implementation(libs.timber)
   coreLibraryDesugaring(libs.desugar)
 
@@ -117,16 +116,14 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation("io.mockk:mockk:$mockkVersion")
   testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
-  testImplementation("androidx.room:room-testing:$roomVersion")
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
-  androidTestImplementation("androidx.test:core:1.5.0-rc01")
-  androidTestImplementation(
-    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
-  )
-  androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+  testImplementation(room.testing)
+  testImplementation(libs.coroutines.test)
+
+  androidTestImplementation(libs.coroutines.test)
   androidTestImplementation("app.cash.turbine:turbine:0.12.0")
-  androidTestImplementation("androidx.test:runner:1.5.0-rc01")
-  androidTestImplementation("androidx.test:rules:1.5.0-rc01")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-rc01")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
+  androidTestImplementation(androidx.uitest.core)
+  androidTestImplementation(androidx.uitest.runner)
+  androidTestImplementation(androidx.uitest.rules)
+  androidTestImplementation(androidx.uitest.junit)
+  androidTestImplementation(androidx.uitest.espresso.intents)
 }

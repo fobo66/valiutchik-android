@@ -70,7 +70,7 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 
 dependencies {
   api(project(":data"))
-  implementation("androidx.annotation:annotation:1.5.0")
+  implementation(androidx.annotations)
   implementation(libs.coroutines.core)
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   implementation(libs.timber)

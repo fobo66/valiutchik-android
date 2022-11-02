@@ -95,8 +95,8 @@ dependencies {
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
   testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  androidTestImplementation("androidx.test:core:1.5.0-rc01")
-  androidTestImplementation("androidx.test:runner:1.5.0-rc01")
-  androidTestImplementation("androidx.test:rules:1.5.0-rc01")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
+  androidTestImplementation(androidx.uitest.core)
+  androidTestImplementation(androidx.uitest.runner)
+  androidTestImplementation(androidx.uitest.rules)
+  androidTestImplementation(androidx.uitest.junit)
 }
