@@ -99,6 +99,13 @@ dependencyResolutionManagement {
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4-rc01")
     }
 
+    register("okhttp") {
+      version("okhttp", "5.0.0-alpha.10")
+      library("bom", "com.squareup.okhttp3", "okhttp-bom").versionRef("okhttp")
+      library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
+      library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
+    }
+
     register("room") {
       version("room", "2.5.0-beta01")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")

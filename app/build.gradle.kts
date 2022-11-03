@@ -158,6 +158,10 @@ dependencies {
   implementation(androidx.navigation)
   implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
+  // dagger
+  implementation("com.google.dagger:hilt-android:$hiltVersion")
+  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
   // multidex
   implementation(androidx.multidex)
 
@@ -192,8 +196,4 @@ dependencies {
   androidTestImplementation(androidx.uitest.junit)
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
-
-  // dagger
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 }
