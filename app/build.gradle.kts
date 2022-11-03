@@ -26,10 +26,6 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val composeVersion = "1.3.2"
-val composeUiVersion = "1.3.0"
-val accompanistVersion = "0.27.0"
-
 android {
   signingConfigs {
     register("releaseSignConfig") {
@@ -102,7 +98,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = composeVersion
+    kotlinCompilerExtensionVersion = compose.versions.compiler.get()
   }
   namespace = "fobo66.exchangecourcesbelarus"
 }
