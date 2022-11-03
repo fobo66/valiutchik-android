@@ -25,11 +25,7 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val junitVersion = "5.9.1"
-val moshiVersion = "1.14.0"
-val roomVersion = "2.4.3"
 val hiltVersion = "2.44"
-val mockkVersion = "1.13.2"
 
 android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
@@ -113,14 +109,14 @@ dependencies {
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
 
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("io.mockk:mockk:$mockkVersion")
-  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
+  testImplementation(testing.junit)
+  testImplementation(testing.mockk)
+  testImplementation(testing.mockk.agent)
   testImplementation(room.testing)
   testImplementation(libs.coroutines.test)
 
   androidTestImplementation(libs.coroutines.test)
-  androidTestImplementation("app.cash.turbine:turbine:0.12.0")
+  androidTestImplementation(testing.turbine)
   androidTestImplementation(androidx.uitest.core)
   androidTestImplementation(androidx.uitest.runner)
   androidTestImplementation(androidx.uitest.rules)

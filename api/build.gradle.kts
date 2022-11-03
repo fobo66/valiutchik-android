@@ -83,7 +83,7 @@ tasks.withType<Detekt>().configureEach {
 
 
 dependencies {
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+  implementation(libs.coroutines.core)
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.10"))
@@ -94,7 +94,7 @@ dependencies {
   coreLibraryDesugaring(libs.desugar)
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+  testImplementation(testing.junit)
   androidTestImplementation(androidx.uitest.core)
   androidTestImplementation(androidx.uitest.runner)
   androidTestImplementation(androidx.uitest.rules)

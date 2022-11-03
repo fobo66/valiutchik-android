@@ -25,8 +25,6 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.9.1"
 val hiltVersion = "2.44"
 
 android {
@@ -80,6 +78,6 @@ dependencies {
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
 
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+  testImplementation(testing.junit)
   testImplementation(libs.coroutines.test)
 }

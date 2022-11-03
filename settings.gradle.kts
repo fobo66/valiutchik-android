@@ -85,8 +85,16 @@ dependencyResolutionManagement {
       library("uitest.core", "androidx.test", "core-ktx").versionRef("uitest")
       library("uitest.runner", "androidx.test", "runner").versionRef("uitest")
       library("uitest.rules", "androidx.test", "rules").versionRef("uitest")
-      library("uitest.espresso.contrib", "androidx.test.espresso", "espresso-contrib").versionRef("espresso")
-      library("uitest.espresso.intents", "androidx.test.espresso", "espresso-intents").versionRef("espresso")
+      library(
+        "uitest.espresso.contrib",
+        "androidx.test.espresso",
+        "espresso-contrib"
+      ).versionRef("espresso")
+      library(
+        "uitest.espresso.intents",
+        "androidx.test.espresso",
+        "espresso-intents"
+      ).versionRef("espresso")
 
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4-rc01")
     }
@@ -97,6 +105,24 @@ dependencyResolutionManagement {
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")
       library("testing", "androidx.room", "room-testing").versionRef("room")
+    }
+
+    register("testing") {
+      version("kaspresso", "1.4.2")
+      version("mockk", "1.13.2")
+      library("junit", "org.junit.jupiter:junit-jupiter:5.9.1")
+      library("kakao", "io.github.kakaocup:compose:0.1.1")
+      library("kaspresso", "com.kaspersky.android-components", "kaspresso").versionRef("kaspresso")
+      library(
+        "kaspresso.compose",
+        "com.kaspersky.android-components",
+        "kaspresso-compose-support"
+      ).versionRef("kaspresso")
+      library("turbine", "app.cash.turbine:turbine:0.12.0")
+      library("truth", "com.google.truth:truth:1.1.3")
+      library("hamcrest", "org.hamcrest:hamcrest-core:2.2")
+      library("mockk", "io.mockk", "mockk").versionRef("mockk")
+      library("mockk.agent", "io.mockk", "mockk-agent-jvm").versionRef("mockk")
     }
 
     register("detektRules") {

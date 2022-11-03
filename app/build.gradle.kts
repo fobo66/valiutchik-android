@@ -29,13 +29,7 @@ plugins {
 val composeVersion = "1.3.2"
 val composeUiVersion = "1.3.0"
 val accompanistVersion = "0.27.0"
-val kotlinCoroutinesVersion = "1.6.4"
 val hiltVersion = "2.44"
-val activityVersion = "1.6.1"
-val lifecycleVersion = "2.6.0-alpha03"
-val junitVersion = "5.9.1"
-val turbineVersion = "0.12.0"
-val kaspressoVersion = "1.4.2"
 
 android {
   signingConfigs {
@@ -149,7 +143,6 @@ dependencies {
   implementation("androidx.compose.ui:ui:$composeUiVersion")
   implementation("androidx.compose.material3:material3:1.0.0")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-  implementation("androidx.activity:activity-compose:$activityVersion")
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
 
@@ -180,23 +173,22 @@ dependencies {
   detektPlugins(detektRules.compose)
 
   // tests
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
   testImplementation(libs.coroutines.test)
-  testImplementation("app.cash.turbine:turbine:$turbineVersion")
-  testImplementation("com.google.truth:truth:1.1.3")
-  androidTestImplementation(androidx.uitest.core)
+  testImplementation(testing.junit)
+  testImplementation(testing.turbine)
+  testImplementation(testing.truth)
+
   androidTestImplementation(libs.coroutines.test)
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:$kaspressoVersion")
-  androidTestImplementation(
-    "com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVersion"
-  )
-  androidTestImplementation("io.github.kakaocup:compose:0.1.1")
-  androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
+  androidTestImplementation(testing.kaspresso)
+  androidTestImplementation(testing.kaspresso.compose)
+  androidTestImplementation(testing.kakao)
+  androidTestImplementation(testing.turbine)
+  androidTestImplementation(testing.hamcrest)
+  androidTestImplementation(androidx.uitest.core)
   androidTestImplementation(androidx.uitest.runner)
   androidTestImplementation(androidx.uitest.rules)
   androidTestImplementation(androidx.uitest.espresso.contrib)
   androidTestImplementation(androidx.uitest.espresso.intents)
-  androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
   androidTestImplementation(androidx.uitest.junit)
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
