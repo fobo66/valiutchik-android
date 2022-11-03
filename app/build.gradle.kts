@@ -29,7 +29,6 @@ plugins {
 val composeVersion = "1.3.2"
 val composeUiVersion = "1.3.0"
 val accompanistVersion = "0.27.0"
-val hiltVersion = "2.44"
 
 android {
   signingConfigs {
@@ -130,7 +129,7 @@ dependencies {
 
   // kotlin
   implementation(libs.coroutines)
-  implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
+  implementation(libs.collections)
 
   // androidx
   implementation(androidx.annotations)
@@ -156,11 +155,11 @@ dependencies {
 
   // nav
   implementation(androidx.navigation)
-  implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+  implementation(di.navigation)
 
   // dagger
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+  implementation(di.core)
+  kapt(di.compiler)
 
   // multidex
   implementation(androidx.multidex)

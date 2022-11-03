@@ -33,6 +33,7 @@ dependencyResolutionManagement {
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.9.1")
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.38.1")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
+      library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.0")
       library(
         "coroutines",
@@ -104,6 +105,14 @@ dependencyResolutionManagement {
       library("bom", "com.squareup.okhttp3", "okhttp-bom").versionRef("okhttp")
       library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
       library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
+    }
+
+    register("di") {
+      version("hilt", "2.44")
+      library("plugin", "com.google.dagger", "hilt-android-gradle-plugin").versionRef("hilt")
+      library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
+      library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
+      library("navigation", "androidx.hilt:hilt-navigation-compose:1.0.0")
     }
 
     register("room") {

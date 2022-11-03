@@ -25,8 +25,6 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val hiltVersion = "2.44"
-
 android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
@@ -93,8 +91,8 @@ dependencies {
   implementation(project(":api"))
   implementation(androidx.annotations)
   implementation(androidx.viewmodel)
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+  implementation(di.core)
+  kapt(di.compiler)
   implementation(libs.moshi)
   kapt(libs.moshi.codegen)
   implementation(libs.coroutines)

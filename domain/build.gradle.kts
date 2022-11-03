@@ -25,8 +25,6 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val hiltVersion = "2.44"
-
 android {
   namespace = "fobo66.valiutchik.domain"
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
@@ -70,9 +68,9 @@ dependencies {
   api(project(":data"))
   implementation(androidx.annotations)
   implementation(libs.coroutines.core)
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
+  implementation(di.core)
+  kapt(di.compiler)
   implementation(libs.timber)
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
   coreLibraryDesugaring(libs.desugar)
 
   detektPlugins(detektRules.formatting)

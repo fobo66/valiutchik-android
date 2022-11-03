@@ -26,10 +26,6 @@ plugins {
   id("de.mannodermaus.android-junit5")
 }
 
-val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.9.1"
-val hiltVersion = "2.44"
-
 android {
   namespace = "fobo66.valiutchik.api"
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
@@ -84,8 +80,8 @@ tasks.withType<Detekt>().configureEach {
 
 dependencies {
   implementation(libs.coroutines.core)
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+  implementation(di.core)
+  kapt(di.compiler)
   implementation(platform(okhttp.bom))
   implementation(okhttp.core)
   debugImplementation(okhttp.logging)

@@ -26,7 +26,7 @@ buildscript {
     classpath(buildscriptPlugins.android)
     classpath(kotlin("gradle-plugin", version = libs.versions.kotlin.get()))
     classpath(buildscriptPlugins.benchmark)
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.44")
+    classpath(di.plugin)
     classpath(buildscriptPlugins.license)
     classpath(buildscriptPlugins.junit5)
   }
