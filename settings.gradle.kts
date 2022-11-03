@@ -107,6 +107,17 @@ dependencyResolutionManagement {
       library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
     }
 
+    register("compose") {
+      version("compiler", "1.3.2")
+      version("compose", "1.4.0-alpha01")
+      library("ui", "androidx.compose.ui", "ui").versionRef("compose")
+      library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
+      library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
+      library("testing", "androidx.compose.ui", "ui-test-junit4").versionRef("compose")
+      library("testing.manifest", "androidx.compose.ui", "ui-test-manifest").versionRef("compose")
+      library("material", "androidx.compose.material3:material3:1.1.0-alpha01")
+    }
+
     register("accompanist") {
       version("accompanist", "0.27.0")
       library(

@@ -139,11 +139,12 @@ dependencies {
   implementation(libs.material)
 
   // compose
-  implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0")
-  implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-  debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+  implementation(compose.ui)
+  implementation(compose.material)
+  implementation(compose.preview)
+  androidTestImplementation(compose.testing)
+  debugImplementation(compose.testing.manifest)
+  debugImplementation(compose.tooling)
 
   implementation(accompanist.swiperefresh)
   implementation(accompanist.permissions)
@@ -193,6 +194,4 @@ dependencies {
   androidTestImplementation(androidx.uitest.espresso.contrib)
   androidTestImplementation(androidx.uitest.espresso.intents)
   androidTestImplementation(androidx.uitest.junit)
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-  debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 }
