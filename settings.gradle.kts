@@ -18,7 +18,7 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("buildscriptPlugins") {
-      library("android", "com.android.tools.build:gradle:8.0.0-alpha06")
+      library("android", "com.android.tools.build:gradle:8.0.0-alpha07")
       library("benchmark", "androidx.benchmark:benchmark-gradle-plugin:1.1.0")
       library("license", "com.jaredsburrows:gradle-license-plugin:0.9.0")
       library("junit5", "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1")
