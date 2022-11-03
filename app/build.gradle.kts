@@ -35,7 +35,7 @@ val activityVersion = "1.6.1"
 val navVersion = "2.5.3"
 val lifecycleVersion = "2.6.0-alpha03"
 val junitVersion = "5.9.1"
-val turbineVersion = "0.12.0"
+val turbineVersion = "0.12.1"
 val kaspressoVersion = "1.4.2"
 
 android {
