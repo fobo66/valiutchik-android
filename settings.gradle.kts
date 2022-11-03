@@ -107,6 +107,25 @@ dependencyResolutionManagement {
       library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
     }
 
+    register("accompanist") {
+      version("accompanist", "0.27.0")
+      library(
+        "swiperefresh",
+        "com.google.accompanist",
+        "accompanist-swiperefresh"
+      ).versionRef("accompanist")
+      library(
+        "permissions",
+        "com.google.accompanist",
+        "accompanist-permissions"
+      ).versionRef("accompanist")
+      library(
+        "systemuicontroller",
+        "com.google.accompanist",
+        "accompanist-systemuicontroller"
+      ).versionRef("accompanist")
+    }
+
     register("di") {
       version("hilt", "2.44")
       library("plugin", "com.google.dagger", "hilt-android-gradle-plugin").versionRef("hilt")

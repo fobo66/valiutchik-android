@@ -145,9 +145,9 @@ dependencies {
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
   debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
 
-  implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
-  implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
-  implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
+  implementation(accompanist.swiperefresh)
+  implementation(accompanist.permissions)
+  implementation(accompanist.systemuicontroller)
 
   // lifecycle
   implementation(androidx.lifecycle)
