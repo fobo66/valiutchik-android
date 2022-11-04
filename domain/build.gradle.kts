@@ -78,4 +78,6 @@ dependencies {
 
   testImplementation(testing.junit)
   testImplementation(libs.coroutines.test)
+
+  androidTestImplementation(androidx.uitest.runner)
 }
