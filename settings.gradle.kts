@@ -36,7 +36,7 @@ dependencyResolutionManagement {
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.0")
       library(
-        "coroutines",
+        "1.6.4",
         "org.jetbrains.kotlinx",
         "kotlinx-coroutines-android"
       )
