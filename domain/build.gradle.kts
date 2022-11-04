@@ -30,7 +30,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.N
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")

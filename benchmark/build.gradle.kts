@@ -33,7 +33,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = com.android.sdklib.AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = com.android.sdklib.AndroidVersion.VersionCodes.N
     version = 1
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"

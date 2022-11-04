@@ -42,7 +42,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.N
     targetSdk = AndroidVersion.VersionCodes.TIRAMISU
     versionCode = 18
     versionName = "1.12.1"

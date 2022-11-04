@@ -29,7 +29,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.N
     version = 1
 
     multiDexEnabled = true

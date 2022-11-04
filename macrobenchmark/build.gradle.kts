@@ -35,7 +35,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.M
+    minSdk = AndroidVersion.VersionCodes.N
     targetSdk = AndroidVersion.VersionCodes.TIRAMISU
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
