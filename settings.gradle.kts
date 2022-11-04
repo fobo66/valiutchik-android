@@ -68,6 +68,7 @@ dependencyResolutionManagement {
       version("lifecycle", "2.6.0-alpha03")
       version("uitest", "1.5.0-rc01")
       version("espresso", "3.5.0-rc01")
+      version("benchmark", "1.2.0-alpha06")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.5.0")
       library("activity", "androidx.activity:activity-compose:1.7.0-alpha02")
@@ -87,6 +88,11 @@ dependencyResolutionManagement {
       library("uitest.runner", "androidx.test", "runner").versionRef("uitest")
       library("uitest.rules", "androidx.test", "rules").versionRef("uitest")
       library(
+        "uitest.espresso",
+        "androidx.test.espresso",
+        "espresso-core"
+      ).versionRef("espresso")
+      library(
         "uitest.espresso.contrib",
         "androidx.test.espresso",
         "espresso-contrib"
@@ -98,6 +104,9 @@ dependencyResolutionManagement {
       ).versionRef("espresso")
 
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4-rc01")
+      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha01")
+      library("uitest.benchmark", "androidx.benchmark", "benchmark-junit4").versionRef("benchmark")
+      library("uitest.macrobenchmark", "androidx.benchmark", "benchmark-macro-junit4").versionRef("benchmark")
     }
 
     register("okhttp") {
@@ -157,6 +166,7 @@ dependencyResolutionManagement {
       version("kaspresso", "1.4.2")
       version("mockk", "1.13.2")
       library("junit", "org.junit.jupiter:junit-jupiter:5.9.1")
+      library("junit4", "junit:junit:4.13.2")
       library("kakao", "io.github.kakaocup:compose:0.1.1")
       library("kaspresso", "com.kaspersky.android-components", "kaspresso").versionRef("kaspresso")
       library(
