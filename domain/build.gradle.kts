@@ -20,21 +20,17 @@ plugins {
   id("com.android.library")
   kotlin("android")
   kotlin("kapt")
-  id("dagger.hilt.android.plugin")
+  id("com.google.dagger.hilt.android")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
 }
-
-val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.9.1"
-val hiltVersion = "2.44"
 
 android {
   namespace = "fobo66.valiutchik.domain"
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.N
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
@@ -63,16 +59,25 @@ detekt {
   autoCorrect = true
 }
 
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "11"
+}
+
 dependencies {
   api(project(":data"))
-  implementation("androidx.annotation:annotation:1.5.0")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  implementation("com.jakewharton.timber:timber:5.0.1")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.22")
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+  implementation(androidx.annotations)
+  implementation(libs.coroutines.core)
+  implementation(di.core)
+  kapt(di.compiler)
+  implementation(libs.timber)
+  coreLibraryDesugaring(libs.desugar)
+
+  detektPlugins(detektRules.formatting)
+  detektPlugins(detektRules.compose)
+
+  testImplementation(testing.junit)
+  testImplementation(libs.coroutines.test)
+
+  androidTestImplementation(androidx.uitest.runner)
 }

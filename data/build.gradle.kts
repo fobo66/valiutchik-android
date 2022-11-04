@@ -20,23 +20,16 @@ plugins {
   id("com.android.library")
   kotlin("android")
   kotlin("kapt")
-  id("dagger.hilt.android.plugin")
+  id("com.google.dagger.hilt.android")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
 }
-
-val kotlinCoroutinesVersion = "1.6.4"
-val junitVersion = "5.9.1"
-val moshiVersion = "1.14.0"
-val roomVersion = "2.4.3"
-val hiltVersion = "2.44"
-val mockkVersion = "1.13.2"
 
 android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.N
     version = 1
 
     multiDexEnabled = true
@@ -89,37 +82,42 @@ detekt {
   autoCorrect = true
 }
 
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "11"
+}
+
 dependencies {
   implementation(project(":api"))
-  implementation("androidx.annotation:annotation:1.5.0")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha03")
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-  implementation("com.squareup.moshi:moshi:$moshiVersion")
-  kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
-  implementation("androidx.room:room-ktx:$roomVersion")
-  kapt("androidx.room:room-compiler:$roomVersion")
-  implementation("androidx.preference:preference-ktx:1.2.0")
-  implementation("androidx.datastore:datastore-preferences:1.0.0")
-  implementation("com.mapbox.search:mapbox-search-android:1.0.0-beta.38.1")
-  implementation("com.jakewharton.timber:timber:5.0.1")
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.22")
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("io.mockk:mockk:$mockkVersion")
-  testImplementation("io.mockk:mockk-agent-jvm:$mockkVersion")
-  testImplementation("androidx.room:room-testing:$roomVersion")
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
-  androidTestImplementation("androidx.test:core:1.5.0-rc01")
-  androidTestImplementation(
-    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
-  )
-  androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("app.cash.turbine:turbine:0.12.0")
-  androidTestImplementation("androidx.test:runner:1.5.0-rc01")
-  androidTestImplementation("androidx.test:rules:1.4.1-beta01")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-rc01")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
+  implementation(androidx.annotations)
+  implementation(androidx.viewmodel)
+  implementation(di.core)
+  kapt(di.compiler)
+  implementation(libs.moshi)
+  kapt(libs.moshi.codegen)
+  implementation(libs.coroutines)
+  implementation(room.ktx)
+  kapt(room.compiler)
+  implementation(androidx.preference)
+  implementation(androidx.datastore)
+  implementation(libs.mapbox)
+  implementation(libs.timber)
+  coreLibraryDesugaring(libs.desugar)
+
+  detektPlugins(detektRules.formatting)
+  detektPlugins(detektRules.compose)
+
+  testImplementation(testing.junit)
+  testImplementation(testing.mockk)
+  testImplementation(testing.mockk.agent)
+  testImplementation(room.testing)
+  testImplementation(libs.coroutines.test)
+
+  androidTestImplementation(libs.coroutines.test)
+  androidTestImplementation(testing.turbine)
+  androidTestImplementation(androidx.uitest.core)
+  androidTestImplementation(androidx.uitest.runner)
+  androidTestImplementation(androidx.uitest.rules)
+  androidTestImplementation(androidx.uitest.junit)
+  androidTestImplementation(androidx.uitest.espresso.intents)
 }

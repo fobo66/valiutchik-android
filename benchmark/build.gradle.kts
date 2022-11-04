@@ -33,7 +33,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = com.android.sdklib.AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = com.android.sdklib.AndroidVersion.VersionCodes.N
     version = 1
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
@@ -60,8 +60,8 @@ android {
 dependencies {
   implementation(project(":api"))
   implementation(project(":data"))
-  androidTestImplementation("androidx.test:runner:1.5.0-rc01")
-  androidTestImplementation("androidx.test.ext:junit:1.1.3")
-  androidTestImplementation("junit:junit:4.13.2")
-  androidTestImplementation("androidx.benchmark:benchmark-junit4:1.1.0")
+  androidTestImplementation(testing.junit4)
+  androidTestImplementation(androidx.uitest.runner)
+  androidTestImplementation(androidx.uitest.junit)
+  androidTestImplementation(androidx.uitest.benchmark)
 }

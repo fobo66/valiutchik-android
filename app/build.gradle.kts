@@ -15,28 +15,17 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
-  id("dagger.hilt.android.plugin")
+  id("com.google.dagger.hilt.android")
   id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
   id("de.mannodermaus.android-junit5")
 }
-
-val composeVersion = "1.3.2"
-val composeUiVersion = "1.3.0"
-val accompanistVersion = "0.27.0"
-val kotlinCoroutinesVersion = "1.6.4"
-val hiltVersion = "2.44"
-val activityVersion = "1.6.1"
-val navVersion = "2.5.3"
-val lifecycleVersion = "2.6.0-alpha03"
-val junitVersion = "5.9.1"
-val turbineVersion = "0.12.0"
-val kaspressoVersion = "1.4.2"
 
 android {
   signingConfigs {
@@ -54,7 +43,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.TIRAMISU
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = AndroidVersion.VersionCodes.LOLLIPOP
+    minSdk = AndroidVersion.VersionCodes.N
     targetSdk = AndroidVersion.VersionCodes.TIRAMISU
     versionCode = 18
     versionName = "1.12.1"
@@ -110,13 +99,35 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = composeVersion
+    kotlinCompilerExtensionVersion = compose.versions.compiler.get()
   }
   namespace = "fobo66.exchangecourcesbelarus"
 }
 
 detekt {
   autoCorrect = true
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "11"
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+  kotlinOptions {
+    if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
+      freeCompilerArgs = freeCompilerArgs + listOf(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+          project.buildDir.absolutePath + "/compose_metrics"
+      )
+      freeCompilerArgs = freeCompilerArgs + listOf(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+          project.buildDir.absolutePath + "/compose_metrics"
+      )
+    }
+  }
 }
 
 licenseReport {
@@ -131,79 +142,70 @@ dependencies {
   api(project(":domain"))
 
   // kotlin
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
+  implementation(libs.coroutines)
+  implementation(libs.collections)
 
   // androidx
-  implementation("androidx.annotation:annotation:1.5.0")
-  implementation("androidx.activity:activity-compose:$activityVersion")
-  implementation("androidx.core:core-ktx:1.9.0")
-  implementation("com.google.android.material:material:1.8.0-alpha02")
-  implementation("androidx.core:core-splashscreen:1.0.0")
+  implementation(androidx.annotations)
+  implementation(androidx.activity)
+  implementation(androidx.core)
+  implementation(androidx.splashscreen)
+  implementation(libs.material)
 
   // compose
-  implementation("androidx.compose.ui:ui:$composeUiVersion")
-  implementation("androidx.compose.material3:material3:1.0.0")
-  implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-  implementation("androidx.activity:activity-compose:$activityVersion")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-  debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+  implementation(compose.ui)
+  implementation(compose.material)
+  implementation(compose.preview)
+  androidTestImplementation(compose.testing)
+  debugImplementation(compose.testing.manifest)
+  debugImplementation(compose.tooling)
 
-  implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
-  implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
-  implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
+  implementation(accompanist.swiperefresh)
+  implementation(accompanist.permissions)
+  implementation(accompanist.systemuicontroller)
 
   // lifecycle
-  implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+  implementation(androidx.lifecycle)
+  implementation(androidx.viewmodel)
 
   // nav
-  implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-  implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-  implementation("androidx.navigation:navigation-compose:$navVersion")
-  implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-  // multidex
-  implementation("androidx.multidex:multidex:2.0.1")
-
-  // timber
-  implementation("com.jakewharton.timber:timber:5.0.1")
-
-  // leakcanary
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
-
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.0")
-
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-  detektPlugins("com.twitter.compose.rules:detekt:0.0.22")
-
-  // tests
-  testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
-  testImplementation("app.cash.turbine:turbine:$turbineVersion")
-  testImplementation("com.google.truth:truth:1.1.3")
-  androidTestImplementation("androidx.test:core:1.5.0-rc01")
-  androidTestImplementation(
-    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
-  )
-  androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-  androidTestImplementation("com.kaspersky.android-components:kaspresso:$kaspressoVersion")
-  androidTestImplementation(
-    "com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVersion"
-  )
-  androidTestImplementation("io.github.kakaocup:compose:0.1.1")
-  androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
-  androidTestImplementation("androidx.test:runner:1.5.0-rc01")
-  androidTestImplementation("androidx.test:rules:1.4.1-beta01")
-  androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.0-rc01")
-  androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0-rc01")
-  androidTestImplementation("org.hamcrest:hamcrest-core:2.2")
-  androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4-rc01")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-  debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
+  implementation(androidx.navigation)
+  implementation(di.navigation)
 
   // dagger
-  implementation("com.google.dagger:hilt-android:$hiltVersion")
-  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+  implementation(di.core)
+  kapt(di.compiler)
+
+  // multidex
+  implementation(androidx.multidex)
+
+  // timber
+  implementation(libs.timber)
+
+  // leakcanary
+  debugImplementation(libs.leakcanary)
+
+  coreLibraryDesugaring(libs.desugar)
+
+  detektPlugins(detektRules.formatting)
+  detektPlugins(detektRules.compose)
+
+  // tests
+  testImplementation(libs.coroutines.test)
+  testImplementation(testing.junit)
+  testImplementation(testing.turbine)
+  testImplementation(testing.truth)
+
+  androidTestImplementation(libs.coroutines.test)
+  androidTestImplementation(testing.kaspresso)
+  androidTestImplementation(testing.kaspresso.compose)
+  androidTestImplementation(testing.kakao)
+  androidTestImplementation(testing.turbine)
+  androidTestImplementation(testing.hamcrest)
+  androidTestImplementation(androidx.uitest.core)
+  androidTestImplementation(androidx.uitest.runner)
+  androidTestImplementation(androidx.uitest.rules)
+  androidTestImplementation(androidx.uitest.espresso.contrib)
+  androidTestImplementation(androidx.uitest.espresso.intents)
+  androidTestImplementation(androidx.uitest.junit)
 }

@@ -18,7 +18,7 @@ import com.android.sdklib.AndroidVersion
 
 plugins {
   id("com.android.test")
-  id("org.jetbrains.kotlin.android")
+  kotlin("android")
 }
 
 android {
@@ -35,7 +35,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.M
+    minSdk = AndroidVersion.VersionCodes.N
     targetSdk = AndroidVersion.VersionCodes.TIRAMISU
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -57,10 +57,10 @@ android {
 }
 
 dependencies {
-  implementation("androidx.test.ext:junit:1.1.3")
-  implementation("androidx.test.espresso:espresso-core:3.4.0")
-  implementation("androidx.test.uiautomator:uiautomator:2.2.0")
-  implementation("androidx.benchmark:benchmark-macro-junit4:1.1.0")
+  implementation(androidx.uitest.junit)
+  implementation(androidx.uitest.espresso)
+  implementation(androidx.uitest.automator)
+  implementation(androidx.uitest.macrobenchmark)
 }
 
 androidComponents {
