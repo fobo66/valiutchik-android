@@ -20,7 +20,7 @@ plugins {
   id("com.android.library")
   kotlin("android")
   kotlin("kapt")
-  id("dagger.hilt.android.plugin")
+  id("com.google.dagger.hilt.android")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
 }

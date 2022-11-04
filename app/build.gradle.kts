@@ -15,12 +15,13 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
-  id("dagger.hilt.android.plugin")
+  id("com.google.dagger.hilt.android")
   id("io.gitlab.arturbosch.detekt")
   id("com.jaredsburrows.license")
   id("de.mannodermaus.android-junit5")
@@ -110,6 +111,23 @@ detekt {
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
   // Target version of the generated JVM bytecode. It is used for type resolution.
   jvmTarget = "11"
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+  kotlinOptions {
+    if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
+      freeCompilerArgs = freeCompilerArgs + listOf(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+          project.buildDir.absolutePath + "/compose_metrics"
+      )
+      freeCompilerArgs = freeCompilerArgs + listOf(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+          project.buildDir.absolutePath + "/compose_metrics"
+      )
+    }
+  }
 }
 
 licenseReport {

@@ -14,23 +14,6 @@
  *    limitations under the License.
  */
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-buildscript {
-  repositories {
-    mavenCentral()
-    google()
-    gradlePluginPortal()
-  }
-  dependencies {
-    classpath(buildscriptPlugins.android)
-    classpath(kotlin("gradle-plugin", version = libs.versions.kotlin.get()))
-    classpath(buildscriptPlugins.benchmark)
-    classpath(di.plugin)
-    classpath(buildscriptPlugins.license)
-    classpath(buildscriptPlugins.junit5)
-  }
-}
 
 allprojects {
   repositories {
@@ -44,25 +27,6 @@ allprojects {
       credentials {
         username = "mapbox"
         password = loadSecret(rootProject, MAPBOX_REPO_TOKEN)
-      }
-    }
-  }
-}
-
-subprojects {
-  tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-      if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
-        freeCompilerArgs = freeCompilerArgs + listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-            project.buildDir.absolutePath + "/compose_metrics"
-        )
-        freeCompilerArgs = freeCompilerArgs + listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-            project.buildDir.absolutePath + "/compose_metrics"
-        )
       }
     }
   }

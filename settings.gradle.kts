@@ -195,6 +195,15 @@ pluginManagement {
     mavenCentral()
   }
   plugins {
+    id("com.android.application") version "8.0.0-alpha07" apply false
+    id("com.android.library") version "8.0.0-alpha07" apply false
+    id("com.android.test") version "8.0.0-alpha07" apply false
+    kotlin("android") version "1.7.20" apply false
+    kotlin("kapt") version "1.7.20" apply false
+    id("com.jaredsburrows.license") version "0.9.0"
+    id("com.google.dagger.hilt.android") version "2.44" apply false
+    id("androidx.benchmark") version "1.2.0-alpha06" apply false
+    id("de.mannodermaus.android-junit5") version "1.8.2.1"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
   }
 }
