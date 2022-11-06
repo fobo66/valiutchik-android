@@ -14,21 +14,18 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus
+package fobo66.exchangecourcesbelarus.util
 
-import androidx.multidex.MultiDexApplication
-import dagger.hilt.android.HiltAndroidApp
+import android.content.Context
+import androidx.startup.Initializer
 import timber.log.Timber
 
-/**
- * (c) 2017 Andrey Mukamolov
- * Created 9/16/17.
- */
-@HiltAndroidApp
-open class App : MultiDexApplication() {
-
-  override fun onCreate() {
-    super.onCreate()
-    Timber.plant(Timber.DebugTree())
+class LogInitializer : Initializer<Timber.Tree> {
+  override fun create(context: Context): Timber.Tree {
+    val tree = Timber.DebugTree()
+    Timber.plant(tree)
+    return tree
   }
+
+  override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }
