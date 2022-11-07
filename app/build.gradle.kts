@@ -150,6 +150,7 @@ dependencies {
   implementation(androidx.activity)
   implementation(androidx.core)
   implementation(androidx.splashscreen)
+  implementation(androidx.appstartup)
   implementation(libs.material)
 
   // compose
