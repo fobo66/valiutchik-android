@@ -18,7 +18,6 @@ package fobo66.exchangecourcesbelarus
 
 import androidx.multidex.MultiDexApplication
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 
 /**
  * (c) 2017 Andrey Mukamolov
