@@ -195,7 +195,7 @@ pluginManagement {
     mavenCentral()
   }
   plugins {
-    id("com.android.application") version "8.0.0-alpha07" apply false
+    id("com.android.application") version "8.0.0-alpha08" apply false
     id("com.android.library") version "8.0.0-alpha08" apply false
     id("com.android.test") version "8.0.0-alpha08" apply false
     kotlin("android") version "1.7.20" apply false
