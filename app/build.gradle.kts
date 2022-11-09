@@ -158,6 +158,7 @@ dependencies {
   implementation(compose.ui)
   implementation(compose.material)
   implementation(compose.preview)
+  implementation(compose.windowsize)
   androidTestImplementation(compose.testing)
   debugImplementation(compose.testing.manifest)
   debugImplementation(compose.tooling)
