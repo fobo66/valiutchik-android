@@ -78,6 +78,7 @@ dependencyResolutionManagement {
       library("navigation", "androidx.navigation:navigation-compose:2.6.0-alpha03")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.0")
+      library("window", "androidx.window:window:1.1.0-alpha04")
       library("lifecycle", "androidx.lifecycle", "lifecycle-runtime-compose").versionRef(
         "lifecycle"
       )
