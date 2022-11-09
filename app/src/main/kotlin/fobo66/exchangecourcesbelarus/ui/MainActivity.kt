@@ -36,9 +36,7 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       SystemBarColors()
-      MainActivityContent(reportFullyDrawn = {
-        reportFullyDrawn()
-      })
+      MainActivityContent()
     }
   }
 }

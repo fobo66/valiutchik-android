@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
+import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -85,6 +86,9 @@ fun MainScreen(
       }
     }
   }
+  ReportDrawnWhen {
+    bestCurrencyRates.isNotEmpty()
+  }
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
@@ -142,7 +146,7 @@ fun BestCurrencyRateCard(
 fun BestCurrencyRatePreview() {
   ValiutchikTheme {
     BestCurrencyRateCard(
-      currencyName = stringResource(id = string.currency_name_usd_buy),
+      currencyName = "US Dollar buy rate",
       bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
       currencyValue = "2.56",
       onClick = {},

@@ -32,7 +32,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +59,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modifier) {
+fun MainActivityContent(modifier: Modifier = Modifier) {
   val navController = rememberNavController()
 
   var isAboutDialogShown by remember {
@@ -113,9 +112,6 @@ fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modif
         AboutAppDialog(
           onDismiss = { isAboutDialogShown = false }
         )
-      }
-      LaunchedEffect(Unit) {
-        reportFullyDrawn()
       }
     }
   }
