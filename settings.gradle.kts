@@ -124,7 +124,7 @@ dependencyResolutionManagement {
       library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
       library("testing", "androidx.compose.ui", "ui-test-junit4").versionRef("compose")
       library("testing.manifest", "androidx.compose.ui", "ui-test-manifest").versionRef("compose")
-      library("material", "androidx.compose.material3:material3:1.1.0-alpha01")
+      library("material", "androidx.compose.material3:material3:1.1.0-alpha02")
     }
 
     register("accompanist") {
