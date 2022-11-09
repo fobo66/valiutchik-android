@@ -117,14 +117,14 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.3.2")
-      version("compose", "1.4.0-alpha01")
+      version("compiler", "1.4.0-alpha01")
+      version("compose", "1.4.0-alpha02")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
       library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
       library("testing", "androidx.compose.ui", "ui-test-junit4").versionRef("compose")
       library("testing.manifest", "androidx.compose.ui", "ui-test-manifest").versionRef("compose")
-      library("material", "androidx.compose.material3:material3:1.1.0-alpha01")
+      library("material", "androidx.compose.material3:material3:1.1.0-alpha02")
     }
 
     register("accompanist") {
