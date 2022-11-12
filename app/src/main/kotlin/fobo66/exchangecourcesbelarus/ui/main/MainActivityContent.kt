@@ -31,6 +31,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -59,7 +60,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityContent(modifier: Modifier = Modifier) {
+fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
   val navController = rememberNavController()
 
   var isAboutDialogShown by remember {
