@@ -25,7 +25,11 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -51,7 +55,7 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen(
+fun BestRatesList(
   bestCurrencyRates: List<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
@@ -66,6 +70,53 @@ fun MainScreen(
         NoRatesIndicator()
       } else {
         LazyColumn(modifier = Modifier.testTag("Courses")) {
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItemPlacement()
+                .lazyListItemPosition(index)
+            )
+          }
+        }
+      }
+    }
+  }
+  ReportDrawnWhen {
+    bestCurrencyRates.isNotEmpty()
+  }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun BestRatesGrid(
+  bestCurrencyRates: List<BestCurrencyRate>,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
+  onBestRateClick: (String) -> Unit,
+  onBestRateLongClick: (String, String) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+  SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
+    Crossfade(bestCurrencyRates) {
+      if (it.isEmpty()) {
+        NoRatesIndicator()
+      } else {
+        LazyVerticalGrid(
+          columns = GridCells.Fixed(2),
+          modifier = Modifier
+            .widthIn(max = 400.dp)
+            .testTag("Courses")
+        ) {
           itemsIndexed(
             items = bestCurrencyRates,
             key = { _, item -> item.currencyNameRes }

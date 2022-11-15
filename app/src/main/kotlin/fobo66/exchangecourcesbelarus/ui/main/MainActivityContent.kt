@@ -32,6 +32,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -51,10 +52,10 @@ import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
+import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
 import fobo66.exchangecourcesbelarus.ui.icons.Info
 import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licensesScreen
-import fobo66.exchangecourcesbelarus.ui.mainScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
@@ -105,7 +106,10 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
         startDestination = DESTINATION_MAIN,
         modifier = Modifier.padding(it)
       ) {
-        mainScreen(snackbarHostState)
+        bestRatesScreen(
+          snackbarHostState,
+          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+        )
         preferenceScreen(navController)
         licensesScreen()
       }

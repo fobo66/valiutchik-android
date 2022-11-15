@@ -24,7 +24,7 @@ import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.CurrenciesScreen.CoursesListItem
-import fobo66.exchangecourcesbelarus.ui.main.MainScreen
+import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import io.github.kakaocup.compose.node.element.ComposeScreen
 import org.junit.Assert.assertTrue
@@ -43,7 +43,7 @@ class MainScreenTest : TestCase(
   fun emptyList() = run {
     step("setup main screen") {
       composeRule.setContent {
-        MainScreen(
+        BestRatesList(
           bestCurrencyRates = listOf(),
           isRefreshing = false,
           onRefresh = {},
@@ -67,7 +67,7 @@ class MainScreenTest : TestCase(
     var isMapOpen = false
     step("setup main screen") {
       composeRule.setContent {
-        MainScreen(
+        BestRatesList(
           bestCurrencyRates = listOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
           isRefreshing = false,
           onRefresh = {},
