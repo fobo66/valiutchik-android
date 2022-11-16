@@ -183,7 +183,7 @@ dependencyResolutionManagement {
 
     register("detektRules") {
       library("formatting", "io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-      library("compose", "com.twitter.compose.rules:detekt:0.0.23")
+      library("compose", "com.twitter.compose.rules:detekt:0.0.24")
     }
   }
 }
