@@ -134,13 +134,13 @@ fun NavGraphBuilder.bestRatesScreen(
 
 @Composable
 fun BestRatesScreen(
-  modifier: Modifier = Modifier,
-  useGrid: Boolean = false,
   bestCurrencyRates: List<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onBestRateClick: (String) -> Unit,
-  onBestRateLongClick: (String, String) -> Unit
+  onBestRateLongClick: (String, String) -> Unit,
+  modifier: Modifier = Modifier,
+  useGrid: Boolean = false
 ) {
   if (useGrid) {
     BestRatesGrid(
