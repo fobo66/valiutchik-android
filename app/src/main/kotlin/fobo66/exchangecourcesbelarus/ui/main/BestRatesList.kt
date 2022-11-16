@@ -114,7 +114,6 @@ fun BestRatesGrid(
         LazyVerticalGrid(
           columns = GridCells.Fixed(2),
           modifier = Modifier
-            .widthIn(max = 400.dp)
             .testTag("Courses")
         ) {
           itemsIndexed(
