@@ -23,12 +23,14 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -46,10 +48,12 @@ import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
-import fobo66.exchangecourcesbelarus.ui.main.MainScreen
+import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
+import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -58,7 +62,10 @@ const val DESTINATION_PREFERENCES = "prefs"
 const val DESTINATION_LICENSES = "licenses"
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalPermissionsApi::class)
-fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
+fun NavGraphBuilder.bestRatesScreen(
+  snackbarHostState: SnackbarHostState,
+  useGrid: Boolean = false
+) {
   composable(DESTINATION_MAIN) {
     val mainViewModel: MainViewModel = hiltViewModel()
     val context = LocalContext.current
@@ -101,7 +108,8 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
         showSnackbar(snackbarHostState, context.getString(string.get_data_error))
       }
     }
-    MainScreen(
+    BestRatesScreen(
+      useGrid = useGrid,
       bestCurrencyRates = bestCurrencyRates,
       isRefreshing = viewState.isInProgress,
       onRefresh = {
@@ -120,6 +128,37 @@ fun NavGraphBuilder.mainScreen(snackbarHostState: SnackbarHostState) {
           showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
         }
       }
+    )
+  }
+}
+
+@Composable
+fun BestRatesScreen(
+  bestCurrencyRates: List<BestCurrencyRate>,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
+  onBestRateClick: (String) -> Unit,
+  onBestRateLongClick: (String, String) -> Unit,
+  modifier: Modifier = Modifier,
+  useGrid: Boolean = false
+) {
+  if (useGrid) {
+    BestRatesGrid(
+      bestCurrencyRates = bestCurrencyRates,
+      isRefreshing = isRefreshing,
+      onRefresh = onRefresh,
+      onBestRateClick = onBestRateClick,
+      onBestRateLongClick = onBestRateLongClick,
+      modifier = modifier
+    )
+  } else {
+    BestRatesList(
+      bestCurrencyRates = bestCurrencyRates,
+      isRefreshing = isRefreshing,
+      onRefresh = onRefresh,
+      onBestRateClick = onBestRateClick,
+      onBestRateLongClick = onBestRateLongClick,
+      modifier = modifier
     )
   }
 }

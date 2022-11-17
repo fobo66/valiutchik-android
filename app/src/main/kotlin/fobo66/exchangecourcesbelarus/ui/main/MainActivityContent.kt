@@ -31,8 +31,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,16 +52,16 @@ import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
+import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
 import fobo66.exchangecourcesbelarus.ui.icons.Info
 import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licensesScreen
-import fobo66.exchangecourcesbelarus.ui.mainScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modifier) {
+fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
   val navController = rememberNavController()
 
   var isAboutDialogShown by remember {
@@ -105,7 +106,10 @@ fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modif
         startDestination = DESTINATION_MAIN,
         modifier = Modifier.padding(it)
       ) {
-        mainScreen(snackbarHostState)
+        bestRatesScreen(
+          snackbarHostState,
+          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+        )
         preferenceScreen(navController)
         licensesScreen()
       }
@@ -113,9 +117,6 @@ fun MainActivityContent(reportFullyDrawn: () -> Unit, modifier: Modifier = Modif
         AboutAppDialog(
           onDismiss = { isAboutDialogShown = false }
         )
-      }
-      LaunchedEffect(Unit) {
-        reportFullyDrawn()
       }
     }
   }

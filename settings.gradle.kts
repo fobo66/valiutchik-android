@@ -17,21 +17,14 @@
 
 dependencyResolutionManagement {
   versionCatalogs {
-    register("buildscriptPlugins") {
-      library("android", "com.android.tools.build:gradle:8.0.0-alpha07")
-      library("benchmark", "androidx.benchmark:benchmark-gradle-plugin:1.1.0")
-      library("license", "com.jaredsburrows:gradle-license-plugin:0.9.0")
-      library("junit5", "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1")
-    }
-
     register("libs") {
-      version("kotlin", "1.7.20")
+      version("kotlin", "1.7.21")
       version("moshi", "1.14.0")
       version("coroutines", "1.6.4")
       library("material", "com.google.android.material:material:1.8.0-alpha02")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
-      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.38.1")
+      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.40")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.0")
@@ -66,7 +59,7 @@ dependencyResolutionManagement {
 
     register("androidx") {
       version("lifecycle", "2.6.0-alpha03")
-      version("uitest", "1.5.1")
+      version("uitest", "1.5.0")
       version("espresso", "3.5.0")
       version("benchmark", "1.2.0-alpha07")
       library("core", "androidx.core:core-ktx:1.9.0")
@@ -78,6 +71,7 @@ dependencyResolutionManagement {
       library("navigation", "androidx.navigation:navigation-compose:2.6.0-alpha03")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.0")
+      library("window", "androidx.window:window:1.1.0-alpha04")
       library("lifecycle", "androidx.lifecycle", "lifecycle-runtime-compose").versionRef(
         "lifecycle"
       )
@@ -117,18 +111,20 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.3.2")
+      version("compiler", "1.4.0-alpha02")
       version("compose", "1.4.0-alpha02")
+      version("material", "1.1.0-alpha02")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
       library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
       library("testing", "androidx.compose.ui", "ui-test-junit4").versionRef("compose")
       library("testing.manifest", "androidx.compose.ui", "ui-test-manifest").versionRef("compose")
-      library("material", "androidx.compose.material3:material3:1.1.0-alpha01")
+      library("material", "androidx.compose.material3", "material3").versionRef("material")
+      library("windowsize", "androidx.compose.material3", "material3-window-size-class").versionRef("material")
     }
 
     register("accompanist") {
-      version("accompanist", "0.27.0")
+      version("accompanist", "0.27.1")
       library(
         "swiperefresh",
         "com.google.accompanist",
@@ -182,7 +178,9 @@ dependencyResolutionManagement {
     }
 
     register("detektRules") {
-      library("formatting", "io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
+      version("detekt", "1.21.0")
+      plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
+      library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
       library("compose", "com.twitter.compose.rules:detekt:0.0.24")
     }
   }

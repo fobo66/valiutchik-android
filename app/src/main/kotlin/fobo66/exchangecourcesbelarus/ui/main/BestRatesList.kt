@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
+import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -25,6 +26,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -50,7 +54,7 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen(
+fun BestRatesList(
   bestCurrencyRates: List<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
@@ -84,6 +88,55 @@ fun MainScreen(
         }
       }
     }
+  }
+  ReportDrawnWhen {
+    bestCurrencyRates.isNotEmpty()
+  }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun BestRatesGrid(
+  bestCurrencyRates: List<BestCurrencyRate>,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
+  onBestRateClick: (String) -> Unit,
+  onBestRateLongClick: (String, String) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+  SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
+    Crossfade(bestCurrencyRates) {
+      if (it.isEmpty()) {
+        NoRatesIndicator()
+      } else {
+        LazyVerticalGrid(
+          columns = GridCells.Fixed(2),
+          modifier = Modifier
+            .testTag("Courses")
+        ) {
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItemPlacement()
+                .lazyListItemPosition(index)
+            )
+          }
+        }
+      }
+    }
+  }
+  ReportDrawnWhen {
+    bestCurrencyRates.isNotEmpty()
   }
 }
 
@@ -142,7 +195,7 @@ fun BestCurrencyRateCard(
 fun BestCurrencyRatePreview() {
   ValiutchikTheme {
     BestCurrencyRateCard(
-      currencyName = stringResource(id = string.currency_name_usd_buy),
+      currencyName = "US Dollar buy rate",
       bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
       currencyValue = "2.56",
       onClick = {},
