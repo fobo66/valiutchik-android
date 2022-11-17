@@ -30,7 +30,7 @@ dependencyResolutionManagement {
       version("coroutines", "1.6.4")
       library("material", "com.google.android.material:material:1.8.0-alpha02")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
-      library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.9.1")
+      library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.38.1")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
@@ -67,7 +67,7 @@ dependencyResolutionManagement {
     register("androidx") {
       version("lifecycle", "2.6.0-alpha03")
       version("uitest", "1.5.1")
-      version("espresso", "3.5.0-rc01")
+      version("espresso", "3.5.0")
       version("benchmark", "1.2.0-alpha07")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.5.0")
@@ -150,7 +150,7 @@ dependencyResolutionManagement {
     }
 
     register("di") {
-      version("hilt", "2.44")
+      version("hilt", "2.44.2")
       library("plugin", "com.google.dagger", "hilt-android-gradle-plugin").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
@@ -158,7 +158,7 @@ dependencyResolutionManagement {
     }
 
     register("room") {
-      version("room", "2.5.0-beta01")
+      version("room", "2.5.0-beta02")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")
