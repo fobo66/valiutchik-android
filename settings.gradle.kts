@@ -67,7 +67,7 @@ dependencyResolutionManagement {
     register("androidx") {
       version("lifecycle", "2.6.0-alpha03")
       version("uitest", "1.5.1")
-      version("espresso", "3.5.0-rc01")
+      version("espresso", "3.5.0")
       version("benchmark", "1.2.0-alpha07")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.5.0")
