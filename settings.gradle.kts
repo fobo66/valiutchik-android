@@ -181,7 +181,7 @@ dependencyResolutionManagement {
       version("detekt", "1.22.0")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "com.twitter.compose.rules:detekt:0.0.24")
+      library("compose", "com.twitter.compose.rules:detekt:0.0.26")
     }
   }
 }
