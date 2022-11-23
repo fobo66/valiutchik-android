@@ -202,7 +202,7 @@ pluginManagement {
     id("com.google.dagger.hilt.android") version "2.44.2" apply false
     id("androidx.benchmark") version "1.2.0-alpha07" apply false
     id("de.mannodermaus.android-junit5") version "1.8.2.1"
-    id("io.gitlab.arturbosch.detekt") version "1.21.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
   }
 }
 
