@@ -97,7 +97,7 @@ dependencyResolutionManagement {
         "espresso-intents"
       ).versionRef("espresso")
 
-      library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4-rc01")
+      library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4")
       library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha01")
       library("uitest.benchmark", "androidx.benchmark", "benchmark-junit4").versionRef("benchmark")
       library("uitest.macrobenchmark", "androidx.benchmark", "benchmark-macro-junit4").versionRef("benchmark")
