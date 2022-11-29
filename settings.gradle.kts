@@ -160,7 +160,7 @@ dependencyResolutionManagement {
 
     register("testing") {
       version("kaspresso", "1.4.3")
-      version("mockk", "1.13.2")
+      version("mockk", "1.13.3")
       library("junit", "org.junit.jupiter:junit-jupiter:5.9.1")
       library("junit4", "junit:junit:4.13.2")
       library("kakao", "io.github.kakaocup:compose:0.2.0")
