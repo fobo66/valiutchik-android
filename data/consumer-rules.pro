@@ -1,1 +1,11 @@
 -dontwarn java.lang.invoke.StringConcatFactory
+-dontwarn com.google.android.gms.common.GoogleApiAvailability
+-dontwarn com.google.android.gms.location.FusedLocationProviderClient
+-dontwarn com.google.android.gms.location.LocationCallback
+-dontwarn com.google.android.gms.location.LocationRequest
+-dontwarn com.google.android.gms.location.LocationResult
+-dontwarn com.google.android.gms.location.LocationServices
+-dontwarn com.google.android.gms.tasks.OnFailureListener
+-dontwarn com.google.android.gms.tasks.OnSuccessListener
+-dontwarn com.google.android.gms.tasks.RuntimeExecutionException
+-dontwarn com.google.android.gms.tasks.Task
