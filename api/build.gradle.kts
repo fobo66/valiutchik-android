@@ -80,17 +80,25 @@ tasks.withType<Detekt>().configureEach {
 
 dependencies {
   implementation(libs.coroutines.core)
+
   implementation(di.core)
   kapt(di.compiler)
+
   implementation(platform(okhttp.bom))
   implementation(okhttp.core)
   debugImplementation(okhttp.logging)
+
   implementation(libs.retrofit)
+
   implementation(libs.timber)
+
   coreLibraryDesugaring(libs.desugar)
+
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
+
   testImplementation(testing.junit)
+
   androidTestImplementation(androidx.uitest.core)
   androidTestImplementation(androidx.uitest.runner)
   androidTestImplementation(androidx.uitest.rules)

@@ -100,7 +100,11 @@ dependencyResolutionManagement {
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4")
       library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha01")
       library("uitest.benchmark", "androidx.benchmark", "benchmark-junit4").versionRef("benchmark")
-      library("uitest.macrobenchmark", "androidx.benchmark", "benchmark-macro-junit4").versionRef("benchmark")
+      library(
+        "uitest.macrobenchmark",
+        "androidx.benchmark",
+        "benchmark-macro-junit4"
+      ).versionRef("benchmark")
     }
 
     register("okhttp") {
@@ -120,7 +124,9 @@ dependencyResolutionManagement {
       library("testing", "androidx.compose.ui", "ui-test-junit4").versionRef("compose")
       library("testing.manifest", "androidx.compose.ui", "ui-test-manifest").versionRef("compose")
       library("material", "androidx.compose.material3", "material3").versionRef("material")
-      library("windowsize", "androidx.compose.material3", "material3-window-size-class").versionRef("material")
+      library("windowsize", "androidx.compose.material3", "material3-window-size-class").versionRef(
+        "material"
+      )
     }
 
     register("accompanist") {
