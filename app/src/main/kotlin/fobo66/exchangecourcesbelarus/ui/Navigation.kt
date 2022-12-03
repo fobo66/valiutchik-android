@@ -19,6 +19,7 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -31,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -41,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
@@ -51,7 +54,7 @@ import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
 import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
+import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.CoroutineScope
@@ -196,31 +199,56 @@ private fun findBankOnMap(
   }
 }
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
-fun NavGraphBuilder.preferenceScreen(navController: NavController) {
-  composable(DESTINATION_PREFERENCES) {
-    val preferencesViewModel: PreferencesViewModel = hiltViewModel()
-
-    val defaultCity by preferencesViewModel.defaultCityPreference
-      .collectAsStateWithLifecycle(
-        initialValue = "Minsk"
+fun NavGraphBuilder.preferenceScreen(
+  navController: NavController,
+  useDialog: Boolean = false
+) {
+  if (useDialog) {
+    dialog(DESTINATION_PREFERENCES) {
+      PreferenceScreen(
+        navController = navController,
+        modifier = Modifier.clip(MaterialTheme.shapes.extraLarge),
+        preferencesViewModel = hiltViewModel()
       )
-
-    val updateInterval by preferencesViewModel.updateIntervalPreference
-      .collectAsStateWithLifecycle(
-        initialValue = MIN_UPDATE_INTERVAL_VALUE
+    }
+  } else {
+    composable(DESTINATION_PREFERENCES) {
+      PreferenceScreen(
+        navController = navController,
+        preferencesViewModel = hiltViewModel()
       )
-
-    PreferenceScreen(
-      defaultCity,
-      updateInterval,
-      preferencesViewModel::updateDefaultCity,
-      preferencesViewModel::updateUpdateInterval,
-      {
-        navController.navigate(DESTINATION_LICENSES)
-      }
-    )
+    }
   }
+}
+
+@Composable
+@OptIn(ExperimentalLifecycleComposeApi::class)
+private fun PreferenceScreen(
+  navController: NavController,
+  preferencesViewModel: PreferencesViewModel,
+  modifier: Modifier = Modifier
+) {
+
+  val defaultCity by preferencesViewModel.defaultCityPreference
+    .collectAsStateWithLifecycle(
+      initialValue = "Minsk"
+    )
+
+  val updateInterval by preferencesViewModel.updateIntervalPreference
+    .collectAsStateWithLifecycle(
+      initialValue = MIN_UPDATE_INTERVAL_VALUE
+    )
+
+  PreferenceScreenContent(
+    defaultCity,
+    updateInterval,
+    preferencesViewModel::updateDefaultCity,
+    preferencesViewModel::updateUpdateInterval,
+    {
+      navController.navigate(DESTINATION_LICENSES)
+    },
+    modifier
+  )
 }
 
 @OptIn(ExperimentalLifecycleComposeApi::class)

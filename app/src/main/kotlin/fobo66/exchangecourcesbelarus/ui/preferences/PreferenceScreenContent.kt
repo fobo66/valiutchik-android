@@ -36,7 +36,7 @@ const val MAX_UPDATE_INTERVAL_VALUE = 24f
 const val UPDATE_INTERVAL_STEPS = 24
 
 @Composable
-fun PreferenceScreen(
+fun PreferenceScreenContent(
   defaultCityValue: String,
   updateIntervalValue: Float,
   onDefaultCityChange: (String) -> Unit,
@@ -91,6 +91,6 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 @Composable
 fun PreferenceScreenPreview() {
   ValiutchikTheme {
-    PreferenceScreen("Минск", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {}, {})
+    PreferenceScreenContent("Минск", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {}, {})
   }
 }

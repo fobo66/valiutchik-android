@@ -110,7 +110,10 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
           snackbarHostState,
           useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
         )
-        preferenceScreen(navController)
+        preferenceScreen(
+          navController,
+          useDialog = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+        )
         licensesScreen()
       }
       if (isAboutDialogShown) {
