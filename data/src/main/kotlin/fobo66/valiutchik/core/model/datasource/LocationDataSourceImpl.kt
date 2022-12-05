@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.Manifest
 import android.content.Context
+import android.location.Criteria
 import android.location.LocationManager
 import android.os.SystemClock
 import androidx.annotation.RequiresPermission
@@ -58,7 +59,10 @@ class LocationDataSourceImpl @Inject constructor(
       var location: android.location.Location? = null
 
       withContext(ioDispatcher) {
-        location = locationManager.getProviders(true)
+        val criteria = Criteria().apply {
+          accuracy = Criteria.ACCURACY_COARSE
+        }
+        location = locationManager.getProviders(criteria, true)
           .asSequence()
           .map { locationManager.getLastKnownLocation(it) }
           .filterNotNull()
