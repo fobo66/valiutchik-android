@@ -22,7 +22,7 @@ import androidx.test.filters.MediumTest
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
+import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import io.github.kakaocup.compose.node.element.KNode
 import org.junit.Assert.assertNotEquals
@@ -43,7 +43,7 @@ class PreferencesScreenTest : TestCase(
     var showLicense = false
     step("setup screen") {
       composeRule.setContent {
-        PreferenceScreen(
+        PreferenceScreenContent(
           defaultCityValue = "Minsk",
           updateIntervalValue = 1f,
           onDefaultCityChange = {},
@@ -69,7 +69,7 @@ class PreferencesScreenTest : TestCase(
     var updateInterval = 1f
     step("setup screen") {
       composeRule.setContent {
-        PreferenceScreen(
+        PreferenceScreenContent(
           defaultCityValue = "Minsk",
           updateIntervalValue = updateInterval,
           onDefaultCityChange = {},
@@ -96,7 +96,7 @@ class PreferencesScreenTest : TestCase(
   fun defaultCityDialogShown() = run {
     step("setup screen") {
       composeRule.setContent {
-        PreferenceScreen(
+        PreferenceScreenContent(
           defaultCityValue = "Minsk",
           updateIntervalValue = 1f,
           onDefaultCityChange = {},
