@@ -45,8 +45,8 @@ android {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.N
     targetSdk = AndroidVersion.VersionCodes.TIRAMISU
-    versionCode = 19
-    versionName = "1.13.0"
+    versionCode = 20
+    versionName = "1.13.1"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
