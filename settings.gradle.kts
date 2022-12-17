@@ -67,7 +67,6 @@ dependencyResolutionManagement {
       library("activity", "androidx.activity:activity-compose:1.7.0-alpha02")
       library("appstartup", "androidx.startup:startup-runtime:1.1.1")
       library("datastore", "androidx.datastore:datastore-preferences:1.0.0")
-      library("preference", "androidx.preference:preference-ktx:1.2.0")
       library("navigation", "androidx.navigation:navigation-compose:2.6.0-alpha04")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.0")

@@ -17,9 +17,7 @@
 package fobo66.valiutchik.core.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.AssetManager
-import androidx.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,11 +31,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object SystemModule {
-
-  @Provides
-  fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-    PreferenceManager.getDefaultSharedPreferences(context)
-
   @Provides
   fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
 }

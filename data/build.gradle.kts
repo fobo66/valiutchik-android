@@ -98,7 +98,6 @@ dependencies {
   implementation(libs.coroutines)
   implementation(room.ktx)
   kapt(room.compiler)
-  implementation(androidx.preference)
   implementation(androidx.datastore)
   implementation(libs.mapbox)
   implementation(libs.timber)

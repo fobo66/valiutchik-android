@@ -64,16 +64,9 @@ object ThirdPartyModule {
   @Provides
   @Singleton
   fun providePreferencesDatastore(
-    @ApplicationContext context: Context,
-    sharedPreferences: SharedPreferences
+    @ApplicationContext context: Context
   ): DataStore<Preferences> =
-    PreferenceDataStoreFactory.create(
-      migrations = listOf(
-        SharedPreferencesMigration(
-          produceSharedPreferences = { sharedPreferences }
-        )
-      )
-    ) {
+    PreferenceDataStoreFactory.create {
       context.preferencesDataStoreFile("valiutchik-prefs")
     }
 }
