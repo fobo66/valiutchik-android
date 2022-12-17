@@ -17,9 +17,7 @@
 package fobo66.valiutchik.core.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
