@@ -157,7 +157,7 @@ dependencyResolutionManagement {
     }
 
     register("room") {
-      version("room", "2.5.0-beta02")
+      version("room", "2.5.0-rc01")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")
