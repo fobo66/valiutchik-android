@@ -17,9 +17,7 @@
 package fobo66.valiutchik.core.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
@@ -64,16 +62,9 @@ object ThirdPartyModule {
   @Provides
   @Singleton
   fun providePreferencesDatastore(
-    @ApplicationContext context: Context,
-    sharedPreferences: SharedPreferences
+    @ApplicationContext context: Context
   ): DataStore<Preferences> =
-    PreferenceDataStoreFactory.create(
-      migrations = listOf(
-        SharedPreferencesMigration(
-          produceSharedPreferences = { sharedPreferences }
-        )
-      )
-    ) {
+    PreferenceDataStoreFactory.create {
       context.preferencesDataStoreFile("valiutchik-prefs")
     }
 }
