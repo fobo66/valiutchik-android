@@ -40,4 +40,5 @@
   <string name="permission_description">Нам неабходны дазвол скарыстаць вашае месцазнаходжанне, каб мы маглі вызначыць ваш горад і паказаць курсы там. Без дазволу прылада будзе карыстаць горад па змаўчанні з налад.</string>
   <string name="no_rates_indicator">Пакуль што няма курсаў</string>
   <string name="bank_name_indicator">Назва банка</string>
+  <string name="see_license_click_label">Глядзець ліцэнзію %1$s</string>
 </resources>
