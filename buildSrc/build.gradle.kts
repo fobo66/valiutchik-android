@@ -23,5 +23,5 @@ repositories {
 }
 
 dependencies {
-  implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
+  implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 }
