@@ -200,7 +200,7 @@ pluginManagement {
   plugins {
     id("com.android.application") version "8.0.0-alpha09" apply false
     id("com.android.library") version "8.0.0-alpha09" apply false
-    id("com.android.test") version "8.0.0-alpha11" apply false
+    id("com.android.test") version "8.0.0-beta01" apply false
     kotlin("android") version "1.7.21" apply false
     kotlin("kapt") version "1.7.21" apply false
     id("com.jaredsburrows.license") version "0.9.0"
