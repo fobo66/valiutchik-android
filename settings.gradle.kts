@@ -21,10 +21,10 @@ dependencyResolutionManagement {
       version("kotlin", "1.7.21")
       version("moshi", "1.14.0")
       version("coroutines", "1.6.4")
-      library("material", "com.google.android.material:material:1.8.0-beta01")
+      library("material", "com.google.android.material:material:1.8.0-rc01")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
-      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.42")
+      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.43")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.0")
@@ -60,8 +60,8 @@ dependencyResolutionManagement {
     register("androidx") {
       version("lifecycle", "2.6.0-alpha03")
       version("uitest", "1.5.0")
-      version("espresso", "3.5.0")
-      version("benchmark", "1.2.0-alpha08")
+      version("espresso", "3.5.1")
+      version("benchmark", "1.2.0-alpha09")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.5.0")
       library("activity", "androidx.activity:activity-compose:1.7.0-alpha02")
@@ -96,8 +96,8 @@ dependencyResolutionManagement {
         "espresso-intents"
       ).versionRef("espresso")
 
-      library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.4")
-      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha01")
+      library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.5")
+      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha02")
       library("uitest.benchmark", "androidx.benchmark", "benchmark-junit4").versionRef("benchmark")
       library(
         "uitest.macrobenchmark",
@@ -107,7 +107,7 @@ dependencyResolutionManagement {
     }
 
     register("okhttp") {
-      version("okhttp", "5.0.0-alpha.10")
+      version("okhttp", "5.0.0-alpha.11")
       library("bom", "com.squareup.okhttp3", "okhttp-bom").versionRef("okhttp")
       library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
       library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
@@ -156,7 +156,7 @@ dependencyResolutionManagement {
     }
 
     register("room") {
-      version("room", "2.5.0-rc01")
+      version("room", "2.5.0")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")
@@ -164,9 +164,9 @@ dependencyResolutionManagement {
     }
 
     register("testing") {
-      version("kaspresso", "1.4.3")
+      version("kaspresso", "1.5.1")
       version("mockk", "1.13.3")
-      library("junit", "org.junit.jupiter:junit-jupiter:5.9.1")
+      library("junit", "org.junit.jupiter:junit-jupiter:5.9.2")
       library("junit4", "junit:junit:4.13.2")
       library("kakao", "io.github.kakaocup:compose:0.2.1")
       library("kaspresso", "com.kaspersky.android-components", "kaspresso").versionRef("kaspresso")
@@ -198,14 +198,14 @@ pluginManagement {
     mavenCentral()
   }
   plugins {
-    id("com.android.application") version "8.0.0-alpha09" apply false
-    id("com.android.library") version "8.0.0-alpha09" apply false
-    id("com.android.test") version "8.0.0-alpha09" apply false
+    id("com.android.application") version "8.1.0-alpha01" apply false
+    id("com.android.library") version "8.1.0-alpha01" apply false
+    id("com.android.test") version "8.1.0-alpha01" apply false
     kotlin("android") version "1.7.21" apply false
     kotlin("kapt") version "1.7.21" apply false
     id("com.jaredsburrows.license") version "0.9.0"
     id("com.google.dagger.hilt.android") version "2.44.2" apply false
-    id("androidx.benchmark") version "1.2.0-alpha08" apply false
+    id("androidx.benchmark") version "1.2.0-alpha09" apply false
     id("de.mannodermaus.android-junit5") version "1.8.2.1"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
   }
