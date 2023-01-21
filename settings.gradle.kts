@@ -24,7 +24,7 @@ dependencyResolutionManagement {
       library("material", "com.google.android.material:material:1.8.0-rc01")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
-      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.43")
+      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-beta.44")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.0")
@@ -59,12 +59,12 @@ dependencyResolutionManagement {
 
     register("androidx") {
       version("lifecycle", "2.6.0-alpha04")
-      version("uitest", "1.5.0")
+      version("uitest", "1.5.2")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-alpha09")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.5.0")
-      library("activity", "androidx.activity:activity-compose:1.7.0-alpha02")
+      library("activity", "androidx.activity:activity-compose:1.7.0-alpha03")
       library("appstartup", "androidx.startup:startup-runtime:1.1.1")
       library("datastore", "androidx.datastore:datastore-preferences:1.0.0")
       library("navigation", "androidx.navigation:navigation-compose:2.6.0-alpha04")
@@ -114,8 +114,8 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.4.0-alpha02")
-      version("compose", "1.4.0-alpha03")
+      version("compiler", "1.4.0")
+      version("compose", "1.4.0-alpha04")
       version("material", "1.1.0-alpha04")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
@@ -201,8 +201,8 @@ pluginManagement {
     id("com.android.application") version "8.1.0-alpha01" apply false
     id("com.android.library") version "8.1.0-alpha01" apply false
     id("com.android.test") version "8.1.0-alpha01" apply false
-    kotlin("android") version "1.7.21" apply false
-    kotlin("kapt") version "1.7.21" apply false
+    kotlin("android") version "1.8.0" apply false
+    kotlin("kapt") version "1.8.0" apply false
     id("com.jaredsburrows.license") version "0.9.0"
     id("com.google.dagger.hilt.android") version "2.44.2" apply false
     id("androidx.benchmark") version "1.2.0-alpha09" apply false
