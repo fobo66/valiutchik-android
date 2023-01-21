@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import android.content.Intent
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.longClick
+import androidx.test.espresso.accessibility.AccessibilityChecks
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
@@ -38,6 +39,10 @@ import org.junit.Test
 class MainActivityTest : TestCase(
   kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
 ) {
+  init {
+    AccessibilityChecks.enable()
+  }
+
 
   @get:Rule
   val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -90,7 +95,7 @@ class MainActivityTest : TestCase(
       onComposeScreen<CurrenciesScreen>(composeTestRule) {
         flakySafely {
           coursesList.firstChild<CoursesListItem> {
-            performGesture {
+            performTouchInput {
               longClick()
             }
           }
