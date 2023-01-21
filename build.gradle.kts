@@ -14,6 +14,18 @@
  *    limitations under the License.
  */
 
+plugins {
+  id("com.android.application") version "8.1.0-alpha01" apply false
+  id("com.android.library") version "8.1.0-alpha01" apply false
+  id("com.android.test") version "8.1.0-alpha01" apply false
+  kotlin("android") version "1.8.0" apply false
+  kotlin("kapt") version "1.8.0" apply false
+  id("com.jaredsburrows.license") version "0.9.0" apply false
+  id("com.google.dagger.hilt.android") version "2.44.2" apply false
+  id("androidx.benchmark") version "1.2.0-alpha09" apply false
+  id("de.mannodermaus.android-junit5") version "1.8.2.1" apply false
+  id("io.gitlab.arturbosch.detekt") version "1.22.0" apply false
+}
 
 allprojects {
   repositories {
@@ -34,4 +46,9 @@ allprojects {
 
 tasks.register<Delete>("clean") {
   delete(rootProject.buildDir)
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "11"
 }

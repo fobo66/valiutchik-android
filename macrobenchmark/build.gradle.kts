@@ -56,6 +56,10 @@ android {
   experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 
+kotlin {
+  jvmToolchain(11)
+}
+
 dependencies {
   implementation(androidx.uitest.junit)
   implementation(androidx.uitest.espresso)

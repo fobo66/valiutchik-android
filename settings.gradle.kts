@@ -18,7 +18,7 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.7.21")
+      version("kotlin", "1.8.0")
       version("moshi", "1.14.0")
       version("coroutines", "1.6.4")
       library("material", "com.google.android.material:material:1.8.0-rc01")
@@ -59,7 +59,6 @@ dependencyResolutionManagement {
 
     register("androidx") {
       version("lifecycle", "2.6.0-alpha04")
-      version("uitest", "1.5.2")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-alpha09")
       library("core", "androidx.core:core-ktx:1.9.0")
@@ -77,9 +76,9 @@ dependencyResolutionManagement {
       library("viewmodel", "androidx.lifecycle", "lifecycle-viewmodel-compose").versionRef(
         "lifecycle"
       )
-      library("uitest.core", "androidx.test", "core-ktx").versionRef("uitest")
-      library("uitest.runner", "androidx.test", "runner").versionRef("uitest")
-      library("uitest.rules", "androidx.test", "rules").versionRef("uitest")
+      library("uitest.core", "androidx.test:core-ktx:1.5.0")
+      library("uitest.runner", "androidx.test:runner:1.5.2")
+      library("uitest.rules", "androidx.test:rules:1.5.0")
       library(
         "uitest.espresso",
         "androidx.test.espresso",
@@ -94,6 +93,11 @@ dependencyResolutionManagement {
         "uitest.espresso.intents",
         "androidx.test.espresso",
         "espresso-intents"
+      ).versionRef("espresso")
+      library(
+        "uitest.espresso.accessibility",
+        "androidx.test.espresso",
+        "espresso-accessibility"
       ).versionRef("espresso")
 
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.5")
@@ -196,18 +200,6 @@ pluginManagement {
     gradlePluginPortal()
     google()
     mavenCentral()
-  }
-  plugins {
-    id("com.android.application") version "8.1.0-alpha01" apply false
-    id("com.android.library") version "8.1.0-alpha01" apply false
-    id("com.android.test") version "8.1.0-alpha01" apply false
-    kotlin("android") version "1.8.0" apply false
-    kotlin("kapt") version "1.8.0" apply false
-    id("com.jaredsburrows.license") version "0.9.0"
-    id("com.google.dagger.hilt.android") version "2.44.2" apply false
-    id("androidx.benchmark") version "1.2.0-alpha09" apply false
-    id("de.mannodermaus.android-junit5") version "1.8.2.1"
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
   }
 }
 
