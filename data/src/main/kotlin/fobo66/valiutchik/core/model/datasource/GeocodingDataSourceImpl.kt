@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.Country
-import com.mapbox.search.Language
 import com.mapbox.search.QueryType.PLACE
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.result.SearchResult
 import fobo66.valiutchik.core.entities.Location
 import javax.inject.Inject
@@ -29,12 +29,12 @@ import javax.inject.Inject
 class GeocodingDataSourceImpl @Inject constructor(
   private val geocodingSearchEngine: SearchEngine
 ) : GeocodingDataSource {
-  private val searchLanguages: List<Language> by lazy {
-    listOf(Language("ru-RU"))
+  private val searchLanguages: List<IsoLanguageCode> by lazy {
+    listOf(IsoLanguageCode("ru-RU"))
   }
 
-  private val searchCountries: List<Country> by lazy {
-    listOf(Country("by"))
+  private val searchCountries: List<IsoCountryCode> by lazy {
+    listOf(IsoCountryCode("by"))
   }
 
   override suspend fun resolveUserCity(location: Location): List<SearchResult> {
