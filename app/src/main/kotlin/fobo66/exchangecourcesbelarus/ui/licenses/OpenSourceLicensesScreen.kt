@@ -27,7 +27,9 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
@@ -76,7 +78,10 @@ fun OpenSourceLicense(
       }
     },
     modifier = modifier
-      .clickable(enabled = item.url != null) {
+      .clickable(
+        enabled = item.url != null,
+        onClickLabel = stringResource(id = R.string.see_license_click_label)
+      ) {
         item.url?.let {
           onItemClick(it)
         }

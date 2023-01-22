@@ -70,6 +70,10 @@ android {
   namespace = "fobo66.valiutchik.core"
 }
 
+kotlin {
+  jvmToolchain(11)
+}
+
 kapt {
   arguments {
     arg("room.schemaLocation", "$projectDir/schemas")
@@ -80,11 +84,6 @@ kapt {
 
 detekt {
   autoCorrect = true
-}
-
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-  // Target version of the generated JVM bytecode. It is used for type resolution.
-  jvmTarget = "11"
 }
 
 dependencies {

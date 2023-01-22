@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -64,7 +63,7 @@ const val DESTINATION_MAIN = "main"
 const val DESTINATION_PREFERENCES = "prefs"
 const val DESTINATION_LICENSES = "licenses"
 
-@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
 fun NavGraphBuilder.bestRatesScreen(
   snackbarHostState: SnackbarHostState,
   useGrid: Boolean = false
@@ -222,7 +221,6 @@ fun NavGraphBuilder.preferenceScreen(
 }
 
 @Composable
-@OptIn(ExperimentalLifecycleComposeApi::class)
 private fun PreferenceScreen(
   navController: NavController,
   preferencesViewModel: PreferencesViewModel,
@@ -251,7 +249,6 @@ private fun PreferenceScreen(
   )
 }
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 fun NavGraphBuilder.licensesScreen() {
   composable(DESTINATION_LICENSES) {
     val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()

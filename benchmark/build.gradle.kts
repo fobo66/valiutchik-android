@@ -57,6 +57,10 @@ android {
   namespace = "fobo66.valiutchik.benchmark"
 }
 
+kotlin {
+  jvmToolchain(11)
+}
+
 dependencies {
   implementation(project(":api"))
   implementation(project(":data"))

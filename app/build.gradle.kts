@@ -104,13 +104,12 @@ android {
   namespace = "fobo66.exchangecourcesbelarus"
 }
 
-detekt {
-  autoCorrect = true
+kotlin {
+  jvmToolchain(11)
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-  // Target version of the generated JVM bytecode. It is used for type resolution.
-  jvmTarget = "11"
+detekt {
+  autoCorrect = true
 }
 
 tasks.withType<KotlinCompile>().configureEach {
@@ -210,5 +209,6 @@ dependencies {
   androidTestImplementation(androidx.uitest.rules)
   androidTestImplementation(androidx.uitest.espresso.contrib)
   androidTestImplementation(androidx.uitest.espresso.intents)
+  androidTestImplementation(androidx.uitest.espresso.accessibility)
   androidTestImplementation(androidx.uitest.junit)
 }
