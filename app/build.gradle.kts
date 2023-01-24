@@ -48,6 +48,7 @@ android {
     versionCode = 21
     versionName = "1.13.2"
     multiDexEnabled = true
+    resConfigs("en", "be", "ru")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
