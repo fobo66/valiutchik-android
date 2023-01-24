@@ -133,7 +133,7 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.28.0")
+      version("accompanist", "0.29.0-alpha")
       library(
         "swiperefresh",
         "com.google.accompanist",
