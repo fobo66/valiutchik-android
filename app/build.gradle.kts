@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ android {
     versionCode = 21
     versionName = "1.13.2"
     multiDexEnabled = true
-    resConfigs("en", "be", "ru")
+    resourceConfigurations += listOf("en", "be", "ru")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
