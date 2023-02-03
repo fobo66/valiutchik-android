@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -95,6 +95,7 @@ dependencies {
   implementation(libs.moshi)
   kapt(libs.moshi.codegen)
   implementation(libs.coroutines)
+  implementation(room.runtime)
   implementation(room.ktx)
   kapt(room.compiler)
   implementation(androidx.datastore)
