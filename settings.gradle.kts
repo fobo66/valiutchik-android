@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.8.0")
+      version("kotlin", "1.8.10")
       version("moshi", "1.14.0")
       version("coroutines", "1.6.4")
       library("material", "com.google.android.material:material:1.8.0")
@@ -118,7 +118,7 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.4.0")
+      version("compiler", "1.4.2")
       version("compose", "1.4.0-alpha05")
       version("material", "1.1.0-alpha05")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
