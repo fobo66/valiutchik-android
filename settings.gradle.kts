@@ -152,7 +152,7 @@ dependencyResolutionManagement {
     }
 
     register("di") {
-      version("hilt", "2.44.2")
+      version("hilt", "2.45")
       library("plugin", "com.google.dagger", "hilt-android-gradle-plugin").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
