@@ -60,7 +60,7 @@ dependencyResolutionManagement {
     register("androidx") {
       version("lifecycle", "2.6.0-beta01")
       version("espresso", "3.5.1")
-      version("benchmark", "1.2.0-alpha09")
+      version("benchmark", "1.2.0-alpha10")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.5.0")
       library("activity", "androidx.activity:activity-compose:1.7.0-beta01")
