@@ -16,7 +16,7 @@
 
 plugins {
   id("com.android.application") version "8.1.0-alpha07" apply false
-  id("com.android.library") version "8.1.0-alpha06" apply false
+  id("com.android.library") version "8.1.0-alpha07" apply false
   id("com.android.test") version "8.1.0-alpha06" apply false
   kotlin("android") version "1.8.10" apply false
   kotlin("kapt") version "1.8.10" apply false
