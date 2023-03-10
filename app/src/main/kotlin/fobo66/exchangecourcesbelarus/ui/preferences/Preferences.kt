@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -56,8 +56,6 @@ fun TextPreference(
   summaryProvider: () -> String = { "" },
   trailing: @Composable (() -> Unit)? = null
 ) {
-  val isEnabled = LocalPreferenceEnabledStatus.current && enabled
-
   ListItem(
     headlineText = title,
     supportingText = summary ?: {
@@ -65,7 +63,7 @@ fun TextPreference(
         text = summaryProvider()
       )
     },
-    modifier = modifier.clickable(onClick = { if (isEnabled) onClick?.invoke() }),
+    modifier = modifier.clickable(onClick = { if (enabled) onClick?.invoke() }),
     trailingContent = trailing
   )
 }
