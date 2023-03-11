@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import fobo66.exchangecourcesbelarus.ui.CurrenciesScreen.CoursesListItem
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import io.github.kakaocup.compose.node.element.ComposeScreen
+import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -44,7 +45,7 @@ class MainScreenTest : TestCase(
     step("setup main screen") {
       composeRule.setContent {
         BestRatesList(
-          bestCurrencyRates = listOf(),
+          bestCurrencyRates = persistentListOf(),
           isRefreshing = false,
           onRefresh = {},
           onBestRateClick = {},
@@ -68,7 +69,7 @@ class MainScreenTest : TestCase(
     step("setup main screen") {
       composeRule.setContent {
         BestRatesList(
-          bestCurrencyRates = listOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
+          bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
           isRefreshing = false,
           onRefresh = {},
           onBestRateClick = {
