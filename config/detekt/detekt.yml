@@ -712,7 +712,11 @@ style:
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     excludeImports: [ 'java.util.*', 'kotlinx.android.synthetic.*' ]
 
-TwitterCompose:
+Compose:
+  CompositionLocalAllowlist:
+    active: true
+    # You can optionally define a list of CompositionLocals that are allowed here
+    # allowedCompositionLocals: LocalSomething,LocalSomethingElse
   ContentEmitterReturningValues:
     active: true
     # You can optionally add your own composables here
@@ -727,19 +731,28 @@ TwitterCompose:
     active: true
   MultipleEmitters:
     active: true
-    # You can optionally add your own composables here
-    # contentEmitters: MyComposable,MyOtherComposable
+      # You can optionally add your own composables here
+      # contentEmitters: MyComposable,MyOtherComposable
   MutableParams:
     active: true
   ComposableNaming:
     active: true
+    # You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
+    # allowedComposableFunctionNames: .*Presenter,.*MoleculePresenter
   ComposableParamOrder:
+    active: true
+  PreviewNaming:
     active: true
   PreviewPublic:
     active: true
+    # You can optionally disable that only previews with @PreviewParameter are flagged
+    # previewPublicOnlyIfParams: false
   RememberMissing:
+    active: true
+  UnstableCollections:
     active: true
   ViewModelForwarding:
     active: true
   ViewModelInjection:
     active: true
+

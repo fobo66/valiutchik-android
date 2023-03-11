@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,11 +51,12 @@ import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.exchangecourcesbelarus.util.lazyListItemPosition
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestRatesList(
-  bestCurrencyRates: List<BestCurrencyRate>,
+  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onBestRateClick: (String) -> Unit,
@@ -64,7 +65,7 @@ fun BestRatesList(
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
-    Crossfade(bestCurrencyRates) {
+    Crossfade(bestCurrencyRates, label = "bestRatesList") {
       if (it.isEmpty()) {
         NoRatesIndicator()
       } else {
@@ -97,7 +98,7 @@ fun BestRatesList(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestRatesGrid(
-  bestCurrencyRates: List<BestCurrencyRate>,
+  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onBestRateClick: (String) -> Unit,

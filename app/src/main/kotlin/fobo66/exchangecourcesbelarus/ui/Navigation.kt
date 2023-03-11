@@ -56,6 +56,8 @@ import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -73,7 +75,7 @@ fun NavGraphBuilder.bestRatesScreen(
     val context = LocalContext.current
 
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle(
-      initialValue = emptyList()
+      initialValue = persistentListOf()
     )
 
     val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
@@ -136,7 +138,7 @@ fun NavGraphBuilder.bestRatesScreen(
 
 @Composable
 fun BestRatesScreen(
-  bestCurrencyRates: List<BestCurrencyRate>,
+  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onBestRateClick: (String) -> Unit,
