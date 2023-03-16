@@ -24,7 +24,7 @@ dependencyResolutionManagement {
       library("material", "com.google.android.material:material:1.8.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
-      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.1")
+      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.2")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.2")
@@ -118,7 +118,7 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.4.2")
+      version("compiler", "1.4.3")
       version("compose", "1.4.0-beta02")
       version("material", "1.1.0-alpha07")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
@@ -133,7 +133,7 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.29.1-alpha")
+      version("accompanist", "0.29.2-rc")
       library(
         "swiperefresh",
         "com.google.accompanist",
