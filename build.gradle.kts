@@ -20,7 +20,7 @@ plugins {
   id("com.android.test") version "8.1.0-alpha09" apply false
   kotlin("android") version "1.8.10" apply false
   kotlin("kapt") version "1.8.10" apply false
-  id("com.jaredsburrows.license") version "0.9.0" apply false
+  id("com.jaredsburrows.license") version "0.9.2" apply false
   id("com.google.dagger.hilt.android") version "2.45" apply false
   id("androidx.benchmark") version "1.2.0-alpha11" apply false
   id("de.mannodermaus.android-junit5") version "1.8.2.1" apply false
