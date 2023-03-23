@@ -196,6 +196,7 @@ dependencies {
   // tests
   testImplementation(libs.coroutines.test)
   testImplementation(testing.junit)
+  testRuntimeOnly(testing.junit.engine)
   testImplementation(testing.turbine)
   testImplementation(testing.truth)
 

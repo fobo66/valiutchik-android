@@ -21,6 +21,7 @@ dependencyResolutionManagement {
       version("kotlin", "1.8.10")
       version("moshi", "1.14.0")
       version("coroutines", "1.6.4")
+      plugin("licenses", "com.jaredsburrows.license").version("0.9.2")
       library("material", "com.google.android.material:material:1.8.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
@@ -58,9 +59,14 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
+      version("plugin", "8.1.0-alpha10")
       version("lifecycle", "2.6.0")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-alpha11")
+      plugin("application", "com.android.application").versionRef("plugin")
+      plugin("library", "com.android.library").versionRef("plugin")
+      plugin("test", "com.android.test").versionRef("plugin")
+      plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
       library("core", "androidx.core:core-ktx:1.9.0")
       library("annotations", "androidx.annotation:annotation:1.6.0")
       library("activity", "androidx.activity:activity-compose:1.7.0-rc01")
@@ -153,14 +159,14 @@ dependencyResolutionManagement {
 
     register("di") {
       version("hilt", "2.45")
-      library("plugin", "com.google.dagger", "hilt-android-gradle-plugin").versionRef("hilt")
+      plugin("plugin", "com.google.dagger.hilt.android").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
       library("navigation", "androidx.hilt:hilt-navigation-compose:1.0.0")
     }
 
     register("room") {
-      version("room", "2.6.0-alpha01")
+      version("room", "2.5.1")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")
@@ -170,7 +176,10 @@ dependencyResolutionManagement {
     register("testing") {
       version("kaspresso", "1.5.1")
       version("mockk", "1.13.4")
-      library("junit", "org.junit.jupiter:junit-jupiter:5.9.2")
+      version("junit", "5.9.2")
+      plugin("junit", "de.mannodermaus.android-junit5").version("1.8.2.1")
+      library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
+      library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
       library("junit4", "junit:junit:4.13.2")
       library("kakao", "io.github.kakaocup:compose:0.2.3")
       library("kaspresso", "com.kaspersky.android-components", "kaspresso").versionRef("kaspresso")

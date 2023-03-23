@@ -107,6 +107,7 @@ dependencies {
   detektPlugins(detektRules.compose)
 
   testImplementation(testing.junit)
+  testRuntimeOnly(testing.junit.engine)
   testImplementation(testing.mockk)
   testImplementation(testing.mockk.agent)
   testImplementation(room.testing)
