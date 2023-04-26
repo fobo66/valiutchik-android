@@ -176,7 +176,7 @@ dependencyResolutionManagement {
     register("testing") {
       version("kaspresso", "1.5.1")
       version("mockk", "1.13.5")
-      version("junit", "5.9.2")
+      version("junit", "5.9.3")
       plugin("junit", "de.mannodermaus.android-junit5").version("1.8.2.1")
       library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
       library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
