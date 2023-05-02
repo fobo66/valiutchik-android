@@ -69,7 +69,7 @@ dependencyResolutionManagement {
       plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
       library("core", "androidx.core:core-ktx:1.10.0")
       library("annotations", "androidx.annotation:annotation:1.6.0")
-      library("activity", "androidx.activity:activity-compose:1.7.0")
+      library("activity", "androidx.activity:activity-compose:1.7.1")
       library("appstartup", "androidx.startup:startup-runtime:1.1.1")
       library("datastore", "androidx.datastore:datastore-preferences:1.0.0")
       library("navigation", "androidx.navigation:navigation-compose:2.6.0-beta01")
