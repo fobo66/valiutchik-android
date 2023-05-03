@@ -62,7 +62,7 @@ dependencyResolutionManagement {
       version("plugin", "8.2.0-alpha02")
       version("lifecycle", "2.6.1")
       version("espresso", "3.5.1")
-      version("benchmark", "1.2.0-alpha13")
+      version("benchmark", "1.2.0-alpha14")
       plugin("application", "com.android.application").versionRef("plugin")
       plugin("library", "com.android.library").versionRef("plugin")
       plugin("test", "com.android.test").versionRef("plugin")
