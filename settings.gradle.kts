@@ -22,7 +22,7 @@ dependencyResolutionManagement {
       version("moshi", "1.14.0")
       version("coroutines", "1.6.4")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.2")
-      library("material", "com.google.android.material:material:1.8.0")
+      library("material", "com.google.android.material:material:1.9.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.10")
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.3")
