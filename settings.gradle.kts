@@ -25,7 +25,7 @@ dependencyResolutionManagement {
       library("material", "com.google.android.material:material:1.9.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.11")
-      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.3")
+      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.4")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.3")
