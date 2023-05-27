@@ -16,36 +16,22 @@
 
 package fobo66.valiutchik.core.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
-import kotlin.annotation.AnnotationRetention.RUNTIME
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/7/19.
- */
-@Module
-@InstallIn(SingletonComponent::class)
-object CoroutineDispatchersModule {
+val coroutineDispatcherModule = module {
 
-  @Provides
-  @Io
-  fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+  factory(qualifier(Dispatcher.IO)) {
+    Dispatchers.IO
+  }
 
-  @Provides
-  @Main
-  fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+  factory(qualifier(Dispatcher.MAIN)) {
+    Dispatchers.Main
+  }
 }
 
-@Qualifier
-@Retention(RUNTIME)
-annotation class Io
+enum class Dispatcher {
+  IO, MAIN
+}
 
-@Qualifier
-@Retention(RUNTIME)
-annotation class Main
