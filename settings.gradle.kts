@@ -160,9 +160,13 @@ dependencyResolutionManagement {
 
     register("di") {
       version("hilt", "2.46.1")
+      version("koin", "1.2.0")
       plugin("plugin", "com.google.dagger.hilt.android").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
+      library("koin.core", "io.insert-koin:koin-android:3.4.0")
+      library("koin.annotations", "io.insert-koin", "koin-annotations").versionRef("koin")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
+      library("koin.compiler", "io.insert-koin", "koin-ksp-compiler").versionRef("koin")
       library("navigation", "androidx.hilt:hilt-navigation-compose:1.0.0")
     }
 
