@@ -16,21 +16,11 @@
 
 package fobo66.valiutchik.core.di
 
-import android.content.Context
-import android.content.res.AssetManager
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/8/19.
- */
-@Module
-@InstallIn(SingletonComponent::class)
-object SystemModule {
-  @Provides
-  fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
+val systemModule = module {
+  factory {
+    androidContext().assets
+  }
 }
