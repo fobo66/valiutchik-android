@@ -20,18 +20,16 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
+const val IO = "io"
+const val MAIN = "main"
+
 val coroutineDispatcherModule = module {
 
-  factory(qualifier(Dispatcher.IO)) {
+  factory(qualifier(IO)) {
     Dispatchers.IO
   }
 
-  factory(qualifier(Dispatcher.MAIN)) {
+  factory(qualifier(MAIN)) {
     Dispatchers.Main
   }
 }
-
-enum class Dispatcher {
-  IO, MAIN
-}
-
