@@ -19,10 +19,11 @@ package fobo66.valiutchik.core.model.repository
 import android.content.Intent
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 import timber.log.Timber
 
-class MapRepositoryImpl @Inject constructor(
+@Single
+class MapRepositoryImpl(
   private val uriDataSource: UriDataSource,
   private val intentDataSource: IntentDataSource
 ) : MapRepository {

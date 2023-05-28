@@ -20,9 +20,10 @@ import fobo66.valiutchik.core.TIMESTAMP
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import java.time.Duration
 import java.time.LocalDateTime
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 
-class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
+@Single
+class CurrencyRatesTimestampRepositoryImpl(
   private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 

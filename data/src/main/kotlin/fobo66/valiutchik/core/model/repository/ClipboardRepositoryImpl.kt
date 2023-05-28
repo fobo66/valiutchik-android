@@ -17,10 +17,11 @@
 package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 import timber.log.Timber
 
-class ClipboardRepositoryImpl @Inject constructor(
+@Single
+class ClipboardRepositoryImpl(
   private val clipboardDataSource: ClipboardDataSource
 ) : ClipboardRepository {
 

@@ -21,10 +21,11 @@ import androidx.annotation.RequiresPermission
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import java.io.IOException
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 import timber.log.Timber
 
-class LocationRepositoryImpl @Inject constructor(
+@Single
+class LocationRepositoryImpl(
   private val locationDataSource: LocationDataSource,
   private val geocodingDataSource: GeocodingDataSource
 ) : LocationRepository {

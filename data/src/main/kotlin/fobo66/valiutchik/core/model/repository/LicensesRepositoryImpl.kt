@@ -21,9 +21,10 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 
-class LicensesRepositoryImpl @Inject constructor(
+@Single
+class LicensesRepositoryImpl(
   private val assetsDataSource: AssetsDataSource,
   private val moshi: Moshi
 ) : LicensesRepository {

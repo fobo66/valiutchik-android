@@ -19,11 +19,12 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Single
 
-class PreferenceRepositoryImpl @Inject constructor(
+@Single
+class PreferenceRepositoryImpl(
   private val preferencesDataSource: PreferencesDataSource
 ) : PreferenceRepository {
   override fun observeDefaultCityPreference(): Flow<String> =
