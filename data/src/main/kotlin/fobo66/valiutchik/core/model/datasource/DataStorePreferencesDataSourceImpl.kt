@@ -21,12 +21,13 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Single
 
-class DataStorePreferencesDataSourceImpl @Inject constructor(
+@Single
+class DataStorePreferencesDataSourceImpl(
   private val dataStore: DataStore<Preferences>
 ) : PreferencesDataSource {
   override suspend fun loadString(key: String, defaultValue: String): String {

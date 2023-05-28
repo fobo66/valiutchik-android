@@ -24,23 +24,22 @@ import android.os.SystemClock
 import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationManagerCompat
-import dagger.hilt.android.qualifiers.ApplicationContext
-import fobo66.valiutchik.core.di.Io
+import fobo66.valiutchik.core.di.IO
 import fobo66.valiutchik.core.entities.Location
 import java.time.Duration
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import org.koin.core.annotation.Named
+import org.koin.core.annotation.Single
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/7/19.
  */
-@Singleton
-class LocationDataSourceImpl @Inject constructor(
-  @ApplicationContext private val context: Context,
-  @Io private val ioDispatcher: CoroutineDispatcher
+@Single
+class LocationDataSourceImpl(
+  private val context: Context,
+  @Named(IO) private val ioDispatcher: CoroutineDispatcher
 ) : LocationDataSource {
 
   private val noLocation by lazy {

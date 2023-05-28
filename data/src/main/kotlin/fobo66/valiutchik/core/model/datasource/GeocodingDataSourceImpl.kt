@@ -24,9 +24,10 @@ import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.result.SearchResult
 import fobo66.valiutchik.core.entities.Location
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 
-class GeocodingDataSourceImpl @Inject constructor(
+@Single
+class GeocodingDataSourceImpl(
   private val geocodingSearchEngine: SearchEngine
 ) : GeocodingDataSource {
   private val searchLanguages: List<IsoLanguageCode> by lazy {

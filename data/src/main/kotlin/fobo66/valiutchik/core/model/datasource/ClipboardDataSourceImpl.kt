@@ -20,11 +20,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.getSystemService
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 
-class ClipboardDataSourceImpl @Inject constructor(
-  @ApplicationContext private val context: Context
+@Single
+class ClipboardDataSourceImpl(
+  private val context: Context
 ) : ClipboardDataSource {
 
   override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {

@@ -18,14 +18,15 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.annotation.Single
 
 /**
  * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
  * Created 11/19/19.
  */
-class PersistenceDataSourceImpl @Inject constructor(
+@Single
+class PersistenceDataSourceImpl(
   private val database: CurrencyRatesDatabase
 ) : PersistenceDataSource {
 

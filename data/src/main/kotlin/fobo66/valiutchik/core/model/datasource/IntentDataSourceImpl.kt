@@ -20,11 +20,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 
-class IntentDataSourceImpl @Inject constructor(
-  @ApplicationContext private val context: Context
+@Single
+class IntentDataSourceImpl(
+  private val context: Context
 ) : IntentDataSource {
   override fun createIntent(uri: Uri, action: String): Intent = Intent(action, uri)
 

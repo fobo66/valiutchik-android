@@ -17,9 +17,10 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.net.Uri
-import javax.inject.Inject
+import org.koin.core.annotation.Single
 
-class UriDataSourceImpl @Inject constructor() : UriDataSource {
+@Single
+class UriDataSourceImpl : UriDataSource {
   /**
    * Forge an URI for the intent with single query parameter
    */

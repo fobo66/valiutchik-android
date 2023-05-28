@@ -17,12 +17,13 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.content.res.AssetManager
-import javax.inject.Inject
 import okio.BufferedSource
 import okio.buffer
 import okio.source
+import org.koin.core.annotation.Single
 
-class AssetsDataSourceImpl @Inject constructor(
+@Single
+class AssetsDataSourceImpl(
   private val assetManager: AssetManager
 ) : AssetsDataSource {
   override fun loadFile(fileName: String): BufferedSource {

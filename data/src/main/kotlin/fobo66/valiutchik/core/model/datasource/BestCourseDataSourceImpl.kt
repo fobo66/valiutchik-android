@@ -23,15 +23,14 @@ import fobo66.valiutchik.core.util.RUB
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.koin.core.annotation.Single
 
 /**
  * Algorithm for finding best currency rate for each currency
  * Created by fobo66 on 05.02.2017.
  */
-@Singleton
-class BestCourseDataSourceImpl @Inject constructor() : BestCourseDataSource {
+@Single
+class BestCourseDataSourceImpl() : BestCourseDataSource {
 
   private val currencyKeys by lazy { listOf(USD, EUR, RUB) }
 
