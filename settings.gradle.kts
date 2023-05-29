@@ -70,7 +70,7 @@ dependencyResolutionManagement {
       plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
       library("core", "androidx.core:core-ktx:1.10.1")
       library("annotations", "androidx.annotation:annotation:1.6.0")
-      library("activity", "androidx.activity:activity-compose:1.7.1")
+      library("activity", "androidx.activity:activity-compose:1.7.2")
       library("appstartup", "androidx.startup:startup-runtime:1.1.1")
       library("datastore", "androidx.datastore:datastore-preferences:1.0.0")
       library("navigation", "androidx.navigation:navigation-compose:2.6.0-rc01")
@@ -126,7 +126,7 @@ dependencyResolutionManagement {
 
     register("compose") {
       version("compiler", "1.4.7")
-      version("compose", "1.5.0-alpha04")
+      version("compose", "1.5.0-beta01")
       version("material", "1.2.0-alpha02")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
@@ -204,7 +204,7 @@ dependencyResolutionManagement {
       version("detekt", "1.22.0")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "io.nlopez.compose.rules:detekt:0.1.5")
+      library("compose", "io.nlopez.compose.rules:detekt:0.1.7")
     }
   }
 }
