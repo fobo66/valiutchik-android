@@ -30,7 +30,7 @@ import org.koin.core.annotation.Single
  * Created by fobo66 on 05.02.2017.
  */
 @Single
-class BestCourseDataSourceImpl() : BestCourseDataSource {
+class BestCourseDataSourceImpl: BestCourseDataSource {
 
   private val currencyKeys by lazy { listOf(USD, EUR, RUB) }
 
