@@ -15,10 +15,10 @@
   -->
 
 <resources>
-  <string name="currency_name_usd_buy">Даляр ЗША курс пакупкі</string>
-  <string name="currency_name_usd_sell">Даляр ЗША курс прадажы</string>
-  <string name="currency_name_eur_buy">Еўра курс пакупкі</string>
-  <string name="currency_name_eur_sell">Еўра курс прадажы</string>
-  <string name="currency_name_rub_buy">Расійскі рубль курс пакупкі</string>
-  <string name="currency_name_rub_sell">Расійскі рубль курс прадажы</string>
+  <string name="currency_name_usd_buy">🇺🇸 Даляр курс пакупкі</string>
+  <string name="currency_name_usd_sell">🇺🇸 Даляр курс прадажы</string>
+  <string name="currency_name_eur_buy">🇪🇺 Еўра курс пакупкі</string>
+  <string name="currency_name_eur_sell">🇪🇺 Еўра курс прадажы</string>
+  <string name="currency_name_rub_buy">🇷🇺 Рубль курс пакупкі</string>
+  <string name="currency_name_rub_sell">🇷🇺 Рубль курс прадажы</string>
 </resources>
