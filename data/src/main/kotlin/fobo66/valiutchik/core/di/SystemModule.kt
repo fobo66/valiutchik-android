@@ -24,10 +24,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/8/19.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object SystemModule {

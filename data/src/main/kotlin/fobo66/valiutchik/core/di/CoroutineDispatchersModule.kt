@@ -25,10 +25,6 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/7/19.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object CoroutineDispatchersModule {
