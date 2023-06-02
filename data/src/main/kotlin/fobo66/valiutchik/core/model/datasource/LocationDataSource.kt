@@ -20,7 +20,13 @@ import android.Manifest
 import androidx.annotation.RequiresPermission
 import fobo66.valiutchik.core.entities.Location
 
+/**
+ * Datasource for working with location
+ */
 interface LocationDataSource {
+  /**
+   * Determine current location
+   */
   @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
   suspend fun resolveLocation(): Location
 }

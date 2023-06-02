@@ -19,7 +19,17 @@ package fobo66.valiutchik.core.model.datasource
 import fobo66.valiutchik.core.entities.BestCourse
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Datasource for working with persistent database
+ */
 interface PersistenceDataSource {
+  /**
+   * Save entries to the database
+   */
   suspend fun saveBestCourses(bestCourses: List<BestCourse>)
+
+  /**
+   * Read entries from the database
+   */
   fun readBestCourses(): Flow<List<BestCourse>>
 }

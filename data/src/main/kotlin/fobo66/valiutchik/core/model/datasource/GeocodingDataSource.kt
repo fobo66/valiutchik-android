@@ -19,6 +19,15 @@ package fobo66.valiutchik.core.model.datasource
 import com.mapbox.search.result.SearchResult
 import fobo66.valiutchik.core.entities.Location
 
+/**
+ * Datasource for geocoding
+ */
 interface GeocodingDataSource {
-  suspend fun resolveUserCity(location: Location): List<SearchResult>
+
+  /**
+   * Find possible city address on given location
+   *
+   * @param location Latitude and longitude for search
+   */
+  suspend fun findPlace(location: Location): List<SearchResult>
 }

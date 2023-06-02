@@ -36,7 +36,7 @@ class FakeGeocodingDataSource : GeocodingDataSource {
     } returns searchAddress
   }
 
-  override suspend fun resolveUserCity(location: Location): List<SearchResult> =
+  override suspend fun findPlace(location: Location): List<SearchResult> =
     when {
       showError -> throw IOException("Yikes!")
       unexpectedError -> throw KotlinNullPointerException("Yikes!")

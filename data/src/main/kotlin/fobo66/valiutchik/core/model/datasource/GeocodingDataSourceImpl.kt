@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.QueryType
 import com.mapbox.search.QueryType.PLACE
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchEngine
@@ -37,10 +38,14 @@ class GeocodingDataSourceImpl @Inject constructor(
     listOf(IsoCountryCode("by"))
   }
 
-  override suspend fun resolveUserCity(location: Location): List<SearchResult> {
+  private val types: List<QueryType> by lazy {
+    listOf(PLACE)
+  }
+
+  override suspend fun findPlace(location: Location): List<SearchResult> {
     val options = ReverseGeoOptions(
       center = Point.fromLngLat(location.longitude, location.latitude),
-      types = listOf(PLACE),
+      types = types,
       languages = searchLanguages,
       countries = searchCountries
     )

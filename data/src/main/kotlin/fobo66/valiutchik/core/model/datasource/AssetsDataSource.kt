@@ -18,6 +18,14 @@ package fobo66.valiutchik.core.model.datasource
 
 import okio.BufferedSource
 
+/**
+ * Datasource for accessing app's assets
+ */
 interface AssetsDataSource {
+  /**
+   * Load file from assets
+   *
+   * @param fileName Name of the asset file. It should exist in the assets
+   */
   fun loadFile(fileName: String): BufferedSource
 }
