@@ -68,10 +68,10 @@ const val DESTINATION_LICENSES = "licenses"
 @OptIn(ExperimentalPermissionsApi::class)
 fun NavGraphBuilder.bestRatesScreen(
   snackbarHostState: SnackbarHostState,
-  useGrid: Boolean = false
+  useGrid: Boolean = false,
+  mainViewModel: MainViewModel
 ) {
   composable(DESTINATION_MAIN) {
-    val mainViewModel: MainViewModel = hiltViewModel()
     val context = LocalContext.current
 
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle(

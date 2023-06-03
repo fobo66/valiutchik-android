@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -51,6 +53,7 @@ import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
+import fobo66.exchangecourcesbelarus.ui.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
 import fobo66.exchangecourcesbelarus.ui.icons.Info
@@ -59,7 +62,6 @@ import fobo66.exchangecourcesbelarus.ui.licensesScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
   val navController = rememberNavController()
@@ -71,6 +73,8 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
   val snackbarHostState = remember {
     SnackbarHostState()
   }
+
+  val mainViewModel: MainViewModel = hiltViewModel()
 
   ValiutchikTheme {
     Scaffold(
@@ -87,6 +91,9 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
           },
           onSettingsClicked = {
             navController.navigate(DESTINATION_PREFERENCES)
+          },
+          onRefreshClicked = {
+            mainViewModel.refreshExchangeRates()
           }
         )
       },
@@ -108,7 +115,8 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
       ) {
         bestRatesScreen(
           snackbarHostState,
-          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+          mainViewModel = mainViewModel
         )
         preferenceScreen(
           navController,
@@ -132,6 +140,7 @@ fun ValiutchikTopBar(
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
   onSettingsClicked: () -> Unit,
+  onRefreshClicked: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   val title = resolveTitle(currentRoute)
@@ -148,6 +157,16 @@ fun ValiutchikTopBar(
       Text(title, modifier = Modifier.testTag("Title"))
     },
     actions = {
+      AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
+        IconButton(onClick = onRefreshClicked, modifier = Modifier.testTag("Refresh")) {
+          Icon(
+            Icons.Default.Refresh,
+            contentDescription = stringResource(
+              id = string.action_refresh
+            )
+          )
+        }
+      }
       IconButton(onClick = onAboutClick, modifier = Modifier.testTag("About")) {
         Icon(
           Info,
