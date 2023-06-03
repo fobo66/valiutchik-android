@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 
+/**
+ * Repository to handle open source licenses
+ */
 interface LicensesRepository {
   fun loadLicenses(): List<OpenSourceLicensesItem>
 }

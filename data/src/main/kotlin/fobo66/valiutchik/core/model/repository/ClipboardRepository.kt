@@ -16,6 +16,13 @@
 
 package fobo66.valiutchik.core.model.repository
 
+/**
+ * Repository for clipboard operations
+ */
 interface ClipboardRepository {
+
+  /**
+   * Copy string to clipboard
+   */
   fun copyToClipboard(label: CharSequence, value: CharSequence)
 }

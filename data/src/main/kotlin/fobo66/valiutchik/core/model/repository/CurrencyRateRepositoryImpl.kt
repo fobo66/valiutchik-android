@@ -35,10 +35,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/4/19.
- */
 class CurrencyRateRepositoryImpl @Inject constructor(
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,

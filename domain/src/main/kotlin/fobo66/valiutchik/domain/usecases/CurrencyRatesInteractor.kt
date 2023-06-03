@@ -19,6 +19,9 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Collection of use cases related to currency rates
+ */
 interface CurrencyRatesInteractor {
   suspend fun refreshExchangeRates()
   suspend fun forceRefreshExchangeRates()

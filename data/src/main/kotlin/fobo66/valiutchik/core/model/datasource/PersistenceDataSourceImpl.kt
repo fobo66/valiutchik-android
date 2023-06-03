@@ -21,10 +21,6 @@ import fobo66.valiutchik.core.entities.BestCourse
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/19/19.
- */
 class PersistenceDataSourceImpl @Inject constructor(
   private val database: CurrencyRatesDatabase
 ) : PersistenceDataSource {

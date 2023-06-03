@@ -17,8 +17,7 @@
 package fobo66.valiutchik.core.entities
 
 /**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/7/19.
+ * Wrapper for the location coordinates
  */
 data class Location(
   val latitude: Double,

@@ -23,10 +23,6 @@ import androidx.room.Query
 import fobo66.valiutchik.core.entities.BestCourse
 import kotlinx.coroutines.flow.Flow
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/18/19.
- */
 @Dao
 interface CurrencyRatesDao {
 

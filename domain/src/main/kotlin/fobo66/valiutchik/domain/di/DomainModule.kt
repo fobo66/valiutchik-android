@@ -47,10 +47,6 @@ import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/8/19.
- */
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class DomainModule {

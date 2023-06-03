@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.datasource
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Datasource for working with key-value preferences
+ */
 interface PreferencesDataSource {
   suspend fun loadString(key: String, defaultValue: String = ""): String
   suspend fun saveString(key: String, value: String)

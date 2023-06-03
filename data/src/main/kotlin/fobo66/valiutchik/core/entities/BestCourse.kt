@@ -23,8 +23,7 @@ import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.USD
 
 /**
- * Model for best available exchange courses to put into cardview
- * Created by fobo66 on 23.08.2015.
+ * Database entity for best available exchange courses
  */
 @Entity(tableName = "best_rates")
 data class BestCourse(

@@ -20,12 +20,10 @@ import fobo66.valiutchik.domain.fake.FakeCurrencyRateRepository
 import fobo66.valiutchik.domain.fake.FakeCurrencyRatesTimestampRepository
 import fobo66.valiutchik.domain.fake.FakePreferenceRepository
 import java.time.LocalDateTime
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-@ExperimentalCoroutinesApi
 class ForceRefreshExchangeRatesForDefaultCityTest {
   private val timestampRepository = FakeCurrencyRatesTimestampRepository()
   private val currencyRateRepository = FakeCurrencyRateRepository()

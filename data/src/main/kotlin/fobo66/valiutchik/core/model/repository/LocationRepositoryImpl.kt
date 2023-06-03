@@ -35,7 +35,7 @@ class LocationRepositoryImpl @Inject constructor(
       Timber.v("Resolving user's location")
       val location = locationDataSource.resolveLocation()
       Timber.v("Resolved user's location: %s", location)
-      geocodingDataSource.resolveUserCity(location)
+      geocodingDataSource.findPlace(location)
     } catch (e: IOException) {
       Timber.e(e, "Failed to determine user city")
       emptyList()

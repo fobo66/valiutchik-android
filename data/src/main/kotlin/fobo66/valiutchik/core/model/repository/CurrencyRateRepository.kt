@@ -20,7 +20,18 @@ import fobo66.valiutchik.core.entities.BestCourse
 import java.time.LocalDateTime
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Repository to process exchange rates
+ */
 interface CurrencyRateRepository {
+
+  /**
+   * Refresh exchange rates for the given city
+   */
   suspend fun refreshExchangeRates(city: String, now: LocalDateTime)
+
+  /**
+   * Load exchange rates from database or from network
+   */
   fun loadExchangeRates(): Flow<List<BestCourse>>
 }

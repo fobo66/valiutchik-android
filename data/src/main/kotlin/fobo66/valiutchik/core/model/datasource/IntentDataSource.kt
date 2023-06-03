@@ -20,7 +20,19 @@ import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 
+/**
+ * Datasource for working with the Intents
+ */
 interface IntentDataSource {
+  /**
+   * Create new Intent
+   */
   fun createIntent(uri: Uri, action: String = Intent.ACTION_VIEW): Intent
+
+  /**
+   * Check if the given Intent can be resolved by the system
+   *
+   * @return null if there's no handler
+   */
   fun resolveIntent(intent: Intent): ComponentName?
 }

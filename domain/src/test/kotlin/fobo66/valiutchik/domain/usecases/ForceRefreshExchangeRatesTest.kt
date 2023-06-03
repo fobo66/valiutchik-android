@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,12 +21,10 @@ import fobo66.valiutchik.domain.fake.FakeCurrencyRatesTimestampRepository
 import fobo66.valiutchik.domain.fake.FakeLocationRepository
 import fobo66.valiutchik.domain.fake.FakePreferenceRepository
 import java.time.LocalDateTime
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-@ExperimentalCoroutinesApi
 class ForceRefreshExchangeRatesTest {
   private val locationRepository = FakeLocationRepository()
   private val timestampRepository = FakeCurrencyRatesTimestampRepository()

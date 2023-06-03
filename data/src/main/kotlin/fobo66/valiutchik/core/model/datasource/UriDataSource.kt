@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.net.Uri
 
+/**
+ * Datasource tp deal with URIs
+ */
 interface UriDataSource {
   /**
    * Forge an URI for the intent with single query parameter

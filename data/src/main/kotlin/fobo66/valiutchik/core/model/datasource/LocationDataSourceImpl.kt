@@ -33,10 +33,6 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/7/19.
- */
 @Singleton
 class LocationDataSourceImpl @Inject constructor(
   @ApplicationContext private val context: Context,
