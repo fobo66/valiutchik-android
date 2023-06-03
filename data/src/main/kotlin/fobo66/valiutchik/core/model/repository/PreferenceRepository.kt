@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.repository
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Repository to handle application preferences
+ */
 interface PreferenceRepository {
   fun observeDefaultCityPreference(): Flow<String>
   fun observeUpdateIntervalPreference(): Flow<Float>

@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.repository
 
 import java.time.LocalDateTime
 
+/**
+ * Repository to handle timestamps of currency rates refresh
+ */
 interface CurrencyRatesTimestampRepository {
   suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime, updateInterval: Float): Boolean
   suspend fun saveTimestamp(now: LocalDateTime)
