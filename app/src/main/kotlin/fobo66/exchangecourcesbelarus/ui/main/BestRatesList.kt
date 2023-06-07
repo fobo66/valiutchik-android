@@ -43,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
@@ -61,7 +62,7 @@ fun BestRatesList(
   onBestRateLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val swipeRefreshState = rememberPullRefreshState(isRefreshing, onRefresh =)
+  val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
     Crossfade(bestCurrencyRates, label = "bestRatesList") {
       if (it.isEmpty()) {
@@ -103,7 +104,7 @@ fun BestRatesGrid(
   onBestRateLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val swipeRefreshState = rememberPullRefreshState(isRefreshing, onRefresh =)
+  val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
     Crossfade(bestCurrencyRates, label = "bestRatesGrid") {
       if (it.isEmpty()) {
