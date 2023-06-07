@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -50,7 +50,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {}
+          onSettingsClicked = {},
+          onRefreshClicked = {}
         )
       }
     }
@@ -71,7 +72,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {}
+          onSettingsClicked = {},
+          onRefreshClicked = {}
         )
       }
     }
@@ -90,7 +92,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_PREFERENCES,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {}
+          onSettingsClicked = {},
+          onRefreshClicked = {}
         )
       }
     }
@@ -116,7 +119,8 @@ class ToolbarTest : TestCase(
           currentRoute = route,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = { route = DESTINATION_PREFERENCES }
+          onSettingsClicked = { route = DESTINATION_PREFERENCES },
+          onRefreshClicked = {}
         )
       }
     }
@@ -155,7 +159,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = { isAboutDialogShown = true },
-          onSettingsClicked = {}
+          onSettingsClicked = {},
+          onRefreshClicked = {}
         )
       }
     }
@@ -166,6 +171,30 @@ class ToolbarTest : TestCase(
     }
     step("check dialog") {
       assertTrue(isAboutDialogShown)
+    }
+  }
+
+  @Test
+  fun refreshWorks() = run {
+    var isRefreshClicked = false
+    step("setup refresh icon") {
+      composeRule.setContent {
+        ValiutchikTopBar(
+          currentRoute = DESTINATION_MAIN,
+          onBackClick = {},
+          onAboutClick = {},
+          onSettingsClicked = {},
+          onRefreshClicked = { isRefreshClicked = true }
+        )
+      }
+    }
+    step("click about icon") {
+      onComposeScreen<ToolbarScreen>(composeRule) {
+        refreshIcon.performClick()
+      }
+    }
+    step("check dialog") {
+      assertTrue(isRefreshClicked)
     }
   }
 }
