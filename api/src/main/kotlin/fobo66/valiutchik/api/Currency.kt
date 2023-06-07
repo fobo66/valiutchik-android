@@ -18,8 +18,6 @@ package fobo66.valiutchik.api
 
 /**
  * Currency model from XML
- *
- * Created by fobo66 on 16.08.2015.
  */
 data class Currency(
   val bankname: String = "",
