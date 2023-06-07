@@ -16,7 +16,6 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
-import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
 import androidx.compose.material3.MaterialTheme
@@ -44,8 +43,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
-import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
@@ -68,10 +67,11 @@ const val DESTINATION_LICENSES = "licenses"
 @OptIn(ExperimentalPermissionsApi::class)
 fun NavGraphBuilder.bestRatesScreen(
   snackbarHostState: SnackbarHostState,
-  useGrid: Boolean = false
+  useGrid: Boolean = false,
+  mainViewModel: MainViewModel,
+  permissionState: PermissionState
 ) {
   composable(DESTINATION_MAIN) {
-    val mainViewModel: MainViewModel = hiltViewModel()
     val context = LocalContext.current
 
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle(
@@ -82,10 +82,6 @@ fun NavGraphBuilder.bestRatesScreen(
       initialValue = MainScreenState.Loading
     )
 
-    val locationPermissionState = rememberPermissionState(
-      permission.ACCESS_COARSE_LOCATION
-    )
-
     var isLocationPermissionPromptShown by rememberSaveable {
       mutableStateOf(false)
     }
@@ -93,11 +89,11 @@ fun NavGraphBuilder.bestRatesScreen(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-      locationPermissionState.launchPermissionRequest()
+      permissionState.launchPermissionRequest()
     }
 
-    LaunchedEffect(locationPermissionState) {
-      if (locationPermissionState.status is PermissionStatus.Granted) {
+    LaunchedEffect(permissionState) {
+      if (permissionState.status is PermissionStatus.Granted) {
         mainViewModel.refreshExchangeRates()
       } else {
         if (!isLocationPermissionPromptShown) {
@@ -117,7 +113,7 @@ fun NavGraphBuilder.bestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       isRefreshing = viewState.isInProgress,
       onRefresh = {
-        if (locationPermissionState.status is PermissionStatus.Granted) {
+        if (permissionState.status is PermissionStatus.Granted) {
           mainViewModel.forceRefreshExchangeRates()
         } else {
           mainViewModel.forceRefreshExchangeRatesForDefaultCity()
