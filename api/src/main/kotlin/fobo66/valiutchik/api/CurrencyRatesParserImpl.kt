@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,8 +25,6 @@ import org.xmlpull.v1.XmlPullParserException
 
 /**
  * XML parser for [MyFIN](myfin.by) feed
- *
- * Created by fobo66 on 16.08.2015.
  */
 class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
   private val neededTagNames by lazy {
@@ -37,7 +35,11 @@ class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
       TAG_NAME_EUR_BUY,
       TAG_NAME_EUR_SELL,
       TAG_NAME_RUR_BUY,
-      TAG_NAME_RUR_SELL
+      TAG_NAME_RUR_SELL,
+      TAG_NAME_PLN_BUY,
+      TAG_NAME_PLN_SELL,
+      TAG_NAME_UAH_BUY,
+      TAG_NAME_UAH_SELL
     )
   }
 
@@ -137,5 +139,9 @@ class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
     const val TAG_NAME_EUR_SELL = "eur_sell"
     const val TAG_NAME_RUR_BUY = "rub_buy"
     const val TAG_NAME_RUR_SELL = "rub_sell"
+    const val TAG_NAME_PLN_BUY = "pln_buy"
+    const val TAG_NAME_PLN_SELL = "pln_sell"
+    const val TAG_NAME_UAH_BUY = "uah_buy"
+    const val TAG_NAME_UAH_SELL = "uah_sell"
   }
 }
