@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,7 +22,9 @@ const val USD = "USD"
 const val EUR = "EUR"
 const val RUB = "RUB"
 const val RUR = "RUR"
+const val PLN = "PLN"
+const val UAH = "UAH"
 
 @Retention(AnnotationRetention.SOURCE)
-@StringDef(value = [USD, EUR, RUB, RUR])
+@StringDef(value = [USD, EUR, RUB, RUR, PLN, UAH])
 annotation class CurrencyName
