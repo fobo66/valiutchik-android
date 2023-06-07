@@ -19,7 +19,6 @@ package fobo66.exchangecourcesbelarus.ui.main
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
@@ -107,7 +106,7 @@ fun BestRatesGrid(
 ) {
   val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
   SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh, modifier = modifier) {
-    Crossfade(bestCurrencyRates) {
+    Crossfade(bestCurrencyRates, label = "bestRatesGrid") {
       if (it.isEmpty()) {
         NoRatesIndicator()
       } else {
@@ -141,7 +140,7 @@ fun BestRatesGrid(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
   currencyName: String,
@@ -165,7 +164,7 @@ fun BestCurrencyRateCard(
       style = MaterialTheme.typography.headlineSmall,
       modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
     )
-    AnimatedContent(currencyValue) {
+    AnimatedContent(currencyValue, label = "currencyValue") {
       Text(
         text = it,
         style = MaterialTheme.typography.displayLarge,
@@ -180,7 +179,7 @@ fun BestCurrencyRateCard(
         contentDescription = stringResource(id = string.bank_name_indicator),
         modifier = Modifier.align(Alignment.CenterVertically)
       )
-      AnimatedContent(bankName) {
+      AnimatedContent(bankName, label = "bankName") {
         Text(
           text = it,
           style = MaterialTheme.typography.bodyMedium,
@@ -193,7 +192,7 @@ fun BestCurrencyRateCard(
 
 @Preview
 @Composable
-fun BestCurrencyRatePreview() {
+private fun BestCurrencyRatePreview() {
   ValiutchikTheme {
     BestCurrencyRateCard(
       currencyName = "US Dollar buy rate",

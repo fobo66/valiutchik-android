@@ -30,10 +30,10 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
@@ -61,7 +61,11 @@ fun TextPreference(
         text = summaryProvider()
       )
     },
-    modifier = modifier.clickable(onClick = { if (enabled) onClick?.invoke() }),
+    modifier = modifier.clickable(onClick = {
+      if (enabled) {
+        onClick?.invoke()
+      }
+    }),
     trailingContent = trailing
   )
 }
@@ -102,7 +106,6 @@ fun ListPreference(
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class)
 private fun ListPreferenceDialog(
   onDismiss: () -> Unit,
   title: @Composable () -> Unit,
@@ -131,7 +134,11 @@ private fun ListPreferenceDialog(
               .selectable(
                 selected = isSelected,
                 role = Role.RadioButton,
-                onClick = { if (!isSelected) onSelected() }
+                onClick = {
+                  if (!isSelected) {
+                    onSelected()
+                  }
+                }
               )
               .padding(4.dp)
               .semantics {
@@ -143,7 +150,11 @@ private fun ListPreferenceDialog(
               modifier = Modifier.semantics {
                 stateDescription = current.key
               },
-              onClick = { if (!isSelected) onSelected() }
+              onClick = {
+                if (!isSelected) {
+                  onSelected()
+                }
+              }
             )
             Text(
               text = current.key,
@@ -170,7 +181,7 @@ internal fun SeekBarPreference(
   steps: Int = 0,
   onValueChange: (Float) -> Unit
 ) {
-  val currentValue = remember(value) { mutableStateOf(value) }
+  val currentValue = remember(value) { mutableFloatStateOf(value) }
 
   TextPreference(
     title = title,
@@ -179,10 +190,10 @@ internal fun SeekBarPreference(
     summary = {
       SeekbarPreferenceSummary(
         enabled = enabled,
-        sliderValue = currentValue.value,
+        sliderValue = currentValue.floatValue,
         valueRepresentation = { it.roundToInt().toString() },
-        onValueChange = { currentValue.value = it },
-        onValueChangeEnd = { onValueChange(currentValue.value) },
+        onValueChange = { currentValue.floatValue = it },
+        onValueChangeEnd = { onValueChange(currentValue.floatValue) },
         valueRange = valueRange,
         steps = steps
       )
@@ -210,7 +221,11 @@ private fun SeekbarPreferenceSummary(
       Spacer(modifier = Modifier.width(16.dp))
       Slider(
         value = sliderValue,
-        onValueChange = { if (enabled) onValueChange(it) },
+        onValueChange = {
+          if (enabled) {
+            onValueChange(it)
+          }
+        },
         valueRange = valueRange,
         steps = steps,
         onValueChangeFinished = onValueChangeEnd,

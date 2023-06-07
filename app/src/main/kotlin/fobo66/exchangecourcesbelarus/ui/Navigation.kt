@@ -113,11 +113,7 @@ fun NavGraphBuilder.bestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       isRefreshing = viewState.isInProgress,
       onRefresh = {
-        if (permissionState.status is PermissionStatus.Granted) {
-          mainViewModel.forceRefreshExchangeRates()
-        } else {
-          mainViewModel.forceRefreshExchangeRatesForDefaultCity()
-        }
+        refreshRates(permissionState, mainViewModel)
       },
       onBestRateClick = { bankName ->
         findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
@@ -261,5 +257,17 @@ fun NavGraphBuilder.licensesScreen() {
         ActivityOptionsCompat.makeBasic().toBundle()
       )
     })
+  }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+fun refreshRates(
+  locationPermissionState: PermissionState,
+  mainViewModel: MainViewModel
+) {
+  if (locationPermissionState.status is PermissionStatus.Granted) {
+    mainViewModel.forceRefreshExchangeRates()
+  } else {
+    mainViewModel.forceRefreshExchangeRatesForDefaultCity()
   }
 }

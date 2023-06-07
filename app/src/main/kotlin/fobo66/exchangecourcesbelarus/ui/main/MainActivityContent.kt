@@ -50,7 +50,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import fobo66.exchangecourcesbelarus.R.string
@@ -64,11 +63,15 @@ import fobo66.exchangecourcesbelarus.ui.icons.Info
 import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licensesScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import fobo66.exchangecourcesbelarus.ui.refreshRates
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
+fun MainActivityContent(
+  windowSizeClass: WindowSizeClass,
+  modifier: Modifier = Modifier,
+  mainViewModel: MainViewModel = hiltViewModel()
+) {
   val navController = rememberNavController()
 
   var isAboutDialogShown by remember {
@@ -83,66 +86,48 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
     SnackbarHostState()
   }
 
-  val mainViewModel: MainViewModel = hiltViewModel()
+  Scaffold(
+    topBar = {
+      val currentDestination by navController.currentBackStackEntryAsState()
 
-  ValiutchikTheme {
-    Scaffold(
-      topBar = {
-        val currentDestination by navController.currentBackStackEntryAsState()
-
-        ValiutchikTopBar(
-          currentRoute = currentDestination?.destination?.route,
-          onBackClick = {
-            navController.popBackStack()
-          },
-          onAboutClick = {
-            isAboutDialogShown = true
-          },
-          onSettingsClicked = {
-            navController.navigate(DESTINATION_PREFERENCES)
-          },
-          onRefreshClicked = {
-            if (locationPermissionState.status is PermissionStatus.Granted) {
-              mainViewModel.forceRefreshExchangeRates()
-            } else {
-              mainViewModel.forceRefreshExchangeRatesForDefaultCity()
-            }
-          }
-        )
-      },
-      snackbarHost = {
-        SnackbarHost(
-          hostState = snackbarHostState,
-          modifier = Modifier.navigationBarsPadding(),
-          snackbar = {
-            Snackbar(snackbarData = it, modifier = Modifier.testTag("Snackbar"))
-          }
-        )
-      },
-      modifier = modifier
+      ValiutchikTopBar(
+        currentRoute = currentDestination?.destination?.route,
+        onBackClick = { navController.popBackStack() },
+        onAboutClick = { isAboutDialogShown = true },
+        onSettingsClicked = { navController.navigate(DESTINATION_PREFERENCES) },
+        onRefreshClicked = { refreshRates(locationPermissionState, mainViewModel) }
+      )
+    },
+    snackbarHost = {
+      SnackbarHost(
+        hostState = snackbarHostState,
+        modifier = Modifier.navigationBarsPadding(),
+        snackbar = {
+          Snackbar(snackbarData = it, modifier = Modifier.testTag("Snackbar"))
+        }
+      )
+    },
+    modifier = modifier
+  ) {
+    NavHost(
+      navController = navController,
+      startDestination = DESTINATION_MAIN,
+      modifier = Modifier.padding(it)
     ) {
-      NavHost(
-        navController = navController,
-        startDestination = DESTINATION_MAIN,
-        modifier = Modifier.padding(it)
-      ) {
-        bestRatesScreen(
-          snackbarHostState,
-          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-          mainViewModel = mainViewModel,
-          permissionState = locationPermissionState
-        )
-        preferenceScreen(
-          navController,
-          useDialog = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
-        )
-        licensesScreen()
-      }
-      if (isAboutDialogShown) {
-        AboutAppDialog(
-          onDismiss = { isAboutDialogShown = false }
-        )
-      }
+      bestRatesScreen(
+        snackbarHostState,
+        useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+        mainViewModel = mainViewModel,
+        permissionState = locationPermissionState
+      )
+      preferenceScreen(
+        navController,
+        useDialog = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+      )
+      licensesScreen()
+    }
+    if (isAboutDialogShown) {
+      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
     }
   }
 }

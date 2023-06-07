@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
 import fobo66.exchangecourcesbelarus.ui.main.SystemBarColors
+import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -40,7 +41,9 @@ class MainActivity : ComponentActivity() {
     setContent {
       SystemBarColors()
       val windowSizeClass = calculateWindowSizeClass(this)
-      MainActivityContent(windowSizeClass)
+      ValiutchikTheme {
+        MainActivityContent(windowSizeClass)
+      }
     }
   }
 }
