@@ -72,7 +72,7 @@ dependencyResolutionManagement {
       library("activity", "androidx.activity:activity-compose:1.7.2")
       library("appstartup", "androidx.startup:startup-runtime:1.1.1")
       library("datastore", "androidx.datastore:datastore-preferences:1.0.0")
-      library("navigation", "androidx.navigation:navigation-compose:2.6.0-rc01")
+      library("navigation", "androidx.navigation:navigation-compose:2.6.0-rc02")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
       library("window", "androidx.window:window:1.1.0-rc01")
@@ -189,7 +189,7 @@ dependencyResolutionManagement {
         "kaspresso-compose-support"
       ).versionRef("kaspresso")
       library("turbine", "app.cash.turbine:turbine:0.13.0")
-      library("truth", "com.google.truth:truth:1.1.3")
+      library("truth", "com.google.truth:truth:1.1.4")
       library("hamcrest", "org.hamcrest:hamcrest-core:2.2")
       library("mockk", "io.mockk", "mockk").versionRef("mockk")
       library("mockk.agent", "io.mockk", "mockk-agent-jvm").versionRef("mockk")
