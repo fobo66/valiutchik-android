@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
+import android.Manifest.permission
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -48,6 +49,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
@@ -62,6 +66,7 @@ import fobo66.exchangecourcesbelarus.ui.licensesScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
   val navController = rememberNavController()
@@ -69,6 +74,10 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
   var isAboutDialogShown by remember {
     mutableStateOf(false)
   }
+
+  val locationPermissionState = rememberPermissionState(
+    permission.ACCESS_COARSE_LOCATION
+  )
 
   val snackbarHostState = remember {
     SnackbarHostState()
@@ -93,7 +102,11 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
             navController.navigate(DESTINATION_PREFERENCES)
           },
           onRefreshClicked = {
-            mainViewModel.refreshExchangeRates()
+            if (locationPermissionState.status is PermissionStatus.Granted) {
+              mainViewModel.forceRefreshExchangeRates()
+            } else {
+              mainViewModel.forceRefreshExchangeRatesForDefaultCity()
+            }
           }
         )
       },
@@ -116,7 +129,8 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
         bestRatesScreen(
           snackbarHostState,
           useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-          mainViewModel = mainViewModel
+          mainViewModel = mainViewModel,
+          permissionState = locationPermissionState
         )
         preferenceScreen(
           navController,
