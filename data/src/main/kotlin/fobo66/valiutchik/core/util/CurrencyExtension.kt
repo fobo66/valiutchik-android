@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ fun Currency.resolveCurrencyBuyRate(@CurrencyName name: String): String {
     EUR -> eurBuy
     RUB, RUR -> rurBuy
     USD -> usdBuy
+    PLN -> plnBuy
+    UAH -> uahBuy
     else -> usdBuy
   }
 }
@@ -40,6 +42,8 @@ fun Currency.resolveCurrencySellRate(@CurrencyName name: String): String {
     EUR -> eurSell
     RUB, RUR -> rurSell
     USD -> usdSell
+    PLN -> plnSell
+    UAH -> uahSell
     else -> usdSell
   }
 }

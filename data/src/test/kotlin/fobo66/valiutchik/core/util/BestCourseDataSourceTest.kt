@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,6 +51,16 @@ class BestCourseDataSourceTest {
   }
 
   @Test
+  fun testBestPLNBuyCourseAreReallyBest() {
+    assertEquals(BEST_PLN_BUY, bestBuy[PLN]?.plnBuy)
+  }
+
+  @Test
+  fun testBestUAHBuyCourseAreReallyBest() {
+    assertEquals(BEST_UAH_BUY, bestBuy[UAH]?.uahBuy)
+  }
+
+  @Test
   fun testBestUSDSellCoursesAreReallyBest() {
     assertEquals(BEST_USD_SELL, bestSell[USD]?.usdSell)
   }
@@ -65,6 +75,16 @@ class BestCourseDataSourceTest {
     assertEquals(BEST_EUR_SELL, bestSell[EUR]?.eurSell)
   }
 
+  @Test
+  fun testBestPLNSellCourseAreReallyBest() {
+    assertEquals(BEST_PLN_SELL, bestSell[PLN]?.plnSell)
+  }
+
+  @Test
+  fun testBestUAHSellCourseAreReallyBest() {
+    assertEquals(BEST_UAH_SELL, bestSell[UAH]?.uahSell)
+  }
+
   companion object {
     const val BEST_USD_BUY = "2.54"
     const val BEST_USD_SELL = "2.546"
@@ -72,5 +92,9 @@ class BestCourseDataSourceTest {
     const val BEST_EUR_SELL = "3.068"
     const val BEST_RUR_BUY = "0.03405"
     const val BEST_RUR_SELL = "0.03414"
+    const val BEST_PLN_BUY = "0.654"
+    const val BEST_PLN_SELL = "0.6715"
+    const val BEST_UAH_BUY = "0.08"
+    const val BEST_UAH_SELL = "0.09"
   }
 }

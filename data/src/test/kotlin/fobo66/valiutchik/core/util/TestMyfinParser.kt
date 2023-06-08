@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,12 @@
 
 package fobo66.valiutchik.core.util
 
+import fobo66.valiutchik.api.Currency
+import fobo66.valiutchik.api.CurrencyRatesParser
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_SELL
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_SELL
 import fobo66.valiutchik.core.TAG_NAME_BANKNAME
 import fobo66.valiutchik.core.TAG_NAME_EUR_BUY
 import fobo66.valiutchik.core.TAG_NAME_EUR_SELL
@@ -29,7 +35,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Document
 import org.w3c.dom.NodeList
 
-class TestMyfinParser : fobo66.valiutchik.api.CurrencyRatesParser {
+class TestMyfinParser : CurrencyRatesParser {
 
   private val neededTagNames by lazy {
     setOf(
@@ -39,11 +45,15 @@ class TestMyfinParser : fobo66.valiutchik.api.CurrencyRatesParser {
       TAG_NAME_EUR_BUY,
       TAG_NAME_EUR_SELL,
       TAG_NAME_RUR_BUY,
-      TAG_NAME_RUR_SELL
+      TAG_NAME_RUR_SELL,
+      TAG_NAME_PLN_BUY,
+      TAG_NAME_PLN_SELL,
+      TAG_NAME_UAH_BUY,
+      TAG_NAME_UAH_SELL
     )
   }
 
-  override fun parse(inputStream: InputStream): Set<fobo66.valiutchik.api.Currency> {
+  override fun parse(inputStream: InputStream): Set<Currency> {
     val dbFactory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
     val documentBuilder = dbFactory.newDocumentBuilder()
     val document = documentBuilder.parse(inputStream)
@@ -52,8 +62,8 @@ class TestMyfinParser : fobo66.valiutchik.api.CurrencyRatesParser {
     return readCurrencies(document)
   }
 
-  private fun readCurrencies(document: Document): Set<fobo66.valiutchik.api.Currency> {
-    val currencies = mutableSetOf<fobo66.valiutchik.api.Currency>()
+  private fun readCurrencies(document: Document): Set<Currency> {
+    val currencies = mutableSetOf<Currency>()
 
     val nodes = document.getElementsByTagName(ENTRY_TAG_NAME)
 
@@ -67,7 +77,7 @@ class TestMyfinParser : fobo66.valiutchik.api.CurrencyRatesParser {
   }
 
   @Throws(IOException::class)
-  private fun readCurrency(nodes: NodeList): fobo66.valiutchik.api.Currency {
+  private fun readCurrency(nodes: NodeList): Currency {
     var fieldName: String
     var currencyBuilder: fobo66.valiutchik.api.CurrencyBuilder =
       fobo66.valiutchik.api.CurrencyBuilderImpl()

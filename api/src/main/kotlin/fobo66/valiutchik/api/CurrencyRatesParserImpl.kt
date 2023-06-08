@@ -23,9 +23,6 @@ import javax.inject.Inject
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 
-/**
- * XML parser for [MyFIN](myfin.by) feed
- */
 class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
   private val neededTagNames by lazy {
     setOf(
