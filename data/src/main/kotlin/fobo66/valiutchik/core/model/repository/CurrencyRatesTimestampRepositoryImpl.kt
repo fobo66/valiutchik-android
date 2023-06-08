@@ -21,6 +21,8 @@ import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import java.time.Duration
 import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
@@ -44,8 +46,9 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     preferencesDataSource.saveString(TIMESTAMP, nowString)
   }
 
-  override suspend fun loadLatestTimestamp(now: LocalDateTime): LocalDateTime {
-    return loadTimestamp(now)
+  override fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime> {
+    return preferencesDataSource.observeString(TIMESTAMP, now.toString())
+      .map { LocalDateTime.parse(it) }
   }
 
   private suspend fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {

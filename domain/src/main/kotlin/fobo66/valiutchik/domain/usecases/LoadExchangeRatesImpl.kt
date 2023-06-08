@@ -34,7 +34,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class LoadExchangeRatesImpl @Inject constructor(
@@ -42,18 +41,17 @@ class LoadExchangeRatesImpl @Inject constructor(
   private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 ) : LoadExchangeRates {
   @OptIn(ExperimentalCoroutinesApi::class)
-  override fun execute(now: LocalDateTime): Flow<List<BestCurrencyRate>> = flow {
-    val timestamp = currencyRatesTimestampRepository.loadLatestTimestamp(now)
-    emit(timestamp)
-  }.flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
-    .map {
-      it.map { bestCourse ->
-        @StringRes val currencyNameRes =
-          resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
+  override fun execute(now: LocalDateTime): Flow<List<BestCurrencyRate>> =
+    currencyRatesTimestampRepository.loadLatestTimestamp(now)
+      .flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
+      .map {
+        it.map { bestCourse ->
+          @StringRes val currencyNameRes =
+            resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
 
-        bestCourse.toBestCurrencyRate(currencyNameRes)
+          bestCourse.toBestCurrencyRate(currencyNameRes)
+        }
       }
-    }
 
   @StringRes
   private fun resolveCurrencyName(@CurrencyName currencyName: String, isBuy: Boolean) =
