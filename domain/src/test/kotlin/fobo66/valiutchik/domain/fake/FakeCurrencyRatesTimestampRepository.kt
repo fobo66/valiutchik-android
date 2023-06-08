@@ -18,6 +18,8 @@ package fobo66.valiutchik.domain.fake
 
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import java.time.LocalDateTime
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
   var isNeededToUpdateCurrencyRates = true
@@ -33,7 +35,7 @@ class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
     isSaveTimestampCalled = true
   }
 
-  override suspend fun loadLatestTimestamp(now: LocalDateTime): LocalDateTime {
-    return now
-  }
+  override fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime> =
+    flowOf(now)
+
 }
