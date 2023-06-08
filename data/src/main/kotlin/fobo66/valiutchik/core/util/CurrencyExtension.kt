@@ -35,7 +35,9 @@ fun Currency.resolveCurrencyBuyRate(@CurrencyName name: String): String {
 }
 
 /**
- * See above.
+ * Method to figure out which currency will be used depends on the context
+ * By default, USD value is returned
+ * If I find the better way to do it, I'll rewrite it.
  */
 fun Currency.resolveCurrencySellRate(@CurrencyName name: String): String {
   return when (name) {

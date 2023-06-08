@@ -25,6 +25,7 @@ const val RUR = "RUR"
 const val PLN = "PLN"
 const val UAH = "UAH"
 
+@Target(AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.TYPE)
 @Retention(AnnotationRetention.SOURCE)
 @StringDef(value = [USD, EUR, RUB, RUR, PLN, UAH])
 annotation class CurrencyName

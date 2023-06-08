@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.api.Currency
 import fobo66.valiutchik.core.UNKNOWN_COURSE
+import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.EUR
 import fobo66.valiutchik.core.util.PLN
 import fobo66.valiutchik.core.util.RUB
@@ -35,7 +36,7 @@ class BestCourseDataSourceImpl @Inject constructor() : BestCourseDataSource {
 
   override fun findBestBuyCurrencies(
     courses: Set<Currency>
-  ): Map<String, Currency> = currencyKeys.associateWith { currencyKey ->
+  ): Map<@CurrencyName String, Currency> = currencyKeys.associateWith { currencyKey ->
     courses.asSequence()
       .filter { isBuyRateCorrect(it, currencyKey) }
       .maxByOrNull { it.resolveCurrencyBuyRate(currencyKey) } ?: courses.first {
@@ -45,7 +46,7 @@ class BestCourseDataSourceImpl @Inject constructor() : BestCourseDataSource {
 
   override fun findBestSellCurrencies(
     courses: Set<Currency>
-  ): Map<String, Currency> = currencyKeys.associateWith { currencyKey ->
+  ): Map<@CurrencyName String, Currency> = currencyKeys.associateWith { currencyKey ->
     courses.asSequence()
       .filter { isSellRateCorrect(it, currencyKey) }
       .minByOrNull { it.resolveCurrencySellRate(currencyKey) } ?: courses.first {
