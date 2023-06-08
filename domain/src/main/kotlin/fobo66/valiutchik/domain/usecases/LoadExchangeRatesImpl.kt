@@ -22,8 +22,10 @@ import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.EUR
+import fobo66.valiutchik.core.util.PLN
 import fobo66.valiutchik.core.util.RUB
 import fobo66.valiutchik.core.util.RUR
+import fobo66.valiutchik.core.util.UAH
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -60,10 +62,12 @@ class LoadExchangeRatesImpl @Inject constructor(
       USD to false -> R.string.currency_name_usd_sell
       EUR to true -> R.string.currency_name_eur_buy
       EUR to false -> R.string.currency_name_eur_sell
-      RUB to true -> R.string.currency_name_rub_buy
-      RUB to false -> R.string.currency_name_rub_sell
-      RUR to true -> R.string.currency_name_rub_buy
-      RUR to false -> R.string.currency_name_rub_sell
+      RUB to true, RUR to true -> R.string.currency_name_rub_buy
+      RUB to false, RUR to false -> R.string.currency_name_rub_sell
+      PLN to true -> R.string.currency_name_pln_buy
+      PLN to false -> R.string.currency_name_pln_sell
+      UAH to true -> R.string.currency_name_uah_buy
+      UAH to false -> R.string.currency_name_uah_sell
       else -> 0
     }
 
