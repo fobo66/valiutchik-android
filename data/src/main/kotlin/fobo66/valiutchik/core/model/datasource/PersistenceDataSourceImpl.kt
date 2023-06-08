@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
+import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
@@ -29,6 +30,6 @@ class PersistenceDataSourceImpl @Inject constructor(
     database.currencyRatesDao().insertBestCurrencyRates(bestCourses)
   }
 
-  override fun readBestCourses(): Flow<List<BestCourse>> =
-    database.currencyRatesDao().loadLatestBestCurrencyRates()
+  override fun readBestCourses(latestTimestamp: LocalDateTime): Flow<List<BestCourse>> =
+    database.currencyRatesDao().loadLatestBestCurrencyRates(latestTimestamp.toString())
 }

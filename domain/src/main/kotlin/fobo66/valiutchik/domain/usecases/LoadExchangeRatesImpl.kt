@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package fobo66.valiutchik.domain.usecases
 import androidx.annotation.StringRes
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.EUR
 import fobo66.valiutchik.core.util.RUB
@@ -26,23 +27,31 @@ import fobo66.valiutchik.core.util.RUR
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class LoadExchangeRatesImpl @Inject constructor(
-  private val currencyRateRepository: CurrencyRateRepository
+  private val currencyRateRepository: CurrencyRateRepository,
+  private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 ) : LoadExchangeRates {
-  override fun execute(): Flow<List<BestCurrencyRate>> =
-    currencyRateRepository.loadExchangeRates()
-      .map {
-        it.map { bestCourse ->
-          @StringRes val currencyNameRes =
-            resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
+  @OptIn(ExperimentalCoroutinesApi::class)
+  override fun execute(now: LocalDateTime): Flow<List<BestCurrencyRate>> = flow {
+    val timestamp = currencyRatesTimestampRepository.loadLatestTimestamp(now)
+    emit(timestamp)
+  }.flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
+    .map {
+      it.map { bestCourse ->
+        @StringRes val currencyNameRes =
+          resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
 
-          bestCourse.toBestCurrencyRate(currencyNameRes)
-        }
+        bestCourse.toBestCurrencyRate(currencyNameRes)
       }
+    }
 
   @StringRes
   private fun resolveCurrencyName(@CurrencyName currencyName: String, isBuy: Boolean) =

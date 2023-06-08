@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import java.time.LocalDateTime
 import kotlinx.coroutines.flow.Flow
 
 interface LoadExchangeRates {
-  fun execute(): Flow<List<BestCurrencyRate>>
+  fun execute(now: LocalDateTime): Flow<List<BestCurrencyRate>>
 }

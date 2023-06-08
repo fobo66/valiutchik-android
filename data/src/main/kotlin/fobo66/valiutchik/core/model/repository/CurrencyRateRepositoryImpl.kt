@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,8 +57,8 @@ class CurrencyRateRepositoryImpl @Inject constructor(
     persistenceDataSource.saveBestCourses(bestCourses)
   }
 
-  override fun loadExchangeRates(): Flow<List<BestCourse>> =
-    persistenceDataSource.readBestCourses()
+  override fun loadExchangeRates(latestTimestamp: LocalDateTime): Flow<List<BestCourse>> =
+    persistenceDataSource.readBestCourses(latestTimestamp)
 
   private fun findBestCourses(
     currencies: Set<Currency>,

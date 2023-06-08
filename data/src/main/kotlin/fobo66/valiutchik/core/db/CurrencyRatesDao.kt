@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@ interface CurrencyRatesDao {
   @Query("SELECT * FROM best_rates")
   suspend fun loadAllBestCurrencyRates(): List<BestCourse>
 
-  @Query("SELECT * FROM best_rates ORDER BY timestamp DESC, currency_name DESC LIMIT 6")
-  fun loadLatestBestCurrencyRates(): Flow<List<BestCourse>>
+  @Query("SELECT * FROM best_rates WHERE timestamp == :latestTimestamp ORDER BY currency_name DESC")
+  fun loadLatestBestCurrencyRates(latestTimestamp: String): Flow<List<BestCourse>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertBestCurrencyRates(bestRates: List<BestCourse>)
