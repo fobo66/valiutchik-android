@@ -29,7 +29,7 @@ interface CurrencyRatesDao {
   @Query("SELECT * FROM best_rates")
   suspend fun loadAllBestCurrencyRates(): List<BestCourse>
 
-  @Query("SELECT * FROM best_rates WHERE timestamp == :latestTimestamp ORDER BY currency_name DESC")
+  @Query("SELECT * FROM best_rates WHERE timestamp == :latestTimestamp ORDER BY currency_name ASC")
   fun loadLatestBestCurrencyRates(latestTimestamp: String): Flow<List<BestCourse>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)

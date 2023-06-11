@@ -18,7 +18,7 @@ package fobo66.valiutchik.core.util
 
 import androidx.annotation.StringDef
 
-const val USD = "USD"
+const val USD = "DOLLAR"
 const val EUR = "EUR"
 const val RUB = "RUB"
 const val RUR = "RUR"
