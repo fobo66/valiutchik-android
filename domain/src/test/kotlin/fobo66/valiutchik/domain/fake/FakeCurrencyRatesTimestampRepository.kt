@@ -37,5 +37,4 @@ class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
 
   override fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime> =
     flowOf(now)
-
 }
