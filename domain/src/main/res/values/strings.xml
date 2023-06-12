@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2022 Andrey Mukamolov
+  ~    Copyright 2023 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -21,4 +21,8 @@
   <string name="currency_name_eur_sell">🇪🇺 Euro sell rate</string>
   <string name="currency_name_rub_buy">🇷🇺 Ruble buy rate</string>
   <string name="currency_name_rub_sell">🇷🇺 Ruble sell rate</string>
+  <string name="currency_name_pln_buy">🇵🇱 Zloty buy rate</string>
+  <string name="currency_name_pln_sell">🇵🇱 Zloty sell rate</string>
+  <string name="currency_name_uah_buy">🇺🇦 Hryvna buy rate</string>
+  <string name="currency_name_uah_sell">🇺🇦 Hryvna sell rate</string>
 </resources>

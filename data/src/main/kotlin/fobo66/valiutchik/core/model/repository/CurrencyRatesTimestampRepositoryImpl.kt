@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import java.time.Duration
 import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
@@ -42,6 +44,11 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   override suspend fun saveTimestamp(now: LocalDateTime) {
     val nowString = now.toString()
     preferencesDataSource.saveString(TIMESTAMP, nowString)
+  }
+
+  override fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime> {
+    return preferencesDataSource.observeString(TIMESTAMP, now.toString())
+      .map { LocalDateTime.parse(it) }
   }
 
   private suspend fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,18 +28,24 @@ fun Currency.resolveCurrencyBuyRate(@CurrencyName name: String): String {
     EUR -> eurBuy
     RUB, RUR -> rurBuy
     USD -> usdBuy
+    PLN -> plnBuy
+    UAH -> uahBuy
     else -> usdBuy
   }
 }
 
 /**
- * See above.
+ * Method to figure out which currency will be used depends on the context
+ * By default, USD value is returned
+ * If I find the better way to do it, I'll rewrite it.
  */
 fun Currency.resolveCurrencySellRate(@CurrencyName name: String): String {
   return when (name) {
     EUR -> eurSell
     RUB, RUR -> rurSell
     USD -> usdSell
+    PLN -> plnSell
+    UAH -> uahSell
     else -> usdSell
   }
 }

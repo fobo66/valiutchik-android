@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@ package fobo66.valiutchik.api
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_BANKNAME
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_EUR_BUY
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_EUR_SELL
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_SELL
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_RUR_BUY
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_RUR_SELL
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_BUY
+import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_SELL
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_USD_BUY
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_USD_SELL
 
-/**
- * (c) 2017 Andrey Mukamolov aka fobo66
- * Created by fobo66 on 15.03.2017.
- */
 class CurrencyBuilderImpl : CurrencyBuilder {
   private val currencyMap = mutableMapOf<String, String>()
 
@@ -44,7 +44,11 @@ class CurrencyBuilderImpl : CurrencyBuilder {
       currencyMap[TAG_NAME_EUR_BUY].orEmpty(),
       currencyMap[TAG_NAME_EUR_SELL].orEmpty(),
       currencyMap[TAG_NAME_RUR_BUY].orEmpty(),
-      currencyMap[TAG_NAME_RUR_SELL].orEmpty()
+      currencyMap[TAG_NAME_RUR_SELL].orEmpty(),
+      currencyMap[TAG_NAME_PLN_BUY].orEmpty(),
+      currencyMap[TAG_NAME_PLN_SELL].orEmpty(),
+      currencyMap[TAG_NAME_UAH_BUY].orEmpty(),
+      currencyMap[TAG_NAME_UAH_SELL].orEmpty()
     )
   }
 }

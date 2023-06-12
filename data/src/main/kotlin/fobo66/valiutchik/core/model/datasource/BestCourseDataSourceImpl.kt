@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,26 +18,25 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.api.Currency
 import fobo66.valiutchik.core.UNKNOWN_COURSE
+import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.EUR
+import fobo66.valiutchik.core.util.PLN
 import fobo66.valiutchik.core.util.RUB
+import fobo66.valiutchik.core.util.UAH
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Algorithm for finding best currency rate for each currency
- * Created by fobo66 on 05.02.2017.
- */
 @Singleton
 class BestCourseDataSourceImpl @Inject constructor() : BestCourseDataSource {
 
-  private val currencyKeys by lazy { listOf(USD, EUR, RUB) }
+  private val currencyKeys by lazy { listOf(USD, EUR, RUB, PLN, UAH) }
 
   override fun findBestBuyCurrencies(
     courses: Set<Currency>
-  ): Map<String, Currency> = currencyKeys.associateWith { currencyKey ->
+  ): Map<@CurrencyName String, Currency> = currencyKeys.associateWith { currencyKey ->
     courses.asSequence()
       .filter { isBuyRateCorrect(it, currencyKey) }
       .maxByOrNull { it.resolveCurrencyBuyRate(currencyKey) } ?: courses.first {
@@ -47,7 +46,7 @@ class BestCourseDataSourceImpl @Inject constructor() : BestCourseDataSource {
 
   override fun findBestSellCurrencies(
     courses: Set<Currency>
-  ): Map<String, Currency> = currencyKeys.associateWith { currencyKey ->
+  ): Map<@CurrencyName String, Currency> = currencyKeys.associateWith { currencyKey ->
     courses.asSequence()
       .filter { isSellRateCorrect(it, currencyKey) }
       .minByOrNull { it.resolveCurrencySellRate(currencyKey) } ?: courses.first {

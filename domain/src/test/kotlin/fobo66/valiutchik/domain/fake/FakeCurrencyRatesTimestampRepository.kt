@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ package fobo66.valiutchik.domain.fake
 
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import java.time.LocalDateTime
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
   var isNeededToUpdateCurrencyRates = true
@@ -32,4 +34,7 @@ class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
   override suspend fun saveTimestamp(now: LocalDateTime) {
     isSaveTimestampCalled = true
   }
+
+  override fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime> =
+    flowOf(now)
 }

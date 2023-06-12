@@ -21,4 +21,8 @@
   <string name="currency_name_eur_sell">🇪🇺 Еўра курс прадажы</string>
   <string name="currency_name_rub_buy">🇷🇺 Рубль курс пакупкі</string>
   <string name="currency_name_rub_sell">🇷🇺 Рубль курс прадажы</string>
+  <string name="currency_name_pln_buy">🇵🇱 Злоты курс пакупкі</string>
+  <string name="currency_name_pln_sell">🇵🇱 Злоты курс прадажы</string>
+  <string name="currency_name_uah_buy">🇺🇦 Грыўна курс пакупкі</string>
+  <string name="currency_name_uah_sell">🇺🇦 Грыўна курс прадажы</string>
 </resources>

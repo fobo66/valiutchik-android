@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@ package fobo66.valiutchik.api
 
 /**
  * Currency model from XML
- *
- * Created by fobo66 on 16.08.2015.
  */
 data class Currency(
   val bankname: String = "",
@@ -28,5 +26,9 @@ data class Currency(
   val eurBuy: String = "",
   val eurSell: String = "",
   val rurBuy: String = "",
-  val rurSell: String = ""
+  val rurSell: String = "",
+  val plnBuy: String = "",
+  val plnSell: String = "",
+  val uahBuy: String = "",
+  val uahSell: String = ""
 )
