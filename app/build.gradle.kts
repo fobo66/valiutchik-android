@@ -167,6 +167,9 @@ dependencies {
   implementation(accompanist.permissions)
   implementation(accompanist.systemuicontroller)
 
+  implementation(widget.glance)
+  implementation(widget.glance.appwidget)
+
   // lifecycle
   implementation(androidx.lifecycle)
   implementation(androidx.viewmodel)
