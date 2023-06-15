@@ -138,6 +138,12 @@ dependencyResolutionManagement {
       )
     }
 
+    register("widget") {
+      version("glance", "1.0.0-beta01")
+      library("glance", "androidx.glance", "glance").versionRef("glance")
+      library("glance.appwidget", "androidx.glance", "glance-appwidget").versionRef("glance")
+    }
+
     register("accompanist") {
       version("accompanist", "0.31.3-beta")
       library(
