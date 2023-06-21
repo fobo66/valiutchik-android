@@ -89,7 +89,7 @@ fun OpenSourceLicense(
 
 @Preview(showBackground = true)
 @Composable
-fun OpenSourceLicensePreview() {
+private fun OpenSourceLicensePreview() {
   ValiutchikTheme {
     OpenSourceLicense(
       item = LicenseItem(
@@ -106,7 +106,7 @@ fun OpenSourceLicensePreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun OpenSourceLicensesPreview() {
+private fun OpenSourceLicensesPreview() {
   ValiutchikTheme {
     OpenSourceLicensesScreen(licensesState = LicensesState(persistentListOf()), onItemClick = {})
   }

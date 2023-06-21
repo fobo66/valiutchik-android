@@ -89,7 +89,7 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 
 @Preview(name = "Preferences", showBackground = true)
 @Composable
-fun PreferenceScreenPreview() {
+private fun PreferenceScreenPreview() {
   ValiutchikTheme {
     PreferenceScreenContent("Минск", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {}, {})
   }

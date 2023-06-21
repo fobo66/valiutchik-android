@@ -92,7 +92,7 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun AboutAppPreview() {
+private fun AboutAppPreview() {
   ValiutchikTheme {
     AboutAppDialog(onDismiss = {})
   }

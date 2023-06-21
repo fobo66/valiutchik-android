@@ -63,7 +63,7 @@ fun NoRatesIndicator(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun NoRatesIndicatorPreview() {
+private fun NoRatesIndicatorPreview() {
   ValiutchikTheme {
     NoRatesIndicator()
   }
