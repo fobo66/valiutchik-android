@@ -27,7 +27,7 @@ plugins {
 
 android {
   namespace = "fobo66.valiutchik.domain"
-  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
+  compileSdk = 34
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.N
