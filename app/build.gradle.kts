@@ -169,6 +169,7 @@ dependencies {
 
   implementation(widget.glance)
   implementation(widget.glance.appwidget)
+  debugImplementation(widget.glance.preview)
 
   // lifecycle
   implementation(androidx.lifecycle)
