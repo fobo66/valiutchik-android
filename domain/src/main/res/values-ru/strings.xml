@@ -15,14 +15,14 @@
   -->
 
 <resources>
-  <string name="currency_name_usd_buy">🇺🇸 Доллар курс покупки</string>
-  <string name="currency_name_usd_sell">🇺🇸 Доллар курс продажи</string>
-  <string name="currency_name_eur_buy">🇪🇺 Евро курс покупки</string>
-  <string name="currency_name_eur_sell">🇪🇺 Евро курс продажи</string>
-  <string name="currency_name_rub_buy">🇷🇺 Рубль курс покупки</string>
-  <string name="currency_name_rub_sell">🇷🇺 Рубль курс продажи</string>
-  <string name="currency_name_pln_buy">🇵🇱 Злотый курс покупки</string>
-  <string name="currency_name_pln_sell">🇵🇱 Злотый курс продажи</string>
-  <string name="currency_name_uah_buy">🇺🇦 Гривна курс покупки</string>
-  <string name="currency_name_uah_sell">🇺🇦 Гривна курс продажи</string>
+  <string name="currency_name_usd_buy">Доллар США курс покупки</string>
+  <string name="currency_name_usd_sell">Доллар США курс продажи</string>
+  <string name="currency_name_eur_buy">Евро курс покупки</string>
+  <string name="currency_name_eur_sell">Евро курс продажи</string>
+  <string name="currency_name_rub_buy">Рубль курс покупки</string>
+  <string name="currency_name_rub_sell">Рубль курс продажи</string>
+  <string name="currency_name_pln_buy">Польский злотый курс покупки</string>
+  <string name="currency_name_pln_sell">Польский злотый курс продажи</string>
+  <string name="currency_name_uah_buy">Гривна курс покупки</string>
+  <string name="currency_name_uah_sell">Гривна курс продажи</string>
 </resources>
