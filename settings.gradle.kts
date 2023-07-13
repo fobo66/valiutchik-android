@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     register("libs") {
       version("kotlin", "1.8.21")
       version("moshi", "1.15.0")
-      version("coroutines", "1.7.1")
+      version("coroutines", "1.7.2")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       library("material", "com.google.android.material:material:1.9.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
