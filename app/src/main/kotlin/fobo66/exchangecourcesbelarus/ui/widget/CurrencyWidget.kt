@@ -40,6 +40,7 @@ import androidx.glance.layout.Column
 import androidx.glance.text.Text
 import com.google.android.glance.appwidget.host.glance.GlanceAppWidgetHostPreview
 import dagger.hilt.android.AndroidEntryPoint
+import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
@@ -55,16 +56,18 @@ class CurrencyWidget(private val loadExchangeRates: LoadExchangeRates) : GlanceA
       initial = persistentListOf()
     )
 
-    LazyColumn(
-      modifier = GlanceModifier
-        .appWidgetBackground()
-        .cornerRadius(16.dp)
-    ) {
-      items(rates, { item -> item.id }) {
-        Column {
-          Text(text = context.getString(it.currencyNameRes))
-          Text(text = it.currencyValue)
-          Text(text = it.bank)
+    ValiutchikWidgetTheme {
+      LazyColumn(
+        modifier = GlanceModifier
+          .appWidgetBackground()
+          .cornerRadius(16.dp)
+      ) {
+        items(rates, { item -> item.id }) {
+          Column {
+            Text(text = context.getString(it.currencyNameRes))
+            Text(text = it.currencyValue)
+            Text(text = it.bank)
+          }
         }
       }
     }
