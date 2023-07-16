@@ -26,7 +26,7 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
+  compileSdk = 34
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.N

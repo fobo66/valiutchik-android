@@ -23,7 +23,7 @@ plugins {
 
 android {
   namespace = "dev.fobo66.valiutchik.macrobenchmark"
-  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
+  compileSdk = 34
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -36,7 +36,7 @@ android {
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.N
-    targetSdk = AndroidVersion.VersionCodes.TIRAMISU
+    targetSdk = 34
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }

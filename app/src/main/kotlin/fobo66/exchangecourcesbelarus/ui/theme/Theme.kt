@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.glance.GlanceComposable
+import androidx.glance.GlanceTheme
 
 private val DarkColorPalette = darkColorScheme(
   primary = Green800,
@@ -74,4 +76,11 @@ fun ValiutchikTheme(
     shapes = Shapes,
     content = content
   )
+}
+
+@Composable
+fun ValiutchikWidgetTheme(
+  content: @GlanceComposable @Composable () -> Unit
+) {
+  GlanceTheme(content = content)
 }

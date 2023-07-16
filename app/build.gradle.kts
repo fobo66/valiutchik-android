@@ -40,11 +40,11 @@ android {
     }
   }
 
-  compileSdk = AndroidVersion.VersionCodes.TIRAMISU
+  compileSdk = 34
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.N
-    targetSdk = AndroidVersion.VersionCodes.TIRAMISU
+    targetSdk = 34
     versionCode = 21
     versionName = "1.13.2"
     multiDexEnabled = true
@@ -169,6 +169,7 @@ dependencies {
 
   implementation(widget.glance)
   implementation(widget.glance.appwidget)
+  debugImplementation(widget.glance.preview)
 
   // lifecycle
   implementation(androidx.lifecycle)
