@@ -100,7 +100,6 @@ private fun MyAppWidgetPreview() {
           )
         )
       )
-
   }
   // The size of the widget
   val displaySize = DpSize(200.dp, 200.dp)
