@@ -163,7 +163,6 @@ dependencies {
   debugImplementation(compose.testing.manifest)
   debugImplementation(compose.tooling)
 
-  implementation(accompanist.swiperefresh)
   implementation(accompanist.permissions)
   implementation(accompanist.systemuicontroller)
 
