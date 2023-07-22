@@ -109,12 +109,7 @@ fun NavGraphBuilder.bestRatesScreen(
       }
     }
     BestRatesScreen(
-      useGrid = useGrid,
       bestCurrencyRates = bestCurrencyRates,
-      isRefreshing = viewState.isInProgress,
-      onRefresh = {
-        refreshRates(permissionState, mainViewModel)
-      },
       onBestRateClick = { bankName ->
         findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
       },
@@ -123,7 +118,8 @@ fun NavGraphBuilder.bestRatesScreen(
         scope.launch {
           showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
         }
-      }
+      },
+      useGrid = useGrid
     )
   }
 }
@@ -131,8 +127,6 @@ fun NavGraphBuilder.bestRatesScreen(
 @Composable
 fun BestRatesScreen(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
-  isRefreshing: Boolean,
-  onRefresh: () -> Unit,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
   modifier: Modifier = Modifier,
@@ -141,8 +135,6 @@ fun BestRatesScreen(
   if (useGrid) {
     BestRatesGrid(
       bestCurrencyRates = bestCurrencyRates,
-      isRefreshing = isRefreshing,
-      onRefresh = onRefresh,
       onBestRateClick = onBestRateClick,
       onBestRateLongClick = onBestRateLongClick,
       modifier = modifier
@@ -150,8 +142,6 @@ fun BestRatesScreen(
   } else {
     BestRatesList(
       bestCurrencyRates = bestCurrencyRates,
-      isRefreshing = isRefreshing,
-      onRefresh = onRefresh,
       onBestRateClick = onBestRateClick,
       onBestRateLongClick = onBestRateLongClick,
       modifier = modifier
