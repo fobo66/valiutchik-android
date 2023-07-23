@@ -75,6 +75,7 @@ kapt {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")
     arg("room.expandProjection", "true")
+    arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
   }
 }
 

@@ -65,6 +65,11 @@ android {
   kotlinOptions {
     jvmTarget = "17"
   }
+  kapt {
+    arguments {
+      arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
+    }
+  }
 }
 
 detekt {

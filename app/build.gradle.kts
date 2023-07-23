@@ -102,6 +102,13 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion = compose.versions.compiler.get()
   }
+
+  kapt {
+    arguments {
+      arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
+    }
+  }
+
   namespace = "fobo66.exchangecourcesbelarus"
 }
 
