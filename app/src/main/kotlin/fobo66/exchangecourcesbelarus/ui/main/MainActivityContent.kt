@@ -138,6 +138,8 @@ fun MainActivityContent(
   }
 }
 
+private const val TOPBAR_PROGRESS_SCALE = 0.5f
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValiutchikTopBar(
@@ -161,7 +163,7 @@ fun ValiutchikTopBar(
       AnimatedVisibility(visible = isRefreshing) {
         CircularProgressIndicator(
           modifier = Modifier
-            .scale(0.5f)
+            .scale(TOPBAR_PROGRESS_SCALE)
         )
       }
     },
