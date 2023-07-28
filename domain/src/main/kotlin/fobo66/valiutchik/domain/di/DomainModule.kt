@@ -49,70 +49,70 @@ import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DomainModule {
+interface DomainModule {
 
   @Binds
-  abstract fun provideRefreshExchangeRates(
+  fun provideRefreshExchangeRates(
     refreshExchangeRatesImpl: RefreshExchangeRatesImpl
   ): RefreshExchangeRates
 
   @Binds
-  abstract fun provideForceRefreshExchangeRates(
+  fun provideForceRefreshExchangeRates(
     forceRefreshExchangeRatesImpl: ForceRefreshExchangeRatesImpl
   ): ForceRefreshExchangeRates
 
   @Binds
-  abstract fun provideRefreshExchangeRatesForDefaultCity(
+  fun provideRefreshExchangeRatesForDefaultCity(
     refreshExchangeRatesForDefaultCityImpl: RefreshExchangeRatesForDefaultCityImpl
   ): RefreshExchangeRatesForDefaultCity
 
   @Binds
-  abstract fun provideForceRefreshExchangeRatesForDefaultCity(
+  fun provideForceRefreshExchangeRatesForDefaultCity(
     forceRefreshExchangeRatesForDefaultCityImpl: ForceRefreshExchangeRatesForDefaultCityImpl
   ): ForceRefreshExchangeRatesForDefaultCity
 
   @Binds
-  abstract fun provideLoadExchangeRates(
+  fun provideLoadExchangeRates(
     loadExchangeRatesImpl: LoadExchangeRatesImpl
   ): LoadExchangeRates
 
   @Binds
-  abstract fun provideCurrencyRatesInteractor(
+  fun provideCurrencyRatesInteractor(
     currencyRatesInteractorImpl: CurrencyRatesInteractorImpl
   ): CurrencyRatesInteractor
 
   @Binds
-  abstract fun provideCopyCurrencyRateToClipboard(
+  fun provideCopyCurrencyRateToClipboard(
     copyCurrencyRateToClipboardImpl: CopyCurrencyRateToClipboardImpl
   ): CopyCurrencyRateToClipboard
 
   @Binds
-  abstract fun provideFindBankOnMap(
+  fun provideFindBankOnMap(
     findBankOnMapImpl: FindBankOnMapImpl
   ): FindBankOnMap
 
   @Binds
-  abstract fun provideLoadDefaultCityPreference(
+  fun provideLoadDefaultCityPreference(
     loadDefaultCityPreferenceImpl: LoadDefaultCityPreferenceImpl
   ): LoadDefaultCityPreference
 
   @Binds
-  abstract fun provideLoadUpdateIntervalPreference(
+  fun provideLoadUpdateIntervalPreference(
     loadUpdateIntervalPreferenceImpl: LoadUpdateIntervalPreferenceImpl
   ): LoadUpdateIntervalPreference
 
   @Binds
-  abstract fun provideUpdateDefaultCityPreference(
+  fun provideUpdateDefaultCityPreference(
     updateDefaultCityPreferenceImpl: UpdateDefaultCityPreferenceImpl
   ): UpdateDefaultCityPreference
 
   @Binds
-  abstract fun provideUpdateUpdateIntervalPreference(
+  fun provideUpdateUpdateIntervalPreference(
     updateUpdateIntervalPreferenceImpl: UpdateUpdateIntervalPreferenceImpl
   ): UpdateUpdateIntervalPreference
 
   @Binds
-  abstract fun provideLoadOpenSourceLicenses(
+  fun provideLoadOpenSourceLicenses(
     loadOpenSourceLicensesImpl: LoadOpenSourceLicensesImpl
   ): LoadOpenSourceLicenses
 }

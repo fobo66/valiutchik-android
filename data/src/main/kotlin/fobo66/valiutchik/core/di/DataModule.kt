@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,94 +57,94 @@ import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataModule {
+interface DataModule {
   @Binds
-  abstract fun provideCurrencyRatesParser(
+  fun provideCurrencyRatesParser(
     currencyRatesParserImpl: fobo66.valiutchik.api.CurrencyRatesParserImpl
   ): fobo66.valiutchik.api.CurrencyRatesParser
 
   @Binds
-  abstract fun provideCurrencyRatesDataSource(
+  fun provideCurrencyRatesDataSource(
     currencyRatesDataSourceImpl: CurrencyRatesDataSourceImpl
   ): CurrencyRatesDataSource
 
   @Binds
-  abstract fun provideCurrencyRatesTimestampRepository(
+  fun provideCurrencyRatesTimestampRepository(
     currencyRatesTimestampRepositoryImpl: CurrencyRatesTimestampRepositoryImpl
   ): CurrencyRatesTimestampRepository
 
   @Binds
-  abstract fun provideLocationDataSource(
+  fun provideLocationDataSource(
     locationDataSourceImpl: LocationDataSourceImpl
   ): LocationDataSource
 
   @Binds
-  abstract fun provideGeocodingDataSource(
+  fun provideGeocodingDataSource(
     geocodingDataSourceImpl: GeocodingDataSourceImpl
   ): GeocodingDataSource
 
   @Binds
-  abstract fun provideLocationRepository(
+  fun provideLocationRepository(
     locationRepositoryImpl: LocationRepositoryImpl
   ): LocationRepository
 
   @Binds
-  abstract fun provideMapRepository(
+  fun provideMapRepository(
     mapRepositoryImpl: MapRepositoryImpl
   ): MapRepository
 
   @Binds
-  abstract fun providePreferencesDataSource(
+  fun providePreferencesDataSource(
     preferencesDataSourceImpl: DataStorePreferencesDataSourceImpl
   ): PreferencesDataSource
 
   @Binds
-  abstract fun providePersistenceDataSource(
+  fun providePersistenceDataSource(
     persistenceDataSourceImpl: PersistenceDataSourceImpl
   ): PersistenceDataSource
 
   @Binds
-  abstract fun provideBestCourseDataSource(
+  fun provideBestCourseDataSource(
     bestCourseDataSourceImpl: BestCourseDataSourceImpl
   ): BestCourseDataSource
 
   @Binds
-  abstract fun provideIntentDataSource(
+  fun provideIntentDataSource(
     intentDataSourceImpl: IntentDataSourceImpl
   ): IntentDataSource
 
   @Binds
-  abstract fun provideUriDataSource(
+  fun provideUriDataSource(
     uriDataSourceImpl: UriDataSourceImpl
   ): UriDataSource
 
   @Binds
-  abstract fun provideCurrencyRateRepository(
+  fun provideCurrencyRateRepository(
     currencyRateRepositoryImpl: CurrencyRateRepositoryImpl
   ): CurrencyRateRepository
 
   @Binds
-  abstract fun providePreferenceRepository(
+  fun providePreferenceRepository(
     preferenceRepositoryImpl: PreferenceRepositoryImpl
   ): PreferenceRepository
 
   @Binds
-  abstract fun provideAssetsDataSource(
+  fun provideAssetsDataSource(
     assetsDataSourceImpl: AssetsDataSourceImpl
   ): AssetsDataSource
 
   @Binds
-  abstract fun provideClipboardDataSource(
+  fun provideClipboardDataSource(
     clipboardDataSourceImpl: ClipboardDataSourceImpl
   ): ClipboardDataSource
 
   @Binds
-  abstract fun provideClipboardRepository(
+  fun provideClipboardRepository(
     clipboardRepositoryImpl: ClipboardRepositoryImpl
   ): ClipboardRepository
 
   @Binds
-  abstract fun provideLicensesRepository(
+  fun provideLicensesRepository(
     licensesRepositoryImpl: LicensesRepositoryImpl
   ): LicensesRepository
 }
