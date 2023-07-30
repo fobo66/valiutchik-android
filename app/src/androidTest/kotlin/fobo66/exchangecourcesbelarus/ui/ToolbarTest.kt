@@ -51,7 +51,8 @@ class ToolbarTest : TestCase(
           onBackClick = {},
           onAboutClick = {},
           onSettingsClicked = {},
-          onRefreshClicked = {}
+          onRefreshClicked = {},
+          isRefreshing = false
         )
       }
     }
@@ -73,7 +74,8 @@ class ToolbarTest : TestCase(
           onBackClick = {},
           onAboutClick = {},
           onSettingsClicked = {},
-          onRefreshClicked = {}
+          onRefreshClicked = {},
+          isRefreshing = false
         )
       }
     }
@@ -93,7 +95,8 @@ class ToolbarTest : TestCase(
           onBackClick = {},
           onAboutClick = {},
           onSettingsClicked = {},
-          onRefreshClicked = {}
+          onRefreshClicked = {},
+          isRefreshing = false
         )
       }
     }
@@ -120,7 +123,8 @@ class ToolbarTest : TestCase(
           onBackClick = {},
           onAboutClick = {},
           onSettingsClicked = { route = DESTINATION_PREFERENCES },
-          onRefreshClicked = {}
+          onRefreshClicked = {},
+          isRefreshing = false
         )
       }
     }
@@ -160,7 +164,8 @@ class ToolbarTest : TestCase(
           onBackClick = {},
           onAboutClick = { isAboutDialogShown = true },
           onSettingsClicked = {},
-          onRefreshClicked = {}
+          onRefreshClicked = {},
+          isRefreshing = false
         )
       }
     }
@@ -184,7 +189,8 @@ class ToolbarTest : TestCase(
           onBackClick = {},
           onAboutClick = {},
           onSettingsClicked = {},
-          onRefreshClicked = { isRefreshClicked = true }
+          onRefreshClicked = { isRefreshClicked = true },
+          isRefreshing = false
         )
       }
     }

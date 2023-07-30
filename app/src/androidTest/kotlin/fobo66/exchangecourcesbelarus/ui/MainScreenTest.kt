@@ -46,8 +46,6 @@ class MainScreenTest : TestCase(
       composeRule.setContent {
         BestRatesList(
           bestCurrencyRates = persistentListOf(),
-          isRefreshing = false,
-          onRefresh = {},
           onBestRateClick = {},
           onBestRateLongClick = { _, _ -> }
         )
@@ -70,8 +68,6 @@ class MainScreenTest : TestCase(
       composeRule.setContent {
         BestRatesList(
           bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
-          isRefreshing = false,
-          onRefresh = {},
           onBestRateClick = {
             isMapOpen = true
           },
