@@ -23,7 +23,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -63,8 +65,6 @@ import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
-import fobo66.exchangecourcesbelarus.ui.icons.Info
-import fobo66.exchangecourcesbelarus.ui.icons.Settings
 import fobo66.exchangecourcesbelarus.ui.licensesScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.refreshRates
@@ -183,7 +183,7 @@ fun ValiutchikTopBar(
       }
       IconButton(onClick = onAboutClick, modifier = Modifier.testTag("About")) {
         Icon(
-          Info,
+          Icons.Default.Info,
           contentDescription = stringResource(
             id = string.action_about
           )
@@ -192,7 +192,7 @@ fun ValiutchikTopBar(
       AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
         IconButton(onClick = onSettingsClicked, modifier = Modifier.testTag("Settings")) {
           Icon(
-            Settings,
+            Icons.Default.Settings,
             contentDescription = stringResource(
               id = string.action_settings
             )
