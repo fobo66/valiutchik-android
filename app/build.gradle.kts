@@ -151,9 +151,10 @@ dependencies {
   // androidx
   implementation(androidx.annotations)
   implementation(androidx.activity)
+  implementation(androidx.appstartup)
   implementation(androidx.core)
   implementation(androidx.splashscreen)
-  implementation(androidx.appstartup)
+  implementation(androidx.tracing)
   implementation(androidx.window)
   implementation(libs.material)
 
