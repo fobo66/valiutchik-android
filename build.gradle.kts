@@ -25,6 +25,7 @@ plugins {
   alias(androidx.plugins.benchmark) apply false
   alias(testing.plugins.junit) apply false
   alias(detektRules.plugins.detekt) apply false
+  alias(database.plugins.plugin) apply false
 }
 
 allprojects {

@@ -173,9 +173,9 @@ dependencyResolutionManagement {
       library("navigation", "androidx.hilt:hilt-navigation-compose:1.0.0")
     }
 
-    register("room") {
+    register("database") {
       version("room", "2.6.0-alpha02")
-      plugin("plug", "androidx.room").versionRef("room")
+      plugin("plugin", "androidx.room").versionRef("room")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
       library("compiler", "androidx.room", "room-compiler").versionRef("room")

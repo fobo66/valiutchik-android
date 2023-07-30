@@ -23,6 +23,7 @@ plugins {
   id("com.google.dagger.hilt.android")
   id("io.gitlab.arturbosch.detekt")
   id("de.mannodermaus.android-junit5")
+  id("androidx.room")
 }
 
 android {
@@ -70,6 +71,10 @@ android {
   namespace = "fobo66.valiutchik.core"
 }
 
+room {
+  schemaDirectory("$projectDir/schemas/")
+}
+
 kapt {
   arguments {
     arg("room.schemaLocation", "$projectDir/schemas")
@@ -92,9 +97,9 @@ dependencies {
   implementation(libs.moshi)
   kapt(libs.moshi.codegen)
   implementation(libs.coroutines)
-  implementation(room.runtime)
-  implementation(room.ktx)
-  kapt(room.compiler)
+  implementation(database.runtime)
+  implementation(database.ktx)
+  kapt(database.compiler)
   implementation(androidx.datastore)
   implementation(libs.mapbox)
   implementation(libs.timber)
@@ -107,7 +112,7 @@ dependencies {
   testRuntimeOnly(testing.junit.engine)
   testImplementation(testing.mockk)
   testImplementation(testing.mockk.agent)
-  testImplementation(room.testing)
+  testImplementation(database.testing)
   testImplementation(libs.coroutines.test)
 
   androidTestImplementation(libs.coroutines.test)
