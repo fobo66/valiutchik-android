@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     register("libs") {
       version("kotlin", "1.9.0")
       version("moshi", "1.15.0")
-      version("coroutines", "1.7.2")
+      version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       library("material", "com.google.android.material:material:1.9.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
@@ -203,10 +203,10 @@ dependencyResolutionManagement {
     }
 
     register("detektRules") {
-      version("detekt", "1.23.0")
+      version("detekt", "1.23.1")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "io.nlopez.compose.rules:detekt:0.1.11")
+      library("compose", "io.nlopez.compose.rules:detekt:0.1.12")
     }
   }
 }
