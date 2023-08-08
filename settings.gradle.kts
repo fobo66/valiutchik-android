@@ -126,7 +126,7 @@ dependencyResolutionManagement {
 
     register("compose") {
       version("compiler", "1.5.1")
-      version("compose", "1.5.0-beta03")
+      version("compose", "1.6.0-alpha02")
       version("material", "1.2.0-alpha04")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
@@ -152,7 +152,7 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.31.3-beta")
+      version("accompanist", "0.33.0-alpha")
       library(
         "permissions",
         "com.google.accompanist",
