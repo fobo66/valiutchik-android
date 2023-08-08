@@ -38,7 +38,7 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
@@ -46,7 +46,6 @@ android {
     }
   }
   compileOptions {
-    isCoreLibraryDesugaringEnabled = true
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
@@ -71,7 +70,6 @@ dependencies {
   implementation(di.core)
   kapt(di.compiler)
   implementation(libs.timber)
-  coreLibraryDesugaring(libs.desugar)
 
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)

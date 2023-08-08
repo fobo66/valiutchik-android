@@ -61,7 +61,6 @@ android {
     }
   }
   compileOptions {
-    isCoreLibraryDesugaringEnabled = true
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
@@ -102,7 +101,6 @@ dependencies {
   implementation(androidx.datastore)
   implementation(libs.mapbox)
   implementation(libs.timber)
-  coreLibraryDesugaring(libs.desugar)
 
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)

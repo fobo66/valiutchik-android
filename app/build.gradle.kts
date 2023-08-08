@@ -70,7 +70,6 @@ android {
     }
   }
   compileOptions {
-    isCoreLibraryDesugaringEnabled = true
 
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -122,12 +121,12 @@ tasks.withType<KotlinCompile>().configureEach {
       freeCompilerArgs = freeCompilerArgs + listOf(
         "-P",
         "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-          project.buildDir.absolutePath + "/compose_metrics"
+          project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
       )
       freeCompilerArgs = freeCompilerArgs + listOf(
         "-P",
         "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-          project.buildDir.absolutePath + "/compose_metrics"
+            project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
       )
     }
   }
@@ -195,7 +194,6 @@ dependencies {
   // leakcanary
   debugImplementation(libs.leakcanary)
 
-  coreLibraryDesugaring(libs.desugar)
 
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
