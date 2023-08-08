@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.Manifest
 import android.content.Context
-import android.location.Criteria
 import android.location.LocationManager
 import android.os.SystemClock
 import androidx.annotation.RequiresPermission
@@ -55,10 +54,7 @@ class LocationDataSourceImpl @Inject constructor(
       var location: android.location.Location? = null
 
       withContext(ioDispatcher) {
-        val criteria = Criteria().apply {
-          accuracy = Criteria.ACCURACY_COARSE
-        }
-        location = locationManager.getProviders(criteria, true)
+        location = locationManager.allProviders
           .asSequence()
           .map { locationManager.getLastKnownLocation(it) }
           .filterNotNull()
