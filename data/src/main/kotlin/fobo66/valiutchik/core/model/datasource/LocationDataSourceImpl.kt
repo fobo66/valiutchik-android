@@ -54,7 +54,7 @@ class LocationDataSourceImpl @Inject constructor(
       var location: android.location.Location? = null
 
       withContext(ioDispatcher) {
-        location = locationManager.allProviders
+        location = locationManager.getProviders(true)
           .asSequence()
           .map { locationManager.getLastKnownLocation(it) }
           .filterNotNull()
