@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceTheme
+import androidx.glance.material3.ColorProviders
 
 private val DarkColorPalette = darkColorScheme(
   primary = Green800,
@@ -47,6 +48,11 @@ private val LightColorPalette = lightColorScheme(
   onBackground = Color.Black,
   onSurface = Color.Black,
   */
+)
+
+private val WidgetColors = ColorProviders(
+  light = LightColorPalette,
+  dark = DarkColorPalette
 )
 
 @Composable
@@ -82,5 +88,8 @@ fun ValiutchikTheme(
 fun ValiutchikWidgetTheme(
   content: @GlanceComposable @Composable () -> Unit
 ) {
-  GlanceTheme(content = content)
+  GlanceTheme(
+    colors = WidgetColors,
+    content = content
+  )
 }

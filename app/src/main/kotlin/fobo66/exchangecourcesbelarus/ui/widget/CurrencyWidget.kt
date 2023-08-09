@@ -85,7 +85,7 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 
 @OptIn(ExperimentalGlanceRemoteViewsApi::class)
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun MyAppWidgetPreview() {
   val loadExchangeRates: LoadExchangeRates = object : LoadExchangeRates {
@@ -102,7 +102,7 @@ private fun MyAppWidgetPreview() {
       )
   }
   // The size of the widget
-  val displaySize = DpSize(200.dp, 200.dp)
+  val displaySize = DpSize(400.dp, 400.dp)
   // Your GlanceAppWidget instance
   val instance = CurrencyWidget(loadExchangeRates)
   // Provide a state depending on the GlanceAppWidget state definition
