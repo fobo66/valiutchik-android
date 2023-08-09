@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.preferencesOf
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.ExperimentalGlanceRemoteViewsApi
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
@@ -36,6 +37,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
+import androidx.glance.background
 import androidx.glance.layout.Column
 import androidx.glance.text.Text
 import com.google.android.glance.appwidget.host.glance.GlanceAppWidgetHostPreview
@@ -59,6 +61,7 @@ class CurrencyWidget(private val loadExchangeRates: LoadExchangeRates) : GlanceA
     ValiutchikWidgetTheme {
       LazyColumn(
         modifier = GlanceModifier
+          .background(GlanceTheme.colors.background)
           .appWidgetBackground()
           .cornerRadius(16.dp)
       ) {
