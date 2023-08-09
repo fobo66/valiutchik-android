@@ -43,7 +43,7 @@ android {
   compileSdk = 34
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = AndroidVersion.VersionCodes.N
+    minSdk = AndroidVersion.VersionCodes.O
     targetSdk = 34
     versionCode = 21
     versionName = "1.13.2"
