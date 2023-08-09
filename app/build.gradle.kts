@@ -171,6 +171,7 @@ dependencies {
 
   implementation(widget.glance)
   implementation(widget.glance.appwidget)
+  implementation(widget.glance.material)
   debugImplementation(widget.glance.preview)
 
   // lifecycle
