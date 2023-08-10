@@ -39,6 +39,7 @@ import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Column
+import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import com.google.android.glance.appwidget.host.glance.GlanceAppWidgetHostPreview
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,7 +67,7 @@ class CurrencyWidget(private val loadExchangeRates: LoadExchangeRates) : GlanceA
           .cornerRadius(16.dp)
       ) {
         items(rates, { item -> item.id }) {
-          Column {
+          Column(modifier = GlanceModifier.padding(16.dp)) {
             Text(text = context.getString(it.currencyNameRes))
             Text(text = it.currencyValue)
             Text(text = it.bank)
