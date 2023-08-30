@@ -18,7 +18,7 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.9.0")
+      version("kotlin", "1.9.10")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
@@ -125,7 +125,7 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.5.1")
+      version("compiler", "1.5.3")
       version("compose", "1.6.0-alpha03")
       version("material", "1.2.0-alpha05")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
