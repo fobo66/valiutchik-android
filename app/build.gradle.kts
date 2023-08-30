@@ -18,13 +18,13 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("com.android.application")
+  alias(androidx.plugins.application)
   kotlin("android")
   kotlin("kapt")
-  id("com.google.dagger.hilt.android")
-  id("io.gitlab.arturbosch.detekt")
-  id("com.jaredsburrows.license")
-  id("de.mannodermaus.android-junit5")
+  alias(di.plugins.plugin)
+  alias(detektRules.plugins.detekt)
+  alias(libs.plugins.licenses)
+  alias(testing.plugins.junit)
 }
 
 android {

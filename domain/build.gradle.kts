@@ -17,12 +17,12 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  id("com.android.library")
+  alias(androidx.plugins.library)
   kotlin("android")
   kotlin("kapt")
-  id("com.google.dagger.hilt.android")
-  id("io.gitlab.arturbosch.detekt")
-  id("de.mannodermaus.android-junit5")
+  alias(di.plugins.plugin)
+  alias(detektRules.plugins.detekt)
+  alias(testing.plugins.junit)
 }
 
 android {
