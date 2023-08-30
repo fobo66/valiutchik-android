@@ -19,7 +19,7 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(androidx.plugins.library)
   kotlin("android")
-  kotlin("kapt")
+  alias(libs.plugins.ksp)
   alias(di.plugins.plugin)
   alias(detektRules.plugins.detekt)
   alias(testing.plugins.junit)
@@ -74,12 +74,9 @@ room {
   schemaDirectory("$projectDir/schemas/")
 }
 
-kapt {
-  arguments {
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-    arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
-  }
+ksp {
+  arg("room.incremental", "true")
+  arg("room.expandProjection", "true")
 }
 
 detekt {
@@ -91,13 +88,13 @@ dependencies {
   implementation(androidx.annotations)
   implementation(androidx.viewmodel)
   implementation(di.core)
-  kapt(di.compiler)
+  ksp(di.compiler)
   implementation(libs.moshi)
-  kapt(libs.moshi.codegen)
+  ksp(libs.moshi.codegen)
   implementation(libs.coroutines)
   implementation(database.runtime)
   implementation(database.ktx)
-  kapt(database.compiler)
+  ksp(database.compiler)
   implementation(androidx.datastore)
   implementation(libs.mapbox)
   implementation(libs.timber)

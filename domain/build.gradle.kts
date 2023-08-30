@@ -19,7 +19,7 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(androidx.plugins.library)
   kotlin("android")
-  kotlin("kapt")
+  alias(libs.plugins.ksp)
   alias(di.plugins.plugin)
   alias(detektRules.plugins.detekt)
   alias(testing.plugins.junit)
@@ -52,11 +52,6 @@ android {
   kotlinOptions {
     jvmTarget = "17"
   }
-  kapt {
-    arguments {
-      arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
-    }
-  }
 }
 
 detekt {
@@ -68,7 +63,7 @@ dependencies {
   implementation(androidx.annotations)
   implementation(libs.coroutines.core)
   implementation(di.core)
-  kapt(di.compiler)
+  ksp(di.compiler)
   implementation(libs.timber)
 
   detektPlugins(detektRules.formatting)

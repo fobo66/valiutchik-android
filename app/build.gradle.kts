@@ -20,7 +20,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   alias(androidx.plugins.application)
   kotlin("android")
-  kotlin("kapt")
+  alias(libs.plugins.ksp)
   alias(di.plugins.plugin)
   alias(detektRules.plugins.detekt)
   alias(libs.plugins.licenses)
@@ -102,12 +102,6 @@ android {
     kotlinCompilerExtensionVersion = compose.versions.compiler.get()
   }
 
-  kapt {
-    arguments {
-      arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
-    }
-  }
-
   namespace = "fobo66.exchangecourcesbelarus"
 }
 
@@ -183,7 +177,7 @@ dependencies {
 
   // dagger
   implementation(di.core)
-  kapt(di.compiler)
+  ksp(di.compiler)
 
   // multidex
   implementation(androidx.multidex)
