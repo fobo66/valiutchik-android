@@ -184,7 +184,7 @@ dependencyResolutionManagement {
     }
 
     register("testing") {
-      version("kaspresso", "1.5.2")
+      version("kaspresso", "1.5.3")
       version("mockk", "1.13.5")
       version("junit", "5.9.3")
       plugin("junit", "de.mannodermaus.android-junit5").version("1.9.3.0")
