@@ -149,7 +149,6 @@ dependencies {
   implementation(androidx.splashscreen)
   implementation(androidx.tracing)
   implementation(androidx.window)
-  implementation(libs.material)
 
   // compose
   implementation(compose.ui)
