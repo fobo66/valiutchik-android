@@ -19,8 +19,8 @@ plugins {
   alias(androidx.plugins.library) apply false
   alias(androidx.plugins.test) apply false
   kotlin("android") version libs.versions.kotlin apply false
-  kotlin("kapt") version libs.versions.kotlin apply false
   alias(libs.plugins.licenses) apply false
+  alias(libs.plugins.ksp) apply false
   alias(di.plugins.plugin) apply false
   alias(androidx.plugins.benchmark) apply false
   alias(testing.plugins.junit) apply false

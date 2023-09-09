@@ -17,7 +17,7 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  id("com.android.test")
+  alias(androidx.plugins.test)
   kotlin("android")
 }
 

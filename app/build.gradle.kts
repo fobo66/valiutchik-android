@@ -18,13 +18,13 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("com.android.application")
+  alias(androidx.plugins.application)
   kotlin("android")
-  kotlin("kapt")
-  id("com.google.dagger.hilt.android")
-  id("io.gitlab.arturbosch.detekt")
-  id("com.jaredsburrows.license")
-  id("de.mannodermaus.android-junit5")
+  alias(libs.plugins.ksp)
+  alias(di.plugins.plugin)
+  alias(detektRules.plugins.detekt)
+  alias(libs.plugins.licenses)
+  alias(testing.plugins.junit)
 }
 
 android {
@@ -100,12 +100,6 @@ android {
 
   composeOptions {
     kotlinCompilerExtensionVersion = compose.versions.compiler.get()
-  }
-
-  kapt {
-    arguments {
-      arg("dagger.ignoreProvisionKeyWildcards", "ENABLED")
-    }
   }
 
   namespace = "fobo66.exchangecourcesbelarus"
@@ -184,7 +178,7 @@ dependencies {
 
   // dagger
   implementation(di.core)
-  kapt(di.compiler)
+  ksp(di.compiler)
 
   // multidex
   implementation(androidx.multidex)

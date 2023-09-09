@@ -18,10 +18,11 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.9.0")
+      version("kotlin", "1.9.10")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
+      plugin("ksp", "com.google.devtools.ksp").version("1.9.10-1.0.13")
       library("material", "com.google.android.material:material:1.9.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
@@ -59,7 +60,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.2.0-alpha15")
+      version("plugin", "8.3.0-alpha01")
       version("lifecycle", "2.7.0-alpha01")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-beta02")
@@ -67,12 +68,12 @@ dependencyResolutionManagement {
       plugin("library", "com.android.library").versionRef("plugin")
       plugin("test", "com.android.test").versionRef("plugin")
       plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
-      library("core", "androidx.core:core-ktx:1.12.0-beta01")
+      library("core", "androidx.core:core-ktx:1.12.0-rc01")
       library("annotations", "androidx.annotation:annotation:1.6.0")
-      library("activity", "androidx.activity:activity-compose:1.8.0-alpha06")
+      library("activity", "androidx.activity:activity-compose:1.8.0-alpha07")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
       library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha04")
-      library("navigation", "androidx.navigation:navigation-compose:2.7.0-rc01")
+      library("navigation", "androidx.navigation:navigation-compose:2.7.0")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
       library("tracing", "androidx.tracing:tracing:1.3.0-alpha02")
@@ -125,9 +126,9 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.5.1")
-      version("compose", "1.6.0-alpha02")
-      version("material", "1.2.0-alpha04")
+      version("compiler", "1.5.3")
+      version("compose", "1.6.0-alpha04")
+      version("material", "1.2.0-alpha06")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
       library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
@@ -167,7 +168,7 @@ dependencyResolutionManagement {
     }
 
     register("di") {
-      version("hilt", "2.47")
+      version("hilt", "2.48")
       plugin("plugin", "com.google.dagger.hilt.android").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
@@ -175,7 +176,7 @@ dependencyResolutionManagement {
     }
 
     register("database") {
-      version("room", "2.6.0-alpha02")
+      version("room", "2.6.0-alpha03")
       plugin("plugin", "androidx.room").versionRef("room")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
@@ -184,7 +185,7 @@ dependencyResolutionManagement {
     }
 
     register("testing") {
-      version("kaspresso", "1.5.2")
+      version("kaspresso", "1.5.3")
       version("mockk", "1.13.5")
       version("junit", "5.9.3")
       plugin("junit", "de.mannodermaus.android-junit5").version("1.9.3.0")
@@ -209,7 +210,7 @@ dependencyResolutionManagement {
       version("detekt", "1.23.1")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "io.nlopez.compose.rules:detekt:0.1.13")
+      library("compose", "io.nlopez.compose.rules:detekt:0.2.1")
     }
   }
 }
