@@ -141,7 +141,7 @@ dependencyResolutionManagement {
     }
 
     register("widget") {
-      version("glance", "1.0.0-rc01")
+      version("glance", "1.0.0")
       version("tools", "0.2.2")
       library("glance", "androidx.glance", "glance").versionRef("glance")
       library("glance.appwidget", "androidx.glance", "glance-appwidget").versionRef("glance")
