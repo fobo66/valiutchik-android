@@ -59,7 +59,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.3.0-alpha01")
+      version("plugin", "8.3.0-alpha03")
       version("lifecycle", "2.7.0-alpha01")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-beta02")
@@ -71,8 +71,8 @@ dependencyResolutionManagement {
       library("annotations", "androidx.annotation:annotation:1.6.0")
       library("activity", "androidx.activity:activity-compose:1.8.0-alpha07")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
-      library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha04")
-      library("navigation", "androidx.navigation:navigation-compose:2.7.0")
+      library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha05")
+      library("navigation", "androidx.navigation:navigation-compose:2.7.2")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
       library("tracing", "androidx.tracing:tracing:1.3.0-alpha02")
@@ -126,7 +126,7 @@ dependencyResolutionManagement {
 
     register("compose") {
       version("compiler", "1.5.3")
-      version("compose", "1.6.0-alpha04")
+      version("compose", "1.6.0-alpha05")
       version("material", "1.2.0-alpha06")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
@@ -140,7 +140,7 @@ dependencyResolutionManagement {
     }
 
     register("widget") {
-      version("glance", "1.0.0-rc01")
+      version("glance", "1.0.0")
       version("tools", "0.2.2")
       library("glance", "androidx.glance", "glance").versionRef("glance")
       library("glance.material", "androidx.glance", "glance-material3").versionRef("glance")
@@ -185,8 +185,8 @@ dependencyResolutionManagement {
 
     register("testing") {
       version("kaspresso", "1.5.3")
-      version("mockk", "1.13.5")
-      version("junit", "5.9.3")
+      version("mockk", "1.13.7")
+      version("junit", "5.10.0")
       plugin("junit", "de.mannodermaus.android-junit5").version("1.9.3.0")
       library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
       library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
@@ -209,7 +209,7 @@ dependencyResolutionManagement {
       version("detekt", "1.23.1")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "io.nlopez.compose.rules:detekt:0.2.1")
+      library("compose", "io.nlopez.compose.rules:detekt:0.2.2")
     }
   }
 }
