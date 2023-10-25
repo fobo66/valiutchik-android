@@ -160,7 +160,6 @@ dependencies {
   debugImplementation(compose.tooling)
 
   implementation(accompanist.permissions)
-  implementation(accompanist.systemuicontroller)
 
   implementation(widget.glance)
   implementation(widget.glance.appwidget)

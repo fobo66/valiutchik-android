@@ -153,16 +153,11 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.33.0-alpha")
+      version("accompanist", "0.33.2-alpha")
       library(
         "permissions",
         "com.google.accompanist",
         "accompanist-permissions"
-      ).versionRef("accompanist")
-      library(
-        "systemuicontroller",
-        "com.google.accompanist",
-        "accompanist-systemuicontroller"
       ).versionRef("accompanist")
     }
 
