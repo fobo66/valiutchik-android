@@ -22,7 +22,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
@@ -157,7 +157,7 @@ fun ValiutchikTopBar(
     navigationIcon = {
       AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
         IconButton(onClick = onBackClick, modifier = Modifier.testTag("Back")) {
-          Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+          Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
         }
       }
       AnimatedVisibility(visible = isRefreshing) {
