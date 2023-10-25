@@ -27,7 +27,7 @@ dependencyResolutionManagement {
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.7")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
-      library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
+      library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.3")
       library(
         "coroutines",
@@ -59,8 +59,8 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.3.0-alpha03")
-      version("lifecycle", "2.7.0-alpha01")
+      version("plugin", "8.3.0-alpha06")
+      version("lifecycle", "2.7.0-alpha02")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-beta02")
       plugin("application", "com.android.application").versionRef("plugin")
@@ -69,7 +69,7 @@ dependencyResolutionManagement {
       plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
       library("core", "androidx.core:core-ktx:1.12.0-rc01")
       library("annotations", "androidx.annotation:annotation:1.6.0")
-      library("activity", "androidx.activity:activity-compose:1.8.0-alpha07")
+      library("activity", "androidx.activity:activity-compose:1.8.0")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
       library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha05")
       library("navigation", "androidx.navigation:navigation-compose:2.7.2")
@@ -126,8 +126,8 @@ dependencyResolutionManagement {
 
     register("compose") {
       version("compiler", "1.5.3")
-      version("compose", "1.6.0-alpha05")
-      version("material", "1.2.0-alpha06")
+      version("compose", "1.6.0-alpha08")
+      version("material", "1.2.0-alpha08")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
       library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
       library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
