@@ -59,7 +59,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.3.0-alpha10")
+      version("plugin", "8.3.0-alpha11")
       version("lifecycle", "2.7.0-alpha02")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0-beta02")
@@ -170,7 +170,7 @@ dependencyResolutionManagement {
     }
 
     register("database") {
-      version("room", "2.6.0-alpha03")
+      version("room", "2.6.0")
       plugin("plugin", "androidx.room").versionRef("room")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
