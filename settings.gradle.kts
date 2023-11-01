@@ -77,7 +77,7 @@ dependencyResolutionManagement {
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
       library("tracing", "androidx.tracing:tracing:1.3.0-alpha02")
-      library("window", "androidx.window:window:1.2.0-beta01")
+      library("window", "androidx.window:window:1.2.0-rc01")
       library("lifecycle", "androidx.lifecycle", "lifecycle-runtime-compose").versionRef(
         "lifecycle"
       )
