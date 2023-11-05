@@ -62,12 +62,12 @@ dependencyResolutionManagement {
       version("plugin", "8.3.0-alpha11")
       version("lifecycle", "2.7.0-alpha02")
       version("espresso", "3.5.1")
-      version("benchmark", "1.2.0-beta02")
+      version("benchmark", "1.2.0")
       plugin("application", "com.android.application").versionRef("plugin")
       plugin("library", "com.android.library").versionRef("plugin")
       plugin("test", "com.android.test").versionRef("plugin")
       plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
-      library("core", "androidx.core:core-ktx:1.12.0-rc01")
+      library("core", "androidx.core:core-ktx:1.12.0")
       library("annotations", "androidx.annotation:annotation:1.6.0")
       library("activity", "androidx.activity:activity-compose:1.8.0")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
@@ -108,7 +108,7 @@ dependencyResolutionManagement {
       ).versionRef("espresso")
 
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.5")
-      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha03")
+      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-alpha04")
       library("uitest.benchmark", "androidx.benchmark", "benchmark-junit4").versionRef("benchmark")
       library(
         "uitest.macrobenchmark",
@@ -204,7 +204,7 @@ dependencyResolutionManagement {
       version("detekt", "1.23.1")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "io.nlopez.compose.rules:detekt:0.2.2")
+      library("compose", "io.nlopez.compose.rules:detekt:0.3.2")
     }
   }
 }
