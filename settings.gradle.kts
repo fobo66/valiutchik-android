@@ -28,7 +28,7 @@ dependencyResolutionManagement {
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.7")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
-      library("desugar", "com.android.tools:desugar_jdk_libs:2.0.3")
+      library("desugar", "com.android.tools:desugar_jdk_libs:2.0.4")
       library(
         "coroutines",
         "org.jetbrains.kotlinx",
@@ -71,7 +71,7 @@ dependencyResolutionManagement {
       library("annotations", "androidx.annotation:annotation:1.6.0")
       library("activity", "androidx.activity:activity-compose:1.8.0")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
-      library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha05")
+      library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha06")
       library("navigation", "androidx.navigation:navigation-compose:2.7.2")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
@@ -162,7 +162,7 @@ dependencyResolutionManagement {
     }
 
     register("di") {
-      version("hilt", "2.48")
+      version("hilt", "2.48.1")
       plugin("plugin", "com.google.dagger.hilt.android").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
