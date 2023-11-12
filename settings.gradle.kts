@@ -23,7 +23,7 @@ dependencyResolutionManagement {
       version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.10-1.0.13")
-      library("material", "com.google.android.material:material:1.9.0")
+      library("material", "com.google.android.material:material:1.10.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.7")
