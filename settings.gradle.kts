@@ -22,7 +22,7 @@ dependencyResolutionManagement {
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
-      plugin("ksp", "com.google.devtools.ksp").version("1.9.10-1.0.13")
+      plugin("ksp", "com.google.devtools.ksp").version("1.9.20-1.0.14")
       library("material", "com.google.android.material:material:1.10.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
