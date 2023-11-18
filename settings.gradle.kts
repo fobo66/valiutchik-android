@@ -60,7 +60,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.3.0-alpha13")
+      version("plugin", "8.3.0-alpha14")
       version("lifecycle", "2.7.0-alpha02")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.0")
@@ -126,7 +126,7 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.5.3")
+      version("compiler", "1.5.4")
       version("compose", "1.6.0-alpha08")
       version("material", "1.2.0-alpha10")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
