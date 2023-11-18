@@ -18,11 +18,12 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.9.10")
+      version("kotlin", "1.9.20")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
-      plugin("ksp", "com.google.devtools.ksp").version("1.9.10-1.0.13")
+      plugin("ksp", "com.google.devtools.ksp").version("1.9.20-1.0.14")
+      library("material", "com.google.android.material:material:1.10.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
       library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.7")
@@ -68,15 +69,15 @@ dependencyResolutionManagement {
       plugin("test", "com.android.test").versionRef("plugin")
       plugin("benchmark", "androidx.benchmark").versionRef("benchmark")
       library("core", "androidx.core:core-ktx:1.12.0")
-      library("annotations", "androidx.annotation:annotation:1.6.0")
+      library("annotations", "androidx.annotation:annotation:1.7.0")
       library("activity", "androidx.activity:activity-compose:1.8.0")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
       library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha06")
-      library("navigation", "androidx.navigation:navigation-compose:2.7.2")
+      library("navigation", "androidx.navigation:navigation-compose:2.7.5")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
       library("tracing", "androidx.tracing:tracing:1.3.0-alpha02")
-      library("window", "androidx.window:window:1.2.0-beta01")
+      library("window", "androidx.window:window:1.2.0-rc01")
       library("lifecycle", "androidx.lifecycle", "lifecycle-runtime-compose").versionRef(
         "lifecycle"
       )
@@ -166,7 +167,7 @@ dependencyResolutionManagement {
       plugin("plugin", "com.google.dagger.hilt.android").versionRef("hilt")
       library("core", "com.google.dagger", "hilt-android").versionRef("hilt")
       library("compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
-      library("navigation", "androidx.hilt:hilt-navigation-compose:1.0.0")
+      library("navigation", "androidx.hilt:hilt-navigation-compose:1.1.0")
     }
 
     register("database") {
@@ -181,8 +182,8 @@ dependencyResolutionManagement {
     register("testing") {
       version("kaspresso", "1.5.3")
       version("mockk", "1.13.7")
-      version("junit", "5.10.0")
-      plugin("junit", "de.mannodermaus.android-junit5").version("1.9.3.0")
+      version("junit", "5.10.1")
+      plugin("junit", "de.mannodermaus.android-junit5").version("1.10.0.0")
       library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
       library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
       library("junit4", "junit:junit:4.13.2")
@@ -201,10 +202,10 @@ dependencyResolutionManagement {
     }
 
     register("detektRules") {
-      version("detekt", "1.23.1")
+      version("detekt", "1.23.3")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
-      library("compose", "io.nlopez.compose.rules:detekt:0.3.2")
+      library("compose", "io.nlopez.compose.rules:detekt:0.3.3")
     }
   }
 }
