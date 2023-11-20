@@ -191,7 +191,7 @@ dependencyResolutionManagement {
       library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
       library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
       library("junit4", "junit:junit:4.13.2")
-      library("kakao", "io.github.kakaocup:compose:0.2.3")
+      library("kakao", "io.github.kakaocup:compose:0.3.0")
       library("kaspresso", "com.kaspersky.android-components", "kaspresso").versionRef("kaspresso")
       library(
         "kaspresso.compose",
