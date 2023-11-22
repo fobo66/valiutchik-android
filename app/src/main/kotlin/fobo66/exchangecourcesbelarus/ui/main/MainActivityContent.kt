@@ -18,11 +18,10 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 import android.Manifest.permission
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
@@ -39,7 +38,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,7 +45,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -56,7 +53,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState.Loading
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
@@ -157,7 +153,7 @@ fun ValiutchikTopBar(
     navigationIcon = {
       AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
         IconButton(onClick = onBackClick, modifier = Modifier.testTag("Back")) {
-          Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+          Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
         }
       }
       AnimatedVisibility(visible = isRefreshing) {
@@ -210,20 +206,5 @@ fun resolveTitle(currentRoute: String?): String {
     DESTINATION_PREFERENCES -> stringResource(id = string.title_activity_settings)
     DESTINATION_LICENSES -> stringResource(id = string.title_activity_oss_licenses)
     else -> stringResource(id = string.app_name)
-  }
-}
-
-@Composable
-fun SystemBarColors() {
-  val systemUiController = rememberSystemUiController()
-
-  val useDarkIcons = !isSystemInDarkTheme()
-
-  SideEffect {
-    systemUiController.setSystemBarsColor(
-      color = Color.Transparent,
-      darkIcons = useDarkIcons,
-      isNavigationBarContrastEnforced = false
-    )
   }
 }

@@ -26,16 +26,16 @@ android {
   compileSdk = 34
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
 
   kotlinOptions {
-    jvmTarget = "11"
+    jvmTarget = "17"
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.N
+    minSdk = AndroidVersion.VersionCodes.O
     targetSdk = 34
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -54,10 +54,6 @@ android {
 
   targetProjectPath = ":app"
   experimentalProperties["android.experimental.self-instrumenting"] = true
-}
-
-kotlin {
-  jvmToolchain(11)
 }
 
 dependencies {

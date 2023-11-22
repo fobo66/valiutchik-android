@@ -19,13 +19,12 @@ package fobo66.exchangecourcesbelarus.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
-import fobo66.exchangecourcesbelarus.ui.main.SystemBarColors
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @AndroidEntryPoint
@@ -36,10 +35,9 @@ class MainActivity : ComponentActivity() {
     installSplashScreen()
     super.onCreate(savedInstanceState)
 
-    WindowCompat.setDecorFitsSystemWindows(window, false)
+    enableEdgeToEdge()
 
     setContent {
-      SystemBarColors()
       val windowSizeClass = calculateWindowSizeClass(this)
       ValiutchikTheme {
         MainActivityContent(windowSizeClass)

@@ -18,7 +18,7 @@
 dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.9.10")
+      version("kotlin", "1.9.20")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
@@ -126,7 +126,7 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.5.3")
+      version("compiler", "1.5.4")
       version("compose", "1.6.0-alpha08")
       version("material", "1.2.0-alpha10")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
@@ -144,6 +144,7 @@ dependencyResolutionManagement {
       version("glance", "1.0.0")
       version("tools", "0.2.2")
       library("glance", "androidx.glance", "glance").versionRef("glance")
+      library("glance.material", "androidx.glance", "glance-material3").versionRef("glance")
       library("glance.appwidget", "androidx.glance", "glance-appwidget").versionRef("glance")
       library(
         "glance.preview",
@@ -153,16 +154,11 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.33.0-alpha")
+      version("accompanist", "0.33.2-alpha")
       library(
         "permissions",
         "com.google.accompanist",
         "accompanist-permissions"
-      ).versionRef("accompanist")
-      library(
-        "systemuicontroller",
-        "com.google.accompanist",
-        "accompanist-systemuicontroller"
       ).versionRef("accompanist")
     }
 

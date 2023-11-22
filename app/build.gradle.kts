@@ -43,7 +43,7 @@ android {
   compileSdk = 34
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = AndroidVersion.VersionCodes.N
+    minSdk = AndroidVersion.VersionCodes.O
     targetSdk = 34
     versionCode = 21
     versionName = "1.13.2"
@@ -149,7 +149,6 @@ dependencies {
   implementation(androidx.splashscreen)
   implementation(androidx.tracing)
   implementation(androidx.window)
-  implementation(libs.material)
 
   // compose
   implementation(compose.ui)
@@ -161,10 +160,10 @@ dependencies {
   debugImplementation(compose.tooling)
 
   implementation(accompanist.permissions)
-  implementation(accompanist.systemuicontroller)
 
   implementation(widget.glance)
   implementation(widget.glance.appwidget)
+  implementation(widget.glance.material)
   debugImplementation(widget.glance.preview)
 
   // lifecycle

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.preferencesOf
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.ExperimentalGlanceRemoteViewsApi
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
@@ -36,7 +37,9 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
+import androidx.glance.background
 import androidx.glance.layout.Column
+import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import com.google.android.glance.appwidget.host.glance.GlanceAppWidgetHostPreview
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,11 +62,12 @@ class CurrencyWidget(private val loadExchangeRates: LoadExchangeRates) : GlanceA
     ValiutchikWidgetTheme {
       LazyColumn(
         modifier = GlanceModifier
+          .background(GlanceTheme.colors.background)
           .appWidgetBackground()
           .cornerRadius(16.dp)
       ) {
         items(rates, { item -> item.id }) {
-          Column {
+          Column(modifier = GlanceModifier.padding(16.dp)) {
             Text(text = context.getString(it.currencyNameRes))
             Text(text = it.currencyValue)
             Text(text = it.bank)
@@ -85,7 +89,7 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 
 @OptIn(ExperimentalGlanceRemoteViewsApi::class)
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun MyAppWidgetPreview() {
   val loadExchangeRates: LoadExchangeRates = object : LoadExchangeRates {
@@ -102,7 +106,7 @@ private fun MyAppWidgetPreview() {
       )
   }
   // The size of the widget
-  val displaySize = DpSize(200.dp, 200.dp)
+  val displaySize = DpSize(400.dp, 400.dp)
   // Your GlanceAppWidget instance
   val instance = CurrencyWidget(loadExchangeRates)
   // Provide a state depending on the GlanceAppWidget state definition
