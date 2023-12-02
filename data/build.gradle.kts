@@ -39,8 +39,8 @@ android {
 
     resValue(
       "string",
-      "mapboxGeocoderAccessToken",
-      loadSecret(rootProject, MAPBOX_TOKEN)
+      "geocoderAccessToken",
+      loadSecret(rootProject, GEOCODER_TOKEN)
     )
   }
 
@@ -66,6 +66,9 @@ android {
   }
   kotlinOptions {
     jvmTarget = "17"
+  }
+  packaging {
+    jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
   }
   namespace = "fobo66.valiutchik.core"
 }
@@ -96,7 +99,8 @@ dependencies {
   implementation(database.ktx)
   ksp(database.compiler)
   implementation(androidx.datastore)
-  implementation(libs.mapbox)
+  implementation(libs.tomtom.geocoder)
+  implementation(libs.tomtom.geocoder.online)
   implementation(libs.timber)
 
   detektPlugins(detektRules.formatting)
@@ -104,8 +108,6 @@ dependencies {
 
   testImplementation(testing.junit)
   testRuntimeOnly(testing.junit.engine)
-  testImplementation(testing.mockk)
-  testImplementation(testing.mockk.agent)
   testImplementation(database.testing)
   testImplementation(libs.coroutines.test)
 

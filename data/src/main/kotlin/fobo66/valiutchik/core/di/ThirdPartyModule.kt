@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.mapbox.search.SearchEngine
-import com.mapbox.search.SearchEngineSettings
 import com.squareup.moshi.Moshi
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoder
+import com.tomtom.sdk.search.reversegeocoder.online.OnlineReverseGeocoder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,13 +39,10 @@ object ThirdPartyModule {
 
   @Provides
   fun provideReverseGeocodingEngine(
+    @ApplicationContext context: Context,
     @GeocoderAccessToken geocoderAccessToken: String
-  ): SearchEngine =
-    SearchEngine.createSearchEngine(
-      SearchEngineSettings(
-        accessToken = geocoderAccessToken
-      )
-    )
+  ): ReverseGeocoder =
+    OnlineReverseGeocoder.create(context, geocoderAccessToken)
 
   @Provides
   fun provideMoshi(): Moshi = Moshi.Builder().build()

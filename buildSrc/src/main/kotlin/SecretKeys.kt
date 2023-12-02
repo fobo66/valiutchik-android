@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ const val KEY_ALIAS = "BITRISEIO_ANDROID_KEYSTORE_ALIAS"
 const val KEY_PASSWORD = "BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD"
 const val STORE_FILE = "BITRISEIO_ANDROID_KEYSTORE_URL"
 const val STORE_PASSWORD = "BITRISEIO_ANDROID_KEYSTORE_PASSWORD"
-const val MAPBOX_TOKEN = "MAPBOX_GEOCODER_ACCESS_TOKEN"
-const val MAPBOX_REPO_TOKEN = "MAPBOX_DOWNLOAD_ACCESS_TOKEN"
+const val GEOCODER_TOKEN = "GEOCODER_ACCESS_TOKEN"
 const val API_USERNAME = "API_USERNAME"
 const val API_PASSWORD = "API_PASSWORD"

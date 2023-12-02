@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,29 +16,26 @@
 
 package fobo66.valiutchik.core.fake
 
-import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResult
+import com.tomtom.sdk.location.Address
+import com.tomtom.sdk.location.GeoPoint
+import com.tomtom.sdk.location.Place
+import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
+import fobo66.valiutchik.core.entities.GeocodingFailedException
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
-import io.mockk.every
-import io.mockk.mockk
-import java.io.IOException
 
 class FakeGeocodingDataSource : GeocodingDataSource {
   var showError = false
   var unexpectedError = false
 
-  private val searchAddress: SearchAddress = SearchAddress(locality = "fake")
+  private val searchAddress: Address = Address(countrySecondarySubdivision = "fake")
 
-  private val searchResult: SearchResult = mockk {
-    every {
-      address
-    } returns searchAddress
-  }
+  private val searchResult: PlaceMatch =
+    PlaceMatch(Place(GeoPoint(0.0, 0.0), address = searchAddress))
 
-  override suspend fun findPlace(location: Location): List<SearchResult> =
+  override suspend fun findPlace(location: Location): List<PlaceMatch> =
     when {
-      showError -> throw IOException("Yikes!")
+      showError -> throw GeocodingFailedException("Yikes!")
       unexpectedError -> throw KotlinNullPointerException("Yikes!")
       else -> listOf(searchResult)
     }

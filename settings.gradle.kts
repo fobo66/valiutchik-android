@@ -16,17 +16,32 @@
 
 
 dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+  repositories {
+    google()
+    mavenCentral()
+    maven {
+      url = uri("https://repositories.tomtom.com/artifactory/maven")
+    }
+  }
   versionCatalogs {
     register("libs") {
       version("kotlin", "1.9.20")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
+      version("tomtom", "0.39.1")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.20-1.0.14")
       library("material", "com.google.android.material:material:1.10.0")
       library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
-      library("mapbox", "com.mapbox.search:mapbox-search-android:1.0.0-rc.7")
+      library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
+      library(
+        "tomtom-geocoder-online",
+        "com.tomtom.sdk.search",
+        "reverse-geocoder-online"
+      ).versionRef("tomtom")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.4")
@@ -181,7 +196,6 @@ dependencyResolutionManagement {
 
     register("testing") {
       version("kaspresso", "1.5.3")
-      version("mockk", "1.13.8")
       version("junit", "5.10.1")
       plugin("junit", "de.mannodermaus.android-junit5").version("1.10.0.0")
       library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
@@ -197,8 +211,6 @@ dependencyResolutionManagement {
       library("turbine", "app.cash.turbine:turbine:1.0.0")
       library("truth", "com.google.truth:truth:1.1.5")
       library("hamcrest", "org.hamcrest:hamcrest-core:2.2")
-      library("mockk", "io.mockk", "mockk").versionRef("mockk")
-      library("mockk.agent", "io.mockk", "mockk-agent-jvm").versionRef("mockk")
     }
 
     register("detektRules") {

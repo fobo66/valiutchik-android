@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ package fobo66.valiutchik.core.model.repository
 
 import android.Manifest
 import androidx.annotation.RequiresPermission
+import fobo66.valiutchik.core.entities.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
-import java.io.IOException
 import javax.inject.Inject
 import timber.log.Timber
 
@@ -36,17 +36,14 @@ class LocationRepositoryImpl @Inject constructor(
       val location = locationDataSource.resolveLocation()
       Timber.v("Resolved user's location: %s", location)
       geocodingDataSource.findPlace(location)
-    } catch (e: IOException) {
+    } catch (e: GeocodingFailedException) {
       Timber.e(e, "Failed to determine user city")
       emptyList()
     }
 
     Timber.v("Resolving user's city")
     return response
-      .asSequence()
-      .map { it.address }
-      .filterNotNull()
-      .map { it.locality }
+      .map { it.place.address?.countrySecondarySubdivision }
       .firstNotNullOfOrNull { it }.also { city ->
         city?.let {
           Timber.v("Resolved user's city: %s", it)
