@@ -196,7 +196,6 @@ dependencyResolutionManagement {
 
     register("testing") {
       version("kaspresso", "1.5.3")
-      version("mockk", "1.13.8")
       version("junit", "5.10.1")
       plugin("junit", "de.mannodermaus.android-junit5").version("1.10.0.0")
       library("junit", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
@@ -212,8 +211,6 @@ dependencyResolutionManagement {
       library("turbine", "app.cash.turbine:turbine:1.0.0")
       library("truth", "com.google.truth:truth:1.1.5")
       library("hamcrest", "org.hamcrest:hamcrest-core:2.2")
-      library("mockk", "io.mockk", "mockk").versionRef("mockk")
-      library("mockk.agent", "io.mockk", "mockk-agent-jvm").versionRef("mockk")
     }
 
     register("detektRules") {

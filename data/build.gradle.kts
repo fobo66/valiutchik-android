@@ -108,8 +108,6 @@ dependencies {
 
   testImplementation(testing.junit)
   testRuntimeOnly(testing.junit.engine)
-  testImplementation(testing.mockk)
-  testImplementation(testing.mockk.agent)
   testImplementation(database.testing)
   testImplementation(libs.coroutines.test)
 
