@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,31 +16,33 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import com.mapbox.search.ResponseInfo
-import com.mapbox.search.ReverseGeoOptions
-import com.mapbox.search.SearchCallback
-import com.mapbox.search.SearchEngine
-import com.mapbox.search.result.SearchResult
+import com.tomtom.sdk.search.common.error.SearchFailure
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoder
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderCallback
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderOptions
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderResponse
+import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
+import fobo66.valiutchik.core.entities.GeocodingFailedException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-internal suspend fun SearchEngine.search(
-  options: ReverseGeoOptions
-): List<SearchResult> =
+internal suspend fun ReverseGeocoder.search(
+  options: ReverseGeocoderOptions
+): List<PlaceMatch> =
   suspendCancellableCoroutine { continuation ->
-    val task = search(
+    val task = reverseGeocode(
       options,
-      object : SearchCallback {
-        override fun onError(e: Exception) {
+      object : ReverseGeocoderCallback {
+        override fun onFailure(failure: SearchFailure) {
           if (continuation.isCancelled) {
             return
           }
-          continuation.resumeWithException(e)
+          continuation.resumeWithException(GeocodingFailedException(failure.message))
         }
 
-        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-          continuation.resume(results)
+        override fun onSuccess(result: ReverseGeocoderResponse) {
+          continuation.resume(result.places)
         }
       }
     )

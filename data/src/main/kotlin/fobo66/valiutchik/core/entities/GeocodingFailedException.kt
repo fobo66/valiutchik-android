@@ -14,20 +14,6 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.core.entities
 
-import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
-import fobo66.valiutchik.core.entities.Location
-
-/**
- * Datasource for geocoding. Supports only reverse geocoding at the moment
- */
-interface GeocodingDataSource {
-
-  /**
-   * Find possible city address on given location
-   *
-   * @param location Latitude and longitude for search
-   */
-  suspend fun findPlace(location: Location): List<PlaceMatch>
-}
+class GeocodingFailedException(message: String) : Exception(message)

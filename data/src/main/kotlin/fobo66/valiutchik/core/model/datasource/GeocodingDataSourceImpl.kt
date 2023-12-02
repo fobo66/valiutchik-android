@@ -16,40 +16,22 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import com.mapbox.geojson.Point
-import com.mapbox.search.QueryType
-import com.mapbox.search.QueryType.PLACE
-import com.mapbox.search.ReverseGeoOptions
-import com.mapbox.search.SearchEngine
-import com.mapbox.search.common.IsoCountryCode
-import com.mapbox.search.common.IsoLanguageCode
-import com.mapbox.search.result.SearchResult
+import com.tomtom.sdk.location.GeoPoint
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoder
+import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderOptions
+import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
 import fobo66.valiutchik.core.entities.Location
 import javax.inject.Inject
 
 class GeocodingDataSourceImpl @Inject constructor(
-  private val geocodingSearchEngine: SearchEngine
+  private val geocoder: ReverseGeocoder
 ) : GeocodingDataSource {
-  private val searchLanguages: List<IsoLanguageCode> by lazy {
-    listOf(IsoLanguageCode("ru-RU"))
-  }
-
-  private val searchCountries: List<IsoCountryCode> by lazy {
-    listOf(IsoCountryCode("by"))
-  }
-
-  private val types: List<QueryType> by lazy {
-    listOf(PLACE)
-  }
-
-  override suspend fun findPlace(location: Location): List<SearchResult> {
-    val options = ReverseGeoOptions(
-      center = Point.fromLngLat(location.longitude, location.latitude),
-      types = types,
-      languages = searchLanguages,
-      countries = searchCountries
+  override suspend fun findPlace(location: Location): List<PlaceMatch> {
+    val coordinate = GeoPoint(latitude = location.latitude, longitude = location.longitude)
+    val options = ReverseGeocoderOptions(
+      position = coordinate,
     )
 
-    return geocodingSearchEngine.search(options)
+    return geocoder.search(options)
   }
 }

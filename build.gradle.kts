@@ -28,23 +28,6 @@ plugins {
   alias(database.plugins.plugin) apply false
 }
 
-allprojects {
-  repositories {
-    mavenCentral()
-    google()
-    maven {
-      url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
-      authentication {
-        create<BasicAuthentication>("basic")
-      }
-      credentials {
-        username = "mapbox"
-        password = loadSecret(rootProject, MAPBOX_REPO_TOKEN)
-      }
-    }
-  }
-}
-
 tasks.register<Delete>("clean") {
   delete(rootProject.layout.buildDirectory)
 }
