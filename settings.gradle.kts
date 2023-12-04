@@ -186,7 +186,7 @@ dependencyResolutionManagement {
     }
 
     register("database") {
-      version("room", "2.6.0")
+      version("room", "2.6.1")
       plugin("plugin", "androidx.room").versionRef("room")
       library("runtime", "androidx.room", "room-runtime").versionRef("room")
       library("ktx", "androidx.room", "room-ktx").versionRef("room")
