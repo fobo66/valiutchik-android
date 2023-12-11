@@ -87,7 +87,7 @@ dependencyResolutionManagement {
       library("annotations", "androidx.annotation:annotation:1.7.0")
       library("activity", "androidx.activity:activity-compose:1.8.1")
       library("appstartup", "androidx.startup:startup-runtime:1.2.0-alpha02")
-      library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha06")
+      library("datastore", "androidx.datastore:datastore-preferences:1.1.0-alpha07")
       library("navigation", "androidx.navigation:navigation-compose:2.7.5")
       library("multidex", "androidx.multidex:multidex:2.0.1")
       library("splashscreen", "androidx.core:core-splashscreen:1.0.1")
