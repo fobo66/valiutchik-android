@@ -43,7 +43,7 @@ dependencyResolutionManagement {
         "reverse-geocoder-online"
       ).versionRef("tomtom")
       library("timber", "com.jakewharton.timber:timber:5.0.1")
-      library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
+      library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
       library("desugar", "com.android.tools:desugar_jdk_libs:2.0.4")
       library(
         "coroutines",
