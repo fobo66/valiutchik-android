@@ -209,7 +209,7 @@ dependencyResolutionManagement {
         "kaspresso-compose-support"
       ).versionRef("kaspresso")
       library("turbine", "app.cash.turbine:turbine:1.0.0")
-      library("truth", "com.google.truth:truth:1.1.5")
+      library("truth", "com.google.truth:truth:1.2.0")
       library("hamcrest", "org.hamcrest:hamcrest-core:2.2")
     }
 
