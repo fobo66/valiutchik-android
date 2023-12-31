@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,16 +16,14 @@
 
 package fobo66.valiutchik.api
 
+import io.ktor.client.HttpClient
 import java.io.IOException
 import javax.inject.Inject
 import retrofit2.HttpException
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/4/19.
- */
 class CurrencyRatesDataSourceImpl @Inject constructor(
-  private val exchangeRatesApi: ExchangeRatesApi
+  private val exchangeRatesApi: ExchangeRatesApi,
+  private val client: HttpClient
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> by lazy {
