@@ -33,6 +33,10 @@ import io.ktor.client.plugins.auth.providers.basic
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.xml.xml
 import javax.inject.Singleton
 import okhttp3.Cache
@@ -67,6 +71,15 @@ object NetworkModule {
     }
     install(HttpCache) {
       publicStorage(FileStorage(context.cacheDir))
+    }
+    install(Logging) {
+      logger = object: Logger {
+        override fun log(message: String) {
+          Timber.tag("HTTP").d(message)
+        }
+      }
+      level = LogLevel.ALL
+      sanitizeHeader { header -> header == HttpHeaders.Authorization }
     }
 
     expectSuccess = true
