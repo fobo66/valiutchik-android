@@ -143,6 +143,7 @@ dependencyResolutionManagement {
       version("ktor", "2.3.7")
       library("client", "io.ktor", "ktor-client-okhttp").versionRef("ktor")
       library("client-mock", "io.ktor", "ktor-client-mock").versionRef("ktor")
+      library("auth", "io.ktor", "ktor-client-auth").versionRef("ktor")
       library("content", "io.ktor", "ktor-client-content-negotiation").versionRef("ktor")
       library("xml", "io.ktor", "ktor-serialization-kotlinx-xml").versionRef("ktor")
     }

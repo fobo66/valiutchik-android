@@ -83,6 +83,7 @@ dependencies {
   implementation(ktor.client)
   implementation(ktor.content)
   implementation(ktor.xml)
+  implementation(ktor.auth)
   implementation(libs.retrofit)
 
   implementation(libs.timber)

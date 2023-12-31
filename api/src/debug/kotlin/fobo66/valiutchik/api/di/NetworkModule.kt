@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,15 @@ import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.api.ExchangeRatesApi
 import fobo66.valiutchik.api.RequestConfigInterceptor
 import fobo66.valiutchik.api.XmlConverterFactory
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
+import io.ktor.client.plugins.auth.providers.basic
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.storage.FileStorage
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.xml.xml
 import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -33,17 +42,35 @@ import retrofit2.Retrofit
 import retrofit2.create
 import timber.log.Timber
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/7/19.
- */
-
 const val BASE_URL = "https://admin.myfin.by/"
 const val CACHE_SIZE = 1024L * 1024L * 2L
 
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
+
+  @Provides
+  fun provideKtorClient(
+    @ApplicationContext context: Context,
+    @ApiUsername username: String,
+    @ApiPassword password: String
+  ) = HttpClient(OkHttp) {
+    install(Auth) {
+      basic {
+        credentials {
+          BasicAuthCredentials(username, password)
+        }
+      }
+    }
+    install(ContentNegotiation) {
+      xml()
+    }
+    install(HttpCache) {
+      publicStorage(FileStorage(context.cacheDir))
+    }
+
+    expectSuccess = true
+  }
 
   @Provides
   @Singleton
