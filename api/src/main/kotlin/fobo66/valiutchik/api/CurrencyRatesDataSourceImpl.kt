@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,16 +16,25 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.di.ApiPassword
+import fobo66.valiutchik.api.di.ApiUsername
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.ResponseException
+import io.ktor.client.request.basicAuth
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.path
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException
 import javax.inject.Inject
-import retrofit2.HttpException
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/4/19.
- */
+const val BASE_URL = "https://admin.myfin.by/"
+
 class CurrencyRatesDataSourceImpl @Inject constructor(
-  private val exchangeRatesApi: ExchangeRatesApi
+  private val client: HttpClient,
+  private val parser: CurrencyRatesParser,
+  @ApiUsername private val username: String,
+  @ApiPassword private val password: String
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> by lazy {
@@ -43,8 +52,14 @@ class CurrencyRatesDataSourceImpl @Inject constructor(
     val cityIndex = citiesMap[city] ?: "1"
 
     return try {
-      exchangeRatesApi.loadExchangeRates(cityIndex)
-    } catch (e: HttpException) {
+      val response = client.get(BASE_URL) {
+        url {
+          path("outer", "authXml", cityIndex)
+        }
+        basicAuth(username, password)
+      }
+      parser.parse(response.bodyAsChannel().toInputStream())
+    } catch (e: ResponseException) {
       throw IOException(e)
     }
   }

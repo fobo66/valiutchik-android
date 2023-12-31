@@ -34,7 +34,6 @@ dependencyResolutionManagement {
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.21-1.0.16")
       library("material", "com.google.android.material:material:1.11.0")
-      library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
       library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
       library(
@@ -75,7 +74,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.3.0-beta01")
+      version("plugin", "8.4.0-alpha01")
       version("lifecycle", "2.7.0-rc02")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.2")
@@ -137,7 +136,13 @@ dependencyResolutionManagement {
       version("okhttp", "5.0.0-alpha.12")
       library("bom", "com.squareup.okhttp3", "okhttp-bom").versionRef("okhttp")
       library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
-      library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
+    }
+    register("ktor") {
+      version("ktor", "2.3.7")
+      library("client", "io.ktor", "ktor-client-okhttp").versionRef("ktor")
+      library("client-mock", "io.ktor", "ktor-client-mock").versionRef("ktor")
+      library("auth", "io.ktor", "ktor-client-auth").versionRef("ktor")
+      library("logging", "io.ktor", "ktor-client-logging").versionRef("ktor")
     }
 
     register("compose") {

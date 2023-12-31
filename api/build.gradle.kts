@@ -79,9 +79,9 @@ dependencies {
 
   implementation(platform(okhttp.bom))
   implementation(okhttp.core)
-  debugImplementation(okhttp.logging)
-
-  implementation(libs.retrofit)
+  debugImplementation(ktor.logging)
+  implementation(ktor.client)
+  implementation(ktor.auth)
 
   implementation(libs.timber)
 

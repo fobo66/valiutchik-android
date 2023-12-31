@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2023 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,61 +22,53 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import fobo66.valiutchik.api.ExchangeRatesApi
-import fobo66.valiutchik.api.RequestConfigInterceptor
-import fobo66.valiutchik.api.XmlConverterFactory
-import javax.inject.Singleton
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.create
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
+import io.ktor.client.plugins.auth.providers.basic
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.storage.FileStorage
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.HttpHeaders
 import timber.log.Timber
-
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/7/19.
- */
-
-const val BASE_URL = "https://admin.myfin.by/"
-const val CACHE_SIZE = 1024L * 1024L * 2L
 
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
 
   @Provides
-  @Singleton
-  fun provideMyfinApi(
-    okHttpClient: OkHttpClient,
-    xmlConverterFactory: XmlConverterFactory
-  ): ExchangeRatesApi = Retrofit.Builder()
-    .baseUrl(BASE_URL)
-    .client(okHttpClient)
-    .addConverterFactory(xmlConverterFactory)
-    .build()
-    .create()
-
-  @Provides
-  @Singleton
-  fun provideOkHttpClient(
+  fun provideKtorClient(
     @ApplicationContext context: Context,
-    loggingInterceptor: HttpLoggingInterceptor,
-    requestConfigInterceptor: RequestConfigInterceptor
-  ): OkHttpClient {
-    return OkHttpClient.Builder().cache(Cache(context.cacheDir, CACHE_SIZE))
-      .addInterceptor(requestConfigInterceptor)
-      .addInterceptor(loggingInterceptor)
-      .build()
+    customLogger: Logger,
+    @ApiUsername username: String,
+    @ApiPassword password: String
+  ) = HttpClient(OkHttp) {
+    install(Auth) {
+      basic {
+        credentials {
+          BasicAuthCredentials(username, password)
+        }
+      }
+    }
+    install(HttpCache) {
+      publicStorage(FileStorage(context.cacheDir))
+    }
+    install(Logging) {
+      logger = customLogger
+      level = LogLevel.ALL
+      sanitizeHeader { header -> header == HttpHeaders.Authorization }
+    }
+
+    expectSuccess = true
   }
 
   @Provides
-  @Singleton
-  fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-    val loggingInterceptor = HttpLoggingInterceptor { message -> Timber.tag("OkHttp").d(message) }
-
-    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-    return loggingInterceptor
+  fun provideLoggingInterceptor(): Logger = object : Logger {
+    override fun log(message: String) {
+      Timber.tag("HTTP").d(message)
+    }
   }
 }
