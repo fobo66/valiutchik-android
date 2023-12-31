@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="11">
+      <module name="Valiutchik.api" target="17" />
+      <module name="Valiutchik.app" target="17" />
+      <module name="Valiutchik.benchmark" target="17" />
+      <module name="Valiutchik.buildSrc" target="17" />
+      <module name="Valiutchik.buildSrc.main" target="17" />
+      <module name="Valiutchik.buildSrc.test" target="17" />
+      <module name="Valiutchik.data" target="17" />
+      <module name="Valiutchik.domain" target="17" />
+      <module name="Valiutchik.macrobenchmark" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
