@@ -16,11 +16,17 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.di.ApiPassword
+import fobo66.valiutchik.api.di.ApiUsername
 import fobo66.valiutchik.api.di.BASE_URL
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
+import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.HttpHeaders
+import io.ktor.http.headers
 import io.ktor.http.path
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException
@@ -28,7 +34,9 @@ import javax.inject.Inject
 
 class CurrencyRatesDataSourceImpl @Inject constructor(
   private val client: HttpClient,
-  private val parser: CurrencyRatesParser
+  private val parser: CurrencyRatesParser,
+  @ApiUsername private val username: String,
+  @ApiPassword private val password: String
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> by lazy {
@@ -50,6 +58,7 @@ class CurrencyRatesDataSourceImpl @Inject constructor(
         url {
           path("outer", "authXml", cityIndex)
         }
+        basicAuth(username, password)
       }
       parser.parse(response.bodyAsChannel().toInputStream())
     } catch (e: ResponseException) {
