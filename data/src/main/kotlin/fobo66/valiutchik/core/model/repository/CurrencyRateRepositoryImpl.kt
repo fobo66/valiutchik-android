@@ -43,19 +43,18 @@ class CurrencyRateRepositoryImpl @Inject constructor(
   @Io private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRateRepository {
 
-  override suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
-    val currencies = try {
-      currencyRatesDataSource.loadExchangeRates(city)
-    } catch (e: IOException) {
-      throw CurrencyRatesLoadFailedException(e)
-    }
-
-    val bestCourses: List<BestCourse>
+  override suspend fun refreshExchangeRates(city: String, now: LocalDateTime) =
     withContext(ioDispatcher) {
-      bestCourses = findBestCourses(currencies, now.toString())
+      val currencies = try {
+        currencyRatesDataSource.loadExchangeRates(city)
+      } catch (e: IOException) {
+        throw CurrencyRatesLoadFailedException(e)
+      }
+
+      val bestCourses = findBestCourses(currencies, now.toString())
+
+      persistenceDataSource.saveBestCourses(bestCourses)
     }
-    persistenceDataSource.saveBestCourses(bestCourses)
-  }
 
   override fun loadExchangeRates(latestTimestamp: LocalDateTime): Flow<List<BestCourse>> =
     persistenceDataSource.readBestCourses(latestTimestamp)
