@@ -139,6 +139,13 @@ dependencyResolutionManagement {
       library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
       library("logging", "com.squareup.okhttp3", "logging-interceptor").withoutVersion()
     }
+    register("ktor") {
+      version("ktor", "2.3.7")
+      library("client", "io.ktor", "ktor-client-okhttp").versionRef("ktor")
+      library("client-mock", "io.ktor", "ktor-client-mock").versionRef("ktor")
+      library("content", "io.ktor", "ktor-client-content-negotiation").versionRef("ktor")
+      library("xml", "io.ktor", "ktor-serialization-kotlinx-xml").versionRef("ktor")
+    }
 
     register("compose") {
       version("compiler", "1.5.6")

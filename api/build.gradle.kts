@@ -80,7 +80,9 @@ dependencies {
   implementation(platform(okhttp.bom))
   implementation(okhttp.core)
   debugImplementation(okhttp.logging)
-
+  implementation(ktor.client)
+  implementation(ktor.content)
+  implementation(ktor.xml)
   implementation(libs.retrofit)
 
   implementation(libs.timber)
