@@ -18,7 +18,6 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.di.ApiPassword
 import fobo66.valiutchik.api.di.ApiUsername
-import fobo66.valiutchik.api.di.BASE_URL
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
@@ -28,6 +27,8 @@ import io.ktor.http.path
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException
 import javax.inject.Inject
+
+const val BASE_URL = "https://admin.myfin.by/"
 
 class CurrencyRatesDataSourceImpl @Inject constructor(
   private val client: HttpClient,
