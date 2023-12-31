@@ -145,8 +145,6 @@ dependencyResolutionManagement {
       library("client-mock", "io.ktor", "ktor-client-mock").versionRef("ktor")
       library("auth", "io.ktor", "ktor-client-auth").versionRef("ktor")
       library("logging", "io.ktor", "ktor-client-logging").versionRef("ktor")
-      library("content", "io.ktor", "ktor-client-content-negotiation").versionRef("ktor")
-      library("xml", "io.ktor", "ktor-serialization-kotlinx-xml").versionRef("ktor")
     }
 
     register("compose") {

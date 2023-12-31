@@ -20,13 +20,10 @@ import fobo66.valiutchik.api.di.ApiPassword
 import fobo66.valiutchik.api.di.ApiUsername
 import fobo66.valiutchik.api.di.BASE_URL
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
-import io.ktor.http.HttpHeaders
-import io.ktor.http.headers
 import io.ktor.http.path
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException

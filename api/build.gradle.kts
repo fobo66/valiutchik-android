@@ -82,8 +82,6 @@ dependencies {
   debugImplementation(okhttp.logging)
   debugImplementation(ktor.logging)
   implementation(ktor.client)
-  implementation(ktor.content)
-  implementation(ktor.xml)
   implementation(ktor.auth)
   implementation(libs.retrofit)
 
