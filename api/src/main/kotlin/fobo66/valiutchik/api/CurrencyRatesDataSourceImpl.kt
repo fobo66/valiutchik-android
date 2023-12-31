@@ -16,14 +16,19 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.di.BASE_URL
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.ResponseException
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.path
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException
 import javax.inject.Inject
-import retrofit2.HttpException
 
 class CurrencyRatesDataSourceImpl @Inject constructor(
-  private val exchangeRatesApi: ExchangeRatesApi,
-  private val client: HttpClient
+  private val client: HttpClient,
+  private val parser: CurrencyRatesParser
 ) : CurrencyRatesDataSource {
 
   private val citiesMap: Map<String, String> by lazy {
@@ -41,8 +46,13 @@ class CurrencyRatesDataSourceImpl @Inject constructor(
     val cityIndex = citiesMap[city] ?: "1"
 
     return try {
-      exchangeRatesApi.loadExchangeRates(cityIndex)
-    } catch (e: HttpException) {
+      val response = client.get(BASE_URL) {
+        url {
+          path("outer", "authXml", cityIndex)
+        }
+      }
+      parser.parse(response.bodyAsChannel().toInputStream())
+    } catch (e: ResponseException) {
       throw IOException(e)
     }
   }
