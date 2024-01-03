@@ -30,7 +30,7 @@ dependencyResolutionManagement {
       version("kotlin", "1.9.21")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
-      version("tomtom", "0.42.0")
+      version("tomtom", "0.42.2")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.21-1.0.16")
       library("material", "com.google.android.material:material:1.11.0")
