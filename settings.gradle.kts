@@ -34,7 +34,7 @@ dependencyResolutionManagement {
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.21-1.0.16")
       library("material", "com.google.android.material:material:1.11.0")
-      library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
+      library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.13")
       library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
       library(
         "tomtom-geocoder-online",
