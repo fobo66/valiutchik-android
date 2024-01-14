@@ -27,12 +27,12 @@ dependencyResolutionManagement {
   }
   versionCatalogs {
     register("libs") {
-      version("kotlin", "1.9.21")
+      version("kotlin", "1.9.22")
       version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
       version("tomtom", "0.42.2")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
-      plugin("ksp", "com.google.devtools.ksp").version("1.9.21-1.0.16")
+      plugin("ksp", "com.google.devtools.ksp").version("1.9.22-1.0.16")
       library("material", "com.google.android.material:material:1.11.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.12")
       library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
@@ -74,7 +74,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.4.0-alpha03")
+      version("plugin", "8.4.0-alpha04")
       version("lifecycle", "2.7.0")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.2")
