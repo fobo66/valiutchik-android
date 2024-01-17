@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -146,7 +146,7 @@ dependencyResolutionManagement {
     }
 
     register("compose") {
-      version("compiler", "1.5.6")
+      version("compiler", "1.5.8")
       version("compose", "1.6.0-rc01")
       version("material", "1.2.0-beta02")
       library("ui", "androidx.compose.ui", "ui").versionRef("compose")
