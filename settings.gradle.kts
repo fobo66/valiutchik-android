@@ -32,7 +32,7 @@ dependencyResolutionManagement {
       version("coroutines", "1.7.3")
       version("tomtom", "0.44.0")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
-      plugin("ksp", "com.google.devtools.ksp").version("1.9.22-1.0.16")
+      plugin("ksp", "com.google.devtools.ksp").version("1.9.22-1.0.17")
       library("material", "com.google.android.material:material:1.11.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.13")
       library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
