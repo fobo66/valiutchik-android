@@ -174,7 +174,7 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.33.2-alpha")
+      version("accompanist", "0.34.0")
       library(
         "permissions",
         "com.google.accompanist",
