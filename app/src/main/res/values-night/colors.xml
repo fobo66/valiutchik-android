@@ -15,17 +15,5 @@
   -->
 
 <resources>
-
-  <!-- Base application theme. -->
-  <style name="ExchangeCoursesTheme" parent="android:Theme.Material.Light.NoActionBar">
-    <item name="android:windowActivityTransitions">true</item>
-    <item name="android:windowEnterTransition">@android:transition/explode</item>
-    <item name="android:windowExitTransition">@android:transition/explode</item>
-  </style>
-
-  <style name="Splash" parent="Theme.SplashScreen">
-    <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-    <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-    <item name="postSplashScreenTheme">@style/ExchangeCoursesTheme</item>
-  </style>
+  <color name="splash_screen_background">#1B5E20</color>
 </resources>
