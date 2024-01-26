@@ -31,7 +31,6 @@ android {
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O
-    version = 1
 
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -52,7 +52,6 @@ android {
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O
-    version = 1
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
   }
