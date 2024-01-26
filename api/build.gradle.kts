@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ plugins {
 
 android {
   namespace = "fobo66.valiutchik.api"
-  compileSdk = 34
+  compileSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O

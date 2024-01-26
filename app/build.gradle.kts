@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,11 +40,11 @@ android {
     }
   }
 
-  compileSdk = 34
+  compileSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = 34
+    targetSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
     versionCode = 21
     versionName = "1.13.2"
     multiDexEnabled = true
