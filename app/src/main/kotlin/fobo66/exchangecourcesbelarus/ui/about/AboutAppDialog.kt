@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 package fobo66.exchangecourcesbelarus.ui.about
 
-import android.R
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -71,9 +71,7 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
 
       ClickableText(
         text = descriptionAnnotatedText,
-        style = MaterialTheme.typography.bodyMedium.copy(
-          color = MaterialTheme.colorScheme.onSurface
-        )
+        style = LocalTextStyle.current
       ) {
         descriptionAnnotatedText.getUrlAnnotations(it, it)
           .firstOrNull()?.let { range ->
@@ -83,7 +81,7 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
     },
     confirmButton = {
       TextButton(onClick = onDismiss) {
-        Text(text = stringResource(id = R.string.ok))
+        Text(text = stringResource(id = android.R.string.ok))
       }
     },
     modifier = modifier
