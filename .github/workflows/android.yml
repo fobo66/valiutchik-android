@@ -69,7 +69,7 @@ jobs:
             ~/.android/adb*
           key: avd-33
       - name: Run tests
-        uses: reactivecircus/android-emulator-runner@v2.30.0
+        uses: reactivecircus/android-emulator-runner@v2.30.1
         with:
           script: ./gradlew connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.size=small
           arch: x86_64
