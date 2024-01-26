@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -56,7 +56,6 @@ import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -74,9 +73,7 @@ fun NavGraphBuilder.bestRatesScreen(
   composable(DESTINATION_MAIN) {
     val context = LocalContext.current
 
-    val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle(
-      initialValue = persistentListOf()
-    )
+    val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
 
     val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
       initialValue = MainScreenState.Loading

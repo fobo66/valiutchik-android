@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import javax.inject.Inject
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -45,11 +46,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
   val bestCurrencyRates = currencyRatesInteractor.loadExchangeRates()
-    .stateIn(
-      scope = viewModelScope,
-      started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-      initialValue = emptyList()
-    )
     .filter { it.isNotEmpty() }
     .map {
       it.toImmutableList()
@@ -57,6 +53,11 @@ class MainViewModel @Inject constructor(
     .onEach {
       state.emit(MainScreenState.LoadedRates)
     }
+    .stateIn(
+      scope = viewModelScope,
+      started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+      initialValue = persistentListOf()
+    )
 
   private val state = MutableStateFlow<MainScreenState>(MainScreenState.Loading)
   val screenState = state.asStateFlow()
