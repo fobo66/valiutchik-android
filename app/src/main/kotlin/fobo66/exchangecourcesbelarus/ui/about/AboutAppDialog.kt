@@ -18,6 +18,7 @@ package fobo66.exchangecourcesbelarus.ui.about
 
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -71,7 +72,9 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
 
       ClickableText(
         text = descriptionAnnotatedText,
-        style = LocalTextStyle.current
+        style = LocalTextStyle.current.copy(
+          color = AlertDialogDefaults.textContentColor
+        )
       ) {
         descriptionAnnotatedText.getUrlAnnotations(it, it)
           .firstOrNull()?.let { range ->
