@@ -74,7 +74,7 @@ dependencyResolutionManagement {
     }
 
     register("androidx") {
-      version("plugin", "8.4.0-alpha06")
+      version("plugin", "8.4.0-alpha07")
       version("lifecycle", "2.7.0")
       version("espresso", "3.5.1")
       version("benchmark", "1.2.2")
