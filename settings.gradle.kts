@@ -28,7 +28,7 @@ dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
       version("kotlin", "1.9.22")
-      version("moshi", "1.15.0")
+      version("moshi", "1.15.1")
       version("coroutines", "1.7.3")
       version("tomtom", "0.45.0")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
