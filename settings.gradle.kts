@@ -138,7 +138,7 @@ dependencyResolutionManagement {
       library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
     }
     register("ktor") {
-      version("ktor", "2.3.7")
+      version("ktor", "2.3.8")
       library("client", "io.ktor", "ktor-client-okhttp").versionRef("ktor")
       library("client-mock", "io.ktor", "ktor-client-mock").versionRef("ktor")
       library("auth", "io.ktor", "ktor-client-auth").versionRef("ktor")
