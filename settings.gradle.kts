@@ -219,7 +219,7 @@ dependencyResolutionManagement {
     }
 
     register("detektRules") {
-      version("detekt", "1.23.4")
+      version("detekt", "1.23.5")
       plugin("detekt", "io.gitlab.arturbosch.detekt").versionRef("detekt")
       library("formatting", "io.gitlab.arturbosch.detekt", "detekt-formatting").versionRef("detekt")
       library("compose", "io.nlopez.compose.rules:detekt:0.3.11")
