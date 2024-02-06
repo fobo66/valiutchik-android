@@ -19,6 +19,7 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(androidx.plugins.library)
   kotlin("android")
+  kotlin("plugin.serialization")
   alias(libs.plugins.ksp)
   alias(di.plugins.plugin)
   alias(detektRules.plugins.detekt)
@@ -90,9 +91,8 @@ dependencies {
   implementation(androidx.annotations)
   implementation(androidx.viewmodel)
   implementation(di.core)
+  implementation(libs.serialization.json)
   ksp(di.compiler)
-  implementation(libs.moshi)
-  ksp(libs.moshi.codegen)
   implementation(libs.coroutines)
   implementation(database.runtime)
   implementation(database.ktx)

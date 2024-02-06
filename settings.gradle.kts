@@ -28,8 +28,8 @@ dependencyResolutionManagement {
   versionCatalogs {
     register("libs") {
       version("kotlin", "1.9.22")
-      version("moshi", "1.15.0")
       version("coroutines", "1.7.3")
+      version("serialization", "1.6.2")
       version("tomtom", "0.45.0")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.22-1.0.17")
@@ -62,15 +62,10 @@ dependencyResolutionManagement {
         "kotlinx-coroutines-test"
       ).versionRef("coroutines")
       library(
-        "moshi",
-        "com.squareup.moshi",
-        "moshi"
-      ).versionRef("moshi")
-      library(
-        "moshi-codegen",
-        "com.squareup.moshi",
-        "moshi-kotlin-codegen"
-      ).versionRef("moshi")
+        "serialization-json",
+        "org.jetbrains.kotlinx",
+        "kotlinx-serialization-json"
+      ).versionRef("serialization")
     }
 
     register("androidx") {
@@ -174,7 +169,7 @@ dependencyResolutionManagement {
     }
 
     register("accompanist") {
-      version("accompanist", "0.34.0")
+      version("accompanist", "0.35.0-alpha")
       library(
         "permissions",
         "com.google.accompanist",

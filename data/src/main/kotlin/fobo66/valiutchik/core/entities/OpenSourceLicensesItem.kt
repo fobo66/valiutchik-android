@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,25 +16,25 @@
 
 package fobo66.valiutchik.core.entities
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class OpenSourceLicensesItem(
-  @Json(name = "dependency")
+  @SerialName("dependency")
   val dependency: String,
-  @Json(name = "description")
+  @SerialName("description")
   val description: String?,
-  @Json(name = "developers")
+  @SerialName("developers")
   val developers: List<String>,
-  @Json(name = "licenses")
+  @SerialName("licenses")
   val licenses: List<License>,
-  @Json(name = "project")
+  @SerialName("project")
   val project: String,
-  @Json(name = "url")
+  @SerialName("url")
   val url: String?,
-  @Json(name = "version")
+  @SerialName("version")
   val version: String,
-  @Json(name = "year")
+  @SerialName("year")
   val year: String?
 )

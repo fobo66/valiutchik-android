@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.squareup.moshi.Moshi
 import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoder
 import com.tomtom.sdk.search.reversegeocoder.online.OnlineReverseGeocoder
 import dagger.Module
@@ -32,6 +31,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import javax.inject.Singleton
+import kotlinx.serialization.json.Json
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -45,7 +45,7 @@ object ThirdPartyModule {
     OnlineReverseGeocoder.create(context, geocoderAccessToken)
 
   @Provides
-  fun provideMoshi(): Moshi = Moshi.Builder().build()
+  fun provideJson(): Json = Json
 
   @Provides
   @Singleton
