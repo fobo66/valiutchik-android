@@ -27,7 +27,6 @@ class LicensesRepositoryImpl @Inject constructor(
   private val json: Json
 ) : LicensesRepository {
 
-
   override fun loadLicenses(): List<OpenSourceLicensesItem> {
     val licensesFile =
       assetsDataSource.loadFile("open_source_licenses.json").readString(Charset.defaultCharset())
