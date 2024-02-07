@@ -118,7 +118,7 @@ dependencyResolutionManagement {
       ).versionRef("espresso")
 
       library("uitest.junit", "androidx.test.ext:junit-ktx:1.1.5")
-      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-beta01")
+      library("uitest.automator", "androidx.test.uiautomator:uiautomator:2.3.0-rc01")
       library("uitest.benchmark", "androidx.benchmark", "benchmark-junit4").versionRef("benchmark")
       library(
         "uitest.macrobenchmark",
