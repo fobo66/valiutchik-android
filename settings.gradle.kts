@@ -31,7 +31,7 @@ dependencyResolutionManagement {
       version("coroutines", "1.7.3")
       version("serialization", "1.6.2")
       version("tomtom", "0.45.0")
-      plugin("licenses", "com.jaredsburrows.license").version("0.9.3")
+      plugin("licenses", "com.jaredsburrows.license").version("0.9.7")
       plugin("ksp", "com.google.devtools.ksp").version("1.9.22-1.0.17")
       library("material", "com.google.android.material:material:1.11.0")
       library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.13")
