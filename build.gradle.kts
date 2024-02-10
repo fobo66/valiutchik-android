@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 plugins {
-  alias(androidx.plugins.application) apply false
-  alias(androidx.plugins.library) apply false
-  alias(androidx.plugins.test) apply false
+  alias(libs.plugins.android.app) apply false
+  alias(libs.plugins.android.library) apply false
+  alias(libs.plugins.android.test) apply false
   kotlin("android") version libs.versions.kotlin apply false
   kotlin("plugin.serialization") version libs.versions.kotlin apply false
   alias(libs.plugins.licenses) apply false

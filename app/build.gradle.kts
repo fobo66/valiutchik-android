@@ -18,13 +18,13 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  alias(androidx.plugins.application)
+  alias(libs.plugins.android.app)
   kotlin("android")
   alias(libs.plugins.ksp)
-  alias(di.plugins.plugin)
-  alias(detektRules.plugins.detekt)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.detekt)
   alias(libs.plugins.licenses)
-  alias(testing.plugins.junit)
+  alias(libs.plugins.junit)
 }
 
 android {

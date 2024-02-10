@@ -17,7 +17,7 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(androidx.plugins.library)
+  alias(libs.plugins.android.library)
   kotlin("android")
   kotlin("plugin.serialization")
   alias(libs.plugins.ksp)
@@ -88,12 +88,11 @@ detekt {
 
 dependencies {
   implementation(project(":api"))
-  implementation(androidx.annotations)
-  implementation(androidx.viewmodel)
-  implementation(di.core)
-  implementation(libs.serialization.json)
-  ksp(di.compiler)
-  implementation(libs.coroutines)
+  implementation(libs.androidx.annotation)
+  implementation(libs.hilt.core)
+  implementation(libs.kotlinx.serialization)
+  ksp(libs.hilt.compiler)
+  implementation(libs.kotlinx.coroutines.android)
   implementation(database.runtime)
   implementation(database.ktx)
   ksp(database.compiler)
@@ -105,12 +104,12 @@ dependencies {
   detektPlugins(detektRules.formatting)
   detektPlugins(detektRules.compose)
 
-  testImplementation(testing.junit)
-  testRuntimeOnly(testing.junit.engine)
+  testImplementation(libs.junit.api)
+  testRuntimeOnly(libs.junit.engine)
   testImplementation(database.testing)
-  testImplementation(libs.coroutines.test)
+  testImplementation(libs.kotlinx.coroutines.test)
 
-  androidTestImplementation(libs.coroutines.test)
+  androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(testing.turbine)
   androidTestImplementation(androidx.uitest.core)
   androidTestImplementation(androidx.uitest.runner)
