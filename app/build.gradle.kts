@@ -99,7 +99,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = compose.versions.compiler.get()
+    kotlinCompilerExtensionVersion = "1.5.9"
   }
 
   namespace = "fobo66.exchangecourcesbelarus"
@@ -138,26 +138,29 @@ dependencies {
   api(project(":domain"))
 
   // kotlin
-  implementation(libs.coroutines)
-  implementation(libs.collections)
+  implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.kotlinx.collections)
 
   // androidx
-  implementation(androidx.annotations)
-  implementation(androidx.activity)
-  implementation(androidx.appstartup)
-  implementation(androidx.core)
-  implementation(androidx.splashscreen)
-  implementation(androidx.tracing)
-  implementation(androidx.window)
+  implementation(libs.androidx.activity)
+  implementation(libs.androidx.startup)
+  implementation(libs.androidx.core)
+  implementation(libs.androidx.splashscreen)
+  implementation(libs.androidx.tracing)
+  implementation(libs.androidx.window)
 
   // compose
-  implementation(compose.ui)
-  implementation(compose.material)
-  implementation(compose.preview)
+  val composeBom = platform(libs.compose.bom)
+  implementation(composeBom)
+  debugImplementation(composeBom)
+  androidTestImplementation(composeBom)
+  implementation(libs.compose.ui)
+  implementation(libs.compose.material)
+  implementation(libs.compose.ui.preview)
   implementation(compose.windowsize)
   androidTestImplementation(compose.testing)
-  debugImplementation(compose.testing.manifest)
-  debugImplementation(compose.tooling)
+  debugImplementation(libs.compose.ui.testing.manifest)
+  debugImplementation(libs.compose.ui.tooling)
 
   implementation(accompanist.permissions)
 
@@ -167,19 +170,16 @@ dependencies {
   debugImplementation(widget.glance.preview)
 
   // lifecycle
-  implementation(androidx.lifecycle)
-  implementation(androidx.viewmodel)
+  implementation(libs.androidx.lifecycle.compose)
+  implementation(libs.androidx.lifecycle.viewmodel)
 
   // nav
   implementation(androidx.navigation)
   implementation(di.navigation)
 
   // dagger
-  implementation(di.core)
-  ksp(di.compiler)
-
-  // multidex
-  implementation(androidx.multidex)
+  implementation(libs.hilt.core)
+  ksp(libs.hilt.compiler)
 
   // timber
   implementation(libs.timber)
@@ -192,19 +192,18 @@ dependencies {
   detektPlugins(detektRules.compose)
 
   // tests
-  testImplementation(libs.coroutines.test)
-  testImplementation(testing.junit)
-  testRuntimeOnly(testing.junit.engine)
+  testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.junit.api)
+  testRuntimeOnly(libs.junit.engine)
   testImplementation(testing.turbine)
-  testImplementation(testing.truth)
+  testImplementation(libs.truth)
 
-  androidTestImplementation(libs.coroutines.test)
+  androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(testing.kaspresso)
   androidTestImplementation(testing.kaspresso.compose)
   androidTestImplementation(testing.kakao)
   androidTestImplementation(testing.turbine)
   androidTestImplementation(testing.hamcrest)
-  androidTestImplementation(androidx.uitest.core)
   androidTestImplementation(androidx.uitest.runner)
   androidTestImplementation(androidx.uitest.rules)
   androidTestImplementation(androidx.uitest.espresso.contrib)

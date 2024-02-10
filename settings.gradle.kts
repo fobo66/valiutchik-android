@@ -33,16 +33,13 @@ dependencyResolutionManagement {
       version("tomtom", "0.46.0")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.7")
       library("material", "com.google.android.material:material:1.11.0")
-      library("leakcanary", "com.squareup.leakcanary:leakcanary-android:2.13")
       library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
       library(
         "tomtom-geocoder-online",
         "com.tomtom.sdk.search",
         "reverse-geocoder-online"
       ).versionRef("tomtom")
-      library("timber", "com.jakewharton.timber:timber:5.0.1")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
-      library("desugar", "com.android.tools:desugar_jdk_libs:2.0.4")
       library(
         "coroutines",
         "org.jetbrains.kotlinx",
