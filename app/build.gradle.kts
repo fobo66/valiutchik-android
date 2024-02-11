@@ -73,6 +73,7 @@ android {
 
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    isCoreLibraryDesugaringEnabled = true
   }
 
   kotlinOptions {
@@ -149,6 +150,8 @@ dependencies {
   implementation(libs.androidx.tracing)
   implementation(libs.androidx.window)
 
+  coreLibraryDesugaring(libs.desugar)
+
   // compose
   val composeBom = platform(libs.compose.bom)
   implementation(composeBom)
@@ -162,12 +165,12 @@ dependencies {
   debugImplementation(libs.compose.ui.testing.manifest)
   debugImplementation(libs.compose.ui.tooling)
 
-  implementation(accompanist.permissions)
+  implementation(libs.accompanist.permissions)
 
-  implementation(widget.glance)
-  implementation(widget.glance.appwidget)
-  implementation(widget.glance.material)
-  debugImplementation(widget.glance.preview)
+  implementation(libs.androidx.glance)
+  implementation(libs.androidx.glance.appwidget)
+  implementation(libs.androidx.glance.material)
+  debugImplementation(libs.androidx.glance.preview)
 
   // lifecycle
   implementation(libs.androidx.lifecycle.compose)
@@ -188,8 +191,8 @@ dependencies {
   debugImplementation(libs.leakcanary)
 
 
-  detektPlugins(detektRules.formatting)
-  detektPlugins(detektRules.compose)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 
   // tests
   testImplementation(libs.kotlinx.coroutines.test)
@@ -201,9 +204,9 @@ dependencies {
   androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.kaspresso)
   androidTestImplementation(libs.kaspresso.compose)
-  androidTestImplementation(testing.kakao)
   androidTestImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.espresso.core)
   androidTestImplementation(libs.androidx.test.espresso.contrib)
   androidTestImplementation(libs.androidx.test.espresso.intents)
   androidTestImplementation(libs.androidx.test.espresso.accessibility)
