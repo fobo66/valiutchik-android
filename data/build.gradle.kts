@@ -21,10 +21,10 @@ plugins {
   kotlin("android")
   kotlin("plugin.serialization")
   alias(libs.plugins.ksp)
-  alias(di.plugins.plugin)
-  alias(detektRules.plugins.detekt)
-  alias(testing.plugins.junit)
-  alias(database.plugins.plugin)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.junit)
+  alias(libs.plugins.room)
 }
 
 android {
@@ -80,6 +80,7 @@ room {
 ksp {
   arg("room.incremental", "true")
   arg("room.expandProjection", "true")
+  arg("room.generateKotlin", "true")
 }
 
 detekt {
@@ -93,27 +94,25 @@ dependencies {
   implementation(libs.kotlinx.serialization)
   ksp(libs.hilt.compiler)
   implementation(libs.kotlinx.coroutines.android)
-  implementation(database.runtime)
-  implementation(database.ktx)
-  ksp(database.compiler)
-  implementation(androidx.datastore)
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
+  ksp(libs.room.compiler)
+  implementation(libs.androidx.datastore)
   implementation(libs.tomtom.geocoder)
   implementation(libs.tomtom.geocoder.online)
   implementation(libs.timber)
 
-  detektPlugins(detektRules.formatting)
-  detektPlugins(detektRules.compose)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
-  testImplementation(database.testing)
+  testImplementation(libs.room.testing)
   testImplementation(libs.kotlinx.coroutines.test)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
-  androidTestImplementation(testing.turbine)
-  androidTestImplementation(androidx.uitest.core)
-  androidTestImplementation(androidx.uitest.runner)
-  androidTestImplementation(androidx.uitest.rules)
-  androidTestImplementation(androidx.uitest.junit)
-  androidTestImplementation(androidx.uitest.espresso.intents)
+  androidTestImplementation(libs.turbine)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.androidx.test.espresso.intents)
 }
