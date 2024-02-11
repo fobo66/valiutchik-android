@@ -33,12 +33,6 @@ dependencyResolutionManagement {
       version("tomtom", "0.46.0")
       plugin("licenses", "com.jaredsburrows.license").version("0.9.7")
       library("material", "com.google.android.material:material:1.11.0")
-      library("tomtom-geocoder", "com.tomtom.sdk.search", "reverse-geocoder").versionRef("tomtom")
-      library(
-        "tomtom-geocoder-online",
-        "com.tomtom.sdk.search",
-        "reverse-geocoder-online"
-      ).versionRef("tomtom")
       library("collections", "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
       library(
         "coroutines",
