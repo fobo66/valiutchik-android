@@ -157,8 +157,8 @@ dependencies {
   implementation(libs.compose.ui)
   implementation(libs.compose.material)
   implementation(libs.compose.ui.preview)
-  implementation(compose.windowsize)
-  androidTestImplementation(compose.testing)
+  implementation(libs.compose.material.windowsize)
+  androidTestImplementation(libs.compose.ui.testing)
   debugImplementation(libs.compose.ui.testing.manifest)
   debugImplementation(libs.compose.ui.tooling)
 
@@ -174,8 +174,8 @@ dependencies {
   implementation(libs.androidx.lifecycle.viewmodel)
 
   // nav
-  implementation(androidx.navigation)
-  implementation(di.navigation)
+  implementation(libs.androidx.navigation)
+  implementation(libs.hilt.navigation)
 
   // dagger
   implementation(libs.hilt.core)
@@ -195,19 +195,17 @@ dependencies {
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
-  testImplementation(testing.turbine)
+  testImplementation(libs.turbine)
   testImplementation(libs.truth)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
-  androidTestImplementation(testing.kaspresso)
-  androidTestImplementation(testing.kaspresso.compose)
+  androidTestImplementation(libs.kaspresso)
+  androidTestImplementation(libs.kaspresso.compose)
   androidTestImplementation(testing.kakao)
-  androidTestImplementation(testing.turbine)
-  androidTestImplementation(testing.hamcrest)
-  androidTestImplementation(androidx.uitest.runner)
-  androidTestImplementation(androidx.uitest.rules)
-  androidTestImplementation(androidx.uitest.espresso.contrib)
-  androidTestImplementation(androidx.uitest.espresso.intents)
-  androidTestImplementation(androidx.uitest.espresso.accessibility)
-  androidTestImplementation(androidx.uitest.junit)
+  androidTestImplementation(libs.turbine)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.espresso.contrib)
+  androidTestImplementation(libs.androidx.test.espresso.intents)
+  androidTestImplementation(libs.androidx.test.espresso.accessibility)
+  androidTestImplementation(libs.androidx.test.junit)
 }
