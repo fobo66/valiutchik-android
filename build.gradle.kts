@@ -22,11 +22,11 @@ plugins {
   kotlin("plugin.serialization") version libs.versions.kotlin apply false
   alias(libs.plugins.licenses) apply false
   alias(libs.plugins.ksp) apply false
-  alias(di.plugins.plugin) apply false
-  alias(androidx.plugins.benchmark) apply false
-  alias(testing.plugins.junit) apply false
-  alias(detektRules.plugins.detekt) apply false
-  alias(database.plugins.plugin) apply false
+  alias(libs.plugins.hilt) apply false
+  alias(libs.plugins.benchmark) apply false
+  alias(libs.plugins.junit) apply false
+  alias(libs.plugins.detekt) apply false
+  alias(libs.plugins.room) apply false
 }
 
 tasks.register<Delete>("clean") {

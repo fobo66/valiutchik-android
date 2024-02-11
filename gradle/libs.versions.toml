@@ -38,6 +38,7 @@ kotlinxSerialization = "1.6.2"
 ksp = "1.9.22-1.0.17"
 ktor = "2.3.8"
 leakCanary = "2.13"
+licensesPlugin = "0.9.7"
 materialLegacy = "1.11.0"
 okhttp = "5.0.0-alpha.12"
 profileinstallerVersion = "1.3.1"
@@ -130,4 +131,5 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 junit = { id = "de.mannodermaus.android-junit5", version.ref = "junitPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+licenses = { id = "com.jaredsburrows.license", version.ref = "licensesPlugin" }
 room = { id = "androidx.room", version.ref = "room" }
