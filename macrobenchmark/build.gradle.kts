@@ -28,6 +28,7 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    isCoreLibraryDesugaringEnabled = true
   }
 
   kotlinOptions {
@@ -57,10 +58,11 @@ android {
 }
 
 dependencies {
-  implementation(androidx.uitest.junit)
-  implementation(androidx.uitest.espresso)
-  implementation(androidx.uitest.automator)
-  implementation(androidx.uitest.macrobenchmark)
+  implementation(libs.androidx.test.junit)
+  implementation(libs.androidx.test.espresso.core)
+  implementation(libs.androidx.test.uiautomator)
+  implementation(libs.androidx.benchmark.macro)
+  coreLibraryDesugaring(libs.desugar)
 }
 
 androidComponents {
