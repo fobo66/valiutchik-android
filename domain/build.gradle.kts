@@ -76,5 +76,5 @@ dependencies {
   testRuntimeOnly(libs.junit.engine)
   testImplementation(libs.kotlinx.coroutines.test)
 
-  androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.androidx.test.runner)
 }
