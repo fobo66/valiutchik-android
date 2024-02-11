@@ -51,6 +51,7 @@ turbine = "1.0.0"
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotations" }
+androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "androidxBenchmark" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
@@ -124,6 +125,7 @@ android-app = { id = "com.android.application", version.ref = "androidGradlePlug
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 baseline-profile = { id = "androidx.baselineprofile", version.ref = "baselineProfilePlugin" }
+benchmark = { id = "androidx.benchmark", version.ref = "androidxBenchmark" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 junit = { id = "de.mannodermaus.android-junit5", version.ref = "junitPlugin" }
