@@ -20,9 +20,9 @@ plugins {
   alias(libs.plugins.android.library)
   kotlin("android")
   alias(libs.plugins.ksp)
-  alias(di.plugins.plugin)
-  alias(detektRules.plugins.detekt)
-  alias(testing.plugins.junit)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.junit)
 }
 
 android {
@@ -72,27 +72,25 @@ detekt {
 
 
 dependencies {
-  implementation(libs.coroutines.core)
+  implementation(libs.kotlinx.coroutines.core)
 
-  implementation(di.core)
-  ksp(di.compiler)
+  implementation(libs.hilt.core)
+  ksp(libs.hilt.compiler)
 
-  implementation(platform(okhttp.bom))
-  implementation(okhttp.core)
-  debugImplementation(ktor.logging)
-  implementation(ktor.client)
-  implementation(ktor.auth)
+  implementation(platform(libs.okhttp.bom))
+  implementation(libs.okhttp.core)
+  debugImplementation(libs.ktor.logging)
+  implementation(libs.ktor.client)
+  implementation(libs.ktor.auth)
 
   implementation(libs.timber)
 
-  detektPlugins(detektRules.formatting)
-  detektPlugins(detektRules.compose)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 
-  testImplementation(testing.junit)
-  testRuntimeOnly(testing.junit.engine)
+  testImplementation(libs.junit.api)
+  testRuntimeOnly(libs.junit.engine)
 
-  androidTestImplementation(androidx.uitest.core)
-  androidTestImplementation(androidx.uitest.runner)
-  androidTestImplementation(androidx.uitest.rules)
-  androidTestImplementation(androidx.uitest.junit)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.junit)
 }

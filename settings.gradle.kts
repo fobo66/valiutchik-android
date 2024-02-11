@@ -123,56 +123,6 @@ dependencyResolutionManagement {
       ).versionRef("benchmark")
     }
 
-    register("okhttp") {
-      version("okhttp", "5.0.0-alpha.12")
-      library("bom", "com.squareup.okhttp3", "okhttp-bom").versionRef("okhttp")
-      library("core", "com.squareup.okhttp3", "okhttp").withoutVersion()
-    }
-    register("ktor") {
-      version("ktor", "2.3.8")
-      library("client", "io.ktor", "ktor-client-okhttp").versionRef("ktor")
-      library("client-mock", "io.ktor", "ktor-client-mock").versionRef("ktor")
-      library("auth", "io.ktor", "ktor-client-auth").versionRef("ktor")
-      library("logging", "io.ktor", "ktor-client-logging").versionRef("ktor")
-    }
-
-    register("compose") {
-      version("compiler", "1.5.8")
-      version("compose", "1.6.0")
-      version("material", "1.2.0-rc01")
-      library("ui", "androidx.compose.ui", "ui").versionRef("compose")
-      library("preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose")
-      library("tooling", "androidx.compose.ui", "ui-tooling").versionRef("compose")
-      library("testing", "androidx.compose.ui", "ui-test-junit4").versionRef("compose")
-      library("testing.manifest", "androidx.compose.ui", "ui-test-manifest").versionRef("compose")
-      library("material", "androidx.compose.material3", "material3").versionRef("material")
-      library("windowsize", "androidx.compose.material3", "material3-window-size-class").versionRef(
-        "material"
-      )
-    }
-
-    register("widget") {
-      version("glance", "1.0.0")
-      version("tools", "0.2.2")
-      library("glance", "androidx.glance", "glance").versionRef("glance")
-      library("glance.material", "androidx.glance", "glance-material3").versionRef("glance")
-      library("glance.appwidget", "androidx.glance", "glance-appwidget").versionRef("glance")
-      library(
-        "glance.preview",
-        "com.google.android.glance.tools",
-        "appwidget-host"
-      ).versionRef("tools")
-    }
-
-    register("accompanist") {
-      version("accompanist", "0.35.0-alpha")
-      library(
-        "permissions",
-        "com.google.accompanist",
-        "accompanist-permissions"
-      ).versionRef("accompanist")
-    }
-
     register("di") {
       version("hilt", "2.50")
       plugin("plugin", "com.google.dagger.hilt.android").versionRef("hilt")
