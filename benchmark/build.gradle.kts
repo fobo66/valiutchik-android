@@ -17,8 +17,8 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(androidx.plugins.library)
-  alias(androidx.plugins.benchmark)
+  alias(libs.plugins.android.library)
+  alias(libs.plugins.benchmark)
   kotlin("android")
 }
 
@@ -28,6 +28,7 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    isCoreLibraryDesugaringEnabled = true
   }
 
   kotlinOptions {
@@ -61,8 +62,7 @@ android {
 dependencies {
   implementation(project(":api"))
   implementation(project(":data"))
-  androidTestImplementation(testing.junit4)
-  androidTestImplementation(androidx.uitest.runner)
-  androidTestImplementation(androidx.uitest.junit)
-  androidTestImplementation(androidx.uitest.benchmark)
+  coreLibraryDesugaring(libs.desugar)
+  androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.androidx.benchmark)
 }

@@ -17,14 +17,14 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(androidx.plugins.library)
+  alias(libs.plugins.android.library)
   kotlin("android")
   kotlin("plugin.serialization")
   alias(libs.plugins.ksp)
-  alias(di.plugins.plugin)
-  alias(detektRules.plugins.detekt)
-  alias(testing.plugins.junit)
-  alias(database.plugins.plugin)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.junit)
+  alias(libs.plugins.room)
 }
 
 android {
@@ -63,6 +63,7 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    isCoreLibraryDesugaringEnabled = true
   }
   kotlinOptions {
     jvmTarget = "17"
@@ -80,6 +81,7 @@ room {
 ksp {
   arg("room.incremental", "true")
   arg("room.expandProjection", "true")
+  arg("room.generateKotlin", "true")
 }
 
 detekt {
@@ -88,33 +90,32 @@ detekt {
 
 dependencies {
   implementation(project(":api"))
-  implementation(androidx.annotations)
-  implementation(androidx.viewmodel)
-  implementation(di.core)
-  implementation(libs.serialization.json)
-  ksp(di.compiler)
-  implementation(libs.coroutines)
-  implementation(database.runtime)
-  implementation(database.ktx)
-  ksp(database.compiler)
-  implementation(androidx.datastore)
+  implementation(libs.androidx.annotation)
+  implementation(libs.hilt.core)
+  implementation(libs.kotlinx.serialization)
+  ksp(libs.hilt.compiler)
+  implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
+  ksp(libs.room.compiler)
+  implementation(libs.androidx.datastore)
   implementation(libs.tomtom.geocoder)
   implementation(libs.tomtom.geocoder.online)
   implementation(libs.timber)
 
-  detektPlugins(detektRules.formatting)
-  detektPlugins(detektRules.compose)
+  coreLibraryDesugaring(libs.desugar)
 
-  testImplementation(testing.junit)
-  testRuntimeOnly(testing.junit.engine)
-  testImplementation(database.testing)
-  testImplementation(libs.coroutines.test)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 
-  androidTestImplementation(libs.coroutines.test)
-  androidTestImplementation(testing.turbine)
-  androidTestImplementation(androidx.uitest.core)
-  androidTestImplementation(androidx.uitest.runner)
-  androidTestImplementation(androidx.uitest.rules)
-  androidTestImplementation(androidx.uitest.junit)
-  androidTestImplementation(androidx.uitest.espresso.intents)
+  testImplementation(libs.junit.api)
+  testRuntimeOnly(libs.junit.engine)
+  testImplementation(libs.room.testing)
+  testImplementation(libs.kotlinx.coroutines.test)
+
+  androidTestImplementation(libs.kotlinx.coroutines.test)
+  androidTestImplementation(libs.turbine)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.androidx.test.espresso.intents)
 }

@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus
-
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
-
-@HiltAndroidApp
-open class App : Application()
+dependencyResolutionManagement {
+  versionCatalogs {
+    register("libs") {
+      from(files("../gradle/libs.versions.toml"))
+    }
+  }
+}

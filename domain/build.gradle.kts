@@ -17,12 +17,12 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(androidx.plugins.library)
+  alias(libs.plugins.android.library)
   kotlin("android")
   alias(libs.plugins.ksp)
-  alias(di.plugins.plugin)
-  alias(detektRules.plugins.detekt)
-  alias(testing.plugins.junit)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.junit)
 }
 
 android {
@@ -48,6 +48,7 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    isCoreLibraryDesugaringEnabled = true
   }
   kotlinOptions {
     jvmTarget = "17"
@@ -60,18 +61,20 @@ detekt {
 
 dependencies {
   api(project(":data"))
-  implementation(androidx.annotations)
-  implementation(libs.coroutines.core)
-  implementation(di.core)
-  ksp(di.compiler)
+  implementation(libs.androidx.annotation)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.hilt.core)
+  ksp(libs.hilt.compiler)
   implementation(libs.timber)
 
-  detektPlugins(detektRules.formatting)
-  detektPlugins(detektRules.compose)
+  coreLibraryDesugaring(libs.desugar)
 
-  testImplementation(testing.junit)
-  testRuntimeOnly(testing.junit.engine)
-  testImplementation(libs.coroutines.test)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 
-  androidTestImplementation(androidx.uitest.runner)
+  testImplementation(libs.junit.api)
+  testRuntimeOnly(libs.junit.engine)
+  testImplementation(libs.kotlinx.coroutines.test)
+
+  androidTestImplementation(libs.androidx.test.runner)
 }

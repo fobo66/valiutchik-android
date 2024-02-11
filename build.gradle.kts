@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
  */
 
 plugins {
-  alias(androidx.plugins.application) apply false
-  alias(androidx.plugins.library) apply false
-  alias(androidx.plugins.test) apply false
+  alias(libs.plugins.android.app) apply false
+  alias(libs.plugins.android.library) apply false
+  alias(libs.plugins.android.test) apply false
   kotlin("android") version libs.versions.kotlin apply false
   kotlin("plugin.serialization") version libs.versions.kotlin apply false
   alias(libs.plugins.licenses) apply false
   alias(libs.plugins.ksp) apply false
-  alias(di.plugins.plugin) apply false
-  alias(androidx.plugins.benchmark) apply false
-  alias(testing.plugins.junit) apply false
-  alias(detektRules.plugins.detekt) apply false
-  alias(database.plugins.plugin) apply false
+  alias(libs.plugins.hilt) apply false
+  alias(libs.plugins.benchmark) apply false
+  alias(libs.plugins.junit) apply false
+  alias(libs.plugins.detekt) apply false
+  alias(libs.plugins.room) apply false
 }
 
 tasks.register<Delete>("clean") {
