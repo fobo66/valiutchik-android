@@ -14,18 +14,10 @@
  *    limitations under the License.
  */
 
-plugins {
-  `kotlin-dsl`
-}
-
-kotlin {
-  jvmToolchain(17)
-}
-
-repositories {
-  mavenCentral()
-}
-
-dependencies {
-  implementation(libs.dotenv.kotlin)
+dependencyResolutionManagement {
+  versionCatalogs {
+    register("libs") {
+      from(files("../gradle/libs.versions.toml"))
+    }
+  }
 }
