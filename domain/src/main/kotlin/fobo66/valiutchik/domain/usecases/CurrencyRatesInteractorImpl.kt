@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 
 class CurrencyRatesInteractorImpl @Inject constructor(
   private val refreshExchangeRates: RefreshExchangeRates,
@@ -29,22 +29,22 @@ class CurrencyRatesInteractorImpl @Inject constructor(
   private val loadExchangeRates: LoadExchangeRates,
 ) : CurrencyRatesInteractor {
   override suspend fun refreshExchangeRates() =
-    refreshExchangeRates.execute(LocalDateTime.now())
+    refreshExchangeRates.execute(Clock.System.now())
 
   override suspend fun forceRefreshExchangeRates() =
-    forceRefreshExchangeRates.execute(LocalDateTime.now())
+    forceRefreshExchangeRates.execute(Clock.System.now())
 
   override suspend fun refreshExchangeRatesForDefaultCity() =
     refreshExchangeRatesForDefaultCity.execute(
-      LocalDateTime.now()
+      Clock.System.now()
     )
 
   override suspend fun forceRefreshExchangeRatesForDefaultCity() =
     forceRefreshExchangeRatesForDefaultCity.execute(
-      LocalDateTime.now()
+      Clock.System.now()
     )
 
   override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = loadExchangeRates.execute(
-    LocalDateTime.now()
+    Clock.System.now()
   )
 }

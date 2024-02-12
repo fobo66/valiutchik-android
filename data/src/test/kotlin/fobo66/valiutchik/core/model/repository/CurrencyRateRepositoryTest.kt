@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,20 +21,16 @@ import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
 import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
 import fobo66.valiutchik.core.fake.FakePersistenceDataSource
 import fobo66.valiutchik.core.util.BankNameNormalizer
-import java.time.LocalDateTime
 import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-/**
- * (c) 2019 Andrey Mukamolov <fobo66@protonmail.com>
- * Created 11/30/19.
- */
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
 
@@ -56,7 +52,7 @@ class CurrencyRateRepositoryTest {
     ioDispatcher.close()
   }
 
-  private val now = LocalDateTime.now()
+  private val now = Clock.System.now()
 
   @Test
   fun `load exchange rates`() {

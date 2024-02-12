@@ -63,6 +63,7 @@ dependencies {
   api(project(":data"))
   implementation(libs.androidx.annotation)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.hilt.core)
   ksp(libs.hilt.compiler)
   implementation(libs.timber)

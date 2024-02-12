@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import java.time.LocalDateTime
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 /**
  * Repository to handle timestamps of currency rates refresh
  */
 interface CurrencyRatesTimestampRepository {
-  suspend fun isNeededToUpdateCurrencyRates(now: LocalDateTime, updateInterval: Float): Boolean
-  suspend fun saveTimestamp(now: LocalDateTime)
+  suspend fun isNeededToUpdateCurrencyRates(now: Instant, updateInterval: Float): Boolean
+  suspend fun saveTimestamp(now: Instant)
 
-  fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime>
+  fun loadLatestTimestamp(now: Instant): Flow<Instant>
 }

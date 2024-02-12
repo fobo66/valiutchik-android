@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,11 +29,11 @@ import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import java.io.IOException
-import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 
 class CurrencyRateRepositoryImpl @Inject constructor(
   private val bestCourseDataSource: BestCourseDataSource,
@@ -43,7 +43,7 @@ class CurrencyRateRepositoryImpl @Inject constructor(
   @Io private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRateRepository {
 
-  override suspend fun refreshExchangeRates(city: String, now: LocalDateTime) =
+  override suspend fun refreshExchangeRates(city: String, now: Instant) =
     withContext(ioDispatcher) {
       val currencies = try {
         currencyRatesDataSource.loadExchangeRates(city)
@@ -56,7 +56,7 @@ class CurrencyRateRepositoryImpl @Inject constructor(
       persistenceDataSource.saveBestCourses(bestCourses)
     }
 
-  override fun loadExchangeRates(latestTimestamp: LocalDateTime): Flow<List<BestCourse>> =
+  override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
     persistenceDataSource.readBestCourses(latestTimestamp)
 
   private fun findBestCourses(

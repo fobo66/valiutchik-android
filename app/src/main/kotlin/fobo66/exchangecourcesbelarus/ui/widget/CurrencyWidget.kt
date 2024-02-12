@@ -39,16 +39,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
 
 class CurrencyWidget(private val loadExchangeRates: LoadExchangeRates) : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
-    val rates: ImmutableList<BestCurrencyRate> by loadExchangeRates.execute(LocalDateTime.now())
+    val rates: ImmutableList<BestCurrencyRate> by loadExchangeRates.execute(Clock.System.now())
       .map { it.toImmutableList() }
       .collectAsState(
         initial = persistentListOf()
