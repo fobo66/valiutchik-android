@@ -141,6 +141,7 @@ dependencies {
   // kotlin
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.collections)
+  implementation(libs.kotlinx.datetime)
 
   // androidx
   implementation(libs.androidx.activity)

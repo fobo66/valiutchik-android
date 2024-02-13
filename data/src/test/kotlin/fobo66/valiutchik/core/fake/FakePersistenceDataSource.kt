@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ package fobo66.valiutchik.core.fake
 
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import java.time.LocalDateTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.datetime.Instant
 
 class FakePersistenceDataSource : PersistenceDataSource {
   var isSaved = false
@@ -29,5 +29,5 @@ class FakePersistenceDataSource : PersistenceDataSource {
     isSaved = true
   }
 
-  override fun readBestCourses(latestTimestamp: LocalDateTime): Flow<List<BestCourse>> = emptyFlow()
+  override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
 }

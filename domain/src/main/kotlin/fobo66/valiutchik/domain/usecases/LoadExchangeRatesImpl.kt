@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,20 +33,20 @@ import fobo66.valiutchik.core.util.UAH
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import java.time.LocalDateTime
 import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 
 class LoadExchangeRatesImpl @Inject constructor(
   private val currencyRateRepository: CurrencyRateRepository,
   private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 ) : LoadExchangeRates {
   @OptIn(ExperimentalCoroutinesApi::class)
-  override fun execute(now: LocalDateTime): Flow<List<BestCurrencyRate>> =
+  override fun execute(now: Instant): Flow<List<BestCurrencyRate>> =
     currencyRatesTimestampRepository.loadLatestTimestamp(now)
       .flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
       .map {

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,17 +18,17 @@ package fobo66.valiutchik.domain.fake
 
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import java.time.LocalDateTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.datetime.Instant
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
   var isRefreshed = false
 
-  override suspend fun refreshExchangeRates(city: String, now: LocalDateTime) {
+  override suspend fun refreshExchangeRates(city: String, now: Instant) {
     isRefreshed = true
   }
 
-  override fun loadExchangeRates(latestTimestamp: LocalDateTime): Flow<List<BestCourse>> =
+  override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
     flowOf(emptyList())
 }

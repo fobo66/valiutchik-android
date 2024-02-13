@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import kotlinx.datetime.Instant
 
 class ForceRefreshExchangeRatesImpl @Inject constructor(
   private val locationRepository: LocationRepository,
@@ -30,7 +30,7 @@ class ForceRefreshExchangeRatesImpl @Inject constructor(
   private val currencyRateRepository: CurrencyRateRepository,
   private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRates {
-  override suspend fun execute(now: LocalDateTime) {
+  override suspend fun execute(now: Instant) {
     val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
     val city = locationRepository.resolveUserCity(defaultCity)
 

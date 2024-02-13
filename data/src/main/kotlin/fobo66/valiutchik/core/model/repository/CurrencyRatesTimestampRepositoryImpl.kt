@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,46 +18,46 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.TIMESTAMP
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
-import java.time.Duration
-import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 
   override suspend fun isNeededToUpdateCurrencyRates(
-    now: LocalDateTime,
+    now: Instant,
     updateInterval: Float
   ): Boolean {
     val timestamp = loadTimestamp(now)
-    val cachedValueAge = Duration.between(timestamp, now)
-    val interval: Duration = Duration.ofHours(
-      updateInterval.toLong()
-    )
+    val cachedValueAge = now - timestamp
+    val interval: Duration = updateInterval.toLong().hours
 
     return cachedValueAge == Duration.ZERO || cachedValueAge > interval
   }
 
-  override suspend fun saveTimestamp(now: LocalDateTime) {
+  override suspend fun saveTimestamp(now: Instant) {
     val nowString = now.toString()
     preferencesDataSource.saveString(TIMESTAMP, nowString)
   }
 
-  override fun loadLatestTimestamp(now: LocalDateTime): Flow<LocalDateTime> {
+  override fun loadLatestTimestamp(now: Instant): Flow<Instant> {
     return preferencesDataSource.observeString(TIMESTAMP, now.toString())
-      .map { LocalDateTime.parse(it) }
+      .map { it.toInstant() }
   }
 
-  private suspend fun loadTimestamp(fallbackTimestamp: LocalDateTime): LocalDateTime {
+  private suspend fun loadTimestamp(fallbackTimestamp: Instant): Instant {
     val rawTimestamp: String = preferencesDataSource.loadString(TIMESTAMP)
 
     return if (rawTimestamp.isEmpty()) {
       fallbackTimestamp
     } else {
-      LocalDateTime.parse(rawTimestamp)
+      rawTimestamp.toInstant()
     }
   }
 }

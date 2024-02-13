@@ -95,6 +95,7 @@ dependencies {
   implementation(libs.kotlinx.serialization)
   ksp(libs.hilt.compiler)
   implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.room.runtime)
   implementation(libs.room.ktx)
   ksp(libs.room.compiler)
