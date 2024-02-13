@@ -188,6 +188,7 @@ dependencies {
 
   // timber
   implementation(libs.timber)
+  implementation(libs.napier)
 
   // leakcanary
   debugImplementation(libs.leakcanary)
