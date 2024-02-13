@@ -44,7 +44,6 @@ napier = "2.7.1"
 okhttp = "5.0.0-alpha.12"
 profileinstallerVersion = "1.3.1"
 room = "2.6.1"
-timber = "5.0.1"
 tomtom = "0.46.0"
 truth = "1.4.0"
 turbine = "1.0.0"
@@ -114,7 +113,6 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 tomtom-geocoder = { group = "com.tomtom.sdk.search", name = "reverse-geocoder", version.ref = "tomtom" }
 tomtom-geocoder-online = { group = "com.tomtom.sdk.search", name = "reverse-geocoder-online", version.ref = "tomtom" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
