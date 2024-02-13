@@ -24,7 +24,10 @@ import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 
 class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   private val preferencesDataSource: PreferencesDataSource
@@ -42,13 +45,16 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
   }
 
   override suspend fun saveTimestamp(now: Instant) {
-    val nowString = now.toString()
+    val nowString = now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
     preferencesDataSource.saveString(TIMESTAMP, nowString)
   }
 
   override fun loadLatestTimestamp(now: Instant): Flow<Instant> {
-    return preferencesDataSource.observeString(TIMESTAMP, now.toString())
-      .map { it.toInstant() }
+    return preferencesDataSource.observeString(
+      TIMESTAMP,
+      now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    )
+      .map { LocalDateTime.parse(it).toInstant(TimeZone.currentSystemDefault()) }
   }
 
   private suspend fun loadTimestamp(fallbackTimestamp: Instant): Instant {
@@ -57,7 +63,7 @@ class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
     return if (rawTimestamp.isEmpty()) {
       fallbackTimestamp
     } else {
-      rawTimestamp.toInstant()
+      LocalDateTime.parse(rawTimestamp).toInstant(TimeZone.currentSystemDefault())
     }
   }
 }
