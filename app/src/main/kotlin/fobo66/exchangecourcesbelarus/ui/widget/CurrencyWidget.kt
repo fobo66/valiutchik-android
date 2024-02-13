@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -34,7 +35,9 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Column
 import androidx.glance.layout.padding
+import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -74,9 +77,19 @@ fun CurrencyWidgetContent(
   ) {
     items(rates, { item -> item.id }) {
       Column(modifier = GlanceModifier.padding(16.dp)) {
-        Text(text = context.getString(it.currencyNameRes))
-        Text(text = it.currencyValue)
-        Text(text = it.bank)
+        Text(
+          text = context.getString(it.currencyNameRes),
+          style = TextStyle(color = GlanceTheme.colors.onSurface)
+        )
+        Text(
+          text = it.currencyValue,
+          style = TextStyle(
+            color = GlanceTheme.colors.onSurface,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+          )
+        )
+        Text(text = it.bank, style = TextStyle(color = GlanceTheme.colors.onSurface))
       }
     }
   }
