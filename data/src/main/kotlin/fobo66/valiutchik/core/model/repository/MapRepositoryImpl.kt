@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ package fobo66.valiutchik.core.model.repository
 import android.content.Intent
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
+import io.github.aakira.napier.Napier
 import javax.inject.Inject
-import timber.log.Timber
 
 class MapRepositoryImpl @Inject constructor(
   private val uriDataSource: UriDataSource,
@@ -40,7 +40,7 @@ class MapRepositoryImpl @Inject constructor(
     return if (canResolveIntent) {
       intent
     } else {
-      Timber.e("Cannot show banks on map: maps app not found")
+      Napier.e("Cannot show banks on map: maps app not found")
       null
     }
   }

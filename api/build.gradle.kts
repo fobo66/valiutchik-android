@@ -86,7 +86,7 @@ dependencies {
 
   coreLibraryDesugaring(libs.desugar)
 
-  implementation(libs.timber)
+  implementation(libs.napier)
 
   detektPlugins(libs.detekt.rules.formatting)
   detektPlugins(libs.detekt.rules.compose)

@@ -22,6 +22,8 @@ import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -45,7 +47,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `now timestamp - need to update`() {
-    preferencesDataSource.string = now.toString()
+    preferencesDataSource.string = now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
       assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
@@ -54,7 +56,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp is old - need to update`() {
-    preferencesDataSource.string = (now - 1.days).toString()
+    preferencesDataSource.string =
+      (now - 1.days).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
       assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
@@ -63,7 +66,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp slightly in the past - no need to update`() {
-    preferencesDataSource.string = (now - 1.hours).toString()
+    preferencesDataSource.string =
+      (now - 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
       assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
@@ -72,7 +76,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp on the limit - no need to update`() {
-    preferencesDataSource.string = (now - 3.hours).toString()
+    preferencesDataSource.string =
+      (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
       assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
@@ -81,7 +86,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp above customized limit - need to update`() {
-    preferencesDataSource.string = (now - 3.hours).toString()
+    preferencesDataSource.string =
+      (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
       assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 2.0f))
@@ -90,7 +96,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
 
   @Test
   fun `timestamp in the future - no need to update`() {
-    preferencesDataSource.string = (now + 1.hours).toString()
+    preferencesDataSource.string =
+      (now + 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
       assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))

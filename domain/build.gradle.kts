@@ -66,7 +66,7 @@ dependencies {
   implementation(libs.kotlinx.datetime)
   implementation(libs.hilt.core)
   ksp(libs.hilt.compiler)
-  implementation(libs.timber)
+  implementation(libs.napier)
 
   coreLibraryDesugaring(libs.desugar)
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import androidx.annotation.RequiresPermission
 import fobo66.valiutchik.core.entities.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import io.github.aakira.napier.Napier
 import javax.inject.Inject
-import timber.log.Timber
 
 class LocationRepositoryImpl @Inject constructor(
   private val locationDataSource: LocationDataSource,
@@ -32,21 +32,21 @@ class LocationRepositoryImpl @Inject constructor(
   @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
   override suspend fun resolveUserCity(defaultCity: String): String {
     val response = try {
-      Timber.v("Resolving user's location")
+      Napier.v("Resolving user's location")
       val location = locationDataSource.resolveLocation()
-      Timber.v("Resolved user's location: %s", location)
+      Napier.v { "Resolved user's location: $location" }
       geocodingDataSource.findPlace(location)
     } catch (e: GeocodingFailedException) {
-      Timber.e(e, "Failed to determine user city")
+      Napier.e("Failed to determine user city", e)
       emptyList()
     }
 
-    Timber.v("Resolving user's city")
+    Napier.v("Resolving user's city")
     return response
       .map { it.place.address?.countrySecondarySubdivision }
       .firstNotNullOfOrNull { it }.also { city ->
         city?.let {
-          Timber.v("Resolved user's city: %s", it)
+          Napier.v { "Resolved user's city: $it" }
         }
       } ?: defaultCity
   }

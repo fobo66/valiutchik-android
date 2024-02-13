@@ -186,8 +186,7 @@ dependencies {
   implementation(libs.hilt.core)
   ksp(libs.hilt.compiler)
 
-  // timber
-  implementation(libs.timber)
+  implementation(libs.napier)
 
   // leakcanary
   debugImplementation(libs.leakcanary)

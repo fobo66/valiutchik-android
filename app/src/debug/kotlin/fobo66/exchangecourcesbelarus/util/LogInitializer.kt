@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,13 +18,15 @@ package fobo66.exchangecourcesbelarus.util
 
 import android.content.Context
 import androidx.startup.Initializer
-import timber.log.Timber
+import io.github.aakira.napier.Antilog
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 
-class LogInitializer : Initializer<Timber.Tree> {
-  override fun create(context: Context): Timber.Tree {
-    val tree = Timber.DebugTree()
-    Timber.plant(tree)
-    return tree
+class LogInitializer : Initializer<Antilog> {
+  override fun create(context: Context): Antilog {
+    val antilog = DebugAntilog()
+    Napier.base(antilog)
+    return antilog
   }
 
   override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
