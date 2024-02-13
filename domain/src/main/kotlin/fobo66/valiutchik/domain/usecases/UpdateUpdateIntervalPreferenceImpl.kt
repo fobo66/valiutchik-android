@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
+import io.github.aakira.napier.Napier
 import javax.inject.Inject
-import timber.log.Timber
 
 class UpdateUpdateIntervalPreferenceImpl @Inject constructor(
   private val preferenceRepository: PreferenceRepository
 ) : UpdateUpdateIntervalPreference {
   override suspend fun execute(newUpdateInterval: Float) {
-    Timber.v("Saving new update interval: %s", newUpdateInterval)
+    Napier.v { "Saving new update interval: $newUpdateInterval" }
     preferenceRepository.updateUpdateIntervalPreference(newUpdateInterval)
-    Timber.v("Saved!")
+    Napier.v("Saved!")
   }
 }

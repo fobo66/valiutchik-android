@@ -103,6 +103,7 @@ dependencies {
   implementation(libs.tomtom.geocoder)
   implementation(libs.tomtom.geocoder.online)
   implementation(libs.timber)
+  implementation(libs.napier)
 
   coreLibraryDesugaring(libs.desugar)
 

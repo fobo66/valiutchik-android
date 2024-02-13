@@ -25,6 +25,7 @@ import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
+import io.github.aakira.napier.Napier
 import javax.inject.Inject
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -36,7 +37,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -73,7 +73,7 @@ class MainViewModel @Inject constructor(
         currencyRatesInteractor.refreshExchangeRates()
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
-        Timber.e(e, "Error happened when refreshing currency rates")
+        Napier.e("Error happened when refreshing currency rates", e)
         state.emit(MainScreenState.Error)
       }
     }
@@ -85,7 +85,7 @@ class MainViewModel @Inject constructor(
         currencyRatesInteractor.forceRefreshExchangeRates()
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
-        Timber.e(e, "Error happened when force refreshing currency rates")
+        Napier.e("Error happened when force refreshing currency rates", e)
         state.emit(MainScreenState.Error)
       }
     }
@@ -97,7 +97,7 @@ class MainViewModel @Inject constructor(
         currencyRatesInteractor.refreshExchangeRatesForDefaultCity()
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
-        Timber.e(e, "Error happened when refreshing currency rates in default city")
+        Napier.e("Error happened when refreshing currency rates in default city", e)
         state.emit(MainScreenState.Error)
       }
     }
@@ -109,7 +109,7 @@ class MainViewModel @Inject constructor(
         currencyRatesInteractor.forceRefreshExchangeRatesForDefaultCity()
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
-        Timber.e(e, "Error happened when refreshing currency rates in default city")
+        Napier.e("Error happened when refreshing currency rates in default city", e)
         state.emit(MainScreenState.Error)
       }
     }

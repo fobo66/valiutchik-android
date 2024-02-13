@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.auth.Auth
@@ -33,7 +34,6 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
-import timber.log.Timber
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -68,7 +68,7 @@ object NetworkModule {
   @Provides
   fun provideLoggingInterceptor(): Logger = object : Logger {
     override fun log(message: String) {
-      Timber.tag("HTTP").d(message)
+      Napier.d(message, tag = "OkHttp")
     }
   }
 }
