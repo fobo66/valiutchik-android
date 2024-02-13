@@ -18,16 +18,15 @@ package fobo66.exchangecourcesbelarus.util
 
 import android.content.Context
 import androidx.startup.Initializer
+import io.github.aakira.napier.Antilog
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
-import timber.log.Timber
 
-class LogInitializer : Initializer<Timber.Tree> {
-  override fun create(context: Context): Timber.Tree {
-    val tree = Timber.DebugTree()
-    Timber.plant(tree)
-    Napier.base(DebugAntilog())
-    return tree
+class LogInitializer : Initializer<Antilog> {
+  override fun create(context: Context): Antilog {
+    val antilog = DebugAntilog()
+    Napier.base(antilog)
+    return antilog
   }
 
   override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
