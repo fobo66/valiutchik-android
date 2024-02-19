@@ -44,7 +44,7 @@ napier = "2.7.1"
 okhttp = "5.0.0-alpha.12"
 profileinstallerVersion = "1.3.1"
 room = "2.6.1"
-tomtom = "0.46.0"
+tomtom = "0.47.0"
 truth = "1.4.0"
 turbine = "1.0.0"
 
