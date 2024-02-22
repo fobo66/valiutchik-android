@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.35.0-alpha"
-androidGradlePlugin = "8.4.0-alpha10"
+androidGradlePlugin = "8.4.0-alpha11"
 androidxActivity = "1.9.0-alpha03"
 androidxAnnotations = "1.7.1"
 androidxBenchmark = "1.2.3"
