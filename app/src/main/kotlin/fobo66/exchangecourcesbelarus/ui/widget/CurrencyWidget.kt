@@ -79,17 +79,17 @@ fun CurrencyWidgetContent(
       Column(modifier = GlanceModifier.padding(16.dp)) {
         Text(
           text = context.getString(it.currencyNameRes),
-          style = TextStyle(color = GlanceTheme.colors.onSurface)
+          style = TextStyle(color = GlanceTheme.colors.onBackground)
         )
         Text(
           text = it.currencyValue,
           style = TextStyle(
-            color = GlanceTheme.colors.onSurface,
+            color = GlanceTheme.colors.onBackground,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
           )
         )
-        Text(text = it.bank, style = TextStyle(color = GlanceTheme.colors.onSurface))
+        Text(text = it.bank, style = TextStyle(color = GlanceTheme.colors.onBackground))
       }
     }
   }
