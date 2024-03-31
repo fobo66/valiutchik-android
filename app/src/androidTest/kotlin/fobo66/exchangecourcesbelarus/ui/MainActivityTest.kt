@@ -25,7 +25,7 @@ import androidx.test.espresso.accessibility.AccessibilityChecks
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.filters.MediumTest
+import androidx.test.filters.LargeTest
 import androidx.test.rule.GrantPermissionRule
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
@@ -35,7 +35,7 @@ import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onCompose
 import org.junit.Rule
 import org.junit.Test
 
-@MediumTest
+@LargeTest
 class MainActivityTest : TestCase(
   kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
 ) {
