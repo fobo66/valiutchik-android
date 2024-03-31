@@ -25,6 +25,7 @@ plugins {
   alias(libs.plugins.detekt)
   alias(libs.plugins.licenses)
   alias(libs.plugins.junit)
+  alias(libs.plugins.baseline.profile)
 }
 
 android {
@@ -150,8 +151,10 @@ dependencies {
   implementation(libs.androidx.splashscreen)
   implementation(libs.androidx.tracing)
   implementation(libs.androidx.window)
+  implementation(libs.profileinstaller)
 
   coreLibraryDesugaring(libs.desugar)
+  baselineProfile(project(":macrobenchmark"))
 
   // compose
   val composeBom = platform(libs.compose.bom)
