@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package fobo66.exchangecourcesbelarus.ui.licenses
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,7 +34,6 @@ import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.persistentListOf
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OpenSourceLicensesScreen(
   licensesState: LicensesState,
@@ -51,7 +49,7 @@ fun OpenSourceLicensesScreen(
           OpenSourceLicense(
             item = item,
             onItemClick = onItemClick,
-            modifier = Modifier.animateItemPlacement()
+            modifier = Modifier.animateItem()
           )
         }
       }
