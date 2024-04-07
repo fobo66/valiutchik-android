@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
@@ -40,12 +41,12 @@ fun OpenSourceLicensesScreen(
   onItemClick: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  Crossfade(licensesState, label = "licenses") {
-    if (it.licenses.isEmpty()) {
+  Crossfade(licensesState, label = "licenses") { state ->
+    if (state.licenses.isEmpty()) {
       EmptyListIndicator()
     } else {
       LazyColumn(modifier = modifier) {
-        items(licensesState.licenses) { item ->
+        items(licensesState.licenses, key = { it.project }) { item ->
           OpenSourceLicense(
             item = item,
             onItemClick = onItemClick,
@@ -70,7 +71,14 @@ fun OpenSourceLicense(
     supportingContent = {
       Column {
         Text(text = item.licenses)
-        Text(text = "Copyright © ${item.year} ${item.authors}")
+        Text(text = buildAnnotatedString {
+          append("Copyright © ")
+          if (item.year.isNotEmpty()) {
+            append(item.year)
+            append(' ')
+          }
+          append(item.authors)
+        })
       }
     },
     modifier = modifier
