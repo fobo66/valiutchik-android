@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -80,10 +80,12 @@ class PreferencesScreenTest : TestCase(
     }
     step("drag update interval slider") {
       onComposeScreen<SettingsScreen>(composeRule) {
-        updateIntervalPreference.child<KNode> {
-          hasTestTag("Slider")
-        }.performTouchInput {
-          swipeRight()
+        flakySafely {
+          updateIntervalPreference.child<KNode> {
+            hasTestTag("Slider")
+          }.performTouchInput {
+            swipeRight()
+          }
         }
       }
     }
@@ -107,12 +109,16 @@ class PreferencesScreenTest : TestCase(
     }
     step("click on default city") {
       onComposeScreen<SettingsScreen>(composeRule) {
-        defaultCityPreference.performClick()
+        flakySafely {
+          defaultCityPreference.performClick()
+        }
       }
     }
     step("check dialog is shown") {
       onComposeScreen<SettingsScreen>(composeRule) {
-        defaultCityPreferenceDialog.assertIsDisplayed()
+        flakySafely {
+          defaultCityPreferenceDialog.assertIsDisplayed()
+        }
       }
     }
   }

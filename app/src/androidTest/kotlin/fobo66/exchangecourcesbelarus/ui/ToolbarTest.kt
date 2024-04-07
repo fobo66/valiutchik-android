@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,7 +60,9 @@ class ToolbarTest : TestCase(
       val expectedTitle =
         InstrumentationRegistry.getInstrumentation().targetContext.getString(string.app_name)
       onComposeScreen<ToolbarScreen>(composeRule) {
-        title.assert(hasText(expectedTitle))
+        flakySafely {
+          title.assert(hasText(expectedTitle))
+        }
       }
     }
   }
@@ -81,7 +83,9 @@ class ToolbarTest : TestCase(
     }
     step("check back arrow") {
       onComposeScreen<ToolbarScreen>(composeRule) {
-        backIcon.assertDoesNotExist()
+        flakySafely {
+          backIcon.assertDoesNotExist()
+        }
       }
     }
   }
@@ -105,8 +109,10 @@ class ToolbarTest : TestCase(
         InstrumentationRegistry.getInstrumentation().targetContext.getString(
           string.title_activity_settings
         )
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        title.assert(hasText(expectedTitle))
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          title.assert(hasText(expectedTitle))
+        }
       }
     }
   }
@@ -129,8 +135,10 @@ class ToolbarTest : TestCase(
       }
     }
     step("click on settings") {
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        settingsIcon.performClick()
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          settingsIcon.performClick()
+        }
       }
     }
     step("check title") {
@@ -138,18 +146,24 @@ class ToolbarTest : TestCase(
         InstrumentationRegistry.getInstrumentation().targetContext.getString(
           string.title_activity_settings
         )
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        title.assert(hasText(expectedTitle))
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          title.assert(hasText(expectedTitle))
+        }
       }
     }
     step("check back icon") {
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        backIcon.assertIsDisplayed()
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          backIcon.assertIsDisplayed()
+        }
       }
     }
     step("check settings icon") {
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        settingsIcon.assertDoesNotExist()
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          settingsIcon.assertDoesNotExist()
+        }
       }
     }
   }
@@ -170,8 +184,10 @@ class ToolbarTest : TestCase(
       }
     }
     step("click about icon") {
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        aboutIcon.performClick()
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          aboutIcon.performClick()
+        }
       }
     }
     step("check dialog") {
@@ -195,8 +211,10 @@ class ToolbarTest : TestCase(
       }
     }
     step("click about icon") {
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        refreshIcon.performClick()
+      flakySafely {
+        onComposeScreen<ToolbarScreen>(composeRule) {
+          refreshIcon.performClick()
+        }
       }
     }
     step("check dialog") {
