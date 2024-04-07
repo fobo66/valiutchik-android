@@ -115,7 +115,9 @@ class MainActivityTest : TestCase(
   fun showSettings() = run {
     step("go to settings screen") {
       onComposeScreen<MainActivityScreen>(composeTestRule) {
-        settingsIcon.performClick()
+        flakySafely {
+          settingsIcon.performClick()
+        }
       }
     }
 
