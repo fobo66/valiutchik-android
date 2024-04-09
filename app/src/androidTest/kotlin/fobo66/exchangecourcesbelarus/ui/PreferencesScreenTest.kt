@@ -55,8 +55,10 @@ class PreferencesScreenTest : TestCase(
       }
     }
     step("click on licenses") {
-      onComposeScreen<SettingsScreen>(composeRule) {
-        licensesPreference.performClick()
+      flakySafely {
+        onComposeScreen<SettingsScreen>(composeRule) {
+          licensesPreference.performClick()
+        }
       }
     }
     step("check if licenses are shown") {
