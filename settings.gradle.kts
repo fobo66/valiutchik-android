@@ -19,18 +19,38 @@ dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 
   repositories {
-    google()
+    google {
+      content {
+        includeGroupAndSubgroups("androidx")
+        includeGroupAndSubgroups("com.android")
+        includeGroupAndSubgroups("com.google")
+      }
+    }
     mavenCentral()
-    maven {
-      url = uri("https://repositories.tomtom.com/artifactory/maven")
+    exclusiveContent {
+      forRepository {
+        maven("https://repositories.tomtom.com/artifactory/maven") {
+          name = "TomTom"
+        }
+      }
+      filter {
+        includeGroupAndSubgroups("com.tomtom.sdk.search")
+      }
     }
   }
 }
 
 pluginManagement {
   repositories {
+    exclusiveContent {
+      forRepository { google() }
+      filter {
+        includeGroupAndSubgroups("androidx")
+        includeGroupAndSubgroups("com.android")
+        includeGroup("com.google.testing.platform")
+      }
+    }
     gradlePluginPortal()
-    google()
     mavenCentral()
   }
 }
