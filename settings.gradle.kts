@@ -34,7 +34,7 @@ dependencyResolutionManagement {
         }
       }
       filter {
-        includeGroupAndSubgroups("com.tomtom.sdk.search")
+        includeGroupAndSubgroups("com.tomtom")
       }
     }
   }
