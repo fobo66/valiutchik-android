@@ -17,7 +17,7 @@ env:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 21
@@ -34,7 +34,8 @@ jobs:
         run: ./gradlew check
         
   ui-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    needs: check
     steps:
       - uses: actions/checkout@v4.1.4
       - name: set up JDK 21
