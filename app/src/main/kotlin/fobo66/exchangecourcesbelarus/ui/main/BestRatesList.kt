@@ -115,7 +115,7 @@ fun BestRatesGrid(
             onLongClick = onBestRateLongClick,
             modifier = Modifier
               .fillMaxWidth()
-              .animateItemPlacement()
+              .animateItem()
               .lazyListItemPosition(index)
           )
         }
