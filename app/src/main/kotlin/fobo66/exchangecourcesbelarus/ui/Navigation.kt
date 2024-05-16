@@ -35,7 +35,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -167,8 +166,7 @@ private fun findBankOnMap(
   val mapIntent = mainViewModel.findBankOnMap(bankName)
 
   if (mapIntent != null) {
-    startActivity(
-      context,
+    context.startActivity(
       Intent.createChooser(mapIntent, context.getString(string.open_map)),
       ActivityOptionsCompat.makeBasic().toBundle()
     )
