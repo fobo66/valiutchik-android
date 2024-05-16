@@ -16,8 +16,8 @@ env:
   
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
+  check:
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v4
@@ -31,19 +31,11 @@ jobs:
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Detekt
-        run: ./gradlew detekt
-      - name: Upload build reports
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: detekt
-          path: |
-            app/build/reports/detekt/detekt.html
-            data/build/reports/detekt/detekt.html
-            domain/build/reports/detekt/detekt.html
+      - name: Check
+        run: ./gradlew check
+        
   ui-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v4.1.4
@@ -79,20 +71,3 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           api-level: 34
-  unit-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4.1.4
-      - name: set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3.3.2
-        with:
-          validate-wrappers: true
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Run tests
-        run: ./gradlew testDebugUnitTest
