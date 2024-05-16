@@ -57,7 +57,6 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
         )
       }
 
-
       Text(
         text = descriptionAnnotatedText
       )
