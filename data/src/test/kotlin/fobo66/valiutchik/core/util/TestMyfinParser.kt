@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_BUY
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_SELL
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_BUY
 import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_SELL
+import fobo66.valiutchik.api.toCurrency
 import fobo66.valiutchik.core.TAG_NAME_BANKNAME
 import fobo66.valiutchik.core.TAG_NAME_EUR_BUY
 import fobo66.valiutchik.core.TAG_NAME_EUR_SELL
@@ -79,22 +80,19 @@ class TestMyfinParser : CurrencyRatesParser {
   @Throws(IOException::class)
   private fun readCurrency(nodes: NodeList): Currency {
     var fieldName: String
-    var currencyBuilder: fobo66.valiutchik.api.CurrencyBuilder =
-      fobo66.valiutchik.api.CurrencyBuilderImpl()
+    val currencyMap = mutableMapOf<String, String>()
     for (index in 0 until nodes.length) {
       val node = nodes.item(index)
       fieldName = node?.nodeName.orEmpty()
       if (isTagNeeded(fieldName)) {
-        currencyBuilder = currencyBuilder.with(fieldName, node?.textContent.orEmpty())
+        currencyMap[fieldName] = node?.textContent.orEmpty()
       }
     }
 
-    return currencyBuilder.build()
+    return currencyMap.toCurrency()
   }
 
-  private fun isTagNeeded(tagName: String): Boolean {
-    return neededTagNames.contains(tagName)
-  }
+  private fun isTagNeeded(tagName: String): Boolean = neededTagNames.contains(tagName)
 
   companion object {
     const val ENTRY_TAG_NAME = "bank"

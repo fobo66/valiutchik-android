@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -70,21 +70,19 @@ class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
   private fun readCurrency(parser: XmlPullParser): Currency {
     parser.require(XmlPullParser.START_TAG, null, ENTRY_TAG_NAME)
     var fieldName: String
-    var currencyBuilder: CurrencyBuilder = CurrencyBuilderImpl()
+    val currencyMap = mutableMapOf<String, String>()
     parser.read {
       fieldName = parser.name
       if (isTagNeeded(fieldName)) {
-        currencyBuilder = currencyBuilder.with(fieldName, readTag(parser, fieldName))
+        currencyMap[fieldName] = readTag(parser, fieldName)
       } else {
         parser.skip()
       }
     }
-    return currencyBuilder.build()
+    return currencyMap.toCurrency()
   }
 
-  private fun isTagNeeded(tagName: String): Boolean {
-    return neededTagNames.contains(tagName)
-  }
+  private fun isTagNeeded(tagName: String): Boolean = neededTagNames.contains(tagName)
 
   @Throws(IOException::class, XmlPullParserException::class)
   private fun readTag(parser: XmlPullParser, tagName: String): String {

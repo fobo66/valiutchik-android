@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,26 +21,25 @@ import org.junit.jupiter.api.Test
 
 class CurrencyBuilderTest {
 
-  private val currencyBuilder: CurrencyBuilder = CurrencyBuilderImpl()
-
   @Test
   fun `for correct field name value is present`() {
-    val currency = currencyBuilder.with("bankname", "test").build()
+    val currency = mutableMapOf("bankname" to "test").toCurrency()
     assertEquals("test", currency.bankname)
   }
 
   @Test
   fun `for incorrect field name value is empty`() {
-    val currency = currencyBuilder.with("test", "test").build()
+    val currency = mutableMapOf("test" to "test").toCurrency()
     assertEquals("", currency.bankname)
   }
 
   @Test
   fun `value is rewritten if specified multiple times`() {
-    val currency = currencyBuilder
-      .with("bankname", "test")
-      .with("bankname", "test2")
-      .build()
+    val currency = mutableMapOf(
+      "bankname" to "test",
+      "bankname" to "test2"
+    )
+      .toCurrency()
     assertEquals("test2", currency.bankname)
   }
 }
