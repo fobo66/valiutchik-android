@@ -6,8 +6,11 @@
 /.idea/workspace.xml
 /.idea/gradle.xml
 /.idea/misc.xml
+/.idea/other.xml
 /.idea/assetWizardSettings.xml
+/.idea/appInsightsSettings.xml
 /.idea/deploymentTargetDropDown.xml
+/.idea/deploymentTargetSelector.xml
 /.idea/androidTestResultsUserPreferences.xml
 .idea/shelf/
 .DS_Store
@@ -18,3 +21,4 @@ build
 /keystore.properties
 .env
 *.log
+.kotlin/sessions
