@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   alias(libs.plugins.android.app)
   kotlin("android")
+  kotlin("plugin.compose")
   alias(libs.plugins.ksp)
   alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
@@ -98,10 +99,6 @@ android {
   testOptions {
     animationsDisabled = true
     unitTests.isIncludeAndroidResources = true
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = "1.5.14"
   }
 
   namespace = "fobo66.exchangecourcesbelarus"
