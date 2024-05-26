@@ -20,10 +20,10 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
@@ -48,8 +48,8 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
         val linkEndIndex = linkIndex + LINK_TEXT.length
         append(description)
         addLink(
-          TextDefaults.Url(
-            url = DESCRIPTION_URL, linkStyle = SpanStyle(
+          LinkAnnotation.Url(
+            url = DESCRIPTION_URL, style = SpanStyle(
               color = MaterialTheme.colorScheme.primary,
               textDecoration = TextDecoration.Underline
             )
