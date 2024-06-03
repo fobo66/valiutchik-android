@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,9 +50,11 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
         append(description)
         addLink(
           LinkAnnotation.Url(
-            url = DESCRIPTION_URL, style = SpanStyle(
-              color = MaterialTheme.colorScheme.primary,
-              textDecoration = TextDecoration.Underline
+            url = DESCRIPTION_URL, styles = TextLinkStyles(
+              style = SpanStyle(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline
+              )
             )
           ), linkIndex, linkEndIndex
         )
