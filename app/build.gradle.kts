@@ -109,17 +109,21 @@ detekt {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-  kotlinOptions {
+  compilerOptions {
     if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
-      freeCompilerArgs = freeCompilerArgs + listOf(
-        "-P",
-        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-          project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
+      freeCompilerArgs.addAll(
+        listOf(
+          "-P",
+          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+              project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
+        )
       )
-      freeCompilerArgs = freeCompilerArgs + listOf(
-        "-P",
-        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-            project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
+      freeCompilerArgs.addAll(
+        listOf(
+          "-P",
+          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+              project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
+        )
       )
     }
   }
