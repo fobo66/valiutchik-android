@@ -72,10 +72,8 @@ android {
     }
   }
   compileOptions {
-
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
-    isCoreLibraryDesugaringEnabled = true
   }
 
   kotlinOptions {
@@ -85,7 +83,6 @@ android {
   }
 
   buildFeatures {
-    buildConfig = false
     compose = true
   }
 
@@ -154,7 +151,6 @@ dependencies {
   implementation(libs.androidx.window)
   implementation(libs.profileinstaller)
 
-  coreLibraryDesugaring(libs.desugar)
   baselineProfile(project(":macrobenchmark"))
 
   // compose

@@ -63,7 +63,6 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
-    isCoreLibraryDesugaringEnabled = true
   }
   kotlinOptions {
     jvmTarget = "17"
@@ -103,8 +102,6 @@ dependencies {
   implementation(libs.tomtom.geocoder)
   implementation(libs.tomtom.geocoder.online)
   implementation(libs.napier)
-
-  coreLibraryDesugaring(libs.desugar)
 
   detektPlugins(libs.detekt.rules.formatting)
   detektPlugins(libs.detekt.rules.compose)

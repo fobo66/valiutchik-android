@@ -60,7 +60,6 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
-    isCoreLibraryDesugaringEnabled = true
   }
   kotlinOptions {
     jvmTarget = "17"
@@ -83,8 +82,6 @@ dependencies {
   debugImplementation(libs.ktor.logging)
   implementation(libs.ktor.client)
   implementation(libs.ktor.auth)
-
-  coreLibraryDesugaring(libs.desugar)
 
   implementation(libs.napier)
 
