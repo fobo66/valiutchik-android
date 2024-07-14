@@ -42,11 +42,11 @@ android {
     }
   }
 
-  compileSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+  compileSdk = 35
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+    targetSdk = 35
     versionCode = 21
     versionName = "1.13.2"
     multiDexEnabled = true

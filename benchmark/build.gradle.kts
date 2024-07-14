@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+  compileSdk = 35
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17

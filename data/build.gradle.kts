@@ -28,7 +28,7 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+  compileSdk = 35
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O
