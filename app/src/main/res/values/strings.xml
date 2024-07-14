@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2023 Andrey Mukamolov
+  ~    Copyright 2024 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
   <string name="no_rates_indicator">No rates available yet</string>
   <string name="bank_name_indicator">Bank name</string>
   <string name="see_license_click_label">See %1$s license</string>
+  <string name="topbar_description_back">Back</string>
   <string-array name="pref_cities_list">
     <item>Minsk</item>
     <item>Brest</item>

@@ -153,7 +153,10 @@ fun ValiutchikTopBar(
     navigationIcon = {
       AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
         IconButton(onClick = onBackClick, modifier = Modifier.testTag("Back")) {
-          Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+          Icon(
+            Icons.AutoMirrored.Default.ArrowBack,
+            contentDescription = stringResource(string.topbar_description_back)
+          )
         }
       }
       AnimatedVisibility(visible = isRefreshing) {
