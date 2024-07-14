@@ -50,8 +50,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {},
-          onRefreshClicked = {},
+          onSettingsClick = {},
+          onRefreshClick = {},
           isRefreshing = false
         )
       }
@@ -75,8 +75,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {},
-          onRefreshClicked = {},
+          onSettingsClick = {},
+          onRefreshClick = {},
           isRefreshing = false
         )
       }
@@ -98,8 +98,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_PREFERENCES,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {},
-          onRefreshClicked = {},
+          onSettingsClick = {},
+          onRefreshClick = {},
           isRefreshing = false
         )
       }
@@ -128,8 +128,8 @@ class ToolbarTest : TestCase(
           currentRoute = route,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = { route = DESTINATION_PREFERENCES },
-          onRefreshClicked = {},
+          onSettingsClick = { route = DESTINATION_PREFERENCES },
+          onRefreshClick = {},
           isRefreshing = false
         )
       }
@@ -177,8 +177,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = { isAboutDialogShown = true },
-          onSettingsClicked = {},
-          onRefreshClicked = {},
+          onSettingsClick = {},
+          onRefreshClick = {},
           isRefreshing = false
         )
       }
@@ -204,8 +204,8 @@ class ToolbarTest : TestCase(
           currentRoute = DESTINATION_MAIN,
           onBackClick = {},
           onAboutClick = {},
-          onSettingsClicked = {},
-          onRefreshClicked = { isRefreshClicked = true },
+          onSettingsClick = {},
+          onRefreshClick = { isRefreshClicked = true },
           isRefreshing = false
         )
       }

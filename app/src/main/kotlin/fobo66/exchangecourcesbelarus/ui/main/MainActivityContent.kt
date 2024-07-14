@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -95,8 +95,8 @@ fun MainActivityContent(
         currentRoute = currentDestination?.destination?.route,
         onBackClick = { navController.popBackStack() },
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClicked = { navController.navigate(DESTINATION_PREFERENCES) },
-        onRefreshClicked = { refreshRates(locationPermissionState, mainViewModel) },
+        onSettingsClick = { navController.navigate(DESTINATION_PREFERENCES) },
+        onRefreshClick = { refreshRates(locationPermissionState, mainViewModel) },
         isRefreshing = state is Loading
       )
     },
@@ -142,8 +142,8 @@ fun ValiutchikTopBar(
   currentRoute: String?,
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
-  onSettingsClicked: () -> Unit,
-  onRefreshClicked: () -> Unit,
+  onSettingsClick: () -> Unit,
+  onRefreshClick: () -> Unit,
   isRefreshing: Boolean,
   modifier: Modifier = Modifier
 ) {
@@ -168,7 +168,7 @@ fun ValiutchikTopBar(
     },
     actions = {
       AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
-        IconButton(onClick = onRefreshClicked, modifier = Modifier.testTag("Refresh")) {
+        IconButton(onClick = onRefreshClick, modifier = Modifier.testTag("Refresh")) {
           Icon(
             Icons.Default.Refresh,
             contentDescription = stringResource(
@@ -186,7 +186,7 @@ fun ValiutchikTopBar(
         )
       }
       AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
-        IconButton(onClick = onSettingsClicked, modifier = Modifier.testTag("Settings")) {
+        IconButton(onClick = onSettingsClick, modifier = Modifier.testTag("Settings")) {
           Icon(
             Icons.Default.Settings,
             contentDescription = stringResource(
