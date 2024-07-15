@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
@@ -58,15 +56,6 @@ import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {
-  @Binds
-  fun provideCurrencyRatesParser(
-    currencyRatesParserImpl: fobo66.valiutchik.api.CurrencyRatesParserImpl
-  ): fobo66.valiutchik.api.CurrencyRatesParser
-
-  @Binds
-  fun provideCurrencyRatesDataSource(
-    currencyRatesDataSourceImpl: CurrencyRatesDataSourceImpl
-  ): CurrencyRatesDataSource
 
   @Binds
   fun provideCurrencyRatesTimestampRepository(

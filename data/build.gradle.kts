@@ -88,7 +88,7 @@ detekt {
 }
 
 dependencies {
-  implementation(project(":api"))
+  api(project(":api"))
   implementation(libs.androidx.annotation)
   implementation(libs.hilt.core)
   implementation(libs.kotlinx.serialization)
