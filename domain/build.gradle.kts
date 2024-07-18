@@ -54,6 +54,10 @@ android {
   }
 }
 
+hilt {
+  enableAggregatingTask = true
+}
+
 detekt {
   autoCorrect = true
 }

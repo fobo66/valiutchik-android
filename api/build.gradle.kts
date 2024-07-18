@@ -70,6 +70,9 @@ detekt {
   autoCorrect = true
 }
 
+hilt {
+  enableAggregatingTask = true
+}
 
 dependencies {
   implementation(libs.kotlinx.coroutines.core)

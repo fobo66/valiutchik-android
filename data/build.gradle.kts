@@ -83,6 +83,10 @@ ksp {
   arg("room.generateKotlin", "true")
 }
 
+hilt {
+  enableAggregatingTask = true
+}
+
 detekt {
   autoCorrect = true
 }

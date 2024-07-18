@@ -126,6 +126,10 @@ tasks.withType<KotlinCompile>().configureEach {
   }
 }
 
+hilt {
+  enableAggregatingTask = true
+}
+
 licenseReport {
   generateCsvReport = false
   generateHtmlReport = false
