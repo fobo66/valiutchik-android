@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
@@ -46,6 +47,7 @@ import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
+import org.koin.dsl.module
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -115,4 +117,60 @@ interface DomainModule {
   fun provideLoadOpenSourceLicenses(
     loadOpenSourceLicensesImpl: LoadOpenSourceLicensesImpl
   ): LoadOpenSourceLicenses
+}
+
+val domainModule = module {
+  includes(repositoriesModule)
+
+  single<CopyCurrencyRateToClipboard> {
+    CopyCurrencyRateToClipboardImpl(get())
+  }
+
+  single<CurrencyRatesInteractor> {
+    CurrencyRatesInteractorImpl(get(), get(), get(), get(), get())
+  }
+
+  single<FindBankOnMap> {
+    FindBankOnMapImpl(get())
+  }
+
+  single<ForceRefreshExchangeRates> {
+    ForceRefreshExchangeRatesImpl(get(), get(), get(), get())
+  }
+
+  single<ForceRefreshExchangeRatesForDefaultCity> {
+    ForceRefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
+  }
+
+  single<LoadDefaultCityPreference> {
+    LoadDefaultCityPreferenceImpl(get())
+  }
+
+  single<LoadExchangeRates> {
+    LoadExchangeRatesImpl(get(), get())
+  }
+
+  single<LoadOpenSourceLicenses> {
+    LoadOpenSourceLicensesImpl(get())
+  }
+
+  single<LoadUpdateIntervalPreference> {
+    LoadUpdateIntervalPreferenceImpl(get())
+  }
+
+  single<RefreshExchangeRates> {
+    RefreshExchangeRatesImpl(get(), get(), get(), get())
+  }
+
+  single<RefreshExchangeRatesForDefaultCity> {
+    RefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
+  }
+
+  single<UpdateDefaultCityPreference> {
+    UpdateDefaultCityPreferenceImpl(get())
+  }
+
+  single<UpdateUpdateIntervalPreference> {
+    UpdateUpdateIntervalPreferenceImpl(get())
+  }
 }

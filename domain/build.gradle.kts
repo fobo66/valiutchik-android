@@ -67,6 +67,8 @@ dependencies {
   implementation(libs.androidx.annotation)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.datetime)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.core)
   implementation(libs.hilt.core)
   ksp(libs.hilt.compiler)
   implementation(libs.napier)
