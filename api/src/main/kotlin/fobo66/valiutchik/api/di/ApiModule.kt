@@ -24,6 +24,9 @@ import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.api.CurrencyRatesParser
 import fobo66.valiutchik.api.CurrencyRatesParserImpl
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,4 +40,17 @@ interface ApiModule {
   fun provideCurrencyRatesDataSource(
     currencyRatesDataSourceImpl: CurrencyRatesDataSourceImpl
   ): CurrencyRatesDataSource
+}
+
+val apiModule = module {
+  includes(credentialsModule, networkModule)
+  singleOf<CurrencyRatesParser>(::CurrencyRatesParserImpl)
+  single<CurrencyRatesDataSource> {
+    CurrencyRatesDataSourceImpl(
+      get(),
+      get(),
+      get(qualifier(API_USERNAME)),
+      get(qualifier(API_PASSWORD))
+    )
+  }
 }

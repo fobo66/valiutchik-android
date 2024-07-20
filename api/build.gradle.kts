@@ -78,6 +78,8 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
 
   implementation(libs.hilt.core)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.android)
   ksp(libs.hilt.compiler)
 
   implementation(platform(libs.okhttp.bom))

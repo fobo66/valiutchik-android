@@ -34,6 +34,9 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -69,6 +72,37 @@ object NetworkModule {
   fun provideLoggingInterceptor(): Logger = object : Logger {
     override fun log(message: String) {
       Napier.d(message, tag = "OkHttp")
+    }
+  }
+}
+
+val networkModule = module {
+  single<Logger> {
+    object : Logger {
+      override fun log(message: String) {
+        Napier.d(message, tag = "Ktor")
+      }
+    }
+  }
+  single {
+    HttpClient(OkHttp) {
+      install(Auth) {
+        basic {
+          credentials {
+            BasicAuthCredentials(get(qualifier(API_USERNAME)), get(qualifier(API_PASSWORD)))
+          }
+        }
+      }
+      install(HttpCache) {
+        publicStorage(FileStorage(androidContext().cacheDir))
+      }
+      install(Logging) {
+        logger = get()
+        level = LogLevel.ALL
+        sanitizeHeader { header -> header == HttpHeaders.Authorization }
+      }
+
+      expectSuccess = true
     }
   }
 }

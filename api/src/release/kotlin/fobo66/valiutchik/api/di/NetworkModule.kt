@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,6 +29,9 @@ import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
 import io.ktor.client.plugins.auth.providers.basic
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -52,5 +55,24 @@ object NetworkModule {
     }
 
     expectSuccess = true
+  }
+}
+
+val networkModule = module {
+  single {
+    HttpClient(OkHttp) {
+      install(Auth) {
+        basic {
+          credentials {
+            BasicAuthCredentials(get(qualifier(API_USERNAME)), get(qualifier(API_PASSWORD)))
+          }
+        }
+      }
+      install(HttpCache) {
+        publicStorage(FileStorage(androidContext().cacheDir))
+      }
+
+      expectSuccess = true
+    }
   }
 }
