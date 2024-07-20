@@ -89,7 +89,7 @@ val networkModule = module {
       install(Auth) {
         basic {
           credentials {
-            BasicAuthCredentials(get(qualifier(API_USERNAME)), get(qualifier(API_PASSWORD)))
+            BasicAuthCredentials(get(qualifier(Api.USERNAME)), get(qualifier(Api.PASSWORD)))
           }
         }
       }

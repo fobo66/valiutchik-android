@@ -30,6 +30,9 @@ import org.koin.dsl.module
 internal const val API_USERNAME = "ApiUsername"
 internal const val API_PASSWORD = "ApiPassword"
 
+internal enum class Api {
+  USERNAME, PASSWORD
+}
 @Module
 @InstallIn(SingletonComponent::class)
 object CredentialsModule {
@@ -45,10 +48,10 @@ object CredentialsModule {
 }
 
 val credentialsModule = module {
-  single(qualifier(API_USERNAME)) {
+  single(qualifier(Api.USERNAME)) {
     androidContext().getString(R.string.apiUsername)
   }
-  single(qualifier(API_PASSWORD)) {
+  single(qualifier(Api.PASSWORD)) {
     androidContext().getString(R.string.apiPassword)
   }
 }

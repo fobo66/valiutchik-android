@@ -49,8 +49,8 @@ val apiModule = module {
     CurrencyRatesDataSourceImpl(
       get(),
       get(),
-      get(qualifier(API_USERNAME)),
-      get(qualifier(API_PASSWORD))
+      get(qualifier(Api.USERNAME)),
+      get(qualifier(Api.PASSWORD))
     )
   }
 }
