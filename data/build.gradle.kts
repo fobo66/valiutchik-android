@@ -95,6 +95,8 @@ dependencies {
   api(project(":api"))
   implementation(libs.androidx.annotation)
   implementation(libs.hilt.core)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.android)
   implementation(libs.kotlinx.serialization)
   ksp(libs.hilt.compiler)
   implementation(libs.kotlinx.coroutines.android)

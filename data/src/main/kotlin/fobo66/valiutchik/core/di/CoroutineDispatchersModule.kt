@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,6 +24,12 @@ import javax.inject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
+
+internal enum class Dispatcher {
+  IO
+}
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -45,3 +51,7 @@ annotation class Io
 @Qualifier
 @Retention(RUNTIME)
 annotation class Main
+
+val coroutineDispatchersModule = module {
+  single(qualifier(Dispatcher.IO)) { Dispatchers.IO }
+}

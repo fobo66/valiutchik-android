@@ -31,6 +31,8 @@ import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.JsonDataSource
+import fobo66.valiutchik.core.model.datasource.JsonDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -52,6 +54,9 @@ import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -128,6 +133,9 @@ interface DataModule {
   ): ClipboardDataSource
 
   @Binds
+  fun provideJsonDataSource(jsonDataSourceImpl: JsonDataSourceImpl): JsonDataSource
+
+  @Binds
   fun provideClipboardRepository(
     clipboardRepositoryImpl: ClipboardRepositoryImpl
   ): ClipboardRepository
@@ -136,4 +144,80 @@ interface DataModule {
   fun provideLicensesRepository(
     licensesRepositoryImpl: LicensesRepositoryImpl
   ): LicensesRepository
+}
+
+val dataSourcesModule = module {
+  includes(systemModule, coroutineDispatchersModule, thirdPartyModule)
+
+  single<AssetsDataSource> {
+    AssetsDataSourceImpl(get())
+  }
+
+  single<BestCourseDataSource> {
+    BestCourseDataSourceImpl()
+  }
+
+  single<ClipboardDataSource> {
+    ClipboardDataSourceImpl(androidContext())
+  }
+
+  single<GeocodingDataSource> {
+    GeocodingDataSourceImpl(get())
+  }
+
+  single<IntentDataSource> {
+    IntentDataSourceImpl(androidContext())
+  }
+
+  single<JsonDataSource> {
+    JsonDataSourceImpl(get())
+  }
+
+  single<LocationDataSource> {
+    LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.IO)))
+  }
+
+  single<PersistenceDataSource> {
+    PersistenceDataSourceImpl(get())
+  }
+
+  single<PreferencesDataSource> {
+    DataStorePreferencesDataSourceImpl(get())
+  }
+
+  single<UriDataSource> {
+    UriDataSourceImpl()
+  }
+}
+
+val repositoriesModule = module {
+  includes(dataSourcesModule)
+
+  single<ClipboardRepository> {
+    ClipboardRepositoryImpl(get())
+  }
+
+  single<CurrencyRateRepository> {
+    CurrencyRateRepositoryImpl(get(), get(), get(), get(), get())
+  }
+
+  single<CurrencyRatesTimestampRepository> {
+    CurrencyRatesTimestampRepositoryImpl(get())
+  }
+
+  single<LicensesRepository> {
+    LicensesRepositoryImpl(get(), get())
+  }
+
+  single<LocationRepository> {
+    LocationRepositoryImpl(get(), get())
+  }
+
+  single<MapRepository> {
+    MapRepositoryImpl(get(), get())
+  }
+
+  single<PreferenceRepository> {
+    PreferenceRepositoryImpl(get())
+  }
 }

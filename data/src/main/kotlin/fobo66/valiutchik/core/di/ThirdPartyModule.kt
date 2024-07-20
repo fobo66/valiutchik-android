@@ -32,6 +32,9 @@ import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import javax.inject.Singleton
 import kotlinx.serialization.json.Json
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -64,4 +67,29 @@ object ThirdPartyModule {
     PreferenceDataStoreFactory.create {
       context.preferencesDataStoreFile("valiutchik-prefs")
     }
+}
+
+val thirdPartyModule = module {
+  includes(secretsModule)
+  single<ReverseGeocoder> {
+    OnlineReverseGeocoder.create(androidContext(), get(qualifier(Secret.GEOCODER_ACCESS_TOKEN)))
+  }
+
+  single<Json> {
+    Json
+  }
+
+  single<CurrencyRatesDatabase> {
+    Room.databaseBuilder(
+      androidContext(),
+      CurrencyRatesDatabase::class.java,
+      "currency-rates"
+    ).build()
+  }
+
+  single<DataStore<Preferences>> {
+    PreferenceDataStoreFactory.create {
+      androidContext().preferencesDataStoreFile("valiutchik-prefs")
+    }
+  }
 }
