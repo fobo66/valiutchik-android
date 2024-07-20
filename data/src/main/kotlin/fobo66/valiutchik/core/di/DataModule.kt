@@ -20,6 +20,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
@@ -147,7 +148,7 @@ interface DataModule {
 }
 
 val dataSourcesModule = module {
-  includes(systemModule, coroutineDispatchersModule, thirdPartyModule)
+  includes(apiModule, systemModule, coroutineDispatchersModule, thirdPartyModule)
 
   single<AssetsDataSource> {
     AssetsDataSourceImpl(get())
