@@ -114,7 +114,10 @@ dependencies {
 
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
+  testImplementation(platform(libs.koin.bom))
+  testImplementation(libs.koin.test)
   testImplementation(libs.room.testing)
+  testImplementation(libs.ktor.client)
   testImplementation(libs.kotlinx.coroutines.test)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)

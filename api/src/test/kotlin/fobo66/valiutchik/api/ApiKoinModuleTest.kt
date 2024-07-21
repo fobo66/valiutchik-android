@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
-class KoinModuleTest {
+class ApiKoinModuleTest {
 
   @OptIn(KoinExperimentalAPI::class)
   @Test
