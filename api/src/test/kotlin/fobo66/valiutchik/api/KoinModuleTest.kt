@@ -41,12 +41,7 @@ class KoinModuleTest {
   @OptIn(KoinExperimentalAPI::class)
   @Test
   fun `check credentials module`() {
-    credentialsModule.verify(
-      extraTypes = listOf(
-        HttpClientEngine::class,
-        HttpClientConfig::class
-      )
-    )
+    credentialsModule.verify()
   }
 
   @OptIn(KoinExperimentalAPI::class)
