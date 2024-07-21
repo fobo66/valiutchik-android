@@ -84,7 +84,7 @@ val networkModule = module {
       }
     }
   }
-  single {
+  single<HttpClient> {
     HttpClient(OkHttp) {
       install(Auth) {
         basic {

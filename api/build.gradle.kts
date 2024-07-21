@@ -94,6 +94,8 @@ dependencies {
   detektPlugins(libs.detekt.rules.compose)
 
   testImplementation(libs.junit.api)
+  testImplementation(platform(libs.koin.bom))
+  testImplementation(libs.koin.test)
   testRuntimeOnly(libs.junit.engine)
 
   androidTestImplementation(libs.androidx.test.rules)
