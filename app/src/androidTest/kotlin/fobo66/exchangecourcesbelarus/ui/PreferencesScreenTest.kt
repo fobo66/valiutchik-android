@@ -16,112 +16,85 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onChildren
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
 import androidx.test.filters.MediumTest
-import com.kaspersky.components.composesupport.config.withComposeSupport
-import com.kaspersky.kaspresso.kaspresso.Kaspresso
-import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
-import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
-import io.github.kakaocup.compose.node.element.KNode
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
 @MediumTest
-class PreferencesScreenTest : TestCase(
-  kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
-) {
+class PreferencesScreenTest {
 
   @get:Rule
   val composeRule = createComposeRule()
 
   @Test
-  fun showLicenses() = run {
+  fun showLicenses() {
     var showLicense = false
-    step("setup screen") {
-      composeRule.setContent {
-        PreferenceScreenContent(
-          defaultCityValue = "Minsk",
-          updateIntervalValue = 1f,
-          onDefaultCityChange = {},
-          onUpdateIntervalChange = {},
-          onOpenSourceLicensesClick = {
-            showLicense = true
-          }
-        )
-      }
-    }
-    step("click on licenses") {
-      flakySafely {
-        onComposeScreen<SettingsScreen>(composeRule) {
-          licensesPreference.performClick()
+    composeRule.setContent {
+      PreferenceScreenContent(
+        defaultCityValue = "Minsk",
+        updateIntervalValue = 1f,
+        onDefaultCityChange = {},
+        onUpdateIntervalChange = {},
+        onOpenSourceLicensesClick = {
+          showLicense = true
         }
-      }
+      )
     }
-    step("check if licenses are shown") {
-      assertTrue(showLicense)
-    }
+
+    composeRule.onNodeWithTag("Licenses").performClick()
+    assertTrue(showLicense)
   }
 
   @Test
-  fun updateIntervalValueChanges() = run {
+  fun updateIntervalValueChanges() {
     var updateInterval = 1f
-    step("setup screen") {
-      composeRule.setContent {
-        PreferenceScreenContent(
-          defaultCityValue = "Minsk",
-          updateIntervalValue = updateInterval,
-          onDefaultCityChange = {},
-          onUpdateIntervalChange = { updateInterval = it },
-          onOpenSourceLicensesClick = {}
-        )
+
+    composeRule.setContent {
+      PreferenceScreenContent(
+        defaultCityValue = "Minsk",
+        updateIntervalValue = updateInterval,
+        onDefaultCityChange = {},
+        onUpdateIntervalChange = { updateInterval = it },
+        onOpenSourceLicensesClick = {}
+      )
+    }
+
+    composeRule.onNodeWithTag("Update interval")
+      .onChildren()
+      .filterToOne(hasTestTag("Slider"))
+      .performTouchInput {
+        swipeRight()
       }
-    }
-    step("drag update interval slider") {
-      onComposeScreen<SettingsScreen>(composeRule) {
-        flakySafely {
-          updateIntervalPreference.child<KNode> {
-            hasTestTag("Slider")
-          }.performTouchInput {
-            swipeRight()
-          }
-        }
-      }
-    }
-    step("check value changed") {
-      assertNotEquals(1f, updateInterval)
-    }
+    assertNotEquals(1f, updateInterval)
   }
 
   @Test
-  fun defaultCityDialogShown() = run {
-    step("setup screen") {
-      composeRule.setContent {
-        PreferenceScreenContent(
-          defaultCityValue = "Minsk",
-          updateIntervalValue = 1f,
-          onDefaultCityChange = {},
-          onUpdateIntervalChange = {},
-          onOpenSourceLicensesClick = {}
-        )
-      }
+  fun defaultCityDialogShown() {
+
+    composeRule.setContent {
+      PreferenceScreenContent(
+        defaultCityValue = "Minsk",
+        updateIntervalValue = 1f,
+        onDefaultCityChange = {},
+        onUpdateIntervalChange = {},
+        onOpenSourceLicensesClick = {}
+      )
     }
-    step("click on default city") {
-      onComposeScreen<SettingsScreen>(composeRule) {
-        flakySafely {
-          defaultCityPreference.performClick()
-        }
-      }
-    }
-    step("check dialog is shown") {
-      onComposeScreen<SettingsScreen>(composeRule) {
-        flakySafely {
-          defaultCityPreferenceDialog.assertIsDisplayed()
-        }
-      }
-    }
+
+    composeRule.onNodeWithTag("Default city").performClick()
+    composeRule.onNode(isDialog()).assertIsDisplayed()
   }
 }

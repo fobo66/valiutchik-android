@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,17 +24,5 @@ class SettingsScreen(semanticsProvider: SemanticsNodeInteractionsProvider) :
   ComposeScreen<SettingsScreen>(semanticsProvider) {
   val settings: KNode = child {
     hasTestTag("Settings")
-  }
-  val defaultCityPreference: KNode = child {
-    hasTestTag("Default city")
-  }
-  val updateIntervalPreference: KNode = child {
-    hasTestTag("Update interval")
-  }
-  val licensesPreference: KNode = child {
-    hasTestTag("Licenses")
-  }
-  val defaultCityPreferenceDialog: KNode = child {
-    isDialog()
   }
 }
