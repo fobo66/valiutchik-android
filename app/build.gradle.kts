@@ -15,7 +15,6 @@
  */
 
 import com.android.sdklib.AndroidVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.android.app)
@@ -105,25 +104,10 @@ detekt {
   autoCorrect = true
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-  compilerOptions {
-    if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
-      freeCompilerArgs.addAll(
-        listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-              project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
-        )
-      )
-      freeCompilerArgs.addAll(
-        listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-              project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
-        )
-      )
-    }
-  }
+composeCompiler {
+  enableStrongSkippingMode = true
+  metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
+  reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
 
 hilt {
