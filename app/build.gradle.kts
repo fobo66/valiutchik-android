@@ -15,7 +15,6 @@
  */
 
 import com.android.sdklib.AndroidVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.android.app)
@@ -105,25 +104,10 @@ detekt {
   autoCorrect = true
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-  compilerOptions {
-    if (project.findProperty("valiutchik.enableComposeCompilerReports") == "true") {
-      freeCompilerArgs.addAll(
-        listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-              project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
-        )
-      )
-      freeCompilerArgs.addAll(
-        listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-              project.layout.buildDirectory.dir("compose_metrics").get().asFile.absolutePath
-        )
-      )
-    }
-  }
+composeCompiler {
+  enableStrongSkippingMode = true
+  metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
+  reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
 
 hilt {
@@ -207,8 +191,6 @@ dependencies {
   testImplementation(libs.truth)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
-  androidTestImplementation(libs.kaspresso)
-  androidTestImplementation(libs.kaspresso.compose)
   androidTestImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.test.rules)
   androidTestImplementation(libs.androidx.test.espresso.core)

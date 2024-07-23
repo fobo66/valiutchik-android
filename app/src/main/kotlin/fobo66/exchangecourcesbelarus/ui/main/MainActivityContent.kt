@@ -59,6 +59,8 @@ import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.MainViewModel
+import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
+import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
 import fobo66.exchangecourcesbelarus.ui.licensesScreen
@@ -105,7 +107,7 @@ fun MainActivityContent(
         hostState = snackbarHostState,
         modifier = Modifier.navigationBarsPadding(),
         snackbar = {
-          Snackbar(snackbarData = it, modifier = Modifier.testTag("Snackbar"))
+          Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
         }
       )
     },
@@ -152,7 +154,7 @@ fun ValiutchikTopBar(
   TopAppBar(
     navigationIcon = {
       AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
-        IconButton(onClick = onBackClick, modifier = Modifier.testTag("Back")) {
+        IconButton(onClick = onBackClick) {
           Icon(
             Icons.AutoMirrored.Default.ArrowBack,
             contentDescription = stringResource(string.topbar_description_back)
@@ -161,17 +163,16 @@ fun ValiutchikTopBar(
       }
       AnimatedVisibility(visible = isRefreshing) {
         CircularProgressIndicator(
-          modifier = Modifier
-            .scale(TOPBAR_PROGRESS_SCALE)
+          modifier = Modifier.scale(TOPBAR_PROGRESS_SCALE)
         )
       }
     },
     title = {
-      Text(title, modifier = Modifier.testTag("Title"))
+      Text(title, modifier = Modifier.testTag(TAG_TITLE))
     },
     actions = {
       AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
-        IconButton(onClick = onRefreshClick, modifier = Modifier.testTag("Refresh")) {
+        IconButton(onClick = onRefreshClick) {
           Icon(
             Icons.Default.Refresh,
             contentDescription = stringResource(
@@ -180,7 +181,7 @@ fun ValiutchikTopBar(
           )
         }
       }
-      IconButton(onClick = onAboutClick, modifier = Modifier.testTag("About")) {
+      IconButton(onClick = onAboutClick) {
         Icon(
           Icons.Default.Info,
           contentDescription = stringResource(
@@ -189,7 +190,7 @@ fun ValiutchikTopBar(
         )
       }
       AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
-        IconButton(onClick = onSettingsClick, modifier = Modifier.testTag("Settings")) {
+        IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,
             contentDescription = stringResource(
@@ -204,10 +205,8 @@ fun ValiutchikTopBar(
 }
 
 @Composable
-fun resolveTitle(currentRoute: String?): String {
-  return when (currentRoute) {
-    DESTINATION_PREFERENCES -> stringResource(id = string.title_activity_settings)
-    DESTINATION_LICENSES -> stringResource(id = string.title_activity_oss_licenses)
-    else -> stringResource(id = string.app_name)
-  }
+fun resolveTitle(currentRoute: String?): String = when (currentRoute) {
+  DESTINATION_PREFERENCES -> stringResource(id = string.title_activity_settings)
+  DESTINATION_LICENSES -> stringResource(id = string.title_activity_oss_licenses)
+  else -> stringResource(id = string.app_name)
 }

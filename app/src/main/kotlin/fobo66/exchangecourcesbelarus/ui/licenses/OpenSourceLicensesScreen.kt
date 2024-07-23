@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
-import fobo66.exchangecourcesbelarus.ui.EmptyListIndicator
+import fobo66.exchangecourcesbelarus.ui.LoadingIndicator
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.persistentListOf
 
@@ -43,7 +43,7 @@ fun OpenSourceLicensesScreen(
 ) {
   Crossfade(licensesState, label = "licenses") { state ->
     if (state.licenses.isEmpty()) {
-      EmptyListIndicator()
+      LoadingIndicator()
     } else {
       LazyColumn(modifier = modifier) {
         items(licensesState.licenses, key = { it.project }) { item ->

@@ -21,6 +21,8 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -44,9 +46,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
+import fobo66.exchangecourcesbelarus.ui.TAG_RATES
+import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
-import fobo66.exchangecourcesbelarus.util.lazyListItemPosition
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 
@@ -61,7 +64,11 @@ fun BestRatesList(
     if (it.isEmpty()) {
       NoRatesIndicator()
     } else {
-      LazyColumn(modifier = Modifier.testTag("Courses")) {
+      LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(all = 8.dp),
+        modifier = Modifier.testTag(TAG_RATES)
+      ) {
         itemsIndexed(
           items = bestCurrencyRates,
           key = { _, item -> item.currencyNameRes }
@@ -75,7 +82,6 @@ fun BestRatesList(
             modifier = Modifier
               .fillMaxWidth()
               .animateItem()
-              .lazyListItemPosition(index)
           )
         }
       }
@@ -100,8 +106,10 @@ fun BestRatesGrid(
     } else {
       LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier
-          .testTag("Courses")
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(all = 8.dp),
+        modifier = Modifier.testTag(TAG_RATES)
       ) {
         itemsIndexed(
           items = bestCurrencyRates,
@@ -116,7 +124,6 @@ fun BestRatesGrid(
             modifier = Modifier
               .fillMaxWidth()
               .animateItem()
-              .lazyListItemPosition(index)
           )
         }
       }
@@ -139,7 +146,6 @@ fun BestCurrencyRateCard(
 ) {
   ElevatedCard(
     modifier = modifier
-      .padding(8.dp)
       .clip(CardDefaults.elevatedShape)
       .combinedClickable(
         onLongClick = { onLongClick(currencyName, currencyValue) },
@@ -157,7 +163,7 @@ fun BestCurrencyRateCard(
         style = MaterialTheme.typography.displayLarge,
         modifier = Modifier
           .padding(top = 16.dp, start = 24.dp)
-          .testTag("Currency value")
+          .testTag(TAG_RATE_VALUE)
       )
     }
     Row(modifier = Modifier.padding(all = 24.dp)) {

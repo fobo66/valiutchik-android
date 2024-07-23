@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import fobo66.exchangecourcesbelarus.ui.icons.NoRates
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @Composable
-fun EmptyListIndicator(modifier: Modifier = Modifier) {
+fun LoadingIndicator(modifier: Modifier = Modifier) {
   Box(modifier = modifier.fillMaxSize()) {
     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
   }
@@ -46,7 +46,7 @@ fun NoRatesIndicator(modifier: Modifier = Modifier) {
   Box(
     modifier = modifier
       .fillMaxSize()
-      .testTag("No rates")
+      .testTag(TAG_NO_RATES)
   ) {
     Column(modifier = Modifier.align(Alignment.Center)) {
       Icon(

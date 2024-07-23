@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
+import fobo66.exchangecourcesbelarus.ui.TAG_SLIDER
 import kotlin.math.roundToInt
 
 @Composable
@@ -229,7 +230,7 @@ private fun SeekbarPreferenceSummary(
         valueRange = valueRange,
         steps = steps,
         onValueChangeFinished = onValueChangeEnd,
-        modifier = Modifier.testTag("Slider")
+        modifier = Modifier.testTag(TAG_SLIDER)
       )
     }
   }
