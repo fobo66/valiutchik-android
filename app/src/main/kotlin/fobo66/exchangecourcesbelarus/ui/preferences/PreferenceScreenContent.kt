@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ fun PreferenceScreenContent(
 
   Column(
     modifier = modifier
-      .testTag("Settings")
+      .testTag("Preferences")
   ) {
     ListPreference(
       title = {
