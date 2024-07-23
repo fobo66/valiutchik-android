@@ -31,14 +31,14 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.filters.LargeTest
+import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import fobo66.exchangecourcesbelarus.R
 import org.junit.Rule
 import org.junit.Test
 
-@LargeTest
+@MediumTest
 class MainActivityTest {
 
   @get:Rule

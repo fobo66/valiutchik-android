@@ -26,14 +26,14 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
-import androidx.test.filters.MediumTest
+import androidx.test.filters.SmallTest
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-@MediumTest
+@SmallTest
 class PreferencesScreenTest {
 
   @get:Rule

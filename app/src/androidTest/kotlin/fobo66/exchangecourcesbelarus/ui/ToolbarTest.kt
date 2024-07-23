@@ -26,7 +26,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.test.filters.MediumTest
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.main.ValiutchikTopBar
@@ -34,7 +34,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-@MediumTest
+@SmallTest
 class ToolbarTest {
 
   @get:Rule
