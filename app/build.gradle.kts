@@ -207,8 +207,6 @@ dependencies {
   testImplementation(libs.truth)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
-  androidTestImplementation(libs.kaspresso)
-  androidTestImplementation(libs.kaspresso.compose)
   androidTestImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.test.rules)
   androidTestImplementation(libs.androidx.test.espresso.core)
