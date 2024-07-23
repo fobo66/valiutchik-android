@@ -21,6 +21,8 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -62,7 +64,11 @@ fun BestRatesList(
     if (it.isEmpty()) {
       NoRatesIndicator()
     } else {
-      LazyColumn(modifier = Modifier.testTag(TAG_RATES)) {
+      LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(all = 8.dp),
+        modifier = Modifier.testTag(TAG_RATES)
+      ) {
         itemsIndexed(
           items = bestCurrencyRates,
           key = { _, item -> item.currencyNameRes }
@@ -100,6 +106,9 @@ fun BestRatesGrid(
     } else {
       LazyVerticalGrid(
         columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(all = 8.dp),
         modifier = Modifier.testTag(TAG_RATES)
       ) {
         itemsIndexed(
@@ -137,7 +146,6 @@ fun BestCurrencyRateCard(
 ) {
   ElevatedCard(
     modifier = modifier
-      .padding(8.dp)
       .clip(CardDefaults.elevatedShape)
       .combinedClickable(
         onLongClick = { onLongClick(currencyName, currencyValue) },
