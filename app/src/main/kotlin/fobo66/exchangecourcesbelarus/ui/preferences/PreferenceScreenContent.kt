@@ -28,6 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
+import fobo66.exchangecourcesbelarus.ui.TAG_DEFAULT_CITY
+import fobo66.exchangecourcesbelarus.ui.TAG_LICENSES
+import fobo66.exchangecourcesbelarus.ui.TAG_PREFERENCES
+import fobo66.exchangecourcesbelarus.ui.TAG_UPDATE_INTERVAL
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.toImmutableMap
 
@@ -53,8 +57,7 @@ fun PreferenceScreenContent(
   }
 
   Column(
-    modifier = modifier
-      .testTag("Preferences")
+    modifier = modifier.testTag(TAG_PREFERENCES)
   ) {
     ListPreference(
       title = {
@@ -63,7 +66,7 @@ fun PreferenceScreenContent(
       value = defaultCityValue,
       entries = entries,
       onValueChange = onDefaultCityChange,
-      modifier = Modifier.testTag("Default city")
+      modifier = Modifier.testTag(TAG_DEFAULT_CITY)
     )
     SeekBarPreference(
       title = {
@@ -73,14 +76,14 @@ fun PreferenceScreenContent(
       valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
       steps = UPDATE_INTERVAL_STEPS,
       onValueChange = onUpdateIntervalChange,
-      modifier = Modifier.testTag("Update interval")
+      modifier = Modifier.testTag(TAG_UPDATE_INTERVAL)
     )
     TextPreference(
       title = {
         Text(text = stringResource(id = R.string.title_activity_oss_licenses))
       },
       onClick = onOpenSourceLicensesClick,
-      modifier = Modifier.testTag("Licenses")
+      modifier = Modifier.testTag(TAG_LICENSES)
     )
   }
 }

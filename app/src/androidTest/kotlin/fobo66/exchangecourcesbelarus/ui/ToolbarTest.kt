@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.filters.MediumTest
@@ -53,7 +54,7 @@ class ToolbarTest {
     }
     val expectedTitle =
       InstrumentationRegistry.getInstrumentation().targetContext.getString(string.app_name)
-    composeRule.onNodeWithTag("Title").assertTextContains(expectedTitle)
+    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
   }
 
 
@@ -70,7 +71,11 @@ class ToolbarTest {
       )
     }
 
-    composeRule.onNodeWithTag("Back").assertDoesNotExist()
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.topbar_description_back
+      )
+    ).assertDoesNotExist()
   }
 
   @Test
@@ -90,7 +95,7 @@ class ToolbarTest {
       InstrumentationRegistry.getInstrumentation().targetContext.getString(
         string.title_activity_settings
       )
-    composeRule.onNodeWithTag("Title").assertTextContains(expectedTitle)
+    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
   }
 
   @Test
@@ -109,14 +114,21 @@ class ToolbarTest {
       )
     }
 
-    composeRule.onNodeWithTag("Settings").performClick()
+    val settingsDescription = InstrumentationRegistry.getInstrumentation().targetContext.getString(
+      string.action_settings
+    )
+    composeRule.onNodeWithContentDescription(settingsDescription).performClick()
     val expectedTitle =
       InstrumentationRegistry.getInstrumentation().targetContext.getString(
         string.title_activity_settings
       )
-    composeRule.onNodeWithTag("Title").assertTextContains(expectedTitle)
-    composeRule.onNodeWithTag("Back").assertIsDisplayed()
-    composeRule.onNodeWithTag("Settings").assertDoesNotExist()
+    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.topbar_description_back
+      )
+    ).assertIsDisplayed()
+    composeRule.onNodeWithContentDescription(settingsDescription).assertDoesNotExist()
   }
 
   @Test
@@ -132,7 +144,11 @@ class ToolbarTest {
         isRefreshing = false
       )
     }
-    composeRule.onNodeWithTag("About").performClick()
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.action_about
+      )
+    ).performClick()
     assertTrue(isAboutDialogShown)
   }
 
@@ -150,7 +166,11 @@ class ToolbarTest {
       )
     }
 
-    composeRule.onNodeWithTag("Refresh").performClick()
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.action_refresh
+      )
+    ).performClick()
     assertTrue(isRefreshClicked)
   }
 }

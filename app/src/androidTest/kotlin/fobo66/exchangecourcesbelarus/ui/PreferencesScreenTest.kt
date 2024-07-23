@@ -54,7 +54,7 @@ class PreferencesScreenTest {
       )
     }
 
-    composeRule.onNodeWithTag("Licenses").performClick()
+    composeRule.onNodeWithTag(TAG_LICENSES).performClick()
     assertTrue(showLicense)
   }
 
@@ -72,9 +72,9 @@ class PreferencesScreenTest {
       )
     }
 
-    composeRule.onNodeWithTag("Update interval")
+    composeRule.onNodeWithTag(TAG_UPDATE_INTERVAL)
       .onChildren()
-      .filterToOne(hasTestTag("Slider"))
+      .filterToOne(hasTestTag(TAG_SLIDER))
       .performTouchInput {
         swipeRight()
       }
@@ -94,7 +94,7 @@ class PreferencesScreenTest {
       )
     }
 
-    composeRule.onNodeWithTag("Default city").performClick()
+    composeRule.onNodeWithTag(TAG_DEFAULT_CITY).performClick()
     composeRule.onNode(isDialog()).assertIsDisplayed()
   }
 }

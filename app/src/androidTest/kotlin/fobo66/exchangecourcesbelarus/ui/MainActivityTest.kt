@@ -24,6 +24,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
@@ -31,7 +32,9 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import fobo66.exchangecourcesbelarus.R
 import org.junit.Rule
 import org.junit.Test
 
@@ -50,13 +53,17 @@ class MainActivityTest {
 
   @Test
   fun showAboutDialog() {
-    composeTestRule.onNodeWithTag("About").performClick()
+    composeTestRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        R.string.action_about
+      )
+    ).performClick()
     composeTestRule.onNode(isDialog()).assertIsDisplayed()
   }
 
   @Test
   fun showMaps() {
-    composeTestRule.onNodeWithTag("Courses")
+    composeTestRule.onNodeWithTag(TAG_RATES)
       .onChildren()
       .onFirst()
       .performClick()
@@ -66,19 +73,23 @@ class MainActivityTest {
 
   @Test
   fun copyToClipboard() {
-    composeTestRule.onNodeWithTag("Courses")
+    composeTestRule.onNodeWithTag(TAG_RATES)
       .onChildren()
       .onFirst()
       .performTouchInput {
         longClick()
       }
 
-    composeTestRule.onNodeWithTag("Snackbar").assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TAG_SNACKBAR).assertIsDisplayed()
   }
 
   @Test
   fun showSettings() {
-    composeTestRule.onNodeWithTag("Settings").performClick()
-    composeTestRule.onNodeWithTag("Preferences").assertIsDisplayed()
+    composeTestRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        R.string.action_settings
+      )
+    ).performClick()
+    composeTestRule.onNodeWithTag(TAG_PREFERENCES).assertIsDisplayed()
   }
 }

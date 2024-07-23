@@ -46,7 +46,7 @@ class MainScreenTest {
         onBestRateLongClick = { _, _ -> }
       )
     }
-    composeRule.onNodeWithTag("No rates").assertIsDisplayed()
+    composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
   }
 
   @OptIn(ExperimentalTestApi::class)
@@ -62,7 +62,7 @@ class MainScreenTest {
         onBestRateLongClick = { _, _ -> }
       )
     }
-    composeRule.onNodeWithTag("Courses")
+    composeRule.onNodeWithTag(TAG_RATES)
       .onChild()
       .performClick()
     assertTrue(isMapOpen)
