@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,3 +17,14 @@
 package fobo66.exchangecourcesbelarus.ui
 
 const val STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS = 5000L
+
+const val TAG_RATES = "Rates"
+const val TAG_NO_RATES = "No rates"
+const val TAG_RATE_VALUE = "Currency rate value"
+const val TAG_PREFERENCES = "Preferences"
+const val TAG_SNACKBAR = "Snackbar"
+const val TAG_TITLE = "Title"
+const val TAG_DEFAULT_CITY = "Default city"
+const val TAG_UPDATE_INTERVAL = "Update interval"
+const val TAG_LICENSES = "Licenses"
+const val TAG_SLIDER = "Slider"

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,75 +17,54 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.test.filters.MediumTest
-import com.kaspersky.components.composesupport.config.withComposeSupport
-import com.kaspersky.kaspresso.kaspresso.Kaspresso
-import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
+import androidx.compose.ui.test.onChild
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.test.filters.SmallTest
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.ui.CurrenciesScreen.CoursesListItem
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import io.github.kakaocup.compose.node.element.ComposeScreen
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-@MediumTest
-class MainScreenTest : TestCase(
-  kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
-) {
+@SmallTest
+class MainScreenTest {
 
   @get:Rule
   val composeRule = createComposeRule()
 
   @Test
-  fun emptyList() = run {
-    step("setup main screen") {
-      composeRule.setContent {
-        BestRatesList(
-          bestCurrencyRates = persistentListOf(),
-          onBestRateClick = {},
-          onBestRateLongClick = { _, _ -> }
-        )
-      }
+  fun emptyList() {
+    composeRule.setContent {
+      BestRatesList(
+        bestCurrencyRates = persistentListOf(),
+        onBestRateClick = {},
+        onBestRateLongClick = { _, _ -> }
+      )
     }
-    step("check empty list indicator is visible") {
-      ComposeScreen.onComposeScreen<CurrenciesScreen>(composeRule) {
-        flakySafely {
-          emptyListIndicator.assertIsDisplayed()
-        }
-      }
-    }
+    composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
   }
 
   @OptIn(ExperimentalTestApi::class)
   @Test
-  fun openMap() = run {
+  fun openMap() {
     var isMapOpen = false
-    step("setup main screen") {
-      composeRule.setContent {
-        BestRatesList(
-          bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
-          onBestRateClick = {
-            isMapOpen = true
-          },
-          onBestRateLongClick = { _, _ -> }
-        )
-      }
+    composeRule.setContent {
+      BestRatesList(
+        bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
+        onBestRateClick = {
+          isMapOpen = true
+        },
+        onBestRateLongClick = { _, _ -> }
+      )
     }
-    step("click on list item") {
-      ComposeScreen.onComposeScreen<CurrenciesScreen>(composeRule) {
-        flakySafely {
-          coursesList.firstChild<CoursesListItem> {
-            performClick()
-          }
-        }
-      }
-    }
-    step("check map is opened") {
-      assertTrue(isMapOpen)
-    }
+    composeRule.onNodeWithTag(TAG_RATES)
+      .onChild()
+      .performClick()
+    assertTrue(isMapOpen)
   }
 }

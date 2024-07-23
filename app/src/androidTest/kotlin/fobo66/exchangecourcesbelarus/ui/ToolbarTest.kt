@@ -20,205 +20,157 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.test.filters.MediumTest
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.kaspersky.components.composesupport.config.withComposeSupport
-import com.kaspersky.kaspresso.kaspresso.Kaspresso
-import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.main.ValiutchikTopBar
-import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-@MediumTest
-class ToolbarTest : TestCase(
-  kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
-) {
+@SmallTest
+class ToolbarTest {
 
   @get:Rule
   val composeRule = createComposeRule()
 
   @Test
-  fun showCorrectTitle() = run {
-    step("setup title") {
-      composeRule.setContent {
-        ValiutchikTopBar(
-          currentRoute = DESTINATION_MAIN,
-          onBackClick = {},
-          onAboutClick = {},
-          onSettingsClick = {},
-          onRefreshClick = {},
-          isRefreshing = false
-        )
-      }
+  fun showCorrectTitle() {
+    composeRule.setContent {
+      ValiutchikTopBar(
+        currentRoute = DESTINATION_MAIN,
+        onBackClick = {},
+        onAboutClick = {},
+        onSettingsClick = {},
+        onRefreshClick = {},
+        isRefreshing = false
+      )
     }
-    step("check title") {
-      val expectedTitle =
-        InstrumentationRegistry.getInstrumentation().targetContext.getString(string.app_name)
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        flakySafely {
-          title.assert(hasText(expectedTitle))
-        }
-      }
+    val expectedTitle =
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(string.app_name)
+    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
+  }
+
+
+  @Test
+  fun doNotShowBackOnMain() {
+    composeRule.setContent {
+      ValiutchikTopBar(
+        currentRoute = DESTINATION_MAIN,
+        onBackClick = {},
+        onAboutClick = {},
+        onSettingsClick = {},
+        onRefreshClick = {},
+        isRefreshing = false
+      )
     }
+
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.topbar_description_back
+      )
+    ).assertDoesNotExist()
   }
 
   @Test
-  fun doNotShowBackOnMain() = run {
-    step("setup title") {
-      composeRule.setContent {
-        ValiutchikTopBar(
-          currentRoute = DESTINATION_MAIN,
-          onBackClick = {},
-          onAboutClick = {},
-          onSettingsClick = {},
-          onRefreshClick = {},
-          isRefreshing = false
-        )
-      }
+  fun showCorrectTitleForSettings() {
+    composeRule.setContent {
+      ValiutchikTopBar(
+        currentRoute = DESTINATION_PREFERENCES,
+        onBackClick = {},
+        onAboutClick = {},
+        onSettingsClick = {},
+        onRefreshClick = {},
+        isRefreshing = false
+      )
     }
-    step("check back arrow") {
-      onComposeScreen<ToolbarScreen>(composeRule) {
-        flakySafely {
-          backIcon.assertDoesNotExist()
-        }
-      }
-    }
+
+    val expectedTitle =
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.title_activity_settings
+      )
+    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
   }
 
   @Test
-  fun showCorrectTitleForSettings() = run {
-    step("setup title") {
-      composeRule.setContent {
-        ValiutchikTopBar(
-          currentRoute = DESTINATION_PREFERENCES,
-          onBackClick = {},
-          onAboutClick = {},
-          onSettingsClick = {},
-          onRefreshClick = {},
-          isRefreshing = false
-        )
+  fun changeStateOnNavigation() {
+    composeRule.setContent {
+      var route by remember {
+        mutableStateOf(DESTINATION_MAIN)
       }
+      ValiutchikTopBar(
+        currentRoute = route,
+        onBackClick = {},
+        onAboutClick = {},
+        onSettingsClick = { route = DESTINATION_PREFERENCES },
+        onRefreshClick = {},
+        isRefreshing = false
+      )
     }
-    step("check title") {
-      val expectedTitle =
-        InstrumentationRegistry.getInstrumentation().targetContext.getString(
-          string.title_activity_settings
-        )
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          title.assert(hasText(expectedTitle))
-        }
-      }
-    }
+
+    val settingsDescription = InstrumentationRegistry.getInstrumentation().targetContext.getString(
+      string.action_settings
+    )
+    composeRule.onNodeWithContentDescription(settingsDescription).performClick()
+    val expectedTitle =
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.title_activity_settings
+      )
+    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.topbar_description_back
+      )
+    ).assertIsDisplayed()
+    composeRule.onNodeWithContentDescription(settingsDescription).assertDoesNotExist()
   }
 
   @Test
-  fun changeStateOnNavigation() = run {
-    step("setup title") {
-      composeRule.setContent {
-        var route by remember {
-          mutableStateOf(DESTINATION_MAIN)
-        }
-        ValiutchikTopBar(
-          currentRoute = route,
-          onBackClick = {},
-          onAboutClick = {},
-          onSettingsClick = { route = DESTINATION_PREFERENCES },
-          onRefreshClick = {},
-          isRefreshing = false
-        )
-      }
-    }
-    step("click on settings") {
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          settingsIcon.performClick()
-        }
-      }
-    }
-    step("check title") {
-      val expectedTitle =
-        InstrumentationRegistry.getInstrumentation().targetContext.getString(
-          string.title_activity_settings
-        )
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          title.assert(hasText(expectedTitle))
-        }
-      }
-    }
-    step("check back icon") {
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          backIcon.assertIsDisplayed()
-        }
-      }
-    }
-    step("check settings icon") {
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          settingsIcon.assertDoesNotExist()
-        }
-      }
-    }
-  }
-
-  @Test
-  fun showAboutDialog() = run {
+  fun showAboutDialog() {
     var isAboutDialogShown = false
-    step("setup about icon") {
-      composeRule.setContent {
-        ValiutchikTopBar(
-          currentRoute = DESTINATION_MAIN,
-          onBackClick = {},
-          onAboutClick = { isAboutDialogShown = true },
-          onSettingsClick = {},
-          onRefreshClick = {},
-          isRefreshing = false
-        )
-      }
+    composeRule.setContent {
+      ValiutchikTopBar(
+        currentRoute = DESTINATION_MAIN,
+        onBackClick = {},
+        onAboutClick = { isAboutDialogShown = true },
+        onSettingsClick = {},
+        onRefreshClick = {},
+        isRefreshing = false
+      )
     }
-    step("click about icon") {
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          aboutIcon.performClick()
-        }
-      }
-    }
-    step("check dialog") {
-      assertTrue(isAboutDialogShown)
-    }
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.action_about
+      )
+    ).performClick()
+    assertTrue(isAboutDialogShown)
   }
 
   @Test
-  fun refreshWorks() = run {
+  fun refreshWorks() {
     var isRefreshClicked = false
-    step("setup refresh icon") {
-      composeRule.setContent {
-        ValiutchikTopBar(
-          currentRoute = DESTINATION_MAIN,
-          onBackClick = {},
-          onAboutClick = {},
-          onSettingsClick = {},
-          onRefreshClick = { isRefreshClicked = true },
-          isRefreshing = false
-        )
-      }
+    composeRule.setContent {
+      ValiutchikTopBar(
+        currentRoute = DESTINATION_MAIN,
+        onBackClick = {},
+        onAboutClick = {},
+        onSettingsClick = {},
+        onRefreshClick = { isRefreshClicked = true },
+        isRefreshing = false
+      )
     }
-    step("click about icon") {
-      flakySafely {
-        onComposeScreen<ToolbarScreen>(composeRule) {
-          refreshIcon.performClick()
-        }
-      }
-    }
-    step("check dialog") {
-      assertTrue(isRefreshClicked)
-    }
+
+    composeRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        string.action_refresh
+      )
+    ).performClick()
+    assertTrue(isRefreshClicked)
   }
 }

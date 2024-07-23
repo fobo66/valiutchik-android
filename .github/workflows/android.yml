@@ -64,7 +64,7 @@ jobs:
       - name: Run tests
         uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
-          script: ./gradlew connectedDebugAndroidTest --no-watch-fs -Pandroid.testInstrumentationRunnerArguments.size=small,medium
+          script: ./gradlew connectedDebugAndroidTest --no-watch-fs -Pandroid.testInstrumentationRunnerArguments.size=small
           arch: x86_64
           target: google_apis
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none

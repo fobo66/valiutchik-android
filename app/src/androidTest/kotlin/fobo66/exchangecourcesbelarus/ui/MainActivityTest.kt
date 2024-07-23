@@ -18,31 +18,28 @@ package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest
 import android.content.Intent
-import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.longClick
-import androidx.test.espresso.accessibility.AccessibilityChecks
-import androidx.test.espresso.intent.Intents
+import androidx.compose.ui.test.onChildren
+import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.filters.LargeTest
+import androidx.test.espresso.intent.rule.IntentsRule
+import androidx.test.filters.MediumTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import com.kaspersky.components.composesupport.config.withComposeSupport
-import com.kaspersky.kaspresso.kaspresso.Kaspresso
-import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import fobo66.exchangecourcesbelarus.ui.CurrenciesScreen.CoursesListItem
-import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
+import fobo66.exchangecourcesbelarus.R
 import org.junit.Rule
 import org.junit.Test
 
-@LargeTest
-class MainActivityTest : TestCase(
-  kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
-) {
-  init {
-    AccessibilityChecks.enable()
-  }
-
+@MediumTest
+class MainActivityTest {
 
   @get:Rule
   val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -51,82 +48,48 @@ class MainActivityTest : TestCase(
   val grantPermissionsRule: GrantPermissionRule =
     GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-  @Test
-  fun showAboutDialog() = run {
-    step("click on About icon") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        aboutIcon.performClick()
-      }
-    }
-    step("check if about info is displayed") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        aboutDialog.assertIsDisplayed()
-      }
-    }
-  }
+  @get:Rule
+  val intentsTestRule = IntentsRule()
 
-  @OptIn(ExperimentalTestApi::class)
   @Test
-  fun showMaps() = before {
-    Intents.init()
-  }.after {
-    Intents.release()
-  }.run {
-    step("click on list item") {
-      onComposeScreen<CurrenciesScreen>(composeTestRule) {
-        flakySafely {
-          coursesList.firstChild<CoursesListItem> {
-            performClick()
-          }
-        }
-      }
-    }
-    step("check chooser is shown") {
-      flakySafely {
-        intended(hasAction(Intent.ACTION_CHOOSER))
-      }
-    }
-  }
-
-  @OptIn(ExperimentalTestApi::class)
-  @Test
-  fun copyToClipboard() = run {
-    step("long press on list item") {
-      onComposeScreen<CurrenciesScreen>(composeTestRule) {
-        flakySafely {
-          coursesList.firstChild<CoursesListItem> {
-            performTouchInput {
-              longClick()
-            }
-          }
-        }
-      }
-    }
-    step("check snackbar is shown") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        flakySafely {
-          snackbar.assertIsDisplayed()
-        }
-      }
-    }
+  fun showAboutDialog() {
+    composeTestRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        R.string.action_about
+      )
+    ).performClick()
+    composeTestRule.onNode(isDialog()).assertIsDisplayed()
   }
 
   @Test
-  fun showSettings() = run {
-    step("go to settings screen") {
-      onComposeScreen<MainActivityScreen>(composeTestRule) {
-        flakySafely {
-          settingsIcon.performClick()
-        }
-      }
-    }
+  fun showMaps() {
+    composeTestRule.onNodeWithTag(TAG_RATES)
+      .onChildren()
+      .onFirst()
+      .performClick()
 
-    step("check settings screen") {
-      onComposeScreen<SettingsScreen>(composeTestRule) {
-        flakySafely {
-          settings.assertIsDisplayed()
-        }
+    intended(hasAction(Intent.ACTION_CHOOSER))
+  }
+
+  @Test
+  fun copyToClipboard() {
+    composeTestRule.onNodeWithTag(TAG_RATES)
+      .onChildren()
+      .onFirst()
+      .performTouchInput {
+        longClick()
       }
-    }
+
+    composeTestRule.onNodeWithTag(TAG_SNACKBAR).assertIsDisplayed()
+  }
+
+  @Test
+  fun showSettings() {
+    composeTestRule.onNodeWithContentDescription(
+      InstrumentationRegistry.getInstrumentation().targetContext.getString(
+        R.string.action_settings
+      )
+    ).performClick()
+    composeTestRule.onNodeWithTag(TAG_PREFERENCES).assertIsDisplayed()
   }
 }
