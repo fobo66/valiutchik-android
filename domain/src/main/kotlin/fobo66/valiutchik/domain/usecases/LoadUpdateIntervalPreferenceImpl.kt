@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,10 +17,9 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class LoadUpdateIntervalPreferenceImpl @Inject constructor(
+class LoadUpdateIntervalPreferenceImpl(
   private val preferenceRepository: PreferenceRepository
 ) : LoadUpdateIntervalPreference {
   override fun execute(): Flow<Float> {

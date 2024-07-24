@@ -16,10 +16,6 @@
 
 package fobo66.valiutchik.domain.di
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
@@ -48,76 +44,6 @@ import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
 import org.koin.dsl.module
-
-@Module
-@InstallIn(SingletonComponent::class)
-interface DomainModule {
-
-  @Binds
-  fun provideRefreshExchangeRates(
-    refreshExchangeRatesImpl: RefreshExchangeRatesImpl
-  ): RefreshExchangeRates
-
-  @Binds
-  fun provideForceRefreshExchangeRates(
-    forceRefreshExchangeRatesImpl: ForceRefreshExchangeRatesImpl
-  ): ForceRefreshExchangeRates
-
-  @Binds
-  fun provideRefreshExchangeRatesForDefaultCity(
-    refreshExchangeRatesForDefaultCityImpl: RefreshExchangeRatesForDefaultCityImpl
-  ): RefreshExchangeRatesForDefaultCity
-
-  @Binds
-  fun provideForceRefreshExchangeRatesForDefaultCity(
-    forceRefreshExchangeRatesForDefaultCityImpl: ForceRefreshExchangeRatesForDefaultCityImpl
-  ): ForceRefreshExchangeRatesForDefaultCity
-
-  @Binds
-  fun provideLoadExchangeRates(
-    loadExchangeRatesImpl: LoadExchangeRatesImpl
-  ): LoadExchangeRates
-
-  @Binds
-  fun provideCurrencyRatesInteractor(
-    currencyRatesInteractorImpl: CurrencyRatesInteractorImpl
-  ): CurrencyRatesInteractor
-
-  @Binds
-  fun provideCopyCurrencyRateToClipboard(
-    copyCurrencyRateToClipboardImpl: CopyCurrencyRateToClipboardImpl
-  ): CopyCurrencyRateToClipboard
-
-  @Binds
-  fun provideFindBankOnMap(
-    findBankOnMapImpl: FindBankOnMapImpl
-  ): FindBankOnMap
-
-  @Binds
-  fun provideLoadDefaultCityPreference(
-    loadDefaultCityPreferenceImpl: LoadDefaultCityPreferenceImpl
-  ): LoadDefaultCityPreference
-
-  @Binds
-  fun provideLoadUpdateIntervalPreference(
-    loadUpdateIntervalPreferenceImpl: LoadUpdateIntervalPreferenceImpl
-  ): LoadUpdateIntervalPreference
-
-  @Binds
-  fun provideUpdateDefaultCityPreference(
-    updateDefaultCityPreferenceImpl: UpdateDefaultCityPreferenceImpl
-  ): UpdateDefaultCityPreference
-
-  @Binds
-  fun provideUpdateUpdateIntervalPreference(
-    updateUpdateIntervalPreferenceImpl: UpdateUpdateIntervalPreferenceImpl
-  ): UpdateUpdateIntervalPreference
-
-  @Binds
-  fun provideLoadOpenSourceLicenses(
-    loadOpenSourceLicensesImpl: LoadOpenSourceLicensesImpl
-  ): LoadOpenSourceLicenses
-}
 
 val domainModule = module {
   includes(repositoriesModule)

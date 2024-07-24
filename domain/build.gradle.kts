@@ -19,8 +19,6 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(libs.plugins.android.library)
   kotlin("android")
-  alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
 }
@@ -54,10 +52,6 @@ android {
   }
 }
 
-hilt {
-  enableAggregatingTask = true
-}
-
 detekt {
   autoCorrect = true
 }
@@ -69,8 +63,6 @@ dependencies {
   implementation(libs.kotlinx.datetime)
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.core)
-  implementation(libs.hilt.core)
-  ksp(libs.hilt.compiler)
   implementation(libs.napier)
 
   detektPlugins(libs.detekt.rules.formatting)

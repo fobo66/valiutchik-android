@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,11 +18,10 @@ package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.domain.entities.OpenSourceLicense
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class LoadOpenSourceLicensesImpl @Inject constructor(
+class LoadOpenSourceLicensesImpl(
   private val licensesRepository: LicensesRepository
 ) : LoadOpenSourceLicenses {
   override fun execute(): Flow<List<OpenSourceLicense>> = flow {

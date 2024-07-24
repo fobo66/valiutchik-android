@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,8 @@ package fobo66.valiutchik.domain.usecases
 
 import android.content.Intent
 import fobo66.valiutchik.core.model.repository.MapRepository
-import javax.inject.Inject
 
-class FindBankOnMapImpl @Inject constructor(
+class FindBankOnMapImpl(
   private val mapRepository: MapRepository
 ) : FindBankOnMap {
   override fun execute(bankName: CharSequence): Intent? = mapRepository.searchOnMap(bankName)

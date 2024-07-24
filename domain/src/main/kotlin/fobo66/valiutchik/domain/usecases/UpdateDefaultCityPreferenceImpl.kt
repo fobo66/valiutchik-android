@@ -18,9 +18,8 @@ package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 
-class UpdateDefaultCityPreferenceImpl @Inject constructor(
+class UpdateDefaultCityPreferenceImpl(
   private val preferenceRepository: PreferenceRepository
 ) : UpdateDefaultCityPreference {
   override suspend fun execute(newDefaultCity: String) {
