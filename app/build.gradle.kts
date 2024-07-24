@@ -173,6 +173,9 @@ dependencies {
   // dagger
   implementation(libs.hilt.core)
   ksp(libs.hilt.compiler)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.android)
+  implementation(libs.koin.compose)
 
   implementation(libs.napier)
 
