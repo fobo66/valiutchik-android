@@ -38,18 +38,20 @@ import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class CurrencyWidget(private val loadExchangeRates: LoadExchangeRates) : GlanceAppWidget() {
+class CurrencyWidget : GlanceAppWidget(), KoinComponent {
+  private val loadExchangeRates: LoadExchangeRates by inject()
+
   override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
     val rates: ImmutableList<BestCurrencyRate> by loadExchangeRates.execute(Clock.System.now())
       .map { it.toImmutableList() }
@@ -95,12 +97,8 @@ fun CurrencyWidgetContent(
   }
 }
 
-@AndroidEntryPoint
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 
-  @Inject
-  lateinit var loadExchangeRates: LoadExchangeRates
-
   override val glanceAppWidget: GlanceAppWidget
-    get() = CurrencyWidget(loadExchangeRates)
+    get() = CurrencyWidget()
 }
