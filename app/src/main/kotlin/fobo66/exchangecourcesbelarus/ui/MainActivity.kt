@@ -23,12 +23,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import org.koin.compose.KoinContext
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
