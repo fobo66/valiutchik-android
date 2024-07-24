@@ -16,10 +16,6 @@
 
 package fobo66.valiutchik.api.di
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.api.CurrencyRatesParser
@@ -27,20 +23,6 @@ import fobo66.valiutchik.api.CurrencyRatesParserImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-
-@Module
-@InstallIn(SingletonComponent::class)
-interface ApiModule {
-  @Binds
-  fun provideCurrencyRatesParser(
-    currencyRatesParserImpl: CurrencyRatesParserImpl
-  ): CurrencyRatesParser
-
-  @Binds
-  fun provideCurrencyRatesDataSource(
-    currencyRatesDataSourceImpl: CurrencyRatesDataSourceImpl
-  ): CurrencyRatesDataSource
-}
 
 val apiModule = module {
   includes(credentialsModule, networkModule)

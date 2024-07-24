@@ -16,12 +16,6 @@
 
 package fobo66.valiutchik.api.di
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.auth.Auth
@@ -32,31 +26,6 @@ import io.ktor.client.plugins.cache.storage.FileStorage
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-
-@InstallIn(SingletonComponent::class)
-@Module
-object NetworkModule {
-
-  @Provides
-  fun provideKtorClient(
-    @ApplicationContext context: Context,
-    @ApiUsername username: String,
-    @ApiPassword password: String
-  ) = HttpClient(OkHttp) {
-    install(Auth) {
-      basic {
-        credentials {
-          BasicAuthCredentials(username, password)
-        }
-      }
-    }
-    install(HttpCache) {
-      publicStorage(FileStorage(context.cacheDir))
-    }
-
-    expectSuccess = true
-  }
-}
 
 val networkModule = module {
   single {

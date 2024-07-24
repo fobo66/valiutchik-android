@@ -19,7 +19,6 @@ package fobo66.valiutchik.api
 import android.util.Xml
 import java.io.IOException
 import java.io.InputStream
-import javax.inject.Inject
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 
@@ -37,7 +36,7 @@ const val TAG_NAME_PLN_SELL = "pln_sell"
 const val TAG_NAME_UAH_BUY = "uah_buy"
 const val TAG_NAME_UAH_SELL = "uah_sell"
 
-class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
+class CurrencyRatesParserImpl : CurrencyRatesParser {
   private val neededTagNames by lazy {
     setOf(
       TAG_NAME_BANKNAME,

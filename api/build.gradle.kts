@@ -19,8 +19,6 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(libs.plugins.android.library)
   kotlin("android")
-  alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
 }
@@ -70,17 +68,11 @@ detekt {
   autoCorrect = true
 }
 
-hilt {
-  enableAggregatingTask = true
-}
-
 dependencies {
   implementation(libs.kotlinx.coroutines.core)
 
-  implementation(libs.hilt.core)
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.android)
-  ksp(libs.hilt.compiler)
 
   implementation(platform(libs.okhttp.bom))
   implementation(libs.okhttp.core)

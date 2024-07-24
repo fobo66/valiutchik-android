@@ -16,12 +16,6 @@
 
 package fobo66.valiutchik.api.di
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -37,44 +31,6 @@ import io.ktor.http.HttpHeaders
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-
-@InstallIn(SingletonComponent::class)
-@Module
-object NetworkModule {
-
-  @Provides
-  fun provideKtorClient(
-    @ApplicationContext context: Context,
-    customLogger: Logger,
-    @ApiUsername username: String,
-    @ApiPassword password: String
-  ) = HttpClient(OkHttp) {
-    install(Auth) {
-      basic {
-        credentials {
-          BasicAuthCredentials(username, password)
-        }
-      }
-    }
-    install(HttpCache) {
-      publicStorage(FileStorage(context.cacheDir))
-    }
-    install(Logging) {
-      logger = customLogger
-      level = LogLevel.ALL
-      sanitizeHeader { header -> header == HttpHeaders.Authorization }
-    }
-
-    expectSuccess = true
-  }
-
-  @Provides
-  fun provideLoggingInterceptor(): Logger = object : Logger {
-    override fun log(message: String) {
-      Napier.d(message, tag = "OkHttp")
-    }
-  }
-}
 
 val networkModule = module {
   single<Logger> {
