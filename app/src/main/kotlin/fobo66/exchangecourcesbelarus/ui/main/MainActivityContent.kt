@@ -47,7 +47,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -66,13 +65,14 @@ import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
 import fobo66.exchangecourcesbelarus.ui.licensesScreen
 import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.refreshRates
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
   modifier: Modifier = Modifier,
-  mainViewModel: MainViewModel = hiltViewModel()
+  mainViewModel: MainViewModel = koinViewModel()
 ) {
   val navController = rememberNavController()
 
