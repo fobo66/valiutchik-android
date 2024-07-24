@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import org.koin.compose.KoinContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -40,7 +41,9 @@ class MainActivity : ComponentActivity() {
     setContent {
       val windowSizeClass = calculateWindowSizeClass(this)
       ValiutchikTheme {
-        MainActivityContent(windowSizeClass)
+        KoinContext {
+          MainActivityContent(windowSizeClass)
+        }
       }
     }
   }
