@@ -16,10 +16,6 @@
 
 package fobo66.valiutchik.core.di
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
@@ -56,97 +52,14 @@ import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 import fobo66.valiutchik.core.util.BankNameNormalizer
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface DataModule {
-
-  @Binds
-  fun provideCurrencyRatesTimestampRepository(
-    currencyRatesTimestampRepositoryImpl: CurrencyRatesTimestampRepositoryImpl
-  ): CurrencyRatesTimestampRepository
-
-  @Binds
-  fun provideLocationDataSource(
-    locationDataSourceImpl: LocationDataSourceImpl
-  ): LocationDataSource
-
-  @Binds
-  fun provideGeocodingDataSource(
-    geocodingDataSourceImpl: GeocodingDataSourceImpl
-  ): GeocodingDataSource
-
-  @Binds
-  fun provideLocationRepository(
-    locationRepositoryImpl: LocationRepositoryImpl
-  ): LocationRepository
-
-  @Binds
-  fun provideMapRepository(
-    mapRepositoryImpl: MapRepositoryImpl
-  ): MapRepository
-
-  @Binds
-  fun providePreferencesDataSource(
-    preferencesDataSourceImpl: DataStorePreferencesDataSourceImpl
-  ): PreferencesDataSource
-
-  @Binds
-  fun providePersistenceDataSource(
-    persistenceDataSourceImpl: PersistenceDataSourceImpl
-  ): PersistenceDataSource
-
-  @Binds
-  fun provideBestCourseDataSource(
-    bestCourseDataSourceImpl: BestCourseDataSourceImpl
-  ): BestCourseDataSource
-
-  @Binds
-  fun provideIntentDataSource(
-    intentDataSourceImpl: IntentDataSourceImpl
-  ): IntentDataSource
-
-  @Binds
-  fun provideUriDataSource(
-    uriDataSourceImpl: UriDataSourceImpl
-  ): UriDataSource
-
-  @Binds
-  fun provideCurrencyRateRepository(
-    currencyRateRepositoryImpl: CurrencyRateRepositoryImpl
-  ): CurrencyRateRepository
-
-  @Binds
-  fun providePreferenceRepository(
-    preferenceRepositoryImpl: PreferenceRepositoryImpl
-  ): PreferenceRepository
-
-  @Binds
-  fun provideAssetsDataSource(
-    assetsDataSourceImpl: AssetsDataSourceImpl
-  ): AssetsDataSource
-
-  @Binds
-  fun provideClipboardDataSource(
-    clipboardDataSourceImpl: ClipboardDataSourceImpl
-  ): ClipboardDataSource
-
-  @Binds
-  fun provideJsonDataSource(jsonDataSourceImpl: JsonDataSourceImpl): JsonDataSource
-
-  @Binds
-  fun provideClipboardRepository(
-    clipboardRepositoryImpl: ClipboardRepositoryImpl
-  ): ClipboardRepository
-
-  @Binds
-  fun provideLicensesRepository(
-    licensesRepositoryImpl: LicensesRepositoryImpl
-  ): LicensesRepository
+val coroutineDispatchersModule = module {
+  single(qualifier(Dispatcher.IO)) { Dispatchers.IO }
 }
 
 val dataSourcesModule = module {

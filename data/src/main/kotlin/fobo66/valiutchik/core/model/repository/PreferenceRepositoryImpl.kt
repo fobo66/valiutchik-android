@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,11 +19,13 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PreferenceRepositoryImpl @Inject constructor(
+private const val DEFAULT_UPDATE_INTERVAL = 3
+private const val DEFAULT_CITY = "Минск"
+
+class PreferenceRepositoryImpl(
   private val preferencesDataSource: PreferencesDataSource
 ) : PreferenceRepository {
   override fun observeDefaultCityPreference(): Flow<String> =
@@ -39,10 +41,5 @@ class PreferenceRepositoryImpl @Inject constructor(
 
   override suspend fun updateUpdateIntervalPreference(newValue: Float) {
     preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.toInt())
-  }
-
-  companion object {
-    private const val DEFAULT_UPDATE_INTERVAL = 3
-    private const val DEFAULT_CITY = "Минск"
   }
 }

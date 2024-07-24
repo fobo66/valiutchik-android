@@ -18,22 +18,24 @@ package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.api.Currency
 import fobo66.valiutchik.api.CurrencyRatesParser
-import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_BUY
-import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_PLN_SELL
-import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_BUY
-import fobo66.valiutchik.api.CurrencyRatesParserImpl.Companion.TAG_NAME_UAH_SELL
-import fobo66.valiutchik.core.TAG_NAME_BANKNAME
-import fobo66.valiutchik.core.TAG_NAME_EUR_BUY
-import fobo66.valiutchik.core.TAG_NAME_EUR_SELL
-import fobo66.valiutchik.core.TAG_NAME_RUR_BUY
-import fobo66.valiutchik.core.TAG_NAME_RUR_SELL
-import fobo66.valiutchik.core.TAG_NAME_USD_BUY
-import fobo66.valiutchik.core.TAG_NAME_USD_SELL
+import fobo66.valiutchik.api.TAG_NAME_BANKNAME
+import fobo66.valiutchik.api.TAG_NAME_EUR_BUY
+import fobo66.valiutchik.api.TAG_NAME_EUR_SELL
+import fobo66.valiutchik.api.TAG_NAME_PLN_BUY
+import fobo66.valiutchik.api.TAG_NAME_PLN_SELL
+import fobo66.valiutchik.api.TAG_NAME_RUR_BUY
+import fobo66.valiutchik.api.TAG_NAME_RUR_SELL
+import fobo66.valiutchik.api.TAG_NAME_UAH_BUY
+import fobo66.valiutchik.api.TAG_NAME_UAH_SELL
+import fobo66.valiutchik.api.TAG_NAME_USD_BUY
+import fobo66.valiutchik.api.TAG_NAME_USD_SELL
 import java.io.IOException
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Document
 import org.w3c.dom.NodeList
+
+const val ENTRY_TAG_NAME = "bank"
 
 class TestMyfinParser : CurrencyRatesParser {
 
@@ -107,8 +109,4 @@ class TestMyfinParser : CurrencyRatesParser {
       uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
       uahSell = get(TAG_NAME_UAH_SELL).orEmpty()
     )
-
-  companion object {
-    const val ENTRY_TAG_NAME = "bank"
-  }
 }

@@ -16,30 +16,10 @@
 
 package fobo66.valiutchik.core.di
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.R
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-
-internal enum class Secret {
-  GEOCODER_ACCESS_TOKEN
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-object SecretsModule {
-
-  @GeocoderAccessToken
-  @Provides
-  fun provideGeocoderAccessToken(@ApplicationContext context: Context): String =
-    context.getString(R.string.geocoderAccessToken)
-}
 
 val secretsModule = module {
   single(qualifier(Secret.GEOCODER_ACCESS_TOKEN)) {

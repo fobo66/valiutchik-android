@@ -21,7 +21,6 @@ plugins {
   kotlin("android")
   kotlin("plugin.serialization")
   alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
   alias(libs.plugins.room)
@@ -83,10 +82,6 @@ ksp {
   arg("room.generateKotlin", "true")
 }
 
-hilt {
-  enableAggregatingTask = true
-}
-
 detekt {
   autoCorrect = true
 }
@@ -94,11 +89,9 @@ detekt {
 dependencies {
   api(project(":api"))
   implementation(libs.androidx.annotation)
-  implementation(libs.hilt.core)
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.android)
   implementation(libs.kotlinx.serialization)
-  ksp(libs.hilt.compiler)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.datetime)
   implementation(libs.room.runtime)

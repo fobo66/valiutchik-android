@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.di
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -24,50 +23,11 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoder
 import com.tomtom.sdk.search.reversegeocoder.online.OnlineReverseGeocoder
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
-import javax.inject.Singleton
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-
-@Module
-@InstallIn(SingletonComponent::class)
-object ThirdPartyModule {
-
-  @Provides
-  fun provideReverseGeocodingEngine(
-    @ApplicationContext context: Context,
-    @GeocoderAccessToken geocoderAccessToken: String
-  ): ReverseGeocoder =
-    OnlineReverseGeocoder.create(context, geocoderAccessToken)
-
-  @Provides
-  fun provideJson(): Json = Json
-
-  @Provides
-  @Singleton
-  fun provideDatabase(@ApplicationContext context: Context): CurrencyRatesDatabase =
-    Room.databaseBuilder(
-      context,
-      CurrencyRatesDatabase::class.java,
-      "currency-rates"
-    ).build()
-
-  @Provides
-  @Singleton
-  fun providePreferencesDatastore(
-    @ApplicationContext context: Context
-  ): DataStore<Preferences> =
-    PreferenceDataStoreFactory.create {
-      context.preferencesDataStoreFile("valiutchik-prefs")
-    }
-}
 
 val thirdPartyModule = module {
   includes(secretsModule)

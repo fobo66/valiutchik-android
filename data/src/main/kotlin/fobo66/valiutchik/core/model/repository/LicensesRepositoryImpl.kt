@@ -20,9 +20,8 @@ import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
 import java.nio.charset.Charset
-import javax.inject.Inject
 
-class LicensesRepositoryImpl @Inject constructor(
+class LicensesRepositoryImpl(
   private val assetsDataSource: AssetsDataSource,
   private val jsonDataSource: JsonDataSource
 ) : LicensesRepository {

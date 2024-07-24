@@ -14,14 +14,8 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.core.di
 
-import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
-import kotlinx.serialization.json.Json
-
-class JsonDataSourceImpl(
-  private val json: Json
-) : JsonDataSource {
-  override fun decodeLicenses(jsonString: String): List<OpenSourceLicensesItem>? =
-    json.decodeFromString(jsonString)
+internal enum class Secret {
+  GEOCODER_ACCESS_TOKEN
 }

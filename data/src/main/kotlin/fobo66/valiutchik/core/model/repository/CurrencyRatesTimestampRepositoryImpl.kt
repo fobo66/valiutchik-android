@@ -18,7 +18,6 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.TIMESTAMP
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
-import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +28,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
-class CurrencyRatesTimestampRepositoryImpl @Inject constructor(
+class CurrencyRatesTimestampRepositoryImpl(
   private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 

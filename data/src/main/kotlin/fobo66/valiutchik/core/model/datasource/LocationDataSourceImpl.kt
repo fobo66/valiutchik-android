@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,19 +23,16 @@ import android.os.SystemClock
 import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationManagerCompat
-import dagger.hilt.android.qualifiers.ApplicationContext
-import fobo66.valiutchik.core.di.Io
 import fobo66.valiutchik.core.entities.Location
 import java.time.Duration
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-@Singleton
-class LocationDataSourceImpl @Inject constructor(
-  @ApplicationContext private val context: Context,
-  @Io private val ioDispatcher: CoroutineDispatcher
+private const val LOCATION_FIX_TIME_DURATION_HOURS = 3L
+
+class LocationDataSourceImpl(
+  private val context: Context,
+  private val ioDispatcher: CoroutineDispatcher
 ) : LocationDataSource {
 
   private val noLocation by lazy {
@@ -69,9 +66,5 @@ class LocationDataSourceImpl @Inject constructor(
     } else {
       noLocation
     }
-  }
-
-  companion object {
-    private const val LOCATION_FIX_TIME_DURATION_HOURS = 3L
   }
 }
