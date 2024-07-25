@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,11 +26,8 @@ import fobo66.valiutchik.core.util.UAH
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class BestCourseDataSourceImpl @Inject constructor() : BestCourseDataSource {
+class BestCourseDataSourceImpl : BestCourseDataSource {
 
   private val currencyKeys by lazy { listOf(USD, EUR, RUB, PLN, UAH) }
 

@@ -20,7 +20,6 @@ import fobo66.valiutchik.api.Currency
 import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
-import fobo66.valiutchik.core.di.Io
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
@@ -29,18 +28,17 @@ import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import java.io.IOException
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
-class CurrencyRateRepositoryImpl @Inject constructor(
+class CurrencyRateRepositoryImpl(
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
   private val bankNameNormalizer: BankNameNormalizer,
-  @Io private val ioDispatcher: CoroutineDispatcher
+  private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRateRepository {
 
   override suspend fun refreshExchangeRates(city: String, now: Instant) =

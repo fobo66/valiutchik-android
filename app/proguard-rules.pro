@@ -1,4 +1,2 @@
-  -keepattributes *Annotation*
-  -keepattributes SourceFile,LineNumberTable
-  -keep public class * extends java.lang.Exception
-  -repackageclasses
+-repackageclasses
+-dontwarn org.slf4j.impl.StaticLoggerBinder

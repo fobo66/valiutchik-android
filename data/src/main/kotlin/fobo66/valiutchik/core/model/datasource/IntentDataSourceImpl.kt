@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,11 +20,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class IntentDataSourceImpl @Inject constructor(
-  @ApplicationContext private val context: Context
+class IntentDataSourceImpl(
+  private val context: Context
 ) : IntentDataSource {
   override fun createIntent(uri: Uri, action: String): Intent = Intent(action, uri)
 

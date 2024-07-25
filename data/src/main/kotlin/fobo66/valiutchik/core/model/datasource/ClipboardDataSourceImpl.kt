@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,11 +20,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.getSystemService
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class ClipboardDataSourceImpl @Inject constructor(
-  @ApplicationContext private val context: Context
+class ClipboardDataSourceImpl(
+  private val context: Context
 ) : ClipboardDataSource {
 
   override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
@@ -33,6 +31,6 @@ class ClipboardDataSourceImpl @Inject constructor(
     return clipboardManager?.let {
       it.setPrimaryClip(clipData)
       it.hasPrimaryClip()
-    } ?: false
+    } == true
   }
 }

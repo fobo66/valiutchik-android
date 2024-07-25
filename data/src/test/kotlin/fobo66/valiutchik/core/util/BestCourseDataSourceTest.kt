@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,17 @@ import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+
+const val BEST_USD_BUY = "2.54"
+const val BEST_USD_SELL = "2.546"
+const val BEST_EUR_BUY = "3.059"
+const val BEST_EUR_SELL = "3.068"
+const val BEST_RUR_BUY = "0.03405"
+const val BEST_RUR_SELL = "0.03414"
+const val BEST_PLN_BUY = "0.654"
+const val BEST_PLN_SELL = "0.6715"
+const val BEST_UAH_BUY = "0.08"
+const val BEST_UAH_SELL = "0.09"
 
 /**
  * Test cases for my algorithm. Check that value resolved as best is correct based on real
@@ -83,18 +94,5 @@ class BestCourseDataSourceTest {
   @Test
   fun testBestUAHSellCourseAreReallyBest() {
     assertEquals(BEST_UAH_SELL, bestSell[UAH]?.uahSell)
-  }
-
-  companion object {
-    const val BEST_USD_BUY = "2.54"
-    const val BEST_USD_SELL = "2.546"
-    const val BEST_EUR_BUY = "3.059"
-    const val BEST_EUR_SELL = "3.068"
-    const val BEST_RUR_BUY = "0.03405"
-    const val BEST_RUR_SELL = "0.03414"
-    const val BEST_PLN_BUY = "0.654"
-    const val BEST_PLN_SELL = "0.6715"
-    const val BEST_UAH_BUY = "0.08"
-    const val BEST_UAH_SELL = "0.09"
   }
 }

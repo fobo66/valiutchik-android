@@ -19,7 +19,6 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.fake.FakePreferenceDataSource
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -28,7 +27,6 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-@ExperimentalCoroutinesApi
 class CurrencyRatesTimestampRepositoryImplTest {
 
   private val preferencesDataSource = FakePreferenceDataSource()

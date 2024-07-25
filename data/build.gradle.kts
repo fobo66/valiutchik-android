@@ -21,7 +21,6 @@ plugins {
   kotlin("android")
   kotlin("plugin.serialization")
   alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
   alias(libs.plugins.room)
@@ -50,7 +49,6 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
     register("benchmark") {
@@ -83,10 +81,6 @@ ksp {
   arg("room.generateKotlin", "true")
 }
 
-hilt {
-  enableAggregatingTask = true
-}
-
 detekt {
   autoCorrect = true
 }
@@ -94,9 +88,9 @@ detekt {
 dependencies {
   api(project(":api"))
   implementation(libs.androidx.annotation)
-  implementation(libs.hilt.core)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.android)
   implementation(libs.kotlinx.serialization)
-  ksp(libs.hilt.compiler)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.datetime)
   implementation(libs.room.runtime)
@@ -112,7 +106,10 @@ dependencies {
 
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
+  testImplementation(platform(libs.koin.bom))
+  testImplementation(libs.koin.test)
   testImplementation(libs.room.testing)
+  testImplementation(libs.ktor.client)
   testImplementation(libs.kotlinx.coroutines.test)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)

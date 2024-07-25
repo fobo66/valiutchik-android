@@ -18,18 +18,17 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
+import fobo66.valiutchik.core.model.datasource.JsonDataSource
 import java.nio.charset.Charset
-import javax.inject.Inject
-import kotlinx.serialization.json.Json
 
-class LicensesRepositoryImpl @Inject constructor(
+class LicensesRepositoryImpl(
   private val assetsDataSource: AssetsDataSource,
-  private val json: Json
+  private val jsonDataSource: JsonDataSource
 ) : LicensesRepository {
 
   override fun loadLicenses(): List<OpenSourceLicensesItem> {
     val licensesFile =
       assetsDataSource.loadFile("open_source_licenses.json").readString(Charset.defaultCharset())
-    return json.decodeFromString(licensesFile) ?: emptyList()
+    return jsonDataSource.decodeLicenses(licensesFile) ?: emptyList()
   }
 }

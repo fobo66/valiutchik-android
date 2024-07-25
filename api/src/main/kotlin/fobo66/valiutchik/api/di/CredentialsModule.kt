@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,24 +16,16 @@
 
 package fobo66.valiutchik.api.di
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.api.R
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object CredentialsModule {
-  @ApiUsername
-  @Provides
-  fun provideUsername(@ApplicationContext context: Context): String =
-    context.getString(R.string.apiUsername)
-
-  @ApiPassword
-  @Provides
-  fun providePassword(@ApplicationContext context: Context): String =
-    context.getString(R.string.apiPassword)
+val credentialsModule = module {
+  single(qualifier(Api.USERNAME)) {
+    androidContext().getString(R.string.apiUsername)
+  }
+  single(qualifier(Api.PASSWORD)) {
+    androidContext().getString(R.string.apiPassword)
+  }
 }

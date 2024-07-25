@@ -19,8 +19,6 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(libs.plugins.android.library)
   kotlin("android")
-  alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
 }
@@ -38,7 +36,6 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = true
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
@@ -54,10 +51,6 @@ android {
   }
 }
 
-hilt {
-  enableAggregatingTask = true
-}
-
 detekt {
   autoCorrect = true
 }
@@ -67,8 +60,8 @@ dependencies {
   implementation(libs.androidx.annotation)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.datetime)
-  implementation(libs.hilt.core)
-  ksp(libs.hilt.compiler)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.core)
   implementation(libs.napier)
 
   detektPlugins(libs.detekt.rules.formatting)
@@ -76,6 +69,9 @@ dependencies {
 
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
+  testImplementation(platform(libs.koin.bom))
+  testImplementation(libs.koin.test)
+  testImplementation(libs.ktor.client)
   testImplementation(libs.kotlinx.coroutines.test)
 
   androidTestImplementation(libs.androidx.test.runner)

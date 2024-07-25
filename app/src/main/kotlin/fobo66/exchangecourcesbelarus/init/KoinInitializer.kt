@@ -14,17 +14,21 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.exchangecourcesbelarus.init
 
-import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import io.github.aakira.napier.Napier
+import android.content.Context
+import androidx.startup.Initializer
+import fobo66.exchangecourcesbelarus.di.viewModelsModule
+import fobo66.valiutchik.domain.di.domainModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.KoinApplication
+import org.koin.core.context.startKoin
 
-class UpdateDefaultCityPreferenceImpl(
-  private val preferenceRepository: PreferenceRepository
-) : UpdateDefaultCityPreference {
-  override suspend fun execute(newDefaultCity: String) {
-    Napier.v { "Saving new default city: $newDefaultCity" }
-    preferenceRepository.updateDefaultCityPreference(newDefaultCity)
-    Napier.v("Saved!")
+class KoinInitializer : Initializer<KoinApplication> {
+  override fun create(context: Context): KoinApplication = startKoin {
+    androidContext(context)
+    modules(viewModelsModule, domainModule)
   }
+
+  override fun dependencies(): List<Class<out Initializer<*>?>?> = emptyList()
 }

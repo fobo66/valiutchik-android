@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,20 +16,13 @@
 
 package fobo66.valiutchik.core.di
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import fobo66.valiutchik.core.R
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SecretsModule {
-
-  @GeocoderAccessToken
-  @Provides
-  fun provideGeocoderAccessToken(@ApplicationContext context: Context): String =
-    context.getString(R.string.geocoderAccessToken)
+val secretsModule = module {
+  single(qualifier(Secret.GEOCODER_ACCESS_TOKEN)) {
+    androidContext().getString(R.string.geocoderAccessToken)
+  }
 }

@@ -20,9 +20,12 @@ import android.content.Intent
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 
-class MapRepositoryImpl @Inject constructor(
+const val URI_SCHEME = "geo"
+const val URI_AUTHORITY = "0,0"
+const val URI_PARAM_KEY = "q"
+
+class MapRepositoryImpl(
   private val uriDataSource: UriDataSource,
   private val intentDataSource: IntentDataSource
 ) : MapRepository {
@@ -43,11 +46,5 @@ class MapRepositoryImpl @Inject constructor(
       Napier.e("Cannot show banks on map: maps app not found")
       null
     }
-  }
-
-  companion object {
-    const val URI_SCHEME = "geo"
-    const val URI_AUTHORITY = "0,0"
-    const val URI_PARAM_KEY = "q"
   }
 }

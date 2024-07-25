@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,20 +18,17 @@ package fobo66.exchangecourcesbelarus.ui.licenses
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
-import javax.inject.Inject
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-@HiltViewModel
-class OpenSourceLicensesViewModel @Inject constructor(
+class OpenSourceLicensesViewModel(
   loadOpenSourceLicenses: LoadOpenSourceLicenses
 ) : ViewModel() {
   val licensesState = loadOpenSourceLicenses.execute()

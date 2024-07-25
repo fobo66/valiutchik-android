@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 
 package fobo66.exchangecourcesbelarus.entities
 
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 
-@Stable
+@Immutable
 data class LicensesState(
   val licenses: ImmutableList<LicenseItem>
 )

@@ -19,14 +19,12 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,8 +36,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+class MainViewModel(
   private val currencyRatesInteractor: CurrencyRatesInteractor,
   private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
   private val findBankOnMap: FindBankOnMap
@@ -62,9 +59,7 @@ class MainViewModel @Inject constructor(
   private val state = MutableStateFlow<MainScreenState>(MainScreenState.Loading)
   val screenState = state.asStateFlow()
 
-  fun findBankOnMap(bankName: CharSequence): Intent? {
-    return findBankOnMap.execute(bankName)
-  }
+  fun findBankOnMap(bankName: CharSequence): Intent? = findBankOnMap.execute(bankName)
 
   fun refreshExchangeRates() =
     viewModelScope.launch {

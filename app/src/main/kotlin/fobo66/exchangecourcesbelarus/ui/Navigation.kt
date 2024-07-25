@@ -35,7 +35,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.app.ActivityOptionsCompat
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -57,6 +56,7 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 const val DESTINATION_MAIN = "main"
 const val DESTINATION_PREFERENCES = "prefs"
@@ -186,14 +186,14 @@ fun NavGraphBuilder.preferenceScreen(
       PreferenceScreen(
         navController = navController,
         modifier = Modifier.clip(MaterialTheme.shapes.extraLarge),
-        preferencesViewModel = hiltViewModel()
+        preferencesViewModel = koinViewModel()
       )
     }
   } else {
     composable(DESTINATION_PREFERENCES) {
       PreferenceScreen(
         navController = navController,
-        preferencesViewModel = hiltViewModel()
+        preferencesViewModel = koinViewModel()
       )
     }
   }
@@ -230,7 +230,7 @@ private fun PreferenceScreen(
 
 fun NavGraphBuilder.licensesScreen() {
   composable(DESTINATION_LICENSES) {
-    val openSourceLicensesViewModel: OpenSourceLicensesViewModel = hiltViewModel()
+    val openSourceLicensesViewModel: OpenSourceLicensesViewModel = koinViewModel()
     val uriHandler = LocalUriHandler.current
 
     val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle()

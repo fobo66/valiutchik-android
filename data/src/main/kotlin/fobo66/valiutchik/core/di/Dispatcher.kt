@@ -14,17 +14,8 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.di
 
-import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import io.github.aakira.napier.Napier
-
-class UpdateDefaultCityPreferenceImpl(
-  private val preferenceRepository: PreferenceRepository
-) : UpdateDefaultCityPreference {
-  override suspend fun execute(newDefaultCity: String) {
-    Napier.v { "Saving new default city: $newDefaultCity" }
-    preferenceRepository.updateDefaultCityPreference(newDefaultCity)
-    Napier.v("Saved!")
-  }
+internal enum class Dispatcher {
+  IO
 }

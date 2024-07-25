@@ -22,9 +22,8 @@ import fobo66.valiutchik.core.entities.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 
-class LocationRepositoryImpl @Inject constructor(
+class LocationRepositoryImpl(
   private val locationDataSource: LocationDataSource,
   private val geocodingDataSource: GeocodingDataSource
 ) : LocationRepository {

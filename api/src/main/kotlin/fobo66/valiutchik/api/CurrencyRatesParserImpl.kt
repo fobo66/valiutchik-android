@@ -19,11 +19,24 @@ package fobo66.valiutchik.api
 import android.util.Xml
 import java.io.IOException
 import java.io.InputStream
-import javax.inject.Inject
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 
-class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
+const val ROOT_TAG_NAME = "root"
+const val ENTRY_TAG_NAME = "bank"
+const val TAG_NAME_BANKNAME = "bankname"
+const val TAG_NAME_USD_BUY = "usd_buy"
+const val TAG_NAME_USD_SELL = "usd_sell"
+const val TAG_NAME_EUR_BUY = "eur_buy"
+const val TAG_NAME_EUR_SELL = "eur_sell"
+const val TAG_NAME_RUR_BUY = "rub_buy"
+const val TAG_NAME_RUR_SELL = "rub_sell"
+const val TAG_NAME_PLN_BUY = "pln_buy"
+const val TAG_NAME_PLN_SELL = "pln_sell"
+const val TAG_NAME_UAH_BUY = "uah_buy"
+const val TAG_NAME_UAH_SELL = "uah_sell"
+
+class CurrencyRatesParserImpl : CurrencyRatesParser {
   private val neededTagNames by lazy {
     setOf(
       TAG_NAME_BANKNAME,
@@ -141,20 +154,4 @@ class CurrencyRatesParserImpl @Inject constructor() : CurrencyRatesParser {
       uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
       uahSell = get(TAG_NAME_UAH_SELL).orEmpty()
     )
-
-  companion object {
-    const val ROOT_TAG_NAME = "root"
-    const val ENTRY_TAG_NAME = "bank"
-    const val TAG_NAME_BANKNAME = "bankname"
-    const val TAG_NAME_USD_BUY = "usd_buy"
-    const val TAG_NAME_USD_SELL = "usd_sell"
-    const val TAG_NAME_EUR_BUY = "eur_buy"
-    const val TAG_NAME_EUR_SELL = "eur_sell"
-    const val TAG_NAME_RUR_BUY = "rub_buy"
-    const val TAG_NAME_RUR_SELL = "rub_sell"
-    const val TAG_NAME_PLN_BUY = "pln_buy"
-    const val TAG_NAME_PLN_SELL = "pln_sell"
-    const val TAG_NAME_UAH_BUY = "uah_buy"
-    const val TAG_NAME_UAH_SELL = "uah_sell"
-  }
 }

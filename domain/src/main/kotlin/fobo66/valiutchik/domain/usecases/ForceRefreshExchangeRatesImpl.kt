@@ -20,11 +20,10 @@ import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Instant
 
-class ForceRefreshExchangeRatesImpl @Inject constructor(
+class ForceRefreshExchangeRatesImpl(
   private val locationRepository: LocationRepository,
   private val timestampRepository: CurrencyRatesTimestampRepository,
   private val currencyRateRepository: CurrencyRateRepository,

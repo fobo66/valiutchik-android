@@ -17,11 +17,10 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 
-class CurrencyRatesInteractorImpl @Inject constructor(
+class CurrencyRatesInteractorImpl(
   private val refreshExchangeRates: RefreshExchangeRates,
   private val forceRefreshExchangeRates: ForceRefreshExchangeRates,
   private val refreshExchangeRatesForDefaultCity: RefreshExchangeRatesForDefaultCity,

@@ -18,9 +18,8 @@ package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 
-class UpdateUpdateIntervalPreferenceImpl @Inject constructor(
+class UpdateUpdateIntervalPreferenceImpl(
   private val preferenceRepository: PreferenceRepository
 ) : UpdateUpdateIntervalPreference {
   override suspend fun execute(newUpdateInterval: Float) {

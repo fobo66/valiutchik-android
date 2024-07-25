@@ -18,9 +18,8 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 
-class ClipboardRepositoryImpl @Inject constructor(
+class ClipboardRepositoryImpl(
   private val clipboardDataSource: ClipboardDataSource
 ) : ClipboardRepository {
 

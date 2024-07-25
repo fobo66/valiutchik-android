@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +16,7 @@
 
 package fobo66.valiutchik.domain.di
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
@@ -46,73 +43,60 @@ import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface DomainModule {
+val domainModule = module {
+  includes(repositoriesModule)
 
-  @Binds
-  fun provideRefreshExchangeRates(
-    refreshExchangeRatesImpl: RefreshExchangeRatesImpl
-  ): RefreshExchangeRates
+  single<CopyCurrencyRateToClipboard> {
+    CopyCurrencyRateToClipboardImpl(get())
+  }
 
-  @Binds
-  fun provideForceRefreshExchangeRates(
-    forceRefreshExchangeRatesImpl: ForceRefreshExchangeRatesImpl
-  ): ForceRefreshExchangeRates
+  single<CurrencyRatesInteractor> {
+    CurrencyRatesInteractorImpl(get(), get(), get(), get(), get())
+  }
 
-  @Binds
-  fun provideRefreshExchangeRatesForDefaultCity(
-    refreshExchangeRatesForDefaultCityImpl: RefreshExchangeRatesForDefaultCityImpl
-  ): RefreshExchangeRatesForDefaultCity
+  single<FindBankOnMap> {
+    FindBankOnMapImpl(get())
+  }
 
-  @Binds
-  fun provideForceRefreshExchangeRatesForDefaultCity(
-    forceRefreshExchangeRatesForDefaultCityImpl: ForceRefreshExchangeRatesForDefaultCityImpl
-  ): ForceRefreshExchangeRatesForDefaultCity
+  single<ForceRefreshExchangeRates> {
+    ForceRefreshExchangeRatesImpl(get(), get(), get(), get())
+  }
 
-  @Binds
-  fun provideLoadExchangeRates(
-    loadExchangeRatesImpl: LoadExchangeRatesImpl
-  ): LoadExchangeRates
+  single<ForceRefreshExchangeRatesForDefaultCity> {
+    ForceRefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
+  }
 
-  @Binds
-  fun provideCurrencyRatesInteractor(
-    currencyRatesInteractorImpl: CurrencyRatesInteractorImpl
-  ): CurrencyRatesInteractor
+  single<LoadDefaultCityPreference> {
+    LoadDefaultCityPreferenceImpl(get())
+  }
 
-  @Binds
-  fun provideCopyCurrencyRateToClipboard(
-    copyCurrencyRateToClipboardImpl: CopyCurrencyRateToClipboardImpl
-  ): CopyCurrencyRateToClipboard
+  single<LoadExchangeRates> {
+    LoadExchangeRatesImpl(get(), get())
+  }
 
-  @Binds
-  fun provideFindBankOnMap(
-    findBankOnMapImpl: FindBankOnMapImpl
-  ): FindBankOnMap
+  single<LoadOpenSourceLicenses> {
+    LoadOpenSourceLicensesImpl(get())
+  }
 
-  @Binds
-  fun provideLoadDefaultCityPreference(
-    loadDefaultCityPreferenceImpl: LoadDefaultCityPreferenceImpl
-  ): LoadDefaultCityPreference
+  single<LoadUpdateIntervalPreference> {
+    LoadUpdateIntervalPreferenceImpl(get())
+  }
 
-  @Binds
-  fun provideLoadUpdateIntervalPreference(
-    loadUpdateIntervalPreferenceImpl: LoadUpdateIntervalPreferenceImpl
-  ): LoadUpdateIntervalPreference
+  single<RefreshExchangeRates> {
+    RefreshExchangeRatesImpl(get(), get(), get(), get())
+  }
 
-  @Binds
-  fun provideUpdateDefaultCityPreference(
-    updateDefaultCityPreferenceImpl: UpdateDefaultCityPreferenceImpl
-  ): UpdateDefaultCityPreference
+  single<RefreshExchangeRatesForDefaultCity> {
+    RefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
+  }
 
-  @Binds
-  fun provideUpdateUpdateIntervalPreference(
-    updateUpdateIntervalPreferenceImpl: UpdateUpdateIntervalPreferenceImpl
-  ): UpdateUpdateIntervalPreference
+  single<UpdateDefaultCityPreference> {
+    UpdateDefaultCityPreferenceImpl(get())
+  }
 
-  @Binds
-  fun provideLoadOpenSourceLicenses(
-    loadOpenSourceLicensesImpl: LoadOpenSourceLicensesImpl
-  ): LoadOpenSourceLicenses
+  single<UpdateUpdateIntervalPreference> {
+    UpdateUpdateIntervalPreferenceImpl(get())
+  }
 }

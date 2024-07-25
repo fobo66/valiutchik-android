@@ -34,14 +34,13 @@ import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 
-class LoadExchangeRatesImpl @Inject constructor(
+class LoadExchangeRatesImpl(
   private val currencyRateRepository: CurrencyRateRepository,
   private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 ) : LoadExchangeRates {

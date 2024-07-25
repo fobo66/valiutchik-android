@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,17 +16,11 @@
 
 package fobo66.valiutchik.core.di
 
-import android.content.Context
-import android.content.res.AssetManager
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SystemModule {
-  @Provides
-  fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
+val systemModule = module {
+  single {
+    androidContext().assets
+  }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,10 +14,16 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.di
+package fobo66.exchangecourcesbelarus.di
 
-import javax.inject.Qualifier
+import fobo66.exchangecourcesbelarus.ui.MainViewModel
+import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
+import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.dsl.module
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class GeocoderAccessToken
+val viewModelsModule = module {
+  viewModelOf(::MainViewModel)
+  viewModelOf(::OpenSourceLicensesViewModel)
+  viewModelOf(::PreferencesViewModel)
+}

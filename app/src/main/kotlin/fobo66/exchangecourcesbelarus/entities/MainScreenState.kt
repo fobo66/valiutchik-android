@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,14 +17,16 @@
 package fobo66.exchangecourcesbelarus.entities
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
-sealed class MainScreenState(val isInProgress: Boolean = true) {
+@Stable
+sealed class MainScreenState {
   @Immutable
   object Loading : MainScreenState()
 
   @Immutable
-  object LoadedRates : MainScreenState(false)
+  object LoadedRates : MainScreenState()
 
   @Immutable
-  object Error : MainScreenState(false)
+  object Error : MainScreenState()
 }

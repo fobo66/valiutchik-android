@@ -20,8 +20,6 @@ plugins {
   alias(libs.plugins.android.app)
   kotlin("android")
   kotlin("plugin.compose")
-  alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt)
   alias(libs.plugins.detekt)
   alias(libs.plugins.licenses)
   alias(libs.plugins.junit)
@@ -110,10 +108,6 @@ composeCompiler {
   reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
 
-hilt {
-  enableAggregatingTask = true
-}
-
 licenseReport {
   generateCsvReport = false
   generateHtmlReport = false
@@ -166,13 +160,13 @@ dependencies {
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.lifecycle.viewmodel)
 
-  // nav
   implementation(libs.androidx.navigation)
-  implementation(libs.hilt.navigation)
 
-  // dagger
-  implementation(libs.hilt.core)
-  ksp(libs.hilt.compiler)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.android)
+  implementation(libs.koin.compose)
+  implementation(libs.koin.navigation)
+  implementation(libs.koin.viewmodel)
 
   implementation(libs.napier)
 

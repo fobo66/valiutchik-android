@@ -14,17 +14,24 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.domain
 
-import fobo66.valiutchik.core.model.repository.PreferenceRepository
-import io.github.aakira.napier.Napier
+import fobo66.valiutchik.domain.di.domainModule
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngine
+import org.junit.jupiter.api.Test
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.test.verify.verify
 
-class UpdateDefaultCityPreferenceImpl(
-  private val preferenceRepository: PreferenceRepository
-) : UpdateDefaultCityPreference {
-  override suspend fun execute(newDefaultCity: String) {
-    Napier.v { "Saving new default city: $newDefaultCity" }
-    preferenceRepository.updateDefaultCityPreference(newDefaultCity)
-    Napier.v("Saved!")
+class DomainKoinModuleTest {
+  @OptIn(KoinExperimentalAPI::class)
+  @Test
+  fun `check domain module`() {
+    domainModule.verify(
+      extraTypes = listOf(
+        HttpClientEngine::class,
+        HttpClientConfig::class
+      )
+    )
   }
 }
