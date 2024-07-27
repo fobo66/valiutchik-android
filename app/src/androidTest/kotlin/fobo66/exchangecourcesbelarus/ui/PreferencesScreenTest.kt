@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasTestTag
@@ -24,8 +25,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTouchInput
-import androidx.compose.ui.test.swipeRight
 import androidx.test.filters.SmallTest
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import org.junit.Assert.assertNotEquals
@@ -58,6 +57,7 @@ class PreferencesScreenTest {
     assertTrue(showLicense)
   }
 
+  @OptIn(ExperimentalTestApi::class)
   @Test
   fun updateIntervalValueChanges() {
     var updateInterval = 1f
@@ -75,9 +75,7 @@ class PreferencesScreenTest {
     composeRule.onNodeWithTag(TAG_UPDATE_INTERVAL)
       .onChildren()
       .filterToOne(hasTestTag(TAG_SLIDER))
-      .performTouchInput {
-        swipeRight()
-      }
+      .performClick()
     assertNotEquals(1f, updateInterval)
   }
 
