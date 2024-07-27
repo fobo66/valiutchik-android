@@ -45,7 +45,7 @@ android {
     minSdk = AndroidVersion.VersionCodes.O
     targetSdk = 35
     versionCode = 21
-    versionName = "1.13.2"
+    versionName = "1.14"
     multiDexEnabled = true
     resourceConfigurations += listOf("en", "be", "ru")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
