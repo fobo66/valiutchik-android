@@ -221,12 +221,9 @@ private fun SeekbarPreferenceSummary(
       )
       Spacer(modifier = Modifier.width(16.dp))
       Slider(
+        enabled = enabled,
         value = sliderValue,
-        onValueChange = {
-          if (enabled) {
-            onValueChange(it)
-          }
-        },
+        onValueChange = onValueChange,
         valueRange = valueRange,
         steps = steps,
         onValueChangeFinished = onValueChangeEnd,
