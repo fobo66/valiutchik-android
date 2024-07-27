@@ -46,11 +46,10 @@ fun OpenSourceLicensesScreen(
       LoadingIndicator()
     } else {
       LazyColumn(modifier = modifier) {
-        items(licensesState.licenses, key = { it.project }) { item ->
+        items(licensesState.licenses) { item ->
           OpenSourceLicense(
             item = item,
-            onItemClick = onItemClick,
-            modifier = Modifier.animateItem()
+            onItemClick = onItemClick
           )
         }
       }
