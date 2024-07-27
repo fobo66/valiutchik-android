@@ -27,6 +27,7 @@ plugins {
   alias(libs.plugins.junit) apply false
   alias(libs.plugins.detekt) apply false
   alias(libs.plugins.room) apply false
+  alias(libs.plugins.baseline.profile) apply false
 }
 
 tasks.register<Delete>("clean") {

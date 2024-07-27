@@ -14,17 +14,14 @@
  *    limitations under the License.
  */
 
-import com.android.build.api.dsl.ManagedVirtualDevice
-import com.android.sdklib.AndroidVersion
-
 plugins {
   alias(libs.plugins.android.test)
-  kotlin("android")
+  alias(libs.plugins.kotlin.android)
   alias(libs.plugins.baseline.profile)
 }
 
 android {
-  namespace = "dev.fobo66.valiutchik.macrobenchmark"
+  namespace = "dev.fobo66.baselineprofile"
   compileSdk = 35
 
   compileOptions {
@@ -37,38 +34,20 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.P
+    minSdk = 28
     targetSdk = 35
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
-  buildTypes {
-    // This benchmark buildType is used for benchmarking, and should function like your
-    // release build (for example, with minification on). It"s signed with a debug key
-    // for easy local/CI testing.
-    create("benchmark") {
-      isDebuggable = true
-      signingConfig = getByName("debug").signingConfig
-      matchingFallbacks += listOf("release")
-    }
-  }
-
-  testOptions.managedDevices.devices {
-    create<ManagedVirtualDevice>("pixel6Api34") {
-      device = "Pixel 6"
-      apiLevel = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
-      systemImageSource = "google"
-    }
-  }
-
   targetProjectPath = ":app"
-  experimentalProperties["android.experimental.self-instrumenting"] = true
+
 }
 
+// This is the configuration block for the Baseline Profile plugin.
+// You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
-  managedDevices += "pixel6Api34"
-  useConnectedDevices = false
+  useConnectedDevices = true
 }
 
 dependencies {
@@ -79,7 +58,11 @@ dependencies {
 }
 
 androidComponents {
-  beforeVariants(selector().all()) {
-    it.enable = it.buildType == "benchmark"
+  onVariants { v ->
+    val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
+    v.instrumentationRunnerArguments.put(
+      "targetAppId",
+      v.testedApks.map { artifactsLoader.load(it)?.applicationId }
+    )
   }
 }

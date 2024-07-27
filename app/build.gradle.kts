@@ -133,7 +133,7 @@ dependencies {
   implementation(libs.androidx.window)
   implementation(libs.profileinstaller)
 
-  baselineProfile(project(":macrobenchmark"))
+  baselineProfile(project(":baselineprofile"))
 
   // compose
   val composeBom = platform(libs.compose.bom)
