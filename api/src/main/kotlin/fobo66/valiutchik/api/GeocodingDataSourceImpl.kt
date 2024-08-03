@@ -17,11 +17,15 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.Feature
+import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.api.entity.GeocodingResult
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -36,12 +40,24 @@ class GeocodingDataSourceImpl(
     latitude: Double,
     longitude: Double
   ): List<Feature> = withContext(ioDispatcher) {
-    val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
-      parameter("apiKey", apiKey)
-      parameter("type", "city")
-      parameter("lat", latitude)
-      parameter("lon", longitude)
-    }.body()
-    result.features
+    try {
+      val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
+        parameter("apiKey", apiKey)
+        parameter("type", "city")
+        parameter("lat", latitude)
+        parameter("lon", longitude)
+      }.body()
+      result.features
+    } catch (e: ResponseException) {
+      Napier.e(e) {
+        "Geocoding API request failed"
+      }
+      throw GeocodingFailedException(e.message)
+    } catch (e: IOException) {
+      Napier.e(e) {
+        "Unexpected issue happened during geocoding request"
+      }
+      throw GeocodingFailedException(e.message)
+    }
   }
 }

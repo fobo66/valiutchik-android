@@ -19,7 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import android.Manifest
 import androidx.annotation.RequiresPermission
 import fobo66.valiutchik.api.GeocodingDataSource
-import fobo66.valiutchik.core.entities.GeocodingFailedException
+import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import io.github.aakira.napier.Napier
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderCallback
 import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderOptions
 import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoderResponse
 import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
-import fobo66.valiutchik.core.entities.GeocodingFailedException
+import fobo66.valiutchik.api.entity.GeocodingFailedException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
