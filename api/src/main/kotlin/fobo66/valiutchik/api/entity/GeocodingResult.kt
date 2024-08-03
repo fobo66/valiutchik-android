@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.api.entity
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
