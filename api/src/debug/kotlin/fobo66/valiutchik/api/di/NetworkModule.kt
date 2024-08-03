@@ -21,6 +21,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
+import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -52,6 +53,10 @@ val networkModule = module {
       }
       install(ContentNegotiation) {
         json(get())
+      }
+      install(ContentEncoding) {
+        gzip()
+        deflate()
       }
       install(Logging) {
         logger = get()

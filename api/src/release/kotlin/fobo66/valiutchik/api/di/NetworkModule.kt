@@ -35,6 +35,10 @@ val networkModule = module {
       install(ContentNegotiation) {
         json(get())
       }
+      install(ContentEncoding) {
+        gzip()
+        deflate()
+      }
       install(HttpCache) {
         publicStorage(FileStorage(androidContext().cacheDir))
       }

@@ -86,6 +86,7 @@ dependencies {
   implementation(libs.ktor.client)
   implementation(libs.ktor.auth)
   implementation(libs.ktor.content)
+  implementation(libs.ktor.encoding)
   implementation(libs.ktor.serialization)
   implementation(libs.kotlinx.serialization)
 
