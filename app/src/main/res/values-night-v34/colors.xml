@@ -15,5 +15,5 @@
   -->
 
 <resources>
-  <color name="splash_screen_background">#1B5E20</color>
+  <color name="splash_screen_background">@android:color/system_background_dark</color>
 </resources>
