@@ -19,6 +19,7 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(libs.plugins.android.library)
   kotlin("android")
+  kotlin("plugin.serialization")
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
 }
@@ -78,6 +79,9 @@ dependencies {
   debugImplementation(libs.ktor.logging)
   implementation(libs.ktor.client)
   implementation(libs.ktor.auth)
+  implementation(libs.ktor.content)
+  implementation(libs.ktor.serialization)
+  implementation(libs.kotlinx.serialization)
 
   implementation(libs.napier)
 
