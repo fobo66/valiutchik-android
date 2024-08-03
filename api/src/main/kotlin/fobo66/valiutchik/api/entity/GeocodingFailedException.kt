@@ -16,4 +16,4 @@
 
 package fobo66.valiutchik.api.entity
 
-class GeocodingFailedException(message: String?) : Exception(message)
+class GeocodingFailedException(cause: Throwable?) : Throwable(cause)

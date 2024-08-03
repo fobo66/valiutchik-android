@@ -52,12 +52,12 @@ class GeocodingDataSourceImpl(
       Napier.e(e) {
         "Geocoding API request failed"
       }
-      throw GeocodingFailedException(e.message)
+      throw GeocodingFailedException(e)
     } catch (e: IOException) {
       Napier.e(e) {
         "Unexpected issue happened during geocoding request"
       }
-      throw GeocodingFailedException(e.message)
+      throw GeocodingFailedException(e)
     }
   }
 }
