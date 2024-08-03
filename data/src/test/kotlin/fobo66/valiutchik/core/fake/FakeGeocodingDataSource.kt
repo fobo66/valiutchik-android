@@ -18,8 +18,8 @@ package fobo66.valiutchik.core.fake
 
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.Feature
+import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.api.entity.Properties
-import fobo66.valiutchik.core.entities.GeocodingFailedException
 
 class FakeGeocodingDataSource : GeocodingDataSource {
   var showError = false
@@ -32,7 +32,7 @@ class FakeGeocodingDataSource : GeocodingDataSource {
     longitude: Double
   ): List<Feature> =
     when {
-      showError -> throw GeocodingFailedException("Yikes!")
+      showError -> throw GeocodingFailedException(Throwable("Yikes!"))
       unexpectedError -> throw KotlinNullPointerException("Yikes!")
       else -> listOf(searchResult)
     }
