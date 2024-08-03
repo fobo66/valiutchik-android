@@ -42,6 +42,7 @@ val networkModule = module {
   single<Json> {
     Json {
       isLenient = true
+      ignoreUnknownKeys = true
     }
   }
   single<HttpClient> {
