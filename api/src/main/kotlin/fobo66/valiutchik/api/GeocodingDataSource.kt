@@ -14,8 +14,20 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.di
+package fobo66.valiutchik.api
 
-internal enum class Api {
-  USERNAME, PASSWORD, GEOCODING_API_KEY
+import fobo66.valiutchik.api.entity.Feature
+
+/**
+ * Datasource for geocoding. Supports only reverse geocoding at the moment
+ */
+interface GeocodingDataSource {
+
+  /**
+   * Find possible city address on given location
+   *
+   * @param latitude Latitude for search
+   * @param longitude Longitude for search
+   */
+  suspend fun findPlace(latitude: Double, longitude: Double): List<Feature>
 }

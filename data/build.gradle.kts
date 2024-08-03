@@ -35,12 +35,6 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
-
-    resValue(
-      "string",
-      "geocoderAccessToken",
-      loadSecret(rootProject, GEOCODER_TOKEN)
-    )
   }
 
   buildFeatures {

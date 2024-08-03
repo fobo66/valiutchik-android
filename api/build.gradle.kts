@@ -45,6 +45,12 @@ android {
       "apiPassword",
       loadSecret(rootProject, API_PASSWORD)
     )
+
+    resValue(
+      "string",
+      "geocoderApiKey",
+      loadSecret(rootProject, GEOCODER_TOKEN)
+    )
   }
 
   buildTypes {

@@ -28,4 +28,7 @@ val credentialsModule = module {
   single(qualifier(Api.PASSWORD)) {
     androidContext().getString(R.string.apiPassword)
   }
+  single(qualifier(Api.GEOCODING_API_KEY)) {
+    androidContext().getString(R.string.geocoderApiKey)
+  }
 }
