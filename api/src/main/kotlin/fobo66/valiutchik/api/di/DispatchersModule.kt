@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,6 +14,12 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.entities
+package fobo66.valiutchik.api.di
 
-class GeocodingFailedException(message: String) : Exception(message)
+import kotlinx.coroutines.Dispatchers
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
+
+val dispatchersModule = module {
+  single(qualifier(Dispatcher.IO)) { Dispatchers.IO }
+}

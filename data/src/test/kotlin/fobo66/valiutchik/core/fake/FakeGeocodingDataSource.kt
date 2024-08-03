@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,26 +16,23 @@
 
 package fobo66.valiutchik.core.fake
 
-import com.tomtom.sdk.location.Address
-import com.tomtom.sdk.location.GeoPoint
-import com.tomtom.sdk.location.Place
-import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
-import fobo66.valiutchik.core.entities.GeocodingFailedException
-import fobo66.valiutchik.core.entities.Location
-import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
+import fobo66.valiutchik.api.GeocodingDataSource
+import fobo66.valiutchik.api.entity.Feature
+import fobo66.valiutchik.api.entity.GeocodingFailedException
+import fobo66.valiutchik.api.entity.Properties
 
 class FakeGeocodingDataSource : GeocodingDataSource {
   var showError = false
   var unexpectedError = false
 
-  private val searchAddress: Address = Address(countrySecondarySubdivision = "fake")
+  private val searchResult = Feature(Properties(city = "fake"))
 
-  private val searchResult: PlaceMatch =
-    PlaceMatch(Place(GeoPoint(0.0, 0.0), address = searchAddress))
-
-  override suspend fun findPlace(location: Location): List<PlaceMatch> =
+  override suspend fun findPlace(
+    latitude: Double,
+    longitude: Double
+  ): List<Feature> =
     when {
-      showError -> throw GeocodingFailedException("Yikes!")
+      showError -> throw GeocodingFailedException(Throwable("Yikes!"))
       unexpectedError -> throw KotlinNullPointerException("Yikes!")
       else -> listOf(searchResult)
     }

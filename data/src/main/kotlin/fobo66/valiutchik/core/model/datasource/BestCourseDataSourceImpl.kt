@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.api.Currency
+import fobo66.valiutchik.api.entity.Currency
 import fobo66.valiutchik.core.UNKNOWN_COURSE
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.EUR

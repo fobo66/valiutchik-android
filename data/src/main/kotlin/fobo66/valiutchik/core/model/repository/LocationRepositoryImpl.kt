@@ -18,8 +18,8 @@ package fobo66.valiutchik.core.model.repository
 
 import android.Manifest
 import androidx.annotation.RequiresPermission
-import fobo66.valiutchik.core.entities.GeocodingFailedException
-import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
+import fobo66.valiutchik.api.GeocodingDataSource
+import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import io.github.aakira.napier.Napier
 
@@ -34,7 +34,7 @@ class LocationRepositoryImpl(
       Napier.v("Resolving user's location")
       val location = locationDataSource.resolveLocation()
       Napier.v { "Resolved user's location: $location" }
-      geocodingDataSource.findPlace(location)
+      geocodingDataSource.findPlace(location.latitude, location.longitude)
     } catch (e: GeocodingFailedException) {
       Napier.e("Failed to determine user city", e)
       emptyList()
@@ -42,7 +42,7 @@ class LocationRepositoryImpl(
 
     Napier.v("Resolving user's city")
     return response
-      .map { it.place.address?.countrySecondarySubdivision }
+      .map { it.properties.city }
       .firstNotNullOfOrNull { it }.also { city ->
         city?.let {
           Napier.v { "Resolved user's city: $it" }

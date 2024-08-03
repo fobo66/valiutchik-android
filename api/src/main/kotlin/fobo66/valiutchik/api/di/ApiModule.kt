@@ -20,19 +20,29 @@ import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
 import fobo66.valiutchik.api.CurrencyRatesParser
 import fobo66.valiutchik.api.CurrencyRatesParserImpl
+import fobo66.valiutchik.api.GeocodingDataSource
+import fobo66.valiutchik.api.GeocodingDataSourceImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val apiModule = module {
-  includes(credentialsModule, networkModule)
+  includes(credentialsModule, networkModule, dispatchersModule)
   singleOf<CurrencyRatesParser>(::CurrencyRatesParserImpl)
   single<CurrencyRatesDataSource> {
     CurrencyRatesDataSourceImpl(
       get(),
       get(),
       get(qualifier(Api.USERNAME)),
-      get(qualifier(Api.PASSWORD))
+      get(qualifier(Api.PASSWORD)),
+      get(qualifier(Dispatcher.IO))
+    )
+  }
+  single<GeocodingDataSource> {
+    GeocodingDataSourceImpl(
+      get(),
+      get(qualifier(Api.GEOCODING_API_KEY)),
+      get(qualifier(Dispatcher.IO))
     )
   }
 }

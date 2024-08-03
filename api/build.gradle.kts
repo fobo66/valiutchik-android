@@ -19,6 +19,7 @@ import com.android.sdklib.AndroidVersion
 plugins {
   alias(libs.plugins.android.library)
   kotlin("android")
+  kotlin("plugin.serialization")
   alias(libs.plugins.detekt)
   alias(libs.plugins.junit)
 }
@@ -43,6 +44,12 @@ android {
       "string",
       "apiPassword",
       loadSecret(rootProject, API_PASSWORD)
+    )
+
+    resValue(
+      "string",
+      "geocoderApiKey",
+      loadSecret(rootProject, GEOCODER_TOKEN)
     )
   }
 
@@ -78,6 +85,10 @@ dependencies {
   debugImplementation(libs.ktor.logging)
   implementation(libs.ktor.client)
   implementation(libs.ktor.auth)
+  implementation(libs.ktor.content)
+  implementation(libs.ktor.encoding)
+  implementation(libs.ktor.serialization)
+  implementation(libs.kotlinx.serialization)
 
   implementation(libs.napier)
 

@@ -14,8 +14,19 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.di
+package fobo66.valiutchik.api.entity
 
-internal enum class Dispatcher {
-  IO
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Properties(
+  @SerialName("city")
+  val city: String? = "",
+  @SerialName("country")
+  val country: String? = "",
+  @SerialName("county")
+  val county: String? = "",
+  @SerialName("formatted")
+  val formatted: String = "",
+)

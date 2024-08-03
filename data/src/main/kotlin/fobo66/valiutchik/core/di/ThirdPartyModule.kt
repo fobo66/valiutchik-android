@@ -21,23 +21,11 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.tomtom.sdk.search.reversegeocoder.ReverseGeocoder
-import com.tomtom.sdk.search.reversegeocoder.online.OnlineReverseGeocoder
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
-import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val thirdPartyModule = module {
-  includes(secretsModule)
-  single<ReverseGeocoder> {
-    OnlineReverseGeocoder.create(androidContext(), get(qualifier(Secret.GEOCODER_ACCESS_TOKEN)))
-  }
-
-  single<Json> {
-    Json
-  }
 
   single<CurrencyRatesDatabase> {
     Room.databaseBuilder(

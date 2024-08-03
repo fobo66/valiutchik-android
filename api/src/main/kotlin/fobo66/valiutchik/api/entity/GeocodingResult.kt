@@ -14,8 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.di
+package fobo66.valiutchik.api.entity
 
-internal enum class Secret {
-  GEOCODER_ACCESS_TOKEN
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class GeocodingResult(
+  @SerialName("features")
+  val features: List<Feature> = listOf()
+)

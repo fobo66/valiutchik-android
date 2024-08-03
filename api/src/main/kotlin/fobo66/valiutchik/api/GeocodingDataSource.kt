@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.api
 
-import com.tomtom.sdk.search.reversegeocoder.model.location.PlaceMatch
-import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.api.entity.Feature
 
 /**
  * Datasource for geocoding. Supports only reverse geocoding at the moment
@@ -27,7 +26,8 @@ interface GeocodingDataSource {
   /**
    * Find possible city address on given location
    *
-   * @param location Latitude and longitude for search
+   * @param latitude Latitude for search
+   * @param longitude Longitude for search
    */
-  suspend fun findPlace(location: Location): List<PlaceMatch>
+  suspend fun findPlace(latitude: Double, longitude: Double): List<Feature>
 }

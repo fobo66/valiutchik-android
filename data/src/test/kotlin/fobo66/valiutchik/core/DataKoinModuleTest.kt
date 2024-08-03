@@ -16,10 +16,8 @@
 
 package fobo66.valiutchik.core
 
-import fobo66.valiutchik.core.di.coroutineDispatchersModule
 import fobo66.valiutchik.core.di.dataSourcesModule
 import fobo66.valiutchik.core.di.repositoriesModule
-import fobo66.valiutchik.core.di.secretsModule
 import fobo66.valiutchik.core.di.systemModule
 import fobo66.valiutchik.core.di.thirdPartyModule
 import io.ktor.client.HttpClientConfig
@@ -29,18 +27,6 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
 class DataKoinModuleTest {
-
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check dispatchers module`() {
-    coroutineDispatchersModule.verify()
-  }
-
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check secrets module`() {
-    secretsModule.verify()
-  }
 
   @OptIn(KoinExperimentalAPI::class)
   @Test

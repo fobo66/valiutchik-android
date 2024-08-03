@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.di
 
+import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
@@ -24,8 +25,6 @@ import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
-import fobo66.valiutchik.core.model.datasource.GeocodingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
@@ -52,18 +51,13 @@ import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 import fobo66.valiutchik.core.util.BankNameNormalizer
-import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
-val coroutineDispatchersModule = module {
-  single(qualifier(Dispatcher.IO)) { Dispatchers.IO }
-}
-
 val dataSourcesModule = module {
-  includes(apiModule, systemModule, coroutineDispatchersModule, thirdPartyModule)
+  includes(apiModule, systemModule, thirdPartyModule)
 
   single<AssetsDataSource> {
     AssetsDataSourceImpl(get())
@@ -75,10 +69,6 @@ val dataSourcesModule = module {
 
   single<ClipboardDataSource> {
     ClipboardDataSourceImpl(androidContext())
-  }
-
-  single<GeocodingDataSource> {
-    GeocodingDataSourceImpl(get())
   }
 
   single<IntentDataSource> {
@@ -116,7 +106,7 @@ val repositoriesModule = module {
   }
 
   single<CurrencyRateRepository> {
-    CurrencyRateRepositoryImpl(get(), get(), get(), get(), get(qualifier(Dispatcher.IO)))
+    CurrencyRateRepositoryImpl(get(), get(), get(), get())
   }
 
   single<CurrencyRatesTimestampRepository> {

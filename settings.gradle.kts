@@ -27,16 +27,6 @@ dependencyResolutionManagement {
       }
     }
     mavenCentral()
-    exclusiveContent {
-      forRepository {
-        maven("https://repositories.tomtom.com/artifactory/maven") {
-          name = "TomTom"
-        }
-      }
-      filter {
-        includeGroupAndSubgroups("com.tomtom")
-      }
-    }
   }
 }
 

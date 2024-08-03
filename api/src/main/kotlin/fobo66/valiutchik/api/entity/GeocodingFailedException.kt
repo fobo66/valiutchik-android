@@ -14,15 +14,6 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.di
+package fobo66.valiutchik.api.entity
 
-import fobo66.valiutchik.core.R
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.qualifier.qualifier
-import org.koin.dsl.module
-
-val secretsModule = module {
-  single(qualifier(Secret.GEOCODER_ACCESS_TOKEN)) {
-    androidContext().getString(R.string.geocoderAccessToken)
-  }
-}
+class GeocodingFailedException(cause: Throwable?) : Throwable(cause)
