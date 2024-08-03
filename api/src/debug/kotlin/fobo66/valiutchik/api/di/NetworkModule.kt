@@ -27,6 +27,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -36,6 +37,11 @@ val networkModule = module {
       override fun log(message: String) {
         Napier.d(message, tag = "Ktor")
       }
+    }
+  }
+  single<Json> {
+    Json {
+      isLenient = true
     }
   }
   single<HttpClient> {

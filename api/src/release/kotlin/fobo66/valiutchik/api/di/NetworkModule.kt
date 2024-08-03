@@ -18,24 +18,21 @@ package fobo66.valiutchik.api.di
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.auth.Auth
-import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
-import io.ktor.client.plugins.auth.providers.basic
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val networkModule = module {
+  single<Json> {
+    Json {
+      isLenient = true
+    }
+  }
   single {
     HttpClient(OkHttp) {
-      install(Auth) {
-        basic {
-          credentials {
-            BasicAuthCredentials(get(qualifier(Api.USERNAME)), get(qualifier(Api.PASSWORD)))
-          }
-        }
+      install(ContentNegotiation) {
+        json(get())
       }
       install(HttpCache) {
         publicStorage(FileStorage(androidContext().cacheDir))
