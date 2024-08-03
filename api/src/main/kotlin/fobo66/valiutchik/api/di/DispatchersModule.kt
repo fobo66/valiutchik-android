@@ -14,14 +14,12 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.entities
+package fobo66.valiutchik.api.di
 
+import kotlinx.coroutines.Dispatchers
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class Feature(
-  @SerialName("properties")
-  val properties: Properties = Properties()
-)
+val dispatchersModule = module {
+  single(qualifier(Dispatcher.IO)) { Dispatchers.IO }
+}

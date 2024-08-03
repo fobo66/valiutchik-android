@@ -43,8 +43,7 @@ class CurrencyRateRepositoryTest {
     bestCourseDataSource,
     persistenceDataSource,
     currencyRatesDataSource,
-    BankNameNormalizer(),
-    ioDispatcher
+    BankNameNormalizer()
   )
 
   @AfterEach

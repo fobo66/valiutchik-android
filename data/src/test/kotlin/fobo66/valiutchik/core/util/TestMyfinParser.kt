@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.util
 
-import fobo66.valiutchik.api.Currency
 import fobo66.valiutchik.api.CurrencyRatesParser
 import fobo66.valiutchik.api.TAG_NAME_BANKNAME
 import fobo66.valiutchik.api.TAG_NAME_EUR_BUY
@@ -29,6 +28,7 @@ import fobo66.valiutchik.api.TAG_NAME_UAH_BUY
 import fobo66.valiutchik.api.TAG_NAME_UAH_SELL
 import fobo66.valiutchik.api.TAG_NAME_USD_BUY
 import fobo66.valiutchik.api.TAG_NAME_USD_SELL
+import fobo66.valiutchik.api.entity.Currency
 import java.io.IOException
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory

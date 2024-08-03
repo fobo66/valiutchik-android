@@ -14,18 +14,20 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package fobo66.valiutchik.api.entity
 
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Currency
-import java.io.IOException
 
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-  var isError = false
-  override suspend fun loadExchangeRates(city: String): Set<Currency> =
-    if (isError) {
-      throw IOException("test")
-    } else {
-      setOf(Currency())
-    }
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Properties(
+  @SerialName("city")
+  val city: String = "",
+  @SerialName("country")
+  val country: String? = "",
+  @SerialName("county")
+  val county: String? = "",
+  @SerialName("formatted")
+  val formatted: String = "",
+)

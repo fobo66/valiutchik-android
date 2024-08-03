@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import fobo66.valiutchik.api.Currency
 import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.entity.Currency
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.BestCourse
@@ -28,31 +28,27 @@ import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import java.io.IOException
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
 class CurrencyRateRepositoryImpl(
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
-  private val bankNameNormalizer: BankNameNormalizer,
-  private val ioDispatcher: CoroutineDispatcher
+  private val bankNameNormalizer: BankNameNormalizer
 ) : CurrencyRateRepository {
 
-  override suspend fun refreshExchangeRates(city: String, now: Instant) =
-    withContext(ioDispatcher) {
-      val currencies = try {
-        currencyRatesDataSource.loadExchangeRates(city)
-      } catch (e: IOException) {
-        throw CurrencyRatesLoadFailedException(e)
-      }
-
-      val bestCourses = findBestCourses(currencies, now.toString())
-
-      persistenceDataSource.saveBestCourses(bestCourses)
+  override suspend fun refreshExchangeRates(city: String, now: Instant) {
+    val currencies = try {
+      currencyRatesDataSource.loadExchangeRates(city)
+    } catch (e: IOException) {
+      throw CurrencyRatesLoadFailedException(e)
     }
+
+    val bestCourses = findBestCourses(currencies, now.toString())
+
+    persistenceDataSource.saveBestCourses(bestCourses)
+  }
 
   override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
     persistenceDataSource.readBestCourses(latestTimestamp)
@@ -60,9 +56,7 @@ class CurrencyRateRepositoryImpl(
   private fun findBestCourses(
     currencies: Set<Currency>,
     now: String
-  ): List<BestCourse> {
-    return resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
-  }
+  ): List<BestCourse> = resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
 
   private fun resolveBuyRates(
     currencies: Set<Currency>,

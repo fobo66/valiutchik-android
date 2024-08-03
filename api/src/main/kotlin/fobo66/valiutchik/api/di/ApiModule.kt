@@ -25,14 +25,15 @@ import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val apiModule = module {
-  includes(credentialsModule, networkModule)
+  includes(credentialsModule, networkModule, dispatchersModule)
   singleOf<CurrencyRatesParser>(::CurrencyRatesParserImpl)
   single<CurrencyRatesDataSource> {
     CurrencyRatesDataSourceImpl(
       get(),
       get(),
       get(qualifier(Api.USERNAME)),
-      get(qualifier(Api.PASSWORD))
+      get(qualifier(Api.PASSWORD)),
+      get(qualifier(Dispatcher.IO))
     )
   }
 }

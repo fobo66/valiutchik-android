@@ -17,6 +17,7 @@
 package fobo66.valiutchik.api
 
 import android.util.Xml
+import fobo66.valiutchik.api.entity.Currency
 import java.io.IOException
 import java.io.InputStream
 import org.xmlpull.v1.XmlPullParser

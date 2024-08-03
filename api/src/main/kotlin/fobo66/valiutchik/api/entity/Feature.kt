@@ -14,14 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.entities
+package fobo66.valiutchik.api.entity
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GeocodingResult(
-  @SerialName("features")
-  val features: List<Feature> = listOf()
+data class Feature(
+  @SerialName("properties")
+  val properties: Properties = Properties()
 )

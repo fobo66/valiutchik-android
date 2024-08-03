@@ -14,20 +14,21 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.entities
+package fobo66.valiutchik.api.entity
 
-
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class Properties(
-  @SerialName("city")
-  val city: String = "",
-  @SerialName("country")
-  val country: String? = "",
-  @SerialName("county")
-  val county: String? = "",
-  @SerialName("formatted")
-  val formatted: String = "",
+/**
+ * Currency model from XML
+ */
+data class Currency(
+  val bankname: String = "",
+  val usdBuy: String = "",
+  val usdSell: String = "",
+  val eurBuy: String = "",
+  val eurSell: String = "",
+  val rurBuy: String = "",
+  val rurSell: String = "",
+  val plnBuy: String = "",
+  val plnSell: String = "",
+  val uahBuy: String = "",
+  val uahSell: String = ""
 )
