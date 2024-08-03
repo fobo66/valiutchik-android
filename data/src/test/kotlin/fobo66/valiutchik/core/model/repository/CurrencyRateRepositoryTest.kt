@@ -56,7 +56,7 @@ class CurrencyRateRepositoryTest {
   @Test
   fun `load exchange rates`() {
     runTest {
-      currencyRateRepository.refreshExchangeRates("Минск", now)
+      currencyRateRepository.refreshExchangeRates("Minsk", now)
     }
 
     assertTrue(persistenceDataSource.isSaved)
@@ -68,7 +68,7 @@ class CurrencyRateRepositoryTest {
 
     runTest {
       assertThrows<CurrencyRatesLoadFailedException> {
-        currencyRateRepository.refreshExchangeRates("Минск", now)
+        currencyRateRepository.refreshExchangeRates("Minsk", now)
       }
     }
   }

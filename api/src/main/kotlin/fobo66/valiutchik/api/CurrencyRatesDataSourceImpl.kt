@@ -40,12 +40,12 @@ class CurrencyRatesDataSourceImpl(
 
   private val citiesMap: Map<String, String> by lazy {
     mapOf(
-      "Минск" to "1",
-      "Витебск" to "2",
-      "Гомель" to "3",
-      "Гродно" to "4",
-      "Брест" to "5",
-      "Могилёв" to "6"
+      "Minsk" to "1",
+      "Vitsebsk" to "2",
+      "Homyel" to "3",
+      "Hrodna" to "4",
+      "Brest" to "5",
+      "Mahilyow" to "6"
     )
   }
 
