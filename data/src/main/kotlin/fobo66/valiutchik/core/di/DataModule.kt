@@ -25,8 +25,6 @@ import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.GeocodingDataSource
-import fobo66.valiutchik.core.model.datasource.GeocodingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
@@ -71,10 +69,6 @@ val dataSourcesModule = module {
 
   single<ClipboardDataSource> {
     ClipboardDataSourceImpl(androidContext())
-  }
-
-  single<GeocodingDataSource> {
-    GeocodingDataSourceImpl(get())
   }
 
   single<IntentDataSource> {

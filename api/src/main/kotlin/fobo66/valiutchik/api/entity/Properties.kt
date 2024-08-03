@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Properties(
   @SerialName("city")
-  val city: String = "",
+  val city: String? = "",
   @SerialName("country")
   val country: String? = "",
   @SerialName("county")
