@@ -91,8 +91,6 @@ dependencies {
   implementation(libs.room.ktx)
   ksp(libs.room.compiler)
   implementation(libs.androidx.datastore)
-  implementation(libs.tomtom.geocoder)
-  implementation(libs.tomtom.geocoder.online)
   implementation(libs.napier)
 
   detektPlugins(libs.detekt.rules.formatting)
