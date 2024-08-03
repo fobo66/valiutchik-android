@@ -44,8 +44,8 @@ android {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.O
     targetSdk = 35
-    versionCode = 21
-    versionName = "1.14"
+    versionCode = 22
+    versionName = "1.14.1"
     multiDexEnabled = true
     resourceConfigurations += listOf("en", "be", "ru")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
