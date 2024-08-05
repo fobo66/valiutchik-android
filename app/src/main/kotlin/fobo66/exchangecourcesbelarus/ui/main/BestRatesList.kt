@@ -166,7 +166,11 @@ fun BestCurrencyRateCard(
           .testTag(TAG_RATE_VALUE)
       )
     }
-    Row(modifier = Modifier.padding(all = 24.dp)) {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      modifier = Modifier.padding(all = 24.dp)
+    ) {
       Icon(
         imageVector = Bank,
         contentDescription = stringResource(id = string.bank_name_indicator),
@@ -175,8 +179,7 @@ fun BestCurrencyRateCard(
       AnimatedContent(bankName, label = "bankName") {
         Text(
           text = it,
-          style = MaterialTheme.typography.bodyMedium,
-          modifier = Modifier.padding(start = 8.dp)
+          style = MaterialTheme.typography.bodyMedium
         )
       }
     }
