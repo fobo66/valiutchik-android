@@ -68,21 +68,6 @@
     "dependency": "androidx.activity:activity-ktx:1.9.1"
   },
   {
-    "project": "additional-data-online-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.search:additional-data-online-internal-android:1.9.0"
-  },
-  {
     "project": "Android App Startup Runtime",
     "description": "Android App Startup Runtime",
     "version": "1.2.0-alpha02",
@@ -610,21 +595,6 @@
     "dependency": "androidx.annotation:annotation-jvm:1.8.1"
   },
   {
-    "project": "annotations-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.annotations:annotations-android:1.9.0"
-  },
-  {
     "project": "AppCompat",
     "description": "Provides backwards-compatible implementations of UI-related Android SDK functionality, including dark mode and Material theming.",
     "version": "1.7.0",
@@ -725,51 +695,6 @@
       }
     ],
     "dependency": "androidx.collection:collection-ktx:1.4.0"
-  },
-  {
-    "project": "collections-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:collections-android:1.9.0"
-  },
-  {
-    "project": "common-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.logging:common-android:1.9.0"
-  },
-  {
-    "project": "common-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.search:common-android:1.9.0"
   },
   {
     "project": "Compose Animation",
@@ -1486,36 +1411,6 @@
     "dependency": "androidx.core:core-ktx:1.14.0-alpha01"
   },
   {
-    "project": "core-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:core-android:1.9.0"
-  },
-  {
-    "project": "coroutines-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:coroutines-internal-android:1.9.0"
-  },
-  {
     "project": "Curtains",
     "description": "Spy on your Android windows",
     "version": "1.2.4",
@@ -1584,16 +1479,6 @@
     "dependency": "androidx.datastore:datastore-core-okio-jvm:1.1.1"
   },
   {
-    "project": "directions-offline-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.routing:directions-offline-protobuf-internal:1.9.0"
-  },
-  {
     "project": "Experimental annotation",
     "description": "Java annotation for use on unstable Android API surfaces. When used in conjunction with the Experimental annotation lint checks, this annotation provides functional parity with Kotlin's Experimental annotation.",
     "version": "1.4.1",
@@ -1609,21 +1494,6 @@
       }
     ],
     "dependency": "androidx.annotation:annotation-experimental:1.4.1"
-  },
-  {
-    "project": "feature-toggle-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk:feature-toggle-android:1.9.0"
   },
   {
     "project": "fragment",
@@ -1658,36 +1528,6 @@
       }
     ],
     "dependency": "androidx.fragment:fragment-ktx:1.7.1"
-  },
-  {
-    "project": "functional-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:functional-android:1.9.0"
-  },
-  {
-    "project": "geojson-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.geojson:geojson-android:1.9.0"
   },
   {
     "project": "Glance",
@@ -1822,21 +1662,6 @@
       }
     ],
     "dependency": "com.google.guava:listenablefuture:1.0"
-  },
-  {
-    "project": "http-core-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.http:http-core-android:1.9.0"
   },
   {
     "project": "JetBrains Java Annotations",
@@ -2213,6 +2038,23 @@
     "dependency": "io.ktor:ktor-client-auth-jvm:2.3.12"
   },
   {
+    "project": "ktor-client-content-negotiation",
+    "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+    "version": "2.3.12",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/ktorio/ktor",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.ktor:ktor-client-content-negotiation-jvm:2.3.12"
+  },
+  {
     "project": "ktor-client-core",
     "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
     "version": "2.3.12",
@@ -2228,6 +2070,23 @@
       }
     ],
     "dependency": "io.ktor:ktor-client-core-jvm:2.3.12"
+  },
+  {
+    "project": "ktor-client-encoding",
+    "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+    "version": "2.3.12",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/ktorio/ktor",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.ktor:ktor-client-encoding-jvm:2.3.12"
   },
   {
     "project": "ktor-client-logging",
@@ -2330,6 +2189,40 @@
       }
     ],
     "dependency": "io.ktor:ktor-serialization-jvm:2.3.12"
+  },
+  {
+    "project": "ktor-serialization-kotlinx",
+    "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+    "version": "2.3.12",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/ktorio/ktor",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.ktor:ktor-serialization-kotlinx-jvm:2.3.12"
+  },
+  {
+    "project": "ktor-serialization-kotlinx-json",
+    "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+    "version": "2.3.12",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/ktorio/ktor",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.ktor:ktor-serialization-kotlinx-json-jvm:2.3.12"
   },
   {
     "project": "ktor-utils",
@@ -2842,91 +2735,6 @@
     "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.4"
   },
   {
-    "project": "logger-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.logging:logger-internal-android:1.9.0"
-  },
-  {
-    "project": "logging-framework-binding-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.logging:logging-framework-binding-internal-android:1.9.0"
-  },
-  {
-    "project": "map-matching-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.navigation:map-matching-protobuf-internal:1.9.0"
-  },
-  {
-    "project": "metadata-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:metadata-android:1.9.0"
-  },
-  {
-    "project": "model-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.location:model-android:1.9.0"
-  },
-  {
-    "project": "model-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.vehicle:model-android:1.9.0"
-  },
-  {
     "project": "napier",
     "description": "Kotlin Multiplatform libraries that show logs in common module.",
     "version": "2.7.1",
@@ -2959,31 +2767,6 @@
       }
     ],
     "dependency": "io.github.aakira:napier-jvm:2.7.1"
-  },
-  {
-    "project": "native-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk:native-internal-android:1.9.0"
-  },
-  {
-    "project": "native-library-loader-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:native-library-loader-internal-android:1.9.0"
   },
   {
     "project": "Navigation Common",
@@ -3054,71 +2837,6 @@
     "dependency": "androidx.navigation:navigation-runtime-ktx:2.8.0-beta06"
   },
   {
-    "project": "navigation-tile-store-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.datamanagement:navigation-tile-store-protobuf-internal:1.9.0"
-  },
-  {
-    "project": "navigation-tiling-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.datamanagement:navigation-tiling-protobuf-internal:1.9.0"
-  },
-  {
-    "project": "nds-store-access-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.datamanagement:nds-store-access-protobuf-internal:1.9.0"
-  },
-  {
-    "project": "nds-store-update-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.datamanagement:nds-store-update-protobuf-internal:1.9.0"
-  },
-  {
-    "project": "ndslive-map-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.datamanagement:ndslive-map-protobuf-internal:1.9.0"
-  },
-  {
-    "project": "net-internal-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.common:net-internal-android:1.9.0"
-  },
-  {
     "project": "okhttp",
     "description": "Square’s meticulous HTTP client for Java and Kotlin.",
     "version": "5.0.0-alpha.14",
@@ -3151,16 +2869,6 @@
       }
     ],
     "dependency": "com.squareup.okio:okio-jvm:3.9.0"
-  },
-  {
-    "project": "openlr-binding-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.openlr:openlr-binding-protobuf-internal:1.9.0"
   },
   {
     "project": "Parcelize Runtime",
@@ -3214,51 +2922,6 @@
     "dependency": "androidx.datastore:datastore-preferences-core-jvm:1.1.1"
   },
   {
-    "project": "Protocol Buffers [Core]",
-    "description": "Core Protocol Buffers library. Protocol Buffers are a way of encoding structured data in an\n    efficient yet extensible format.",
-    "version": "3.25.3",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "BSD-3-Clause",
-        "license_url": "https://opensource.org/licenses/BSD-3-Clause"
-      }
-    ],
-    "dependency": "com.google.protobuf:protobuf-java:3.25.3"
-  },
-  {
-    "project": "Protocol Buffers [Kotlin-Core]",
-    "description": "Kotlin core Protocol Buffers library. Protocol Buffers are a way of encoding structured data in an\n    efficient yet extensible format.",
-    "version": "3.25.3",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "BSD-3-Clause",
-        "license_url": "https://opensource.org/licenses/BSD-3-Clause"
-      }
-    ],
-    "dependency": "com.google.protobuf:protobuf-kotlin:3.25.3"
-  },
-  {
-    "project": "quantity-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.quantity:quantity-android:1.9.0"
-  },
-  {
     "project": "RemoteViews",
     "description": "AndroidX RemoteViews Support",
     "version": "1.1.0",
@@ -3274,46 +2937,6 @@
       }
     ],
     "dependency": "androidx.core:core-remoteviews:1.1.0"
-  },
-  {
-    "project": "reverse-geocoder-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.search:reverse-geocoder-android:1.9.0"
-  },
-  {
-    "project": "reverse-geocoder-online-android",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [
-      {
-        "license": "TomTom Mobile SDKs License",
-        "license_url": "https://developer.tomtom.com/assets/downloads/tomtom-sdks/license.txt"
-      }
-    ],
-    "dependency": "com.tomtom.sdk.search:reverse-geocoder-online-android:1.9.0"
-  },
-  {
-    "project": "reverse-geocoding-offline-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk:reverse-geocoding-offline-protobuf-internal:1.9.0"
   },
   {
     "project": "Room Kotlin Extensions",
@@ -3367,16 +2990,6 @@
     "dependency": "androidx.room:room-runtime-android:2.7.0-alpha05"
   },
   {
-    "project": "route-projection-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.navigation:route-projection-protobuf-internal:1.9.0"
-  },
-  {
     "project": "Saved State",
     "description": "Android Lifecycle Saved State",
     "version": "1.2.1",
@@ -3409,16 +3022,6 @@
       }
     ],
     "dependency": "androidx.savedstate:savedstate-ktx:1.2.1"
-  },
-  {
-    "project": "search-offline-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk:search-offline-protobuf-internal:1.9.0"
   },
   {
     "project": "Shark",
@@ -3623,16 +3226,6 @@
     "dependency": "co.touchlab:stately-strict-jvm:2.0.6"
   },
   {
-    "project": "structured-search-offline-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.search:structured-search-offline-protobuf-internal:1.9.0"
-  },
-  {
     "project": "Tracing",
     "description": "Android Tracing",
     "version": "1.3.0-alpha02",
@@ -3650,16 +3243,6 @@
     "dependency": "androidx.tracing:tracing:1.3.0-alpha02"
   },
   {
-    "project": "traffic-client-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk:traffic-client-protobuf-internal:1.9.0"
-  },
-  {
     "project": "Use Plumber Android to fix known leaks in the Android Framework and other Google Android libraries.",
     "description": "LeakCanary",
     "version": "2.14",
@@ -3675,16 +3258,6 @@
       }
     ],
     "dependency": "com.squareup.leakcanary:plumber-android-core:2.14"
-  },
-  {
-    "project": "verbal-message-generation-protobuf-internal",
-    "description": null,
-    "version": "1.9.0",
-    "developers": [],
-    "url": null,
-    "year": null,
-    "licenses": [],
-    "dependency": "com.tomtom.sdk.navigation:verbal-message-generation-protobuf-internal:1.9.0"
   },
   {
     "project": "VersionedParcelable",
