@@ -42,6 +42,12 @@ class CurrencyRatesDataSourceImpl(
     mapOf(
       "Minsk" to "1",
       "Vitsebsk" to "2",
+      "Baranavichy" to "20",
+      "Babruysk" to "21",
+      "Barysaw" to "22",
+      "Lida" to "23",
+      "Mazyr" to "24",
+      "Navapolatsk" to "25",
       "Homyel" to "3",
       "Hrodna" to "4",
       "Brest" to "5",
