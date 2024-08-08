@@ -17,7 +17,6 @@
 <resources>
   <string name="app_name">Валютчик</string>
   <string name="action_settings">Настройки</string>
-  <string name="action_buysell">Купить/Продать</string>
   <string name="action_refresh">Обновить</string>
   <string name="action_about">О приложении</string>
   <string name="title_about">О приложении</string>
