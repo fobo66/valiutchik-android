@@ -38,17 +38,17 @@
   <string-array name="pref_cities_list">
     <item>Minsk</item>
     <item>Brest</item>
-    <item>Vitebsk</item>
-    <item>Homel</item>
+    <item>Vitsebsk</item>
+    <item>Homyel</item>
     <item>Hrodna</item>
-    <item>Mogilev</item>
+    <item>Mahilyow</item>
   </string-array>
   <string-array name="pref_cities_values" translatable="false">
-    <item>Минск</item>
+    <item>Minsk</item>
     <item>Брест</item>
-    <item>Витебск</item>
-    <item>Гомель</item>
-    <item>Гродно</item>
-    <item>Могилёв</item>
+    <item>Vitsebsk</item>
+    <item>Homyel</item>
+    <item>Hrodna</item>
+    <item>Mahilyow</item>
   </string-array>
 </resources>
