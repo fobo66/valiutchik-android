@@ -82,6 +82,7 @@ detekt {
 dependencies {
   api(project(":api"))
   implementation(libs.androidx.annotation)
+  implementation(libs.androidx.collection)
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.android)
   implementation(libs.kotlinx.serialization)

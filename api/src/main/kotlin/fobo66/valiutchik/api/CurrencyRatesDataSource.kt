@@ -19,5 +19,5 @@ package fobo66.valiutchik.api
 import fobo66.valiutchik.api.entity.Currency
 
 interface CurrencyRatesDataSource {
-  suspend fun loadExchangeRates(city: String): Set<Currency>
+  suspend fun loadExchangeRates(cityIndex: String): Set<Currency>
 }

@@ -16,6 +16,8 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import androidx.collection.ScatterMap
+import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.entity.Currency
 import fobo66.valiutchik.core.BUY_COURSE
@@ -38,9 +40,46 @@ class CurrencyRateRepositoryImpl(
   private val bankNameNormalizer: BankNameNormalizer
 ) : CurrencyRateRepository {
 
+  private val citiesMap: ScatterMap<String, String> by lazy {
+    mutableScatterMapOf(
+      "Minsk" to "1",
+      "Vitsebsk" to "2",
+      "Baranavichy" to "20",
+      "Babruysk" to "21",
+      "Barysaw" to "22",
+      "Lida" to "23",
+      "Mazyr" to "24",
+      "Navapolatsk" to "25",
+      "Orsha" to "26",
+      "Pinsk" to "27",
+      "Polatsk" to "28",
+      "Salihorsk" to "29",
+      "Swislatsch" to "201",
+      "Homyel" to "3",
+      "Maladzyechna" to "30",
+      "Svietlahorsk" to "31",
+      "Zhlobin" to "32",
+      "Rechytsa" to "33",
+      "Sluck" to "34",
+      "Zhodzina" to "35",
+      "Vileyka" to "36",
+      "Dzyarzhynsk" to "37",
+      "Maryina Horka" to "38",
+      "Horki" to "39",
+      "Hrodna" to "4",
+      "Asipovichy" to "40",
+      "Krychaw" to "41",
+      "Kalinkavichy" to "42",
+      "Rahachow" to "43",
+      "Brest" to "5",
+      "Mahilyow" to "6"
+    )
+  }
+
   override suspend fun refreshExchangeRates(city: String, now: Instant) {
+    val cityIndex = citiesMap[city] ?: "1"
     val currencies = try {
-      currencyRatesDataSource.loadExchangeRates(city)
+      currencyRatesDataSource.loadExchangeRates(cityIndex)
     } catch (e: IOException) {
       throw CurrencyRatesLoadFailedException(e)
     }

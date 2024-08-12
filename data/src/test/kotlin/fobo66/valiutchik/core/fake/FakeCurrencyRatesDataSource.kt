@@ -22,7 +22,7 @@ import java.io.IOException
 
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
   var isError = false
-  override suspend fun loadExchangeRates(city: String): Set<Currency> =
+  override suspend fun loadExchangeRates(cityIndex: String): Set<Currency> =
     if (isError) {
       throw IOException("test")
     } else {

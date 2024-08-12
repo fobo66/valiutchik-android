@@ -38,45 +38,8 @@ class CurrencyRatesDataSourceImpl(
   private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
 
-  private val citiesMap: Map<String, String> by lazy {
-    mapOf(
-      "Minsk" to "1",
-      "Vitsebsk" to "2",
-      "Baranavichy" to "20",
-      "Babruysk" to "21",
-      "Barysaw" to "22",
-      "Lida" to "23",
-      "Mazyr" to "24",
-      "Navapolatsk" to "25",
-      "Orsha" to "26",
-      "Pinsk" to "27",
-      "Polatsk" to "28",
-      "Salihorsk" to "29",
-      "Swislatsch" to "201",
-      "Homyel" to "3",
-      "Maladzyechna" to "30",
-      "Svietlahorsk" to "31",
-      "Zhlobin" to "32",
-      "Rechytsa" to "33",
-      "Sluck" to "34",
-      "Zhodzina" to "35",
-      "Vileyka" to "36",
-      "Dzyarzhynsk" to "37",
-      "Maryina Horka" to "38",
-      "Horki" to "39",
-      "Hrodna" to "4",
-      "Asipovichy" to "40",
-      "Krychaw" to "41",
-      "Kalinkavichy" to "42",
-      "Rahachow" to "43",
-      "Brest" to "5",
-      "Mahilyow" to "6"
-    )
-  }
-
-  override suspend fun loadExchangeRates(city: String): Set<Currency> = withContext(ioDispatcher) {
-    val cityIndex = citiesMap[city] ?: "1"
-
+  override suspend fun loadExchangeRates(cityIndex: String): Set<Currency> =
+    withContext(ioDispatcher) {
     try {
       val response = client.get(BASE_URL) {
         url {
