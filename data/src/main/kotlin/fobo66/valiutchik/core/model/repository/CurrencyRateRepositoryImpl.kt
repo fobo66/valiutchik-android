@@ -71,6 +71,12 @@ class CurrencyRateRepositoryImpl(
       "Krychaw" to "41",
       "Kalinkavichy" to "42",
       "Rahachow" to "43",
+      "Kobryn" to "44",
+      "Biaroza" to "45",
+      "Luniniec" to "46",
+      "Ivatsevichy" to "47",
+      "Slonim" to "48",
+      "Vawkavysk" to "49",
       "Brest" to "5",
       "Mahilyow" to "6"
     )
