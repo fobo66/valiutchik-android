@@ -78,6 +78,14 @@ class CurrencyRateRepositoryImpl(
       "Slonim" to "48",
       "Vawkavysk" to "49",
       "Brest" to "5",
+      "Smarhon" to "50",
+      "Navahrudak" to "51",
+      "Stowbtsy" to "54",
+      "Smaliavichy" to "55",
+      "Zaslawye" to "56",
+      "Nyasvizh" to "57",
+      "Pastavy" to "58",
+      "Hlybokaye" to "59",
       "Mahilyow" to "6"
     )
   }
