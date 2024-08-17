@@ -86,7 +86,17 @@ class CurrencyRateRepositoryImpl(
       "Nyasvizh" to "57",
       "Pastavy" to "58",
       "Hlybokaye" to "59",
-      "Mahilyow" to "6"
+      "Mahilyow" to "6",
+      "Lepel" to "60",
+      "Navalukoml" to "61",
+      "Talochyn" to "62",
+      "Braslau" to "63",
+      "Bykhaw" to "64",
+      "Shklov" to "65",
+      "Kastsiukovichy" to "66",
+      "Mstsislau" to "67",
+      "Chavusy" to "68",
+      "Dobrush" to "69",
     )
   }
 
