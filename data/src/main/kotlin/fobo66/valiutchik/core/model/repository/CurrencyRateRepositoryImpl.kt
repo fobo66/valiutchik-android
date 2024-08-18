@@ -97,6 +97,19 @@ class CurrencyRateRepositoryImpl(
       "Mstsislau" to "67",
       "Chavusy" to "68",
       "Dobrush" to "69",
+      "Zhytkavichy" to "70",
+      "Khoiniki" to "71",
+      "Pyetrykaw" to "72",
+      "Pruzhany" to "73",
+      "Ivanava" to "74",
+      "Drahichyn" to "75",
+      "Hantsavichy" to "76",
+      "Stolin" to "77",
+      "Malaryta" to "78",
+      "Masty" to "79",
+      "Shchuchyn" to "80",
+      "Ashmyany" to "81",
+      "Astravyets" to "82",
     )
   }
 
