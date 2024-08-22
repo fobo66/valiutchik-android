@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private const val DEFAULT_UPDATE_INTERVAL = 3
-private const val DEFAULT_CITY = "Минск"
+private const val DEFAULT_CITY = "Minsk"
 
 class PreferenceRepositoryImpl(
   private val preferencesDataSource: PreferencesDataSource
