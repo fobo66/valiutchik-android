@@ -38,7 +38,7 @@ import kotlinx.collections.immutable.toImmutableList
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
-const val UPDATE_INTERVAL_STEPS = 24
+const val UPDATE_INTERVAL_STEPS = 22
 
 @Composable
 fun PreferenceScreenContent(
