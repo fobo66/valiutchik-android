@@ -35,7 +35,7 @@ class RefreshExchangeRatesImpl(
     if (timestampRepository.isNeededToUpdateCurrencyRates(now, updateInterval)) {
       val city = locationRepository.resolveUserCity(defaultCity)
 
-      currencyRateRepository.refreshExchangeRates(city, now)
+      currencyRateRepository.refreshExchangeRates(city, now, defaultCity)
       timestampRepository.saveTimestamp(now)
     }
   }

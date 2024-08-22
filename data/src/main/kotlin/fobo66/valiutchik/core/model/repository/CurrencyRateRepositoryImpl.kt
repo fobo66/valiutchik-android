@@ -113,8 +113,8 @@ class CurrencyRateRepositoryImpl(
     )
   }
 
-  override suspend fun refreshExchangeRates(city: String, now: Instant) {
-    val cityIndex = citiesMap[city] ?: "1"
+  override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
+    val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
     val currencies = try {
       currencyRatesDataSource.loadExchangeRates(cityIndex)
     } catch (e: IOException) {
