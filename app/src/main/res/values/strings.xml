@@ -35,19 +35,143 @@
   <string name="see_license_click_label">See %1$s license</string>
   <string name="topbar_description_back">Back</string>
   <string-array name="pref_cities_list">
-    <item>Minsk</item>
+    <item>Ashmyany</item>
+    <item>Asipovichy</item>
+    <item>Astravyets</item>
+    <item>Babruysk</item>
+    <item>Baranavichy</item>
+    <item>Barysaw</item>
+    <item>Biaroza</item>
+    <item>Braslau</item>
     <item>Brest</item>
-    <item>Vitsebsk</item>
+    <item>Bykhaw</item>
+    <item>Chavusy</item>
+    <item>Dobrush</item>
+    <item>Drahichyn</item>
+    <item>Dzyarzhynsk</item>
+    <item>Hantsavichy</item>
+    <item>Hlybokaye</item>
     <item>Homyel</item>
+    <item>Horki</item>
     <item>Hrodna</item>
+    <item>Ivanava</item>
+    <item>Ivatsevichy</item>
+    <item>Kalinkavichy</item>
+    <item>Kastsiukovichy</item>
+    <item>Khoiniki</item>
+    <item>Kobryn</item>
+    <item>Krychaw</item>
+    <item>Lepel</item>
+    <item>Lida</item>
+    <item>Luniniec</item>
     <item>Mahilyow</item>
+    <item>Maladzyechna</item>
+    <item>Malaryta</item>
+    <item>Maryina Horka</item>
+    <item>Masty</item>
+    <item>Mazyr</item>
+    <item>Minsk</item>
+    <item>Mstsislau</item>
+    <item>Navahrudak</item>
+    <item>Navalukoml</item>
+    <item>Navapolatsk</item>
+    <item>Nyasvizh</item>
+    <item>Orsha</item>
+    <item>Pastavy</item>
+    <item>Pinsk</item>
+    <item>Polatsk</item>
+    <item>Pruzhany</item>
+    <item>Pyetrykaw</item>
+    <item>Rahachow</item>
+    <item>Rechytsa</item>
+    <item>Salihorsk</item>
+    <item>Shchuchyn</item>
+    <item>Shklov</item>
+    <item>Slonim</item>
+    <item>Sluck</item>
+    <item>Smaliavichy</item>
+    <item>Smarhon</item>
+    <item>Stolin</item>
+    <item>Stowbtsy</item>
+    <item>Svietlahorsk</item>
+    <item>Swislatsch</item>
+    <item>Talochyn</item>
+    <item>Vawkavysk</item>
+    <item>Vileyka</item>
+    <item>Vitsebsk</item>
+    <item>Zaslawye</item>
+    <item>Zhlobin</item>
+    <item>Zhodzina</item>
+    <item>Zhytkavichy</item>
   </string-array>
   <string-array name="pref_cities_values" translatable="false">
-    <item>Minsk</item>
-    <item>Брест</item>
-    <item>Vitsebsk</item>
+    <item>Ashmyany</item>
+    <item>Asipovichy</item>
+    <item>Astravyets</item>
+    <item>Babruysk</item>
+    <item>Baranavichy</item>
+    <item>Barysaw</item>
+    <item>Biaroza</item>
+    <item>Braslau</item>
+    <item>Brest</item>
+    <item>Bykhaw</item>
+    <item>Chavusy</item>
+    <item>Dobrush</item>
+    <item>Drahichyn</item>
+    <item>Dzyarzhynsk</item>
+    <item>Hantsavichy</item>
+    <item>Hlybokaye</item>
     <item>Homyel</item>
+    <item>Horki</item>
     <item>Hrodna</item>
+    <item>Ivanava</item>
+    <item>Ivatsevichy</item>
+    <item>Kalinkavichy</item>
+    <item>Kastsiukovichy</item>
+    <item>Khoiniki</item>
+    <item>Kobryn</item>
+    <item>Krychaw</item>
+    <item>Lepel</item>
+    <item>Lida</item>
+    <item>Luniniec</item>
     <item>Mahilyow</item>
+    <item>Maladzyechna</item>
+    <item>Malaryta</item>
+    <item>Maryina Horka</item>
+    <item>Masty</item>
+    <item>Mazyr</item>
+    <item>Minsk</item>
+    <item>Mstsislau</item>
+    <item>Navahrudak</item>
+    <item>Navalukoml</item>
+    <item>Navapolatsk</item>
+    <item>Nyasvizh</item>
+    <item>Orsha</item>
+    <item>Pastavy</item>
+    <item>Pinsk</item>
+    <item>Polatsk</item>
+    <item>Pruzhany</item>
+    <item>Pyetrykaw</item>
+    <item>Rahachow</item>
+    <item>Rechytsa</item>
+    <item>Salihorsk</item>
+    <item>Shchuchyn</item>
+    <item>Shklov</item>
+    <item>Slonim</item>
+    <item>Sluck</item>
+    <item>Smaliavichy</item>
+    <item>Smarhon</item>
+    <item>Stolin</item>
+    <item>Stowbtsy</item>
+    <item>Svietlahorsk</item>
+    <item>Swislatsch</item>
+    <item>Talochyn</item>
+    <item>Vawkavysk</item>
+    <item>Vileyka</item>
+    <item>Vitsebsk</item>
+    <item>Zaslawye</item>
+    <item>Zhlobin</item>
+    <item>Zhodzina</item>
+    <item>Zhytkavichy</item>
   </string-array>
 </resources>
