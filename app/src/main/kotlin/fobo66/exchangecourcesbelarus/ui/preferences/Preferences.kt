@@ -20,14 +20,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -37,8 +35,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
@@ -90,9 +88,9 @@ fun ListPreference(
     enabled = enabled,
     onClick = { showDialog(!isDialogShown) },
     summary = {
-      val summaryValue = entries.preferenceEntries.entries.find { it.value == value }?.key
+      val summaryValue = entries.preferenceEntries.find { it.value == value }?.key
       Text(
-        text = summaryValue ?: entries.preferenceEntries.keys.first()
+        text = summaryValue ?: entries.preferenceEntries.first().key
       )
     }
   )
@@ -120,51 +118,42 @@ private fun ListPreferenceDialog(
     onDismissRequest = onDismiss,
     title = title,
     text = {
-      Column(
-        modifier = Modifier
-          .verticalScroll(rememberScrollState())
-          .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
-      ) {
-        entries.preferenceEntries.forEach { current ->
-          val isSelected = value == current.value
-          val onSelected = {
-            onValueChange(current.value)
-            onDismiss()
-          }
-          Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-              .fillMaxWidth()
-              .selectable(
-                selected = isSelected,
-                role = Role.RadioButton,
+      LazyColumn {
+        items(items = entries.preferenceEntries) { current ->
+          ListItem(
+            headlineContent = {
+              Text(
+                text = current.key
+              )
+            },
+            leadingContent = {
+              RadioButton(
+                selected = value == current.value,
+                modifier = Modifier.semantics {
+                  stateDescription = current.key
+                },
                 onClick = {
-                  if (!isSelected) {
-                    onSelected()
+                  if (value != current.value) {
+                    onValueChange(current.value)
+                    onDismiss()
                   }
                 }
               )
-              .padding(4.dp)
+            },
+            colors = ListItemDefaults.colors(
+              containerColor = Color.Transparent
+            ),
+            modifier = Modifier
+              .clickable(onClick = {
+                if (value != current.value) {
+                  onValueChange(current.value)
+                  onDismiss()
+                }
+              })
               .semantics {
                 stateDescription = current.key
               }
-          ) {
-            RadioButton(
-              selected = isSelected,
-              modifier = Modifier.semantics {
-                stateDescription = current.key
-              },
-              onClick = {
-                if (!isSelected) {
-                  onSelected()
-                }
-              }
-            )
-            Text(
-              text = current.key,
-              modifier = Modifier.padding(start = 8.dp)
-            )
-          }
+          )
         }
       }
     },

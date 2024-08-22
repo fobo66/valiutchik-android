@@ -28,12 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
+import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntry
 import fobo66.exchangecourcesbelarus.ui.TAG_DEFAULT_CITY
 import fobo66.exchangecourcesbelarus.ui.TAG_LICENSES
 import fobo66.exchangecourcesbelarus.ui.TAG_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.TAG_UPDATE_INTERVAL
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
-import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.collections.immutable.toImmutableList
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
@@ -52,7 +53,8 @@ fun PreferenceScreenContent(
   val citiesValues = stringArrayResource(id = array.pref_cities_values)
   val entries = remember {
     ListPreferenceEntries(
-      citiesKeys.mapIndexed { index, key -> key to citiesValues[index] }.toMap().toImmutableMap()
+      citiesKeys.mapIndexed { index, key -> ListPreferenceEntry(key, citiesValues[index]) }
+        .toImmutableList()
     )
   }
 

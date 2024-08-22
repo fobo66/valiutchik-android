@@ -55,9 +55,11 @@ class LocationDataSourceImpl(
           .asSequence()
           .map { locationManager.getLastKnownLocation(it) }
           .filterNotNull()
-          .find {
+          .filter {
             SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <= locationFixTimeMaximum
           }
+          .sortedBy { it.elapsedRealtimeNanos }
+          .first()
       }
 
       location?.let {
