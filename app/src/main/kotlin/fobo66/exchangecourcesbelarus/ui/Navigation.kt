@@ -16,8 +16,9 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
-import android.content.Context
 import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
@@ -34,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -53,8 +53,8 @@ import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import io.github.aakira.napier.Napier
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -71,6 +71,10 @@ fun NavGraphBuilder.bestRatesScreen(
 ) {
   composable(DESTINATION_MAIN) {
     val context = LocalContext.current
+    val mapLauncher =
+      rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        Napier.d("Opened map")
+      }
 
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
 
@@ -107,7 +111,16 @@ fun NavGraphBuilder.bestRatesScreen(
     BestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       onBestRateClick = { bankName ->
-        findBankOnMap(mainViewModel, bankName, context, scope, snackbarHostState)
+        val mapIntent = mainViewModel.findBankOnMap(bankName)
+        if (mapIntent != null) {
+          mapLauncher.launch(
+            Intent.createChooser(mapIntent, context.getString(string.open_map))
+          )
+        } else {
+          scope.launch {
+            showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
+          }
+        }
       },
       onBestRateLongClick = { currencyName, currencyValue ->
         mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
@@ -154,27 +167,6 @@ private suspend fun showSnackbar(
     message = message,
     duration = duration
   )
-}
-
-private fun findBankOnMap(
-  mainViewModel: MainViewModel,
-  bankName: String,
-  context: Context,
-  scope: CoroutineScope,
-  snackbarHostState: SnackbarHostState
-) {
-  val mapIntent = mainViewModel.findBankOnMap(bankName)
-
-  if (mapIntent != null) {
-    context.startActivity(
-      Intent.createChooser(mapIntent, context.getString(string.open_map)),
-      ActivityOptionsCompat.makeBasic().toBundle()
-    )
-  } else {
-    scope.launch {
-      showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
-    }
-  }
 }
 
 fun NavGraphBuilder.preferenceScreen(

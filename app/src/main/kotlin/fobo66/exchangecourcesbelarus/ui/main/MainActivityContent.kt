@@ -149,7 +149,6 @@ fun ValiutchikTopBar(
   isRefreshing: Boolean,
   modifier: Modifier = Modifier
 ) {
-  val title = resolveTitle(currentRoute)
 
   TopAppBar(
     navigationIcon = {
@@ -168,7 +167,7 @@ fun ValiutchikTopBar(
       }
     },
     title = {
-      Text(title, modifier = Modifier.testTag(TAG_TITLE))
+      Text(resolveTitle(currentRoute), modifier = Modifier.testTag(TAG_TITLE))
     },
     actions = {
       AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
