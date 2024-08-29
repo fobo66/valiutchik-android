@@ -25,7 +25,7 @@ import kotlinx.datetime.Instant
 class FakeCurrencyRateRepository : CurrencyRateRepository {
   var isRefreshed = false
 
-  override suspend fun refreshExchangeRates(city: String, now: Instant) {
+  override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
     isRefreshed = true
   }
 

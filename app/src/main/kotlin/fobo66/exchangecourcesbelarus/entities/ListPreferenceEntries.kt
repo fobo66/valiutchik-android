@@ -17,9 +17,9 @@
 package fobo66.exchangecourcesbelarus.entities
 
 import androidx.compose.runtime.Immutable
-import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class ListPreferenceEntries(
-  val preferenceEntries: ImmutableMap<String, String>
+  val preferenceEntries: ImmutableList<ListPreferenceEntry>
 )

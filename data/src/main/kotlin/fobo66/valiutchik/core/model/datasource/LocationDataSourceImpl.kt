@@ -24,11 +24,11 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationManagerCompat
 import fobo66.valiutchik.core.entities.Location
-import java.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-private const val LOCATION_FIX_TIME_DURATION_HOURS = 3L
+private const val LOCATION_FIX_TIME_DURATION_HOURS = 3
 
 class LocationDataSourceImpl(
   private val context: Context,
@@ -40,7 +40,7 @@ class LocationDataSourceImpl(
   }
 
   private val locationFixTimeMaximum: Long by lazy {
-    Duration.ofHours(LOCATION_FIX_TIME_DURATION_HOURS).toNanos()
+    LOCATION_FIX_TIME_DURATION_HOURS.hours.inWholeNanoseconds
   }
 
   @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -55,9 +55,10 @@ class LocationDataSourceImpl(
           .asSequence()
           .map { locationManager.getLastKnownLocation(it) }
           .filterNotNull()
-          .find {
+          .filter {
             SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <= locationFixTimeMaximum
           }
+          .maxBy { it.elapsedRealtimeNanos }
       }
 
       location?.let {

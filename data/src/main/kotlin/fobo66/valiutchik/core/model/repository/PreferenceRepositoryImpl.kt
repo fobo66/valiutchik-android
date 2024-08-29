@@ -19,11 +19,12 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
+import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private const val DEFAULT_UPDATE_INTERVAL = 3
-private const val DEFAULT_CITY = "Минск"
+private const val DEFAULT_CITY = "Minsk"
 
 class PreferenceRepositoryImpl(
   private val preferencesDataSource: PreferencesDataSource
@@ -40,6 +41,6 @@ class PreferenceRepositoryImpl(
   }
 
   override suspend fun updateUpdateIntervalPreference(newValue: Float) {
-    preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.toInt())
+    preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.roundToInt())
   }
 }

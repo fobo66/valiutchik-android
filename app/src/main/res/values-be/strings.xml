@@ -16,20 +16,81 @@
 
 <resources>
   <string name="app_name">Валютчык</string>
-  <string name="action_about">Пра прыладу</string>
-  <string name="action_buysell">Купіць/Прадаць</string>
+  <string name="action_about">Пра прыкладанне</string>
   <string name="action_refresh">Аднавіць</string>
   <string name="action_settings">Налады</string>
-  <string name="about_app_description">Прылада дазваляе хутка атрымаць інфармацыю пра найлепшыя курсы валют у абласных цэнтрах Беларусі. Па націску па картачцы курса вы можаце знайсці бліжэйшае аддзяленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе ў вашым горадзе. По доўгім націску вы можаце скапіяваць курс у буфер абмену. Таксама ў наладах вы можаце памяняць інтэрвал аднаўлення курсаў ці змяніць горад па ўмаўчанні. Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банку. Інфармацыя прапанавана сайтам <a href="myfin.by">myfin.by</a></string>
-  <string name="title_about">Інфармацыя пра прыладу</string>
+  <string name="about_app_description">Прыкладанне дазваляе хутка атрымаць інфармацыю пра найлепшыя курсы валют у абласных цэнтрах Беларусі. Па націску па картачцы курса вы можаце знайсці бліжэйшае аддзяленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе ў вашым горадзе. По доўгім націску вы можаце скапіяваць курс у буфер абмену. Таксама ў наладах вы можаце памяняць інтэрвал аднаўлення курсаў ці змяніць горад па ўмаўчанні. Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банку. Інфармацыя прапанавана сайтам <a href="myfin.by">myfin.by</a></string>
+  <string name="title_about">Інфармацыя пра прыкладанне</string>
   <string name="title_activity_settings">Налады</string>
   <string-array name="pref_cities_list">
-    <item>Менск</item>
+    <item>Ашмяны</item>
+    <item>Асіповічы</item>
+    <item>Астравец</item>
+    <item>Бабруйск</item>
+    <item>Баранавічы</item>
+    <item>Барысаў</item>
+    <item>Бяроза</item>
+    <item>Браслаў</item>
     <item>Брэст</item>
-    <item>Віцебск</item>
+    <item>Быхаў</item>
+    <item>Чавусы</item>
+    <item>Добруш</item>
+    <item>Драгічын</item>
+    <item>Дзяржынск</item>
+    <item>Ганцавічы</item>
+    <item>Глыбокае</item>
     <item>Гомель</item>
-    <item>Гародня</item>
+    <item>Горкі</item>
+    <item>Гродна</item>
+    <item>Іванава</item>
+    <item>Івацэвічы</item>
+    <item>Калінкавічы</item>
+    <item>Касцюковічы</item>
+    <item>Хойнікі</item>
+    <item>Кобрын</item>
+    <item>Крычаў</item>
+    <item>Лепель</item>
+    <item>Ліда</item>
+    <item>Лунінец</item>
     <item>Магілёў</item>
+    <item>Маладзечна</item>
+    <item>Маларыта</item>
+    <item>Мар\'іна Горка</item>
+    <item>Масты</item>
+    <item>Мазыр</item>
+    <item>Мінск</item>
+    <item>Мсціслаў</item>
+    <item>Навагрудак</item>
+    <item>Навалукомль</item>
+    <item>Наваполацк</item>
+    <item>Нясвіж</item>
+    <item>Орша</item>
+    <item>Паставы</item>
+    <item>Пінск</item>
+    <item>Полацк</item>
+    <item>Пружаны</item>
+    <item>Петрыкаў</item>
+    <item>Рагачоў</item>
+    <item>Рэчыца</item>
+    <item>Салігорск</item>
+    <item>Шчучын</item>
+    <item>Шклоў</item>
+    <item>Слонім</item>
+    <item>Слуцк</item>
+    <item>Смалявічы</item>
+    <item>Смаргонь</item>
+    <item>Столін</item>
+    <item>Стаўбцы</item>
+    <item>Светлагорск</item>
+    <item>Свіслач</item>
+    <item>Талочын</item>
+    <item>Ваўкавыск</item>
+    <item>Вілейка</item>
+    <item>Віцебск</item>
+    <item>Заслаўе</item>
+    <item>Жлобін</item>
+    <item>Жодзіна</item>
+    <item>Жыткавічы</item>
   </string-array>
   <string name="pref_title_default_city">Горад па ўмаўчанні</string>
   <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>

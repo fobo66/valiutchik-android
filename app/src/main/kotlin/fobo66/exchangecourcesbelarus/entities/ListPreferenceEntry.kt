@@ -14,24 +14,12 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.repository
+package fobo66.exchangecourcesbelarus.entities
 
-import fobo66.valiutchik.core.entities.BestCourse
-import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import androidx.compose.runtime.Immutable
 
-/**
- * Repository to process exchange rates
- */
-interface CurrencyRateRepository {
-
-  /**
-   * Refresh exchange rates for the given city
-   */
-  suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String = city)
-
-  /**
-   * Load exchange rates from database or from network
-   */
-  fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>>
-}
+@Immutable
+data class ListPreferenceEntry(
+  val key: String,
+  val value: String
+)
