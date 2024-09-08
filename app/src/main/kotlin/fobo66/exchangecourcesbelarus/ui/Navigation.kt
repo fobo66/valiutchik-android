@@ -176,7 +176,7 @@ fun NavGraphBuilder.preferenceScreen(
   if (useDialog) {
     dialog(DESTINATION_PREFERENCES) {
       PreferenceScreen(
-        navController = navController,
+        onLicensesClick = { navController.navigate(DESTINATION_LICENSES) },
         modifier = Modifier.clip(MaterialTheme.shapes.extraLarge),
         preferencesViewModel = koinViewModel()
       )
@@ -184,7 +184,7 @@ fun NavGraphBuilder.preferenceScreen(
   } else {
     composable(DESTINATION_PREFERENCES) {
       PreferenceScreen(
-        navController = navController,
+        onLicensesClick = { navController.navigate(DESTINATION_LICENSES) },
         preferencesViewModel = koinViewModel()
       )
     }
@@ -192,8 +192,8 @@ fun NavGraphBuilder.preferenceScreen(
 }
 
 @Composable
-private fun PreferenceScreen(
-  navController: NavController,
+fun PreferenceScreen(
+  onLicensesClick: () -> Unit,
   preferencesViewModel: PreferencesViewModel,
   modifier: Modifier = Modifier
 ) {
@@ -209,14 +209,12 @@ private fun PreferenceScreen(
     )
 
   PreferenceScreenContent(
-    defaultCity,
-    updateInterval,
-    preferencesViewModel::updateDefaultCity,
-    preferencesViewModel::updateUpdateInterval,
-    {
-      navController.navigate(DESTINATION_LICENSES)
-    },
-    modifier
+    defaultCityValue = defaultCity,
+    updateIntervalValue = updateInterval,
+    onDefaultCityChange = preferencesViewModel::updateDefaultCity,
+    onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
+    onOpenSourceLicensesClick = onLicensesClick,
+    modifier = modifier
   )
 }
 
@@ -231,6 +229,24 @@ fun NavGraphBuilder.licensesScreen() {
       uriHandler.openUri(licenseUrl)
     })
   }
+}
+
+@Composable
+fun OpenSourceLicensesDestination(
+  modifier: Modifier = Modifier,
+  viewModel: OpenSourceLicensesViewModel = koinViewModel()
+) {
+  val uriHandler = LocalUriHandler.current
+
+  val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
+
+  OpenSourceLicensesScreen(
+    licensesState = licensesState,
+    onItemClick = { licenseUrl ->
+      uriHandler.openUri(licenseUrl)
+    },
+    modifier = modifier
+  )
 }
 
 @OptIn(ExperimentalPermissionsApi::class)

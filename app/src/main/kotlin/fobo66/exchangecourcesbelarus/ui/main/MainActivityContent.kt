@@ -17,6 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
 import android.Manifest.permission
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -35,6 +36,10 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -58,6 +63,8 @@ import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.MainViewModel
+import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
+import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
@@ -67,7 +74,7 @@ import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.refreshRates
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
@@ -75,6 +82,11 @@ fun MainActivityContent(
   mainViewModel: MainViewModel = koinViewModel()
 ) {
   val navController = rememberNavController()
+  val navigator = rememberSupportingPaneScaffoldNavigator()
+
+  BackHandler(enabled = navigator.canNavigateBack()) {
+    navigator.navigateBack()
+  }
 
   var isAboutDialogShown by remember {
     mutableStateOf(false)
@@ -87,6 +99,24 @@ fun MainActivityContent(
   val snackbarHostState = remember {
     SnackbarHostState()
   }
+
+  SupportingPaneScaffold(
+    directive = navigator.scaffoldDirective,
+    value = navigator.scaffoldValue,
+    mainPane = {
+
+    },
+    supportingPane = {
+      PreferenceScreen(
+        onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) },
+        preferencesViewModel = koinViewModel()
+      )
+    },
+    extraPane = {
+      OpenSourceLicensesDestination()
+    },
+    modifier = modifier
+  )
 
   Scaffold(
     topBar = {
