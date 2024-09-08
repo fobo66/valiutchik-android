@@ -103,7 +103,6 @@ detekt {
 }
 
 composeCompiler {
-  enableStrongSkippingMode = true
   metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
   reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
@@ -144,6 +143,9 @@ dependencies {
   implementation(libs.compose.material)
   implementation(libs.compose.ui.preview)
   implementation(libs.compose.material.windowsize)
+  implementation(libs.compose.material.adaptive)
+  implementation(libs.compose.material.adaptive.layout)
+  implementation(libs.compose.material.adaptive.navigation)
   androidTestImplementation(libs.compose.ui.testing)
   debugImplementation(libs.compose.ui.testing.manifest)
   debugImplementation(libs.compose.ui.tooling)
