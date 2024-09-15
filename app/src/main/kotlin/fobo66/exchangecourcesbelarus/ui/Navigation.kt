@@ -68,9 +68,7 @@ fun BestRatesScreenDestination(
 
   val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
 
-  val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
-    initialValue = MainScreenState.Loading
-  )
+  val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
 
   var isLocationPermissionPromptShown by rememberSaveable {
     mutableStateOf(false)
@@ -119,6 +117,8 @@ fun BestRatesScreenDestination(
       }
     },
     useGrid = useGrid,
+    isRefreshing = viewState is MainScreenState.Loading,
+    onRefresh = { refreshRates(permissionState, mainViewModel) },
     modifier = modifier
   )
 }
@@ -128,6 +128,8 @@ fun BestRatesScreen(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier,
   useGrid: Boolean = false
 ) {
@@ -136,6 +138,8 @@ fun BestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       onBestRateClick = onBestRateClick,
       onBestRateLongClick = onBestRateLongClick,
+      isRefreshing = isRefreshing,
+      onRefresh = onRefresh,
       modifier = modifier
     )
   } else {
@@ -143,6 +147,8 @@ fun BestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       onBestRateClick = onBestRateClick,
       onBestRateLongClick = onBestRateLongClick,
+      isRefreshing = isRefreshing,
+      onRefresh = onRefresh,
       modifier = modifier
     )
   }

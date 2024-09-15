@@ -33,9 +33,11 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,36 +55,41 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesList(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   Crossfade(bestCurrencyRates, label = "bestRatesList", modifier = modifier) {
     if (it.isEmpty()) {
       NoRatesIndicator()
     } else {
-      LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(all = 8.dp),
-        modifier = Modifier.testTag(TAG_RATES)
-      ) {
-        itemsIndexed(
-          items = bestCurrencyRates,
-          key = { _, item -> item.currencyNameRes }
-        ) { index, item ->
-          BestCurrencyRateCard(
-            currencyName = stringResource(id = item.currencyNameRes),
-            currencyValue = item.currencyValue,
-            bankName = item.bank,
-            onClick = onBestRateClick,
-            onLongClick = onBestRateLongClick,
-            modifier = Modifier
-              .fillMaxWidth()
-              .animateItem()
-          )
+      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+        LazyColumn(
+          verticalArrangement = Arrangement.spacedBy(16.dp),
+          contentPadding = PaddingValues(all = 8.dp),
+          modifier = Modifier.testTag(TAG_RATES)
+        ) {
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItem()
+            )
+          }
         }
       }
     }
@@ -92,39 +99,43 @@ fun BestRatesList(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = modifier) {
     if (it.isEmpty()) {
       NoRatesIndicator()
     } else {
-      LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(all = 8.dp),
-        modifier = Modifier.testTag(TAG_RATES)
-      ) {
-        itemsIndexed(
-          items = bestCurrencyRates,
-          key = { _, item -> item.currencyNameRes }
-        ) { index, item ->
-          BestCurrencyRateCard(
-            currencyName = stringResource(id = item.currencyNameRes),
-            currencyValue = item.currencyValue,
-            bankName = item.bank,
-            onClick = onBestRateClick,
-            onLongClick = onBestRateLongClick,
-            modifier = Modifier
-              .fillMaxWidth()
-              .animateItem()
-          )
+      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+        LazyVerticalGrid(
+          columns = GridCells.Fixed(2),
+          verticalArrangement = Arrangement.spacedBy(16.dp),
+          horizontalArrangement = Arrangement.spacedBy(16.dp),
+          contentPadding = PaddingValues(all = 8.dp),
+          modifier = Modifier.testTag(TAG_RATES)
+        ) {
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItem()
+            )
+          }
         }
       }
     }

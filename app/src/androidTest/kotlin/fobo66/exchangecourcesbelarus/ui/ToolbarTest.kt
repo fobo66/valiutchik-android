@@ -48,9 +48,7 @@ class ToolbarTest {
         currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
     val expectedTitle =
@@ -66,9 +64,7 @@ class ToolbarTest {
         currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
 
@@ -86,9 +82,7 @@ class ToolbarTest {
         currentScreen = ThreePaneScaffoldRole.Secondary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
 
@@ -109,9 +103,7 @@ class ToolbarTest {
         currentScreen = route,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = { route = ThreePaneScaffoldRole.Secondary },
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = { route = ThreePaneScaffoldRole.Secondary }
       )
     }
 
@@ -140,9 +132,7 @@ class ToolbarTest {
         currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
     composeRule.onNodeWithContentDescription(
@@ -161,9 +151,7 @@ class ToolbarTest {
         currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = { isRefreshClicked = true },
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
 

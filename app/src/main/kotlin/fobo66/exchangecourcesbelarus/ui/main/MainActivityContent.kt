@@ -24,9 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -48,30 +46,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.entities.MainScreenState.Loading
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
-import fobo66.exchangecourcesbelarus.ui.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
-import fobo66.exchangecourcesbelarus.ui.refreshRates
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
-  modifier: Modifier = Modifier,
-  mainViewModel: MainViewModel = koinViewModel()
+  modifier: Modifier = Modifier
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
 
@@ -87,15 +78,11 @@ fun MainActivityContent(
 
   Scaffold(
     topBar = {
-      val state by mainViewModel.screenState.collectAsStateWithLifecycle()
-
       ValiutchikTopBar(
         currentScreen = navigator.currentDestination?.pane,
         onBackClick = { navigator.navigateBack() },
         onAboutClick = { isAboutDialogShown = true },
         onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
-        onRefreshClick = { refreshRates(locationPermissionState, mainViewModel) },
-        isRefreshing = state is Loading,
         updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
         settingsVisible = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
       )
@@ -118,7 +105,6 @@ fun MainActivityContent(
         BestRatesScreenDestination(
           snackbarHostState = snackbarHostState,
           permissionState = locationPermissionState,
-          mainViewModel = mainViewModel,
           useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
         )
       },
@@ -138,8 +124,6 @@ fun MainActivityContent(
   }
 }
 
-private const val TOPBAR_PROGRESS_SCALE = 0.5f
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValiutchikTopBar(
@@ -147,8 +131,6 @@ fun ValiutchikTopBar(
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
   onSettingsClick: () -> Unit,
-  onRefreshClick: () -> Unit,
-  isRefreshing: Boolean,
   modifier: Modifier = Modifier,
   updateTitle: Boolean = true,
   settingsVisible: Boolean = true
@@ -164,11 +146,6 @@ fun ValiutchikTopBar(
           )
         }
       }
-      AnimatedVisibility(visible = isRefreshing) {
-        CircularProgressIndicator(
-          modifier = Modifier.scale(TOPBAR_PROGRESS_SCALE)
-        )
-      }
     },
     title = {
       Text(
@@ -180,16 +157,6 @@ fun ValiutchikTopBar(
       )
     },
     actions = {
-      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary) {
-        IconButton(onClick = onRefreshClick) {
-          Icon(
-            Icons.Default.Refresh,
-            contentDescription = stringResource(
-              id = string.action_refresh
-            )
-          )
-        }
-      }
       IconButton(onClick = onAboutClick) {
         Icon(
           Icons.Default.Info,
