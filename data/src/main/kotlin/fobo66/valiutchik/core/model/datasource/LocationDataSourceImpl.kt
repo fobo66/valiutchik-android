@@ -58,7 +58,7 @@ class LocationDataSourceImpl(
           .filter {
             SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <= locationFixTimeMaximum
           }
-          .maxBy { it.elapsedRealtimeNanos }
+          .maxByOrNull { it.elapsedRealtimeNanos }
       }
 
       location?.let {
