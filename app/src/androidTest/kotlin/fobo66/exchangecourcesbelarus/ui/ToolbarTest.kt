@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,7 +45,7 @@ class ToolbarTest {
   fun showCorrectTitle() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentScreen = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
@@ -62,7 +63,7 @@ class ToolbarTest {
   fun doNotShowBackOnMain() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentScreen = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
@@ -82,7 +83,7 @@ class ToolbarTest {
   fun showCorrectTitleForSettings() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentScreen = DESTINATION_PREFERENCES,
+        currentScreen = ThreePaneScaffoldRole.Secondary,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
@@ -102,13 +103,13 @@ class ToolbarTest {
   fun changeStateOnNavigation() {
     composeRule.setContent {
       var route by remember {
-        mutableStateOf(DESTINATION_MAIN)
+        mutableStateOf(ThreePaneScaffoldRole.Primary)
       }
       ValiutchikTopBar(
         currentScreen = route,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = { route = DESTINATION_PREFERENCES },
+        onSettingsClick = { route = ThreePaneScaffoldRole.Secondary },
         onRefreshClick = {},
         isRefreshing = false
       )
@@ -136,7 +137,7 @@ class ToolbarTest {
     var isAboutDialogShown = false
     composeRule.setContent {
       ValiutchikTopBar(
-        currentScreen = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = { isAboutDialogShown = true },
         onSettingsClick = {},
@@ -157,7 +158,7 @@ class ToolbarTest {
     var isRefreshClicked = false
     composeRule.setContent {
       ValiutchikTopBar(
-        currentScreen = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},

@@ -19,7 +19,6 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -32,14 +31,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
@@ -60,24 +54,6 @@ import org.koin.androidx.compose.koinViewModel
 
 const val DESTINATION_MAIN = "main"
 const val DESTINATION_PREFERENCES = "prefs"
-const val DESTINATION_LICENSES = "licenses"
-
-@OptIn(ExperimentalPermissionsApi::class)
-fun NavGraphBuilder.bestRatesScreen(
-  snackbarHostState: SnackbarHostState,
-  useGrid: Boolean = false,
-  mainViewModel: MainViewModel,
-  permissionState: PermissionState
-) {
-  composable(DESTINATION_MAIN) {
-    BestRatesScreenDestination(
-      snackbarHostState = snackbarHostState,
-      permissionState = permissionState,
-      mainViewModel = mainViewModel,
-      useGrid = useGrid
-    )
-  }
-}
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -187,33 +163,11 @@ private suspend fun showSnackbar(
   )
 }
 
-fun NavGraphBuilder.preferenceScreen(
-  navController: NavController,
-  useDialog: Boolean = false
-) {
-  if (useDialog) {
-    dialog(DESTINATION_PREFERENCES) {
-      PreferenceScreen(
-        onLicensesClick = { navController.navigate(DESTINATION_LICENSES) },
-        modifier = Modifier.clip(MaterialTheme.shapes.extraLarge),
-        preferencesViewModel = koinViewModel()
-      )
-    }
-  } else {
-    composable(DESTINATION_PREFERENCES) {
-      PreferenceScreen(
-        onLicensesClick = { navController.navigate(DESTINATION_LICENSES) },
-        preferencesViewModel = koinViewModel()
-      )
-    }
-  }
-}
-
 @Composable
 fun PreferenceScreen(
   onLicensesClick: () -> Unit,
-  preferencesViewModel: PreferencesViewModel,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
 
   val defaultCity by preferencesViewModel.defaultCityPreference
@@ -234,19 +188,6 @@ fun PreferenceScreen(
     onOpenSourceLicensesClick = onLicensesClick,
     modifier = modifier
   )
-}
-
-fun NavGraphBuilder.licensesScreen() {
-  composable(DESTINATION_LICENSES) {
-    val openSourceLicensesViewModel: OpenSourceLicensesViewModel = koinViewModel()
-    val uriHandler = LocalUriHandler.current
-
-    val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle()
-
-    OpenSourceLicensesScreen(licensesState = licensesState, onItemClick = { licenseUrl ->
-      uriHandler.openUri(licenseUrl)
-    })
-  }
 }
 
 @Composable

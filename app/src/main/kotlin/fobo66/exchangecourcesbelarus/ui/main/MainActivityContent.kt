@@ -95,7 +95,9 @@ fun MainActivityContent(
         onAboutClick = { isAboutDialogShown = true },
         onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
         onRefreshClick = { refreshRates(locationPermissionState, mainViewModel) },
-        isRefreshing = state is Loading
+        isRefreshing = state is Loading,
+        updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
+        settingsVisible = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
       )
     },
     snackbarHost = {
@@ -122,8 +124,7 @@ fun MainActivityContent(
       },
       supportingPane = {
         PreferenceScreen(
-          onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) },
-          preferencesViewModel = koinViewModel()
+          onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) }
         )
       },
       extraPane = {
@@ -148,7 +149,9 @@ fun ValiutchikTopBar(
   onSettingsClick: () -> Unit,
   onRefreshClick: () -> Unit,
   isRefreshing: Boolean,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  updateTitle: Boolean = true,
+  settingsVisible: Boolean = true
 ) {
 
   TopAppBar(
@@ -168,7 +171,13 @@ fun ValiutchikTopBar(
       }
     },
     title = {
-      Text(stringResource(id = string.app_name), modifier = Modifier.testTag(TAG_TITLE))
+      Text(
+        text = if (updateTitle) {
+          resolveTitle(currentScreen)
+        } else {
+          stringResource(id = string.app_name)
+        }, modifier = Modifier.testTag(TAG_TITLE)
+      )
     },
     actions = {
       AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary) {
@@ -189,7 +198,7 @@ fun ValiutchikTopBar(
           )
         )
       }
-      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary) {
+      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
         IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,
@@ -202,4 +211,11 @@ fun ValiutchikTopBar(
     },
     modifier = modifier
   )
+}
+
+@Composable
+fun resolveTitle(currentScreen: ThreePaneScaffoldRole?): String = when (currentScreen) {
+  ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
+  ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
+  else -> stringResource(id = string.app_name)
 }
