@@ -27,7 +27,7 @@ plugins {
 }
 
 android {
-  compileSdk = 35
+  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O

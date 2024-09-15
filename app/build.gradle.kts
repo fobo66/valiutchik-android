@@ -39,16 +39,19 @@ android {
     }
   }
 
-  compileSdk = 35
+  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = 35
+    targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
     versionCode = 23
     versionName = "1.14.2"
     multiDexEnabled = true
-    resourceConfigurations += listOf("en", "be", "ru")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  androidResources {
+    localeFilters += listOf("en", "be", "ru")
   }
 
   buildTypes {
