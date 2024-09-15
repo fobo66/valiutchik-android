@@ -160,16 +160,16 @@ fun BestCurrencyRateCard(
     AnimatedContent(currencyValue, label = "currencyValue") {
       Text(
         text = it,
-        style = MaterialTheme.typography.displayLarge,
+        style = MaterialTheme.typography.displaySmall,
         modifier = Modifier
-          .padding(top = 16.dp, start = 24.dp)
+          .padding(vertical = 16.dp, horizontal = 24.dp)
           .testTag(TAG_RATE_VALUE)
       )
     }
     Row(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(all = 24.dp)
+      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp)
     ) {
       Icon(
         imageVector = Bank,
