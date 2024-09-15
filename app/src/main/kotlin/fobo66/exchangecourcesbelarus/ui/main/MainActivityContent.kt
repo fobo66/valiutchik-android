@@ -68,16 +68,11 @@ fun MainActivityContent(
   modifier: Modifier = Modifier
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
-
-  BackHandler(enabled = navigator.canNavigateBack()) {
-    navigator.navigateBack()
-  }
-
   var isAboutDialogShown by remember { mutableStateOf(false) }
-
   val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
-
   val snackbarHostState = remember { SnackbarHostState() }
+
+  BackHandler(navigator.canNavigateBack()) { navigator.navigateBack() }
 
   Scaffold(
     topBar = {
@@ -117,9 +112,7 @@ fun MainActivityContent(
           onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) }
         )
       },
-      extraPane = {
-        OpenSourceLicensesDestination()
-      },
+      extraPane = { OpenSourceLicensesDestination() },
       modifier = Modifier.padding(
         start = it.calculateStartPadding(layoutDirection),
         end = it.calculateEndPadding(layoutDirection),
