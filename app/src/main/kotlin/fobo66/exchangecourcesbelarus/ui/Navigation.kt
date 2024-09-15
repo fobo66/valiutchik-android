@@ -19,7 +19,6 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -32,14 +31,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
@@ -49,7 +43,6 @@ import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
-import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -58,79 +51,76 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-const val DESTINATION_MAIN = "main"
-const val DESTINATION_PREFERENCES = "prefs"
-const val DESTINATION_LICENSES = "licenses"
-
 @OptIn(ExperimentalPermissionsApi::class)
-fun NavGraphBuilder.bestRatesScreen(
+@Composable
+fun BestRatesScreenDestination(
   snackbarHostState: SnackbarHostState,
-  useGrid: Boolean = false,
-  mainViewModel: MainViewModel,
-  permissionState: PermissionState
+  permissionState: PermissionState,
+  modifier: Modifier = Modifier,
+  mainViewModel: MainViewModel = koinViewModel(),
+  useGrid: Boolean = false
 ) {
-  composable(DESTINATION_MAIN) {
-    val context = LocalContext.current
-    val mapLauncher =
-      rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        Napier.d("Opened map")
-      }
-
-    val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
-
-    val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
-      initialValue = MainScreenState.Loading
-    )
-
-    var isLocationPermissionPromptShown by rememberSaveable {
-      mutableStateOf(false)
+  val context = LocalContext.current
+  val mapLauncher =
+    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+      Napier.d("Opened map")
     }
 
-    val scope = rememberCoroutineScope()
+  val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-      permissionState.launchPermissionRequest()
-    }
+  val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(permissionState) {
-      if (permissionState.status is PermissionStatus.Granted) {
-        mainViewModel.refreshExchangeRates()
-      } else {
-        if (!isLocationPermissionPromptShown) {
-          isLocationPermissionPromptShown = true
-          showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
-        }
-        mainViewModel.refreshExchangeRatesForDefaultCity()
-      }
-    }
-    LaunchedEffect(viewState) {
-      if (viewState is MainScreenState.Error) {
-        showSnackbar(snackbarHostState, context.getString(string.get_data_error))
-      }
-    }
-    BestRatesScreen(
-      bestCurrencyRates = bestCurrencyRates,
-      onBestRateClick = { bankName ->
-        val mapIntent = mainViewModel.findBankOnMap(bankName)
-        if (mapIntent != null) {
-          mapLauncher.launch(
-            Intent.createChooser(mapIntent, context.getString(string.open_map))
-          )
-        } else {
-          scope.launch {
-            showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
-          }
-        }
-      },
-      onBestRateLongClick = { currencyName, currencyValue ->
-        mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-        scope.launch {
-          showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
-        }
-      },
-      useGrid = useGrid
-    )
+  var isLocationPermissionPromptShown by rememberSaveable {
+    mutableStateOf(false)
   }
+
+  val scope = rememberCoroutineScope()
+
+  LaunchedEffect(Unit) {
+    permissionState.launchPermissionRequest()
+  }
+
+  LaunchedEffect(permissionState) {
+    if (permissionState.status is PermissionStatus.Granted) {
+      mainViewModel.refreshExchangeRates()
+    } else {
+      if (!isLocationPermissionPromptShown) {
+        isLocationPermissionPromptShown = true
+        showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
+      }
+      mainViewModel.refreshExchangeRatesForDefaultCity()
+    }
+  }
+  LaunchedEffect(viewState) {
+    if (viewState is MainScreenState.Error) {
+      showSnackbar(snackbarHostState, context.getString(string.get_data_error))
+    }
+  }
+  BestRatesScreen(
+    bestCurrencyRates = bestCurrencyRates,
+    onBestRateClick = { bankName ->
+      val mapIntent = mainViewModel.findBankOnMap(bankName)
+      if (mapIntent != null) {
+        mapLauncher.launch(
+          Intent.createChooser(mapIntent, context.getString(string.open_map))
+        )
+      } else {
+        scope.launch {
+          showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
+        }
+      }
+    },
+    onBestRateLongClick = { currencyName, currencyValue ->
+      mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+      scope.launch {
+        showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
+      }
+    },
+    useGrid = useGrid,
+    isRefreshing = viewState is MainScreenState.Loading,
+    onRefresh = { refreshRates(permissionState, mainViewModel) },
+    modifier = modifier
+  )
 }
 
 @Composable
@@ -138,6 +128,8 @@ fun BestRatesScreen(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier,
   useGrid: Boolean = false
 ) {
@@ -146,6 +138,8 @@ fun BestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       onBestRateClick = onBestRateClick,
       onBestRateLongClick = onBestRateLongClick,
+      isRefreshing = isRefreshing,
+      onRefresh = onRefresh,
       modifier = modifier
     )
   } else {
@@ -153,6 +147,8 @@ fun BestRatesScreen(
       bestCurrencyRates = bestCurrencyRates,
       onBestRateClick = onBestRateClick,
       onBestRateLongClick = onBestRateLongClick,
+      isRefreshing = isRefreshing,
+      onRefresh = onRefresh,
       modifier = modifier
     )
   }
@@ -169,68 +165,45 @@ private suspend fun showSnackbar(
   )
 }
 
-fun NavGraphBuilder.preferenceScreen(
-  navController: NavController,
-  useDialog: Boolean = false
-) {
-  if (useDialog) {
-    dialog(DESTINATION_PREFERENCES) {
-      PreferenceScreen(
-        navController = navController,
-        modifier = Modifier.clip(MaterialTheme.shapes.extraLarge),
-        preferencesViewModel = koinViewModel()
-      )
-    }
-  } else {
-    composable(DESTINATION_PREFERENCES) {
-      PreferenceScreen(
-        navController = navController,
-        preferencesViewModel = koinViewModel()
-      )
-    }
-  }
-}
-
 @Composable
-private fun PreferenceScreen(
-  navController: NavController,
-  preferencesViewModel: PreferencesViewModel,
-  modifier: Modifier = Modifier
+fun PreferenceScreen(
+  onLicensesClick: () -> Unit,
+  modifier: Modifier = Modifier,
+  preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
 
   val defaultCity by preferencesViewModel.defaultCityPreference
-    .collectAsStateWithLifecycle(
-      initialValue = "Minsk"
-    )
+    .collectAsStateWithLifecycle()
 
   val updateInterval by preferencesViewModel.updateIntervalPreference
-    .collectAsStateWithLifecycle(
-      initialValue = MIN_UPDATE_INTERVAL_VALUE
-    )
+    .collectAsStateWithLifecycle()
 
   PreferenceScreenContent(
-    defaultCity,
-    updateInterval,
-    preferencesViewModel::updateDefaultCity,
-    preferencesViewModel::updateUpdateInterval,
-    {
-      navController.navigate(DESTINATION_LICENSES)
-    },
-    modifier
+    defaultCityValue = defaultCity,
+    updateIntervalValue = updateInterval,
+    onDefaultCityChange = preferencesViewModel::updateDefaultCity,
+    onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
+    onOpenSourceLicensesClick = onLicensesClick,
+    modifier = modifier
   )
 }
 
-fun NavGraphBuilder.licensesScreen() {
-  composable(DESTINATION_LICENSES) {
-    val openSourceLicensesViewModel: OpenSourceLicensesViewModel = koinViewModel()
-    val uriHandler = LocalUriHandler.current
+@Composable
+fun OpenSourceLicensesDestination(
+  modifier: Modifier = Modifier,
+  viewModel: OpenSourceLicensesViewModel = koinViewModel()
+) {
+  val uriHandler = LocalUriHandler.current
 
-    val licensesState by openSourceLicensesViewModel.licensesState.collectAsStateWithLifecycle()
+  val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
 
-    OpenSourceLicensesScreen(licensesState = licensesState, onItemClick = { licenseUrl ->
+  OpenSourceLicensesScreen(
+    licensesState = licensesState,
+    onItemClick = { licenseUrl ->
       uriHandler.openUri(licenseUrl)
-    })
-  }
+    },
+    modifier = modifier
+  )
 }
 
 @OptIn(ExperimentalPermissionsApi::class)

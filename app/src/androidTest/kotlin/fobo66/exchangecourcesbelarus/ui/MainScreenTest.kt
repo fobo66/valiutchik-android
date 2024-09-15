@@ -43,7 +43,9 @@ class MainScreenTest {
       BestRatesList(
         bestCurrencyRates = persistentListOf(),
         onBestRateClick = {},
-        onBestRateLongClick = { _, _ -> }
+        onBestRateLongClick = { _, _ -> },
+        isRefreshing = false,
+        onRefresh = {}
       )
     }
     composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
@@ -59,7 +61,9 @@ class MainScreenTest {
         onBestRateClick = {
           isMapOpen = true
         },
-        onBestRateLongClick = { _, _ -> }
+        onBestRateLongClick = { _, _ -> },
+        isRefreshing = false,
+        onRefresh = {}
       )
     }
     composeRule.onNodeWithTag(TAG_RATES)

@@ -75,6 +75,10 @@
           android:name="fobo66.exchangecourcesbelarus.init.KoinInitializer"
           android:value="androidx.startup" />
     </provider>
+
+    <property
+        android:name="android.window.PROPERTY_COMPAT_ALLOW_SMALL_COVER_SCREEN"
+        android:value="1" />
   </application>
 
 </manifest>

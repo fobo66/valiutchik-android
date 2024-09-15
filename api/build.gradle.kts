@@ -26,7 +26,7 @@ plugins {
 
 android {
   namespace = "fobo66.valiutchik.api"
-  compileSdk = 35
+  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O

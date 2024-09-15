@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,12 +45,10 @@ class ToolbarTest {
   fun showCorrectTitle() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
     val expectedTitle =
@@ -62,12 +61,10 @@ class ToolbarTest {
   fun doNotShowBackOnMain() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
 
@@ -82,12 +79,10 @@ class ToolbarTest {
   fun showCorrectTitleForSettings() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_PREFERENCES,
+        currentScreen = ThreePaneScaffoldRole.Secondary,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
 
@@ -102,15 +97,13 @@ class ToolbarTest {
   fun changeStateOnNavigation() {
     composeRule.setContent {
       var route by remember {
-        mutableStateOf(DESTINATION_MAIN)
+        mutableStateOf(ThreePaneScaffoldRole.Primary)
       }
       ValiutchikTopBar(
-        currentRoute = route,
+        currentScreen = route,
         onBackClick = {},
         onAboutClick = {},
-        onSettingsClick = { route = DESTINATION_PREFERENCES },
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = { route = ThreePaneScaffoldRole.Secondary }
       )
     }
 
@@ -136,12 +129,10 @@ class ToolbarTest {
     var isAboutDialogShown = false
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = ThreePaneScaffoldRole.Primary,
         onBackClick = {},
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = {},
-        onRefreshClick = {},
-        isRefreshing = false
+        onSettingsClick = {}
       )
     }
     composeRule.onNodeWithContentDescription(
@@ -150,27 +141,5 @@ class ToolbarTest {
       )
     ).performClick()
     assertTrue(isAboutDialogShown)
-  }
-
-  @Test
-  fun refreshWorks() {
-    var isRefreshClicked = false
-    composeRule.setContent {
-      ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
-        onBackClick = {},
-        onAboutClick = {},
-        onSettingsClick = {},
-        onRefreshClick = { isRefreshClicked = true },
-        isRefreshing = false
-      )
-    }
-
-    composeRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.action_refresh
-      )
-    ).performClick()
-    assertTrue(isRefreshClicked)
   }
 }

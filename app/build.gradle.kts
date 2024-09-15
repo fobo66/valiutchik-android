@@ -39,16 +39,19 @@ android {
     }
   }
 
-  compileSdk = 35
+  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = 35
+    targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
     versionCode = 23
     versionName = "1.14.2"
     multiDexEnabled = true
-    resourceConfigurations += listOf("en", "be", "ru")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  androidResources {
+    localeFilters += listOf("en", "be", "ru")
   }
 
   buildTypes {
@@ -103,7 +106,6 @@ detekt {
 }
 
 composeCompiler {
-  enableStrongSkippingMode = true
   metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
   reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
@@ -144,6 +146,9 @@ dependencies {
   implementation(libs.compose.material)
   implementation(libs.compose.ui.preview)
   implementation(libs.compose.material.windowsize)
+  implementation(libs.compose.material.adaptive)
+  implementation(libs.compose.material.adaptive.layout)
+  implementation(libs.compose.material.adaptive.navigation)
   androidTestImplementation(libs.compose.ui.testing)
   debugImplementation(libs.compose.ui.testing.manifest)
   debugImplementation(libs.compose.ui.tooling)
@@ -159,8 +164,6 @@ dependencies {
   // lifecycle
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.lifecycle.viewmodel)
-
-  implementation(libs.androidx.navigation)
 
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.android)

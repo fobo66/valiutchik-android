@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-  compileSdk = 35
+  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17

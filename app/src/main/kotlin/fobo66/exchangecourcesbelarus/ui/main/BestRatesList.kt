@@ -24,8 +24,10 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -33,13 +35,16 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,36 +58,47 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesList(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   Crossfade(bestCurrencyRates, label = "bestRatesList", modifier = modifier) {
     if (it.isEmpty()) {
       NoRatesIndicator()
     } else {
-      LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(all = 8.dp),
-        modifier = Modifier.testTag(TAG_RATES)
-      ) {
-        itemsIndexed(
-          items = bestCurrencyRates,
-          key = { _, item -> item.currencyNameRes }
-        ) { index, item ->
-          BestCurrencyRateCard(
-            currencyName = stringResource(id = item.currencyNameRes),
-            currencyValue = item.currencyValue,
-            bankName = item.bank,
-            onClick = onBestRateClick,
-            onLongClick = onBestRateLongClick,
-            modifier = Modifier
-              .fillMaxWidth()
-              .animateItem()
-          )
+      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+        val density = LocalDensity.current
+        LazyColumn(
+          verticalArrangement = Arrangement.spacedBy(16.dp),
+          contentPadding = PaddingValues(
+            top = 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = WindowInsets.systemBars.getBottom(density).dp
+          ),
+          modifier = Modifier.testTag(TAG_RATES)
+        ) {
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItem()
+            )
+          }
         }
       }
     }
@@ -92,39 +108,49 @@ fun BestRatesList(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = modifier) {
     if (it.isEmpty()) {
       NoRatesIndicator()
     } else {
-      LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(all = 8.dp),
-        modifier = Modifier.testTag(TAG_RATES)
-      ) {
-        itemsIndexed(
-          items = bestCurrencyRates,
-          key = { _, item -> item.currencyNameRes }
-        ) { index, item ->
-          BestCurrencyRateCard(
-            currencyName = stringResource(id = item.currencyNameRes),
-            currencyValue = item.currencyValue,
-            bankName = item.bank,
-            onClick = onBestRateClick,
-            onLongClick = onBestRateLongClick,
-            modifier = Modifier
-              .fillMaxWidth()
-              .animateItem()
-          )
+      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+        val density = LocalDensity.current
+        LazyVerticalGrid(
+          columns = GridCells.Fixed(2),
+          verticalArrangement = Arrangement.spacedBy(16.dp),
+          horizontalArrangement = Arrangement.spacedBy(16.dp),
+          contentPadding = PaddingValues(
+            top = 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = WindowInsets.systemBars.getBottom(density).dp
+          ),
+          modifier = Modifier.testTag(TAG_RATES)
+        ) {
+          itemsIndexed(
+            items = bestCurrencyRates,
+            key = { _, item -> item.currencyNameRes }
+          ) { index, item ->
+            BestCurrencyRateCard(
+              currencyName = stringResource(id = item.currencyNameRes),
+              currencyValue = item.currencyValue,
+              bankName = item.bank,
+              onClick = onBestRateClick,
+              onLongClick = onBestRateLongClick,
+              modifier = Modifier
+                .fillMaxWidth()
+                .animateItem()
+            )
+          }
         }
       }
     }
@@ -160,16 +186,16 @@ fun BestCurrencyRateCard(
     AnimatedContent(currencyValue, label = "currencyValue") {
       Text(
         text = it,
-        style = MaterialTheme.typography.displayLarge,
+        style = MaterialTheme.typography.displaySmall,
         modifier = Modifier
-          .padding(top = 16.dp, start = 24.dp)
+          .padding(vertical = 16.dp, horizontal = 24.dp)
           .testTag(TAG_RATE_VALUE)
       )
     }
     Row(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(all = 24.dp)
+      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp)
     ) {
       Icon(
         imageVector = Bank,

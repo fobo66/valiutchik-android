@@ -17,15 +17,16 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
 import android.Manifest.permission
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,71 +36,53 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.entities.MainScreenState.Loading
-import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
-import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
-import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
-import fobo66.exchangecourcesbelarus.ui.MainViewModel
+import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
+import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
+import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
-import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
-import fobo66.exchangecourcesbelarus.ui.licensesScreen
-import fobo66.exchangecourcesbelarus.ui.preferenceScreen
-import fobo66.exchangecourcesbelarus.ui.refreshRates
-import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
-  modifier: Modifier = Modifier,
-  mainViewModel: MainViewModel = koinViewModel()
+  modifier: Modifier = Modifier
 ) {
-  val navController = rememberNavController()
+  val navigator = rememberSupportingPaneScaffoldNavigator()
+  var isAboutDialogShown by remember { mutableStateOf(false) }
+  val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
+  val snackbarHostState = remember { SnackbarHostState() }
 
-  var isAboutDialogShown by remember {
-    mutableStateOf(false)
-  }
-
-  val locationPermissionState = rememberPermissionState(
-    permission.ACCESS_COARSE_LOCATION
-  )
-
-  val snackbarHostState = remember {
-    SnackbarHostState()
-  }
+  BackHandler(navigator.canNavigateBack()) { navigator.navigateBack() }
 
   Scaffold(
     topBar = {
-      val currentDestination by navController.currentBackStackEntryAsState()
-      val state by mainViewModel.screenState.collectAsState()
-
       ValiutchikTopBar(
-        currentRoute = currentDestination?.destination?.route,
-        onBackClick = { navController.popBackStack() },
+        currentScreen = navigator.currentDestination?.pane,
+        onBackClick = { navigator.navigateBack() },
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = { navController.navigate(DESTINATION_PREFERENCES) },
-        onRefreshClick = { refreshRates(locationPermissionState, mainViewModel) },
-        isRefreshing = state is Loading
+        onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
+        updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
+        settingsVisible = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
       )
     },
     snackbarHost = {
@@ -113,46 +96,50 @@ fun MainActivityContent(
     },
     modifier = modifier
   ) {
-    NavHost(
-      navController = navController,
-      startDestination = DESTINATION_MAIN,
-      modifier = Modifier.padding(it)
-    ) {
-      bestRatesScreen(
-        snackbarHostState,
-        useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-        mainViewModel = mainViewModel,
-        permissionState = locationPermissionState
+    val layoutDirection = LocalLayoutDirection.current
+    SupportingPaneScaffold(
+      directive = navigator.scaffoldDirective,
+      value = navigator.scaffoldValue,
+      mainPane = {
+        BestRatesScreenDestination(
+          snackbarHostState = snackbarHostState,
+          permissionState = locationPermissionState,
+          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+        )
+      },
+      supportingPane = {
+        PreferenceScreen(
+          onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) }
+        )
+      },
+      extraPane = { OpenSourceLicensesDestination() },
+      modifier = Modifier.padding(
+        start = it.calculateStartPadding(layoutDirection),
+        end = it.calculateEndPadding(layoutDirection),
+        top = it.calculateTopPadding()
       )
-      preferenceScreen(
-        navController,
-        useDialog = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
-      )
-      licensesScreen()
-    }
+    )
     if (isAboutDialogShown) {
       AboutAppDialog(onDismiss = { isAboutDialogShown = false })
     }
   }
 }
 
-private const val TOPBAR_PROGRESS_SCALE = 0.5f
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValiutchikTopBar(
-  currentRoute: String?,
+  currentScreen: ThreePaneScaffoldRole?,
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
   onSettingsClick: () -> Unit,
-  onRefreshClick: () -> Unit,
-  isRefreshing: Boolean,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  updateTitle: Boolean = true,
+  settingsVisible: Boolean = true
 ) {
 
   TopAppBar(
     navigationIcon = {
-      AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
+      AnimatedVisibility(currentScreen != ThreePaneScaffoldRole.Primary) {
         IconButton(onClick = onBackClick) {
           Icon(
             Icons.AutoMirrored.Default.ArrowBack,
@@ -160,26 +147,17 @@ fun ValiutchikTopBar(
           )
         }
       }
-      AnimatedVisibility(visible = isRefreshing) {
-        CircularProgressIndicator(
-          modifier = Modifier.scale(TOPBAR_PROGRESS_SCALE)
-        )
-      }
     },
     title = {
-      Text(resolveTitle(currentRoute), modifier = Modifier.testTag(TAG_TITLE))
+      Text(
+        text = if (updateTitle) {
+          resolveTitle(currentScreen)
+        } else {
+          stringResource(id = string.app_name)
+        }, modifier = Modifier.testTag(TAG_TITLE)
+      )
     },
     actions = {
-      AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
-        IconButton(onClick = onRefreshClick) {
-          Icon(
-            Icons.Default.Refresh,
-            contentDescription = stringResource(
-              id = string.action_refresh
-            )
-          )
-        }
-      }
       IconButton(onClick = onAboutClick) {
         Icon(
           Icons.Default.Info,
@@ -188,7 +166,7 @@ fun ValiutchikTopBar(
           )
         )
       }
-      AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
+      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
         IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,
@@ -204,8 +182,8 @@ fun ValiutchikTopBar(
 }
 
 @Composable
-fun resolveTitle(currentRoute: String?): String = when (currentRoute) {
-  DESTINATION_PREFERENCES -> stringResource(id = string.title_activity_settings)
-  DESTINATION_LICENSES -> stringResource(id = string.title_activity_oss_licenses)
+fun resolveTitle(currentScreen: ThreePaneScaffoldRole?): String = when (currentScreen) {
+  ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
+  ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
   else -> stringResource(id = string.app_name)
 }
