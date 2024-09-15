@@ -70,67 +70,85 @@ fun NavGraphBuilder.bestRatesScreen(
   permissionState: PermissionState
 ) {
   composable(DESTINATION_MAIN) {
-    val context = LocalContext.current
-    val mapLauncher =
-      rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        Napier.d("Opened map")
-      }
-
-    val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
-
-    val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
-      initialValue = MainScreenState.Loading
-    )
-
-    var isLocationPermissionPromptShown by rememberSaveable {
-      mutableStateOf(false)
-    }
-
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(Unit) {
-      permissionState.launchPermissionRequest()
-    }
-
-    LaunchedEffect(permissionState) {
-      if (permissionState.status is PermissionStatus.Granted) {
-        mainViewModel.refreshExchangeRates()
-      } else {
-        if (!isLocationPermissionPromptShown) {
-          isLocationPermissionPromptShown = true
-          showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
-        }
-        mainViewModel.refreshExchangeRatesForDefaultCity()
-      }
-    }
-    LaunchedEffect(viewState) {
-      if (viewState is MainScreenState.Error) {
-        showSnackbar(snackbarHostState, context.getString(string.get_data_error))
-      }
-    }
-    BestRatesScreen(
-      bestCurrencyRates = bestCurrencyRates,
-      onBestRateClick = { bankName ->
-        val mapIntent = mainViewModel.findBankOnMap(bankName)
-        if (mapIntent != null) {
-          mapLauncher.launch(
-            Intent.createChooser(mapIntent, context.getString(string.open_map))
-          )
-        } else {
-          scope.launch {
-            showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
-          }
-        }
-      },
-      onBestRateLongClick = { currencyName, currencyValue ->
-        mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-        scope.launch {
-          showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
-        }
-      },
+    BestRatesScreenDestination(
+      snackbarHostState = snackbarHostState,
+      permissionState = permissionState,
+      mainViewModel = mainViewModel,
       useGrid = useGrid
     )
   }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun BestRatesScreenDestination(
+  snackbarHostState: SnackbarHostState,
+  permissionState: PermissionState,
+  modifier: Modifier = Modifier,
+  mainViewModel: MainViewModel = koinViewModel(),
+  useGrid: Boolean = false
+) {
+  val context = LocalContext.current
+  val mapLauncher =
+    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+      Napier.d("Opened map")
+    }
+
+  val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
+
+  val viewState by mainViewModel.screenState.collectAsStateWithLifecycle(
+    initialValue = MainScreenState.Loading
+  )
+
+  var isLocationPermissionPromptShown by rememberSaveable {
+    mutableStateOf(false)
+  }
+
+  val scope = rememberCoroutineScope()
+
+  LaunchedEffect(Unit) {
+    permissionState.launchPermissionRequest()
+  }
+
+  LaunchedEffect(permissionState) {
+    if (permissionState.status is PermissionStatus.Granted) {
+      mainViewModel.refreshExchangeRates()
+    } else {
+      if (!isLocationPermissionPromptShown) {
+        isLocationPermissionPromptShown = true
+        showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
+      }
+      mainViewModel.refreshExchangeRatesForDefaultCity()
+    }
+  }
+  LaunchedEffect(viewState) {
+    if (viewState is MainScreenState.Error) {
+      showSnackbar(snackbarHostState, context.getString(string.get_data_error))
+    }
+  }
+  BestRatesScreen(
+    bestCurrencyRates = bestCurrencyRates,
+    onBestRateClick = { bankName ->
+      val mapIntent = mainViewModel.findBankOnMap(bankName)
+      if (mapIntent != null) {
+        mapLauncher.launch(
+          Intent.createChooser(mapIntent, context.getString(string.open_map))
+        )
+      } else {
+        scope.launch {
+          showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
+        }
+      }
+    },
+    onBestRateLongClick = { currencyName, currencyValue ->
+      mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+      scope.launch {
+        showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
+      }
+    },
+    useGrid = useGrid,
+    modifier = modifier
+  )
 }
 
 @Composable

@@ -52,13 +52,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState.Loading
+import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
 import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
@@ -67,10 +67,6 @@ import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
-import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
-import fobo66.exchangecourcesbelarus.ui.bestRatesScreen
-import fobo66.exchangecourcesbelarus.ui.licensesScreen
-import fobo66.exchangecourcesbelarus.ui.preferenceScreen
 import fobo66.exchangecourcesbelarus.ui.refreshRates
 import org.koin.androidx.compose.koinViewModel
 
@@ -88,35 +84,11 @@ fun MainActivityContent(
     navigator.navigateBack()
   }
 
-  var isAboutDialogShown by remember {
-    mutableStateOf(false)
-  }
+  var isAboutDialogShown by remember { mutableStateOf(false) }
 
-  val locationPermissionState = rememberPermissionState(
-    permission.ACCESS_COARSE_LOCATION
-  )
+  val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
 
-  val snackbarHostState = remember {
-    SnackbarHostState()
-  }
-
-  SupportingPaneScaffold(
-    directive = navigator.scaffoldDirective,
-    value = navigator.scaffoldValue,
-    mainPane = {
-
-    },
-    supportingPane = {
-      PreferenceScreen(
-        onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) },
-        preferencesViewModel = koinViewModel()
-      )
-    },
-    extraPane = {
-      OpenSourceLicensesDestination()
-    },
-    modifier = modifier
-  )
+  val snackbarHostState = remember { SnackbarHostState() }
 
   Scaffold(
     topBar = {
@@ -125,9 +97,9 @@ fun MainActivityContent(
 
       ValiutchikTopBar(
         currentRoute = currentDestination?.destination?.route,
-        onBackClick = { navController.popBackStack() },
+        onBackClick = { navigator.navigateBack() },
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = { navController.navigate(DESTINATION_PREFERENCES) },
+        onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
         onRefreshClick = { refreshRates(locationPermissionState, mainViewModel) },
         isRefreshing = state is Loading
       )
@@ -143,26 +115,28 @@ fun MainActivityContent(
     },
     modifier = modifier
   ) {
-    NavHost(
-      navController = navController,
-      startDestination = DESTINATION_MAIN,
+    SupportingPaneScaffold(
+      directive = navigator.scaffoldDirective,
+      value = navigator.scaffoldValue,
+      mainPane = {
+        BestRatesScreenDestination(
+          snackbarHostState = snackbarHostState,
+          permissionState = locationPermissionState,
+          mainViewModel = mainViewModel,
+          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+        )
+      },
+      supportingPane = {
+        PreferenceScreen(
+          onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) },
+          preferencesViewModel = koinViewModel()
+        )
+      },
+      extraPane = {
+        OpenSourceLicensesDestination()
+      },
       modifier = Modifier.padding(it)
-    ) {
-      bestRatesScreen(
-        snackbarHostState,
-        useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-        mainViewModel = mainViewModel,
-        permissionState = locationPermissionState
-      )
-      preferenceScreen(
-        navController,
-        useDialog = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
-      )
-      licensesScreen()
-    }
-    if (isAboutDialogShown) {
-      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
-    }
+    )
   }
 }
 
