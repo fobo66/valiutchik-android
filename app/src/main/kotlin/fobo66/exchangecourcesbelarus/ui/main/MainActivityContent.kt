@@ -168,7 +168,7 @@ fun ValiutchikTopBar(
       }
     },
     title = {
-      Text(resolveTitle(currentScreen), modifier = Modifier.testTag(TAG_TITLE))
+      Text(stringResource(id = string.app_name), modifier = Modifier.testTag(TAG_TITLE))
     },
     actions = {
       AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary) {
@@ -202,11 +202,4 @@ fun ValiutchikTopBar(
     },
     modifier = modifier
   )
-}
-
-@Composable
-fun resolveTitle(currentRoute: ThreePaneScaffoldRole?): String = when (currentRoute) {
-  ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
-  ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
-  else -> stringResource(id = string.app_name)
 }
