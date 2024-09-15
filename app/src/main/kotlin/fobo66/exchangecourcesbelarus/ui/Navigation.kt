@@ -43,7 +43,6 @@ import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
-import fobo66.exchangecourcesbelarus.ui.preferences.MIN_UPDATE_INTERVAL_VALUE
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -51,9 +50,6 @@ import io.github.aakira.napier.Napier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-
-const val DESTINATION_MAIN = "main"
-const val DESTINATION_PREFERENCES = "prefs"
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -171,14 +167,10 @@ fun PreferenceScreen(
 ) {
 
   val defaultCity by preferencesViewModel.defaultCityPreference
-    .collectAsStateWithLifecycle(
-      initialValue = "Minsk"
-    )
+    .collectAsStateWithLifecycle()
 
   val updateInterval by preferencesViewModel.updateIntervalPreference
-    .collectAsStateWithLifecycle(
-      initialValue = MIN_UPDATE_INTERVAL_VALUE
-    )
+    .collectAsStateWithLifecycle()
 
   PreferenceScreenContent(
     defaultCityValue = defaultCity,

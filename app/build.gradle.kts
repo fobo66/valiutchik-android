@@ -165,8 +165,6 @@ dependencies {
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.lifecycle.viewmodel)
 
-  implementation(libs.androidx.navigation)
-
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.android)
   implementation(libs.koin.compose)
