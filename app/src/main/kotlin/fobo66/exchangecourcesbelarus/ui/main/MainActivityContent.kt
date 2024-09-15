@@ -19,6 +19,8 @@ package fobo66.exchangecourcesbelarus.ui.main
 import android.Manifest.permission
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -46,6 +48,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -98,6 +101,7 @@ fun MainActivityContent(
     },
     modifier = modifier
   ) {
+    val layoutDirection = LocalLayoutDirection.current
     SupportingPaneScaffold(
       directive = navigator.scaffoldDirective,
       value = navigator.scaffoldValue,
@@ -116,7 +120,11 @@ fun MainActivityContent(
       extraPane = {
         OpenSourceLicensesDestination()
       },
-      modifier = Modifier.padding(it)
+      modifier = Modifier.padding(
+        start = it.calculateStartPadding(layoutDirection),
+        end = it.calculateEndPadding(layoutDirection),
+        top = it.calculateTopPadding()
+      )
     )
     if (isAboutDialogShown) {
       AboutAppDialog(onDismiss = { isAboutDialogShown = false })
