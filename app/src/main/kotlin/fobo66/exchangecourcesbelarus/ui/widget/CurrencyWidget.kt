@@ -41,10 +41,7 @@ import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -53,8 +50,7 @@ class CurrencyWidget : GlanceAppWidget(), KoinComponent {
   private val loadExchangeRates: LoadExchangeRates by inject()
 
   override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
-    val rates: ImmutableList<BestCurrencyRate> by loadExchangeRates.execute(Clock.System.now())
-      .map { it.toImmutableList() }
+    val rates: List<BestCurrencyRate> by loadExchangeRates.execute(Clock.System.now())
       .collectAsState(
         initial = persistentListOf()
       )
@@ -68,7 +64,7 @@ class CurrencyWidget : GlanceAppWidget(), KoinComponent {
 @Composable
 fun CurrencyWidgetContent(
   context: Context,
-  rates: ImmutableList<BestCurrencyRate>,
+  rates: List<BestCurrencyRate>,
   modifier: GlanceModifier = GlanceModifier
 ) {
   LazyColumn(
