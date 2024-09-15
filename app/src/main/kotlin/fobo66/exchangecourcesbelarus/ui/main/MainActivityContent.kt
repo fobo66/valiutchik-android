@@ -43,7 +43,6 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,21 +51,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState.Loading
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
-import fobo66.exchangecourcesbelarus.ui.DESTINATION_LICENSES
-import fobo66.exchangecourcesbelarus.ui.DESTINATION_MAIN
-import fobo66.exchangecourcesbelarus.ui.DESTINATION_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
+import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.refreshRates
 import org.koin.androidx.compose.koinViewModel
 
@@ -77,7 +73,6 @@ fun MainActivityContent(
   modifier: Modifier = Modifier,
   mainViewModel: MainViewModel = koinViewModel()
 ) {
-  val navController = rememberNavController()
   val navigator = rememberSupportingPaneScaffoldNavigator()
 
   BackHandler(enabled = navigator.canNavigateBack()) {
@@ -92,11 +87,10 @@ fun MainActivityContent(
 
   Scaffold(
     topBar = {
-      val currentDestination by navController.currentBackStackEntryAsState()
-      val state by mainViewModel.screenState.collectAsState()
+      val state by mainViewModel.screenState.collectAsStateWithLifecycle()
 
       ValiutchikTopBar(
-        currentRoute = currentDestination?.destination?.route,
+        currentScreen = navigator.currentDestination?.pane,
         onBackClick = { navigator.navigateBack() },
         onAboutClick = { isAboutDialogShown = true },
         onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
@@ -137,6 +131,9 @@ fun MainActivityContent(
       },
       modifier = Modifier.padding(it)
     )
+    if (isAboutDialogShown) {
+      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
+    }
   }
 }
 
@@ -145,7 +142,7 @@ private const val TOPBAR_PROGRESS_SCALE = 0.5f
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValiutchikTopBar(
-  currentRoute: String?,
+  currentScreen: ThreePaneScaffoldRole?,
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
   onSettingsClick: () -> Unit,
@@ -156,7 +153,7 @@ fun ValiutchikTopBar(
 
   TopAppBar(
     navigationIcon = {
-      AnimatedVisibility(currentRoute != DESTINATION_MAIN) {
+      AnimatedVisibility(currentScreen != ThreePaneScaffoldRole.Primary) {
         IconButton(onClick = onBackClick) {
           Icon(
             Icons.AutoMirrored.Default.ArrowBack,
@@ -171,10 +168,10 @@ fun ValiutchikTopBar(
       }
     },
     title = {
-      Text(resolveTitle(currentRoute), modifier = Modifier.testTag(TAG_TITLE))
+      Text(resolveTitle(currentScreen), modifier = Modifier.testTag(TAG_TITLE))
     },
     actions = {
-      AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
+      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary) {
         IconButton(onClick = onRefreshClick) {
           Icon(
             Icons.Default.Refresh,
@@ -192,7 +189,7 @@ fun ValiutchikTopBar(
           )
         )
       }
-      AnimatedVisibility(currentRoute == DESTINATION_MAIN) {
+      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary) {
         IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,
@@ -208,8 +205,8 @@ fun ValiutchikTopBar(
 }
 
 @Composable
-fun resolveTitle(currentRoute: String?): String = when (currentRoute) {
-  DESTINATION_PREFERENCES -> stringResource(id = string.title_activity_settings)
-  DESTINATION_LICENSES -> stringResource(id = string.title_activity_oss_licenses)
+fun resolveTitle(currentRoute: ThreePaneScaffoldRole?): String = when (currentRoute) {
+  ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
+  ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
   else -> stringResource(id = string.app_name)
 }

@@ -44,7 +44,7 @@ class ToolbarTest {
   fun showCorrectTitle() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = DESTINATION_MAIN,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
@@ -62,7 +62,7 @@ class ToolbarTest {
   fun doNotShowBackOnMain() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = DESTINATION_MAIN,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
@@ -82,7 +82,7 @@ class ToolbarTest {
   fun showCorrectTitleForSettings() {
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_PREFERENCES,
+        currentScreen = DESTINATION_PREFERENCES,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
@@ -105,7 +105,7 @@ class ToolbarTest {
         mutableStateOf(DESTINATION_MAIN)
       }
       ValiutchikTopBar(
-        currentRoute = route,
+        currentScreen = route,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = { route = DESTINATION_PREFERENCES },
@@ -136,7 +136,7 @@ class ToolbarTest {
     var isAboutDialogShown = false
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = DESTINATION_MAIN,
         onBackClick = {},
         onAboutClick = { isAboutDialogShown = true },
         onSettingsClick = {},
@@ -157,7 +157,7 @@ class ToolbarTest {
     var isRefreshClicked = false
     composeRule.setContent {
       ValiutchikTopBar(
-        currentRoute = DESTINATION_MAIN,
+        currentScreen = DESTINATION_MAIN,
         onBackClick = {},
         onAboutClick = {},
         onSettingsClick = {},
