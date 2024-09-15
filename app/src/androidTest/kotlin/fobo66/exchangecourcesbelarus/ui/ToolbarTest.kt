@@ -142,24 +142,4 @@ class ToolbarTest {
     ).performClick()
     assertTrue(isAboutDialogShown)
   }
-
-  @Test
-  fun refreshWorks() {
-    var isRefreshClicked = false
-    composeRule.setContent {
-      ValiutchikTopBar(
-        currentScreen = ThreePaneScaffoldRole.Primary,
-        onBackClick = {},
-        onAboutClick = {},
-        onSettingsClick = {}
-      )
-    }
-
-    composeRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.action_refresh
-      )
-    ).performClick()
-    assertTrue(isRefreshClicked)
-  }
 }
