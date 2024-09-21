@@ -82,7 +82,7 @@ fun MainActivityContent(
         onAboutClick = { isAboutDialogShown = true },
         onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
         updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-        settingsVisible = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+        settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
       )
     },
     snackbarHost = {
