@@ -19,6 +19,7 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.Crossfade
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -133,24 +134,24 @@ fun BestRatesScreen(
   modifier: Modifier = Modifier,
   useGrid: Boolean = false
 ) {
-  if (useGrid) {
-    BestRatesGrid(
-      bestCurrencyRates = bestCurrencyRates,
-      onBestRateClick = onBestRateClick,
-      onBestRateLongClick = onBestRateLongClick,
-      isRefreshing = isRefreshing,
-      onRefresh = onRefresh,
-      modifier = modifier
-    )
-  } else {
-    BestRatesList(
-      bestCurrencyRates = bestCurrencyRates,
-      onBestRateClick = onBestRateClick,
-      onBestRateLongClick = onBestRateLongClick,
-      isRefreshing = isRefreshing,
-      onRefresh = onRefresh,
-      modifier = modifier
-    )
+  Crossfade(targetState = useGrid, label = "BestRatesScreen", modifier = modifier) {
+    if (it) {
+      BestRatesGrid(
+        bestCurrencyRates = bestCurrencyRates,
+        onBestRateClick = onBestRateClick,
+        onBestRateLongClick = onBestRateLongClick,
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh
+      )
+    } else {
+      BestRatesList(
+        bestCurrencyRates = bestCurrencyRates,
+        onBestRateClick = onBestRateClick,
+        onBestRateLongClick = onBestRateLongClick,
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh
+      )
+    }
   }
 }
 
