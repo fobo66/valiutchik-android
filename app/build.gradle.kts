@@ -134,6 +134,7 @@ dependencies {
   implementation(libs.androidx.tracing)
   implementation(libs.androidx.window)
   implementation(libs.profileinstaller)
+  implementation(libs.work.runtime)
 
   baselineProfile(project(":baselineprofile"))
 
@@ -170,6 +171,7 @@ dependencies {
   implementation(libs.koin.compose)
   implementation(libs.koin.navigation)
   implementation(libs.koin.viewmodel)
+  implementation(libs.koin.work)
 
   implementation(libs.napier)
 
@@ -195,4 +197,5 @@ dependencies {
   androidTestImplementation(libs.androidx.test.espresso.intents)
   androidTestImplementation(libs.androidx.test.espresso.accessibility)
   androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.work.testing)
 }
