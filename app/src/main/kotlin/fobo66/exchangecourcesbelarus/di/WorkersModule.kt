@@ -16,14 +16,10 @@
 
 package fobo66.exchangecourcesbelarus.di
 
-import fobo66.exchangecourcesbelarus.ui.MainViewModel
-import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import org.koin.core.module.dsl.viewModelOf
+import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
+import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 
-val viewModelsModule = module {
-  viewModelOf(::MainViewModel)
-  viewModelOf(::OpenSourceLicensesViewModel)
-  viewModelOf(::PreferencesViewModel)
+val workersModule = module {
+  worker { RatesRefreshWorker(get(), get(), get(), get()) }
 }
