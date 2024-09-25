@@ -28,7 +28,6 @@ class CurrencyRatesInteractorImpl(
   override suspend fun forceRefreshExchangeRates() =
     forceRefreshExchangeRates.execute(Clock.System.now())
 
-
   override suspend fun forceRefreshExchangeRatesForDefaultCity() =
     forceRefreshExchangeRatesForDefaultCity.execute(
       Clock.System.now()

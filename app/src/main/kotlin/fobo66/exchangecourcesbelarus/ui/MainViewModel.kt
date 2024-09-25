@@ -110,7 +110,6 @@ class MainViewModel(
       .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
       .build()
     workManager.enqueue(workRequest)
-
   }
 
   fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
