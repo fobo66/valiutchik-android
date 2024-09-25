@@ -21,6 +21,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import androidx.sqlite.driver.AndroidSQLiteDriver
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -28,11 +29,13 @@ import org.koin.dsl.module
 val thirdPartyModule = module {
 
   single<CurrencyRatesDatabase> {
-    Room.databaseBuilder(
-      androidContext(),
-      CurrencyRatesDatabase::class.java,
-      "currency-rates"
-    ).build()
+    val dbFile = androidContext().getDatabasePath("currency-rates")
+    Room.databaseBuilder<CurrencyRatesDatabase>(
+      context = androidContext(),
+      name = dbFile.absolutePath
+    )
+      .setDriver(AndroidSQLiteDriver())
+      .build()
   }
 
   single<DataStore<Preferences>> {
