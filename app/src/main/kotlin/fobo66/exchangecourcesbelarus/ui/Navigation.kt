@@ -38,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.isGranted
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
@@ -82,7 +83,7 @@ fun BestRatesScreenDestination(
   }
 
   LaunchedEffect(permissionState) {
-    if (permissionState.status is PermissionStatus.Granted) {
+    if (permissionState.status.isGranted) {
       mainViewModel.refreshExchangeRates()
     } else {
       if (!isLocationPermissionPromptShown) {
