@@ -19,18 +19,29 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
+import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
+import fobo66.exchangecourcesbelarus.work.WORKER_ARG_LOCATION_AVAILABLE
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
+import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import io.github.aakira.napier.Napier
+import java.util.concurrent.TimeUnit
+import kotlin.math.roundToLong
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -39,7 +50,9 @@ import kotlinx.coroutines.launch
 class MainViewModel(
   private val currencyRatesInteractor: CurrencyRatesInteractor,
   private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
-  private val findBankOnMap: FindBankOnMap
+  private val findBankOnMap: FindBankOnMap,
+  private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
+  private val workManager: WorkManager
 ) : ViewModel() {
 
   val bestCurrencyRates = currencyRatesInteractor.loadExchangeRates()
@@ -61,18 +74,6 @@ class MainViewModel(
 
   fun findBankOnMap(bankName: CharSequence): Intent? = findBankOnMap.execute(bankName)
 
-  fun refreshExchangeRates() =
-    viewModelScope.launch {
-      try {
-        state.emit(MainScreenState.Loading)
-        currencyRatesInteractor.refreshExchangeRates()
-        state.emit(MainScreenState.LoadedRates)
-      } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Error happened when refreshing currency rates", e)
-        state.emit(MainScreenState.Error)
-      }
-    }
-
   fun forceRefreshExchangeRates() =
     viewModelScope.launch {
       try {
@@ -81,18 +82,6 @@ class MainViewModel(
         state.emit(MainScreenState.LoadedRates)
       } catch (e: CurrencyRatesLoadFailedException) {
         Napier.e("Error happened when force refreshing currency rates", e)
-        state.emit(MainScreenState.Error)
-      }
-    }
-
-  fun refreshExchangeRatesForDefaultCity() =
-    viewModelScope.launch {
-      try {
-        state.emit(MainScreenState.Loading)
-        currencyRatesInteractor.refreshExchangeRatesForDefaultCity()
-        state.emit(MainScreenState.LoadedRates)
-      } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Error happened when refreshing currency rates in default city", e)
         state.emit(MainScreenState.Error)
       }
     }
@@ -108,6 +97,21 @@ class MainViewModel(
         state.emit(MainScreenState.Error)
       }
     }
+
+  fun handleRefresh(isLocationAvailable: Boolean) = viewModelScope.launch {
+    val updateInterval = loadUpdateIntervalPreference.execute().first().roundToLong()
+    val workRequest = PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
+      .setConstraints(
+        Constraints.Builder()
+          .setRequiresBatteryNotLow(true)
+          .setRequiredNetworkType(NetworkType.NOT_ROAMING)
+          .build()
+      )
+      .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+      .build()
+    workManager.enqueue(workRequest)
+
+  }
 
   fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
     copyCurrencyRateToClipboard.execute(currencyName, currencyValue)

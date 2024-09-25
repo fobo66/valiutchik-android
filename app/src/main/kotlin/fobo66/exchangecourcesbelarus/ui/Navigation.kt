@@ -37,7 +37,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
@@ -83,14 +82,13 @@ fun BestRatesScreenDestination(
   }
 
   LaunchedEffect(permissionState) {
-    if (permissionState.status.isGranted) {
-      mainViewModel.refreshExchangeRates()
-    } else {
+    val isPermissionGranted = permissionState.status.isGranted
+    mainViewModel.handleRefresh(isPermissionGranted)
+    if (!isPermissionGranted) {
       if (!isLocationPermissionPromptShown) {
         isLocationPermissionPromptShown = true
         showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
       }
-      mainViewModel.refreshExchangeRatesForDefaultCity()
     }
   }
   LaunchedEffect(viewState) {
@@ -213,7 +211,7 @@ fun refreshRates(
   locationPermissionState: PermissionState,
   mainViewModel: MainViewModel
 ) {
-  if (locationPermissionState.status is PermissionStatus.Granted) {
+  if (locationPermissionState.status.isGranted) {
     mainViewModel.forceRefreshExchangeRates()
   } else {
     mainViewModel.forceRefreshExchangeRatesForDefaultCity()
