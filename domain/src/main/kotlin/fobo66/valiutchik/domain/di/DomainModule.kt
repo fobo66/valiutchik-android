@@ -49,7 +49,7 @@ val domainModule = module {
   }
 
   single<CurrencyRatesInteractor> {
-    CurrencyRatesInteractorImpl(get(), get(), get())
+    CurrencyRatesInteractorImpl(get())
   }
 
   single<FindBankOnMap> {
