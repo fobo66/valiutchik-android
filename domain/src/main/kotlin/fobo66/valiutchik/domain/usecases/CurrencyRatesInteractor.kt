@@ -23,7 +23,5 @@ import kotlinx.coroutines.flow.Flow
  * Collection of use cases related to currency rates
  */
 interface CurrencyRatesInteractor {
-  suspend fun forceRefreshExchangeRates()
-  suspend fun forceRefreshExchangeRatesForDefaultCity()
   fun loadExchangeRates(): Flow<List<BestCurrencyRate>>
 }

@@ -118,7 +118,7 @@ fun BestRatesScreenDestination(
     },
     useGrid = useGrid,
     isRefreshing = viewState is MainScreenState.Loading,
-    onRefresh = { refreshRates(permissionState, mainViewModel) },
+    onRefresh = { mainViewModel.handleRefresh(permissionState.status.isGranted) },
     modifier = modifier
   )
 }
@@ -204,16 +204,4 @@ fun OpenSourceLicensesDestination(
     },
     modifier = modifier
   )
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-fun refreshRates(
-  locationPermissionState: PermissionState,
-  mainViewModel: MainViewModel
-) {
-  if (locationPermissionState.status.isGranted) {
-    mainViewModel.forceRefreshExchangeRates()
-  } else {
-    mainViewModel.forceRefreshExchangeRatesForDefaultCity()
-  }
 }

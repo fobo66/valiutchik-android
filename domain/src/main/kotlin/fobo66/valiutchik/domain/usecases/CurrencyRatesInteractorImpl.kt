@@ -21,18 +21,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 
 class CurrencyRatesInteractorImpl(
-  private val forceRefreshExchangeRates: ForceRefreshExchangeRates,
-  private val forceRefreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
   private val loadExchangeRates: LoadExchangeRates,
 ) : CurrencyRatesInteractor {
-  override suspend fun forceRefreshExchangeRates() =
-    forceRefreshExchangeRates.execute(Clock.System.now())
-
-  override suspend fun forceRefreshExchangeRatesForDefaultCity() =
-    forceRefreshExchangeRatesForDefaultCity.execute(
-      Clock.System.now()
-    )
-
   override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = loadExchangeRates.execute(
     Clock.System.now()
   )

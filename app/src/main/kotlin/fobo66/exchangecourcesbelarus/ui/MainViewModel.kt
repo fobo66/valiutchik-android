@@ -20,6 +20,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -27,12 +28,10 @@ import androidx.work.workDataOf
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
 import fobo66.exchangecourcesbelarus.work.WORKER_ARG_LOCATION_AVAILABLE
-import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
-import io.github.aakira.napier.Napier
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToLong
 import kotlinx.collections.immutable.persistentListOf
@@ -48,7 +47,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-  private val currencyRatesInteractor: CurrencyRatesInteractor,
+  currencyRatesInteractor: CurrencyRatesInteractor,
   private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
   private val findBankOnMap: FindBankOnMap,
   private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
@@ -74,30 +73,6 @@ class MainViewModel(
 
   fun findBankOnMap(bankName: CharSequence): Intent? = findBankOnMap.execute(bankName)
 
-  fun forceRefreshExchangeRates() =
-    viewModelScope.launch {
-      try {
-        state.emit(MainScreenState.Loading)
-        currencyRatesInteractor.forceRefreshExchangeRates()
-        state.emit(MainScreenState.LoadedRates)
-      } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Error happened when force refreshing currency rates", e)
-        state.emit(MainScreenState.Error)
-      }
-    }
-
-  fun forceRefreshExchangeRatesForDefaultCity() =
-    viewModelScope.launch {
-      try {
-        state.emit(MainScreenState.Loading)
-        currencyRatesInteractor.forceRefreshExchangeRatesForDefaultCity()
-        state.emit(MainScreenState.LoadedRates)
-      } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Error happened when refreshing currency rates in default city", e)
-        state.emit(MainScreenState.Error)
-      }
-    }
-
   fun handleRefresh(isLocationAvailable: Boolean) = viewModelScope.launch {
     val updateInterval = loadUpdateIntervalPreference.execute().first().roundToLong()
     val workRequest = PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
@@ -109,7 +84,11 @@ class MainViewModel(
       )
       .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
       .build()
-    workManager.enqueue(workRequest)
+    workManager.enqueueUniquePeriodicWork(
+      "backgroundRefresh",
+      ExistingPeriodicWorkPolicy.REPLACE,
+      workRequest
+    )
   }
 
   fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
