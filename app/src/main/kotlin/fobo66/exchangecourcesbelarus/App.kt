@@ -17,5 +17,6 @@
 package fobo66.exchangecourcesbelarus
 
 import android.app.Application
+import org.koin.core.component.KoinComponent
 
-open class App : Application()
+open class App : Application(), KoinComponent

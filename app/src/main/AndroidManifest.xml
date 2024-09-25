@@ -35,8 +35,8 @@
       android:fullBackupOnly="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
-      android:theme="@style/ExchangeCoursesTheme"
       android:localeConfig="@xml/locales_config"
+      android:theme="@style/ExchangeCoursesTheme"
       tools:targetApi="tiramisu">
     <profileable
         android:shell="true"
@@ -74,6 +74,10 @@
       <meta-data
           android:name="fobo66.exchangecourcesbelarus.init.KoinInitializer"
           android:value="androidx.startup" />
+      <meta-data
+          android:name="androidx.work.WorkManagerInitializer"
+          android:value="androidx.startup"
+          tools:node="remove" />
     </provider>
 
     <property
