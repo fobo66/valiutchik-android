@@ -19,7 +19,6 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.Crossfade
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -43,12 +42,9 @@ import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
-import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import io.github.aakira.napier.Napier
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -58,8 +54,7 @@ fun BestRatesScreenDestination(
   snackbarHostState: SnackbarHostState,
   permissionState: PermissionState,
   modifier: Modifier = Modifier,
-  mainViewModel: MainViewModel = koinViewModel(),
-  useGrid: Boolean = false
+  mainViewModel: MainViewModel = koinViewModel()
 ) {
   val context = LocalContext.current
   val mapLauncher =
@@ -96,7 +91,7 @@ fun BestRatesScreenDestination(
       showSnackbar(snackbarHostState, context.getString(string.get_data_error))
     }
   }
-  BestRatesScreen(
+  BestRatesGrid(
     bestCurrencyRates = bestCurrencyRates,
     onBestRateClick = { bankName ->
       val mapIntent = mainViewModel.findBankOnMap(bankName)
@@ -116,42 +111,10 @@ fun BestRatesScreenDestination(
         showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
       }
     },
-    useGrid = useGrid,
     isRefreshing = viewState is MainScreenState.Loading,
     onRefresh = { mainViewModel.handleRefresh(permissionState.status.isGranted) },
     modifier = modifier
   )
-}
-
-@Composable
-fun BestRatesScreen(
-  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
-  onBestRateClick: (String) -> Unit,
-  onBestRateLongClick: (String, String) -> Unit,
-  isRefreshing: Boolean,
-  onRefresh: () -> Unit,
-  modifier: Modifier = Modifier,
-  useGrid: Boolean = false
-) {
-  Crossfade(targetState = useGrid, label = "BestRatesScreen", modifier = modifier) {
-    if (it) {
-      BestRatesGrid(
-        bestCurrencyRates = bestCurrencyRates,
-        onBestRateClick = onBestRateClick,
-        onBestRateLongClick = onBestRateLongClick,
-        isRefreshing = isRefreshing,
-        onRefresh = onRefresh
-      )
-    } else {
-      BestRatesList(
-        bestCurrencyRates = bestCurrencyRates,
-        onBestRateClick = onBestRateClick,
-        onBestRateLongClick = onBestRateLongClick,
-        isRefreshing = isRefreshing,
-        onRefresh = onRefresh
-      )
-    }
-  }
 }
 
 private suspend fun showSnackbar(

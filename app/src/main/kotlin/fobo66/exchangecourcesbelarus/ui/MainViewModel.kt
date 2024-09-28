@@ -74,6 +74,7 @@ class MainViewModel(
   fun findBankOnMap(bankName: CharSequence): Intent? = findBankOnMap.execute(bankName)
 
   fun handleRefresh(isLocationAvailable: Boolean) = viewModelScope.launch {
+    state.emit(MainScreenState.Loading)
     val updateInterval = loadUpdateIntervalPreference.execute().first().roundToLong()
     val workRequest = PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
       .setConstraints(
@@ -86,9 +87,10 @@ class MainViewModel(
       .build()
     workManager.enqueueUniquePeriodicWork(
       "backgroundRefresh",
-      ExistingPeriodicWorkPolicy.UPDATE,
+      ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
       workRequest
     )
+    state.emit(MainScreenState.LoadedRates)
   }
 
   fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
