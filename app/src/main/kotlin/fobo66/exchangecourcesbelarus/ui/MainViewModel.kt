@@ -31,9 +31,7 @@ import fobo66.exchangecourcesbelarus.work.WORKER_ARG_LOCATION_AVAILABLE
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
-import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import java.util.concurrent.TimeUnit
-import kotlin.math.roundToLong
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,10 +45,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-  currencyRatesInteractor: CurrencyRatesInteractor,
+  private val currencyRatesInteractor: CurrencyRatesInteractor,
   private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
   private val findBankOnMap: FindBankOnMap,
-  private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
   private val workManager: WorkManager
 ) : ViewModel() {
 
@@ -75,7 +72,7 @@ class MainViewModel(
 
   fun handleRefresh(isLocationAvailable: Boolean) = viewModelScope.launch {
     state.emit(MainScreenState.Loading)
-    val updateInterval = loadUpdateIntervalPreference.execute().first().roundToLong()
+    val updateInterval = currencyRatesInteractor.loadUpdateInterval().first()
     val workRequest = PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
       .setConstraints(
         Constraints.Builder()

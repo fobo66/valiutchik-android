@@ -17,13 +17,20 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlin.math.roundToLong
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 
 class CurrencyRatesInteractorImpl(
   private val loadExchangeRates: LoadExchangeRates,
+  private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
 ) : CurrencyRatesInteractor {
   override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = loadExchangeRates.execute(
     Clock.System.now()
   )
+
+  override fun loadUpdateInterval(): Flow<Long> =
+    loadUpdateIntervalPreference.execute()
+      .map { it.roundToLong() }
 }
