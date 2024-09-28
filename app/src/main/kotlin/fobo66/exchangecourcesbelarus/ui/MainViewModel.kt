@@ -86,7 +86,7 @@ class MainViewModel(
       .build()
     workManager.enqueueUniquePeriodicWork(
       "backgroundRefresh",
-      ExistingPeriodicWorkPolicy.REPLACE,
+      ExistingPeriodicWorkPolicy.UPDATE,
       workRequest
     )
   }
