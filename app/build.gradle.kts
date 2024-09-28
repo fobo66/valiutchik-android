@@ -197,5 +197,6 @@ dependencies {
   androidTestImplementation(libs.androidx.test.espresso.intents)
   androidTestImplementation(libs.androidx.test.espresso.accessibility)
   androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.truth)
   androidTestImplementation(libs.work.testing)
 }
