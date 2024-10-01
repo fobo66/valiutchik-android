@@ -78,7 +78,7 @@ fun BestRatesScreenDestination(
 
   LaunchedEffect(permissionState) {
     val isPermissionGranted = permissionState.status.isGranted
-    mainViewModel.handleRefresh(isPermissionGranted)
+    mainViewModel.handleLocationPermission(isPermissionGranted)
     if (!isPermissionGranted) {
       if (!isLocationPermissionPromptShown) {
         isLocationPermissionPromptShown = true
@@ -162,9 +162,7 @@ fun OpenSourceLicensesDestination(
 
   OpenSourceLicensesScreen(
     licensesState = licensesState,
-    onItemClick = { licenseUrl ->
-      uriHandler.openUri(licenseUrl)
-    },
+    onItemClick = uriHandler::openUri,
     modifier = modifier
   )
 }
