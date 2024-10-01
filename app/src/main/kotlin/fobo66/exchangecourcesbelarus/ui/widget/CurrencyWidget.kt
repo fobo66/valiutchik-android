@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.appWidgetBackground
@@ -35,6 +36,8 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Column
 import androidx.glance.layout.padding
+import androidx.glance.preview.ExperimentalGlancePreviewApi
+import androidx.glance.preview.Preview
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -97,4 +100,15 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 
   override val glanceAppWidget: GlanceAppWidget
     get() = CurrencyWidget()
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview(widthDp = 140, heightDp = 160)
+@Composable
+private fun CurrencyWidgetPreview() {
+  CurrencyWidgetContent(
+    LocalContext.current, listOf(
+      BestCurrencyRate(0, "test", fobo66.valiutchik.domain.R.string.currency_name_eur_buy, "1.23")
+    )
+  )
 }
