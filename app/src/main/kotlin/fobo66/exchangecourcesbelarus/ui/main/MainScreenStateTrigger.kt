@@ -14,16 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.di
+package fobo66.exchangecourcesbelarus.ui.main
 
-import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
-import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
-
-val viewModelsModule = module {
-  viewModelOf(::MainViewModel)
-  viewModelOf(::OpenSourceLicensesViewModel)
-  viewModelOf(::PreferencesViewModel)
-}
+data class MainScreenStateTrigger(
+  val isRefreshTriggered: Boolean,
+  val isLocationAvailable: Boolean?,
+  val updateInterval: Long
+)

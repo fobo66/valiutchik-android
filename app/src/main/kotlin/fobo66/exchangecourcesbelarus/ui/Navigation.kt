@@ -42,6 +42,7 @@ import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
+import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import io.github.aakira.napier.Napier
@@ -76,7 +77,7 @@ fun BestRatesScreenDestination(
     permissionState.launchPermissionRequest()
   }
 
-  LaunchedEffect(permissionState) {
+  LaunchedEffect(permissionState.status) {
     val isPermissionGranted = permissionState.status.isGranted
     mainViewModel.handleLocationPermission(isPermissionGranted)
     if (!isPermissionGranted) {
@@ -112,7 +113,7 @@ fun BestRatesScreenDestination(
       }
     },
     isRefreshing = viewState is MainScreenState.Loading,
-    onRefresh = { mainViewModel.handleRefresh(permissionState.status.isGranted) },
+    onRefresh = mainViewModel::manualRefresh,
     modifier = modifier
   )
 }
