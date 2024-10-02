@@ -21,59 +21,59 @@ import org.junit.jupiter.api.Test
 
 class BankNameNormalizerTest {
 
-  private val bankNameNormalizerImpl = BankNameNormalizerImpl()
+  private val bankNameNormalizer: BankNameNormalizer = BankNameNormalizerImpl()
 
   @Test
   fun `bank name inside typographic quotes`() {
     val bankName = "ЗАО «БСБ Банк»"
-    assertEquals("БСБ Банк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("БСБ Банк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name inside regular quotes`() {
     val bankName = "ЗАО \"БСБ Банк\""
-    assertEquals("БСБ Банк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("БСБ Банк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name inside multiple quotes`() {
     val bankName = "ЗАО «Статусбанк» (бывш. \"Евроторгинвестбанк\")"
-    assertEquals("Статусбанк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Статусбанк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name inside multiple pairs of typographical quotes`() {
     val bankName = "ЗАО «Статусбанк» (бывш. «Евроторгинвестбанк»)"
-    assertEquals("Статусбанк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Статусбанк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name inside multiple pairs of regular quotes`() {
     val bankName = "ЗАО \"Статусбанк\" (бывш. \"Евроторгинвестбанк\")"
-    assertEquals("Статусбанк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Статусбанк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name with multiple nested quotes starting with typographical`() {
     val bankName = "ЗАО «Статусбанк \"Евроторгинвестбанк\"»"
-    assertEquals("Статусбанк Евроторгинвестбанк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Статусбанк Евроторгинвестбанк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name with multiple nested quotes starting with regular`() {
     val bankName = "ЗАО \"Статусбанк «Евроторгинвестбанк»\""
-    assertEquals("Статусбанк Евроторгинвестбанк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Статусбанк Евроторгинвестбанк", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `real bank name with nested imbalanced quotes`() {
     val bankName = "ЗАО «Банк «Решение»"
-    assertEquals("Банк Решение", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Банк Решение", bankNameNormalizer.normalize(bankName))
   }
 
   @Test
   fun `bank name without quotes`() {
     val bankName = "Статусбанк"
-    assertEquals("Статусбанк", bankNameNormalizerImpl.normalize(bankName))
+    assertEquals("Статусбанк", bankNameNormalizer.normalize(bankName))
   }
 }
