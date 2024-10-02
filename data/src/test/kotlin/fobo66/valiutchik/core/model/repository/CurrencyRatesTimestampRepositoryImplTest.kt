@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.fake.FakePreferenceDataSource
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
@@ -23,8 +24,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class CurrencyRatesTimestampRepositoryImplTest {
@@ -39,7 +38,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = ""
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
+      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)).isTrue()
     }
   }
 
@@ -48,7 +47,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
     preferencesDataSource.string = now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
+      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)).isTrue()
     }
   }
 
@@ -58,7 +57,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
       (now - 1.days).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
+      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)).isTrue()
     }
   }
 
@@ -68,7 +67,12 @@ class CurrencyRatesTimestampRepositoryImplTest {
       (now - 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
-      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
+      assertThat(
+        currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
+          now,
+          3.0f
+        )
+      ).isFalse()
     }
   }
 
@@ -78,7 +82,12 @@ class CurrencyRatesTimestampRepositoryImplTest {
       (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
-      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
+      assertThat(
+        currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
+          now,
+          3.0f
+        )
+      ).isFalse()
     }
   }
 
@@ -88,7 +97,7 @@ class CurrencyRatesTimestampRepositoryImplTest {
       (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
-      assertTrue(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 2.0f))
+      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 2.0f)).isTrue()
     }
   }
 
@@ -98,7 +107,12 @@ class CurrencyRatesTimestampRepositoryImplTest {
       (now + 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
     runTest {
-      assertFalse(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f))
+      assertThat(
+        currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
+          now,
+          3.0f
+        )
+      ).isFalse()
     }
   }
 }
