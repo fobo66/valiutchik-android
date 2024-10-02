@@ -14,11 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.util
+package fobo66.valiutchik.core.fake
 
-interface BankNameNormalizer {
-  /**
-   * Clean up all the unnecessary parts from the bank name
-   */
-  fun normalize(bankName: String): String
+import fobo66.valiutchik.core.util.BankNameNormalizer
+
+class FakeBankNameNormalizer : BankNameNormalizer {
+  override fun normalize(bankName: String): String = bankName
 }

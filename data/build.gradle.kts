@@ -104,6 +104,7 @@ dependencies {
   testImplementation(libs.room.testing)
   testImplementation(libs.ktor.client)
   testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.truth)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.turbine)
