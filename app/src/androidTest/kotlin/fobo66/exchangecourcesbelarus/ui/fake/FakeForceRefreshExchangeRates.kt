@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,13 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.fake
+package fobo66.exchangecourcesbelarus.ui.fake
 
-import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
+import kotlinx.datetime.Instant
 
-class FakeCopyCurrencyRateToClipboard : CopyCurrencyRateToClipboard {
-  var isCopied = false
-  override fun execute(currencyName: CharSequence, currencyValue: CharSequence) {
-    isCopied = true
+class FakeForceRefreshExchangeRates : ForceRefreshExchangeRates {
+  var isRefreshed: Boolean = false
+  override suspend fun execute(now: Instant) {
+    isRefreshed = true
   }
 }

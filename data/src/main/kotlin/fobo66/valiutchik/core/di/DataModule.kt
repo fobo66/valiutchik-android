@@ -51,8 +51,8 @@ import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 import fobo66.valiutchik.core.util.BankNameNormalizer
+import fobo66.valiutchik.core.util.BankNameNormalizerImpl
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
@@ -95,7 +95,9 @@ val dataSourcesModule = module {
     UriDataSourceImpl()
   }
 
-  singleOf(::BankNameNormalizer)
+  single<BankNameNormalizer> {
+    BankNameNormalizerImpl()
+  }
 }
 
 val repositoriesModule = module {

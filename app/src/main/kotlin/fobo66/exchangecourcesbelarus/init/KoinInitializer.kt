@@ -19,15 +19,18 @@ package fobo66.exchangecourcesbelarus.init
 import android.content.Context
 import androidx.startup.Initializer
 import fobo66.exchangecourcesbelarus.di.viewModelsModule
+import fobo66.exchangecourcesbelarus.di.workersModule
 import fobo66.valiutchik.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 
 class KoinInitializer : Initializer<KoinApplication> {
   override fun create(context: Context): KoinApplication = startKoin {
     androidContext(context)
-    modules(viewModelsModule, domainModule)
+    workManagerFactory()
+    modules(viewModelsModule, domainModule, workersModule)
   }
 
   override fun dependencies(): List<Class<out Initializer<*>?>?> = emptyList()

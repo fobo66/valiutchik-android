@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.fake
 
-import kotlinx.datetime.Instant
+import fobo66.valiutchik.core.util.BankNameNormalizer
 
-interface RefreshExchangeRates {
-  suspend fun execute(now: Instant)
+class FakeBankNameNormalizer : BankNameNormalizer {
+  override fun normalize(bankName: String): String = bankName
 }

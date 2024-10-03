@@ -103,8 +103,7 @@ fun MainActivityContent(
       mainPane = {
         BestRatesScreenDestination(
           snackbarHostState = snackbarHostState,
-          permissionState = locationPermissionState,
-          useGrid = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+          permissionState = locationPermissionState
         )
       },
       supportingPane = {

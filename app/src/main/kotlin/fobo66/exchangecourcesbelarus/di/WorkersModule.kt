@@ -14,10 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.exchangecourcesbelarus.di
 
-import kotlinx.datetime.Instant
+import androidx.work.WorkManager
+import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.workmanager.dsl.worker
+import org.koin.dsl.module
 
-interface RefreshExchangeRatesForDefaultCity {
-  suspend fun execute(now: Instant)
+val workersModule = module {
+  single { WorkManager.getInstance(androidContext()) }
+  worker { RatesRefreshWorker(get(), get(), androidContext(), get()) }
 }

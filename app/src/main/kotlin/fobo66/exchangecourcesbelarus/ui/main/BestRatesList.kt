@@ -28,11 +28,9 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -58,56 +56,6 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BestRatesList(
-  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
-  onBestRateClick: (String) -> Unit,
-  onBestRateLongClick: (String, String) -> Unit,
-  isRefreshing: Boolean,
-  onRefresh: () -> Unit,
-  modifier: Modifier = Modifier
-) {
-  Crossfade(bestCurrencyRates, label = "bestRatesList", modifier = modifier) {
-    if (it.isEmpty()) {
-      NoRatesIndicator()
-    } else {
-      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
-        val density = LocalDensity.current
-        LazyColumn(
-          verticalArrangement = Arrangement.spacedBy(16.dp),
-          contentPadding = PaddingValues(
-            top = 8.dp,
-            start = 8.dp,
-            end = 8.dp,
-            bottom = WindowInsets.systemBars.getBottom(density).dp
-          ),
-          modifier = Modifier.testTag(TAG_RATES)
-        ) {
-          itemsIndexed(
-            items = bestCurrencyRates,
-            key = { _, item -> item.currencyNameRes }
-          ) { index, item ->
-            BestCurrencyRateCard(
-              currencyName = stringResource(id = item.currencyNameRes),
-              currencyValue = item.currencyValue,
-              bankName = item.bank,
-              onClick = onBestRateClick,
-              onLongClick = onBestRateLongClick,
-              modifier = Modifier
-                .fillMaxWidth()
-                .animateItem()
-            )
-          }
-        }
-      }
-    }
-  }
-  ReportDrawnWhen {
-    bestCurrencyRates.isNotEmpty()
-  }
-}
-
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
@@ -125,14 +73,16 @@ fun BestRatesGrid(
       PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
         val density = LocalDensity.current
         LazyVerticalGrid(
-          columns = GridCells.Fixed(2),
+          columns = GridCells.Adaptive(minSize = 220.dp),
           verticalArrangement = Arrangement.spacedBy(16.dp),
           horizontalArrangement = Arrangement.spacedBy(16.dp),
           contentPadding = PaddingValues(
             top = 8.dp,
             start = 8.dp,
             end = 8.dp,
-            bottom = WindowInsets.systemBars.getBottom(density).dp
+            bottom = with(density) {
+              WindowInsets.systemBars.getBottom(density).toDp()
+            }
           ),
           modifier = Modifier.testTag(TAG_RATES)
         ) {

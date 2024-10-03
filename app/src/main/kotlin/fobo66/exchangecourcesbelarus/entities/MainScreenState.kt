@@ -22,6 +22,9 @@ import androidx.compose.runtime.Stable
 @Stable
 sealed class MainScreenState {
   @Immutable
+  object Initial : MainScreenState()
+
+  @Immutable
   object Loading : MainScreenState()
 
   @Immutable

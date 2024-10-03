@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2024 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,15 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.fake
+package fobo66.exchangecourcesbelarus.ui.main
 
-import android.content.Intent
-import fobo66.valiutchik.domain.usecases.FindBankOnMap
-
-class FakeFindBankOnMap : FindBankOnMap {
-  var isFindBankOnMapRequested = false
-  override fun execute(bankName: CharSequence): Intent? {
-    isFindBankOnMapRequested = true
-    return null
-  }
-}
+data class MainScreenStateTrigger(
+  val isRefreshTriggered: Boolean,
+  val isLocationAvailable: Boolean?,
+  val updateInterval: Long
+)

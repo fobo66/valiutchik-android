@@ -14,11 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.util
+package fobo66.exchangecourcesbelarus.ui.fake
 
-interface BankNameNormalizer {
-  /**
-   * Clean up all the unnecessary parts from the bank name
-   */
-  fun normalize(bankName: String): String
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
+import kotlinx.datetime.Instant
+
+class FakeForceRefreshExchangeRatesForDefaultCity : ForceRefreshExchangeRatesForDefaultCity {
+  var isRefreshed: Boolean = false
+  override suspend fun execute(now: Instant) {
+    isRefreshed = true
+  }
 }

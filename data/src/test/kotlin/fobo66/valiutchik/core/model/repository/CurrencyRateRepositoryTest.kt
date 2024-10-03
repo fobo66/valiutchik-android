@@ -16,18 +16,18 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.fake.FakeBankNameNormalizer
 import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
 import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
 import fobo66.valiutchik.core.fake.FakePersistenceDataSource
-import fobo66.valiutchik.core.util.BankNameNormalizer
 import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -37,13 +37,14 @@ class CurrencyRateRepositoryTest {
   private val bestCourseDataSource = FakeBestCourseDataSource()
   private val persistenceDataSource = FakePersistenceDataSource()
   private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
+  private val bankNameNormalizer = FakeBankNameNormalizer()
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
   private val currencyRateRepository: CurrencyRateRepository = CurrencyRateRepositoryImpl(
     bestCourseDataSource,
     persistenceDataSource,
     currencyRatesDataSource,
-    BankNameNormalizer()
+    bankNameNormalizer
   )
 
   @AfterEach
@@ -59,7 +60,7 @@ class CurrencyRateRepositoryTest {
       currencyRateRepository.refreshExchangeRates("Minsk", now)
     }
 
-    assertTrue(persistenceDataSource.isSaved)
+    assertThat(persistenceDataSource.isSaved).isTrue()
   }
 
   @Test

@@ -24,7 +24,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.filters.SmallTest
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.ui.main.BestRatesList
+import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertTrue
@@ -40,7 +40,7 @@ class MainScreenTest {
   @Test
   fun emptyList() {
     composeRule.setContent {
-      BestRatesList(
+      BestRatesGrid(
         bestCurrencyRates = persistentListOf(),
         onBestRateClick = {},
         onBestRateLongClick = { _, _ -> },
@@ -56,7 +56,7 @@ class MainScreenTest {
   fun openMap() {
     var isMapOpen = false
     composeRule.setContent {
-      BestRatesList(
+      BestRatesGrid(
         bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
         onBestRateClick = {
           isMapOpen = true

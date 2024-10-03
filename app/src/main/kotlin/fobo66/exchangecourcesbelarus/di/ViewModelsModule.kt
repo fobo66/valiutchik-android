@@ -16,10 +16,10 @@
 
 package fobo66.exchangecourcesbelarus.di
 
-import fobo66.exchangecourcesbelarus.ui.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
+import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelsModule = module {
