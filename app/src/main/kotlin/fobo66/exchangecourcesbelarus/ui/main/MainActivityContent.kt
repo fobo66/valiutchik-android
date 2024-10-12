@@ -46,6 +46,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -60,6 +61,7 @@ import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -71,16 +73,17 @@ fun MainActivityContent(
   var isAboutDialogShown by remember { mutableStateOf(false) }
   val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
   val snackbarHostState = remember { SnackbarHostState() }
+  val scope = rememberCoroutineScope()
 
-  BackHandler(navigator.canNavigateBack()) { navigator.navigateBack() }
+  BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
 
   Scaffold(
     topBar = {
       ValiutchikTopBar(
         currentScreen = navigator.currentDestination?.pane,
-        onBackClick = { navigator.navigateBack() },
+        onBackClick = { scope.launch { navigator.navigateBack() } },
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) },
+        onSettingsClick = { scope.launch { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) } },
         updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
         settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
       )
@@ -108,7 +111,7 @@ fun MainActivityContent(
       },
       supportingPane = {
         PreferenceScreen(
-          onLicensesClick = { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) }
+          onLicensesClick = { scope.launch { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) } }
         )
       },
       extraPane = { OpenSourceLicensesDestination() },

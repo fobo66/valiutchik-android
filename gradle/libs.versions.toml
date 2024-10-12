@@ -75,6 +75,7 @@ androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "android
 androidx-window = { module = "androidx.window:window", version.ref = "androidxWindow" }
 compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
 compose-material = { group = "androidx.compose.material3", name = "material3" }
+compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
 compose-material-adaptive-layout = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout" }
 compose-material-adaptive-navigation = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation" }
