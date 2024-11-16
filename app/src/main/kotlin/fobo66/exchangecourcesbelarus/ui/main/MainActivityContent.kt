@@ -39,6 +39,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -71,11 +72,8 @@ fun MainActivityContent(
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
   var isAboutDialogShown by remember { mutableStateOf(false) }
-  val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
   val snackbarHostState = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
-
-  BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
 
   Scaffold(
     topBar = {
@@ -106,27 +104,9 @@ fun MainActivityContent(
     modifier = modifier,
   ) {
     val layoutDirection = LocalLayoutDirection.current
-    SupportingPaneScaffold(
-      directive = navigator.scaffoldDirective,
-      value = navigator.scaffoldValue,
-      mainPane = {
-        BestRatesScreenDestination(
-          snackbarHostState = snackbarHostState,
-          permissionState = locationPermissionState,
-        )
-      },
-      supportingPane = {
-        PreferenceScreen(
-          onLicensesClick = {
-            scope.launch {
-              navigator.navigateTo(
-                ThreePaneScaffoldRole.Tertiary,
-              )
-            }
-          },
-        )
-      },
-      extraPane = { OpenSourceLicensesDestination() },
+    MainScreenPanels(
+      navigator = navigator,
+      snackbarHostState = snackbarHostState,
       modifier =
         Modifier.padding(
           start = it.calculateStartPadding(layoutDirection),
@@ -138,6 +118,43 @@ fun MainActivityContent(
       AboutAppDialog(onDismiss = { isAboutDialogShown = false })
     }
   }
+}
+
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalPermissionsApi::class)
+@Composable
+fun MainScreenPanels(
+  navigator: ThreePaneScaffoldNavigator<Any>,
+  snackbarHostState: SnackbarHostState,
+  modifier: Modifier = Modifier,
+) {
+  val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
+  val scope = rememberCoroutineScope()
+
+  BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
+
+  SupportingPaneScaffold(
+    directive = navigator.scaffoldDirective,
+    value = navigator.scaffoldValue,
+    mainPane = {
+      BestRatesScreenDestination(
+        snackbarHostState = snackbarHostState,
+        permissionState = locationPermissionState,
+      )
+    },
+    supportingPane = {
+      PreferenceScreen(
+        onLicensesClick = {
+          scope.launch {
+            navigator.navigateTo(
+              ThreePaneScaffoldRole.Tertiary,
+            )
+          }
+        },
+      )
+    },
+    extraPane = { OpenSourceLicensesDestination() },
+    modifier = modifier,
+  )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
