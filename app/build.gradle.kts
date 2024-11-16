@@ -179,7 +179,6 @@ dependencies {
   // leakcanary
   debugImplementation(libs.leakcanary)
 
-
   detektPlugins(libs.detekt.rules.formatting)
   detektPlugins(libs.detekt.rules.compose)
 

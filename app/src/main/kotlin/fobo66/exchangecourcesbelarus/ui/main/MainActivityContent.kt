@@ -67,7 +67,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
   var isAboutDialogShown by remember { mutableStateOf(false) }
@@ -83,9 +83,15 @@ fun MainActivityContent(
         currentScreen = navigator.currentDestination?.pane,
         onBackClick = { scope.launch { navigator.navigateBack() } },
         onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = { scope.launch { navigator.navigateTo(ThreePaneScaffoldRole.Secondary) } },
+        onSettingsClick = {
+          scope.launch {
+            navigator.navigateTo(
+              ThreePaneScaffoldRole.Secondary,
+            )
+          }
+        },
         updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-        settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
+        settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
       )
     },
     snackbarHost = {
@@ -94,10 +100,10 @@ fun MainActivityContent(
         modifier = Modifier.navigationBarsPadding(),
         snackbar = {
           Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
-        }
+        },
       )
     },
-    modifier = modifier
+    modifier = modifier,
   ) {
     val layoutDirection = LocalLayoutDirection.current
     SupportingPaneScaffold(
@@ -106,20 +112,27 @@ fun MainActivityContent(
       mainPane = {
         BestRatesScreenDestination(
           snackbarHostState = snackbarHostState,
-          permissionState = locationPermissionState
+          permissionState = locationPermissionState,
         )
       },
       supportingPane = {
         PreferenceScreen(
-          onLicensesClick = { scope.launch { navigator.navigateTo(ThreePaneScaffoldRole.Tertiary) } }
+          onLicensesClick = {
+            scope.launch {
+              navigator.navigateTo(
+                ThreePaneScaffoldRole.Tertiary,
+              )
+            }
+          },
         )
       },
       extraPane = { OpenSourceLicensesDestination() },
-      modifier = Modifier.padding(
-        start = it.calculateStartPadding(layoutDirection),
-        end = it.calculateEndPadding(layoutDirection),
-        top = it.calculateTopPadding()
-      )
+      modifier =
+        Modifier.padding(
+          start = it.calculateStartPadding(layoutDirection),
+          end = it.calculateEndPadding(layoutDirection),
+          top = it.calculateTopPadding(),
+        ),
     )
     if (isAboutDialogShown) {
       AboutAppDialog(onDismiss = { isAboutDialogShown = false })
@@ -136,56 +149,60 @@ fun ValiutchikTopBar(
   onSettingsClick: () -> Unit,
   modifier: Modifier = Modifier,
   updateTitle: Boolean = true,
-  settingsVisible: Boolean = true
+  settingsVisible: Boolean = true,
 ) {
-
   TopAppBar(
     navigationIcon = {
       AnimatedVisibility(currentScreen != ThreePaneScaffoldRole.Primary) {
         IconButton(onClick = onBackClick) {
           Icon(
             Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(string.topbar_description_back)
+            contentDescription = stringResource(string.topbar_description_back),
           )
         }
       }
     },
     title = {
       Text(
-        text = if (updateTitle) {
-          resolveTitle(currentScreen)
-        } else {
-          stringResource(id = string.app_name)
-        }, modifier = Modifier.testTag(TAG_TITLE)
+        text =
+          if (updateTitle) {
+            resolveTitle(currentScreen)
+          } else {
+            stringResource(id = string.app_name)
+          },
+        modifier = Modifier.testTag(TAG_TITLE),
       )
     },
     actions = {
       IconButton(onClick = onAboutClick) {
         Icon(
           Icons.Default.Info,
-          contentDescription = stringResource(
-            id = string.action_about
-          )
+          contentDescription =
+            stringResource(
+              id = string.action_about,
+            ),
         )
       }
       AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
         IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,
-            contentDescription = stringResource(
-              id = string.action_settings
-            )
+            contentDescription =
+              stringResource(
+                id = string.action_settings,
+              ),
           )
         }
       }
     },
-    modifier = modifier
+    modifier = modifier,
   )
 }
 
 @Composable
-fun resolveTitle(currentScreen: ThreePaneScaffoldRole?): String = when (currentScreen) {
-  ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
-  ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
-  else -> stringResource(id = string.app_name)
-}
+fun resolveTitle(currentScreen: ThreePaneScaffoldRole?): String =
+  when (currentScreen) {
+    ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
+    ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
+    else -> stringResource(id = string.app_name)
+  }

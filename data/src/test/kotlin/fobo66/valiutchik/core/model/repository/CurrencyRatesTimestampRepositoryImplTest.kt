@@ -18,16 +18,15 @@ package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.fake.FakePreferenceDataSource
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 
 class CurrencyRatesTimestampRepositoryImplTest {
-
   private val preferencesDataSource = FakePreferenceDataSource()
   private val now = Clock.System.now()
   private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository =
@@ -70,8 +69,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
       assertThat(
         currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
           now,
-          3.0f
-        )
+          3.0f,
+        ),
       ).isFalse()
     }
   }
@@ -85,8 +84,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
       assertThat(
         currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
           now,
-          3.0f
-        )
+          3.0f,
+        ),
       ).isFalse()
     }
   }
@@ -110,8 +109,8 @@ class CurrencyRatesTimestampRepositoryImplTest {
       assertThat(
         currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
           now,
-          3.0f
-        )
+          3.0f,
+        ),
       ).isFalse()
     }
   }

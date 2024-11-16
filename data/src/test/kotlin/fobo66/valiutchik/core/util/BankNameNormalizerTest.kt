@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class BankNameNormalizerTest {
-
   private val bankNameNormalizer: BankNameNormalizer = BankNameNormalizerImpl()
 
   @Test
