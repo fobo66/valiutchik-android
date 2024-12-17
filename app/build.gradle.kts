@@ -42,7 +42,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.S_V2
     targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
     versionCode = 23
     versionName = "1.14.2"
@@ -144,7 +144,9 @@ dependencies {
   debugImplementation(composeBom)
   androidTestImplementation(composeBom)
   implementation(libs.compose.ui)
+  implementation(libs.compose.xr)
   implementation(libs.compose.material)
+  implementation(libs.compose.xr.material)
   implementation(libs.compose.material.icons)
   implementation(libs.compose.ui.preview)
   implementation(libs.compose.material.windowsize)

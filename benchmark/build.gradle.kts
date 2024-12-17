@@ -35,7 +35,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.S_V2
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
   }
@@ -48,7 +48,7 @@ android {
       isMinifyEnabled = true
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
-        "benchmark-proguard-rules.pro"
+        "benchmark-proguard-rules.pro",
       )
     }
     release {

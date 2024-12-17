@@ -23,13 +23,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.xr.compose.material3.EnableXrComponentOverrides
+import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
-
-  @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+  @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3XrApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     installSplashScreen()
     super.onCreate(savedInstanceState)
@@ -40,7 +41,9 @@ class MainActivity : ComponentActivity() {
       val windowSizeClass = calculateWindowSizeClass(this)
       ValiutchikTheme {
         KoinContext {
-          MainActivityContent(windowSizeClass)
+          EnableXrComponentOverrides {
+            MainActivityContent(windowSizeClass)
+          }
         }
       }
     }
