@@ -44,7 +44,10 @@ import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -58,8 +61,9 @@ class CurrencyWidget :
     context: Context,
     id: GlanceId,
   ) = provideContent {
-    val rates: List<BestCurrencyRate> by loadExchangeRates
+    val rates: ImmutableList<BestCurrencyRate> by loadExchangeRates
       .execute(Clock.System.now())
+      .map { it.toImmutableList() }
       .collectAsState(
         initial = persistentListOf(),
       )
@@ -73,7 +77,7 @@ class CurrencyWidget :
 @Composable
 fun CurrencyWidgetContent(
   context: Context,
-  rates: List<BestCurrencyRate>,
+  rates: ImmutableList<BestCurrencyRate>,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   LazyColumn(
@@ -115,7 +119,7 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 private fun CurrencyWidgetPreview() {
   CurrencyWidgetContent(
     LocalContext.current,
-    listOf(
+    persistentListOf(
       BestCurrencyRate(0, "test", fobo66.valiutchik.domain.R.string.currency_name_eur_buy, "1.23"),
     ),
   )
