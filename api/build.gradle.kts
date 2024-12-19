@@ -29,7 +29,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.S_V2
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
@@ -37,19 +37,19 @@ android {
     resValue(
       "string",
       "apiUsername",
-      loadSecret(rootProject, API_USERNAME)
+      loadSecret(rootProject, API_USERNAME),
     )
 
     resValue(
       "string",
       "apiPassword",
-      loadSecret(rootProject, API_PASSWORD)
+      loadSecret(rootProject, API_PASSWORD),
     )
 
     resValue(
       "string",
       "geocoderApiKey",
-      loadSecret(rootProject, GEOCODER_TOKEN)
+      loadSecret(rootProject, GEOCODER_TOKEN),
     )
   }
 
@@ -57,7 +57,7 @@ android {
     release {
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro"
+        "proguard-rules.pro",
       )
     }
   }
