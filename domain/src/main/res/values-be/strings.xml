@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2022 Andrey Mukamolov
+  ~    Copyright 2024 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
   <string name="currency_name_usd_sell">Даляр ЗША курс прадажы</string>
   <string name="currency_name_eur_buy">Еўра курс пакупкі</string>
   <string name="currency_name_eur_sell">Еўра курс прадажы</string>
-  <string name="currency_name_rub_buy">Рубль курс пакупкі</string>
-  <string name="currency_name_rub_sell">Рубль курс прадажы</string>
-  <string name="currency_name_pln_buy">Польскі злоты курс пакупкі</string>
-  <string name="currency_name_pln_sell">Польскі злоты курс прадажы</string>
+  <string name="currency_name_rub_buy">Рубель курс пакупкі</string>
+  <string name="currency_name_rub_sell">Рубель курс прадажы</string>
+  <string name="currency_name_pln_buy">Злоты курс пакупкі</string>
+  <string name="currency_name_pln_sell">Злоты курс прадажы</string>
   <string name="currency_name_uah_buy">Грыўна курс пакупкі</string>
   <string name="currency_name_uah_sell">Грыўна курс прадажы</string>
 </resources>
