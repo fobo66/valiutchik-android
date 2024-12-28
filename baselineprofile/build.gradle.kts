@@ -52,14 +52,13 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.S_V2
     targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   targetProjectPath = ":app"
-
 }
 
 // This is the configuration block for the Baseline Profile plugin.
@@ -80,7 +79,7 @@ androidComponents {
     val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
     v.instrumentationRunnerArguments.put(
       "targetAppId",
-      v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() }
+      v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() },
     )
   }
 }

@@ -28,7 +28,7 @@ android {
   compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.S_V2
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
@@ -38,7 +38,7 @@ android {
     release {
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro"
+        "proguard-rules.pro",
       )
     }
   }
