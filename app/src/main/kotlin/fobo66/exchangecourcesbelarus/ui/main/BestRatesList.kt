@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -59,124 +59,124 @@ import kotlinx.collections.immutable.ImmutableList
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
-  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
-  onBestRateClick: (String) -> Unit,
-  onBestRateLongClick: (String, String) -> Unit,
-  isRefreshing: Boolean,
-  onRefresh: () -> Unit,
-  modifier: Modifier = Modifier,
+    bestCurrencyRates: ImmutableList<BestCurrencyRate>,
+    onBestRateClick: (String) -> Unit,
+    onBestRateLongClick: (String, String) -> Unit,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = modifier) {
-    if (it.isEmpty()) {
-      NoRatesIndicator()
-    } else {
-      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
-        val density = LocalDensity.current
-        LazyVerticalGrid(
-          columns = GridCells.Adaptive(minSize = 220.dp),
-          verticalArrangement = Arrangement.spacedBy(16.dp),
-          horizontalArrangement = Arrangement.spacedBy(16.dp),
-          contentPadding =
-            PaddingValues(
-              top = 8.dp,
-              start = 8.dp,
-              end = 8.dp,
-              bottom =
-                with(density) {
-                  WindowInsets.systemBars.getBottom(density).toDp()
-                } + 8.dp,
-            ),
-          modifier = Modifier.testTag(TAG_RATES),
-        ) {
-          itemsIndexed(
-            items = bestCurrencyRates,
-            key = { _, item -> item.currencyNameRes },
-          ) { index, item ->
-            BestCurrencyRateCard(
-              currencyName = stringResource(id = item.currencyNameRes),
-              currencyValue = item.currencyValue,
-              bankName = item.bank,
-              onClick = onBestRateClick,
-              onLongClick = onBestRateLongClick,
-              modifier =
-                Modifier
-                  .fillMaxWidth()
-                  .animateItem(),
-            )
-          }
+    Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = modifier) {
+        if (it.isEmpty()) {
+            NoRatesIndicator()
+        } else {
+            PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+                val density = LocalDensity.current
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 220.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding =
+                    PaddingValues(
+                        top = 8.dp,
+                        start = 8.dp,
+                        end = 8.dp,
+                        bottom =
+                        with(density) {
+                            WindowInsets.systemBars.getBottom(density).toDp()
+                        } + 8.dp
+                    ),
+                    modifier = Modifier.testTag(TAG_RATES)
+                ) {
+                    itemsIndexed(
+                        items = bestCurrencyRates,
+                        key = { _, item -> item.currencyNameRes }
+                    ) { index, item ->
+                        BestCurrencyRateCard(
+                            currencyName = stringResource(id = item.currencyNameRes),
+                            currencyValue = item.currencyValue,
+                            bankName = item.bank,
+                            onClick = onBestRateClick,
+                            onLongClick = onBestRateLongClick,
+                            modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .animateItem()
+                        )
+                    }
+                }
+            }
         }
-      }
     }
-  }
-  ReportDrawnWhen {
-    bestCurrencyRates.isNotEmpty()
-  }
+    ReportDrawnWhen {
+        bestCurrencyRates.isNotEmpty()
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
-  currencyName: String,
-  currencyValue: String,
-  bankName: String,
-  onClick: (String) -> Unit,
-  onLongClick: (String, String) -> Unit,
-  modifier: Modifier = Modifier,
+    currencyName: String,
+    currencyValue: String,
+    bankName: String,
+    onClick: (String) -> Unit,
+    onLongClick: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  ElevatedCard(
-    modifier =
-      modifier
-        .clip(CardDefaults.elevatedShape)
-        .combinedClickable(
-          onLongClick = { onLongClick(currencyName, currencyValue) },
-          onClick = { onClick(bankName) },
-        ),
-  ) {
-    Text(
-      text = currencyName,
-      style = MaterialTheme.typography.headlineSmall,
-      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
-    )
-    AnimatedContent(currencyValue, label = "currencyValue") {
-      Text(
-        text = it,
-        style = MaterialTheme.typography.displaySmall,
+    ElevatedCard(
         modifier =
-          Modifier
-            .padding(vertical = 16.dp, horizontal = 24.dp)
-            .testTag(TAG_RATE_VALUE),
-      )
-    }
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-      horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
+        modifier
+            .clip(CardDefaults.elevatedShape)
+            .combinedClickable(
+                onLongClick = { onLongClick(currencyName, currencyValue) },
+                onClick = { onClick(bankName) }
+            )
     ) {
-      Icon(
-        imageVector = Bank,
-        contentDescription = stringResource(id = string.bank_name_indicator),
-        modifier = Modifier.align(Alignment.CenterVertically),
-      )
-      AnimatedContent(bankName, label = "bankName") {
         Text(
-          text = it,
-          style = MaterialTheme.typography.bodyMedium,
+            text = currencyName,
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
         )
-      }
+        AnimatedContent(currencyValue, label = "currencyValue") {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.displaySmall,
+                modifier =
+                Modifier
+                    .padding(vertical = 16.dp, horizontal = 24.dp)
+                    .testTag(TAG_RATE_VALUE)
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(start = 24.dp, bottom = 24.dp)
+        ) {
+            Icon(
+                imageVector = Bank,
+                contentDescription = stringResource(id = string.bank_name_indicator),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            AnimatedContent(bankName, label = "bankName") {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
     }
-  }
 }
 
 @Preview
 @Composable
 private fun BestCurrencyRatePreview() {
-  ValiutchikTheme {
-    BestCurrencyRateCard(
-      currencyName = "US Dollar buy rate",
-      bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
-      currencyValue = "2.56",
-      onClick = {},
-      onLongClick = { _, _ -> },
-    )
-  }
+    ValiutchikTheme {
+        BestCurrencyRateCard(
+            currencyName = "US Dollar buy rate",
+            bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
+            currencyValue = "2.56",
+            onClick = {},
+            onLongClick = { _, _ -> }
+        )
+    }
 }
