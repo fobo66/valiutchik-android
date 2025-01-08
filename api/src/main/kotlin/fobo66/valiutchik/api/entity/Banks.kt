@@ -14,13 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api
+package fobo66.valiutchik.api.entity
 
-import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.api.entity.Currency
+import kotlinx.serialization.Serializable
+import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
-interface CurrencyRatesDataSource {
-  suspend fun loadExchangeRates(cityIndex: String): Set<Currency>
-
-  suspend fun loadBankExchangeRates(cityIndex: String): Set<Bank>
-}
+@Serializable
+@XmlSerialName("root")
+data class Banks(
+  val banks: List<Bank>,
+)

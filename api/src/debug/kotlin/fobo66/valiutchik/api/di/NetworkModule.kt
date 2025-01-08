@@ -30,47 +30,55 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.json.Json
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
 import nl.adaptivity.xmlutil.serialization.XML
+import nl.adaptivity.xmlutil.serialization.XmlConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val networkModule = module {
+@OptIn(ExperimentalXmlUtilApi::class)
+val networkModule =
+  module {
     single<Logger> {
-        object : Logger {
-            override fun log(message: String) {
-                Napier.d(message, tag = "Ktor")
-            }
+      object : Logger {
+        override fun log(message: String) {
+          Napier.d(message, tag = "Ktor")
         }
+      }
     }
     single<Json> {
-        Json {
-            isLenient = true
-            ignoreUnknownKeys = true
-        }
+      Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+      }
     }
     single<XML> {
-        XML {}
+      XML {
+        defaultPolicy {
+          unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
+        }
+      }
     }
     single<HttpClient> {
-        HttpClient(OkHttp) {
-            install(HttpCache) {
-                publicStorage(FileStorage(androidContext().cacheDir))
-            }
-            install(ContentNegotiation) {
-                json(get())
-                xml(get())
-            }
-            install(ContentEncoding) {
-                gzip()
-                deflate()
-            }
-            install(Logging) {
-                logger = get()
-                level = LogLevel.ALL
-                sanitizeHeader { header -> header == HttpHeaders.Authorization }
-            }
-
-            expectSuccess = true
+      HttpClient(OkHttp) {
+        install(HttpCache) {
+          publicStorage(FileStorage(androidContext().cacheDir))
         }
+        install(ContentNegotiation) {
+          json(get())
+          xml(get())
+        }
+        install(ContentEncoding) {
+          gzip()
+          deflate()
+        }
+        install(Logging) {
+          logger = get()
+          level = LogLevel.ALL
+          sanitizeHeader { header -> header == HttpHeaders.Authorization }
+        }
+
+        expectSuccess = true
+      }
     }
-}
+  }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,17 +16,19 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.Banks
 import fobo66.valiutchik.api.entity.Currency
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.path
-import io.ktor.utils.io.jvm.javaio.toInputStream
-import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 const val BASE_URL = "https://admin.myfin.by/"
 
@@ -35,21 +37,61 @@ class CurrencyRatesDataSourceImpl(
   private val parser: CurrencyRatesParser,
   private val username: String,
   private val password: String,
-  private val ioDispatcher: CoroutineDispatcher
+  private val ioDispatcher: CoroutineDispatcher,
 ) : CurrencyRatesDataSource {
-
   override suspend fun loadExchangeRates(cityIndex: String): Set<Currency> =
     withContext(ioDispatcher) {
-    try {
-      val response = client.get(BASE_URL) {
-        url {
-          path("outer", "authXml", cityIndex)
+      try {
+        val response =
+          client.get(BASE_URL) {
+            url {
+              path("outer", "authXml", cityIndex)
+            }
+            basicAuth(username, password)
+          }
+        val body =
+          response
+            .body<Banks>()
+
+        Napier.d {
+          "Parsed banks: $body"
         }
-        basicAuth(username, password)
+
+        body.banks
+          .map {
+            Currency(
+              bankname = it.bankName,
+              usdBuy = it.usdBuy,
+              usdSell = it.usdSell,
+              eurBuy = it.eurBuy,
+              eurSell = it.eurSell,
+              rurBuy = it.rubBuy,
+              rurSell = it.rubSell,
+              plnBuy = it.plnBuy,
+              plnSell = it.plnSell,
+              uahBuy = it.uahBuy,
+              uahSell = it.uahSell,
+            )
+          }.toSet()
+      } catch (e: ResponseException) {
+        throw IOException(e)
       }
-      parser.parse(response.bodyAsChannel().toInputStream())
-    } catch (e: ResponseException) {
-      throw IOException(e)
     }
-  }
+
+  override suspend fun loadBankExchangeRates(cityIndex: String): Set<Bank> =
+    withContext(ioDispatcher) {
+      try {
+        val response: Banks =
+          client
+            .get(BASE_URL) {
+              url {
+                path("outer", "authXml", cityIndex)
+              }
+              basicAuth(username, password)
+            }.body()
+        response.banks.toSet()
+      } catch (e: ResponseException) {
+        throw IOException(e)
+      }
+    }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,14 +17,13 @@
 package fobo66.valiutchik.api
 
 import androidx.test.filters.SmallTest
+import nl.adaptivity.xmlutil.XmlException
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.xmlpull.v1.XmlPullParserException
 
 @SmallTest
 class CurrencyRatesParserImplTest {
-
-  private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
+  private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
 
   @Test
   fun singleCurrency() {
@@ -47,7 +46,7 @@ class CurrencyRatesParserImplTest {
     assertEquals(2, currencies.size)
   }
 
-  @Test(expected = XmlPullParserException::class)
+  @Test(expected = XmlException::class)
   fun errorForIncorrectXml() {
     val testFileStream = javaClass.classLoader?.getResourceAsStream("wrongData.xml")!!
     parser.parse(testFileStream)
