@@ -16,10 +16,8 @@
 
 package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.Banks
 import fobo66.valiutchik.api.entity.Currency
-import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
@@ -34,7 +32,6 @@ const val BASE_URL = "https://admin.myfin.by/"
 
 class CurrencyRatesDataSourceImpl(
   private val client: HttpClient,
-  private val parser: CurrencyRatesParser,
   private val username: String,
   private val password: String,
   private val ioDispatcher: CoroutineDispatcher,
@@ -49,15 +46,10 @@ class CurrencyRatesDataSourceImpl(
             }
             basicAuth(username, password)
           }
-        val body =
-          response
-            .body<Banks>()
 
-        Napier.d {
-          "Parsed banks: $body"
-        }
-
-        body.banks
+        response
+          .body<Banks>()
+          .banks
           .map {
             Currency(
               bankname = it.bankName,
@@ -73,23 +65,6 @@ class CurrencyRatesDataSourceImpl(
               uahSell = it.uahSell,
             )
           }.toSet()
-      } catch (e: ResponseException) {
-        throw IOException(e)
-      }
-    }
-
-  override suspend fun loadBankExchangeRates(cityIndex: String): Set<Bank> =
-    withContext(ioDispatcher) {
-      try {
-        val response: Banks =
-          client
-            .get(BASE_URL) {
-              url {
-                path("outer", "authXml", cityIndex)
-              }
-              basicAuth(username, password)
-            }.body()
-        response.banks.toSet()
       } catch (e: ResponseException) {
         throw IOException(e)
       }
