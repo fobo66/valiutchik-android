@@ -31,8 +31,6 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.json.Json
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
-import nl.adaptivity.xmlutil.serialization.XML
-import nl.adaptivity.xmlutil.serialization.XmlConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -52,13 +50,6 @@ val networkModule =
         ignoreUnknownKeys = true
       }
     }
-    single<XML> {
-      XML {
-        defaultPolicy {
-          unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
-        }
-      }
-    }
     single<HttpClient> {
       HttpClient(OkHttp) {
         install(HttpCache) {
@@ -66,7 +57,7 @@ val networkModule =
         }
         install(ContentNegotiation) {
           json(get())
-          xml(get())
+          xml()
         }
         install(ContentEncoding) {
           gzip()

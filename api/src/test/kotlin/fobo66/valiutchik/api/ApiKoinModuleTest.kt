@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
 class ApiKoinModuleTest {
-
   @OptIn(KoinExperimentalAPI::class)
   @Test
   fun `check dispatchers module`() {
@@ -38,10 +37,11 @@ class ApiKoinModuleTest {
   @Test
   fun `check network module`() {
     networkModule.verify(
-      extraTypes = listOf(
-        HttpClientEngine::class,
-        HttpClientConfig::class
-      )
+      extraTypes =
+        listOf(
+          HttpClientEngine::class,
+          HttpClientConfig::class,
+        ),
     )
   }
 
@@ -55,10 +55,11 @@ class ApiKoinModuleTest {
   @Test
   fun `check api module`() {
     apiModule.verify(
-      extraTypes = listOf(
-        HttpClientEngine::class,
-        HttpClientConfig::class
-      )
+      extraTypes =
+        listOf(
+          HttpClientEngine::class,
+          HttpClientConfig::class,
+        ),
     )
   }
 }
