@@ -53,10 +53,16 @@ class BestCourseDataSourceImpl : BestCourseDataSource {
   private fun isSellRateCorrect(
     currency: Bank,
     currencyKey: String,
-  ) = currency.resolveCurrencySellRate(currencyKey) != UNKNOWN_COURSE
+  ): Boolean {
+    val rate = currency.resolveCurrencySellRate(currencyKey)
+    return rate.isNotEmpty() && rate != UNKNOWN_COURSE
+  }
 
   private fun isBuyRateCorrect(
     currency: Bank,
     currencyKey: String,
-  ) = currency.resolveCurrencyBuyRate(currencyKey) != UNKNOWN_COURSE
+  ): Boolean {
+    val rate = currency.resolveCurrencyBuyRate(currencyKey)
+    return rate.isNotEmpty() && rate != UNKNOWN_COURSE
+  }
 }
