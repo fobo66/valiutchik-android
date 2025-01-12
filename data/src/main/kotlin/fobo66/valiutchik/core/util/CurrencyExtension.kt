@@ -20,8 +20,7 @@ import fobo66.valiutchik.api.entity.Bank
 
 /**
  * Method to figure out which currency will be used depends on the context
- * By default, USD value is returned
- * If I find the better way to do it, I'll rewrite it.
+ * By default, empty string is returned
  */
 fun Bank.resolveCurrencyBuyRate(
   @CurrencyName name: String,
@@ -32,13 +31,12 @@ fun Bank.resolveCurrencyBuyRate(
     USD -> usdBuy
     PLN -> plnBuy
     UAH -> uahBuy
-    else -> usdBuy
+    else -> ""
   }
 
 /**
  * Method to figure out which currency will be used depends on the context
- * By default, USD value is returned
- * If I find the better way to do it, I'll rewrite it.
+ * By default, empty string is returned
  */
 fun Bank.resolveCurrencySellRate(
   @CurrencyName name: String,
@@ -49,5 +47,5 @@ fun Bank.resolveCurrencySellRate(
     USD -> usdSell
     PLN -> plnSell
     UAH -> uahSell
-    else -> usdSell
+    else -> ""
   }
