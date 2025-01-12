@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.BestCourse
@@ -29,17 +29,16 @@ import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
-import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
+import java.io.IOException
 
 class CurrencyRateRepositoryImpl(
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
-  private val bankNameNormalizer: BankNameNormalizer
+  private val bankNameNormalizer: BankNameNormalizer,
 ) : CurrencyRateRepository {
-
   private val citiesMap: ScatterMap<String, String> by lazy {
     mutableScatterMapOf(
       "Ashmyany" to "81",
@@ -113,13 +112,18 @@ class CurrencyRateRepositoryImpl(
     )
   }
 
-  override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
+  override suspend fun refreshExchangeRates(
+    city: String,
+    now: Instant,
+    defaultCity: String,
+  ) {
     val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
-    val currencies = try {
-      currencyRatesDataSource.loadExchangeRates(cityIndex)
-    } catch (e: IOException) {
-      throw CurrencyRatesLoadFailedException(e)
-    }
+    val currencies =
+      try {
+        currencyRatesDataSource.loadExchangeRates(cityIndex)
+      } catch (e: IOException) {
+        throw CurrencyRatesLoadFailedException(e)
+      }
 
     val bestCourses = findBestCourses(currencies, now.toString())
 
@@ -130,37 +134,39 @@ class CurrencyRateRepositoryImpl(
     persistenceDataSource.readBestCourses(latestTimestamp)
 
   private fun findBestCourses(
-    currencies: Set<Currency>,
-    now: String
+    currencies: List<Bank>,
+    now: String,
   ): List<BestCourse> = resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
 
   private fun resolveBuyRates(
-    currencies: Set<Currency>,
-    now: String
-  ) = bestCourseDataSource.findBestBuyCurrencies(currencies)
+    currencies: List<Bank>,
+    now: String,
+  ) = bestCourseDataSource
+    .findBestBuyCurrencies(currencies)
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        bankNameNormalizer.normalize(currency.bankname),
+        bankNameNormalizer.normalize(currency.bankName),
         currency.resolveCurrencyBuyRate(currencyKey),
         currencyKey,
         now,
-        BUY_COURSE
+        BUY_COURSE,
       )
     }
 
   private fun resolveSellRates(
-    currencies: Set<Currency>,
-    now: String
-  ) = bestCourseDataSource.findBestSellCurrencies(currencies)
+    currencies: List<Bank>,
+    now: String,
+  ) = bestCourseDataSource
+    .findBestSellCurrencies(currencies)
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        bankNameNormalizer.normalize(currency.bankname),
+        bankNameNormalizer.normalize(currency.bankName),
         currency.resolveCurrencySellRate(currencyKey),
         currencyKey,
         now,
-        SELL_COURSE
+        SELL_COURSE,
       )
     }
 }

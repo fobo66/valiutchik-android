@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 package fobo66.valiutchik.api
 
 import android.util.Xml
-import fobo66.valiutchik.api.entity.Currency
-import java.io.IOException
-import java.io.InputStream
+import fobo66.valiutchik.api.entity.Bank
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
+import java.io.InputStream
 
 const val ROOT_TAG_NAME = "root"
 const val ENTRY_TAG_NAME = "bank"
@@ -50,24 +50,25 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
       TAG_NAME_PLN_BUY,
       TAG_NAME_PLN_SELL,
       TAG_NAME_UAH_BUY,
-      TAG_NAME_UAH_SELL
+      TAG_NAME_UAH_SELL,
     )
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  override fun parse(inputStream: InputStream): Set<Currency> {
-    val parser = Xml.newPullParser().apply {
-      setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
-      setInput(inputStream, "utf-8")
-      nextTag()
-    }
+  override fun parse(inputStream: InputStream): List<Bank> {
+    val parser =
+      Xml.newPullParser().apply {
+        setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+        setInput(inputStream, "utf-8")
+        nextTag()
+      }
     return readCurrencies(parser)
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readCurrencies(parser: XmlPullParser): Set<Currency> {
-    val currencies = mutableSetOf<Currency>()
-    var currency: Currency
+  private fun readCurrencies(parser: XmlPullParser): List<Bank> {
+    val currencies = mutableListOf<Bank>()
+    var currency: Bank
     parser.require(XmlPullParser.START_TAG, null, ROOT_TAG_NAME)
     parser.read {
       if (parser.name == ENTRY_TAG_NAME) {
@@ -81,7 +82,7 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readCurrency(parser: XmlPullParser): Currency {
+  private fun readCurrency(parser: XmlPullParser): Bank {
     parser.require(XmlPullParser.START_TAG, null, ENTRY_TAG_NAME)
     var fieldName: String
     val currencyMap = mutableMapOf<String, String>()
@@ -99,7 +100,10 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   private fun isTagNeeded(tagName: String): Boolean = neededTagNames.contains(tagName)
 
   @Throws(IOException::class, XmlPullParserException::class)
-  private fun readTag(parser: XmlPullParser, tagName: String): String {
+  private fun readTag(
+    parser: XmlPullParser,
+    tagName: String,
+  ): String {
     parser.require(XmlPullParser.START_TAG, null, tagName)
     val param = readText(parser)
     parser.require(XmlPullParser.END_TAG, null, tagName)
@@ -141,18 +145,18 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   /**
    * Builder for currency object
    */
-  private fun MutableMap<String, String>.toCurrency(): Currency =
-    Currency(
-      bankname = get(TAG_NAME_BANKNAME).orEmpty(),
+  private fun MutableMap<String, String>.toCurrency(): Bank =
+    Bank(
+      bankName = get(TAG_NAME_BANKNAME).orEmpty(),
       usdBuy = get(TAG_NAME_USD_BUY).orEmpty(),
       usdSell = get(TAG_NAME_USD_SELL).orEmpty(),
       eurBuy = get(TAG_NAME_EUR_BUY).orEmpty(),
       eurSell = get(TAG_NAME_EUR_SELL).orEmpty(),
-      rurBuy = get(TAG_NAME_RUR_BUY).orEmpty(),
-      rurSell = get(TAG_NAME_RUR_SELL).orEmpty(),
+      rubBuy = get(TAG_NAME_RUR_BUY).orEmpty(),
+      rubSell = get(TAG_NAME_RUR_SELL).orEmpty(),
       plnBuy = get(TAG_NAME_PLN_BUY).orEmpty(),
       plnSell = get(TAG_NAME_PLN_SELL).orEmpty(),
       uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
-      uahSell = get(TAG_NAME_UAH_SELL).orEmpty()
+      uahSell = get(TAG_NAME_UAH_SELL).orEmpty(),
     )
 }

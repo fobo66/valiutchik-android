@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.Banks
-import fobo66.valiutchik.api.entity.Currency
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
@@ -36,7 +36,7 @@ class CurrencyRatesDataSourceImpl(
   private val password: String,
   private val ioDispatcher: CoroutineDispatcher,
 ) : CurrencyRatesDataSource {
-  override suspend fun loadExchangeRates(cityIndex: String): Set<Currency> =
+  override suspend fun loadExchangeRates(cityIndex: String): List<Bank> =
     withContext(ioDispatcher) {
       try {
         val response =
@@ -47,24 +47,7 @@ class CurrencyRatesDataSourceImpl(
             basicAuth(username, password)
           }
 
-        response
-          .body<Banks>()
-          .banks
-          .map {
-            Currency(
-              bankname = it.bankName,
-              usdBuy = it.usdBuy,
-              usdSell = it.usdSell,
-              eurBuy = it.eurBuy,
-              eurSell = it.eurSell,
-              rurBuy = it.rubBuy,
-              rurSell = it.rubSell,
-              plnBuy = it.plnBuy,
-              plnSell = it.plnSell,
-              uahBuy = it.uahBuy,
-              uahSell = it.uahSell,
-            )
-          }.toSet()
+        response.body<Banks>().banks
       } catch (e: ResponseException) {
         throw IOException(e)
       }

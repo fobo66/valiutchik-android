@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,15 +17,16 @@
 package fobo66.valiutchik.core.fake
 
 import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.Bank
 import java.io.IOException
 
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
   var isError = false
-  override suspend fun loadExchangeRates(cityIndex: String): Set<Currency> =
+
+  override suspend fun loadExchangeRates(cityIndex: String): List<Bank> =
     if (isError) {
       throw IOException("test")
     } else {
-      setOf(Currency())
+      listOf(Bank())
     }
 }

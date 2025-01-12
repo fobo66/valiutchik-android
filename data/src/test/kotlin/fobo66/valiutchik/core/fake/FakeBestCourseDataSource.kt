@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,13 +16,11 @@
 
 package fobo66.valiutchik.core.fake
 
-import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 
 class FakeBestCourseDataSource : BestCourseDataSource {
-  override fun findBestBuyCurrencies(courses: Set<Currency>): Map<String, Currency> =
-    emptyMap()
+  override fun findBestBuyCurrencies(courses: List<Bank>): Map<String, Bank> = emptyMap()
 
-  override fun findBestSellCurrencies(courses: Set<Currency>): Map<String, Currency> =
-    emptyMap()
+  override fun findBestSellCurrencies(courses: List<Bank>): Map<String, Bank> = emptyMap()
 }

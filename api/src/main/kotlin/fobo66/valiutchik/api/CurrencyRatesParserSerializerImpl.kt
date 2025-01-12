@@ -16,29 +16,14 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.Banks
-import fobo66.valiutchik.api.entity.Currency
 import nl.adaptivity.xmlutil.serialization.XML
 import java.io.InputStream
 
 class CurrencyRatesParserSerializerImpl : CurrencyRatesParser {
-  override fun parse(inputStream: InputStream): Set<Currency> {
+  override fun parse(inputStream: InputStream): List<Bank> {
     val banks = XML.decodeFromString<Banks>(inputStream.readBytes().toString(Charsets.UTF_8))
     return banks.banks
-      .map {
-        Currency(
-          bankname = it.bankName,
-          usdBuy = it.usdBuy,
-          usdSell = it.usdSell,
-          eurBuy = it.eurBuy,
-          eurSell = it.eurSell,
-          rurBuy = it.rubBuy,
-          rurSell = it.rubSell,
-          plnBuy = it.plnBuy,
-          plnSell = it.plnSell,
-          uahBuy = it.uahBuy,
-          uahSell = it.uahSell,
-        )
-      }.toSet()
   }
 }

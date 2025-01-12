@@ -54,7 +54,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals(BEST_RUR_BUY, bestBuy[RUB]?.rurBuy)
+    assertEquals(BEST_RUR_BUY, bestBuy[RUB]?.rubBuy)
   }
 
   @Test
@@ -79,7 +79,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestRURSellCourseAreReallyBest() {
-    assertEquals(BEST_RUR_SELL, bestSell[RUB]?.rurSell)
+    assertEquals(BEST_RUR_SELL, bestSell[RUB]?.rubSell)
   }
 
   @Test

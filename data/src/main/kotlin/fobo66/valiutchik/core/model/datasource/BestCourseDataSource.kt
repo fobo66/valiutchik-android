@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.Bank
 
 /**
  * Datasource for determining best exchange rates in the dataset
@@ -29,9 +29,7 @@ interface BestCourseDataSource {
    *
    * @return Map of the currency name to its best rate
    */
-  fun findBestBuyCurrencies(
-    courses: Set<Currency>
-  ): Map<String, Currency>
+  fun findBestBuyCurrencies(courses: List<Bank>): Map<String, Bank>
 
   /**
    * Find best sell rates (what bank sells for) for the given currency
@@ -40,7 +38,5 @@ interface BestCourseDataSource {
    *
    * @return Map of the currency name to its best rate
    */
-  fun findBestSellCurrencies(
-    courses: Set<Currency>
-  ): Map<String, Currency>
+  fun findBestSellCurrencies(courses: List<Bank>): Map<String, Bank>
 }
