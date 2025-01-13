@@ -34,15 +34,15 @@ class CurrencyRatesParserImplBenchmark {
 
   private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
   private val kotlinxSerializationParser = fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl()
-  private val myfinFeedFileStream =
-    InstrumentationRegistry
-      .getInstrumentation()
-      .context.assets
-      .open("myfinFeed.xml")
 
   @Test
   fun customParser() {
     benchmarkRule.measureRepeated {
+      val myfinFeedFileStream =
+        InstrumentationRegistry
+          .getInstrumentation()
+          .context.assets
+          .open("myfinFeed.xml")
       parser.parse(myfinFeedFileStream)
     }
   }
@@ -50,6 +50,11 @@ class CurrencyRatesParserImplBenchmark {
   @Test
   fun kotlinxSerialization() {
     benchmarkRule.measureRepeated {
+      val myfinFeedFileStream =
+        InstrumentationRegistry
+          .getInstrumentation()
+          .context.assets
+          .open("myfinFeed.xml")
       kotlinxSerializationParser.parse(myfinFeedFileStream)
     }
   }
