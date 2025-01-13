@@ -20,10 +20,13 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.InputStream
 
 /**
  * Benchmark for the algorithm for resolving best course
@@ -33,16 +36,22 @@ class BestCourseDataSourceBenchmark {
   @get:Rule
   val benchmarkRule = BenchmarkRule()
 
-  private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
+  private val parser = fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl()
 
   private val bestCourseDataSource = BestCourseDataSourceImpl()
 
-  private val myfinFeedFileStream =
-    InstrumentationRegistry
-      .getInstrumentation()
-      .context.assets
-      .open("myfinFeed.xml")
-  private val currencies = parser.parse(myfinFeedFileStream)
+  private lateinit var myfinFeedFileStream: InputStream
+  private lateinit var currencies: List<Bank>
+
+  @Before
+  fun setUp() {
+    myfinFeedFileStream =
+      InstrumentationRegistry
+        .getInstrumentation()
+        .context.assets
+        .open("myfinFeed.xml")
+    currencies = parser.parse(myfinFeedFileStream)
+  }
 
   @Test
   fun findBestBuyCurrencies() {
