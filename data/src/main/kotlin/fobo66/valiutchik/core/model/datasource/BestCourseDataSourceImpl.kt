@@ -28,7 +28,7 @@ import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 
 class BestCourseDataSourceImpl : BestCourseDataSource {
-  private val currencyKeys by lazy { listOf(USD, EUR, RUB, PLN, UAH) }
+  private val currencyKeys by lazy { arrayOf(USD, EUR, RUB, PLN, UAH) }
 
   override fun findBestBuyCurrencies(courses: List<Bank>): Map<@CurrencyName String, Bank> =
     currencyKeys.associateWith { currencyKey ->
