@@ -18,12 +18,15 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.Banks
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
+import nl.adaptivity.xmlutil.core.KtXmlReader
 import nl.adaptivity.xmlutil.serialization.XML
 import java.io.InputStream
 
 class CurrencyRatesParserSerializerImpl : CurrencyRatesParser {
+  @OptIn(ExperimentalXmlUtilApi::class)
   override fun parse(inputStream: InputStream): List<Bank> {
-    val banks = XML.decodeFromString<Banks>(inputStream.readBytes().toString(Charsets.UTF_8))
+    val banks = XML.decodeFromReader<Banks>(KtXmlReader(inputStream))
     return banks.banks
   }
 }
