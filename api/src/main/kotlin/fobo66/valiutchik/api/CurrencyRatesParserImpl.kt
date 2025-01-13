@@ -17,6 +17,9 @@
 package fobo66.valiutchik.api
 
 import android.util.Xml
+import androidx.collection.MutableScatterMap
+import androidx.collection.mutableScatterMapOf
+import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
@@ -39,7 +42,7 @@ const val TAG_NAME_UAH_SELL = "uah_sell"
 
 class CurrencyRatesParserImpl : CurrencyRatesParser {
   private val neededTagNames by lazy {
-    setOf(
+    scatterSetOf(
       TAG_NAME_BANKNAME,
       TAG_NAME_USD_BUY,
       TAG_NAME_USD_SELL,
@@ -66,29 +69,28 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readCurrencies(parser: XmlPullParser): List<Bank> {
-    val currencies = mutableListOf<Bank>()
-    var currency: Bank
-    parser.require(XmlPullParser.START_TAG, null, ROOT_TAG_NAME)
-    parser.read {
-      if (parser.name == ENTRY_TAG_NAME) {
-        currency = readCurrency(parser)
-        currencies.add(currency)
-      } else {
-        parser.skip()
+  private fun readCurrencies(parser: XmlPullParser): List<Bank> =
+    buildList {
+      var currency: Bank
+      parser.require(XmlPullParser.START_TAG, null, ROOT_TAG_NAME)
+      parser.read {
+        if (parser.name == ENTRY_TAG_NAME) {
+          currency = readCurrency(parser)
+          add(currency)
+        } else {
+          parser.skip()
+        }
       }
     }
-    return currencies
-  }
 
   @Throws(XmlPullParserException::class, IOException::class)
   private fun readCurrency(parser: XmlPullParser): Bank {
     parser.require(XmlPullParser.START_TAG, null, ENTRY_TAG_NAME)
     var fieldName: String
-    val currencyMap = mutableMapOf<String, String>()
+    val currencyMap = mutableScatterMapOf<String, String>()
     parser.read {
       fieldName = parser.name
-      if (isTagNeeded(fieldName)) {
+      if (neededTagNames.contains(fieldName)) {
         currencyMap[fieldName] = readTag(parser, fieldName)
       } else {
         parser.skip()
@@ -96,8 +98,6 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
     }
     return currencyMap.toCurrency()
   }
-
-  private fun isTagNeeded(tagName: String): Boolean = neededTagNames.contains(tagName)
 
   @Throws(IOException::class, XmlPullParserException::class)
   private fun readTag(
@@ -145,7 +145,7 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   /**
    * Builder for currency object
    */
-  private fun MutableMap<String, String>.toCurrency(): Bank =
+  private fun MutableScatterMap<String, String>.toCurrency(): Bank =
     Bank(
       bankName = get(TAG_NAME_BANKNAME).orEmpty(),
       usdBuy = get(TAG_NAME_USD_BUY).orEmpty(),
