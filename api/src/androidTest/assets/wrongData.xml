@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2022 Andrey Mukamolov
+  ~    Copyright 2025 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
   ~    limitations under the License.
   -->
 
-<root>
-  <bank>
+<test>
+  <currency>
     <bankid>6</bankid>
     <filialid>15</filialid>
     <date>14.03.2017</date>
@@ -35,5 +35,5 @@
     <uah_sell>-</uah_sell>
     <eurusd_buy>1.05</eurusd_buy>
     <eurusd_sell>1.079</eurusd_sell>
-  </bank>
-</root>
+  </currency>
+</test>

@@ -56,7 +56,7 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
     val parser =
       Xml.newPullParser().apply {
         setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
-        setInput(inputStream, "utf-8")
+        setInput(inputStream.buffered(), "utf-8")
         nextTag()
       }
     return readCurrencies(parser)

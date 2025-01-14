@@ -16,56 +16,39 @@
 
 package fobo66.valiutchik.api
 
-import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.xmlpull.v1.XmlPullParserException
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import kotlin.test.assertFails
 
-@SmallTest
-class CurrencyRatesParserImplTest {
-  private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
+class CurrencyRatesParserSerializerImplTest {
+  private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
 
   @Test
   fun singleCurrency() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("singleCurrency.xml")
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("singleCurrency.xml")!!
     val currencies = parser.parse(testFileStream)
     assertEquals(1, currencies.size)
   }
 
   @Test
   fun multipleCurrencies() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("multipleCurrencies.xml")
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("multipleCurrencies.xml")!!
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
   }
 
   @Test
   fun sameCurrenciesFilteredOut() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("sameCurrencies.xml")
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("sameCurrencies.xml")!!
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
   }
 
-  @Test(expected = XmlPullParserException::class)
+  @Test
   fun errorForIncorrectXml() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("wrongData.xml")
-    parser.parse(testFileStream)
+    val testFileStream = javaClass.classLoader?.getResourceAsStream("wrongData.xml")!!
+    assertFails {
+      parser.parse(testFileStream)
+    }
   }
 }
