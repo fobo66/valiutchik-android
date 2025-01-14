@@ -16,11 +16,12 @@
 
 package fobo66.valiutchik.api.entity
 
+import fobo66.valiutchik.api.ROOT_TAG_NAME
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
 @Serializable
-@XmlSerialName("root")
+@XmlSerialName(ROOT_TAG_NAME)
 data class Banks(
   val banks: Set<Bank>,
 )

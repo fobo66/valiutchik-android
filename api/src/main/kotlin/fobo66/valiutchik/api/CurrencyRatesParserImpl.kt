@@ -26,24 +26,16 @@ import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
 
-const val ROOT_TAG_NAME = "root"
-const val ENTRY_TAG_NAME = "bank"
-const val TAG_NAME_BANKNAME = "bankname"
-const val TAG_NAME_USD_BUY = "usd_buy"
-const val TAG_NAME_USD_SELL = "usd_sell"
-const val TAG_NAME_EUR_BUY = "eur_buy"
-const val TAG_NAME_EUR_SELL = "eur_sell"
-const val TAG_NAME_RUR_BUY = "rub_buy"
-const val TAG_NAME_RUR_SELL = "rub_sell"
-const val TAG_NAME_PLN_BUY = "pln_buy"
-const val TAG_NAME_PLN_SELL = "pln_sell"
-const val TAG_NAME_UAH_BUY = "uah_buy"
-const val TAG_NAME_UAH_SELL = "uah_sell"
-
 class CurrencyRatesParserImpl : CurrencyRatesParser {
   private val neededTagNames by lazy {
     scatterSetOf(
-      TAG_NAME_BANKNAME,
+      TAG_NAME_BANK_ID,
+      TAG_NAME_FILIAL_ID,
+      TAG_NAME_DATE,
+      TAG_NAME_BANK_NAME,
+      TAG_NAME_FILIAL_NAME,
+      TAG_NAME_BANK_ADDRESS,
+      TAG_NAME_BANK_PHONE,
       TAG_NAME_USD_BUY,
       TAG_NAME_USD_SELL,
       TAG_NAME_EUR_BUY,
@@ -54,6 +46,8 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
       TAG_NAME_PLN_SELL,
       TAG_NAME_UAH_BUY,
       TAG_NAME_UAH_SELL,
+      TAG_NAME_EURUSD_BUY,
+      TAG_NAME_EURUSD_SELL,
     )
   }
 
@@ -147,7 +141,13 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
    */
   private fun MutableScatterMap<String, String>.toCurrency(): Bank =
     Bank(
-      bankName = get(TAG_NAME_BANKNAME).orEmpty(),
+      bankId = get(TAG_NAME_BANK_ID).orEmpty(),
+      filialId = get(TAG_NAME_FILIAL_ID).orEmpty(),
+      date = get(TAG_NAME_DATE).orEmpty(),
+      filialName = get(TAG_NAME_FILIAL_NAME).orEmpty(),
+      bankAddress = get(TAG_NAME_BANK_ADDRESS).orEmpty(),
+      bankPhone = get(TAG_NAME_BANK_PHONE).orEmpty(),
+      bankName = get(TAG_NAME_BANK_NAME).orEmpty(),
       usdBuy = get(TAG_NAME_USD_BUY).orEmpty(),
       usdSell = get(TAG_NAME_USD_SELL).orEmpty(),
       eurBuy = get(TAG_NAME_EUR_BUY).orEmpty(),
@@ -158,5 +158,7 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
       plnSell = get(TAG_NAME_PLN_SELL).orEmpty(),
       uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
       uahSell = get(TAG_NAME_UAH_SELL).orEmpty(),
+      conversionBuy = get(TAG_NAME_EURUSD_BUY).orEmpty(),
+      conversionSell = get(TAG_NAME_EURUSD_SELL).orEmpty(),
     )
 }

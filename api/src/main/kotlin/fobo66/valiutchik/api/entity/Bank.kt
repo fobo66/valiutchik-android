@@ -16,6 +16,26 @@
 
 package fobo66.valiutchik.api.entity
 
+import fobo66.valiutchik.api.ENTRY_TAG_NAME
+import fobo66.valiutchik.api.TAG_NAME_BANK_ADDRESS
+import fobo66.valiutchik.api.TAG_NAME_BANK_ID
+import fobo66.valiutchik.api.TAG_NAME_BANK_NAME
+import fobo66.valiutchik.api.TAG_NAME_BANK_PHONE
+import fobo66.valiutchik.api.TAG_NAME_DATE
+import fobo66.valiutchik.api.TAG_NAME_EURUSD_BUY
+import fobo66.valiutchik.api.TAG_NAME_EURUSD_SELL
+import fobo66.valiutchik.api.TAG_NAME_EUR_BUY
+import fobo66.valiutchik.api.TAG_NAME_EUR_SELL
+import fobo66.valiutchik.api.TAG_NAME_FILIAL_ID
+import fobo66.valiutchik.api.TAG_NAME_FILIAL_NAME
+import fobo66.valiutchik.api.TAG_NAME_PLN_BUY
+import fobo66.valiutchik.api.TAG_NAME_PLN_SELL
+import fobo66.valiutchik.api.TAG_NAME_RUR_BUY
+import fobo66.valiutchik.api.TAG_NAME_RUR_SELL
+import fobo66.valiutchik.api.TAG_NAME_UAH_BUY
+import fobo66.valiutchik.api.TAG_NAME_UAH_SELL
+import fobo66.valiutchik.api.TAG_NAME_USD_BUY
+import fobo66.valiutchik.api.TAG_NAME_USD_SELL
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -24,63 +44,63 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
  * Currency model from XML
  */
 @Serializable
-@XmlSerialName("bank")
+@XmlSerialName(ENTRY_TAG_NAME)
 data class Bank(
   @XmlElement
-  @XmlSerialName("bankid")
+  @XmlSerialName(TAG_NAME_BANK_ID)
   val bankId: String = "",
   @XmlElement
-  @XmlSerialName("filialid")
+  @XmlSerialName(TAG_NAME_FILIAL_ID)
   val filialId: String = "",
   @XmlElement
-  @XmlSerialName("date")
+  @XmlSerialName(TAG_NAME_DATE)
   val date: String = "",
   @XmlElement
-  @XmlSerialName("bankname")
+  @XmlSerialName(TAG_NAME_BANK_NAME)
   val bankName: String = "",
   @XmlElement
-  @XmlSerialName("filialname")
+  @XmlSerialName(TAG_NAME_FILIAL_NAME)
   val filialName: String = "",
   @XmlElement
-  @XmlSerialName("bankaddress")
+  @XmlSerialName(TAG_NAME_BANK_ADDRESS)
   val bankAddress: String = "",
   @XmlElement
-  @XmlSerialName("bankphone")
+  @XmlSerialName(TAG_NAME_BANK_PHONE)
   val bankPhone: String = "",
   @XmlElement
-  @XmlSerialName("usd_buy")
+  @XmlSerialName(TAG_NAME_USD_BUY)
   val usdBuy: String = "",
   @XmlElement
-  @XmlSerialName("usd_sell")
+  @XmlSerialName(TAG_NAME_USD_SELL)
   val usdSell: String = "",
   @XmlElement
-  @XmlSerialName("eur_buy")
+  @XmlSerialName(TAG_NAME_EUR_BUY)
   val eurBuy: String = "",
   @XmlElement
-  @XmlSerialName("eur_sell")
+  @XmlSerialName(TAG_NAME_EUR_SELL)
   val eurSell: String = "",
   @XmlElement
-  @XmlSerialName("rub_buy")
+  @XmlSerialName(TAG_NAME_RUR_BUY)
   val rubBuy: String = "",
   @XmlElement
-  @XmlSerialName("rub_sell")
+  @XmlSerialName(TAG_NAME_RUR_SELL)
   val rubSell: String = "",
   @XmlElement
-  @XmlSerialName("pln_buy")
+  @XmlSerialName(TAG_NAME_PLN_BUY)
   val plnBuy: String = "",
   @XmlElement
-  @XmlSerialName("pln_sell")
+  @XmlSerialName(TAG_NAME_PLN_SELL)
   val plnSell: String = "",
   @XmlElement
-  @XmlSerialName("uah_buy")
+  @XmlSerialName(TAG_NAME_UAH_BUY)
   val uahBuy: String = "",
   @XmlElement
-  @XmlSerialName("uah_sell")
+  @XmlSerialName(TAG_NAME_UAH_SELL)
   val uahSell: String = "",
   @XmlElement
-  @XmlSerialName("eurusd_sell")
+  @XmlSerialName(TAG_NAME_EURUSD_SELL)
   val conversionSell: String = "",
   @XmlElement
-  @XmlSerialName("eurusd_buy")
+  @XmlSerialName(TAG_NAME_EURUSD_BUY)
   val conversionBuy: String = "",
 )
