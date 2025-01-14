@@ -39,7 +39,7 @@ class CurrencyRateRepositoryImpl(
   private val currencyRatesDataSource: CurrencyRatesDataSource,
   private val bankNameNormalizer: BankNameNormalizer,
 ) : CurrencyRateRepository {
-  private val citiesMap: ScatterMap<String, String> by lazy {
+  private val citiesMap: ScatterMap<String, String> by lazy(LazyThreadSafetyMode.NONE) {
     mutableScatterMapOf(
       "Ashmyany" to "81",
       "Asipovichy" to "40",
