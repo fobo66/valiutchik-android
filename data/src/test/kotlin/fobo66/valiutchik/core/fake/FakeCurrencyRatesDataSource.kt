@@ -23,10 +23,10 @@ import java.io.IOException
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
   var isError = false
 
-  override suspend fun loadExchangeRates(cityIndex: String): List<Bank> =
+  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
     if (isError) {
       throw IOException("test")
     } else {
-      listOf(Bank())
+      setOf(Bank())
     }
 }

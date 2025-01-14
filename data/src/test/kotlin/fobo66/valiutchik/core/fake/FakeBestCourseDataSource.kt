@@ -20,7 +20,7 @@ import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 
 class FakeBestCourseDataSource : BestCourseDataSource {
-  override fun findBestBuyCurrencies(courses: List<Bank>): Map<String, Bank> = emptyMap()
+  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<String, Bank> = emptyMap()
 
-  override fun findBestSellCurrencies(courses: List<Bank>): Map<String, Bank> = emptyMap()
+  override fun findBestSellCurrencies(courses: Set<Bank>): Map<String, Bank> = emptyMap()
 }

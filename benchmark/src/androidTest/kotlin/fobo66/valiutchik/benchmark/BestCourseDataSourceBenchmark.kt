@@ -41,7 +41,7 @@ class BestCourseDataSourceBenchmark {
   private val bestCourseDataSource = BestCourseDataSourceImpl()
 
   private lateinit var myfinFeedFileStream: InputStream
-  private lateinit var currencies: List<Bank>
+  private lateinit var currencies: Set<Bank>
 
   @Before
   fun setUp() {
