@@ -29,7 +29,7 @@ interface BestCourseDataSource {
    *
    * @return Map of the currency name to its best rate
    */
-  fun findBestBuyCurrencies(courses: List<Bank>): Map<String, Bank>
+  fun findBestBuyCurrencies(courses: Set<Bank>): Map<String, Bank>
 
   /**
    * Find best sell rates (what bank sells for) for the given currency
@@ -38,5 +38,5 @@ interface BestCourseDataSource {
    *
    * @return Map of the currency name to its best rate
    */
-  fun findBestSellCurrencies(courses: List<Bank>): Map<String, Bank>
+  fun findBestSellCurrencies(courses: Set<Bank>): Map<String, Bank>
 }

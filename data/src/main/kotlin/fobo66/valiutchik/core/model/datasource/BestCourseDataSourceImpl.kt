@@ -30,7 +30,7 @@ import fobo66.valiutchik.core.util.resolveCurrencySellRate
 class BestCourseDataSourceImpl : BestCourseDataSource {
   private val currencyKeys by lazy { arrayOf(USD, EUR, RUB, PLN, UAH) }
 
-  override fun findBestBuyCurrencies(courses: List<Bank>): Map<@CurrencyName String, Bank> =
+  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
     currencyKeys.associateWith { currencyKey ->
       courses
         .asSequence()
@@ -40,7 +40,7 @@ class BestCourseDataSourceImpl : BestCourseDataSource {
       }
     }
 
-  override fun findBestSellCurrencies(courses: List<Bank>): Map<@CurrencyName String, Bank> =
+  override fun findBestSellCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
     currencyKeys.associateWith { currencyKey ->
       courses
         .asSequence()

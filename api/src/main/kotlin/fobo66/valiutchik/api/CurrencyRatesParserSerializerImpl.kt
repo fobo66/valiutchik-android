@@ -25,7 +25,7 @@ import java.io.InputStream
 
 class CurrencyRatesParserSerializerImpl : CurrencyRatesParser {
   @OptIn(ExperimentalXmlUtilApi::class)
-  override fun parse(inputStream: InputStream): List<Bank> {
+  override fun parse(inputStream: InputStream): Set<Bank> {
     val banks = XML.decodeFromReader<Banks>(KtXmlReader(inputStream))
     return banks.banks
   }

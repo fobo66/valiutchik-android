@@ -134,12 +134,12 @@ class CurrencyRateRepositoryImpl(
     persistenceDataSource.readBestCourses(latestTimestamp)
 
   private fun findBestCourses(
-    currencies: List<Bank>,
+    currencies: Set<Bank>,
     now: String,
   ): List<BestCourse> = resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
 
   private fun resolveBuyRates(
-    currencies: List<Bank>,
+    currencies: Set<Bank>,
     now: String,
   ) = bestCourseDataSource
     .findBestBuyCurrencies(currencies)
@@ -155,7 +155,7 @@ class CurrencyRateRepositoryImpl(
     }
 
   private fun resolveSellRates(
-    currencies: List<Bank>,
+    currencies: Set<Bank>,
     now: String,
   ) = bestCourseDataSource
     .findBestSellCurrencies(currencies)

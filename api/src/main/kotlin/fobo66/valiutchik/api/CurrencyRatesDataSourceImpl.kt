@@ -36,7 +36,7 @@ class CurrencyRatesDataSourceImpl(
   private val password: String,
   private val ioDispatcher: CoroutineDispatcher,
 ) : CurrencyRatesDataSource {
-  override suspend fun loadExchangeRates(cityIndex: String): List<Bank> =
+  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
     withContext(ioDispatcher) {
       try {
         val response =
