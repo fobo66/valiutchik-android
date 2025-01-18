@@ -19,6 +19,7 @@ package fobo66.valiutchik.api
 import android.util.Xml
 import androidx.collection.MutableScatterMap
 import androidx.collection.mutableScatterMapOf
+import androidx.collection.mutableScatterSetOf
 import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 import org.xmlpull.v1.XmlPullParser
@@ -63,19 +64,20 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readCurrencies(parser: XmlPullParser): Set<Bank> =
-    buildSet {
-      var currency: Bank
-      parser.require(XmlPullParser.START_TAG, null, ROOT_TAG_NAME)
-      parser.read {
-        if (parser.name == ENTRY_TAG_NAME) {
-          currency = readCurrency(parser)
-          add(currency)
-        } else {
-          parser.skip()
-        }
+  private fun readCurrencies(parser: XmlPullParser): Set<Bank> {
+    val result = mutableScatterSetOf<Bank>()
+    var currency: Bank
+    parser.require(XmlPullParser.START_TAG, null, ROOT_TAG_NAME)
+    parser.read {
+      if (parser.name == ENTRY_TAG_NAME) {
+        currency = readCurrency(parser)
+        result.add(currency)
+      } else {
+        parser.skip()
       }
     }
+    return result.asSet()
+  }
 
   @Throws(XmlPullParserException::class, IOException::class)
   private fun readCurrency(parser: XmlPullParser): Bank {

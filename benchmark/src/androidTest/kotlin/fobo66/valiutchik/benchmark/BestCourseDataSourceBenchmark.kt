@@ -26,7 +26,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.InputStream
 
 /**
  * Benchmark for the algorithm for resolving best course
@@ -36,16 +35,15 @@ class BestCourseDataSourceBenchmark {
   @get:Rule
   val benchmarkRule = BenchmarkRule()
 
-  private val parser = fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl()
+  private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
 
   private val bestCourseDataSource = BestCourseDataSourceImpl()
 
-  private lateinit var myfinFeedFileStream: InputStream
   private lateinit var currencies: Set<Bank>
 
   @Before
   fun setUp() {
-    myfinFeedFileStream =
+    val myfinFeedFileStream =
       InstrumentationRegistry
         .getInstrumentation()
         .context.assets
