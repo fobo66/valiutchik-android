@@ -28,7 +28,7 @@ import java.io.IOException
 import java.io.InputStream
 
 class CurrencyRatesParserImpl : CurrencyRatesParser {
-  private val neededTagNames by lazy {
+  private val neededTagNames by lazy(LazyThreadSafetyMode.NONE) {
     scatterSetOf(
       TAG_NAME_BANK_ID,
       TAG_NAME_FILIAL_ID,
