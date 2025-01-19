@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,31 +23,34 @@ import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val networkModule = module {
-  single<Json> {
-    Json {
-      isLenient = true
-      ignoreUnknownKeys = true
+val networkModule =
+  module {
+    single<Json> {
+      Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+      }
     }
-  }
-  single {
-    HttpClient(OkHttp) {
-      install(ContentNegotiation) {
-        json(get())
-      }
-      install(ContentEncoding) {
-        gzip()
-        deflate()
-      }
-      install(HttpCache) {
-        publicStorage(FileStorage(androidContext().cacheDir))
-      }
+    single {
+      HttpClient(OkHttp) {
+        install(ContentNegotiation) {
+          json(get())
+          xml()
+        }
+        install(ContentEncoding) {
+          gzip()
+          deflate()
+        }
+        install(HttpCache) {
+          publicStorage(FileStorage(androidContext().cacheDir))
+        }
 
-      expectSuccess = true
+        expectSuccess = true
+      }
     }
   }
-}

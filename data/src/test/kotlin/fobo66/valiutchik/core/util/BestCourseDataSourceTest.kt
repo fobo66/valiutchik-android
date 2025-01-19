@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.util
 
 import fobo66.valiutchik.api.CurrencyRatesParser
+import fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -39,7 +40,7 @@ const val BEST_UAH_SELL = "0.09"
  */
 class BestCourseDataSourceTest {
   private val testFile = javaClass.classLoader?.getResourceAsStream("myfinTestData.xml")!!
-  private val parser: CurrencyRatesParser = TestMyfinParser()
+  private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
   private val currencies = parser.parse(testFile)
 
   private val bestCourseDataSource: BestCourseDataSource = BestCourseDataSourceImpl()
@@ -53,7 +54,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals(BEST_RUR_BUY, bestBuy[RUB]?.rurBuy)
+    assertEquals(BEST_RUR_BUY, bestBuy[RUB]?.rubBuy)
   }
 
   @Test
@@ -78,7 +79,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestRURSellCourseAreReallyBest() {
-    assertEquals(BEST_RUR_SELL, bestSell[RUB]?.rurSell)
+    assertEquals(BEST_RUR_SELL, bestSell[RUB]?.rubSell)
   }
 
   @Test

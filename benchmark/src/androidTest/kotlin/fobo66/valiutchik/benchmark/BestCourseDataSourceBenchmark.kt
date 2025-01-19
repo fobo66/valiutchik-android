@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import org.junit.Before
 import org.junit.Rule
@@ -31,7 +32,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class BestCourseDataSourceBenchmark {
-
   @get:Rule
   val benchmarkRule = BenchmarkRule()
 
@@ -39,12 +39,15 @@ class BestCourseDataSourceBenchmark {
 
   private val bestCourseDataSource = BestCourseDataSourceImpl()
 
-  private var currencies: Set<fobo66.valiutchik.api.Currency> = setOf()
+  private lateinit var currencies: Set<Bank>
 
   @Before
   fun setUp() {
     val myfinFeedFileStream =
-      InstrumentationRegistry.getInstrumentation().context.assets.open("myfinFeed.xml")
+      InstrumentationRegistry
+        .getInstrumentation()
+        .context.assets
+        .open("myfinFeed.xml")
     currencies = parser.parse(myfinFeedFileStream)
   }
 

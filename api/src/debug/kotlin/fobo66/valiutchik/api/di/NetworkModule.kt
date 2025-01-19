@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,43 +28,48 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.json.Json
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val networkModule = module {
-  single<Logger> {
-    object : Logger {
-      override fun log(message: String) {
-        Napier.d(message, tag = "Ktor")
+@OptIn(ExperimentalXmlUtilApi::class)
+val networkModule =
+  module {
+    single<Logger> {
+      object : Logger {
+        override fun log(message: String) {
+          Napier.d(message, tag = "Ktor")
+        }
       }
     }
-  }
-  single<Json> {
-    Json {
-      isLenient = true
-      ignoreUnknownKeys = true
+    single<Json> {
+      Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+      }
     }
-  }
-  single<HttpClient> {
-    HttpClient(OkHttp) {
-      install(HttpCache) {
-        publicStorage(FileStorage(androidContext().cacheDir))
-      }
-      install(ContentNegotiation) {
-        json(get())
-      }
-      install(ContentEncoding) {
-        gzip()
-        deflate()
-      }
-      install(Logging) {
-        logger = get()
-        level = LogLevel.ALL
-        sanitizeHeader { header -> header == HttpHeaders.Authorization }
-      }
+    single<HttpClient> {
+      HttpClient(OkHttp) {
+        install(HttpCache) {
+          publicStorage(FileStorage(androidContext().cacheDir))
+        }
+        install(ContentNegotiation) {
+          json(get())
+          xml()
+        }
+        install(ContentEncoding) {
+          gzip()
+          deflate()
+        }
+        install(Logging) {
+          logger = get()
+          level = LogLevel.ALL
+          sanitizeHeader { header -> header == HttpHeaders.Authorization }
+        }
 
-      expectSuccess = true
+        expectSuccess = true
+      }
     }
   }
-}

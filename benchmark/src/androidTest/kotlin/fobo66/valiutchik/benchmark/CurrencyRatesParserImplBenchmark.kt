@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,18 +29,33 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class CurrencyRatesParserImplBenchmark {
-
   @get:Rule
   val benchmarkRule = BenchmarkRule()
 
   private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
+  private val kotlinxSerializationParser = fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl()
 
   @Test
-  fun parseMyfinFeed() {
+  fun customParser() {
     benchmarkRule.measureRepeated {
       val myfinFeedFileStream =
-        InstrumentationRegistry.getInstrumentation().context.assets.open("myfinFeed.xml")
+        InstrumentationRegistry
+          .getInstrumentation()
+          .context.assets
+          .open("myfinFeed.xml")
       parser.parse(myfinFeedFileStream)
+    }
+  }
+
+  @Test
+  fun kotlinxSerialization() {
+    benchmarkRule.measureRepeated {
+      val myfinFeedFileStream =
+        InstrumentationRegistry
+          .getInstrumentation()
+          .context.assets
+          .open("myfinFeed.xml")
+      kotlinxSerializationParser.parse(myfinFeedFileStream)
     }
   }
 }

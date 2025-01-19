@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,19 +16,12 @@
 
 package fobo66.valiutchik.api.entity
 
-/**
- * Currency model from XML
- */
-data class Currency(
-  val bankname: String = "",
-  val usdBuy: String = "",
-  val usdSell: String = "",
-  val eurBuy: String = "",
-  val eurSell: String = "",
-  val rurBuy: String = "",
-  val rurSell: String = "",
-  val plnBuy: String = "",
-  val plnSell: String = "",
-  val uahBuy: String = "",
-  val uahSell: String = ""
+import fobo66.valiutchik.api.ROOT_TAG_NAME
+import kotlinx.serialization.Serializable
+import nl.adaptivity.xmlutil.serialization.XmlSerialName
+
+@Serializable
+@XmlSerialName(ROOT_TAG_NAME)
+data class Banks(
+  val banks: Set<Bank>,
 )
