@@ -21,6 +21,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.xmlpull.v1.XmlPullParserException
+import java.io.InputStream
 
 @SmallTest
 class CurrencyRatesParserImplTest {
@@ -28,44 +29,34 @@ class CurrencyRatesParserImplTest {
 
   @Test
   fun singleCurrency() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("singleCurrency.xml")
+    val testFileStream = openTestFile("singleCurrency.xml")
     val currencies = parser.parse(testFileStream)
     assertEquals(1, currencies.size)
   }
 
   @Test
   fun multipleCurrencies() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("multipleCurrencies.xml")
+    val testFileStream = openTestFile("multipleCurrencies.xml")
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
   }
 
   @Test
   fun sameCurrenciesFilteredOut() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("sameCurrencies.xml")
+    val testFileStream = openTestFile("sameCurrencies.xml")
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
   }
 
   @Test(expected = XmlPullParserException::class)
   fun errorForIncorrectXml() {
-    val testFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("wrongData.xml")
+    val testFileStream = openTestFile("wrongData.xml")
     parser.parse(testFileStream)
   }
+
+  private fun openTestFile(fileName: String): InputStream =
+    InstrumentationRegistry
+      .getInstrumentation()
+      .context.assets
+      .open(fileName)
 }

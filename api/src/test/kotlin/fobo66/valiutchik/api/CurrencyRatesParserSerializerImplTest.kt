@@ -18,6 +18,7 @@ package fobo66.valiutchik.api
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.io.InputStream
 import kotlin.test.assertFails
 
 class CurrencyRatesParserSerializerImplTest {
@@ -25,30 +26,33 @@ class CurrencyRatesParserSerializerImplTest {
 
   @Test
   fun singleCurrency() {
-    val testFileStream = javaClass.classLoader?.getResourceAsStream("singleCurrency.xml")!!
+    val testFileStream = openTestFile("singleCurrency.xml")
     val currencies = parser.parse(testFileStream)
     assertEquals(1, currencies.size)
   }
 
   @Test
   fun multipleCurrencies() {
-    val testFileStream = javaClass.classLoader?.getResourceAsStream("multipleCurrencies.xml")!!
+    val testFileStream = openTestFile("multipleCurrencies.xml")
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
   }
 
   @Test
   fun sameCurrenciesFilteredOut() {
-    val testFileStream = javaClass.classLoader?.getResourceAsStream("sameCurrencies.xml")!!
+    val testFileStream = openTestFile("sameCurrencies.xml")
     val currencies = parser.parse(testFileStream)
     assertEquals(2, currencies.size)
   }
 
   @Test
   fun errorForIncorrectXml() {
-    val testFileStream = javaClass.classLoader?.getResourceAsStream("wrongData.xml")!!
+    val testFileStream = openTestFile("wrongData.xml")
     assertFails {
       parser.parse(testFileStream)
     }
   }
+
+  private fun openTestFile(fileName: String): InputStream =
+    javaClass.classLoader?.getResourceAsStream(fileName)!!
 }
