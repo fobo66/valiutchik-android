@@ -53,15 +53,16 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  override fun parse(inputStream: InputStream): Set<Bank> {
-    val parser =
-      Xml.newPullParser().apply {
-        setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
-        setInput(inputStream.buffered(), "utf-8")
-        nextTag()
-      }
-    return readCurrencies(parser)
-  }
+  override fun parse(inputStream: InputStream): Set<Bank> =
+    inputStream.buffered().use {
+      val parser =
+        Xml.newPullParser().apply {
+          setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+          setInput(it, "utf-8")
+          nextTag()
+        }
+      return readCurrencies(parser)
+    }
 
   @Throws(XmlPullParserException::class, IOException::class)
   private fun readCurrencies(parser: XmlPullParser): Set<Bank> {
