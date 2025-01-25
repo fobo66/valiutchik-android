@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,30 +17,26 @@
 package fobo66.valiutchik.api
 
 import android.util.Xml
-import fobo66.valiutchik.api.entity.Currency
-import java.io.IOException
-import java.io.InputStream
+import androidx.collection.MutableScatterMap
+import androidx.collection.mutableScatterMapOf
+import androidx.collection.mutableScatterSetOf
+import androidx.collection.scatterSetOf
+import fobo66.valiutchik.api.entity.Bank
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
-
-const val ROOT_TAG_NAME = "root"
-const val ENTRY_TAG_NAME = "bank"
-const val TAG_NAME_BANKNAME = "bankname"
-const val TAG_NAME_USD_BUY = "usd_buy"
-const val TAG_NAME_USD_SELL = "usd_sell"
-const val TAG_NAME_EUR_BUY = "eur_buy"
-const val TAG_NAME_EUR_SELL = "eur_sell"
-const val TAG_NAME_RUR_BUY = "rub_buy"
-const val TAG_NAME_RUR_SELL = "rub_sell"
-const val TAG_NAME_PLN_BUY = "pln_buy"
-const val TAG_NAME_PLN_SELL = "pln_sell"
-const val TAG_NAME_UAH_BUY = "uah_buy"
-const val TAG_NAME_UAH_SELL = "uah_sell"
+import java.io.IOException
+import java.io.InputStream
 
 class CurrencyRatesParserImpl : CurrencyRatesParser {
-  private val neededTagNames by lazy {
-    setOf(
-      TAG_NAME_BANKNAME,
+  private val neededTagNames by lazy(LazyThreadSafetyMode.NONE) {
+    scatterSetOf(
+      TAG_NAME_BANK_ID,
+      TAG_NAME_FILIAL_ID,
+      TAG_NAME_DATE,
+      TAG_NAME_BANK_NAME,
+      TAG_NAME_FILIAL_NAME,
+      TAG_NAME_BANK_ADDRESS,
+      TAG_NAME_BANK_PHONE,
       TAG_NAME_USD_BUY,
       TAG_NAME_USD_SELL,
       TAG_NAME_EUR_BUY,
@@ -50,44 +46,48 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
       TAG_NAME_PLN_BUY,
       TAG_NAME_PLN_SELL,
       TAG_NAME_UAH_BUY,
-      TAG_NAME_UAH_SELL
+      TAG_NAME_UAH_SELL,
+      TAG_NAME_EURUSD_BUY,
+      TAG_NAME_EURUSD_SELL,
     )
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  override fun parse(inputStream: InputStream): Set<Currency> {
-    val parser = Xml.newPullParser().apply {
-      setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
-      setInput(inputStream, "utf-8")
-      nextTag()
+  override fun parse(inputStream: InputStream): Set<Bank> =
+    inputStream.buffered().use {
+      val parser =
+        Xml.newPullParser().apply {
+          setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+          setInput(it, "utf-8")
+          nextTag()
+        }
+      return readCurrencies(parser)
     }
-    return readCurrencies(parser)
-  }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readCurrencies(parser: XmlPullParser): Set<Currency> {
-    val currencies = mutableSetOf<Currency>()
-    var currency: Currency
+  private fun readCurrencies(parser: XmlPullParser): Set<Bank> {
+    val result = mutableScatterSetOf<Bank>()
+    var currency: Bank
     parser.require(XmlPullParser.START_TAG, null, ROOT_TAG_NAME)
     parser.read {
       if (parser.name == ENTRY_TAG_NAME) {
         currency = readCurrency(parser)
-        currencies.add(currency)
+        result.add(currency)
       } else {
         parser.skip()
       }
     }
-    return currencies
+    return result.asSet()
   }
 
   @Throws(XmlPullParserException::class, IOException::class)
-  private fun readCurrency(parser: XmlPullParser): Currency {
+  private fun readCurrency(parser: XmlPullParser): Bank {
     parser.require(XmlPullParser.START_TAG, null, ENTRY_TAG_NAME)
     var fieldName: String
-    val currencyMap = mutableMapOf<String, String>()
+    val currencyMap = mutableScatterMapOf<String, String>()
     parser.read {
       fieldName = parser.name
-      if (isTagNeeded(fieldName)) {
+      if (neededTagNames.contains(fieldName)) {
         currencyMap[fieldName] = readTag(parser, fieldName)
       } else {
         parser.skip()
@@ -96,10 +96,11 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
     return currencyMap.toCurrency()
   }
 
-  private fun isTagNeeded(tagName: String): Boolean = neededTagNames.contains(tagName)
-
   @Throws(IOException::class, XmlPullParserException::class)
-  private fun readTag(parser: XmlPullParser, tagName: String): String {
+  private fun readTag(
+    parser: XmlPullParser,
+    tagName: String,
+  ): String {
     parser.require(XmlPullParser.START_TAG, null, tagName)
     val param = readText(parser)
     parser.require(XmlPullParser.END_TAG, null, tagName)
@@ -141,18 +142,26 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
   /**
    * Builder for currency object
    */
-  private fun MutableMap<String, String>.toCurrency(): Currency =
-    Currency(
-      bankname = get(TAG_NAME_BANKNAME).orEmpty(),
+  private fun MutableScatterMap<String, String>.toCurrency(): Bank =
+    Bank(
+      bankId = get(TAG_NAME_BANK_ID).orEmpty(),
+      filialId = get(TAG_NAME_FILIAL_ID).orEmpty(),
+      date = get(TAG_NAME_DATE).orEmpty(),
+      filialName = get(TAG_NAME_FILIAL_NAME).orEmpty(),
+      bankAddress = get(TAG_NAME_BANK_ADDRESS).orEmpty(),
+      bankPhone = get(TAG_NAME_BANK_PHONE).orEmpty(),
+      bankName = get(TAG_NAME_BANK_NAME).orEmpty(),
       usdBuy = get(TAG_NAME_USD_BUY).orEmpty(),
       usdSell = get(TAG_NAME_USD_SELL).orEmpty(),
       eurBuy = get(TAG_NAME_EUR_BUY).orEmpty(),
       eurSell = get(TAG_NAME_EUR_SELL).orEmpty(),
-      rurBuy = get(TAG_NAME_RUR_BUY).orEmpty(),
-      rurSell = get(TAG_NAME_RUR_SELL).orEmpty(),
+      rubBuy = get(TAG_NAME_RUR_BUY).orEmpty(),
+      rubSell = get(TAG_NAME_RUR_SELL).orEmpty(),
       plnBuy = get(TAG_NAME_PLN_BUY).orEmpty(),
       plnSell = get(TAG_NAME_PLN_SELL).orEmpty(),
       uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
-      uahSell = get(TAG_NAME_UAH_SELL).orEmpty()
+      uahSell = get(TAG_NAME_UAH_SELL).orEmpty(),
+      conversionBuy = get(TAG_NAME_EURUSD_BUY).orEmpty(),
+      conversionSell = get(TAG_NAME_EURUSD_SELL).orEmpty(),
     )
 }

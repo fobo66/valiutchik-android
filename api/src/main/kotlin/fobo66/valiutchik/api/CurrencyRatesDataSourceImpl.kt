@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,40 +16,40 @@
 
 package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.Banks
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.path
-import io.ktor.utils.io.jvm.javaio.toInputStream
-import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 const val BASE_URL = "https://admin.myfin.by/"
 
 class CurrencyRatesDataSourceImpl(
   private val client: HttpClient,
-  private val parser: CurrencyRatesParser,
   private val username: String,
   private val password: String,
-  private val ioDispatcher: CoroutineDispatcher
+  private val ioDispatcher: CoroutineDispatcher,
 ) : CurrencyRatesDataSource {
-
-  override suspend fun loadExchangeRates(cityIndex: String): Set<Currency> =
+  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
     withContext(ioDispatcher) {
-    try {
-      val response = client.get(BASE_URL) {
-        url {
-          path("outer", "authXml", cityIndex)
-        }
-        basicAuth(username, password)
+      try {
+        val response =
+          client.get(BASE_URL) {
+            url {
+              path("outer", "authXml", cityIndex)
+            }
+            basicAuth(username, password)
+          }
+
+        response.body<Banks>().banks
+      } catch (e: ResponseException) {
+        throw IOException(e)
       }
-      parser.parse(response.bodyAsChannel().toInputStream())
-    } catch (e: ResponseException) {
-      throw IOException(e)
     }
-  }
 }

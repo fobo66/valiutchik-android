@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,36 +16,36 @@
 
 package fobo66.valiutchik.core.util
 
-import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.Bank
 
 /**
  * Method to figure out which currency will be used depends on the context
- * By default, USD value is returned
- * If I find the better way to do it, I'll rewrite it.
+ * By default, empty string is returned
  */
-fun Currency.resolveCurrencyBuyRate(@CurrencyName name: String): String {
-  return when (name) {
+fun Bank.resolveCurrencyBuyRate(
+  @CurrencyName name: String,
+): String =
+  when (name) {
     EUR -> eurBuy
-    RUB, RUR -> rurBuy
+    RUB, RUR -> rubBuy
     USD -> usdBuy
     PLN -> plnBuy
     UAH -> uahBuy
-    else -> usdBuy
+    else -> ""
   }
-}
 
 /**
  * Method to figure out which currency will be used depends on the context
- * By default, USD value is returned
- * If I find the better way to do it, I'll rewrite it.
+ * By default, empty string is returned
  */
-fun Currency.resolveCurrencySellRate(@CurrencyName name: String): String {
-  return when (name) {
+fun Bank.resolveCurrencySellRate(
+  @CurrencyName name: String,
+): String =
+  when (name) {
     EUR -> eurSell
-    RUB, RUR -> rurSell
+    RUB, RUR -> rubSell
     USD -> usdSell
     PLN -> plnSell
     UAH -> uahSell
-    else -> usdSell
+    else -> ""
   }
-}
