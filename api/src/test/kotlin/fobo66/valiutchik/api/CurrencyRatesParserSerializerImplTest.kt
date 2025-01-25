@@ -16,16 +16,13 @@
 
 package fobo66.valiutchik.api
 
-import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.xmlpull.v1.XmlPullParserException
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.io.InputStream
+import kotlin.test.assertFails
 
-@SmallTest
-class CurrencyRatesParserImplTest {
-  private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
+class CurrencyRatesParserSerializerImplTest {
+  private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
 
   @Test
   fun singleCurrency() {
@@ -48,15 +45,14 @@ class CurrencyRatesParserImplTest {
     assertEquals(2, currencies.size)
   }
 
-  @Test(expected = XmlPullParserException::class)
+  @Test
   fun errorForIncorrectXml() {
     val testFileStream = openTestFile("wrongData.xml")
-    parser.parse(testFileStream)
+    assertFails {
+      parser.parse(testFileStream)
+    }
   }
 
   private fun openTestFile(fileName: String): InputStream =
-    InstrumentationRegistry
-      .getInstrumentation()
-      .context.assets
-      .open(fileName)
+    javaClass.classLoader?.getResourceAsStream(fileName)!!
 }

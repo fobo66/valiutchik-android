@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,19 +37,19 @@ android {
     resValue(
       "string",
       "apiUsername",
-      loadSecret(rootProject, API_USERNAME)
+      loadSecret(rootProject, API_USERNAME),
     )
 
     resValue(
       "string",
       "apiPassword",
-      loadSecret(rootProject, API_PASSWORD)
+      loadSecret(rootProject, API_PASSWORD),
     )
 
     resValue(
       "string",
       "geocoderApiKey",
-      loadSecret(rootProject, GEOCODER_TOKEN)
+      loadSecret(rootProject, GEOCODER_TOKEN),
     )
   }
 
@@ -57,7 +57,7 @@ android {
     release {
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro"
+        "proguard-rules.pro",
       )
     }
   }
@@ -76,6 +76,7 @@ detekt {
 
 dependencies {
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.androidx.collection)
 
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.android)
@@ -88,6 +89,7 @@ dependencies {
   implementation(libs.ktor.content)
   implementation(libs.ktor.encoding)
   implementation(libs.ktor.serialization)
+  implementation(libs.ktor.serialization.xml)
   implementation(libs.kotlinx.serialization)
 
   implementation(libs.napier)
