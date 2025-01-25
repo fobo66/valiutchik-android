@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2024 Andrey Mukamolov
+  ~    Copyright 2025 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -19,14 +19,6 @@
 
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.INTERNET" />
-
-  <queries>
-    <intent>
-      <action android:name="android.intent.action.VIEW" />
-
-      <data android:scheme="geo" />
-    </intent>
-  </queries>
 
   <application
       android:name=".App"

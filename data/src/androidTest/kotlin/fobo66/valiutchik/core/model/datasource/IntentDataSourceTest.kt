@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,29 +31,28 @@ import org.junit.Test
 @SmallTest
 class IntentDataSourceTest {
 
-  private val uri: Uri = Uri.parse("geo:0,0?q=test")
+    @get:Rule
+    val intentsRule = IntentsRule()
 
-  @get:Rule
-  val intentsRule = IntentsRule()
+    private val intentDataSource: IntentDataSource =
+        IntentDataSourceImpl(InstrumentationRegistry.getInstrumentation().targetContext)
 
-  private val intentDataSource: IntentDataSource =
-    IntentDataSourceImpl(InstrumentationRegistry.getInstrumentation().targetContext)
+    @Test
+    fun createIntent() {
+        val intent = intentDataSource.createIntent(Uri.EMPTY)
+        assertThat(intent, hasAction(Intent.ACTION_VIEW))
+    }
 
-  @Test
-  fun createIntent() {
-    val intent = intentDataSource.createIntent(Uri.EMPTY)
-    assertThat(intent, hasAction(Intent.ACTION_VIEW))
-  }
+    @Test
+    fun canResolveIntent() {
+        val uri: Uri = Uri.parse("geo:0,0?q=test")
+        val intent = intentDataSource.createIntent(uri)
+        assertNotNull("Can resolve intent", intentDataSource.resolveIntent(intent))
+    }
 
-  @Test
-  fun canResolveIntent() {
-    val intent = intentDataSource.createIntent(uri)
-    assertNotNull("Can resolve intent", intentDataSource.resolveIntent(intent))
-  }
-
-  @Test
-  fun cannotResolveEmptyIntent() {
-    val intent = intentDataSource.createIntent(Uri.EMPTY)
-    assertNull(intentDataSource.resolveIntent(intent))
-  }
+    @Test
+    fun cannotResolveEmptyIntent() {
+        val intent = intentDataSource.createIntent(Uri.EMPTY)
+        assertNull(intentDataSource.resolveIntent(intent))
+    }
 }
