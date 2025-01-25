@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui.about
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +45,14 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
     SpatialDialog(
         onDismissRequest = onDismiss
     ) {
-        Column(modifier = modifier.padding(24.dp)) {
+        Column(
+            modifier = modifier
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(24.dp)
+        ) {
             Text(
                 text = stringResource(id = string.title_about),
                 style = MaterialTheme.typography.headlineSmall
