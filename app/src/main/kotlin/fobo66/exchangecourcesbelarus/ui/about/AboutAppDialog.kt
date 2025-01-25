@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
 
 package fobo66.exchangecourcesbelarus.ui.about
 
-import androidx.compose.material3.AlertDialog
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
@@ -29,6 +31,8 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.xr.compose.spatial.SpatialDialog
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
@@ -37,46 +41,56 @@ private const val LINK_TEXT = "myfin.by"
 
 @Composable
 fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
-  AlertDialog(
-    onDismissRequest = onDismiss,
-    title = {
-      Text(text = stringResource(id = string.title_about))
-    },
-    text = {
-      val descriptionAnnotatedText = buildAnnotatedString {
-        val description = stringResource(id = string.about_app_description)
-        val linkIndex = description.indexOf(LINK_TEXT)
-        val linkEndIndex = linkIndex + LINK_TEXT.length
-        append(description)
-        addLink(
-          LinkAnnotation.Url(
-            url = DESCRIPTION_URL, styles = TextLinkStyles(
-              style = SpanStyle(
-                color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline
-              )
+    SpatialDialog(
+        onDismissRequest = onDismiss
+    ) {
+        Column(modifier = modifier.padding(24.dp)) {
+            Text(
+                text = stringResource(id = string.title_about),
+                style = MaterialTheme.typography.headlineSmall
             )
-          ), linkIndex, linkEndIndex
-        )
-      }
+            val descriptionAnnotatedText = buildAnnotatedString {
+                val description = stringResource(id = string.about_app_description)
+                val linkIndex = description.indexOf(LINK_TEXT)
+                val linkEndIndex = linkIndex + LINK_TEXT.length
+                append(description)
+                addLink(
+                    LinkAnnotation.Url(
+                        url = DESCRIPTION_URL,
+                        styles = TextLinkStyles(
+                            style = SpanStyle(
+                                color = MaterialTheme.colorScheme.primary,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        )
+                    ),
+                    linkIndex,
+                    linkEndIndex
+                )
+            }
 
-      Text(
-        text = descriptionAnnotatedText
-      )
-    },
-    confirmButton = {
-      TextButton(onClick = onDismiss) {
-        Text(text = stringResource(id = android.R.string.ok))
-      }
-    },
-    modifier = modifier
-  )
+            Text(
+                text = descriptionAnnotatedText,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            )
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .align(Alignment.End)
+            ) {
+                Text(text = stringResource(id = android.R.string.ok))
+            }
+        }
+    }
 }
 
 @Preview
 @Composable
 private fun AboutAppPreview() {
-  ValiutchikTheme {
-    AboutAppDialog(onDismiss = {})
-  }
+    ValiutchikTheme {
+        AboutAppDialog(onDismiss = {})
+    }
 }
