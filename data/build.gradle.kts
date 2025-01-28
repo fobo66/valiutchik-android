@@ -70,13 +70,8 @@ android {
 }
 
 room {
-    schemaDirectory("$projectDir/schemas/")
-}
-
-ksp {
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-    arg("room.generateKotlin", "true")
+    generateKotlin = true
+    schemaDirectory(layout.projectDirectory.dir("schemas"))
 }
 
 detekt {
