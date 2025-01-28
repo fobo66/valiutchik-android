@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,27 +17,27 @@
 package fobo66.valiutchik.core.util
 
 class BankNameNormalizerImpl : BankNameNormalizer {
-  private val quotes = "\"«»"
+    private val quotes = "\"«»"
 
-  override fun normalize(bankName: String): String {
-    val startTypographicalQuotePosition = bankName.indexOfFirst { it == '«' }
-    val startQuotePosition = bankName.indexOfFirst { it == '\"' }
+    override fun normalize(bankName: String): String {
+        val startTypographicalQuotePosition = bankName.indexOfFirst { it == '«' }
+        val startQuotePosition = bankName.indexOfFirst { it == '\"' }
 
-    if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {
-      return bankName
+        if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {
+            return bankName
+        }
+
+        val canonicalBankName =
+            if (startTypographicalQuotePosition == -1 ||
+                (startQuotePosition in 1 until startTypographicalQuotePosition)
+            ) {
+                val endQuotePosition = bankName.indexOf('\"', startQuotePosition + 1)
+                bankName.substring(startQuotePosition + 1, endQuotePosition)
+            } else {
+                val endQuotePosition = bankName.indexOfFirst { it == '»' }
+                bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
+            }
+
+        return canonicalBankName.filterNot { quotes.contains(it) }
     }
-
-    val canonicalBankName =
-      if (startTypographicalQuotePosition == -1 ||
-        (startQuotePosition in 1 until startTypographicalQuotePosition)
-      ) {
-        val endQuotePosition = bankName.indexOf('\"', startQuotePosition + 1)
-        bankName.substring(startQuotePosition + 1, endQuotePosition)
-      } else {
-        val endQuotePosition = bankName.indexOfFirst { it == '»' }
-        bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
-      }
-
-    return canonicalBankName.filterNot { quotes.contains(it) }
-  }
 }

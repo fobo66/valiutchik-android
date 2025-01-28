@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import android.content.Context
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +28,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.exchangecourcesbelarus.R.string
@@ -38,108 +40,107 @@ import org.junit.Test
 @SmallTest
 class ToolbarTest {
 
-  @get:Rule
-  val composeRule = createComposeRule()
+    @get:Rule
+    val composeRule = createComposeRule()
 
-  @Test
-  fun showCorrectTitle() {
-    composeRule.setContent {
-      ValiutchikTopBar(
-        currentScreen = ThreePaneScaffoldRole.Primary,
-        onBackClick = {},
-        onAboutClick = {},
-        onSettingsClick = {}
-      )
-    }
-    val expectedTitle =
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(string.app_name)
-    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
-  }
-
-
-  @Test
-  fun doNotShowBackOnMain() {
-    composeRule.setContent {
-      ValiutchikTopBar(
-        currentScreen = ThreePaneScaffoldRole.Primary,
-        onBackClick = {},
-        onAboutClick = {},
-        onSettingsClick = {}
-      )
+    @Test
+    fun showCorrectTitle() {
+        composeRule.setContent {
+            ValiutchikTopBar(
+                currentScreen = ThreePaneScaffoldRole.Primary,
+                onBackClick = {},
+                onAboutClick = {},
+                onSettingsClick = {}
+            )
+        }
+        val expectedTitle =
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(string.app_name)
+        composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
     }
 
-    composeRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.topbar_description_back
-      )
-    ).assertDoesNotExist()
-  }
+    @Test
+    fun doNotShowBackOnMain() {
+        composeRule.setContent {
+            ValiutchikTopBar(
+                currentScreen = ThreePaneScaffoldRole.Primary,
+                onBackClick = {},
+                onAboutClick = {},
+                onSettingsClick = {}
+            )
+        }
 
-  @Test
-  fun showCorrectTitleForSettings() {
-    composeRule.setContent {
-      ValiutchikTopBar(
-        currentScreen = ThreePaneScaffoldRole.Secondary,
-        onBackClick = {},
-        onAboutClick = {},
-        onSettingsClick = {}
-      )
+        composeRule.onNodeWithContentDescription(
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                string.topbar_description_back
+            )
+        ).assertDoesNotExist()
     }
 
-    val expectedTitle =
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.title_activity_settings
-      )
-    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
-  }
+    @Test
+    fun showCorrectTitleForSettings() {
+        composeRule.setContent {
+            ValiutchikTopBar(
+                currentScreen = ThreePaneScaffoldRole.Secondary,
+                onBackClick = {},
+                onAboutClick = {},
+                onSettingsClick = {}
+            )
+        }
 
-  @Test
-  fun changeStateOnNavigation() {
-    composeRule.setContent {
-      var route by remember {
-        mutableStateOf(ThreePaneScaffoldRole.Primary)
-      }
-      ValiutchikTopBar(
-        currentScreen = route,
-        onBackClick = {},
-        onAboutClick = {},
-        onSettingsClick = { route = ThreePaneScaffoldRole.Secondary }
-      )
+        val expectedTitle =
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                string.title_activity_settings
+            )
+        composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
     }
 
-    val settingsDescription = InstrumentationRegistry.getInstrumentation().targetContext.getString(
-      string.action_settings
-    )
-    composeRule.onNodeWithContentDescription(settingsDescription).performClick()
-    val expectedTitle =
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.title_activity_settings
-      )
-    composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
-    composeRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.topbar_description_back
-      )
-    ).assertIsDisplayed()
-    composeRule.onNodeWithContentDescription(settingsDescription).assertDoesNotExist()
-  }
+    @Test
+    fun changeStateOnNavigation() {
+        composeRule.setContent {
+            var route by remember {
+                mutableStateOf(ThreePaneScaffoldRole.Primary)
+            }
+            ValiutchikTopBar(
+                currentScreen = route,
+                onBackClick = {},
+                onAboutClick = {},
+                onSettingsClick = { route = ThreePaneScaffoldRole.Secondary }
+            )
+        }
 
-  @Test
-  fun showAboutDialog() {
-    var isAboutDialogShown = false
-    composeRule.setContent {
-      ValiutchikTopBar(
-        currentScreen = ThreePaneScaffoldRole.Primary,
-        onBackClick = {},
-        onAboutClick = { isAboutDialogShown = true },
-        onSettingsClick = {}
-      )
+        val settingsDescription = ApplicationProvider.getApplicationContext<Context>().getString(
+            string.action_settings
+        )
+        composeRule.onNodeWithContentDescription(settingsDescription).performClick()
+        val expectedTitle =
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                string.title_activity_settings
+            )
+        composeRule.onNodeWithTag(TAG_TITLE).assertTextContains(expectedTitle)
+        composeRule.onNodeWithContentDescription(
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                string.topbar_description_back
+            )
+        ).assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(settingsDescription).assertDoesNotExist()
     }
-    composeRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        string.action_about
-      )
-    ).performClick()
-    assertTrue(isAboutDialogShown)
-  }
+
+    @Test
+    fun showAboutDialog() {
+        var isAboutDialogShown = false
+        composeRule.setContent {
+            ValiutchikTopBar(
+                currentScreen = ThreePaneScaffoldRole.Primary,
+                onBackClick = {},
+                onAboutClick = { isAboutDialogShown = true },
+                onSettingsClick = {}
+            )
+        }
+        composeRule.onNodeWithContentDescription(
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                string.action_about
+            )
+        ).performClick()
+        assertTrue(isAboutDialogShown)
+    }
 }

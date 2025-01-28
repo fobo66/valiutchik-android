@@ -29,6 +29,7 @@ junit = "5.11.4"
 junitPlugin = "1.11.3.0"
 koin = "4.0.2"
 kotlin = "2.1.0"
+kotlinter = "5.0.1"
 kotlinxCollections = "0.3.8"
 kotlinxCoroutines = "1.10.1"
 kotlinxDatetime = "0.6.1"
@@ -139,6 +140,7 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 junit = { id = "de.mannodermaus.android-junit5", version.ref = "junitPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 licenses = { id = "com.jaredsburrows.license", version.ref = "licensesPlugin" }
 room = { id = "androidx.room", version.ref = "room" }

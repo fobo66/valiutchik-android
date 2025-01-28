@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class License(
-  @SerialName("license")
-  val license: String,
-  @SerialName("license_url")
-  val licenseUrl: String
+    @SerialName("license")
+    val license: String,
+    @SerialName("license_url")
+    val licenseUrl: String
 )

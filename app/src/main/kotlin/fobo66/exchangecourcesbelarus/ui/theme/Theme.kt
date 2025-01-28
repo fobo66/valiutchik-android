@@ -132,6 +132,7 @@ fun ValiutchikTheme(
 }
 
 @Composable
+@Suppress("ktlint:standard:function-type-modifier-spacing") // bug with ktlint
 fun ValiutchikWidgetTheme(
     isDynamicColor: Boolean = true,
     content:

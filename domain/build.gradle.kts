@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,62 +17,63 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(libs.plugins.android.library)
-  kotlin("android")
-  alias(libs.plugins.detekt)
-  alias(libs.plugins.junit)
+    alias(libs.plugins.android.library)
+    kotlin("android")
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
+    alias(libs.plugins.junit)
 }
 
 android {
-  namespace = "fobo66.valiutchik.domain"
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    namespace = "fobo66.valiutchik.domain"
+    compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
-  defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.S_V2
+    defaultConfig {
+        minSdk = AndroidVersion.VersionCodes.S_V2
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    consumerProguardFiles("consumer-rules.pro")
-  }
-
-  buildTypes {
-    release {
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro",
-      )
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
-  kotlinOptions {
-    jvmTarget = "17"
-  }
+
+    buildTypes {
+        release {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 detekt {
-  autoCorrect = true
+    autoCorrect = true
 }
 
 dependencies {
-  api(project(":data"))
-  implementation(libs.androidx.annotation)
-  implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.kotlinx.datetime)
-  implementation(platform(libs.koin.bom))
-  implementation(libs.koin.core)
-  implementation(libs.napier)
+    api(project(":data"))
+    implementation(libs.androidx.annotation)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.napier)
 
-  detektPlugins(libs.detekt.rules.formatting)
-  detektPlugins(libs.detekt.rules.compose)
+    detektPlugins(libs.detekt.rules.formatting)
+    detektPlugins(libs.detekt.rules.compose)
 
-  testImplementation(libs.junit.api)
-  testRuntimeOnly(libs.junit.engine)
-  testImplementation(platform(libs.koin.bom))
-  testImplementation(libs.koin.test)
-  testImplementation(libs.ktor.client)
-  testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
+    testImplementation(platform(libs.koin.bom))
+    testImplementation(libs.koin.test)
+    testImplementation(libs.ktor.client)
+    testImplementation(libs.kotlinx.coroutines.test)
 
-  androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.runner)
 }

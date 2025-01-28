@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,94 +37,94 @@ import org.junit.Test
 @SmallTest
 class PersistenceDataSourceTest {
 
-  private lateinit var db: CurrencyRatesDatabase
-  private lateinit var persistenceDataSource: PersistenceDataSource
+    private lateinit var db: CurrencyRatesDatabase
+    private lateinit var persistenceDataSource: PersistenceDataSource
 
-  @Before
-  fun setUp() {
-    val context = InstrumentationRegistry.getInstrumentation().targetContext
-    db = Room.inMemoryDatabaseBuilder(
-      context,
-      CurrencyRatesDatabase::class.java
-    ).build()
-    persistenceDataSource =
-      PersistenceDataSourceImpl(db)
-  }
-
-  @After
-  fun tearDown() {
-    db.close()
-  }
-
-  @Test
-  fun saveBestBuyCourses() {
-    val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-      BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE)
-    )
-
-    runBlocking {
-      persistenceDataSource.saveBestCourses(bestCourses)
+    @Before
+    fun setUp() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        db = Room.inMemoryDatabaseBuilder(
+            context,
+            CurrencyRatesDatabase::class.java
+        ).build()
+        persistenceDataSource =
+            PersistenceDataSourceImpl(db)
     }
 
-    runBlocking {
-      val bestBuyRates = db.currencyRatesDao().loadAllBestCurrencyRates()
-      assertEquals(2, bestBuyRates.size)
-    }
-  }
-
-  @Test
-  fun saveBestSellCourses() {
-    val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
-      BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE)
-    )
-
-    runBlocking {
-      persistenceDataSource.saveBestCourses(bestCourses)
+    @After
+    fun tearDown() {
+        db.close()
     }
 
-    runBlocking {
-      val bestSellRates = db.currencyRatesDao().loadAllBestCurrencyRates()
-      assertEquals(2, bestSellRates.size)
-    }
-  }
+    @Test
+    fun saveBestBuyCourses() {
+        val bestCourses = listOf(
+            BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+            BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE)
+        )
 
-  @Test
-  fun saveMixedCourses() {
-    val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-      BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-      BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE)
-    )
+        runBlocking {
+            persistenceDataSource.saveBestCourses(bestCourses)
+        }
 
-    runBlocking {
-      persistenceDataSource.saveBestCourses(bestCourses)
-    }
-
-    runBlocking {
-      val bestRates = db.currencyRatesDao().loadAllBestCurrencyRates()
-      assertEquals(3, bestRates.size)
-    }
-  }
-
-  @Test
-  fun loadOnlySellCoursesFromMixedCourses() {
-    runBlocking {
-      val bestCourses = listOf(
-        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-        BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
-        BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE)
-      )
-
-      persistenceDataSource.saveBestCourses(bestCourses)
-
-      db.currencyRatesDao().loadLatestBestCurrencyRates("")
-        .map { courses -> courses.filter { !it.isBuy } }
-        .test {
-          assertEquals(2, awaitItem().size)
+        runBlocking {
+            val bestBuyRates = db.currencyRatesDao().loadAllBestCurrencyRates()
+            assertEquals(2, bestBuyRates.size)
         }
     }
-  }
+
+    @Test
+    fun saveBestSellCourses() {
+        val bestCourses = listOf(
+            BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
+            BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE)
+        )
+
+        runBlocking {
+            persistenceDataSource.saveBestCourses(bestCourses)
+        }
+
+        runBlocking {
+            val bestSellRates = db.currencyRatesDao().loadAllBestCurrencyRates()
+            assertEquals(2, bestSellRates.size)
+        }
+    }
+
+    @Test
+    fun saveMixedCourses() {
+        val bestCourses = listOf(
+            BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+            BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+            BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE)
+        )
+
+        runBlocking {
+            persistenceDataSource.saveBestCourses(bestCourses)
+        }
+
+        runBlocking {
+            val bestRates = db.currencyRatesDao().loadAllBestCurrencyRates()
+            assertEquals(3, bestRates.size)
+        }
+    }
+
+    @Test
+    fun loadOnlySellCoursesFromMixedCourses() {
+        runBlocking {
+            val bestCourses = listOf(
+                BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+                BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+                BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
+                BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE)
+            )
+
+            persistenceDataSource.saveBestCourses(bestCourses)
+
+            db.currencyRatesDao().loadLatestBestCurrencyRates("")
+                .map { courses -> courses.filter { !it.isBuy } }
+                .test {
+                    assertEquals(2, awaitItem().size)
+                }
+        }
+    }
 }

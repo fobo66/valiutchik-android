@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,37 +28,37 @@ import org.koin.test.verify.verify
 
 class DataKoinModuleTest {
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check system module`() {
-    systemModule.verify()
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check system module`() {
+        systemModule.verify()
+    }
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check third party module`() {
-    thirdPartyModule.verify()
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check third party module`() {
+        thirdPartyModule.verify()
+    }
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check datasource module`() {
-    dataSourcesModule.verify(
-      extraTypes = listOf(
-        HttpClientEngine::class,
-        HttpClientConfig::class
-      )
-    )
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check datasource module`() {
+        dataSourcesModule.verify(
+            extraTypes = listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
+    }
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check repositories module`() {
-    repositoriesModule.verify(
-      extraTypes = listOf(
-        HttpClientEngine::class,
-        HttpClientConfig::class
-      )
-    )
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check repositories module`() {
+        repositoriesModule.verify(
+            extraTypes = listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
+    }
 }

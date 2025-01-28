@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,36 +27,36 @@ import org.junit.jupiter.api.assertThrows
 @ExperimentalCoroutinesApi
 class LocationRepositoryTest {
 
-  private val locationDataSource = FakeLocationDataSource()
-  private val geocodingDataSource = FakeGeocodingDataSource()
+    private val locationDataSource = FakeLocationDataSource()
+    private val geocodingDataSource = FakeGeocodingDataSource()
 
-  private val locationRepository: LocationRepository =
-    LocationRepositoryImpl(locationDataSource, geocodingDataSource)
+    private val locationRepository: LocationRepository =
+        LocationRepositoryImpl(locationDataSource, geocodingDataSource)
 
-  @Test
-  fun `resolve user city`() = runTest {
-    val city = locationRepository.resolveUserCity("default")
-    assertEquals("fake", city)
-  }
-
-  @Test
-  fun `return default city on HTTP error`() {
-    geocodingDataSource.showError = true
-
-    runTest {
-      val city = locationRepository.resolveUserCity("default")
-      assertEquals("default", city)
+    @Test
+    fun `resolve user city`() = runTest {
+        val city = locationRepository.resolveUserCity("default")
+        assertEquals("fake", city)
     }
-  }
 
-  @Test
-  fun `crash on unexpected error`() {
-    geocodingDataSource.unexpectedError = true
+    @Test
+    fun `return default city on HTTP error`() {
+        geocodingDataSource.showError = true
 
-    runTest {
-      assertThrows<KotlinNullPointerException> {
-        locationRepository.resolveUserCity("default")
-      }
+        runTest {
+            val city = locationRepository.resolveUserCity("default")
+            assertEquals("default", city)
+        }
     }
-  }
+
+    @Test
+    fun `crash on unexpected error`() {
+        geocodingDataSource.unexpectedError = true
+
+        runTest {
+            assertThrows<KotlinNullPointerException> {
+                locationRepository.resolveUserCity("default")
+            }
+        }
+    }
 }

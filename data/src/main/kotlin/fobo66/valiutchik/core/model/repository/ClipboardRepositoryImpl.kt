@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,16 +19,15 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import io.github.aakira.napier.Napier
 
-class ClipboardRepositoryImpl(
-  private val clipboardDataSource: ClipboardDataSource
-) : ClipboardRepository {
+class ClipboardRepositoryImpl(private val clipboardDataSource: ClipboardDataSource) :
+    ClipboardRepository {
 
-  override fun copyToClipboard(label: CharSequence, value: CharSequence) {
-    Napier.v { "Copying to clipboard: label = $label, value = $value" }
-    if (clipboardDataSource.copyToClipboard(label, value)) {
-      Napier.v("Copied successfully")
-    } else {
-      Napier.v("Copying failed")
+    override fun copyToClipboard(label: CharSequence, value: CharSequence) {
+        Napier.v { "Copying to clipboard: label = $label, value = $value" }
+        if (clipboardDataSource.copyToClipboard(label, value)) {
+            Napier.v("Copied successfully")
+        } else {
+            Napier.v("Copying failed")
+        }
     }
-  }
 }

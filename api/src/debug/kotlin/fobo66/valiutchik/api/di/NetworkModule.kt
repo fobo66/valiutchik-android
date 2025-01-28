@@ -36,40 +36,40 @@ import org.koin.dsl.module
 
 @OptIn(ExperimentalXmlUtilApi::class)
 val networkModule =
-  module {
-    single<Logger> {
-      object : Logger {
-        override fun log(message: String) {
-          Napier.d(message, tag = "Ktor")
+    module {
+        single<Logger> {
+            object : Logger {
+                override fun log(message: String) {
+                    Napier.d(message, tag = "Ktor")
+                }
+            }
         }
-      }
-    }
-    single<Json> {
-      Json {
-        isLenient = true
-        ignoreUnknownKeys = true
-      }
-    }
-    single<HttpClient> {
-      HttpClient(OkHttp) {
-        install(HttpCache) {
-          publicStorage(FileStorage(androidContext().cacheDir))
+        single<Json> {
+            Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            }
         }
-        install(ContentNegotiation) {
-          json(get())
-          xml()
-        }
-        install(ContentEncoding) {
-          gzip()
-          deflate()
-        }
-        install(Logging) {
-          logger = get()
-          level = LogLevel.ALL
-          sanitizeHeader { header -> header == HttpHeaders.Authorization }
-        }
+        single<HttpClient> {
+            HttpClient(OkHttp) {
+                install(HttpCache) {
+                    publicStorage(FileStorage(androidContext().cacheDir))
+                }
+                install(ContentNegotiation) {
+                    json(get())
+                    xml()
+                }
+                install(ContentEncoding) {
+                    gzip()
+                    deflate()
+                }
+                install(Logging) {
+                    logger = get()
+                    level = LogLevel.ALL
+                    sanitizeHeader { header -> header == HttpHeaders.Authorization }
+                }
 
-        expectSuccess = true
-      }
+                expectSuccess = true
+            }
+        }
     }
-  }

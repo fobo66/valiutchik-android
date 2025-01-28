@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,25 +26,25 @@ const val URI_AUTHORITY = "0,0"
 const val URI_PARAM_KEY = "q"
 
 class MapRepositoryImpl(
-  private val uriDataSource: UriDataSource,
-  private val intentDataSource: IntentDataSource
+    private val uriDataSource: UriDataSource,
+    private val intentDataSource: IntentDataSource
 ) : MapRepository {
-  override fun searchOnMap(query: CharSequence): Intent? {
-    val mapUri = uriDataSource.prepareUri(
-      URI_SCHEME,
-      URI_AUTHORITY,
-      URI_PARAM_KEY,
-      query.toString()
-    )
-    val intent = intentDataSource.createIntent(mapUri)
+    override fun searchOnMap(query: CharSequence): Intent? {
+        val mapUri = uriDataSource.prepareUri(
+            URI_SCHEME,
+            URI_AUTHORITY,
+            URI_PARAM_KEY,
+            query.toString()
+        )
+        val intent = intentDataSource.createIntent(mapUri)
 
-    val canResolveIntent = intentDataSource.resolveIntent(intent) != null
+        val canResolveIntent = intentDataSource.resolveIntent(intent) != null
 
-    return if (canResolveIntent) {
-      intent
-    } else {
-      Napier.e("Cannot show banks on map: maps app not found")
-      null
+        return if (canResolveIntent) {
+            intent
+        } else {
+            Napier.e("Cannot show banks on map: maps app not found")
+            null
+        }
     }
-  }
 }

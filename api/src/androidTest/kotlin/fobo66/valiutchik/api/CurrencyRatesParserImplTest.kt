@@ -18,45 +18,44 @@ package fobo66.valiutchik.api
 
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
+import java.io.InputStream
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.xmlpull.v1.XmlPullParserException
-import java.io.InputStream
 
 @SmallTest
 class CurrencyRatesParserImplTest {
-  private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
+    private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
 
-  @Test
-  fun singleCurrency() {
-    val testFileStream = openTestFile("singleCurrency.xml")
-    val currencies = parser.parse(testFileStream)
-    assertEquals(1, currencies.size)
-  }
+    @Test
+    fun singleCurrency() {
+        val testFileStream = openTestFile("singleCurrency.xml")
+        val currencies = parser.parse(testFileStream)
+        assertEquals(1, currencies.size)
+    }
 
-  @Test
-  fun multipleCurrencies() {
-    val testFileStream = openTestFile("multipleCurrencies.xml")
-    val currencies = parser.parse(testFileStream)
-    assertEquals(2, currencies.size)
-  }
+    @Test
+    fun multipleCurrencies() {
+        val testFileStream = openTestFile("multipleCurrencies.xml")
+        val currencies = parser.parse(testFileStream)
+        assertEquals(2, currencies.size)
+    }
 
-  @Test
-  fun sameCurrenciesFilteredOut() {
-    val testFileStream = openTestFile("sameCurrencies.xml")
-    val currencies = parser.parse(testFileStream)
-    assertEquals(2, currencies.size)
-  }
+    @Test
+    fun sameCurrenciesFilteredOut() {
+        val testFileStream = openTestFile("sameCurrencies.xml")
+        val currencies = parser.parse(testFileStream)
+        assertEquals(2, currencies.size)
+    }
 
-  @Test(expected = XmlPullParserException::class)
-  fun errorForIncorrectXml() {
-    val testFileStream = openTestFile("wrongData.xml")
-    parser.parse(testFileStream)
-  }
+    @Test(expected = XmlPullParserException::class)
+    fun errorForIncorrectXml() {
+        val testFileStream = openTestFile("wrongData.xml")
+        parser.parse(testFileStream)
+    }
 
-  private fun openTestFile(fileName: String): InputStream =
-    InstrumentationRegistry
-      .getInstrumentation()
-      .context.assets
-      .open(fileName)
+    private fun openTestFile(fileName: String): InputStream = InstrumentationRegistry
+        .getInstrumentation()
+        .context.assets
+        .open(fileName)
 }

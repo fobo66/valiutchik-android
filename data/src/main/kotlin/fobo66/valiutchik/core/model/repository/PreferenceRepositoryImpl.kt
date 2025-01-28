@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,21 +26,20 @@ import kotlinx.coroutines.flow.map
 private const val DEFAULT_UPDATE_INTERVAL = 3
 private const val DEFAULT_CITY = "Minsk"
 
-class PreferenceRepositoryImpl(
-  private val preferencesDataSource: PreferencesDataSource
-) : PreferenceRepository {
-  override fun observeDefaultCityPreference(): Flow<String> =
-    preferencesDataSource.observeString(KEY_DEFAULT_CITY, DEFAULT_CITY)
+class PreferenceRepositoryImpl(private val preferencesDataSource: PreferencesDataSource) :
+    PreferenceRepository {
+    override fun observeDefaultCityPreference(): Flow<String> =
+        preferencesDataSource.observeString(KEY_DEFAULT_CITY, DEFAULT_CITY)
 
-  override fun observeUpdateIntervalPreference(): Flow<Float> =
-    preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
-      .map { it.toFloat() }
+    override fun observeUpdateIntervalPreference(): Flow<Float> =
+        preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+            .map { it.toFloat() }
 
-  override suspend fun updateDefaultCityPreference(newValue: String) {
-    preferencesDataSource.saveString(KEY_DEFAULT_CITY, newValue)
-  }
+    override suspend fun updateDefaultCityPreference(newValue: String) {
+        preferencesDataSource.saveString(KEY_DEFAULT_CITY, newValue)
+    }
 
-  override suspend fun updateUpdateIntervalPreference(newValue: Float) {
-    preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.roundToInt())
-  }
+    override suspend fun updateUpdateIntervalPreference(newValue: Float) {
+        preferencesDataSource.saveInt(KEY_UPDATE_INTERVAL, newValue.roundToInt())
+    }
 }

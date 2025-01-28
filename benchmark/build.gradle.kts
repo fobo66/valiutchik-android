@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,50 +17,52 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(libs.plugins.android.library)
-  alias(libs.plugins.benchmark)
-  kotlin("android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.benchmark)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 android {
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
-
-  kotlinOptions {
-    jvmTarget = "17"
-  }
-
-  defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.S_V2
-
-    testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
-  }
-
-  testBuildType = "release"
-  buildTypes {
-    debug {
-      // Since debuggable can"t be modified by gradle for library modules,
-      // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
-      isMinifyEnabled = true
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "benchmark-proguard-rules.pro",
-      )
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    release {
-      isDefault = true
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
-  }
-  namespace = "fobo66.valiutchik.benchmark"
+
+    defaultConfig {
+        minSdk = AndroidVersion.VersionCodes.S_V2
+
+        testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
+    }
+
+    testBuildType = "release"
+    buildTypes {
+        debug {
+            // Since debuggable can"t be modified by gradle for library modules,
+            // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "benchmark-proguard-rules.pro"
+            )
+        }
+        release {
+            isDefault = true
+        }
+    }
+    namespace = "fobo66.valiutchik.benchmark"
 }
 
 dependencies {
-  implementation(project(":api"))
-  implementation(project(":data"))
-  androidTestImplementation(libs.androidx.test.junit)
-  androidTestImplementation(libs.androidx.benchmark)
+    implementation(project(":api"))
+    implementation(project(":data"))
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.benchmark)
 }

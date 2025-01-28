@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,5 +22,5 @@ import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
  * Repository to handle open source licenses
  */
 interface LicensesRepository {
-  fun loadLicenses(): List<OpenSourceLicensesItem>
+    fun loadLicenses(): List<OpenSourceLicensesItem>
 }

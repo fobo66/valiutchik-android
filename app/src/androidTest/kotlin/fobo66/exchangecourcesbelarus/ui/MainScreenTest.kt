@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,41 +34,43 @@ import org.junit.Test
 @SmallTest
 class MainScreenTest {
 
-  @get:Rule
-  val composeRule = createComposeRule()
+    @get:Rule
+    val composeRule = createComposeRule()
 
-  @Test
-  fun emptyList() {
-    composeRule.setContent {
-      BestRatesGrid(
-        bestCurrencyRates = persistentListOf(),
-        onBestRateClick = {},
-        onBestRateLongClick = { _, _ -> },
-        isRefreshing = false,
-        onRefresh = {}
-      )
+    @Test
+    fun emptyList() {
+        composeRule.setContent {
+            BestRatesGrid(
+                bestCurrencyRates = persistentListOf(),
+                onBestRateClick = {},
+                onBestRateLongClick = { _, _ -> },
+                isRefreshing = false,
+                onRefresh = {}
+            )
+        }
+        composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
     }
-    composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
-  }
 
-  @OptIn(ExperimentalTestApi::class)
-  @Test
-  fun openMap() {
-    var isMapOpen = false
-    composeRule.setContent {
-      BestRatesGrid(
-        bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
-        onBestRateClick = {
-          isMapOpen = true
-        },
-        onBestRateLongClick = { _, _ -> },
-        isRefreshing = false,
-        onRefresh = {}
-      )
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun openMap() {
+        var isMapOpen = false
+        composeRule.setContent {
+            BestRatesGrid(
+                bestCurrencyRates = persistentListOf(
+                    BestCurrencyRate(0, "test", string.app_name, "0.0")
+                ),
+                onBestRateClick = {
+                    isMapOpen = true
+                },
+                onBestRateLongClick = { _, _ -> },
+                isRefreshing = false,
+                onRefresh = {}
+            )
+        }
+        composeRule.onNodeWithTag(TAG_RATES)
+            .onChild()
+            .performClick()
+        assertTrue(isMapOpen)
     }
-    composeRule.onNodeWithTag(TAG_RATES)
-      .onChild()
-      .performClick()
-    assertTrue(isMapOpen)
-  }
 }

@@ -54,5 +54,5 @@ class CurrencyRatesParserSerializerImplTest {
     }
 
     private fun openTestFile(fileName: String): InputStream =
-    javaClass.classLoader?.getResourceAsStream(fileName)!!
+        javaClass.classLoader?.getResourceAsStream(fileName)!!
 }

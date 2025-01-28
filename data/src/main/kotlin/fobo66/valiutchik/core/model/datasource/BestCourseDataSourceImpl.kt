@@ -28,41 +28,35 @@ import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 
 class BestCourseDataSourceImpl : BestCourseDataSource {
-  private val currencyKeys by lazy(LazyThreadSafetyMode.NONE) { arrayOf(USD, EUR, RUB, PLN, UAH) }
+    private val currencyKeys by lazy(LazyThreadSafetyMode.NONE) { arrayOf(USD, EUR, RUB, PLN, UAH) }
 
-  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
-    currencyKeys.associateWith { currencyKey ->
-      courses
-        .asSequence()
-        .filter { isBuyRateCorrect(it, currencyKey) }
-        .maxByOrNull { it.resolveCurrencyBuyRate(currencyKey) } ?: courses.first {
-        isBuyRateCorrect(it, currencyKey)
-      }
+    override fun findBestBuyCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
+        currencyKeys.associateWith { currencyKey ->
+            courses
+                .asSequence()
+                .filter { isBuyRateCorrect(it, currencyKey) }
+                .maxByOrNull { it.resolveCurrencyBuyRate(currencyKey) } ?: courses.first {
+                isBuyRateCorrect(it, currencyKey)
+            }
+        }
+
+    override fun findBestSellCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
+        currencyKeys.associateWith { currencyKey ->
+            courses
+                .asSequence()
+                .filter { isSellRateCorrect(it, currencyKey) }
+                .minByOrNull { it.resolveCurrencySellRate(currencyKey) } ?: courses.first {
+                isSellRateCorrect(it, currencyKey)
+            }
+        }
+
+    private fun isSellRateCorrect(currency: Bank, currencyKey: String): Boolean {
+        val rate = currency.resolveCurrencySellRate(currencyKey)
+        return rate.isNotEmpty() && rate != UNKNOWN_COURSE
     }
 
-  override fun findBestSellCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
-    currencyKeys.associateWith { currencyKey ->
-      courses
-        .asSequence()
-        .filter { isSellRateCorrect(it, currencyKey) }
-        .minByOrNull { it.resolveCurrencySellRate(currencyKey) } ?: courses.first {
-        isSellRateCorrect(it, currencyKey)
-      }
+    private fun isBuyRateCorrect(currency: Bank, currencyKey: String): Boolean {
+        val rate = currency.resolveCurrencyBuyRate(currencyKey)
+        return rate.isNotEmpty() && rate != UNKNOWN_COURSE
     }
-
-  private fun isSellRateCorrect(
-    currency: Bank,
-    currencyKey: String,
-  ): Boolean {
-    val rate = currency.resolveCurrencySellRate(currencyKey)
-    return rate.isNotEmpty() && rate != UNKNOWN_COURSE
-  }
-
-  private fun isBuyRateCorrect(
-    currency: Bank,
-    currencyKey: String,
-  ): Boolean {
-    val rate = currency.resolveCurrencyBuyRate(currencyKey)
-    return rate.isNotEmpty() && rate != UNKNOWN_COURSE
-  }
 }

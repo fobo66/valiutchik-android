@@ -23,5 +23,5 @@ import java.io.InputStream
  * XML parser for [MyFIN](myfin.by) dataset
  */
 interface CurrencyRatesParser {
-  fun parse(inputStream: InputStream): Set<Bank>
+    fun parse(inputStream: InputStream): Set<Bank>
 }
