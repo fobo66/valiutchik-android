@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ package fobo66.valiutchik.core.model.datasource
  * Datasource for working with clipboard
  */
 interface ClipboardDataSource {
-  /**
-   * Add provided entry to the device's clipboard
-   *
-   * @param label Clipboard item label
-   * @param value String value of the item
-   *
-   * @return Whether or not clipboard operation was successful
-   */
-  fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean
+    /**
+     * Add provided entry to the device's clipboard
+     *
+     * @param label Clipboard item label
+     * @param value String value of the item
+     *
+     * @return Whether or not clipboard operation was successful
+     */
+    fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean
 }

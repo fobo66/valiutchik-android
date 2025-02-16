@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,19 +22,17 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.Instant
 
 class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
-  var isNeededToUpdateCurrencyRates = true
-  var isSaveTimestampCalled = false
+    var isNeededToUpdateCurrencyRates = true
+    var isSaveTimestampCalled = false
 
-  override suspend fun isNeededToUpdateCurrencyRates(
-    now: Instant,
-    updateInterval: Float
-  ): Boolean =
-    isNeededToUpdateCurrencyRates
+    override suspend fun isNeededToUpdateCurrencyRates(
+        now: Instant,
+        updateInterval: Float
+    ): Boolean = isNeededToUpdateCurrencyRates
 
-  override suspend fun saveTimestamp(now: Instant) {
-    isSaveTimestampCalled = true
-  }
+    override suspend fun saveTimestamp(now: Instant) {
+        isSaveTimestampCalled = true
+    }
 
-  override fun loadLatestTimestamp(now: Instant): Flow<Instant> =
-    flowOf(now)
+    override fun loadLatestTimestamp(now: Instant): Flow<Instant> = flowOf(now)
 }

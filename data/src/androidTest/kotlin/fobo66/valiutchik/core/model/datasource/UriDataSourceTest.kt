@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,29 +26,29 @@ import org.junit.Test
 @SmallTest
 class UriDataSourceTest {
 
-  private val uriDataSource: UriDataSource = UriDataSourceImpl()
+    private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
-  @Test
-  fun prepareHttpUri() {
-    val uri = uriDataSource.prepareUri(
-      "https",
-      "example.com",
-      "key",
-      "value"
-    )
+    @Test
+    fun prepareHttpUri() {
+        val uri = uriDataSource.prepareUri(
+            "https",
+            "example.com",
+            "key",
+            "value"
+        )
 
-    assertEquals("https://example.com?key=value", uri.toString())
-  }
+        assertEquals("https://example.com?key=value", uri.toString())
+    }
 
-  @Test
-  fun prepareMapUri() {
-    val uri = uriDataSource.prepareUri(
-      URI_SCHEME,
-      URI_AUTHORITY,
-      URI_PARAM_KEY,
-      "test"
-    )
+    @Test
+    fun prepareMapUri() {
+        val uri = uriDataSource.prepareUri(
+            URI_SCHEME,
+            URI_AUTHORITY,
+            URI_PARAM_KEY,
+            "test"
+        )
 
-    assertEquals("test", uri.getQueryParameter(URI_PARAM_KEY))
-  }
+        assertEquals("test", uri.getQueryParameter(URI_PARAM_KEY))
+    }
 }

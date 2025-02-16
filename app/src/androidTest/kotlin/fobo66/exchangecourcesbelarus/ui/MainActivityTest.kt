@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,55 +41,55 @@ import org.junit.Test
 @MediumTest
 class MainActivityTest {
 
-  @get:Rule
-  val composeTestRule = createAndroidComposeRule<MainActivity>()
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-  @get:Rule
-  val grantPermissionsRule: GrantPermissionRule =
-    GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
+    @get:Rule
+    val grantPermissionsRule: GrantPermissionRule =
+        GrantPermissionRule.grant(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-  @get:Rule
-  val intentsTestRule = IntentsRule()
+    @get:Rule
+    val intentsTestRule = IntentsRule()
 
-  @Test
-  fun showAboutDialog() {
-    composeTestRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        R.string.action_about
-      )
-    ).performClick()
-    composeTestRule.onNode(isDialog()).assertIsDisplayed()
-  }
+    @Test
+    fun showAboutDialog() {
+        composeTestRule.onNodeWithContentDescription(
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                R.string.action_about
+            )
+        ).performClick()
+        composeTestRule.onNode(isDialog()).assertIsDisplayed()
+    }
 
-  @Test
-  fun showMaps() {
-    composeTestRule.onNodeWithTag(TAG_RATES)
-      .onChildren()
-      .onFirst()
-      .performClick()
+    @Test
+    fun showMaps() {
+        composeTestRule.onNodeWithTag(TAG_RATES)
+            .onChildren()
+            .onFirst()
+            .performClick()
 
-    intended(hasAction(Intent.ACTION_CHOOSER))
-  }
+        intended(hasAction(Intent.ACTION_CHOOSER))
+    }
 
-  @Test
-  fun copyToClipboard() {
-    composeTestRule.onNodeWithTag(TAG_RATES)
-      .onChildren()
-      .onFirst()
-      .performTouchInput {
-        longClick()
-      }
+    @Test
+    fun copyToClipboard() {
+        composeTestRule.onNodeWithTag(TAG_RATES)
+            .onChildren()
+            .onFirst()
+            .performTouchInput {
+                longClick()
+            }
 
-    composeTestRule.onNodeWithTag(TAG_SNACKBAR).assertIsDisplayed()
-  }
+        composeTestRule.onNodeWithTag(TAG_SNACKBAR).assertIsDisplayed()
+    }
 
-  @Test
-  fun showSettings() {
-    composeTestRule.onNodeWithContentDescription(
-      InstrumentationRegistry.getInstrumentation().targetContext.getString(
-        R.string.action_settings
-      )
-    ).performClick()
-    composeTestRule.onNodeWithTag(TAG_PREFERENCES).assertIsDisplayed()
-  }
+    @Test
+    fun showSettings() {
+        composeTestRule.onNodeWithContentDescription(
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                R.string.action_settings
+            )
+        ).performClick()
+        composeTestRule.onNodeWithTag(TAG_PREFERENCES).assertIsDisplayed()
+    }
 }

@@ -22,30 +22,24 @@ import fobo66.valiutchik.api.entity.Bank
  * Method to figure out which currency will be used depends on the context
  * By default, empty string is returned
  */
-fun Bank.resolveCurrencyBuyRate(
-  @CurrencyName name: String,
-): String =
-  when (name) {
+fun Bank.resolveCurrencyBuyRate(@CurrencyName name: String): String = when (name) {
     EUR -> eurBuy
     RUB, RUR -> rubBuy
     USD -> usdBuy
     PLN -> plnBuy
     UAH -> uahBuy
     else -> ""
-  }
+}
 
 /**
  * Method to figure out which currency will be used depends on the context
  * By default, empty string is returned
  */
-fun Bank.resolveCurrencySellRate(
-  @CurrencyName name: String,
-): String =
-  when (name) {
+fun Bank.resolveCurrencySellRate(@CurrencyName name: String): String = when (name) {
     EUR -> eurSell
     RUB, RUR -> rubSell
     USD -> usdSell
     PLN -> plnSell
     UAH -> uahSell
     else -> ""
-  }
+}

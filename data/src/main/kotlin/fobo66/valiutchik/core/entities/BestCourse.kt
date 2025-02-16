@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,11 +27,11 @@ import fobo66.valiutchik.core.util.USD
  */
 @Entity(tableName = "best_rates")
 data class BestCourse(
-  @PrimaryKey(autoGenerate = true) val id: Long,
-  @ColumnInfo(name = "bank") val bank: String = "",
-  @ColumnInfo(name = "currency_value") val currencyValue: String = "",
-  @ColumnInfo(name = "currency_name") @CurrencyName
-  val currencyName: String = USD,
-  @ColumnInfo(name = "timestamp") val timestamp: String = "",
-  @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    @ColumnInfo(name = "bank") val bank: String = "",
+    @ColumnInfo(name = "currency_value") val currencyValue: String = "",
+    @ColumnInfo(name = "currency_name") @CurrencyName
+    val currencyName: String = USD,
+    @ColumnInfo(name = "timestamp") val timestamp: String = "",
+    @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
 )
