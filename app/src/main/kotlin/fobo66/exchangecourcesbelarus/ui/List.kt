@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,35 +36,35 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @Composable
 fun LoadingIndicator(modifier: Modifier = Modifier) {
-  Box(modifier = modifier.fillMaxSize()) {
-    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-  }
+    Box(modifier = modifier.fillMaxSize()) {
+        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+    }
 }
 
 @Composable
 fun NoRatesIndicator(modifier: Modifier = Modifier) {
-  Box(
-    modifier = modifier
-      .fillMaxSize()
-      .testTag(TAG_NO_RATES)
-  ) {
-    Column(modifier = Modifier.align(Alignment.Center)) {
-      Icon(
-        NoRates,
-        contentDescription = null,
-        modifier = Modifier
-          .padding(16.dp)
-          .align(Alignment.CenterHorizontally)
-      )
-      Text(text = stringResource(id = string.no_rates_indicator))
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .testTag(TAG_NO_RATES)
+    ) {
+        Column(modifier = Modifier.align(Alignment.Center)) {
+            Icon(
+                NoRates,
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+            Text(text = stringResource(id = string.no_rates_indicator))
+        }
     }
-  }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun NoRatesIndicatorPreview() {
-  ValiutchikTheme {
-    NoRatesIndicator()
-  }
+    ValiutchikTheme {
+        NoRatesIndicator()
+    }
 }

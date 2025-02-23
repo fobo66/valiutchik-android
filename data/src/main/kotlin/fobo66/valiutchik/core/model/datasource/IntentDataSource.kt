@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,15 +24,15 @@ import android.net.Uri
  * Datasource for working with the Intents
  */
 interface IntentDataSource {
-  /**
-   * Create new Intent
-   */
-  fun createIntent(uri: Uri, action: String = Intent.ACTION_VIEW): Intent
+    /**
+     * Create new Intent
+     */
+    fun createIntent(uri: Uri, action: String = Intent.ACTION_VIEW): Intent
 
-  /**
-   * Check if the given Intent can be resolved by the system
-   *
-   * @return null if there's no handler
-   */
-  fun resolveIntent(intent: Intent): ComponentName?
+    /**
+     * Check if the given Intent can be resolved by the system
+     *
+     * @return null if there's no handler
+     */
+    fun resolveIntent(intent: Intent): ComponentName?
 }

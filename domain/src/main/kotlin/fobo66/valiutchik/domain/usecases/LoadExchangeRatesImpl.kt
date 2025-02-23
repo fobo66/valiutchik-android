@@ -33,66 +33,64 @@ import fobo66.valiutchik.core.util.UAH
 import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import java.util.Locale
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
-import java.util.Locale
 
 class LoadExchangeRatesImpl(
-  private val currencyRateRepository: CurrencyRateRepository,
-  private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository,
+    private val currencyRateRepository: CurrencyRateRepository,
+    private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 ) : LoadExchangeRates {
-  @OptIn(ExperimentalCoroutinesApi::class)
-  override fun execute(now: Instant): Flow<List<BestCurrencyRate>> =
-    currencyRatesTimestampRepository
-      .loadLatestTimestamp(now)
-      .flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
-      .map {
-        it.map { bestCourse ->
-          @StringRes val currencyNameRes =
-            resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun execute(now: Instant): Flow<List<BestCurrencyRate>> =
+        currencyRatesTimestampRepository
+            .loadLatestTimestamp(now)
+            .flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
+            .map {
+                it.map { bestCourse ->
+                    @StringRes val currencyNameRes =
+                        resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
 
-          bestCourse.toBestCurrencyRate(
-            currencyNameRes,
-            formatCurrencyValue(bestCourse.currencyValue),
-          )
+                    bestCourse.toBestCurrencyRate(
+                        currencyNameRes,
+                        formatCurrencyValue(bestCourse.currencyValue)
+                    )
+                }
+            }
+
+    @StringRes
+    private fun resolveCurrencyName(@CurrencyName currencyName: String, isBuy: Boolean) =
+        when (currencyName to isBuy) {
+            USD to true -> R.string.currency_name_usd_buy
+            USD to false -> R.string.currency_name_usd_sell
+            EUR to true -> R.string.currency_name_eur_buy
+            EUR to false -> R.string.currency_name_eur_sell
+            RUB to true, RUR to true -> R.string.currency_name_rub_buy
+            RUB to false, RUR to false -> R.string.currency_name_rub_sell
+            PLN to true -> R.string.currency_name_pln_buy
+            PLN to false -> R.string.currency_name_pln_sell
+            UAH to true -> R.string.currency_name_uah_buy
+            UAH to false -> R.string.currency_name_uah_sell
+            else -> 0
         }
-      }
 
-  @StringRes
-  private fun resolveCurrencyName(
-    @CurrencyName currencyName: String,
-    isBuy: Boolean,
-  ) = when (currencyName to isBuy) {
-    USD to true -> R.string.currency_name_usd_buy
-    USD to false -> R.string.currency_name_usd_sell
-    EUR to true -> R.string.currency_name_eur_buy
-    EUR to false -> R.string.currency_name_eur_sell
-    RUB to true, RUR to true -> R.string.currency_name_rub_buy
-    RUB to false, RUR to false -> R.string.currency_name_rub_sell
-    PLN to true -> R.string.currency_name_pln_buy
-    PLN to false -> R.string.currency_name_pln_sell
-    UAH to true -> R.string.currency_name_uah_buy
-    UAH to false -> R.string.currency_name_uah_sell
-    else -> 0
-  }
+    private fun formatCurrencyValue(rawValue: String): String =
+        if (VERSION.SDK_INT >= VERSION_CODES.R) {
+            NumberFormatter
+                .withLocale(Locale.getDefault())
+                .unit(Currency.getInstance("BYN"))
+                .format(rawValue.toDoubleOrNull() ?: 0.0)
+                .toString()
+        } else {
+            rawValue
+        }
 
-  private fun formatCurrencyValue(rawValue: String): String =
-    if (VERSION.SDK_INT >= VERSION_CODES.R) {
-      NumberFormatter
-        .withLocale(Locale.getDefault())
-        .unit(Currency.getInstance("BYN"))
-        .format(rawValue.toDoubleOrNull() ?: 0.0)
-        .toString()
-    } else {
-      rawValue
-    }
-
-  private fun BestCourse.toBestCurrencyRate(
-    @StringRes currencyNameRes: Int,
-    currencyValue: String? = null,
-  ): BestCurrencyRate =
-    BestCurrencyRate(id, bank, currencyNameRes, currencyValue ?: this.currencyValue)
+    private fun BestCourse.toBestCurrencyRate(
+        @StringRes currencyNameRes: Int,
+        currencyValue: String? = null
+    ): BestCurrencyRate =
+        BestCurrencyRate(id, bank, currencyNameRes, currencyValue ?: this.currencyValue)
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,11 +21,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
-class IntentDataSourceImpl(
-  private val context: Context
-) : IntentDataSource {
-  override fun createIntent(uri: Uri, action: String): Intent = Intent(action, uri)
+class IntentDataSourceImpl(private val context: Context) : IntentDataSource {
+    override fun createIntent(uri: Uri, action: String): Intent = Intent(action, uri)
 
-  override fun resolveIntent(intent: Intent): ComponentName? =
-    intent.resolveActivity(context.packageManager)
+    override fun resolveIntent(intent: Intent): ComponentName? =
+        intent.resolveActivity(context.packageManager)
 }
