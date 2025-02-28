@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.S_V2
+        minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }

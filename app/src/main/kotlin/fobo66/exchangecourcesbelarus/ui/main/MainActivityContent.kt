@@ -64,7 +64,7 @@ import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
     val navigator = rememberSupportingPaneScaffoldNavigator()

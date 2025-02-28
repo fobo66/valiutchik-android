@@ -38,7 +38,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.S_V2
+        minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
         targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

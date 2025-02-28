@@ -29,7 +29,7 @@ android {
     compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.S_V2
+        minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
