@@ -16,16 +16,20 @@
 
 package fobo66.exchangecourcesbelarus.ui.preferences
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -40,7 +44,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
+import androidx.xr.compose.spatial.SpatialDialog
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.ui.TAG_SLIDER
 import kotlin.math.roundToInt
@@ -112,13 +116,24 @@ private fun ListPreferenceDialog(
     title: @Composable () -> Unit,
     entries: ListPreferenceEntries,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = title,
-        text = {
-            LazyColumn {
+    SpatialDialog(
+        onDismissRequest = onDismiss
+    ) {
+        Column(
+            modifier = modifier
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(24.dp)
+        ) {
+            ProvideTextStyle(MaterialTheme.typography.headlineSmall) {
+                title()
+            }
+            LazyColumn(contentPadding = PaddingValues(top = 16.dp)) {
                 items(items = entries.preferenceEntries) { current ->
                     ListItem(
                         headlineContent = {
@@ -156,12 +171,8 @@ private fun ListPreferenceDialog(
                     )
                 }
             }
-        },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = true
-        ),
-        confirmButton = { }
-    )
+        }
+    }
 }
 
 @Composable
