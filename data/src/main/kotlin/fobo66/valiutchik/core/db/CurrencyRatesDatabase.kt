@@ -19,7 +19,6 @@ package fobo66.valiutchik.core.db
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.migration.AutoMigrationSpec
 import fobo66.valiutchik.core.entities.BestCourse
 
 @Database(

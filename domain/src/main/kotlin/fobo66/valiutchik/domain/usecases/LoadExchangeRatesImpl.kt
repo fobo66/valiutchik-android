@@ -24,14 +24,7 @@ import androidx.annotation.StringRes
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.CurrencyNameNew
-import fobo66.valiutchik.core.util.EUR
-import fobo66.valiutchik.core.util.PLN
-import fobo66.valiutchik.core.util.RUB
-import fobo66.valiutchik.core.util.RUR
-import fobo66.valiutchik.core.util.UAH
-import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -64,7 +57,7 @@ class LoadExchangeRatesImpl(
 
   @StringRes
   private fun resolveCurrencyName(
-   currencyName: CurrencyNameNew,
+    currencyName: CurrencyNameNew,
     isBuy: Boolean,
   ) = when (currencyName to isBuy) {
     CurrencyNameNew.USD to true -> R.string.currency_name_usd_buy
