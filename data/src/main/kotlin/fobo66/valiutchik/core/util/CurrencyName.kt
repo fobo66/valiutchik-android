@@ -16,16 +16,11 @@
 
 package fobo66.valiutchik.core.util
 
-import androidx.annotation.StringDef
-
-const val USD = "DOLLAR"
-const val EUR = "EUR"
-const val RUB = "RUB"
-const val RUR = "RUR"
-const val PLN = "PLN"
-const val UAH = "UAH"
-
-@Target(AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.TYPE)
-@Retention(AnnotationRetention.SOURCE)
-@StringDef(value = [USD, EUR, RUB, RUR, PLN, UAH])
-annotation class CurrencyName
+enum class CurrencyNameNew {
+  USD,
+  EUR,
+  RUB,
+  RUR,
+  PLN,
+  UAH
+}

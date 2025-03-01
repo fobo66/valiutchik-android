@@ -19,33 +19,29 @@ package fobo66.valiutchik.core.util
 import fobo66.valiutchik.api.entity.Bank
 
 /**
- * Method to figure out which currency will be used depends on the context
- * By default, empty string is returned
+ * Resolve currency buy rate based on the key
  */
 fun Bank.resolveCurrencyBuyRate(
-  @CurrencyName name: String,
+  name: CurrencyNameNew,
 ): String =
   when (name) {
-    EUR -> eurBuy
-    RUB, RUR -> rubBuy
-    USD -> usdBuy
-    PLN -> plnBuy
-    UAH -> uahBuy
-    else -> ""
+    CurrencyNameNew.EUR -> eurBuy
+    CurrencyNameNew.RUB, CurrencyNameNew.RUR -> rubBuy
+    CurrencyNameNew.USD -> usdBuy
+    CurrencyNameNew.PLN -> plnBuy
+    CurrencyNameNew.UAH -> uahBuy
   }
 
 /**
- * Method to figure out which currency will be used depends on the context
- * By default, empty string is returned
+ * Resolve currency sell rate based on the key
  */
 fun Bank.resolveCurrencySellRate(
-  @CurrencyName name: String,
+  name: CurrencyNameNew,
 ): String =
   when (name) {
-    EUR -> eurSell
-    RUB, RUR -> rubSell
-    USD -> usdSell
-    PLN -> plnSell
-    UAH -> uahSell
-    else -> ""
+    CurrencyNameNew.EUR -> eurSell
+    CurrencyNameNew.RUB, CurrencyNameNew.RUR -> rubSell
+    CurrencyNameNew.USD -> usdSell
+    CurrencyNameNew.PLN -> plnSell
+    CurrencyNameNew.UAH -> uahSell
   }
