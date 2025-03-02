@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,4 +19,6 @@ package fobo66.exchangecourcesbelarus
 import android.app.Application
 import org.koin.core.component.KoinComponent
 
-open class App : Application(), KoinComponent
+open class App :
+    Application(),
+    KoinComponent

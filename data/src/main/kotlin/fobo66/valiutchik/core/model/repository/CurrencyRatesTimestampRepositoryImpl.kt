@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,40 +29,39 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
 class CurrencyRatesTimestampRepositoryImpl(
-  private val preferencesDataSource: PreferencesDataSource
+    private val preferencesDataSource: PreferencesDataSource
 ) : CurrencyRatesTimestampRepository {
 
-  override suspend fun isNeededToUpdateCurrencyRates(
-    now: Instant,
-    updateInterval: Float
-  ): Boolean {
-    val timestamp = loadTimestamp(now)
-    val cachedValueAge = now - timestamp
-    val interval: Duration = updateInterval.toLong().hours
+    override suspend fun isNeededToUpdateCurrencyRates(
+        now: Instant,
+        updateInterval: Float
+    ): Boolean {
+        val timestamp = loadTimestamp(now)
+        val cachedValueAge = now - timestamp
+        val interval: Duration = updateInterval.toLong().hours
 
-    return cachedValueAge == Duration.ZERO || cachedValueAge > interval
-  }
-
-  override suspend fun saveTimestamp(now: Instant) {
-    val nowString = now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
-    preferencesDataSource.saveString(TIMESTAMP, nowString)
-  }
-
-  override fun loadLatestTimestamp(now: Instant): Flow<Instant> {
-    return preferencesDataSource.observeString(
-      TIMESTAMP,
-      now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
-    )
-      .map { LocalDateTime.parse(it).toInstant(TimeZone.currentSystemDefault()) }
-  }
-
-  private suspend fun loadTimestamp(fallbackTimestamp: Instant): Instant {
-    val rawTimestamp: String = preferencesDataSource.loadString(TIMESTAMP)
-
-    return if (rawTimestamp.isEmpty()) {
-      fallbackTimestamp
-    } else {
-      LocalDateTime.parse(rawTimestamp).toInstant(TimeZone.currentSystemDefault())
+        return cachedValueAge == Duration.ZERO || cachedValueAge > interval
     }
-  }
+
+    override suspend fun saveTimestamp(now: Instant) {
+        val nowString = now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+        preferencesDataSource.saveString(TIMESTAMP, nowString)
+    }
+
+    override fun loadLatestTimestamp(now: Instant): Flow<Instant> =
+        preferencesDataSource.observeString(
+            TIMESTAMP,
+            now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+        )
+            .map { LocalDateTime.parse(it).toInstant(TimeZone.currentSystemDefault()) }
+
+    private suspend fun loadTimestamp(fallbackTimestamp: Instant): Instant {
+        val rawTimestamp: String = preferencesDataSource.loadString(TIMESTAMP)
+
+        return if (rawTimestamp.isEmpty()) {
+            fallbackTimestamp
+        } else {
+            LocalDateTime.parse(rawTimestamp).toInstant(TimeZone.currentSystemDefault())
+        }
+    }
 }

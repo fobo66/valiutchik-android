@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.Instant
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
-  var isRefreshed = false
+    var isRefreshed = false
 
-  override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
-    isRefreshed = true
-  }
+    override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
+        isRefreshed = true
+    }
 
-  override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
-    flowOf(emptyList())
+    override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
+        flowOf(emptyList())
 }

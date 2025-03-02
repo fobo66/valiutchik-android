@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val systemModule = module {
-  single {
-    androidContext().assets
-  }
+    single {
+        androidContext().assets
+    }
 }

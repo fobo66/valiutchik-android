@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,100 +18,109 @@ package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.fake.FakePreferenceDataSource
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.junit.jupiter.api.Test
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.hours
 
 class CurrencyRatesTimestampRepositoryImplTest {
-  private val preferencesDataSource = FakePreferenceDataSource()
-  private val now = Clock.System.now()
-  private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository =
-    CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
+    private val preferencesDataSource = FakePreferenceDataSource()
+    private val now = Clock.System.now()
+    private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository =
+        CurrencyRatesTimestampRepositoryImpl(preferencesDataSource)
 
-  @Test
-  fun `no timestamp - need to update`() {
-    preferencesDataSource.string = ""
+    @Test
+    fun `no timestamp - need to update`() {
+        preferencesDataSource.string = ""
 
-    runTest {
-      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)).isTrue()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)
+            ).isTrue()
+        }
     }
-  }
 
-  @Test
-  fun `now timestamp - need to update`() {
-    preferencesDataSource.string = now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    @Test
+    fun `now timestamp - need to update`() {
+        preferencesDataSource.string =
+            now.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
-    runTest {
-      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)).isTrue()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)
+            ).isTrue()
+        }
     }
-  }
 
-  @Test
-  fun `timestamp is old - need to update`() {
-    preferencesDataSource.string =
-      (now - 1.days).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    @Test
+    fun `timestamp is old - need to update`() {
+        preferencesDataSource.string =
+            (now - 1.days).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
-    runTest {
-      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)).isTrue()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 3.0f)
+            ).isTrue()
+        }
     }
-  }
 
-  @Test
-  fun `timestamp slightly in the past - no need to update`() {
-    preferencesDataSource.string =
-      (now - 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    @Test
+    fun `timestamp slightly in the past - no need to update`() {
+        preferencesDataSource.string =
+            (now - 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
-    runTest {
-      assertThat(
-        currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
-          now,
-          3.0f,
-        ),
-      ).isFalse()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
+                    now,
+                    3.0f
+                )
+            ).isFalse()
+        }
     }
-  }
 
-  @Test
-  fun `timestamp on the limit - no need to update`() {
-    preferencesDataSource.string =
-      (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    @Test
+    fun `timestamp on the limit - no need to update`() {
+        preferencesDataSource.string =
+            (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
-    runTest {
-      assertThat(
-        currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
-          now,
-          3.0f,
-        ),
-      ).isFalse()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
+                    now,
+                    3.0f
+                )
+            ).isFalse()
+        }
     }
-  }
 
-  @Test
-  fun `timestamp above customized limit - need to update`() {
-    preferencesDataSource.string =
-      (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    @Test
+    fun `timestamp above customized limit - need to update`() {
+        preferencesDataSource.string =
+            (now - 3.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
-    runTest {
-      assertThat(currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 2.0f)).isTrue()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(now, 2.0f)
+            ).isTrue()
+        }
     }
-  }
 
-  @Test
-  fun `timestamp in the future - no need to update`() {
-    preferencesDataSource.string =
-      (now + 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
+    @Test
+    fun `timestamp in the future - no need to update`() {
+        preferencesDataSource.string =
+            (now + 1.hours).toLocalDateTime(TimeZone.currentSystemDefault()).toString()
 
-    runTest {
-      assertThat(
-        currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
-          now,
-          3.0f,
-        ),
-      ).isFalse()
+        runTest {
+            assertThat(
+                currencyRatesTimestampRepository.isNeededToUpdateCurrencyRates(
+                    now,
+                    3.0f
+                )
+            ).isFalse()
+        }
     }
-  }
 }
