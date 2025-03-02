@@ -17,7 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.core.util.CurrencyNameNew
+import fobo66.valiutchik.core.util.CurrencyName
 import java.util.EnumMap
 
 /**
@@ -31,7 +31,7 @@ interface BestCourseDataSource {
    *
    * @return Map of the currency name to its best rate
    */
-  fun findBestBuyCurrencies(courses: Set<Bank>): EnumMap<CurrencyNameNew, Bank>
+  fun findBestBuyCurrencies(courses: Set<Bank>): EnumMap<CurrencyName, Bank>
 
   /**
    * Find best sell rates (what bank sells for) for the given currency
@@ -40,5 +40,5 @@ interface BestCourseDataSource {
    *
    * @return Map of the currency name to its best rate
    */
-  fun findBestSellCurrencies(courses: Set<Bank>): EnumMap<CurrencyNameNew, Bank>
+  fun findBestSellCurrencies(courses: Set<Bank>): EnumMap<CurrencyName, Bank>
 }

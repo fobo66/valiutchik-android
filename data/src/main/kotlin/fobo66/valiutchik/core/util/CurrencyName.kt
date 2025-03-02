@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.core.util
 
-enum class CurrencyNameNew {
+enum class CurrencyName {
   USD,
   EUR,
   RUB,

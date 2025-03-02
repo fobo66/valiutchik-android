@@ -18,17 +18,19 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.UNKNOWN_COURSE
-import fobo66.valiutchik.core.util.CurrencyNameNew
+import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import java.util.EnumMap
 import java.util.EnumSet
 
 class BestCourseDataSourceImpl : BestCourseDataSource {
-  private val currencyKeys: EnumSet<CurrencyNameNew> by lazy(LazyThreadSafetyMode.NONE) { EnumSet.allOf(CurrencyNameNew::class.java) }
+  private val currencyKeys: EnumSet<CurrencyName> by lazy(LazyThreadSafetyMode.NONE) {
+    EnumSet.allOf(CurrencyName::class.java)
+  }
 
-  override fun findBestBuyCurrencies(courses: Set<Bank>): EnumMap<CurrencyNameNew, Bank> =
-    EnumMap<CurrencyNameNew, Bank>(currencyKeys.associateWith { currencyKey ->
+  override fun findBestBuyCurrencies(courses: Set<Bank>): EnumMap<CurrencyName, Bank> =
+    EnumMap<CurrencyName, Bank>(currencyKeys.associateWith { currencyKey ->
       courses
         .asSequence()
         .filter { isBuyRateCorrect(it, currencyKey) }
@@ -37,8 +39,8 @@ class BestCourseDataSourceImpl : BestCourseDataSource {
       }
     })
 
-  override fun findBestSellCurrencies(courses: Set<Bank>): EnumMap<CurrencyNameNew, Bank> =
-    EnumMap<CurrencyNameNew, Bank>(currencyKeys.associateWith { currencyKey ->
+  override fun findBestSellCurrencies(courses: Set<Bank>): EnumMap<CurrencyName, Bank> =
+    EnumMap<CurrencyName, Bank>(currencyKeys.associateWith { currencyKey ->
       courses
         .asSequence()
         .filter { isSellRateCorrect(it, currencyKey) }
@@ -49,7 +51,7 @@ class BestCourseDataSourceImpl : BestCourseDataSource {
 
   private fun isSellRateCorrect(
     currency: Bank,
-    currencyKey: CurrencyNameNew,
+    currencyKey: CurrencyName,
   ): Boolean {
     val rate = currency.resolveCurrencySellRate(currencyKey)
     return rate.isNotEmpty() && rate != UNKNOWN_COURSE
@@ -57,7 +59,7 @@ class BestCourseDataSourceImpl : BestCourseDataSource {
 
   private fun isBuyRateCorrect(
     currency: Bank,
-    currencyKey: CurrencyNameNew,
+    currencyKey: CurrencyName,
   ): Boolean {
     val rate = currency.resolveCurrencyBuyRate(currencyKey)
     return rate.isNotEmpty() && rate != UNKNOWN_COURSE

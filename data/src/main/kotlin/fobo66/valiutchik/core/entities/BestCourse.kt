@@ -19,7 +19,7 @@ package fobo66.valiutchik.core.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import fobo66.valiutchik.core.util.CurrencyNameNew
+import fobo66.valiutchik.core.util.CurrencyName
 
 /**
  * Database entity for best available exchange courses
@@ -30,7 +30,7 @@ data class BestCourse(
   @ColumnInfo(name = "bank") val bank: String = "",
   @ColumnInfo(name = "currency_value") val currencyValue: String = "",
   @ColumnInfo(name = "currency_name")
-  val currencyName: CurrencyNameNew = CurrencyNameNew.USD,
+  val currencyName: CurrencyName = CurrencyName.USD,
   @ColumnInfo(name = "timestamp") val timestamp: String = "",
   @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
 )

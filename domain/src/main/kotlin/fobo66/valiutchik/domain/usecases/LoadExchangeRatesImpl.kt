@@ -24,7 +24,7 @@ import androidx.annotation.StringRes
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.util.CurrencyNameNew
+import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -57,19 +57,19 @@ class LoadExchangeRatesImpl(
 
   @StringRes
   private fun resolveCurrencyName(
-    currencyName: CurrencyNameNew,
+    currencyName: CurrencyName,
     isBuy: Boolean,
   ) = when (currencyName to isBuy) {
-    CurrencyNameNew.USD to true -> R.string.currency_name_usd_buy
-    CurrencyNameNew.USD to false -> R.string.currency_name_usd_sell
-    CurrencyNameNew.EUR to true -> R.string.currency_name_eur_buy
-    CurrencyNameNew.EUR to false -> R.string.currency_name_eur_sell
-    CurrencyNameNew.RUB to true, CurrencyNameNew.RUR to true -> R.string.currency_name_rub_buy
-    CurrencyNameNew.RUB to false, CurrencyNameNew.RUR to false -> R.string.currency_name_rub_sell
-    CurrencyNameNew.PLN to true -> R.string.currency_name_pln_buy
-    CurrencyNameNew.PLN to false -> R.string.currency_name_pln_sell
-    CurrencyNameNew.UAH to true -> R.string.currency_name_uah_buy
-    CurrencyNameNew.UAH to false -> R.string.currency_name_uah_sell
+    CurrencyName.USD to true -> R.string.currency_name_usd_buy
+    CurrencyName.USD to false -> R.string.currency_name_usd_sell
+    CurrencyName.EUR to true -> R.string.currency_name_eur_buy
+    CurrencyName.EUR to false -> R.string.currency_name_eur_sell
+    CurrencyName.RUB to true, CurrencyName.RUR to true -> R.string.currency_name_rub_buy
+    CurrencyName.RUB to false, CurrencyName.RUR to false -> R.string.currency_name_rub_sell
+    CurrencyName.PLN to true -> R.string.currency_name_pln_buy
+    CurrencyName.PLN to false -> R.string.currency_name_pln_sell
+    CurrencyName.UAH to true -> R.string.currency_name_uah_buy
+    CurrencyName.UAH to false -> R.string.currency_name_uah_sell
     else -> 0
   }
 
