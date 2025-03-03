@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,9 +24,9 @@ import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.util.EUR
-import fobo66.valiutchik.core.util.RUB
-import fobo66.valiutchik.core.util.USD
+import fobo66.valiutchik.core.util.CurrencyName.EUR
+import fobo66.valiutchik.core.util.CurrencyName.RUB
+import fobo66.valiutchik.core.util.CurrencyName.USD
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -36,17 +36,18 @@ import org.junit.Test
 
 @SmallTest
 class PersistenceDataSourceTest {
-
   private lateinit var db: CurrencyRatesDatabase
   private lateinit var persistenceDataSource: PersistenceDataSource
 
   @Before
   fun setUp() {
     val context = InstrumentationRegistry.getInstrumentation().targetContext
-    db = Room.inMemoryDatabaseBuilder(
-      context,
-      CurrencyRatesDatabase::class.java
-    ).build()
+    db =
+      Room
+        .inMemoryDatabaseBuilder(
+          context,
+          CurrencyRatesDatabase::class.java,
+        ).build()
     persistenceDataSource =
       PersistenceDataSourceImpl(db)
   }
@@ -58,10 +59,11 @@ class PersistenceDataSourceTest {
 
   @Test
   fun saveBestBuyCourses() {
-    val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-      BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE)
-    )
+    val bestCourses =
+      listOf(
+        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+      )
 
     runBlocking {
       persistenceDataSource.saveBestCourses(bestCourses)
@@ -75,10 +77,11 @@ class PersistenceDataSourceTest {
 
   @Test
   fun saveBestSellCourses() {
-    val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
-      BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE)
-    )
+    val bestCourses =
+      listOf(
+        BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
+        BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE),
+      )
 
     runBlocking {
       persistenceDataSource.saveBestCourses(bestCourses)
@@ -92,11 +95,12 @@ class PersistenceDataSourceTest {
 
   @Test
   fun saveMixedCourses() {
-    val bestCourses = listOf(
-      BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-      BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-      BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE)
-    )
+    val bestCourses =
+      listOf(
+        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+        BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
+      )
 
     runBlocking {
       persistenceDataSource.saveBestCourses(bestCourses)
@@ -111,16 +115,19 @@ class PersistenceDataSourceTest {
   @Test
   fun loadOnlySellCoursesFromMixedCourses() {
     runBlocking {
-      val bestCourses = listOf(
-        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-        BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
-        BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE)
-      )
+      val bestCourses =
+        listOf(
+          BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+          BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+          BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
+          BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE),
+        )
 
       persistenceDataSource.saveBestCourses(bestCourses)
 
-      db.currencyRatesDao().loadLatestBestCurrencyRates("")
+      db
+        .currencyRatesDao()
+        .loadLatestBestCurrencyRates("")
         .map { courses -> courses.filter { !it.isBuy } }
         .test {
           assertEquals(2, awaitItem().size)
