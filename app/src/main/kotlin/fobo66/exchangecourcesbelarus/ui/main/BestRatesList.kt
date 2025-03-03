@@ -90,7 +90,7 @@ fun BestRatesGrid(
         ) {
           itemsIndexed(
             items = bestCurrencyRates,
-            key = { _, item -> item.currencyNameRes },
+            key = { _, item -> item.id },
           ) { index, item ->
             BestCurrencyRateCard(
               currencyName = stringResource(id = item.currencyNameRes),
