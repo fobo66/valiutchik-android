@@ -19,12 +19,9 @@ package fobo66.valiutchik.core.fake
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.util.CurrencyName
-import java.util.EnumMap
 
 class FakeBestCourseDataSource : BestCourseDataSource {
-  override fun findBestBuyCurrencies(courses: Set<Bank>): EnumMap<CurrencyName, Bank> =
-    EnumMap(CurrencyName::class.java)
+  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
 
-  override fun findBestSellCurrencies(courses: Set<Bank>): EnumMap<CurrencyName, Bank> =
-    EnumMap(CurrencyName::class.java)
+  override fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
 }
