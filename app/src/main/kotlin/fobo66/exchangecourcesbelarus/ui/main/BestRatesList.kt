@@ -18,7 +18,6 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -55,7 +54,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
