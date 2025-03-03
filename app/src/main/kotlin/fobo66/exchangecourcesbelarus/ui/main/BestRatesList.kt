@@ -17,7 +17,6 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
 import androidx.activity.compose.ReportDrawnWhen
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -136,16 +135,14 @@ fun BestCurrencyRateCard(
       style = MaterialTheme.typography.headlineSmall,
       modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
     )
-    AnimatedContent(currencyValue, label = "currencyValue") {
-      Text(
-        text = it,
-        style = MaterialTheme.typography.displaySmall,
-        modifier =
-          Modifier
-            .padding(vertical = 16.dp, horizontal = 24.dp)
-            .testTag(TAG_RATE_VALUE),
-      )
-    }
+    Text(
+      text = currencyValue,
+      style = MaterialTheme.typography.displaySmall,
+      modifier =
+        Modifier
+          .padding(vertical = 16.dp, horizontal = 24.dp)
+          .testTag(TAG_RATE_VALUE),
+    )
     Row(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -156,12 +153,10 @@ fun BestCurrencyRateCard(
         contentDescription = stringResource(id = string.bank_name_indicator),
         modifier = Modifier.align(Alignment.CenterVertically),
       )
-      AnimatedContent(bankName, label = "bankName") {
-        Text(
-          text = it,
-          style = MaterialTheme.typography.bodyMedium,
-        )
-      }
+      Text(
+        text = bankName,
+        style = MaterialTheme.typography.bodyMedium,
+      )
     }
   }
 }
