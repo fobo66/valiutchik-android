@@ -24,9 +24,9 @@ import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
 import fobo66.valiutchik.core.util.CurrencyName.EUR
 import fobo66.valiutchik.core.util.CurrencyName.RUB
-import fobo66.valiutchik.core.util.CurrencyName.USD
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -61,7 +61,7 @@ class PersistenceDataSourceTest {
   fun saveBestBuyCourses() {
     val bestCourses =
       listOf(
-        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+        BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
         BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
       )
 
@@ -79,7 +79,7 @@ class PersistenceDataSourceTest {
   fun saveBestSellCourses() {
     val bestCourses =
       listOf(
-        BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
+        BestCourse(0, "test", "1.925", DOLLAR, "", SELL_COURSE),
         BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE),
       )
 
@@ -97,7 +97,7 @@ class PersistenceDataSourceTest {
   fun saveMixedCourses() {
     val bestCourses =
       listOf(
-        BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+        BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
         BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
         BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
       )
@@ -117,10 +117,10 @@ class PersistenceDataSourceTest {
     runBlocking {
       val bestCourses =
         listOf(
-          BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+          BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
           BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
           BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
-          BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE),
+          BestCourse(0, "test", "2.0325", DOLLAR, "", SELL_COURSE),
         )
 
       persistenceDataSource.saveBestCourses(bestCourses)

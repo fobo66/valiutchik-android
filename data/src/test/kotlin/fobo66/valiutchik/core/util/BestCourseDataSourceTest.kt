@@ -49,7 +49,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestUSDBuyCoursesAreReallyBest() {
-    assertEquals(BEST_USD_BUY, bestBuy[CurrencyName.USD]?.usdBuy)
+    assertEquals(BEST_USD_BUY, bestBuy[CurrencyName.DOLLAR]?.usdBuy)
   }
 
   @Test
@@ -74,7 +74,7 @@ class BestCourseDataSourceTest {
 
   @Test
   fun testBestUSDSellCoursesAreReallyBest() {
-    assertEquals(BEST_USD_SELL, bestSell[CurrencyName.USD]?.usdSell)
+    assertEquals(BEST_USD_SELL, bestSell[CurrencyName.DOLLAR]?.usdSell)
   }
 
   @Test

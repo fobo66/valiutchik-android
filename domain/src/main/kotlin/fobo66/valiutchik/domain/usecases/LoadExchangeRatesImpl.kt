@@ -60,12 +60,12 @@ class LoadExchangeRatesImpl(
     currencyName: CurrencyName,
     isBuy: Boolean,
   ) = when (currencyName to isBuy) {
-    CurrencyName.USD to true -> R.string.currency_name_usd_buy
-    CurrencyName.USD to false -> R.string.currency_name_usd_sell
+    CurrencyName.DOLLAR to true -> R.string.currency_name_usd_buy
+    CurrencyName.DOLLAR to false -> R.string.currency_name_usd_sell
     CurrencyName.EUR to true -> R.string.currency_name_eur_buy
     CurrencyName.EUR to false -> R.string.currency_name_eur_sell
-    CurrencyName.RUB to true, CurrencyName.RUR to true -> R.string.currency_name_rub_buy
-    CurrencyName.RUB to false, CurrencyName.RUR to false -> R.string.currency_name_rub_sell
+    CurrencyName.RUB to true -> R.string.currency_name_rub_buy
+    CurrencyName.RUB to false -> R.string.currency_name_rub_sell
     CurrencyName.PLN to true -> R.string.currency_name_pln_buy
     CurrencyName.PLN to false -> R.string.currency_name_pln_sell
     CurrencyName.UAH to true -> R.string.currency_name_uah_buy
