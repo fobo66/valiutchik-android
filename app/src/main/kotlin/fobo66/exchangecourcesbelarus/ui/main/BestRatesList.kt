@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui.main
 
 import androidx.activity.compose.ReportDrawnWhen
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -56,7 +54,7 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
@@ -64,7 +62,7 @@ fun BestRatesGrid(
   onBestRateLongClick: (String, String) -> Unit,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = modifier) {
     if (it.isEmpty()) {
@@ -76,19 +74,21 @@ fun BestRatesGrid(
           columns = GridCells.Adaptive(minSize = 220.dp),
           verticalArrangement = Arrangement.spacedBy(16.dp),
           horizontalArrangement = Arrangement.spacedBy(16.dp),
-          contentPadding = PaddingValues(
-            top = 8.dp,
-            start = 8.dp,
-            end = 8.dp,
-            bottom = with(density) {
-              WindowInsets.systemBars.getBottom(density).toDp()
-            }
-          ),
-          modifier = Modifier.testTag(TAG_RATES)
+          contentPadding =
+            PaddingValues(
+              top = 8.dp,
+              start = 8.dp,
+              end = 8.dp,
+              bottom =
+                with(density) {
+                  WindowInsets.systemBars.getBottom(this).toDp()
+                },
+            ),
+          modifier = Modifier.testTag(TAG_RATES),
         ) {
           itemsIndexed(
             items = bestCurrencyRates,
-            key = { _, item -> item.currencyNameRes }
+            key = { _, item -> item.id },
           ) { index, item ->
             BestCurrencyRateCard(
               currencyName = stringResource(id = item.currencyNameRes),
@@ -96,9 +96,10 @@ fun BestRatesGrid(
               bankName = item.bank,
               onClick = onBestRateClick,
               onLongClick = onBestRateLongClick,
-              modifier = Modifier
-                .fillMaxWidth()
-                .animateItem()
+              modifier =
+                Modifier
+                  .fillMaxWidth()
+                  .animateItem(),
             )
           }
         }
@@ -110,7 +111,6 @@ fun BestRatesGrid(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
   currencyName: String,
@@ -118,46 +118,44 @@ fun BestCurrencyRateCard(
   bankName: String,
   onClick: (String) -> Unit,
   onLongClick: (String, String) -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   ElevatedCard(
-    modifier = modifier
-      .clip(CardDefaults.elevatedShape)
-      .combinedClickable(
-        onLongClick = { onLongClick(currencyName, currencyValue) },
-        onClick = { onClick(bankName) }
-      )
+    modifier =
+      modifier
+        .clip(CardDefaults.elevatedShape)
+        .combinedClickable(
+          onLongClick = { onLongClick(currencyName, currencyValue) },
+          onClick = { onClick(bankName) },
+        ),
   ) {
     Text(
       text = currencyName,
       style = MaterialTheme.typography.headlineSmall,
-      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
+      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
     )
-    AnimatedContent(currencyValue, label = "currencyValue") {
-      Text(
-        text = it,
-        style = MaterialTheme.typography.displaySmall,
-        modifier = Modifier
+    Text(
+      text = currencyValue,
+      style = MaterialTheme.typography.displaySmall,
+      modifier =
+        Modifier
           .padding(vertical = 16.dp, horizontal = 24.dp)
-          .testTag(TAG_RATE_VALUE)
-      )
-    }
+          .testTag(TAG_RATE_VALUE),
+    )
     Row(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp)
+      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
     ) {
       Icon(
         imageVector = Bank,
         contentDescription = stringResource(id = string.bank_name_indicator),
-        modifier = Modifier.align(Alignment.CenterVertically)
+        modifier = Modifier.align(Alignment.CenterVertically),
       )
-      AnimatedContent(bankName, label = "bankName") {
-        Text(
-          text = it,
-          style = MaterialTheme.typography.bodyMedium
-        )
-      }
+      Text(
+        text = bankName,
+        style = MaterialTheme.typography.bodyMedium,
+      )
     }
   }
 }
@@ -171,7 +169,7 @@ private fun BestCurrencyRatePreview() {
       bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
       currencyValue = "2.56",
       onClick = {},
-      onLongClick = { _, _ -> }
+      onLongClick = { _, _ -> },
     )
   }
 }

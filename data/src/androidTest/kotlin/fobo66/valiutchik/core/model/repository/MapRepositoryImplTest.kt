@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,27 +31,32 @@ import org.junit.Test
 
 @SmallTest
 class MapRepositoryImplTest {
-
-  private val uriDataSource = object : UriDataSource {
-    override fun prepareUri(
-      scheme: String,
-      authority: String,
-      queryParameterKey: String,
-      queryParameterValue: String
-    ): Uri = Uri.EMPTY
-  }
-
-  private val intentDataSource = object : IntentDataSource {
-    var canResolveIntent = true
-
-    override fun createIntent(uri: Uri, action: String): Intent = Intent()
-
-    override fun resolveIntent(intent: Intent): ComponentName? = if (canResolveIntent) {
-      InstrumentationRegistry.getInstrumentation().componentName
-    } else {
-      null
+  private val uriDataSource =
+    object : UriDataSource {
+      override fun prepareUri(
+        scheme: String,
+        authority: String,
+        queryParameterKey: String,
+        queryParameterValue: String,
+      ): Uri = Uri.EMPTY
     }
-  }
+
+  private val intentDataSource =
+    object : IntentDataSource {
+      var canResolveIntent = true
+
+      override fun createIntent(
+        uri: Uri,
+        action: String,
+      ): Intent = Intent()
+
+      override fun resolveIntent(intent: Intent): ComponentName? =
+        if (canResolveIntent) {
+          InstrumentationRegistry.getInstrumentation().componentName
+        } else {
+          null
+        }
+    }
 
   private lateinit var mapRepository: MapRepository
 

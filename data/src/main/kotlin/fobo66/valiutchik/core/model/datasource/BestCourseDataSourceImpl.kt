@@ -16,43 +16,52 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import androidx.collection.ScatterMap
+import androidx.collection.ScatterSet
+import androidx.collection.mutableScatterMapOf
+import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.UNKNOWN_COURSE
 import fobo66.valiutchik.core.util.CurrencyName
-import fobo66.valiutchik.core.util.EUR
-import fobo66.valiutchik.core.util.PLN
-import fobo66.valiutchik.core.util.RUB
-import fobo66.valiutchik.core.util.UAH
-import fobo66.valiutchik.core.util.USD
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 
 class BestCourseDataSourceImpl : BestCourseDataSource {
-  private val currencyKeys by lazy(LazyThreadSafetyMode.NONE) { arrayOf(USD, EUR, RUB, PLN, UAH) }
+  private val currencyKeys: ScatterSet<CurrencyName> by lazy(LazyThreadSafetyMode.NONE) {
+    scatterSetOf(
+      CurrencyName.DOLLAR,
+      CurrencyName.EUR,
+      CurrencyName.RUB,
+      CurrencyName.PLN,
+      CurrencyName.UAH,
+    )
+  }
 
-  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
-    currencyKeys.associateWith { currencyKey ->
-      courses
-        .asSequence()
-        .filter { isBuyRateCorrect(it, currencyKey) }
-        .maxByOrNull { it.resolveCurrencyBuyRate(currencyKey) } ?: courses.first {
-        isBuyRateCorrect(it, currencyKey)
-      }
-    }
+  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> =
+    currencyKeys
+      .associateWith { currencyKey ->
+        courses
+          .asSequence()
+          .filter { isBuyRateCorrect(it, currencyKey) }
+          .maxByOrNull { it.resolveCurrencyBuyRate(currencyKey) } ?: courses.first {
+          isBuyRateCorrect(it, currencyKey)
+        }
+      }.asMap()
 
-  override fun findBestSellCurrencies(courses: Set<Bank>): Map<@CurrencyName String, Bank> =
-    currencyKeys.associateWith { currencyKey ->
-      courses
-        .asSequence()
-        .filter { isSellRateCorrect(it, currencyKey) }
-        .minByOrNull { it.resolveCurrencySellRate(currencyKey) } ?: courses.first {
-        isSellRateCorrect(it, currencyKey)
-      }
-    }
+  override fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> =
+    currencyKeys
+      .associateWith { currencyKey ->
+        courses
+          .asSequence()
+          .filter { isSellRateCorrect(it, currencyKey) }
+          .minByOrNull { it.resolveCurrencySellRate(currencyKey) } ?: courses.first {
+          isSellRateCorrect(it, currencyKey)
+        }
+      }.asMap()
 
   private fun isSellRateCorrect(
     currency: Bank,
-    currencyKey: String,
+    currencyKey: CurrencyName,
   ): Boolean {
     val rate = currency.resolveCurrencySellRate(currencyKey)
     return rate.isNotEmpty() && rate != UNKNOWN_COURSE
@@ -60,9 +69,17 @@ class BestCourseDataSourceImpl : BestCourseDataSource {
 
   private fun isBuyRateCorrect(
     currency: Bank,
-    currencyKey: String,
+    currencyKey: CurrencyName,
   ): Boolean {
     val rate = currency.resolveCurrencyBuyRate(currencyKey)
     return rate.isNotEmpty() && rate != UNKNOWN_COURSE
+  }
+
+  private inline fun <K, V> ScatterSet<K>.associateWith(valueSelector: (K) -> V): ScatterMap<K, V> {
+    val result = mutableScatterMapOf<K, V>()
+    this.forEach { element ->
+      result.put(element, valueSelector(element))
+    }
+    return result
   }
 }
