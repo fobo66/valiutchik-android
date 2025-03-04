@@ -21,6 +21,8 @@ import android.icu.util.Currency
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import androidx.annotation.StringRes
+import androidx.collection.ScatterMap
+import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
@@ -33,11 +35,32 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import java.util.Locale
+import kotlin.LazyThreadSafetyMode.NONE
 
 class LoadExchangeRatesImpl(
   private val currencyRateRepository: CurrencyRateRepository,
   private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository,
 ) : LoadExchangeRates {
+  private val buyLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
+    mutableScatterMapOf(
+      CurrencyName.DOLLAR to R.string.currency_name_usd_buy,
+      CurrencyName.EUR to R.string.currency_name_eur_buy,
+      CurrencyName.RUB to R.string.currency_name_rub_buy,
+      CurrencyName.PLN to R.string.currency_name_pln_buy,
+      CurrencyName.UAH to R.string.currency_name_uah_buy,
+    )
+  }
+
+  private val sellLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
+    mutableScatterMapOf(
+      CurrencyName.DOLLAR to R.string.currency_name_usd_sell,
+      CurrencyName.EUR to R.string.currency_name_eur_sell,
+      CurrencyName.RUB to R.string.currency_name_rub_sell,
+      CurrencyName.PLN to R.string.currency_name_pln_sell,
+      CurrencyName.UAH to R.string.currency_name_uah_sell,
+    )
+  }
+
   @OptIn(ExperimentalCoroutinesApi::class)
   override fun execute(now: Instant): Flow<List<BestCurrencyRate>> =
     currencyRatesTimestampRepository
@@ -59,18 +82,15 @@ class LoadExchangeRatesImpl(
   private fun resolveCurrencyName(
     currencyName: CurrencyName,
     isBuy: Boolean,
-  ) = when (currencyName to isBuy) {
-    CurrencyName.DOLLAR to true -> R.string.currency_name_usd_buy
-    CurrencyName.DOLLAR to false -> R.string.currency_name_usd_sell
-    CurrencyName.EUR to true -> R.string.currency_name_eur_buy
-    CurrencyName.EUR to false -> R.string.currency_name_eur_sell
-    CurrencyName.RUB to true -> R.string.currency_name_rub_buy
-    CurrencyName.RUB to false -> R.string.currency_name_rub_sell
-    CurrencyName.PLN to true -> R.string.currency_name_pln_buy
-    CurrencyName.PLN to false -> R.string.currency_name_pln_sell
-    CurrencyName.UAH to true -> R.string.currency_name_uah_buy
-    CurrencyName.UAH to false -> R.string.currency_name_uah_sell
-    else -> 0
+  ): Int {
+    val labelRes =
+      if (isBuy) {
+        buyLabels[currencyName]
+      } else {
+        sellLabels[currencyName]
+      }
+
+    return labelRes ?: 0
   }
 
   private fun formatCurrencyValue(rawValue: String): String =
