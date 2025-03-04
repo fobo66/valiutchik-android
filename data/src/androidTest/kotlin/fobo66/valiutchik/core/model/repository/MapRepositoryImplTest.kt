@@ -26,7 +26,6 @@ import fobo66.valiutchik.core.model.datasource.UriDataSource
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
-import org.junit.Before
 import org.junit.Test
 
 @SmallTest
@@ -37,15 +36,14 @@ class MapRepositoryImplTest {
             scheme: String,
             authority: String,
             queryParameterKey: String,
-            queryParameterValue: String,
+            queryParameterValue: String
         ): Uri = Uri.EMPTY
     }
 
     private val intentDataSource = object : IntentDataSource {
         var canResolveIntent = true
 
-        override fun createIntent(uri: Uri, action: String,
-      ): Intent = Intent()
+        override fun createIntent(uri: Uri, action: String): Intent = Intent()
 
         override fun resolveIntent(intent: Intent): ComponentName? = if (canResolveIntent) {
             InstrumentationRegistry.getInstrumentation().componentName
@@ -54,12 +52,7 @@ class MapRepositoryImplTest {
         }
     }
 
-    private lateinit var mapRepository: MapRepository
-
-    @Before
-    fun setUp() {
-        mapRepository = MapRepositoryImpl(uriDataSource, intentDataSource)
-    }
+    private val mapRepository: MapRepository = MapRepositoryImpl(uriDataSource, intentDataSource)
 
     @After
     fun tearDown() {
