@@ -37,14 +37,15 @@ class MapRepositoryImplTest {
             scheme: String,
             authority: String,
             queryParameterKey: String,
-            queryParameterValue: String
+            queryParameterValue: String,
         ): Uri = Uri.EMPTY
     }
 
     private val intentDataSource = object : IntentDataSource {
         var canResolveIntent = true
 
-        override fun createIntent(uri: Uri, action: String): Intent = Intent()
+        override fun createIntent(uri: Uri, action: String,
+      ): Intent = Intent()
 
         override fun resolveIntent(intent: Intent): ComponentName? = if (canResolveIntent) {
             InstrumentationRegistry.getInstrumentation().componentName

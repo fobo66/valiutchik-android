@@ -24,9 +24,9 @@ import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.util.EUR
-import fobo66.valiutchik.core.util.RUB
-import fobo66.valiutchik.core.util.USD
+import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
+import fobo66.valiutchik.core.util.CurrencyName.EUR
+import fobo66.valiutchik.core.util.CurrencyName.RUB
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -45,7 +45,7 @@ class PersistenceDataSourceTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         db = Room.inMemoryDatabaseBuilder(
             context,
-            CurrencyRatesDatabase::class.java
+            CurrencyRatesDatabase::class.java,
         ).build()
         persistenceDataSource =
             PersistenceDataSourceImpl(db)
@@ -59,8 +59,8 @@ class PersistenceDataSourceTest {
     @Test
     fun saveBestBuyCourses() {
         val bestCourses = listOf(
-            BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
-            BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE)
+            BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
+            BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
         )
 
         runBlocking {
@@ -76,8 +76,8 @@ class PersistenceDataSourceTest {
     @Test
     fun saveBestSellCourses() {
         val bestCourses = listOf(
-            BestCourse(0, "test", "1.925", USD, "", SELL_COURSE),
-            BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE)
+            BestCourse(0, "test", "1.925", DOLLAR, "", SELL_COURSE),
+            BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE),
         )
 
         runBlocking {
@@ -93,9 +93,9 @@ class PersistenceDataSourceTest {
     @Test
     fun saveMixedCourses() {
         val bestCourses = listOf(
-            BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+            BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
             BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-            BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE)
+            BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
         )
 
         runBlocking {
@@ -112,15 +112,17 @@ class PersistenceDataSourceTest {
     fun loadOnlySellCoursesFromMixedCourses() {
         runBlocking {
             val bestCourses = listOf(
-                BestCourse(0, "test", "1.925", USD, "", BUY_COURSE),
+                BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
                 BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
                 BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
-                BestCourse(0, "test", "2.0325", USD, "", SELL_COURSE)
+                BestCourse(0, "test", "2.0325", DOLLAR, "", SELL_COURSE),
             )
 
             persistenceDataSource.saveBestCourses(bestCourses)
 
-            db.currencyRatesDao().loadLatestBestCurrencyRates("")
+            db
+        .currencyRatesDao()
+        .loadLatestBestCurrencyRates("")
                 .map { courses -> courses.filter { !it.isBuy } }
                 .test {
                     assertEquals(2, awaitItem().size)

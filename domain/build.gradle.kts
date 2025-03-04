@@ -59,6 +59,7 @@ detekt {
 dependencies {
     api(project(":data"))
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.collection)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(platform(libs.koin.bom))
