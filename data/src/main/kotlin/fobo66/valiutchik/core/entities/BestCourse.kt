@@ -32,5 +32,5 @@ data class BestCourse(
     @ColumnInfo(name = "currency_name")
     val currencyName: CurrencyName = CurrencyName.DOLLAR,
     @ColumnInfo(name = "timestamp") val timestamp: String = "",
-    @ColumnInfo(name = "is_buy") val isBuy: Boolean = false,
+    @ColumnInfo(name = "is_buy") val isBuy: Boolean = false
 )

@@ -30,37 +30,36 @@ import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import java.util.Locale
+import kotlin.LazyThreadSafetyMode.NONE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
-import java.util.Locale
-import kotlin.LazyThreadSafetyMode.NONE
 
 class LoadExchangeRatesImpl(
     private val currencyRateRepository: CurrencyRateRepository,
     private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
 ) : LoadExchangeRates {
     private val buyLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
-    mutableScatterMapOf(
-      CurrencyName.DOLLAR to R.string.currency_name_usd_buy,
-      CurrencyName.EUR to R.string.currency_name_eur_buy,
-      CurrencyName.RUB to R.string.currency_name_rub_buy,
-      CurrencyName.PLN to R.string.currency_name_pln_buy,
-      CurrencyName.UAH to R.string.currency_name_uah_buy,
-    )
-  }
+        mutableScatterMapOf(
+            CurrencyName.DOLLAR to R.string.currency_name_usd_buy,
+            CurrencyName.EUR to R.string.currency_name_eur_buy,
+            CurrencyName.RUB to R.string.currency_name_rub_buy,
+            CurrencyName.PLN to R.string.currency_name_pln_buy,
+            CurrencyName.UAH to R.string.currency_name_uah_buy
+        )
+    }
 
-  private val sellLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
-    mutableScatterMapOf(
-      CurrencyName.DOLLAR to R.string.currency_name_usd_sell,
-      CurrencyName.EUR to R.string.currency_name_eur_sell,
-      CurrencyName.RUB to R.string.currency_name_rub_sell,
-      CurrencyName.PLN to R.string.currency_name_pln_sell,
-      CurrencyName.UAH to R.string.currency_name_uah_sell,
-    )
-  }
+    private val sellLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
+        mutableScatterMapOf(
+            CurrencyName.DOLLAR to R.string.currency_name_usd_sell,
+            CurrencyName.EUR to R.string.currency_name_eur_sell,
+            CurrencyName.RUB to R.string.currency_name_rub_sell,
+            CurrencyName.PLN to R.string.currency_name_pln_sell,
+            CurrencyName.UAH to R.string.currency_name_uah_sell
+        )
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun execute(now: Instant): Flow<List<BestCurrencyRate>> =
@@ -79,20 +78,17 @@ class LoadExchangeRatesImpl(
                 }
             }
 
-  @StringRes
-  private fun resolveCurrencyName(
-    currencyName: CurrencyName,
-    isBuy: Boolean,
-  ): Int {
-    val labelRes =
-      if (isBuy) {
-        buyLabels[currencyName]
-      } else {
-        sellLabels[currencyName]
-      }
+    @StringRes
+    private fun resolveCurrencyName(currencyName: CurrencyName, isBuy: Boolean): Int {
+        val labelRes =
+            if (isBuy) {
+                buyLabels[currencyName]
+            } else {
+                sellLabels[currencyName]
+            }
 
-    return labelRes ?: 0
-  }
+        return labelRes ?: 0
+    }
 
     private fun formatCurrencyValue(rawValue: String): String =
         if (VERSION.SDK_INT >= VERSION_CODES.R) {

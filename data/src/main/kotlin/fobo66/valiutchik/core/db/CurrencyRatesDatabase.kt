@@ -22,10 +22,11 @@ import androidx.room.RoomDatabase
 import fobo66.valiutchik.core.entities.BestCourse
 
 @Database(
-  entities = [BestCourse::class], version = 2,
-  autoMigrations = [
-    AutoMigration(from = 1, to = 2)
-  ]
+    entities = [BestCourse::class],
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
     abstract fun currencyRatesDao(): CurrencyRatesDao
