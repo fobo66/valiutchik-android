@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@ import androidx.room.RoomDatabase
 import fobo66.valiutchik.core.entities.BestCourse
 
 @Database(
-  entities = [BestCourse::class], version = 2,
-  autoMigrations = [
-    AutoMigration(from = 1, to = 2)
-  ]
+    entities = [BestCourse::class],
+    version = 3,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3)
+    ]
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
-  abstract fun currencyRatesDao(): CurrencyRatesDao
+    abstract fun currencyRatesDao(): CurrencyRatesDao
 }
