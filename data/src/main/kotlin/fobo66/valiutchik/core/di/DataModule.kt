@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.core.model.datasource.FormattingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
@@ -74,6 +76,10 @@ val dataSourcesModule =
 
     single<IntentDataSource> {
       IntentDataSourceImpl(androidContext())
+    }
+
+    single<FormattingDataSource> {
+      FormattingDataSourceImpl(androidContext())
     }
 
     single<JsonDataSource> {
