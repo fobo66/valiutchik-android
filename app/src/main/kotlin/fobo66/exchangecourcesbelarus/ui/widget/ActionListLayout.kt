@@ -77,11 +77,7 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
  * fit the item content. The state icon is dropped in smaller sizes to allow space for additional
  * action and the text.
  *
- * The layout is an implementation suggestion, you can customize it to your needs. For example,
- * if you don't have a supporting text, you can drop the filled containers and use spacing to
- * individually differentiate your content. You can use separate icons for on and off states if it
- * suits your use case. And, if you need support for more states, you can use appropriate text and
- * icons.
+ * Derived from [platform sample](https://github.com/android/platform-samples/blob/main/samples/user-interface/appwidgets/src/main/java/com/example/platform/ui/appwidgets/glance/layout/collections/layout/ActionListLayout.kt)
  *
  * @param title the text to be displayed as title of the widget, e.g. name of your widget or app.
  * @param titleIconRes a tintable icon that represents your app or brand, that can be displayed
@@ -98,10 +94,6 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
  *              supporting text and the action icon information.
  * @param checkedItems list of keys of items that are in "ON" / checked state.
  * @param actionButtonClick handler to toggle the state.
- *
- * @see [FilledActionListItem] for accepted inputs.
- * @see [com.example.platform.ui.appwidgets.glance.layout.collections.CheckListAppWidget]
- *
  */
 @Composable
 fun ActionListLayout(
@@ -388,7 +380,7 @@ private fun GlanceModifier.filledContainer(isChecked: Boolean): GlanceModifier {
 
 /**
  * Holds data corresponding to each item in a
- * [com.example.platform.ui.appwidgets.glance.layout.collections.layout.ActionListLayout].
+ * [ActionListLayout].
  *
  * @param key a unique identifier for a specific item
  * @param title a short text (1-2 words) representing the item
