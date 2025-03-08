@@ -34,7 +34,7 @@ import androidx.glance.preview.Preview
 @Preview(widthDp = 306, heightDp = 276) // max handheld
 @Preview(widthDp = 180, heightDp = 184) // min tablet
 @Preview(widthDp = 304, heightDp = 304) // max tablet
-annotation class SmallWidgetPreview
+annotation class PreviewSmallWidget
 
 /**
  * Previews for 4x2 handheld and 3x2 tablet widgets.
@@ -51,7 +51,7 @@ annotation class SmallWidgetPreview
 @Preview(widthDp = 624, heightDp = 276) // max handheld
 @Preview(widthDp = 298, heightDp = 184) // min tablet
 @Preview(widthDp = 488, heightDp = 304) // max tablet
-annotation class MediumWidgetPreview
+annotation class PreviewMediumWidget
 
 /**
  * Previews for 4x3 handheld and 3x3 tablet widgets.
@@ -68,4 +68,4 @@ annotation class MediumWidgetPreview
 @Preview(widthDp = 624, heightDp = 422) // max handheld
 @Preview(widthDp = 298, heightDp = 424) // min tablet
 @Preview(widthDp = 488, heightDp = 672) // max tablet
-annotation class LargeWidgetPreview
+annotation class PreviewLargeWidget

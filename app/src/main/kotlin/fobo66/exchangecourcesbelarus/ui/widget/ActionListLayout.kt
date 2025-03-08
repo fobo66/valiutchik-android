@@ -105,6 +105,7 @@ fun ActionListLayout(
   items: List<ActionListItem>,
   checkedItems: List<String>,
   actionButtonClick: (String) -> Unit,
+  modifier: GlanceModifier = GlanceModifier
 ) {
   fun titleBar(): @Composable (() -> Unit) = {
     TitleBar(
@@ -132,7 +133,7 @@ fun ActionListLayout(
 
   Scaffold(
     backgroundColor = GlanceTheme.colors.widgetBackground,
-    modifier = GlanceModifier.padding(top = scaffoldTopPadding),
+    modifier = modifier.padding(top = scaffoldTopPadding),
     titleBar = if (showTitleBar()) {
       titleBar()
     } else {
@@ -346,7 +347,9 @@ private fun FilledActionListItem(
           item.trailingIconButtonContentDescription
         )
       }
-    } else null
+    } else {
+      null
+    }
   )
 }
 
@@ -358,7 +361,9 @@ private inline fun takeComposableIf(
 ): (@Composable () -> Unit)? {
   return if (predicate) {
     { block() }
-  } else null
+  } else {
+    null
+  }
 }
 
 /**
@@ -541,9 +546,9 @@ private annotation class ActionListBreakpointPreviews
  * widget sizes without needing to run the app or manually place the widget.
  */
 @ActionListBreakpointPreviews
-@SmallWidgetPreview
-@MediumWidgetPreview
-@LargeWidgetPreview
+@PreviewSmallWidget
+@PreviewMediumWidget
+@PreviewLargeWidget
 @Composable
 private fun ActionListLayoutPreview() {
   ActionListLayout(

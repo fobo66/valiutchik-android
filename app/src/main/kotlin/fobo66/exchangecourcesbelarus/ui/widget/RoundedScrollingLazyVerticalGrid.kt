@@ -127,7 +127,7 @@ fun <T> RoundedScrollingLazyVerticalGrid(
       }
 
       Box(
-        modifier = modifier
+        modifier = GlanceModifier
           .fillMaxSize()
           .padding(
             start = cellStartPadding,
