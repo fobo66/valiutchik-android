@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,43 +34,43 @@ import org.junit.jupiter.api.assertThrows
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
 
-  private val bestCourseDataSource = FakeBestCourseDataSource()
-  private val persistenceDataSource = FakePersistenceDataSource()
-  private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
-  private val bankNameNormalizer = FakeBankNameNormalizer()
-  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val bestCourseDataSource = FakeBestCourseDataSource()
+    private val persistenceDataSource = FakePersistenceDataSource()
+    private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
+    private val bankNameNormalizer = FakeBankNameNormalizer()
+    private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-  private val currencyRateRepository: CurrencyRateRepository = CurrencyRateRepositoryImpl(
-    bestCourseDataSource,
-    persistenceDataSource,
-    currencyRatesDataSource,
-    bankNameNormalizer
-  )
+    private val currencyRateRepository: CurrencyRateRepository = CurrencyRateRepositoryImpl(
+        bestCourseDataSource,
+        persistenceDataSource,
+        currencyRatesDataSource,
+        bankNameNormalizer
+    )
 
-  @AfterEach
-  fun tearDown() {
-    ioDispatcher.close()
-  }
-
-  private val now = Clock.System.now()
-
-  @Test
-  fun `load exchange rates`() {
-    runTest {
-      currencyRateRepository.refreshExchangeRates("Minsk", now)
+    @AfterEach
+    fun tearDown() {
+        ioDispatcher.close()
     }
 
-    assertThat(persistenceDataSource.isSaved).isTrue()
-  }
+    private val now = Clock.System.now()
 
-  @Test
-  fun `do not load exchange rates when there was an error`() {
-    currencyRatesDataSource.isError = true
+    @Test
+    fun `load exchange rates`() {
+        runTest {
+            currencyRateRepository.refreshExchangeRates("Minsk", now)
+        }
 
-    runTest {
-      assertThrows<CurrencyRatesLoadFailedException> {
-        currencyRateRepository.refreshExchangeRates("Minsk", now)
-      }
+        assertThat(persistenceDataSource.isSaved).isTrue()
     }
-  }
+
+    @Test
+    fun `do not load exchange rates when there was an error`() {
+        currencyRatesDataSource.isError = true
+
+        runTest {
+            assertThrows<CurrencyRatesLoadFailedException> {
+                currencyRateRepository.refreshExchangeRates("Minsk", now)
+            }
+        }
+    }
 }
