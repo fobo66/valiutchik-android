@@ -14,21 +14,16 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.db
+package fobo66.valiutchik.core.model.datasource
 
-import androidx.room.AutoMigration
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import fobo66.valiutchik.core.entities.BestCourse
+interface FormattingDataSource {
+  /**
+   * Format currency rate as a monetary value
+   */
+  fun formatCurrencyValue(value: Double): String
 
-@Database(
-    entities = [BestCourse::class],
-    version = 3,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3)
-    ]
-)
-abstract class CurrencyRatesDatabase : RoomDatabase() {
-    abstract fun currencyRatesDao(): CurrencyRatesDao
+  /**
+   * Clean up all the unnecessary parts from the bank name
+   */
+  fun formatBankName(name: String): String
 }
