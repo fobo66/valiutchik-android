@@ -24,20 +24,20 @@ import org.junit.Test
 
 @SmallTest
 class FormattingDataSourceImplTest {
-  private val locale = Locale.US
-  private val bankNameNormalizer = FakeBankNameNormalizer()
-  private val formattingDataSource: FormattingDataSource =
-    FormattingDataSourceImpl(locale, bankNameNormalizer)
+    private val locale = Locale.US
+    private val bankNameNormalizer = FakeBankNameNormalizer()
+    private val formattingDataSource: FormattingDataSource =
+        FormattingDataSourceImpl(locale, bankNameNormalizer)
 
-  @Test
-  fun formatCurrency() {
-    val rate = formattingDataSource.formatCurrencyValue(1.23)
-    assertThat(rate).isEqualTo("BYN 1.23")
-  }
+    @Test
+    fun formatCurrency() {
+        val rate = formattingDataSource.formatCurrencyValue(1.23)
+        assertThat(rate).isEqualTo("BYN 1.23")
+    }
 
-  @Test
-  fun formatLongCurrency() {
-    val rate = formattingDataSource.formatCurrencyValue(1.234567890)
-    assertThat(rate).isEqualTo("BYN 1.23")
-  }
+    @Test
+    fun formatLongCurrency() {
+        val rate = formattingDataSource.formatCurrencyValue(1.234567890)
+        assertThat(rate).isEqualTo("BYN 1.23")
+    }
 }

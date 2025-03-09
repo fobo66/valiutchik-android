@@ -25,31 +25,31 @@ import org.junit.Test
 
 @SmallTest
 class UriDataSourceTest {
-  private val uriDataSource: UriDataSource = UriDataSourceImpl()
+    private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
-  @Test
-  fun prepareHttpUri() {
-    val uri =
-      uriDataSource.prepareUri(
-        "https",
-        "example.com",
-        "key",
-        "value",
-      )
+    @Test
+    fun prepareHttpUri() {
+        val uri =
+            uriDataSource.prepareUri(
+                "https",
+                "example.com",
+                "key",
+                "value"
+            )
 
-    assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
-  }
+        assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
+    }
 
-  @Test
-  fun prepareMapUri() {
-    val uri =
-      uriDataSource.prepareUri(
-        URI_SCHEME,
-        URI_AUTHORITY,
-        URI_PARAM_KEY,
-        "test",
-      )
+    @Test
+    fun prepareMapUri() {
+        val uri =
+            uriDataSource.prepareUri(
+                URI_SCHEME,
+                URI_AUTHORITY,
+                URI_PARAM_KEY,
+                "test"
+            )
 
-    assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
-  }
+        assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+    }
 }

@@ -24,22 +24,18 @@ import kotlinx.datetime.Instant
  * Repository to process exchange rates
  */
 interface CurrencyRateRepository {
-  /**
-   * Refresh exchange rates for the given city
-   */
-  suspend fun refreshExchangeRates(
-    city: String,
-    now: Instant,
-    defaultCity: String = city,
-  )
+    /**
+     * Refresh exchange rates for the given city
+     */
+    suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String = city)
 
-  /**
-   * Load exchange rates from database or from network
-   */
-  fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>>
+    /**
+     * Load exchange rates from database or from network
+     */
+    fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>>
 
-  /**
-   * Format currency rate into human-readable form
-   */
-  fun formatRate(rate: BestCourse): String
+    /**
+     * Format currency rate into human-readable form
+     */
+    fun formatRate(rate: BestCourse): String
 }

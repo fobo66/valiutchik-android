@@ -36,58 +36,58 @@ import org.junit.jupiter.api.assertThrows
 
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
-  private val bestCourseDataSource = FakeBestCourseDataSource()
-  private val persistenceDataSource = FakePersistenceDataSource()
-  private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
-  private val formattingDataSource = FakeFormattingDataSource()
-  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val bestCourseDataSource = FakeBestCourseDataSource()
+    private val persistenceDataSource = FakePersistenceDataSource()
+    private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
+    private val formattingDataSource = FakeFormattingDataSource()
+    private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-  private val currencyRateRepository: CurrencyRateRepository =
-    CurrencyRateRepositoryImpl(
-      bestCourseDataSource,
-      persistenceDataSource,
-      currencyRatesDataSource,
-      formattingDataSource,
-    )
+    private val currencyRateRepository: CurrencyRateRepository =
+        CurrencyRateRepositoryImpl(
+            bestCourseDataSource,
+            persistenceDataSource,
+            currencyRatesDataSource,
+            formattingDataSource
+        )
 
-  @AfterEach
-  fun tearDown() {
-    ioDispatcher.close()
-  }
-
-  private val now = Clock.System.now()
-
-  @Test
-  fun `load exchange rates`() {
-    runTest {
-      currencyRateRepository.refreshExchangeRates("Minsk", now)
+    @AfterEach
+    fun tearDown() {
+        ioDispatcher.close()
     }
 
-    assertThat(persistenceDataSource.isSaved).isTrue()
-  }
+    private val now = Clock.System.now()
 
-  @Test
-  fun `do not load exchange rates when there was an error`() {
-    currencyRatesDataSource.isError = true
+    @Test
+    fun `load exchange rates`() {
+        runTest {
+            currencyRateRepository.refreshExchangeRates("Minsk", now)
+        }
 
-    runTest {
-      assertThrows<CurrencyRatesLoadFailedException> {
-        currencyRateRepository.refreshExchangeRates("Minsk", now)
-      }
+        assertThat(persistenceDataSource.isSaved).isTrue()
     }
-  }
 
-  @Test
-  fun `normalize ruble rate`() {
-    val rate = BestCourse(id = 0, currencyValue = 0.0123, currencyName = RUB)
-    val result = currencyRateRepository.formatRate(rate)
-    assertThat(result).isEqualTo("1.23")
-  }
+    @Test
+    fun `do not load exchange rates when there was an error`() {
+        currencyRatesDataSource.isError = true
 
-  @Test
-  fun `do not normalize dollar rate`() {
-    val rate = BestCourse(id = 0, currencyValue = 1.23, currencyName = DOLLAR)
-    val result = currencyRateRepository.formatRate(rate)
-    assertThat(result).isEqualTo("1.23")
-  }
+        runTest {
+            assertThrows<CurrencyRatesLoadFailedException> {
+                currencyRateRepository.refreshExchangeRates("Minsk", now)
+            }
+        }
+    }
+
+    @Test
+    fun `normalize ruble rate`() {
+        val rate = BestCourse(id = 0, currencyValue = 0.0123, currencyName = RUB)
+        val result = currencyRateRepository.formatRate(rate)
+        assertThat(result).isEqualTo("1.23")
+    }
+
+    @Test
+    fun `do not normalize dollar rate`() {
+        val rate = BestCourse(id = 0, currencyValue = 1.23, currencyName = DOLLAR)
+        val result = currencyRateRepository.formatRate(rate)
+        assertThat(result).isEqualTo("1.23")
+    }
 }

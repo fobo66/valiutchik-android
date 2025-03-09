@@ -28,29 +28,29 @@ import org.junit.Test
 
 @SmallTest
 class IntentDataSourceTest {
-  private val uri: Uri = Uri.parse("geo:0,0?q=test")
+    private val uri: Uri = Uri.parse("geo:0,0?q=test")
 
-  @get:Rule
-  val intentsRule = IntentsRule()
+    @get:Rule
+    val intentsRule = IntentsRule()
 
-  private val intentDataSource: IntentDataSource =
-    IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
+    private val intentDataSource: IntentDataSource =
+        IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
 
-  @Test
-  fun createIntent() {
-    val intent = intentDataSource.createIntent(Uri.EMPTY)
-    assertIntent(intent).hasAction(Intent.ACTION_VIEW)
-  }
+    @Test
+    fun createIntent() {
+        val intent = intentDataSource.createIntent(Uri.EMPTY)
+        assertIntent(intent).hasAction(Intent.ACTION_VIEW)
+    }
 
-  @Test
-  fun canResolveIntent() {
-    val intent = intentDataSource.createIntent(uri)
-    assertThat(intentDataSource.resolveIntent(intent)).isNotNull()
-  }
+    @Test
+    fun canResolveIntent() {
+        val intent = intentDataSource.createIntent(uri)
+        assertThat(intentDataSource.resolveIntent(intent)).isNotNull()
+    }
 
-  @Test
-  fun cannotResolveEmptyIntent() {
-    val intent = intentDataSource.createIntent(Uri.EMPTY)
-    assertThat(intentDataSource.resolveIntent(intent)).isNull()
-  }
+    @Test
+    fun cannotResolveEmptyIntent() {
+        val intent = intentDataSource.createIntent(Uri.EMPTY)
+        assertThat(intentDataSource.resolveIntent(intent)).isNull()
+    }
 }

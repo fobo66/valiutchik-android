@@ -23,11 +23,11 @@ import fobo66.valiutchik.core.entities.BestCourse
 
 @Database(
     entities = [BestCourse::class],
-  version = 3,
-  autoMigrations = [
-    AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3),
-  ],
+    version = 3,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3)
+    ]
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
     abstract fun currencyRatesDao(): CurrencyRatesDao
