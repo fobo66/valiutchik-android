@@ -51,8 +51,8 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.MainActivity
+import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.gridCells
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.stateIconBackgroundSize
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.stateIconSize
@@ -190,7 +190,6 @@ private fun ListView(
     itemContentProvider = { item ->
       FilledActionListItem(
         item = item,
-        isChecked = checkedItems.contains(item.key),
         actionButtonClick = actionButtonOnClick,
         modifier = GlanceModifier.fillMaxSize()
       )
@@ -205,13 +204,12 @@ private fun GridView(
   actionButtonOnClick: (String) -> Unit,
 ) {
   RoundedScrollingLazyVerticalGrid(
-    gridCells = gridCells,
+    gridCells = GRID_SIZE,
     items = items,
     cellSpacing = itemContentSpacing,
     itemContentProvider = { item ->
       FilledActionListItem(
         item = item,
-        isChecked = checkedItems.contains(item.key),
         actionButtonClick = actionButtonOnClick,
         modifier = GlanceModifier.fillMaxSize()
       )
@@ -231,126 +229,72 @@ private fun FilledActionListItem(
   item: ActionListItem,
   actionButtonClick: (String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
-  isChecked: Boolean,
 ) {
-  @Composable
-  fun Title() {
-    Text(
-      text = item.title,
-      style = ActionListLayoutTextStyles.titleText(isChecked),
-      maxLines = 1,
-      // Container's content description already reads this text
-      modifier = GlanceModifier.semantics { contentDescription = "" }
-    )
-  }
-
-  @Composable
-  fun SupportingText() {
-    Text(
-      text = if (isChecked) {
-        item.onSupportingText
-      } else {
-        item.offSupportingText
-      },
-      style = ActionListLayoutTextStyles.supportingText(isChecked),
-      maxLines = 2,
-      // Container's content description already reads this text
-      modifier = GlanceModifier.semantics { contentDescription = "" }
-    )
-  }
-
-  @Composable
-  fun StateIndicatorIcon() {
-    Box(
-      GlanceModifier
-        .size(stateIconBackgroundSize)
-        .cornerRadius(circularCornerRadius),
-      contentAlignment = Alignment.Center
-    ) {
-      Image(
-        provider = ImageProvider(item.stateIconRes),
-        modifier = modifier.size(stateIconSize),
-        contentDescription = null, // already covered in list item container's description
-        colorFilter = ColorFilter.tint(
-          if (isChecked) {
-            GlanceTheme.colors.onPrimary
-          } else {
-            GlanceTheme.colors.onSurfaceVariant
-          }
-        )
-      )
-    }
-  }
-
-  /**
-   * Additional action that can be performed against the item.
-   *
-   * For example, edit the item. Onclick of the title toggles the state, however, sometimes, the
-   * may be additional controls associated with the action e.g. changing temperature.
-   */
-  @Composable
-  fun AdditionalActionButton(@DrawableRes resId: Int, contentDescription: String?) {
-    CircleIconButton(
-      imageProvider = ImageProvider(resId),
-      contentDescription = contentDescription,
-      onClick = actionStartActivity<MainActivity>(),
-      backgroundColor = null,
-      contentColor = if (isChecked) {
-        GlanceTheme.colors.onPrimary
-      } else {
-        GlanceTheme.colors.onSurface
-      }
-    )
-  }
-
-  /**
-   * Returns a combined content description that can be set on entire list item.
-   */
-  fun combinedContentDescription(): String {
-    val contentDescriptionBuilder = StringBuilder()
-    contentDescriptionBuilder.append(item.title)
-    contentDescriptionBuilder.append(" ")
-    contentDescriptionBuilder.append(
-      if (isChecked) {
-        item.onSupportingText
-      } else {
-        item.offSupportingText
-      }
-    )
-    contentDescriptionBuilder.append(" ")
-    contentDescriptionBuilder.append(
-      if (isChecked) {
-        item.onStateActionContentDescription
-      } else {
-        item.offStartActionContentDescription
-      }
-    )
-    return contentDescriptionBuilder.toString()
-  }
-
   ListItem(
     modifier = modifier
       // We set a combined content description on list item since entire item is clickable.
-      .semantics { contentDescription = combinedContentDescription() }
-      .filledContainer(isChecked)
+      .semantics { contentDescription = combinedContentDescription(item) }
+      .filledContainer()
       .clickable(key = "${LocalSize.current} ${item.key}") { actionButtonClick(item.key) },
     contentSpacing = itemContentSpacing,
     leadingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
-      StateIndicatorIcon()
+      Box(
+        GlanceModifier
+          .size(stateIconBackgroundSize)
+          .cornerRadius(circularCornerRadius),
+        contentAlignment = Alignment.Center
+      ) {
+        Image(
+          provider = ImageProvider(item.stateIconRes),
+          modifier = GlanceModifier.size(stateIconSize),
+          contentDescription = null, // already covered in list item container's description
+          colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
+        )
+      }
     },
-    headlineContent = { Title() },
-    supportingContent = { SupportingText() },
+    headlineContent = {
+      Text(
+        text = item.title,
+        style = ActionListLayoutTextStyles.titleText(false),
+        maxLines = 1,
+        // Container's content description already reads this text
+        modifier = GlanceModifier.semantics { contentDescription = "" }
+      )
+    },
+    supportingContent = {
+      Text(
+        text = item.offSupportingText,
+        style = ActionListLayoutTextStyles.supportingText(false),
+        maxLines = 2,
+        // Container's content description already reads this text
+        modifier = GlanceModifier.semantics { contentDescription = "" }
+      )
+    },
     trailingContent = if (item.trailingIconButtonRes != null) {
       {
-        AdditionalActionButton(
-          item.trailingIconButtonRes,
-          item.trailingIconButtonContentDescription
+        CircleIconButton(
+          imageProvider = ImageProvider(item.trailingIconButtonRes),
+          contentDescription = item.trailingIconButtonContentDescription,
+          onClick = actionStartActivity<MainActivity>(),
+          backgroundColor = null,
+          contentColor = GlanceTheme.colors.onSurface
         )
       }
     } else {
       null
     }
   )
+}
+
+/**
+ * Returns a combined content description that can be set on entire list item.
+ */
+private fun combinedContentDescription(item: ActionListItem): String = buildString {
+  append(item.title)
+  append(" ")
+  append(item.offSupportingText)
+  append(" ")
+  append(item.offStartActionContentDescription)
 }
 
 /** Returns the provided [block] composable if [predicate] is true, else returns null */
@@ -371,16 +315,10 @@ private inline fun takeComposableIf(
  * appropriate corner radius.
  */
 @Composable
-private fun GlanceModifier.filledContainer(isChecked: Boolean): GlanceModifier {
+private fun GlanceModifier.filledContainer(): GlanceModifier {
   return cornerRadius(ActionListLayoutDimensions.filledItemCornerRadius)
     .padding(ActionListLayoutDimensions.filledItemPadding)
-    .background(
-      if (isChecked) {
-        GlanceTheme.colors.primary
-      } else {
-        GlanceTheme.colors.secondaryContainer
-      }
-    )
+    .background(GlanceTheme.colors.secondaryContainer)
 }
 
 /**
@@ -497,7 +435,7 @@ private object ActionListLayoutTextStyles {
 
 private object ActionListLayoutDimensions {
   /** Number of cells in the grid, when items are displayed as a grid. */
-  const val gridCells = 2
+  const val GRID_SIZE = 2
 
   /** Padding applied at bottom of the widget content */
   val widgetPadding = 12.dp
@@ -536,7 +474,7 @@ private object ActionListLayoutDimensions {
 @Preview(widthDp = 259, heightDp = 200)
 @Preview(widthDp = 438, heightDp = 200)
 @Preview(widthDp = 644, heightDp = 200)
-private annotation class ActionListBreakpointPreviews
+private annotation class PreviewActionListBreakpoints
 
 /**
  * Previews for the action list layout.
@@ -545,7 +483,7 @@ private annotation class ActionListBreakpointPreviews
  * the previews at standard sizes allows us to quickly verify updates across min / max and common
  * widget sizes without needing to run the app or manually place the widget.
  */
-@ActionListBreakpointPreviews
+@PreviewActionListBreakpoints
 @PreviewSmallWidget
 @PreviewMediumWidget
 @PreviewLargeWidget
