@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,38 +17,39 @@
 package fobo66.valiutchik.core.model.datasource
 
 import androidx.test.filters.SmallTest
+import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
 import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
 import fobo66.valiutchik.core.model.repository.URI_SCHEME
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 @SmallTest
 class UriDataSourceTest {
-
   private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
   @Test
   fun prepareHttpUri() {
-    val uri = uriDataSource.prepareUri(
-      "https",
-      "example.com",
-      "key",
-      "value"
-    )
+    val uri =
+      uriDataSource.prepareUri(
+        "https",
+        "example.com",
+        "key",
+        "value",
+      )
 
-    assertEquals("https://example.com?key=value", uri.toString())
+    assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
   }
 
   @Test
   fun prepareMapUri() {
-    val uri = uriDataSource.prepareUri(
-      URI_SCHEME,
-      URI_AUTHORITY,
-      URI_PARAM_KEY,
-      "test"
-    )
+    val uri =
+      uriDataSource.prepareUri(
+        URI_SCHEME,
+        URI_AUTHORITY,
+        URI_PARAM_KEY,
+        "test",
+      )
 
-    assertEquals("test", uri.getQueryParameter(URI_PARAM_KEY))
+    assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
   }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.content.Intent
 import android.net.Uri
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Rule
@@ -30,14 +30,13 @@ import org.junit.Test
 
 @SmallTest
 class IntentDataSourceTest {
-
   private val uri: Uri = Uri.parse("geo:0,0?q=test")
 
   @get:Rule
   val intentsRule = IntentsRule()
 
   private val intentDataSource: IntentDataSource =
-    IntentDataSourceImpl(InstrumentationRegistry.getInstrumentation().targetContext)
+    IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
 
   @Test
   fun createIntent() {
