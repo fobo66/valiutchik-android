@@ -111,8 +111,8 @@ class PersistenceDataSourceTest {
         .currencyRatesDao()
         .loadLatestBestCurrencyRates(TIMESTAMP)
         .map { courses -> courses.filter { !it.isBuy } }
-        .test {
-          assertThat(awaitItem()).hasSize(2)
-        }
+      .test {
+        assertThat(awaitItem()).hasSize(2)
+      }
     }
 }

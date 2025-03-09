@@ -25,6 +25,7 @@ import fobo66.valiutchik.core.fake.FakeFormattingDataSource
 import fobo66.valiutchik.core.fake.FakePersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
 import fobo66.valiutchik.core.util.CurrencyName.RUB
+import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
@@ -32,7 +33,6 @@ import kotlinx.datetime.Clock
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.util.concurrent.Executors
 
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {

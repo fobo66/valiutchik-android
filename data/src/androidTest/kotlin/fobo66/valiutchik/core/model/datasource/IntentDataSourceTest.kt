@@ -20,11 +20,11 @@ import android.content.Intent
 import android.net.Uri
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.rule.IntentsRule
+import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
-import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 
 @SmallTest
 class IntentDataSourceTest {

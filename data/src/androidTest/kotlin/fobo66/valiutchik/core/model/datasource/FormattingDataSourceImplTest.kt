@@ -19,8 +19,8 @@ package fobo66.valiutchik.core.model.datasource
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.fake.FakeBankNameNormalizer
-import org.junit.Test
 import java.util.Locale
+import org.junit.Test
 
 @SmallTest
 class FormattingDataSourceImplTest {

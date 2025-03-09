@@ -17,9 +17,9 @@
 package fobo66.valiutchik.core.di
 
 import androidx.core.app.LocaleManagerCompat
+import java.util.Locale
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import java.util.Locale
 
 val systemModule =
   module {

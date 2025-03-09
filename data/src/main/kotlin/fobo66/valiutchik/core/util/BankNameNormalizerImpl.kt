@@ -32,11 +32,11 @@ class BankNameNormalizerImpl : BankNameNormalizer {
     val startQuotePosition = bankName.indexOfFirst { it == QUOTE }
 
     if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {
-            return bankName
-        }
+      return bankName
+    }
 
-        val canonicalBankName =
-      if (startTypographicalQuotePosition == -1 ||
+    val canonicalBankName =
+            if (startTypographicalQuotePosition == -1 ||
         (startQuotePosition in 1 until startTypographicalQuotePosition)
       ) {
         val endQuotePosition = bankName.indexOf(QUOTE, startQuotePosition + 1)

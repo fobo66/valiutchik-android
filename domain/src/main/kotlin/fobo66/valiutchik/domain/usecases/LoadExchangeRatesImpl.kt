@@ -25,12 +25,12 @@ import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlin.LazyThreadSafetyMode.NONE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
-import kotlin.LazyThreadSafetyMode.NONE
 
 class LoadExchangeRatesImpl(
   private val currencyRateRepository: CurrencyRateRepository,

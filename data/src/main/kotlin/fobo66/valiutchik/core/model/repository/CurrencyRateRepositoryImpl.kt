@@ -31,9 +31,9 @@ import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
+import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
-import java.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
 
@@ -178,7 +178,7 @@ class CurrencyRateRepositoryImpl(
         currency.resolveCurrencySellRate(currencyKey).toDoubleOrNull() ?: 0.0,
         currencyKey,
         now,
-        SELL_COURSE,
+        SELL_COURSE
       )
     }
 }
