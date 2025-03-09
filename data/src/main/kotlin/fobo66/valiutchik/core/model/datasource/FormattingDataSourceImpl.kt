@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.icu.number.NumberFormatter
+import android.icu.text.DecimalFormat
 import android.icu.util.Currency
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -39,6 +40,11 @@ class FormattingDataSourceImpl(
         .format(value)
         .toString()
     } else {
-      value.toString()
+      val format =
+        DecimalFormat.getCurrencyInstance(locale).apply {
+          currency = Currency.getInstance(BYN)
+        }
+
+      format.format(value)
     }
 }
