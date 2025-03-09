@@ -19,14 +19,12 @@ package fobo66.valiutchik.core.model.datasource
 import android.content.Intent
 import android.net.Uri
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SmallTest
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
+import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
+import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 
 @SmallTest
 class IntentDataSourceTest {
@@ -41,18 +39,18 @@ class IntentDataSourceTest {
   @Test
   fun createIntent() {
     val intent = intentDataSource.createIntent(Uri.EMPTY)
-    assertThat(intent, hasAction(Intent.ACTION_VIEW))
+    assertIntent(intent).hasAction(Intent.ACTION_VIEW)
   }
 
   @Test
   fun canResolveIntent() {
     val intent = intentDataSource.createIntent(uri)
-    assertNotNull("Can resolve intent", intentDataSource.resolveIntent(intent))
+    assertThat(intentDataSource.resolveIntent(intent)).isNotNull()
   }
 
   @Test
   fun cannotResolveEmptyIntent() {
     val intent = intentDataSource.createIntent(Uri.EMPTY)
-    assertNull(intentDataSource.resolveIntent(intent))
+    assertThat(intentDataSource.resolveIntent(intent)).isNull()
   }
 }
