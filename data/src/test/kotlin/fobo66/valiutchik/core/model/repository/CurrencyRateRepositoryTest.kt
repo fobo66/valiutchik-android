@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,11 +18,10 @@ package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
-import fobo66.valiutchik.core.fake.FakeBankNameNormalizer
 import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
 import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
+import fobo66.valiutchik.core.fake.FakeFormattingDataSource
 import fobo66.valiutchik.core.fake.FakePersistenceDataSource
-import java.util.concurrent.Executors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
@@ -30,22 +29,23 @@ import kotlinx.datetime.Clock
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.Executors
 
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
-
   private val bestCourseDataSource = FakeBestCourseDataSource()
   private val persistenceDataSource = FakePersistenceDataSource()
   private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
-  private val bankNameNormalizer = FakeBankNameNormalizer()
+  private val formattingDataSource = FakeFormattingDataSource()
   private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-  private val currencyRateRepository: CurrencyRateRepository = CurrencyRateRepositoryImpl(
-    bestCourseDataSource,
-    persistenceDataSource,
-    currencyRatesDataSource,
-    bankNameNormalizer
-  )
+  private val currencyRateRepository: CurrencyRateRepository =
+    CurrencyRateRepositoryImpl(
+      bestCourseDataSource,
+      persistenceDataSource,
+      currencyRatesDataSource,
+      formattingDataSource,
+    )
 
   @AfterEach
   fun tearDown() {

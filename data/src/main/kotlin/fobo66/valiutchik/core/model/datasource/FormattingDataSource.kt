@@ -17,5 +17,13 @@
 package fobo66.valiutchik.core.model.datasource
 
 interface FormattingDataSource {
-    fun formatCurrencyValue(value: Double): String
+  /**
+   * Format currency rate as a monetary value
+   */
+  fun formatCurrencyValue(value: Double): String
+
+  /**
+   * Clean up all the unnecessary parts from the bank name
+   */
+  fun formatBankName(name: String): String
 }

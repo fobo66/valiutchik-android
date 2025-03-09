@@ -27,7 +27,6 @@ import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
@@ -42,7 +41,6 @@ class CurrencyRateRepositoryImpl(
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
-  private val bankNameNormalizer: BankNameNormalizer,
   private val formattingDataSource: FormattingDataSource,
 ) : CurrencyRateRepository {
   private val citiesMap: ScatterMap<String, String> by lazy(LazyThreadSafetyMode.NONE) {
@@ -152,7 +150,7 @@ class CurrencyRateRepositoryImpl(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        bankNameNormalizer.normalize(currency.bankName),
+        formattingDataSource.formatBankName(currency.bankName),
         currency.resolveCurrencyBuyRate(currencyKey).toDoubleOrNull() ?: 0.0,
         currencyKey,
         now,
@@ -176,7 +174,7 @@ class CurrencyRateRepositoryImpl(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        bankNameNormalizer.normalize(currency.bankName),
+        formattingDataSource.formatBankName(currency.bankName),
         currency.resolveCurrencySellRate(currencyKey).toDoubleOrNull() ?: 0.0,
         currencyKey,
         now,
