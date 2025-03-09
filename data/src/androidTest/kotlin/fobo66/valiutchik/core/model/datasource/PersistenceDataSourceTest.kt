@@ -61,8 +61,8 @@ class PersistenceDataSourceTest {
   fun saveBestBuyCourses() {
     val bestCourses =
       listOf(
-        BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
-        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
+        BestCourse(0, "test", 1.925, DOLLAR, "", BUY_COURSE),
+        BestCourse(0, "test", 2.25, EUR, "", BUY_COURSE),
       )
 
     runBlocking {
@@ -79,8 +79,8 @@ class PersistenceDataSourceTest {
   fun saveBestSellCourses() {
     val bestCourses =
       listOf(
-        BestCourse(0, "test", "1.925", DOLLAR, "", SELL_COURSE),
-        BestCourse(0, "test", "2.25", EUR, "", SELL_COURSE),
+        BestCourse(0, "test", 1.925, DOLLAR, "", SELL_COURSE),
+        BestCourse(0, "test", 2.25, EUR, "", SELL_COURSE),
       )
 
     runBlocking {
@@ -97,9 +97,9 @@ class PersistenceDataSourceTest {
   fun saveMixedCourses() {
     val bestCourses =
       listOf(
-        BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
-        BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-        BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
+        BestCourse(0, "test", 1.925, DOLLAR, "", BUY_COURSE),
+        BestCourse(0, "test", 2.25, EUR, "", BUY_COURSE),
+        BestCourse(0, "test", 0.0325, RUB, "", SELL_COURSE),
       )
 
     runBlocking {
@@ -117,10 +117,10 @@ class PersistenceDataSourceTest {
     runBlocking {
       val bestCourses =
         listOf(
-          BestCourse(0, "test", "1.925", DOLLAR, "", BUY_COURSE),
-          BestCourse(0, "test", "2.25", EUR, "", BUY_COURSE),
-          BestCourse(0, "test", "0.0325", RUB, "", SELL_COURSE),
-          BestCourse(0, "test", "2.0325", DOLLAR, "", SELL_COURSE),
+          BestCourse(0, "test", 1.925, DOLLAR, "", BUY_COURSE),
+          BestCourse(0, "test", 2.25, EUR, "", BUY_COURSE),
+          BestCourse(0, "test", 0.0325, RUB, "", SELL_COURSE),
+          BestCourse(0, "test", 2.0325, DOLLAR, "", SELL_COURSE),
         )
 
       persistenceDataSource.saveBestCourses(bestCourses)
