@@ -17,11 +17,14 @@
 package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
+import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
 import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
 import fobo66.valiutchik.core.fake.FakeFormattingDataSource
 import fobo66.valiutchik.core.fake.FakePersistenceDataSource
+import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
+import fobo66.valiutchik.core.util.CurrencyName.RUB
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
@@ -72,5 +75,19 @@ class CurrencyRateRepositoryTest {
         currencyRateRepository.refreshExchangeRates("Minsk", now)
       }
     }
+  }
+
+  @Test
+  fun `normalize ruble rate`() {
+    val rate = BestCourse(id = 0, currencyValue = 0.0123, currencyName = RUB)
+    val result = currencyRateRepository.formatRate(rate)
+    assertThat(result).isEqualTo("1.23")
+  }
+
+  @Test
+  fun `do not normalize dollar rate`() {
+    val rate = BestCourse(id = 0, currencyValue = 1.23, currencyName = DOLLAR)
+    val result = currencyRateRepository.formatRate(rate)
+    assertThat(result).isEqualTo("1.23")
   }
 }
