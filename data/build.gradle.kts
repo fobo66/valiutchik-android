@@ -106,8 +106,10 @@ dependencies {
     testImplementation(libs.truth)
 
     androidTestImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.turbine)
+  androidTestImplementation(libs.truth)
+  androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.espresso.intents)
+    androidTestImplementation(libs.androidx.test.truth)
+  androidTestImplementation(libs.androidx.test.espresso.intents)
 }

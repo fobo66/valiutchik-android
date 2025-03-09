@@ -17,12 +17,14 @@
 package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
+import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
-import fobo66.valiutchik.core.fake.FakeBankNameNormalizer
 import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
 import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
+import fobo66.valiutchik.core.fake.FakeFormattingDataSource
 import fobo66.valiutchik.core.fake.FakePersistenceDataSource
-import java.util.concurrent.Executors
+import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
+import fobo66.valiutchik.core.util.CurrencyName.RUB
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
@@ -30,47 +32,62 @@ import kotlinx.datetime.Clock
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.Executors
 
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
+  private val bestCourseDataSource = FakeBestCourseDataSource()
+  private val persistenceDataSource = FakePersistenceDataSource()
+  private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
+  private val formattingDataSource = FakeFormattingDataSource()
+  private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-    private val bestCourseDataSource = FakeBestCourseDataSource()
-    private val persistenceDataSource = FakePersistenceDataSource()
-    private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
-    private val bankNameNormalizer = FakeBankNameNormalizer()
-    private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-
-    private val currencyRateRepository: CurrencyRateRepository = CurrencyRateRepositoryImpl(
-        bestCourseDataSource,
-        persistenceDataSource,
-        currencyRatesDataSource,
-        bankNameNormalizer
+  private val currencyRateRepository: CurrencyRateRepository =
+    CurrencyRateRepositoryImpl(
+      bestCourseDataSource,
+      persistenceDataSource,
+      currencyRatesDataSource,
+      formattingDataSource,
     )
 
-    @AfterEach
-    fun tearDown() {
-        ioDispatcher.close()
+  @AfterEach
+  fun tearDown() {
+    ioDispatcher.close()
+  }
+
+  private val now = Clock.System.now()
+
+  @Test
+  fun `load exchange rates`() {
+    runTest {
+      currencyRateRepository.refreshExchangeRates("Minsk", now)
     }
 
-    private val now = Clock.System.now()
+    assertThat(persistenceDataSource.isSaved).isTrue()
+  }
 
-    @Test
-    fun `load exchange rates`() {
-        runTest {
-            currencyRateRepository.refreshExchangeRates("Minsk", now)
-        }
+  @Test
+  fun `do not load exchange rates when there was an error`() {
+    currencyRatesDataSource.isError = true
 
-        assertThat(persistenceDataSource.isSaved).isTrue()
+    runTest {
+      assertThrows<CurrencyRatesLoadFailedException> {
+        currencyRateRepository.refreshExchangeRates("Minsk", now)
+      }
     }
+  }
 
-    @Test
-    fun `do not load exchange rates when there was an error`() {
-        currencyRatesDataSource.isError = true
+  @Test
+  fun `normalize ruble rate`() {
+    val rate = BestCourse(id = 0, currencyValue = 0.0123, currencyName = RUB)
+    val result = currencyRateRepository.formatRate(rate)
+    assertThat(result).isEqualTo("1.23")
+  }
 
-        runTest {
-            assertThrows<CurrencyRatesLoadFailedException> {
-                currencyRateRepository.refreshExchangeRates("Minsk", now)
-            }
-        }
-    }
+  @Test
+  fun `do not normalize dollar rate`() {
+    val rate = BestCourse(id = 0, currencyValue = 1.23, currencyName = DOLLAR)
+    val result = currencyRateRepository.formatRate(rate)
+    assertThat(result).isEqualTo("1.23")
+  }
 }

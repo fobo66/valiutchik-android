@@ -28,8 +28,8 @@ import fobo66.valiutchik.core.util.CurrencyName
 data class BestCourse(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "bank") val bank: String = "",
-    @ColumnInfo(name = "currency_value") val currencyValue: String = "",
-    @ColumnInfo(name = "currency_name")
+  @ColumnInfo(name = "currency_value") val currencyValue: Double = 0.0,
+  @ColumnInfo(name = "currency_name")
     val currencyName: CurrencyName = CurrencyName.DOLLAR,
     @ColumnInfo(name = "timestamp") val timestamp: String = "",
     @ColumnInfo(name = "is_buy") val isBuy: Boolean = false

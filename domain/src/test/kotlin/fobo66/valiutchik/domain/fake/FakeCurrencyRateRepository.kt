@@ -23,12 +23,18 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.Instant
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
-    var isRefreshed = false
+  var isRefreshed = false
 
-    override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
-        isRefreshed = true
-    }
+  override suspend fun refreshExchangeRates(
+    city: String,
+    now: Instant,
+    defaultCity: String,
+  ) {
+    isRefreshed = true
+  }
 
-    override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
-        flowOf(emptyList())
+  override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
+    flowOf(emptyList())
+
+  override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
 }

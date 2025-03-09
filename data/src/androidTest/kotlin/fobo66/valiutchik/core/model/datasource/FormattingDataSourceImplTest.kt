@@ -18,38 +18,26 @@ package fobo66.valiutchik.core.model.datasource
 
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
-import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
-import fobo66.valiutchik.core.model.repository.URI_SCHEME
+import fobo66.valiutchik.core.fake.FakeBankNameNormalizer
 import org.junit.Test
+import java.util.Locale
 
 @SmallTest
-class UriDataSourceTest {
-  private val uriDataSource: UriDataSource = UriDataSourceImpl()
+class FormattingDataSourceImplTest {
+  private val locale = Locale.US
+  private val bankNameNormalizer = FakeBankNameNormalizer()
+  private val formattingDataSource: FormattingDataSource =
+    FormattingDataSourceImpl(locale, bankNameNormalizer)
 
   @Test
-  fun prepareHttpUri() {
-    val uri =
-      uriDataSource.prepareUri(
-        "https",
-        "example.com",
-        "key",
-        "value",
-      )
-
-    assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
+  fun formatCurrency() {
+    val rate = formattingDataSource.formatCurrencyValue(1.23)
+    assertThat(rate).isEqualTo("BYN 1.23")
   }
 
   @Test
-  fun prepareMapUri() {
-    val uri =
-      uriDataSource.prepareUri(
-        URI_SCHEME,
-        URI_AUTHORITY,
-        URI_PARAM_KEY,
-        "test",
-      )
-
-    assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+  fun formatLongCurrency() {
+    val rate = formattingDataSource.formatCurrencyValue(1.234567890)
+    assertThat(rate).isEqualTo("BYN 1.23")
   }
 }

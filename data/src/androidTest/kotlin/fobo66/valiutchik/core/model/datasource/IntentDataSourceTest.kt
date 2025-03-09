@@ -18,41 +18,39 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.content.Intent
 import android.net.Uri
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
+import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
+import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 
 @SmallTest
 class IntentDataSourceTest {
+  private val uri: Uri = Uri.parse("geo:0,0?q=test")
 
-    @get:Rule
-    val intentsRule = IntentsRule()
+  @get:Rule
+  val intentsRule = IntentsRule()
 
-    private val intentDataSource: IntentDataSource =
-        IntentDataSourceImpl(InstrumentationRegistry.getInstrumentation().targetContext)
+  private val intentDataSource: IntentDataSource =
+    IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
 
-    @Test
-    fun createIntent() {
-        val intent = intentDataSource.createIntent(Uri.EMPTY)
-        assertThat(intent, hasAction(Intent.ACTION_VIEW))
-    }
+  @Test
+  fun createIntent() {
+    val intent = intentDataSource.createIntent(Uri.EMPTY)
+    assertIntent(intent).hasAction(Intent.ACTION_VIEW)
+  }
 
-    @Test
-    fun canResolveIntent() {
-        val uri: Uri = Uri.parse("geo:0,0?q=test")
-        val intent = intentDataSource.createIntent(uri)
-        assertNotNull("Can resolve intent", intentDataSource.resolveIntent(intent))
-    }
+  @Test
+  fun canResolveIntent() {
+    val intent = intentDataSource.createIntent(uri)
+    assertThat(intentDataSource.resolveIntent(intent)).isNotNull()
+  }
 
-    @Test
-    fun cannotResolveEmptyIntent() {
-        val intent = intentDataSource.createIntent(Uri.EMPTY)
-        assertNull(intentDataSource.resolveIntent(intent))
-    }
+  @Test
+  fun cannotResolveEmptyIntent() {
+    val intent = intentDataSource.createIntent(Uri.EMPTY)
+    assertThat(intentDataSource.resolveIntent(intent)).isNull()
+  }
 }
