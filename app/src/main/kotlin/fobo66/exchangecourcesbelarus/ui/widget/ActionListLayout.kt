@@ -92,7 +92,6 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
  * @param titleBarAction action to be performed on click of the [titleBarActionIconRes] button.
  * @param items list of items to be included in the list; typically includes a short title, a
  *              supporting text and the action icon information.
- * @param checkedItems list of keys of items that are in "ON" / checked state.
  * @param actionButtonClick handler to toggle the state.
  */
 @Composable
@@ -103,7 +102,6 @@ fun ActionListLayout(
   titleBarActionIconContentDescription: String,
   titleBarAction: Action,
   items: List<ActionListItem>,
-  checkedItems: List<String>,
   actionButtonClick: (String) -> Unit,
   modifier: GlanceModifier = GlanceModifier
 ) {
@@ -142,7 +140,6 @@ fun ActionListLayout(
   ) {
     Content(
       items = items,
-      checkedItems = checkedItems,
       actionButtonOnClick = actionButtonClick,
     )
   }
@@ -151,7 +148,6 @@ fun ActionListLayout(
 @Composable
 private fun Content(
   items: List<ActionListItem>,
-  checkedItems: List<String>,
   actionButtonOnClick: (String) -> Unit,
 ) {
   val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
@@ -163,13 +159,11 @@ private fun Content(
       when (actionListLayoutSize) {
         Large -> GridView(
           items = items,
-          checkedItems = checkedItems,
           actionButtonOnClick = actionButtonOnClick
         )
 
         else -> ListView(
           items = items,
-          checkedItems = checkedItems,
           actionButtonOnClick = actionButtonOnClick
         )
       }
@@ -180,7 +174,6 @@ private fun Content(
 @Composable
 private fun ListView(
   items: List<ActionListItem>,
-  checkedItems: List<String>,
   actionButtonOnClick: (String) -> Unit,
 ) {
   RoundedScrollingLazyColumn(
@@ -200,7 +193,6 @@ private fun ListView(
 @Composable
 private fun GridView(
   items: List<ActionListItem>,
-  checkedItems: List<String>,
   actionButtonOnClick: (String) -> Unit,
 ) {
   RoundedScrollingLazyVerticalGrid(
@@ -496,7 +488,6 @@ private fun ActionListLayoutPreview() {
     titleBarActionIconContentDescription = "test",
     titleBarAction = action {},
     items = emptyList(),
-    checkedItems = listOf("1", "3"),
     actionButtonClick = {},
   )
 }
