@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -107,6 +107,7 @@ dependencies {
   testImplementation(libs.truth)
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
+  androidTestImplementation(libs.truth)
   androidTestImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.test.rules)
   androidTestImplementation(libs.androidx.test.junit)
