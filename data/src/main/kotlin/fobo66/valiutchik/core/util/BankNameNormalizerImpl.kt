@@ -19,7 +19,7 @@ package fobo66.valiutchik.core.util
 import kotlin.LazyThreadSafetyMode.NONE
 
 private const val QUOTE = '\"'
-private const val OPEN_TYPOGRAPHIC_QUOTE = '»'
+private const val OPEN_TYPOGRAPHIC_QUOTE = '«'
 private const val CLOSING_TYPOGRAPHIC_QUOTE = '»'
 
 class BankNameNormalizerImpl : BankNameNormalizer {
