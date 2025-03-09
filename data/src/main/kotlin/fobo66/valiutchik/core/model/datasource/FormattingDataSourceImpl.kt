@@ -23,6 +23,7 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import java.util.Locale
+import kotlin.LazyThreadSafetyMode.NONE
 
 private const val BYN = "BYN"
 
@@ -32,17 +33,21 @@ class FormattingDataSourceImpl(
 ) : FormattingDataSource {
   override fun formatBankName(name: String): String = bankNameNormalizer.normalize(name)
 
+  private val currency: Currency by lazy(NONE) {
+    Currency.getInstance(BYN)
+  }
+
   override fun formatCurrencyValue(value: Double): String =
     if (VERSION.SDK_INT >= VERSION_CODES.R) {
       NumberFormatter
         .withLocale(locale)
-        .unit(Currency.getInstance(BYN))
+        .unit(currency)
         .format(value)
         .toString()
     } else {
       val format =
         DecimalFormat.getCurrencyInstance(locale).apply {
-          currency = Currency.getInstance(BYN)
+          currency = currency
         }
 
       format.format(value)
