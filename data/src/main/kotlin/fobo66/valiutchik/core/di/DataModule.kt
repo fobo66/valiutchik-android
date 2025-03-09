@@ -79,7 +79,7 @@ val dataSourcesModule =
     }
 
     single<FormattingDataSource> {
-      FormattingDataSourceImpl(androidContext(), get())
+      FormattingDataSourceImpl(get(), get())
     }
 
     single<JsonDataSource> {
