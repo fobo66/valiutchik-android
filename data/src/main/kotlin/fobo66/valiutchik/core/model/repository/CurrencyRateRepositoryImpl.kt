@@ -25,19 +25,23 @@ import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
+import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import fobo66.valiutchik.core.util.BankNameNormalizer
+import fobo66.valiutchik.core.util.CurrencyName.RUB
+import fobo66.valiutchik.core.util.CurrencyName.UAH
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import java.io.IOException
 
+private const val EXCHANGE_RATE_NORMALIZER = 100
+
 class CurrencyRateRepositoryImpl(
   private val bestCourseDataSource: BestCourseDataSource,
   private val persistenceDataSource: PersistenceDataSource,
   private val currencyRatesDataSource: CurrencyRatesDataSource,
-  private val bankNameNormalizer: BankNameNormalizer,
+  private val formattingDataSource: FormattingDataSource,
 ) : CurrencyRateRepository {
   private val citiesMap: ScatterMap<String, String> by lazy(LazyThreadSafetyMode.NONE) {
     mutableScatterMapOf(
@@ -146,13 +150,21 @@ class CurrencyRateRepositoryImpl(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        bankNameNormalizer.normalize(currency.bankName),
-        currency.resolveCurrencyBuyRate(currencyKey),
+        formattingDataSource.formatBankName(currency.bankName),
+        currency.resolveCurrencyBuyRate(currencyKey).toDoubleOrNull() ?: 0.0,
         currencyKey,
         now,
         BUY_COURSE,
       )
     }
+
+  override fun formatRate(rate: BestCourse): String =
+    formattingDataSource.formatCurrencyValue(
+      when (rate.currencyName) {
+        RUB, UAH -> rate.currencyValue * EXCHANGE_RATE_NORMALIZER
+        else -> rate.currencyValue
+      },
+    )
 
   private fun resolveSellRates(
     currencies: Set<Bank>,
@@ -162,8 +174,8 @@ class CurrencyRateRepositoryImpl(
     .map { (currencyKey, currency) ->
       BestCourse(
         0L,
-        bankNameNormalizer.normalize(currency.bankName),
-        currency.resolveCurrencySellRate(currencyKey),
+        formattingDataSource.formatBankName(currency.bankName),
+        currency.resolveCurrencySellRate(currencyKey).toDoubleOrNull() ?: 0.0,
         currencyKey,
         now,
         SELL_COURSE,

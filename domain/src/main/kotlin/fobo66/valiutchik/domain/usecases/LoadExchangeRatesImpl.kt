@@ -16,10 +16,6 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import android.icu.number.NumberFormatter
-import android.icu.util.Currency
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import androidx.annotation.StringRes
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
@@ -34,7 +30,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
-import java.util.Locale
 import kotlin.LazyThreadSafetyMode.NONE
 
 class LoadExchangeRatesImpl(
@@ -73,7 +68,7 @@ class LoadExchangeRatesImpl(
 
           bestCourse.toBestCurrencyRate(
             currencyNameRes,
-            formatCurrencyValue(bestCourse.currencyValue),
+            currencyRateRepository.formatRate(bestCourse),
           )
         }
       }
@@ -93,20 +88,8 @@ class LoadExchangeRatesImpl(
     return labelRes ?: 0
   }
 
-  private fun formatCurrencyValue(rawValue: String): String =
-    if (VERSION.SDK_INT >= VERSION_CODES.R) {
-      NumberFormatter
-        .withLocale(Locale.getDefault())
-        .unit(Currency.getInstance("BYN"))
-        .format(rawValue.toDoubleOrNull() ?: 0.0)
-        .toString()
-    } else {
-      rawValue
-    }
-
   private fun BestCourse.toBestCurrencyRate(
     @StringRes currencyNameRes: Int,
-    currencyValue: String? = null,
-  ): BestCurrencyRate =
-    BestCurrencyRate(id, bank, currencyNameRes, currencyValue ?: this.currencyValue)
+    currencyValue: String,
+  ): BestCurrencyRate = BestCurrencyRate(id, bank, currencyNameRes, currencyValue)
 }

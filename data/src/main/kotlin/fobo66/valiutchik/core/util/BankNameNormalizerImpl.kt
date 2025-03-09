@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +16,20 @@
 
 package fobo66.valiutchik.core.util
 
+import kotlin.LazyThreadSafetyMode.NONE
+
+private const val QUOTE = '\"'
+private const val OPEN_TYPOGRAPHIC_QUOTE = '«'
+private const val CLOSING_TYPOGRAPHIC_QUOTE = '»'
+
 class BankNameNormalizerImpl : BankNameNormalizer {
-  private val quotes = "\"«»"
+  private val quotes by lazy(NONE) {
+    charArrayOf(QUOTE, OPEN_TYPOGRAPHIC_QUOTE, CLOSING_TYPOGRAPHIC_QUOTE)
+  }
 
   override fun normalize(bankName: String): String {
-    val startTypographicalQuotePosition = bankName.indexOfFirst { it == '«' }
-    val startQuotePosition = bankName.indexOfFirst { it == '\"' }
+    val startTypographicalQuotePosition = bankName.indexOfFirst { it == OPEN_TYPOGRAPHIC_QUOTE }
+    val startQuotePosition = bankName.indexOfFirst { it == QUOTE }
 
     if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {
       return bankName
@@ -31,10 +39,10 @@ class BankNameNormalizerImpl : BankNameNormalizer {
       if (startTypographicalQuotePosition == -1 ||
         (startQuotePosition in 1 until startTypographicalQuotePosition)
       ) {
-        val endQuotePosition = bankName.indexOf('\"', startQuotePosition + 1)
+        val endQuotePosition = bankName.indexOf(QUOTE, startQuotePosition + 1)
         bankName.substring(startQuotePosition + 1, endQuotePosition)
       } else {
-        val endQuotePosition = bankName.indexOfFirst { it == '»' }
+        val endQuotePosition = bankName.indexOfFirst { it == CLOSING_TYPOGRAPHIC_QUOTE }
         bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
       }
 

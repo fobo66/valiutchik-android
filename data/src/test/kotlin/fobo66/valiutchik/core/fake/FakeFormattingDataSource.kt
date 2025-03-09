@@ -14,21 +14,12 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.db
+package fobo66.valiutchik.core.fake
 
-import androidx.room.AutoMigration
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 
-@Database(
-    entities = [BestCourse::class],
-    version = 3,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3)
-    ]
-)
-abstract class CurrencyRatesDatabase : RoomDatabase() {
-    abstract fun currencyRatesDao(): CurrencyRatesDao
+class FakeFormattingDataSource : FormattingDataSource {
+  override fun formatCurrencyValue(value: Double): String = value.toString()
+
+  override fun formatBankName(name: String): String = name
 }
