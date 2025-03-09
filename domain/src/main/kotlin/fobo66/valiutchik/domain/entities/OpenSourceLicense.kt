@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ package fobo66.valiutchik.domain.entities
  * for the given dependency to consume on the presentation layer
  */
 data class OpenSourceLicense(
-  val developers: List<String>,
-  val licenses: List<String>,
-  val project: String,
-  val url: String?,
-  val version: String,
-  val year: String?
+    val developers: List<String>,
+    val licenses: List<String>,
+    val project: String,
+    val url: String?,
+    val version: String,
+    val year: String?
 )

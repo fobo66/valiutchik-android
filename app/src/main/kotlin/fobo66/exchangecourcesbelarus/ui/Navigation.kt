@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -52,118 +52,121 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun BestRatesScreenDestination(
-  snackbarHostState: SnackbarHostState,
-  permissionState: PermissionState,
-  modifier: Modifier = Modifier,
-  mainViewModel: MainViewModel = koinViewModel()
+    snackbarHostState: SnackbarHostState,
+    permissionState: PermissionState,
+    modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel = koinViewModel()
 ) {
-  val context = LocalContext.current
-  val mapLauncher =
-    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-      Napier.d("Opened map")
-    }
-
-  val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
-
-  val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
-
-  var isLocationPermissionPromptShown by rememberSaveable {
-    mutableStateOf(false)
-  }
-
-  val scope = rememberCoroutineScope()
-
-  LaunchedEffect(Unit) {
-    permissionState.launchPermissionRequest()
-  }
-
-  LaunchedEffect(permissionState.status) {
-    val isPermissionGranted = permissionState.status.isGranted
-    mainViewModel.handleLocationPermission(isPermissionGranted)
-    if (!isPermissionGranted) {
-      if (!isLocationPermissionPromptShown) {
-        isLocationPermissionPromptShown = true
-        showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
-      }
-    }
-  }
-  LaunchedEffect(viewState) {
-    if (viewState is MainScreenState.Error) {
-      showSnackbar(snackbarHostState, context.getString(string.get_data_error))
-    }
-  }
-  BestRatesGrid(
-    bestCurrencyRates = bestCurrencyRates,
-    onBestRateClick = { bankName ->
-      val mapIntent = mainViewModel.findBankOnMap(bankName)
-      if (mapIntent != null) {
-        mapLauncher.launch(
-          Intent.createChooser(mapIntent, context.getString(string.open_map))
-        )
-      } else {
-        scope.launch {
-          showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
+    val context = LocalContext.current
+    val mapLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            Napier.d("Opened map")
         }
-      }
-    },
-    onBestRateLongClick = { currencyName, currencyValue ->
-      mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
-      scope.launch {
-        showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
-      }
-    },
-    isRefreshing = viewState is MainScreenState.Loading,
-    onRefresh = mainViewModel::manualRefresh,
-    modifier = modifier
-  )
+
+    val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
+
+    val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
+
+    var isLocationPermissionPromptShown by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        permissionState.launchPermissionRequest()
+    }
+
+    LaunchedEffect(permissionState.status) {
+        val isPermissionGranted = permissionState.status.isGranted
+        mainViewModel.handleLocationPermission(isPermissionGranted)
+        if (!isPermissionGranted) {
+            if (!isLocationPermissionPromptShown) {
+                isLocationPermissionPromptShown = true
+                showSnackbar(
+                    snackbarHostState,
+                    context.getString(string.permission_description),
+                    Long
+                )
+            }
+        }
+    }
+    LaunchedEffect(viewState) {
+        if (viewState is MainScreenState.Error) {
+            showSnackbar(snackbarHostState, context.getString(string.get_data_error))
+        }
+    }
+    BestRatesGrid(
+        bestCurrencyRates = bestCurrencyRates,
+        onBestRateClick = { bankName ->
+            val mapIntent = mainViewModel.findBankOnMap(bankName)
+            if (mapIntent != null) {
+                mapLauncher.launch(
+                    Intent.createChooser(mapIntent, context.getString(string.open_map))
+                )
+            } else {
+                scope.launch {
+                    showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
+                }
+            }
+        },
+        onBestRateLongClick = { currencyName, currencyValue ->
+            mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+            scope.launch {
+                showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
+            }
+        },
+        isRefreshing = viewState is MainScreenState.Loading,
+        onRefresh = mainViewModel::manualRefresh,
+        modifier = modifier
+    )
 }
 
 private suspend fun showSnackbar(
-  snackbarHostState: SnackbarHostState,
-  message: String,
-  duration: SnackbarDuration = Short
+    snackbarHostState: SnackbarHostState,
+    message: String,
+    duration: SnackbarDuration = Short
 ) {
-  snackbarHostState.showSnackbar(
-    message = message,
-    duration = duration
-  )
+    snackbarHostState.showSnackbar(
+        message = message,
+        duration = duration
+    )
 }
 
 @Composable
 fun PreferenceScreen(
-  onLicensesClick: () -> Unit,
-  modifier: Modifier = Modifier,
-  preferencesViewModel: PreferencesViewModel = koinViewModel()
+    onLicensesClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
+    val defaultCity by preferencesViewModel.defaultCityPreference
+        .collectAsStateWithLifecycle()
 
-  val defaultCity by preferencesViewModel.defaultCityPreference
-    .collectAsStateWithLifecycle()
+    val updateInterval by preferencesViewModel.updateIntervalPreference
+        .collectAsStateWithLifecycle()
 
-  val updateInterval by preferencesViewModel.updateIntervalPreference
-    .collectAsStateWithLifecycle()
-
-  PreferenceScreenContent(
-    defaultCityValue = defaultCity,
-    updateIntervalValue = updateInterval,
-    onDefaultCityChange = preferencesViewModel::updateDefaultCity,
-    onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
-    onOpenSourceLicensesClick = onLicensesClick,
-    modifier = modifier
-  )
+    PreferenceScreenContent(
+        defaultCityValue = defaultCity,
+        updateIntervalValue = updateInterval,
+        onDefaultCityChange = preferencesViewModel::updateDefaultCity,
+        onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
+        onOpenSourceLicensesClick = onLicensesClick,
+        modifier = modifier
+    )
 }
 
 @Composable
 fun OpenSourceLicensesDestination(
-  modifier: Modifier = Modifier,
-  viewModel: OpenSourceLicensesViewModel = koinViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: OpenSourceLicensesViewModel = koinViewModel()
 ) {
-  val uriHandler = LocalUriHandler.current
+    val uriHandler = LocalUriHandler.current
 
-  val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
+    val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
 
-  OpenSourceLicensesScreen(
-    licensesState = licensesState,
-    onItemClick = uriHandler::openUri,
-    modifier = modifier
-  )
+    OpenSourceLicensesScreen(
+        licensesState = licensesState,
+        onItemClick = uriHandler::openUri,
+        modifier = modifier
+    )
 }

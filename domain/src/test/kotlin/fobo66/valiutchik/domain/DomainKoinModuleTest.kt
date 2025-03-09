@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,14 +24,14 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
 class DomainKoinModuleTest {
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check domain module`() {
-    domainModule.verify(
-      extraTypes = listOf(
-        HttpClientEngine::class,
-        HttpClientConfig::class
-      )
-    )
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check domain module`() {
+        domainModule.verify(
+            extraTypes = listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
+    }
 }

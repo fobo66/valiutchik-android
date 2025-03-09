@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,14 +21,13 @@ import fobo66.valiutchik.core.entities.BestCourse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
-class PersistenceDataSourceImpl(
-  private val database: CurrencyRatesDatabase
-) : PersistenceDataSource {
+class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
+    PersistenceDataSource {
 
-  override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-    database.currencyRatesDao().insertBestCurrencyRates(bestCourses)
-  }
+    override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
+        database.currencyRatesDao().insertBestCurrencyRates(bestCourses)
+    }
 
-  override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> =
-    database.currencyRatesDao().loadLatestBestCurrencyRates(latestTimestamp.toString())
+    override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> =
+        database.currencyRatesDao().loadLatestBestCurrencyRates(latestTimestamp.toString())
 }

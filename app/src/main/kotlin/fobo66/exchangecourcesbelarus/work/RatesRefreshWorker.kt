@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,23 +28,22 @@ import kotlinx.datetime.Clock
 const val WORKER_ARG_LOCATION_AVAILABLE = "isLocationAvailable"
 
 class RatesRefreshWorker(
-  private val refreshExchangeRates: ForceRefreshExchangeRates,
-  private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
-  appContext: Context,
-  params: WorkerParameters
-) :
-  CoroutineWorker(appContext, params) {
-  override suspend fun doWork(): Result = try {
-    val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
+    private val refreshExchangeRates: ForceRefreshExchangeRates,
+    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
+    appContext: Context,
+    params: WorkerParameters
+) : CoroutineWorker(appContext, params) {
+    override suspend fun doWork(): Result = try {
+        val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
 
-    if (isLocationAvailable) {
-      refreshExchangeRates.execute(Clock.System.now())
-    } else {
-      refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
+        if (isLocationAvailable) {
+            refreshExchangeRates.execute(Clock.System.now())
+        } else {
+            refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
+        }
+        Result.success()
+    } catch (e: CurrencyRatesLoadFailedException) {
+        Napier.e("Background refresh failed", e)
+        Result.failure()
     }
-    Result.success()
-  } catch (e: CurrencyRatesLoadFailedException) {
-    Napier.e("Background refresh failed", e)
-    Result.failure()
-  }
 }
