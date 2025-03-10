@@ -237,7 +237,7 @@ private fun FilledActionListItem(
         contentAlignment = Alignment.Center
       ) {
         Image(
-          provider = ImageProvider(item.stateIconRes),
+          provider = ImageProvider(R.drawable.ic_currency_exchange),
           modifier = GlanceModifier.size(stateIconSize),
           contentDescription = null, // already covered in list item container's description
           colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
@@ -247,7 +247,7 @@ private fun FilledActionListItem(
     headlineContent = {
       Text(
         text = item.title,
-        style = ActionListLayoutTextStyles.titleText(false),
+        style = ActionListLayoutTextStyles.titleText(),
         maxLines = 1,
         // Container's content description already reads this text
         modifier = GlanceModifier.semantics { contentDescription = "" }
@@ -395,18 +395,14 @@ private object ActionListLayoutTextStyles {
    * Style for the text displayed as title within each item.
    */
   @Composable
-  fun titleText(checked: Boolean): TextStyle = TextStyle(
+  fun titleText(): TextStyle = TextStyle(
     fontWeight = FontWeight.Medium,
     fontSize = if (ActionListLayoutSize.fromLocalSize() == Small) {
       14.sp // M3 Title Small
     } else {
       16.sp // M3 Title Medium
     },
-    color = if (checked) {
-      GlanceTheme.colors.onPrimary
-    } else {
-      GlanceTheme.colors.onSurface
-    }
+    color = GlanceTheme.colors.onSurface
   )
 
   /**
