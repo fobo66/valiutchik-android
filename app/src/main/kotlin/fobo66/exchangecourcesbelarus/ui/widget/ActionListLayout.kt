@@ -18,6 +18,7 @@ package fobo66.exchangecourcesbelarus.ui.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,7 +31,6 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
 import androidx.glance.action.action
-import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.components.CircleIconButton
 import androidx.glance.appwidget.components.Scaffold
@@ -39,6 +39,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
+import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
@@ -50,7 +51,6 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.MainActivity
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
@@ -61,6 +61,7 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.widget
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.showTitleBar
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 
 /**
  * A layout focused on presenting list of two-state actions represented by a title (1-2 words),
@@ -101,45 +102,50 @@ fun ActionListLayout(
   @DrawableRes titleBarActionIconRes: Int,
   titleBarActionIconContentDescription: String,
   titleBarAction: Action,
-  items: List<ActionListItem>,
-  actionButtonClick: (String) -> Unit,
-  modifier: GlanceModifier = GlanceModifier
+  items: List<BestCurrencyRate>,
+  itemClick: (String) -> Unit,
+  actionButtonClick: (String, String) -> Unit,
+  modifier: GlanceModifier = GlanceModifier,
 ) {
-  fun titleBar(): @Composable (() -> Unit) = {
-    TitleBar(
-      startIcon = ImageProvider(titleIconRes),
-      title = title.takeIf { ActionListLayoutSize.fromLocalSize() != Small } ?: "",
-      iconColor = GlanceTheme.colors.primary,
-      textColor = GlanceTheme.colors.onSurface,
-      actions = {
-        CircleIconButton(
-          imageProvider = ImageProvider(titleBarActionIconRes),
-          contentDescription = titleBarActionIconContentDescription,
-          contentColor = GlanceTheme.colors.secondary,
-          backgroundColor = null, // transparent
-          onClick = titleBarAction
-        )
-      }
-    )
-  }
+  fun titleBar(): @Composable (() -> Unit) =
+    {
+      TitleBar(
+        startIcon = ImageProvider(titleIconRes),
+        title = title.takeIf { ActionListLayoutSize.fromLocalSize() != Small } ?: "",
+        iconColor = GlanceTheme.colors.primary,
+        textColor = GlanceTheme.colors.onSurface,
+        actions = {
+          CircleIconButton(
+            imageProvider = ImageProvider(titleBarActionIconRes),
+            contentDescription = titleBarActionIconContentDescription,
+            contentColor = GlanceTheme.colors.secondary,
+            backgroundColor = null, // transparent
+            onClick = titleBarAction,
+          )
+        },
+      )
+    }
 
-  val scaffoldTopPadding = if (showTitleBar()) {
-    0.dp
-  } else {
-    widgetPadding
-  }
+  val scaffoldTopPadding =
+    if (showTitleBar()) {
+      0.dp
+    } else {
+      widgetPadding
+    }
 
   Scaffold(
     backgroundColor = GlanceTheme.colors.widgetBackground,
     modifier = modifier.padding(top = scaffoldTopPadding),
-    titleBar = if (showTitleBar()) {
-      titleBar()
-    } else {
-      null
-    },
+    titleBar =
+      if (showTitleBar()) {
+        titleBar()
+      } else {
+        null
+      },
   ) {
     Content(
       items = items,
+      itemClick = itemClick,
       actionButtonOnClick = actionButtonClick,
     )
   }
@@ -147,25 +153,31 @@ fun ActionListLayout(
 
 @Composable
 private fun Content(
-  items: List<ActionListItem>,
-  actionButtonOnClick: (String) -> Unit,
+  items: List<BestCurrencyRate>,
+  itemClick: (String) -> Unit,
+  actionButtonOnClick: (String, String) -> Unit,
+  modifier: GlanceModifier = GlanceModifier
 ) {
   val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
 
-  Box(modifier = GlanceModifier.padding(bottom = widgetPadding)) {
+  Box(modifier = modifier.padding(bottom = widgetPadding)) {
     if (items.isEmpty()) {
       EmptyListContent()
     } else {
       when (actionListLayoutSize) {
-        Large -> GridView(
-          items = items,
-          actionButtonOnClick = actionButtonOnClick
-        )
+        Large ->
+          GridView(
+            items = items,
+            itemClick = itemClick,
+            actionButtonOnClick = actionButtonOnClick,
+          )
 
-        else -> ListView(
-          items = items,
-          actionButtonOnClick = actionButtonOnClick
-        )
+        else ->
+          ListView(
+            items = items,
+            itemClick = itemClick,
+            actionButtonOnClick = actionButtonOnClick,
+          )
       }
     }
   }
@@ -173,40 +185,52 @@ private fun Content(
 
 @Composable
 private fun ListView(
-  items: List<ActionListItem>,
-  actionButtonOnClick: (String) -> Unit,
+  items: List<BestCurrencyRate>,
+  itemClick: (String) -> Unit,
+  actionButtonOnClick: (String, String) -> Unit,
+  modifier: GlanceModifier = GlanceModifier,
 ) {
   RoundedScrollingLazyColumn(
     modifier = GlanceModifier.fillMaxSize(),
     items = items,
     verticalItemsSpacing = verticalSpacing,
     itemContentProvider = { item ->
-      FilledActionListItem(
-        item = item,
+      CurrencyListItem(
+        rateId = item.id,
+        currencyName = stringResource(item.currencyNameRes),
+        currencyValue = item.currencyValue,
+        bankName = item.bank,
+        itemClick = itemClick,
         actionButtonClick = actionButtonOnClick,
-        modifier = GlanceModifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
       )
-    }
+    },
   )
 }
 
 @Composable
 private fun GridView(
-  items: List<ActionListItem>,
-  actionButtonOnClick: (String) -> Unit,
+  items: List<BestCurrencyRate>,
+  itemClick: (String) -> Unit,
+  actionButtonOnClick: (String, String) -> Unit,
+  modifier: GlanceModifier = GlanceModifier,
 ) {
   RoundedScrollingLazyVerticalGrid(
     gridCells = GRID_SIZE,
     items = items,
     cellSpacing = itemContentSpacing,
     itemContentProvider = { item ->
-      FilledActionListItem(
-        item = item,
+      CurrencyListItem(
+        rateId = item.id,
+        currencyName = stringResource(item.currencyNameRes),
+        currencyValue = item.currencyValue,
+        bankName = item.bank,
+        itemClick = itemClick,
         actionButtonClick = actionButtonOnClick,
-        modifier = GlanceModifier.fillMaxSize()
+        modifier = GlanceModifier.fillMaxSize(),
       )
     },
-    modifier = GlanceModifier.fillMaxSize(),
+    modifier = modifier.fillMaxSize(),
   )
 }
 
@@ -217,101 +241,128 @@ private fun GridView(
  */
 @OptIn(ExperimentalGlanceApi::class)
 @Composable
-private fun FilledActionListItem(
-  item: ActionListItem,
-  actionButtonClick: (String) -> Unit,
+private fun CurrencyListItem(
+  rateId: Long,
+  currencyName: String,
+  currencyValue: String,
+  bankName: String,
+  itemClick: (String) -> Unit,
+  actionButtonClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   ListItem(
-    modifier = modifier
-      // We set a combined content description on list item since entire item is clickable.
-      .semantics { contentDescription = combinedContentDescription(item) }
-      .filledContainer()
-      .clickable(key = "${LocalSize.current} ${item.key}") { actionButtonClick(item.key) },
+    modifier =
+      modifier
+        // We set a combined content description on list item since entire item is clickable.
+        .semantics {
+          contentDescription = combinedContentDescription(currencyName, currencyValue, bankName)
+        }.filledContainer()
+        .clickable(
+          key = "${LocalSize.current} $rateId",
+        ) { itemClick(currencyValue) },
     contentSpacing = itemContentSpacing,
-    leadingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
-      Box(
-        GlanceModifier
-          .size(stateIconBackgroundSize)
-          .cornerRadius(circularCornerRadius),
-        contentAlignment = Alignment.Center
-      ) {
-        Image(
-          provider = ImageProvider(R.drawable.ic_currency_exchange),
-          modifier = GlanceModifier.size(stateIconSize),
-          contentDescription = null, // already covered in list item container's description
-          colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
-        )
-      }
-    },
+    leadingContent =
+      takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
+        Box(
+          GlanceModifier
+            .size(stateIconBackgroundSize)
+            .cornerRadius(circularCornerRadius),
+          contentAlignment = Alignment.Center,
+        ) {
+          Image(
+            provider = ImageProvider(R.drawable.ic_currency_exchange),
+            modifier = GlanceModifier.size(stateIconSize),
+            contentDescription = null, // already covered in list item container's description
+            colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant),
+          )
+        }
+      },
     headlineContent = {
       Text(
-        text = item.title,
+        text = currencyName,
         style = ActionListLayoutTextStyles.titleText(),
         maxLines = 1,
         // Container's content description already reads this text
-        modifier = GlanceModifier.semantics { contentDescription = "" }
+        modifier = GlanceModifier.semantics { contentDescription = "" },
       )
     },
     supportingContent = {
       Text(
-        text = item.offSupportingText,
-        style = ActionListLayoutTextStyles.supportingText(false),
+        text = currencyValue,
         maxLines = 2,
+        style = ActionListLayoutTextStyles.mainText(),
         // Container's content description already reads this text
-        modifier = GlanceModifier.semantics { contentDescription = "" }
+        modifier = GlanceModifier.semantics { contentDescription = "" },
       )
-    },
-    trailingContent = if (item.trailingIconButtonRes != null) {
-      {
-        CircleIconButton(
-          imageProvider = ImageProvider(item.trailingIconButtonRes),
-          contentDescription = item.trailingIconButtonContentDescription,
-          onClick = actionStartActivity<MainActivity>(),
-          backgroundColor = null,
-          contentColor = GlanceTheme.colors.onSurface
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Image(
+          provider = ImageProvider(R.drawable.ic_bank),
+          contentDescription = stringResource(id = R.string.bank_name_indicator),
+        )
+        Text(
+          text = bankName,
+          style = ActionListLayoutTextStyles.supportingText(),
+          modifier = GlanceModifier.padding(start = 8.dp),
         )
       }
-    } else {
-      null
-    }
+    },
+    trailingContent = {
+      CircleIconButton(
+        imageProvider = ImageProvider(R.drawable.ic_show_on_map),
+        contentDescription = stringResource(R.string.open_map),
+        onClick =
+          action(key = "${LocalSize.current} $rateId") {
+            actionButtonClick(
+              currencyName,
+              currencyValue,
+            )
+          },
+        backgroundColor = null,
+        contentColor = GlanceTheme.colors.onSurface,
+      )
+    },
   )
 }
 
 /**
  * Returns a combined content description that can be set on entire list item.
  */
-private fun combinedContentDescription(item: ActionListItem): String = buildString {
-  append(item.title)
-  append(" ")
-  append(item.offSupportingText)
-  append(" ")
-  append(item.offStartActionContentDescription)
-}
+private fun combinedContentDescription(
+  currencyName: String,
+  currencyValue: String,
+  bankName: String,
+): String =
+  buildString {
+    append(currencyName)
+    append(" ")
+    append(currencyValue)
+    append(" ")
+    append(bankName)
+  }
 
 /** Returns the provided [block] composable if [predicate] is true, else returns null */
 @Composable
 private inline fun takeComposableIf(
   predicate: Boolean,
   crossinline block: @Composable () -> Unit,
-): (@Composable () -> Unit)? {
-  return if (predicate) {
+): (@Composable () -> Unit)? =
+  if (predicate) {
     { block() }
   } else {
     null
   }
-}
 
 /**
  * Converts an item into a filled container by applying the background color, padding and an
  * appropriate corner radius.
  */
 @Composable
-private fun GlanceModifier.filledContainer(): GlanceModifier {
-  return cornerRadius(ActionListLayoutDimensions.filledItemCornerRadius)
+private fun GlanceModifier.filledContainer(): GlanceModifier =
+  cornerRadius(ActionListLayoutDimensions.filledItemCornerRadius)
     .padding(ActionListLayoutDimensions.filledItemPadding)
     .background(GlanceTheme.colors.secondaryContainer)
-}
 
 /**
  * Holds data corresponding to each item in a
@@ -355,7 +406,9 @@ data class ActionListItem(
  *
  * In this layout, only width breakpoints are used to scale the layout.
  */
-private enum class ActionListLayoutSize(val maxWidth: Dp) {
+private enum class ActionListLayoutSize(
+  val maxWidth: Dp,
+) {
   // Single column list - compact view e.g. reduced fonts.
   Small(maxWidth = 260.dp),
 
@@ -363,7 +416,8 @@ private enum class ActionListLayoutSize(val maxWidth: Dp) {
   Medium(maxWidth = 439.dp),
 
   // 2 Column Grid
-  Large(maxWidth = 644.dp);
+  Large(maxWidth = 644.dp),
+  ;
 
   companion object {
     /**
@@ -384,9 +438,7 @@ private enum class ActionListLayoutSize(val maxWidth: Dp) {
     }
 
     @Composable
-    fun showTitleBar(): Boolean {
-      return LocalSize.current.height >= 180.dp
-    }
+    fun showTitleBar(): Boolean = LocalSize.current.height >= 180.dp
   }
 }
 
@@ -395,29 +447,38 @@ private object ActionListLayoutTextStyles {
    * Style for the text displayed as title within each item.
    */
   @Composable
-  fun titleText(): TextStyle = TextStyle(
-    fontWeight = FontWeight.Medium,
-    fontSize = if (ActionListLayoutSize.fromLocalSize() == Small) {
-      14.sp // M3 Title Small
-    } else {
-      16.sp // M3 Title Medium
-    },
-    color = GlanceTheme.colors.onSurface
-  )
+  fun titleText(): TextStyle =
+    TextStyle(
+      fontWeight = FontWeight.Medium,
+      fontSize =
+        if (ActionListLayoutSize.fromLocalSize() == Small) {
+          14.sp // M3 Title Small
+        } else {
+          16.sp // M3 Title Medium
+        },
+      color = GlanceTheme.colors.onSurface,
+    )
 
   /**
    * Style for the text displayed as supporting text within each item.
    */
   @Composable
-  fun supportingText(isChecked: Boolean): TextStyle =
+  fun mainText(): TextStyle =
+    TextStyle(
+      color = GlanceTheme.colors.primary,
+      fontSize = 24.sp,
+      fontWeight = FontWeight.Bold,
+    )
+
+  /**
+   * Style for the text displayed as supporting text within each item.
+   */
+  @Composable
+  fun supportingText(): TextStyle =
     TextStyle(
       fontWeight = FontWeight.Normal,
       fontSize = 12.sp, // M3 Label Medium
-      color = if (isChecked) {
-        GlanceTheme.colors.onPrimary
-      } else {
-        GlanceTheme.colors.onSurfaceVariant
-      }
+      color = GlanceTheme.colors.onSurfaceVariant,
     )
 }
 
@@ -484,6 +545,7 @@ private fun ActionListLayoutPreview() {
     titleBarActionIconContentDescription = "test",
     titleBarAction = action {},
     items = emptyList(),
-    actionButtonClick = {},
+    actionButtonClick = {_, _ ->},
+    itemClick = {}
   )
 }
