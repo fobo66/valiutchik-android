@@ -39,6 +39,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
+import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
@@ -156,7 +157,7 @@ private fun Content(
   items: List<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
-  modifier: GlanceModifier = GlanceModifier
+  modifier: GlanceModifier = GlanceModifier,
 ) {
   val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
 
@@ -191,7 +192,7 @@ private fun ListView(
   modifier: GlanceModifier = GlanceModifier,
 ) {
   RoundedScrollingLazyColumn(
-    modifier = GlanceModifier.fillMaxSize(),
+    modifier = modifier.fillMaxSize(),
     items = items,
     verticalItemsSpacing = verticalSpacing,
     itemContentProvider = { item ->
@@ -202,7 +203,7 @@ private fun ListView(
         bankName = item.bank,
         itemClick = itemClick,
         actionButtonClick = actionButtonOnClick,
-        modifier = modifier.fillMaxSize(),
+        modifier = GlanceModifier.fillMaxSize(),
       )
     },
   )
@@ -287,26 +288,7 @@ private fun CurrencyListItem(
       )
     },
     supportingContent = {
-      Text(
-        text = currencyValue,
-        maxLines = 2,
-        style = ActionListLayoutTextStyles.mainText(),
-        // Container's content description already reads this text
-        modifier = GlanceModifier.semantics { contentDescription = "" },
-      )
-      Row(
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        Image(
-          provider = ImageProvider(R.drawable.ic_bank),
-          contentDescription = stringResource(id = R.string.bank_name_indicator),
-        )
-        Text(
-          text = bankName,
-          style = ActionListLayoutTextStyles.supportingText(),
-          modifier = GlanceModifier.padding(start = 8.dp),
-        )
-      }
+      CurrencyValueContent(currencyValue, bankName)
     },
     trailingContent = {
       CircleIconButton(
@@ -324,6 +306,36 @@ private fun CurrencyListItem(
       )
     },
   )
+}
+
+@Composable
+private fun CurrencyValueContent(
+  currencyValue: String,
+  bankName: String,
+  modifier: GlanceModifier = GlanceModifier,
+) {
+  Column(modifier = modifier) {
+    Text(
+      text = currencyValue,
+      maxLines = 2,
+      style = ActionListLayoutTextStyles.mainText(),
+      // Container's content description already reads this text
+      modifier = GlanceModifier.semantics { contentDescription = "" },
+    )
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      Image(
+        provider = ImageProvider(R.drawable.ic_bank),
+        contentDescription = stringResource(id = R.string.bank_name_indicator),
+      )
+      Text(
+        text = bankName,
+        style = ActionListLayoutTextStyles.supportingText(),
+        modifier = GlanceModifier.padding(start = 8.dp),
+      )
+    }
+  }
 }
 
 /**
@@ -545,7 +557,7 @@ private fun ActionListLayoutPreview() {
     titleBarActionIconContentDescription = "test",
     titleBarAction = action {},
     items = emptyList(),
-    actionButtonClick = {_, _ ->},
-    itemClick = {}
+    actionButtonClick = { _, _ -> },
+    itemClick = {},
   )
 }
