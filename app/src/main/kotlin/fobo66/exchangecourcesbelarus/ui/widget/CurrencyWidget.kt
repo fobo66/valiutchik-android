@@ -20,27 +20,17 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
-import androidx.glance.GlanceTheme
+import androidx.glance.LocalContext
+import androidx.glance.action.action
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.appWidgetBackground
-import androidx.glance.appwidget.cornerRadius
-import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
-import androidx.glance.background
-import androidx.glance.layout.Column
-import androidx.glance.layout.padding
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
-import androidx.glance.text.FontWeight
-import androidx.glance.text.Text
-import androidx.glance.text.TextStyle
+import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
@@ -74,32 +64,19 @@ fun CurrencyWidgetContent(
   rates: List<BestCurrencyRate>,
   modifier: GlanceModifier = GlanceModifier,
 ) {
-  LazyColumn(
-    modifier =
-      modifier
-        .background(GlanceTheme.colors.widgetBackground)
-        .appWidgetBackground()
-        .cornerRadius(16.dp),
-  ) {
-    items(rates, { item -> item.id }) {
-      Column(modifier = GlanceModifier.padding(16.dp)) {
-        Text(
-          text = stringResource(it.currencyNameRes),
-          style = TextStyle(color = GlanceTheme.colors.primary),
-        )
-        Text(
-          text = it.currencyValue,
-          style =
-            TextStyle(
-              color = GlanceTheme.colors.primary,
-              fontSize = 24.sp,
-              fontWeight = FontWeight.Bold,
-            ),
-        )
-        Text(text = it.bank, style = TextStyle(color = GlanceTheme.colors.primary))
-      }
-    }
-  }
+  val context = LocalContext.current
+
+  ActionListLayout(
+    title = context.getString(R.string.app_name),
+    titleIconRes = R.drawable.ic_launcher_foreground,
+    titleBarActionIconRes = R.drawable.ic_refresh,
+    titleBarActionIconContentDescription = "Refresh",
+    titleBarAction = action { },
+    items = rates,
+    actionButtonClick = { _, _ -> },
+    itemClick = {},
+    modifier = modifier,
+  )
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -113,7 +90,12 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 private fun CurrencyWidgetPreview() {
   CurrencyWidgetContent(
     listOf(
-      BestCurrencyRate(0, "test", fobo66.valiutchik.domain.R.string.currency_name_eur_buy, "1.23"),
+      BestCurrencyRate(
+        0,
+        "test",
+        fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
+        "1.23",
+      ),
     ),
   )
 }

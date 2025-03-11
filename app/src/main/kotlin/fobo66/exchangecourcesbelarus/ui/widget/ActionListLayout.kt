@@ -18,7 +18,6 @@ package fobo66.exchangecourcesbelarus.ui.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,6 +27,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
 import androidx.glance.action.action
@@ -63,7 +63,6 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.sh
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 /**
@@ -193,6 +192,8 @@ private fun ListView(
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
+  val context = LocalContext.current
+
   RoundedScrollingLazyColumn(
     modifier = modifier.fillMaxSize(),
     items = items,
@@ -200,7 +201,7 @@ private fun ListView(
     itemContentProvider = { item ->
       CurrencyListItem(
         rateId = item.id,
-        currencyName = stringResource(item.currencyNameRes),
+        currencyName = context.getString(item.currencyNameRes),
         currencyValue = item.currencyValue,
         bankName = item.bank,
         itemClick = itemClick,
@@ -218,6 +219,8 @@ private fun GridView(
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
+  val context = LocalContext.current
+
   RoundedScrollingLazyVerticalGrid(
     gridCells = GRID_SIZE,
     items = items,
@@ -225,7 +228,7 @@ private fun GridView(
     itemContentProvider = { item ->
       CurrencyListItem(
         rateId = item.id,
-        currencyName = stringResource(item.currencyNameRes),
+        currencyName = context.getString(item.currencyNameRes),
         currencyValue = item.currencyValue,
         bankName = item.bank,
         itemClick = itemClick,
@@ -253,6 +256,8 @@ private fun CurrencyListItem(
   actionButtonClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
+  val context = LocalContext.current
+
   ListItem(
     modifier =
       modifier
@@ -295,7 +300,7 @@ private fun CurrencyListItem(
     trailingContent = {
       CircleIconButton(
         imageProvider = ImageProvider(R.drawable.ic_show_on_map),
-        contentDescription = stringResource(R.string.open_map),
+        contentDescription = context.getString(R.string.open_map),
         onClick =
           action(key = "${LocalSize.current} $rateId") {
             actionButtonClick(
@@ -316,6 +321,8 @@ private fun CurrencyValueContent(
   bankName: String,
   modifier: GlanceModifier = GlanceModifier,
 ) {
+  val context = LocalContext.current
+
   Column(modifier = modifier) {
     Text(
       text = currencyValue,
@@ -329,7 +336,7 @@ private fun CurrencyValueContent(
     ) {
       Image(
         provider = ImageProvider(R.drawable.ic_bank),
-        contentDescription = stringResource(id = R.string.bank_name_indicator),
+        contentDescription = context.getString(R.string.bank_name_indicator),
       )
       Text(
         text = bankName,
