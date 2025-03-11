@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
-import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.appWidgetBackground
@@ -44,7 +44,6 @@ import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -58,21 +57,20 @@ class CurrencyWidget :
     context: Context,
     id: GlanceId,
   ) = provideContent {
-    val rates: List<BestCurrencyRate> by loadExchangeRates
+    val rates by loadExchangeRates
       .execute(Clock.System.now())
       .collectAsState(
-        initial = persistentListOf(),
+        initial = emptyList(),
       )
 
     ValiutchikWidgetTheme {
-      CurrencyWidgetContent(context = context, rates = rates)
+      CurrencyWidgetContent(rates = rates)
     }
   }
 }
 
 @Composable
 fun CurrencyWidgetContent(
-  context: Context,
   rates: List<BestCurrencyRate>,
   modifier: GlanceModifier = GlanceModifier,
 ) {
@@ -86,7 +84,7 @@ fun CurrencyWidgetContent(
     items(rates, { item -> item.id }) {
       Column(modifier = GlanceModifier.padding(16.dp)) {
         Text(
-          text = context.getString(it.currencyNameRes),
+          text = stringResource(it.currencyNameRes),
           style = TextStyle(color = GlanceTheme.colors.primary),
         )
         Text(
@@ -114,8 +112,7 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 @Composable
 private fun CurrencyWidgetPreview() {
   CurrencyWidgetContent(
-    LocalContext.current,
-    persistentListOf(
+    listOf(
       BestCurrencyRate(0, "test", fobo66.valiutchik.domain.R.string.currency_name_eur_buy, "1.23"),
     ),
   )

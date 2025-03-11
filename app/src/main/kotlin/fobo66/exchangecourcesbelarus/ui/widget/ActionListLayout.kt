@@ -105,7 +105,7 @@ fun ActionListLayout(
   @DrawableRes titleBarActionIconRes: Int,
   titleBarActionIconContentDescription: String,
   titleBarAction: Action,
-  items: ImmutableList<BestCurrencyRate>,
+  items: List<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -156,7 +156,7 @@ fun ActionListLayout(
 
 @Composable
 private fun Content(
-  items: ImmutableList<BestCurrencyRate>,
+  items: List<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -188,7 +188,7 @@ private fun Content(
 
 @Composable
 private fun ListView(
-  items: ImmutableList<BestCurrencyRate>,
+  items: List<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -213,7 +213,7 @@ private fun ListView(
 
 @Composable
 private fun GridView(
-  items: ImmutableList<BestCurrencyRate>,
+  items: List<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
