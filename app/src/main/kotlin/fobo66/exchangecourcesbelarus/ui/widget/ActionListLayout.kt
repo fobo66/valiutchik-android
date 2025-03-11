@@ -378,7 +378,6 @@ private fun GlanceModifier.filledContainer(): GlanceModifier =
     .padding(ActionListLayoutDimensions.filledItemPadding)
     .background(GlanceTheme.colors.secondaryContainer)
 
-
 /**
  * Size of the widget per the reference breakpoints. Each size has its own display
  * characteristics such as - showing content as list vs grid, font sizes etc.
