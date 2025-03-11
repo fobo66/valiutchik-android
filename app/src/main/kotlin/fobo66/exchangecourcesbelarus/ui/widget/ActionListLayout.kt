@@ -63,6 +63,8 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.sh
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * A layout focused on presenting list of two-state actions represented by a title (1-2 words),
@@ -103,7 +105,7 @@ fun ActionListLayout(
   @DrawableRes titleBarActionIconRes: Int,
   titleBarActionIconContentDescription: String,
   titleBarAction: Action,
-  items: List<BestCurrencyRate>,
+  items: ImmutableList<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -154,7 +156,7 @@ fun ActionListLayout(
 
 @Composable
 private fun Content(
-  items: List<BestCurrencyRate>,
+  items: ImmutableList<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -186,7 +188,7 @@ private fun Content(
 
 @Composable
 private fun ListView(
-  items: List<BestCurrencyRate>,
+  items: ImmutableList<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -211,7 +213,7 @@ private fun ListView(
 
 @Composable
 private fun GridView(
-  items: List<BestCurrencyRate>,
+  items: ImmutableList<BestCurrencyRate>,
   itemClick: (String) -> Unit,
   actionButtonOnClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
@@ -376,41 +378,6 @@ private fun GlanceModifier.filledContainer(): GlanceModifier =
     .padding(ActionListLayoutDimensions.filledItemPadding)
     .background(GlanceTheme.colors.secondaryContainer)
 
-/**
- * Holds data corresponding to each item in a
- * [ActionListLayout].
- *
- * @param key a unique identifier for a specific item
- * @param title a short text (1-2 words) representing the item
- * @param onSupportingText a compact text (~20 characters) that supports the [title] and provides
- *                         textual indication of "ON" state of item; this allows keeping the title
- *                         short and glanceable.
- * @param offSupportingText a compact text (~20 characters) that supports the [title] and provides
- *  *                         textual indication of "OFF" state of item; this allows keeping the title
- *  *                         short and glanceable.
- * @param stateIconRes a tintable icon that can represents the item and that can be presented on
- *                        a colored background to indicate the current state (e.g. bulb ON / OFF).
- *                        On click of this icon, the item's state will be toggled.
- * @param onStateActionContentDescription text to describe what happens on click of the list item
- *                                        when item is in "ON" (checked) state; appended to the
- *                                        title and supporting text when used by the the
- *                                        accessibility services.
- * @param offStartActionContentDescription text to describe what happens on click of the list item
- *                                        when item is in "OFF" (un-checked) state; appended to the
- *                                        title and supporting text when used by the the
- *                                        accessibility services.
- */
-data class ActionListItem(
-  val key: String,
-  val title: String,
-  val onSupportingText: String,
-  val offSupportingText: String,
-  @DrawableRes val stateIconRes: Int,
-  val onStateActionContentDescription: String,
-  val offStartActionContentDescription: String,
-  @DrawableRes val trailingIconButtonRes: Int? = null,
-  val trailingIconButtonContentDescription: String? = null,
-)
 
 /**
  * Size of the widget per the reference breakpoints. Each size has its own display
@@ -556,7 +523,7 @@ private fun ActionListLayoutPreview() {
     titleBarActionIconRes = R.drawable.ic_launcher_foreground,
     titleBarActionIconContentDescription = "test",
     titleBarAction = action {},
-    items = emptyList(),
+    items = persistentListOf(),
     actionButtonClick = { _, _ -> },
     itemClick = {},
   )
