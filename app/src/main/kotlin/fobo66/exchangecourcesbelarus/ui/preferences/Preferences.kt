@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +46,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
-import androidx.xr.compose.spatial.SpatialDialog
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.ui.TAG_SLIDER
 import kotlin.math.roundToInt
@@ -61,12 +62,14 @@ fun TextPreference(
 ) {
     ListItem(
         headlineContent = title,
-        supportingContent = summary ?: {
+        supportingContent =
+        summary ?: {
             Text(
                 text = summaryProvider()
             )
         },
-        modifier = modifier.clickable(onClick = {
+        modifier =
+        modifier.clickable(onClick = {
             if (enabled) {
                 onClick?.invoke()
             }
@@ -110,6 +113,7 @@ fun ListPreference(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListPreferenceDialog(
     onDismiss: () -> Unit,
@@ -119,16 +123,16 @@ private fun ListPreferenceDialog(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    SpatialDialog(
+    BasicAlertDialog(
         onDismissRequest = onDismiss
     ) {
         Column(
-            modifier = modifier
+            modifier =
+            modifier
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.large
-                )
-                .padding(24.dp)
+                ).padding(24.dp)
         ) {
             ProvideTextStyle(MaterialTheme.typography.headlineSmall) {
                 title()
@@ -144,7 +148,8 @@ private fun ListPreferenceDialog(
                         leadingContent = {
                             RadioButton(
                                 selected = value == current.value,
-                                modifier = Modifier.semantics {
+                                modifier =
+                                Modifier.semantics {
                                     stateDescription = current.key
                                 },
                                 onClick = {
@@ -155,10 +160,12 @@ private fun ListPreferenceDialog(
                                 }
                             )
                         },
-                        colors = ListItemDefaults.colors(
+                        colors =
+                        ListItemDefaults.colors(
                             containerColor = Color.Transparent
                         ),
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .clickable(onClick = {
                                 if (value != current.value) {
                                     onValueChange(current.value)
