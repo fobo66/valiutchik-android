@@ -87,7 +87,7 @@ class CurrencyWidget :
             mapIntent?.let {
               Intent.createChooser(it, context.getString(R.string.open_map))
             }
-          }
+          },
         )
       }
     }

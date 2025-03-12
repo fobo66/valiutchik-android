@@ -334,6 +334,7 @@ private fun CurrencyValueContent(
     ) {
       Image(
         provider = ImageProvider(R.drawable.ic_bank),
+        colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
         contentDescription = context.getString(R.string.bank_name_indicator),
       )
       Text(
