@@ -21,17 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
-import androidx.glance.action.Action
 import androidx.glance.action.action
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
 import androidx.glance.preview.ExperimentalGlancePreviewApi
-import androidx.glance.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -71,13 +69,12 @@ class CurrencyWidget :
       ValiutchikWidgetTheme {
         CurrencyWidgetContent(
           rates = rates,
-          titleBarAction =
-            action {
-              scope.launch {
-                refreshExchangeRates.execute(Clock.System.now())
-                update(context, id)
-              }
-            },
+          onTitleBarActionClick = {
+            scope.launch {
+              refreshExchangeRates.execute(Clock.System.now())
+              update(context, id)
+            }
+          },
         )
       }
     }
@@ -87,7 +84,7 @@ class CurrencyWidget :
 @Composable
 fun CurrencyWidgetContent(
   rates: ImmutableList<BestCurrencyRate>,
-  titleBarAction: Action,
+  onTitleBarActionClick: () -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val context = LocalContext.current
@@ -96,8 +93,8 @@ fun CurrencyWidgetContent(
     title = context.getString(R.string.app_name),
     titleIconRes = R.drawable.ic_launcher_foreground,
     titleBarActionIconRes = R.drawable.ic_refresh,
-    titleBarActionIconContentDescription = "Refresh",
-    titleBarAction = titleBarAction,
+    titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
+    titleBarAction = action(null, onTitleBarActionClick),
     items = rates,
     actionButtonClick = { _, _ -> },
     itemClick = {},
@@ -111,7 +108,9 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 140, heightDp = 160)
+@PreviewSmallWidget
+@PreviewMediumWidget
+@PreviewLargeWidget
 @Composable
 private fun CurrencyWidgetPreview() {
   CurrencyWidgetContent(
@@ -123,7 +122,13 @@ private fun CurrencyWidgetPreview() {
           fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
           "1.23",
         ),
+        BestCurrencyRate(
+          1,
+          "test",
+          fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
+          "1.23",
+        ),
       ),
-    titleBarAction = action { },
+    onTitleBarActionClick = {},
   )
 }
