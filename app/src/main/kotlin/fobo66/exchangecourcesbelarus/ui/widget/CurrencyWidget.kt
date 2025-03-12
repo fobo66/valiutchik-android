@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.res.stringResource
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
@@ -113,22 +112,24 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 @PreviewLargeWidget
 @Composable
 private fun CurrencyWidgetPreview() {
-  CurrencyWidgetContent(
-    rates =
-      persistentListOf(
-        BestCurrencyRate(
-          0,
-          "test",
-          fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
-          "1.23",
+  ValiutchikWidgetTheme {
+    CurrencyWidgetContent(
+      rates =
+        persistentListOf(
+          BestCurrencyRate(
+            0,
+            "test",
+            fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
+            "1.23",
+          ),
+          BestCurrencyRate(
+            1,
+            "test",
+            fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
+            "1.23",
+          ),
         ),
-        BestCurrencyRate(
-          1,
-          "test",
-          fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
-          "1.23",
-        ),
-      ),
-    onTitleBarActionClick = {},
-  )
+      onTitleBarActionClick = {},
+    )
+  }
 }
