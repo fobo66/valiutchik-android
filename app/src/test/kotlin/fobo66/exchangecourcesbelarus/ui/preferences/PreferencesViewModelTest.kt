@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,80 +36,80 @@ import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesViewModelTest {
-  private lateinit var viewModel: PreferencesViewModel
+    private lateinit var viewModel: PreferencesViewModel
 
-  val defaultCity = MutableStateFlow("test")
-  val updateInterval = MutableStateFlow(1f)
+    val defaultCity = MutableStateFlow("test")
+    val updateInterval = MutableStateFlow(1f)
 
-  private val loadUpdateIntervalPreference = object : LoadUpdateIntervalPreference {
-    override fun execute(): Flow<Float> = updateInterval
-  }
-
-  private val loadDefaultCityPreference = object : LoadDefaultCityPreference {
-    override fun execute(): Flow<String> = defaultCity
-  }
-
-  private val updateUpdateIntervalPreference = object : UpdateUpdateIntervalPreference {
-    override suspend fun execute(newUpdateInterval: Float) {
-      updateInterval.emit(newUpdateInterval)
+    private val loadUpdateIntervalPreference = object : LoadUpdateIntervalPreference {
+        override fun execute(): Flow<Float> = updateInterval
     }
-  }
 
-  private val updateDefaultCityPreference = object : UpdateDefaultCityPreference {
-    override suspend fun execute(newDefaultCity: String) {
-      defaultCity.emit(newDefaultCity)
+    private val loadDefaultCityPreference = object : LoadDefaultCityPreference {
+        override fun execute(): Flow<String> = defaultCity
     }
-  }
 
-  @BeforeEach
-  fun setUp() {
-    Dispatchers.setMain(UnconfinedTestDispatcher())
-    viewModel = PreferencesViewModel(
-      loadDefaultCityPreference,
-      loadUpdateIntervalPreference,
-      updateDefaultCityPreference,
-      updateUpdateIntervalPreference
-    )
-  }
-
-  @AfterEach
-  fun tearDown() {
-    Dispatchers.resetMain()
-  }
-
-  @Test
-  fun `load default city pref`() = runTest {
-    viewModel.defaultCityPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals("test", awaitItem)
+    private val updateUpdateIntervalPreference = object : UpdateUpdateIntervalPreference {
+        override suspend fun execute(newUpdateInterval: Float) {
+            updateInterval.emit(newUpdateInterval)
+        }
     }
-  }
 
-  @Test
-  fun `update default city pref`() = runTest {
-    viewModel.updateDefaultCity("newcity")
-
-    viewModel.defaultCityPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals("newcity", awaitItem)
+    private val updateDefaultCityPreference = object : UpdateDefaultCityPreference {
+        override suspend fun execute(newDefaultCity: String) {
+            defaultCity.emit(newDefaultCity)
+        }
     }
-  }
 
-  @Test
-  fun `load update interval pref`() = runTest {
-    viewModel.updateIntervalPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals(1f, awaitItem)
+    @BeforeEach
+    fun setUp() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+        viewModel = PreferencesViewModel(
+            loadDefaultCityPreference,
+            loadUpdateIntervalPreference,
+            updateDefaultCityPreference,
+            updateUpdateIntervalPreference
+        )
     }
-  }
 
-  @Test
-  fun `update update interval pref`() = runTest {
-    viewModel.updateUpdateInterval(3f)
-
-    viewModel.updateIntervalPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals(3f, awaitItem)
+    @AfterEach
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
-  }
+
+    @Test
+    fun `load default city pref`() = runTest {
+        viewModel.defaultCityPreference.test {
+            val awaitItem = awaitItem()
+            assertEquals("test", awaitItem)
+        }
+    }
+
+    @Test
+    fun `update default city pref`() = runTest {
+        viewModel.updateDefaultCity("newcity")
+
+        viewModel.defaultCityPreference.test {
+            val awaitItem = awaitItem()
+            assertEquals("newcity", awaitItem)
+        }
+    }
+
+    @Test
+    fun `load update interval pref`() = runTest {
+        viewModel.updateIntervalPreference.test {
+            val awaitItem = awaitItem()
+            assertEquals(1f, awaitItem)
+        }
+    }
+
+    @Test
+    fun `update update interval pref`() = runTest {
+        viewModel.updateUpdateInterval(3f)
+
+        viewModel.updateIntervalPreference.test {
+            val awaitItem = awaitItem()
+            assertEquals(3f, awaitItem)
+        }
+    }
 }

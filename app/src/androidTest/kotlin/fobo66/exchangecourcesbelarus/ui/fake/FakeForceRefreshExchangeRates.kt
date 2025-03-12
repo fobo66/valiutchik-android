@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import kotlinx.datetime.Instant
 
 class FakeForceRefreshExchangeRates : ForceRefreshExchangeRates {
-  var isRefreshed: Boolean = false
-  override suspend fun execute(now: Instant) {
-    isRefreshed = true
-  }
+    var isRefreshed: Boolean = false
+    override suspend fun execute(now: Instant) {
+        isRefreshed = true
+    }
 }

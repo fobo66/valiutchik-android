@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,82 +37,85 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun OpenSourceLicensesScreen(
-  licensesState: LicensesState,
-  onItemClick: (String) -> Unit,
-  modifier: Modifier = Modifier
+    licensesState: LicensesState,
+    onItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  Crossfade(licensesState, label = "licenses") { state ->
-    if (state.licenses.isEmpty()) {
-      LoadingIndicator()
-    } else {
-      LazyColumn(modifier = modifier) {
-        items(licensesState.licenses) { item ->
-          OpenSourceLicense(
-            item = item,
-            onItemClick = onItemClick
-          )
+    Crossfade(licensesState, label = "licenses") { state ->
+        if (state.licenses.isEmpty()) {
+            LoadingIndicator()
+        } else {
+            LazyColumn(modifier = modifier) {
+                items(licensesState.licenses) { item ->
+                    OpenSourceLicense(
+                        item = item,
+                        onItemClick = onItemClick
+                    )
+                }
+            }
         }
-      }
     }
-  }
 }
 
 @Composable
 fun OpenSourceLicense(
-  item: LicenseItem,
-  onItemClick: (String) -> Unit,
-  modifier: Modifier = Modifier
+    item: LicenseItem,
+    onItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  ListItem(
-    headlineContent = {
-      Text(text = item.project)
-    },
-    supportingContent = {
-      Column {
-        Text(text = item.licenses)
-        Text(text = buildAnnotatedString {
-          append("Copyright © ")
-          if (item.year.isNotEmpty()) {
-            append(item.year)
-            append(' ')
-          }
-          append(item.authors)
-        })
-      }
-    },
-    modifier = modifier
-      .clickable(
-        enabled = item.url != null,
-        onClickLabel = stringResource(id = R.string.see_license_click_label)
-      ) {
-        item.url?.let {
-          onItemClick(it)
-        }
-      }
-  )
+    ListItem(
+        headlineContent = {
+            Text(text = item.project)
+        },
+        supportingContent = {
+            Column {
+                Text(text = item.licenses)
+                Text(
+                    text = buildAnnotatedString {
+                        append("Copyright © ")
+                        if (item.year.isNotEmpty()) {
+                            append(item.year)
+                            append(' ')
+                        }
+                        append(item.authors)
+                    }
+                )
+            }
+        },
+        modifier = modifier
+            .clickable(
+                enabled = item.url != null,
+                onClickLabel = stringResource(id = R.string.see_license_click_label)
+            ) {
+                item.url?.let {
+                    onItemClick(it)
+                }
+            }
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun OpenSourceLicensePreview() {
-  ValiutchikTheme {
-    OpenSourceLicense(
-      item = LicenseItem(
-        authors = "The Android Open Source Project",
-        licenses = "The Apache Software License, Version 2.0",
-        project = "Activity Compose",
-        url = null,
-        year = "2019"
-      ),
-      onItemClick = {}
-    )
-  }
+    ValiutchikTheme {
+        OpenSourceLicense(
+            item = LicenseItem(
+                authors = "The Android Open Source Project",
+                licenses = "The Apache Software License, Version 2.0",
+                project = "Activity Compose",
+                url = null,
+                year = "2019"
+            ),
+            onItemClick = {}
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun OpenSourceLicensesPreview() {
-  ValiutchikTheme {
-    OpenSourceLicensesScreen(licensesState = LicensesState(persistentListOf()), onItemClick = {})
-  }
+    ValiutchikTheme {
+        OpenSourceLicensesScreen(licensesState = LicensesState(persistentListOf()), onItemClick = {
+        })
+    }
 }
