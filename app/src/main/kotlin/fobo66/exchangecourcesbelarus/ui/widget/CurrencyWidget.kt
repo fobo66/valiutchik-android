@@ -17,6 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui.widget
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +33,8 @@ import androidx.glance.preview.ExperimentalGlancePreviewApi
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
+import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import kotlinx.collections.immutable.ImmutableList
@@ -48,6 +51,8 @@ class CurrencyWidget :
   KoinComponent {
   private val loadExchangeRates: LoadExchangeRates by inject()
   private val refreshExchangeRates: ForceRefreshExchangeRates by inject()
+  private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard by inject()
+  private val findBankOnMap: FindBankOnMap by inject()
 
   override suspend fun provideGlance(
     context: Context,
@@ -74,6 +79,15 @@ class CurrencyWidget :
               update(context, id)
             }
           },
+          onItemClick = { key, value ->
+            copyCurrencyRateToClipboard.execute(key, value)
+          },
+          onItemActionButtonClick = { bank ->
+            val mapIntent = findBankOnMap.execute(bank)
+            mapIntent?.let {
+              Intent.createChooser(it, context.getString(R.string.open_map))
+            }
+          }
         )
       }
     }
@@ -84,6 +98,8 @@ class CurrencyWidget :
 fun CurrencyWidgetContent(
   rates: ImmutableList<BestCurrencyRate>,
   onTitleBarActionClick: () -> Unit,
+  onItemActionButtonClick: (String) -> Unit,
+  onItemClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val context = LocalContext.current
@@ -95,8 +111,8 @@ fun CurrencyWidgetContent(
     titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
     titleBarAction = action(null, onTitleBarActionClick),
     items = rates,
-    actionButtonClick = { _, _ -> },
-    itemClick = {},
+    itemClick = onItemClick,
+    actionButtonClick = onItemActionButtonClick,
     modifier = modifier,
   )
 }
@@ -130,6 +146,8 @@ private fun CurrencyWidgetPreview() {
           ),
         ),
       onTitleBarActionClick = {},
+      onItemActionButtonClick = {},
+      onItemClick = { _, _ -> },
     )
   }
 }

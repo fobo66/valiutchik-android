@@ -106,8 +106,8 @@ fun ActionListLayout(
   titleBarActionIconContentDescription: String,
   titleBarAction: Action,
   items: ImmutableList<BestCurrencyRate>,
-  itemClick: (String) -> Unit,
-  actionButtonClick: (String, String) -> Unit,
+  actionButtonClick: (String) -> Unit,
+  itemClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   fun titleBar(): @Composable (() -> Unit) =
@@ -149,7 +149,7 @@ fun ActionListLayout(
     Content(
       items = items,
       itemClick = itemClick,
-      actionButtonOnClick = actionButtonClick,
+      actionButtonClick = actionButtonClick,
     )
   }
 }
@@ -157,8 +157,8 @@ fun ActionListLayout(
 @Composable
 private fun Content(
   items: ImmutableList<BestCurrencyRate>,
-  itemClick: (String) -> Unit,
-  actionButtonOnClick: (String, String) -> Unit,
+  actionButtonClick: (String) -> Unit,
+  itemClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
@@ -172,14 +172,14 @@ private fun Content(
           GridView(
             items = items,
             itemClick = itemClick,
-            actionButtonOnClick = actionButtonOnClick,
+            actionButtonClick = actionButtonClick,
           )
 
         else ->
           ListView(
             items = items,
             itemClick = itemClick,
-            actionButtonOnClick = actionButtonOnClick,
+            actionButtonClick = actionButtonClick,
           )
       }
     }
@@ -189,8 +189,8 @@ private fun Content(
 @Composable
 private fun ListView(
   items: ImmutableList<BestCurrencyRate>,
-  itemClick: (String) -> Unit,
-  actionButtonOnClick: (String, String) -> Unit,
+  actionButtonClick: (String) -> Unit,
+  itemClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val context = LocalContext.current
@@ -206,7 +206,7 @@ private fun ListView(
         currencyValue = item.currencyValue,
         bankName = item.bank,
         itemClick = itemClick,
-        actionButtonClick = actionButtonOnClick,
+        actionButtonClick = actionButtonClick,
         modifier = GlanceModifier.fillMaxSize(),
       )
     },
@@ -216,8 +216,8 @@ private fun ListView(
 @Composable
 private fun GridView(
   items: ImmutableList<BestCurrencyRate>,
-  itemClick: (String) -> Unit,
-  actionButtonOnClick: (String, String) -> Unit,
+  actionButtonClick: (String) -> Unit,
+  itemClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val context = LocalContext.current
@@ -233,7 +233,7 @@ private fun GridView(
         currencyValue = item.currencyValue,
         bankName = item.bank,
         itemClick = itemClick,
-        actionButtonClick = actionButtonOnClick,
+        actionButtonClick = actionButtonClick,
         modifier = GlanceModifier.fillMaxSize(),
       )
     },
@@ -253,8 +253,8 @@ private fun CurrencyListItem(
   currencyName: String,
   currencyValue: String,
   bankName: String,
-  itemClick: (String) -> Unit,
-  actionButtonClick: (String, String) -> Unit,
+  actionButtonClick: (String) -> Unit,
+  itemClick: (String, String) -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val context = LocalContext.current
@@ -268,7 +268,7 @@ private fun CurrencyListItem(
         }.filledContainer()
         .clickable(
           key = "${LocalSize.current} $rateId",
-        ) { itemClick(currencyValue) },
+        ) { itemClick(currencyName, currencyValue) },
     contentSpacing = itemContentSpacing,
     leadingContent =
       takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
@@ -304,10 +304,7 @@ private fun CurrencyListItem(
         contentDescription = context.getString(R.string.open_map),
         onClick =
           action(key = "${LocalSize.current} $rateId") {
-            actionButtonClick(
-              currencyName,
-              currencyValue,
-            )
+            actionButtonClick(bankName)
           },
         backgroundColor = null,
         contentColor = GlanceTheme.colors.onSurface,
@@ -531,7 +528,7 @@ private fun ActionListLayoutPreview() {
     titleBarActionIconContentDescription = "test",
     titleBarAction = action {},
     items = persistentListOf(),
-    actionButtonClick = { _, _ -> },
-    itemClick = {},
+    itemClick = { _, _ -> },
+    actionButtonClick = {},
   )
 }
