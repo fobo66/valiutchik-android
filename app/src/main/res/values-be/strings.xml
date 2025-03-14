@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2024 Andrey Mukamolov
+  ~    Copyright 2025 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -103,4 +103,6 @@
   <string name="bank_name_indicator">Назва банка</string>
   <string name="see_license_click_label">Глядзець ліцэнзію %1$s</string>
   <string name="topbar_description_back">Назад</string>
+  <string name="open_app">Адкрыць прыкладанне</string>
+  <string name="widget_action_refresh">Аднавіць</string>
 </resources>
