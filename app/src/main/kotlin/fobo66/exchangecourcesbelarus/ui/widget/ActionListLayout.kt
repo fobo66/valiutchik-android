@@ -498,7 +498,7 @@ private fun ActionListLayoutPreview() {
   ActionListLayout(
     title = "Test",
     titleIconRes = R.drawable.ic_launcher_foreground,
-    titleBarActionIconRes = R.drawable.ic_launcher_foreground,
+    titleBarActionIconRes = R.drawable.ic_refresh,
     titleBarActionIconContentDescription = "test",
     titleBarAction = action {},
     items = persistentListOf(),

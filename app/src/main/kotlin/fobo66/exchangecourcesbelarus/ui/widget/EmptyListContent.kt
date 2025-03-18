@@ -45,15 +45,16 @@ import fobo66.exchangecourcesbelarus.ui.MainActivity
  * app-specific title bar in the [androidx.glance.appwidget.components.Scaffold] .
  */
 @Composable
-fun EmptyListContent() {
+fun EmptyListContent(modifier: GlanceModifier = GlanceModifier) {
   val context = LocalContext.current
 
   NoDataContent(
     noDataText = context.getString(R.string.no_rates_indicator),
     noDataIconRes = R.drawable.ic_empty_rates,
     actionButtonText = context.getString(R.string.open_app),
-    actionButtonIcon = R.drawable.ic_launcher_foreground,
-    actionButtonOnClick = actionStartActivity<MainActivity>()
+    actionButtonIcon = R.drawable.ic_open_in_app,
+    actionButtonOnClick = actionStartActivity<MainActivity>(),
+    modifier = modifier
   )
 }
 
@@ -79,6 +80,7 @@ internal fun NoDataContent(
   actionButtonText: String,
   actionButtonIcon: Int,
   actionButtonOnClick: Action,
+  modifier: GlanceModifier = GlanceModifier
 ) {
   @Composable
   fun showIcon() = LocalSize.current.height >= 180.dp
@@ -86,7 +88,7 @@ internal fun NoDataContent(
   Column(
     verticalAlignment = Alignment.CenterVertically,
     horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = GlanceModifier.fillMaxSize()
+    modifier = modifier.fillMaxSize()
   ) {
     if (showIcon()) {
       Image(
