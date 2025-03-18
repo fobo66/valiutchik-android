@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2023 Andrey Mukamolov
+  ~    Copyright 2025 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -15,10 +15,13 @@
   -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/app_name"
-    android:minWidth="180dp"
-    android:minHeight="50dp"
+    android:minWidth="203dp"
+    android:minHeight="51dp"
+    android:updatePeriodMillis="10800000"
     android:resizeMode="horizontal|vertical"
     android:initialLayout="@layout/glance_default_loading_layout"
     android:targetCellWidth="3"
-    android:targetCellHeight="1"
+    android:targetCellHeight="2"
+    android:minResizeWidth="203dp"
+    android:minResizeHeight="51dp"
     android:widgetCategory="home_screen" />
