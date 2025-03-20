@@ -61,6 +61,7 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.sh
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import io.github.aakira.napier.Napier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -125,6 +126,7 @@ fun ActionListLayout(
         },
       )
     }
+  Napier.d(LocalSize.current.toString())
 
   val scaffoldTopPadding =
     if (showTitleBar()) {
@@ -157,6 +159,7 @@ private fun Content(
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
+  Napier.d(actionListLayoutSize.name)
 
   Box(modifier = modifier.padding(bottom = widgetPadding)) {
     if (items.isEmpty()) {
