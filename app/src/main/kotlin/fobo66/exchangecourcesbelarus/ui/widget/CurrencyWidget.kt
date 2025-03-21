@@ -28,6 +28,7 @@ import androidx.glance.action.action
 import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.provideContent
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.MainActivity
@@ -49,6 +50,9 @@ class CurrencyWidget :
   KoinComponent {
   private val loadExchangeRates: LoadExchangeRates by inject()
   private val refreshExchangeRates: ForceRefreshExchangeRates by inject()
+
+  override val sizeMode: SizeMode
+    get() = SizeMode.Exact
 
   override suspend fun provideGlance(
     context: Context,
