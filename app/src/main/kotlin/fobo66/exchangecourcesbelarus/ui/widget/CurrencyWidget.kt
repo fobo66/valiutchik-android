@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,31 +20,27 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
-import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
+import androidx.glance.action.action
+import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.appWidgetBackground
-import androidx.glance.appwidget.cornerRadius
-import androidx.glance.appwidget.lazy.LazyColumn
-import androidx.glance.appwidget.lazy.items
+import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.provideContent
-import androidx.glance.background
-import androidx.glance.layout.Column
-import androidx.glance.layout.padding
-import androidx.glance.preview.ExperimentalGlancePreviewApi
-import androidx.glance.preview.Preview
-import androidx.glance.text.FontWeight
-import androidx.glance.text.Text
-import androidx.glance.text.TextStyle
+import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.ui.MainActivity
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -53,55 +49,60 @@ class CurrencyWidget :
   GlanceAppWidget(),
   KoinComponent {
   private val loadExchangeRates: LoadExchangeRates by inject()
+  private val refreshExchangeRates: ForceRefreshExchangeRates by inject()
+
+  override val sizeMode: SizeMode
+    get() = SizeMode.Exact
 
   override suspend fun provideGlance(
     context: Context,
     id: GlanceId,
-  ) = provideContent {
-    val rates: List<BestCurrencyRate> by loadExchangeRates
-      .execute(Clock.System.now())
-      .collectAsState(
-        initial = persistentListOf(),
-      )
+  ): Nothing {
+    val ratesState =
+      loadExchangeRates
+        .execute(Clock.System.now())
+        .map { it.toImmutableList() }
 
-    ValiutchikWidgetTheme {
-      CurrencyWidgetContent(context = context, rates = rates)
+    provideContent {
+      val scope = rememberCoroutineScope()
+      val rates by ratesState
+        .collectAsState(
+          initial = persistentListOf(),
+        )
+
+      ValiutchikWidgetTheme {
+        CurrencyWidgetContent(
+          rates = rates,
+          onTitleBarActionClick = {
+            scope.launch {
+              refreshExchangeRates.execute(Clock.System.now())
+              update(context, id)
+            }
+          },
+        )
+      }
     }
   }
 }
 
 @Composable
 fun CurrencyWidgetContent(
-  context: Context,
-  rates: List<BestCurrencyRate>,
+  rates: ImmutableList<BestCurrencyRate>,
+  onTitleBarActionClick: () -> Unit,
   modifier: GlanceModifier = GlanceModifier,
 ) {
-  LazyColumn(
-    modifier =
-      modifier
-        .background(GlanceTheme.colors.widgetBackground)
-        .appWidgetBackground()
-        .cornerRadius(16.dp),
-  ) {
-    items(rates, { item -> item.id }) {
-      Column(modifier = GlanceModifier.padding(16.dp)) {
-        Text(
-          text = context.getString(it.currencyNameRes),
-          style = TextStyle(color = GlanceTheme.colors.primary),
-        )
-        Text(
-          text = it.currencyValue,
-          style =
-            TextStyle(
-              color = GlanceTheme.colors.primary,
-              fontSize = 24.sp,
-              fontWeight = FontWeight.Bold,
-            ),
-        )
-        Text(text = it.bank, style = TextStyle(color = GlanceTheme.colors.primary))
-      }
-    }
-  }
+  val context = LocalContext.current
+
+  ActionListLayout(
+    title = context.getString(R.string.app_name),
+    titleIconRes = R.drawable.ic_launcher_foreground,
+    titleBarActionIconRes = R.drawable.ic_refresh,
+    titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
+    titleBarAction = action(null, onTitleBarActionClick),
+    items = rates,
+    actionButtonClick = actionStartActivity<MainActivity>(),
+    modifier = modifier,
+  )
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -109,14 +110,29 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
     get() = CurrencyWidget()
 }
 
-@OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 140, heightDp = 160)
+@PreviewSmallWidget
+@PreviewMediumWidget
+@PreviewLargeWidget
 @Composable
 private fun CurrencyWidgetPreview() {
-  CurrencyWidgetContent(
-    LocalContext.current,
-    persistentListOf(
-      BestCurrencyRate(0, "test", fobo66.valiutchik.domain.R.string.currency_name_eur_buy, "1.23"),
-    ),
-  )
+  ValiutchikWidgetTheme {
+    CurrencyWidgetContent(
+      rates =
+        persistentListOf(
+          BestCurrencyRate(
+            0,
+            "test",
+            fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
+            "1.23",
+          ),
+          BestCurrencyRate(
+            1,
+            "test",
+            fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
+            "1.23",
+          ),
+        ),
+      onTitleBarActionClick = {},
+    )
+  }
 }

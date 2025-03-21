@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~    Copyright 2025 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +13,14 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/app_name"
-    android:minWidth="203dp"
-    android:minHeight="51dp"
-    android:updatePeriodMillis="10800000"
-    android:resizeMode="horizontal|vertical"
-    android:initialLayout="@layout/glance_default_loading_layout"
-    android:targetCellWidth="3"
-    android:targetCellHeight="2"
-    android:minResizeWidth="203dp"
-    android:minResizeHeight="51dp"
-    android:widgetCategory="home_screen" />
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="?attr/colorControlNormal">
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M200,680L200,400L280,400L280,680L200,680ZM440,680L440,400L520,400L520,680L440,680ZM80,840L80,760L880,760L880,840L80,840ZM680,680L680,400L760,400L760,680L680,680ZM80,320L80,240L480,40L880,240L880,320L80,320ZM258,240L480,240L702,240L258,240ZM258,240L702,240L480,130L258,240Z" />
+</vector>

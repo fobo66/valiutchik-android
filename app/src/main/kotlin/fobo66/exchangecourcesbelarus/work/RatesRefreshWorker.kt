@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,8 +17,10 @@
 package fobo66.exchangecourcesbelarus.work
 
 import android.content.Context
+import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import fobo66.exchangecourcesbelarus.ui.widget.CurrencyWidget
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
@@ -42,6 +44,7 @@ class RatesRefreshWorker(
     } else {
       refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
     }
+    CurrencyWidget().updateAll(applicationContext)
     Result.success()
   } catch (e: CurrencyRatesLoadFailedException) {
     Napier.e("Background refresh failed", e)
