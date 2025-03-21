@@ -37,6 +37,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
@@ -133,23 +134,31 @@ fun MainScreenPanels(
         directive = navigator.scaffoldDirective,
         value = navigator.scaffoldValue,
         mainPane = {
-            BestRatesScreenDestination(
-                snackbarHostState = snackbarHostState,
-                permissionState = locationPermissionState
-            )
+            AnimatedPane {
+                BestRatesScreenDestination(
+                    snackbarHostState = snackbarHostState,
+                    permissionState = locationPermissionState
+                )
+            }
         },
         supportingPane = {
-            PreferenceScreen(
-                onLicensesClick = {
-                    scope.launch {
-                        navigator.navigateTo(
-                            ThreePaneScaffoldRole.Tertiary
-                        )
+            AnimatedPane {
+                PreferenceScreen(
+                    onLicensesClick = {
+                        scope.launch {
+                            navigator.navigateTo(
+                                ThreePaneScaffoldRole.Tertiary
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         },
-        extraPane = { OpenSourceLicensesDestination() },
+        extraPane = {
+            AnimatedPane {
+                OpenSourceLicensesDestination()
+            }
+        },
         modifier = modifier
     )
 }

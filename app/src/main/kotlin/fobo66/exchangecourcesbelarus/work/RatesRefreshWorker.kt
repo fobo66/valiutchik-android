@@ -17,8 +17,10 @@
 package fobo66.exchangecourcesbelarus.work
 
 import android.content.Context
+import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import fobo66.exchangecourcesbelarus.ui.widget.CurrencyWidget
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
@@ -28,22 +30,24 @@ import kotlinx.datetime.Clock
 const val WORKER_ARG_LOCATION_AVAILABLE = "isLocationAvailable"
 
 class RatesRefreshWorker(
-    private val refreshExchangeRates: ForceRefreshExchangeRates,
-    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
-    appContext: Context,
-    params: WorkerParameters
-) : CoroutineWorker(appContext, params) {
-    override suspend fun doWork(): Result = try {
-        val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
+  private val refreshExchangeRates: ForceRefreshExchangeRates,
+  private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
+  appContext: Context,
+  params: WorkerParameters
+) :
+  CoroutineWorker(appContext, params) {
+  override suspend fun doWork(): Result = try {
+    val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
 
-        if (isLocationAvailable) {
-            refreshExchangeRates.execute(Clock.System.now())
-        } else {
-            refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
-        }
-        Result.success()
-    } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Background refresh failed", e)
-        Result.failure()
+    if (isLocationAvailable) {
+      refreshExchangeRates.execute(Clock.System.now())
+    } else {
+      refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
     }
+    CurrencyWidget().updateAll(applicationContext)
+    Result.success()
+  } catch (e: CurrencyRatesLoadFailedException) {
+    Napier.e("Background refresh failed", e)
+    Result.failure()
+  }
 }
