@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,18 +22,14 @@ import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.api.entity.Properties
 
 class FakeGeocodingDataSource : GeocodingDataSource {
-  var showError = false
-  var unexpectedError = false
+    var showError = false
+    var unexpectedError = false
 
-  private val searchResult = Feature(Properties(city = "fake"))
+    private val searchResult = Feature(Properties(city = "fake"))
 
-  override suspend fun findPlace(
-    latitude: Double,
-    longitude: Double
-  ): List<Feature> =
-    when {
-      showError -> throw GeocodingFailedException(Throwable("Yikes!"))
-      unexpectedError -> throw KotlinNullPointerException("Yikes!")
-      else -> listOf(searchResult)
+    override suspend fun findPlace(latitude: Double, longitude: Double): List<Feature> = when {
+        showError -> throw GeocodingFailedException(Throwable("Yikes!"))
+        unexpectedError -> throw KotlinNullPointerException("Yikes!")
+        else -> listOf(searchResult)
     }
 }

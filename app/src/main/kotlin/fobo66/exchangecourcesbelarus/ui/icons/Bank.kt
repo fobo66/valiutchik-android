@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,49 +21,50 @@ import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
 val Bank: ImageVector
-  get() {
-    if (_accountBalance != null) {
-      return _accountBalance!!
+    get() {
+        if (_accountBalance != null) {
+            return _accountBalance!!
+        }
+        _accountBalance = materialIcon(name = "Filled.AccountBalance") {
+            materialPath {
+                moveTo(4.0f, 10.0f)
+                horizontalLineToRelative(3.0f)
+                verticalLineToRelative(7.0f)
+                horizontalLineToRelative(-3.0f)
+                close()
+            }
+            materialPath {
+                moveTo(10.5f, 10.0f)
+                horizontalLineToRelative(3.0f)
+                verticalLineToRelative(7.0f)
+                horizontalLineToRelative(-3.0f)
+                close()
+            }
+            materialPath {
+                moveTo(2.0f, 19.0f)
+                horizontalLineToRelative(20.0f)
+                verticalLineToRelative(3.0f)
+                horizontalLineToRelative(-20.0f)
+                close()
+            }
+            materialPath {
+                moveTo(17.0f, 10.0f)
+                horizontalLineToRelative(3.0f)
+                verticalLineToRelative(7.0f)
+                horizontalLineToRelative(-3.0f)
+                close()
+            }
+            materialPath {
+                moveTo(12.0f, 1.0f)
+                lineToRelative(-10.0f, 5.0f)
+                lineToRelative(0.0f, 2.0f)
+                lineToRelative(20.0f, 0.0f)
+                lineToRelative(0.0f, -2.0f)
+                close()
+            }
+        }
+        return _accountBalance!!
     }
-    _accountBalance = materialIcon(name = "Filled.AccountBalance") {
-      materialPath {
-        moveTo(4.0f, 10.0f)
-        horizontalLineToRelative(3.0f)
-        verticalLineToRelative(7.0f)
-        horizontalLineToRelative(-3.0f)
-        close()
-      }
-      materialPath {
-        moveTo(10.5f, 10.0f)
-        horizontalLineToRelative(3.0f)
-        verticalLineToRelative(7.0f)
-        horizontalLineToRelative(-3.0f)
-        close()
-      }
-      materialPath {
-        moveTo(2.0f, 19.0f)
-        horizontalLineToRelative(20.0f)
-        verticalLineToRelative(3.0f)
-        horizontalLineToRelative(-20.0f)
-        close()
-      }
-      materialPath {
-        moveTo(17.0f, 10.0f)
-        horizontalLineToRelative(3.0f)
-        verticalLineToRelative(7.0f)
-        horizontalLineToRelative(-3.0f)
-        close()
-      }
-      materialPath {
-        moveTo(12.0f, 1.0f)
-        lineToRelative(-10.0f, 5.0f)
-        lineToRelative(0.0f, 2.0f)
-        lineToRelative(20.0f, 0.0f)
-        lineToRelative(0.0f, -2.0f)
-        close()
-      }
-    }
-    return _accountBalance!!
-  }
 
+@Suppress("ktlint:standard:backing-property-naming") // ok for icons
 private var _accountBalance: ImageVector? = null
