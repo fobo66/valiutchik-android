@@ -20,6 +20,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -99,24 +100,14 @@ fun ValiutchikTopBar(
 @Composable
 fun PrimaryTopBar(
   title: String,
-  onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
   onSettingsClick: () -> Unit,
+  onRefreshClick: () -> Unit,
+  showRefresh: Boolean,
   modifier: Modifier = Modifier,
   settingsVisible: Boolean = true,
-  showBack: Boolean = true,
 ) {
   TopAppBar(
-    navigationIcon = {
-      AnimatedVisibility(showBack) {
-        IconButton(onClick = onBackClick) {
-          Icon(
-            Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(R.string.topbar_description_back),
-          )
-        }
-      }
-    },
     title = {
       Text(
         text = title,
@@ -132,6 +123,17 @@ fun PrimaryTopBar(
               id = R.string.action_about,
             ),
         )
+      }
+      AnimatedVisibility(showRefresh) {
+        IconButton(onClick = onRefreshClick) {
+          Icon(
+            Icons.Default.Refresh,
+            contentDescription =
+              stringResource(
+                id = R.string.widget_action_refresh,
+              ),
+          )
+        }
       }
       AnimatedVisibility(settingsVisible) {
         IconButton(onClick = onSettingsClick) {
@@ -181,9 +183,10 @@ private fun PrimaryTopbarPreview() {
   ValiutchikTheme {
     PrimaryTopBar(
       title = "Test",
-      onBackClick = {},
+      showRefresh = true,
       onSettingsClick = {},
-      onAboutClick = {}
+      onAboutClick = {},
+      onRefreshClick = {}
     )
   }
 }
