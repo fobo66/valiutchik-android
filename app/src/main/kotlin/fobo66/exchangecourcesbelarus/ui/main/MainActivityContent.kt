@@ -66,13 +66,7 @@ fun MainActivityContent(
         currentScreen = navigator.currentDestination?.pane,
         onBackClick = { scope.launch { navigator.navigateBack() } },
         onAboutClick = {},
-        onSettingsClick = {
-          scope.launch {
-            navigator.navigateTo(
-              ThreePaneScaffoldRole.Secondary,
-            )
-          }
-        },
+        onSettingsClick = {},
         updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
         settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
       )
@@ -120,6 +114,7 @@ fun MainScreenPanels(
     mainPane = {
       AnimatedPane {
         BestRatesScreenDestination(
+          navigator = navigator,
           snackbarHostState = snackbarHostState,
           permissionState = locationPermissionState,
         )

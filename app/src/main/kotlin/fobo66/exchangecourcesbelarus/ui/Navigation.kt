@@ -23,6 +23,9 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -49,9 +52,10 @@ import io.github.aakira.napier.Napier
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun BestRatesScreenDestination(
+  navigator: ThreePaneScaffoldNavigator<Any>,
   snackbarHostState: SnackbarHostState,
   permissionState: PermissionState,
   modifier: Modifier = Modifier,
@@ -113,7 +117,11 @@ fun BestRatesScreenDestination(
       }
     },
     showExplicitRefresh = true,
-    onSettingsClick = {},
+    onSettingsClick = {
+      scope.launch {
+        navigator.navigateTo(ThreePaneScaffoldRole.Secondary)
+      }
+    },
     isRefreshing = viewState is MainScreenState.Loading,
     onRefresh = mainViewModel::manualRefresh,
     modifier = modifier
