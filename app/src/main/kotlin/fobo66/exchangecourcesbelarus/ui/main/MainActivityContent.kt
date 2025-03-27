@@ -20,6 +20,7 @@ import android.Manifest.permission
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -58,19 +59,8 @@ fun MainActivityContent(
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
   val snackbarHostState = remember { SnackbarHostState() }
-  val scope = rememberCoroutineScope()
 
   Scaffold(
-    topBar = {
-      ValiutchikTopBar(
-        currentScreen = navigator.currentDestination?.pane,
-        onBackClick = { scope.launch { navigator.navigateBack() } },
-        onAboutClick = {},
-        onSettingsClick = {},
-        updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-        settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
-      )
-    },
     snackbarHost = {
       SnackbarHost(
         hostState = snackbarHostState,
@@ -93,7 +83,8 @@ fun MainActivityContent(
           start = it.calculateStartPadding(layoutDirection),
           end = it.calculateEndPadding(layoutDirection),
           top = it.calculateTopPadding(),
-        ),
+        )
+          .consumeWindowInsets(it),
     )
   }
 }
