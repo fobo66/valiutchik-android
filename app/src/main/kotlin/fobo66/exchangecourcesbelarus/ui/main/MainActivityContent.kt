@@ -136,7 +136,7 @@ fun MainScreenPanels(
     },
     extraPane = {
       AnimatedPane {
-        OpenSourceLicensesDestination()
+        OpenSourceLicensesDestination(navigator = navigator)
       }
     },
     modifier = modifier,

@@ -190,18 +190,26 @@ fun PreferenceScreenDestination(
   }
 }
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun OpenSourceLicensesDestination(
+  navigator: ThreePaneScaffoldNavigator<Any>,
   modifier: Modifier = Modifier,
   viewModel: OpenSourceLicensesViewModel = koinViewModel()
 ) {
   val uriHandler = LocalUriHandler.current
+  val scope = rememberCoroutineScope()
 
   val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
 
   OpenSourceLicensesScreen(
     licensesState = licensesState,
     onItemClick = uriHandler::openUri,
+    onBackClick = {
+      scope.launch {
+        navigator.navigateBack()
+      }
+    },
     modifier = modifier
   )
 }
