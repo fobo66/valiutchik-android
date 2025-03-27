@@ -18,24 +18,14 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 import android.Manifest.permission
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
@@ -61,7 +51,6 @@ import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
-import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import kotlinx.coroutines.launch
 
@@ -160,65 +149,6 @@ fun MainScreenPanels(
     extraPane = {
       AnimatedPane {
         OpenSourceLicensesDestination()
-      }
-    },
-    modifier = modifier,
-  )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ValiutchikTopBar(
-  currentScreen: ThreePaneScaffoldRole?,
-  onBackClick: () -> Unit,
-  onAboutClick: () -> Unit,
-  onSettingsClick: () -> Unit,
-  modifier: Modifier = Modifier,
-  updateTitle: Boolean = true,
-  settingsVisible: Boolean = true,
-) {
-  TopAppBar(
-    navigationIcon = {
-      AnimatedVisibility(currentScreen != ThreePaneScaffoldRole.Primary) {
-        IconButton(onClick = onBackClick) {
-          Icon(
-            Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(string.topbar_description_back),
-          )
-        }
-      }
-    },
-    title = {
-      Text(
-        text =
-          if (updateTitle) {
-            resolveTitle(currentScreen)
-          } else {
-            stringResource(id = string.app_name)
-          },
-        modifier = Modifier.testTag(TAG_TITLE),
-      )
-    },
-    actions = {
-      IconButton(onClick = onAboutClick) {
-        Icon(
-          Icons.Default.Info,
-          contentDescription =
-            stringResource(
-              id = string.action_about,
-            ),
-        )
-      }
-      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
-        IconButton(onClick = onSettingsClick) {
-          Icon(
-            Icons.Default.Settings,
-            contentDescription =
-              stringResource(
-                id = string.action_settings,
-              ),
-          )
-        }
       }
     },
     modifier = modifier,
