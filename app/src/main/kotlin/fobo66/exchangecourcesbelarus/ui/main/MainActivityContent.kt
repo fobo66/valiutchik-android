@@ -76,7 +76,7 @@ fun MainActivityContent(
     MainScreenPanels(
       navigator = navigator,
       snackbarHostState = snackbarHostState,
-      manualRefreshVisible = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded,
+      manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
       canOpenSettings = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
       modifier =
         Modifier.padding(
