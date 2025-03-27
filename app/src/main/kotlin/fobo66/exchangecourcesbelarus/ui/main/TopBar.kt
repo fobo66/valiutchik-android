@@ -80,7 +80,7 @@ fun ValiutchikTopBar(
             ),
         )
       }
-      AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
+      this.AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
         IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,
@@ -124,7 +124,7 @@ fun PrimaryTopBar(
             ),
         )
       }
-      AnimatedVisibility(showRefresh) {
+      this.AnimatedVisibility(showRefresh) {
         IconButton(onClick = onRefreshClick) {
           Icon(
             Icons.Default.Refresh,
@@ -135,7 +135,7 @@ fun PrimaryTopBar(
           )
         }
       }
-      AnimatedVisibility(settingsVisible) {
+      this.AnimatedVisibility(settingsVisible) {
         IconButton(onClick = onSettingsClick) {
           Icon(
             Icons.Default.Settings,

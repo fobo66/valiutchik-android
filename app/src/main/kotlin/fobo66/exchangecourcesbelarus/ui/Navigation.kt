@@ -58,6 +58,8 @@ fun BestRatesScreenDestination(
   navigator: ThreePaneScaffoldNavigator<Any>,
   snackbarHostState: SnackbarHostState,
   permissionState: PermissionState,
+  manualRefreshVisible: Boolean,
+  canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
   mainViewModel: MainViewModel = koinViewModel()
 ) {
@@ -116,7 +118,8 @@ fun BestRatesScreenDestination(
         showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
       }
     },
-    showExplicitRefresh = true,
+    showExplicitRefresh = manualRefreshVisible,
+    showSettings = canOpenSettings,
     onSettingsClick = {
       scope.launch {
         navigator.navigateTo(ThreePaneScaffoldRole.Secondary)

@@ -54,6 +54,7 @@ import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
+import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -67,6 +68,7 @@ fun BestRatesGrid(
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
   showExplicitRefresh: Boolean,
+  showSettings: Boolean,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onSettingsClick: () -> Unit,
@@ -80,6 +82,7 @@ fun BestRatesGrid(
       onAboutClick = { isAboutDialogShown = true },
       onRefreshClick = onRefresh,
       showRefresh = showExplicitRefresh,
+      settingsVisible = showSettings,
       onSettingsClick = onSettingsClick
     )
     Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
@@ -123,6 +126,10 @@ fun BestRatesGrid(
           }
         }
       }
+    }
+
+    if (isAboutDialogShown) {
+      AboutAppDialog(onDismiss = {isAboutDialogShown = false})
     }
   }
   ReportDrawnWhen {
@@ -195,6 +202,7 @@ private fun BestCurrencyRatesPreview() {
       onBestRateClick = {},
       onBestRateLongClick = { _, _ -> },
       showExplicitRefresh = true,
+      showSettings = true,
       isRefreshing = true,
       onRefresh = {},
       onSettingsClick = {}

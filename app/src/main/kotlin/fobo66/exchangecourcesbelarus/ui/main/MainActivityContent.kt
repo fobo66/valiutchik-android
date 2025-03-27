@@ -86,6 +86,8 @@ fun MainActivityContent(
     MainScreenPanels(
       navigator = navigator,
       snackbarHostState = snackbarHostState,
+      manualRefreshVisible = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded,
+      canOpenSettings = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
       modifier =
         Modifier.padding(
           start = it.calculateStartPadding(layoutDirection),
@@ -101,6 +103,8 @@ fun MainActivityContent(
 fun MainScreenPanels(
   navigator: ThreePaneScaffoldNavigator<Any>,
   snackbarHostState: SnackbarHostState,
+  manualRefreshVisible: Boolean,
+  canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
 ) {
   val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
@@ -116,6 +120,8 @@ fun MainScreenPanels(
         BestRatesScreenDestination(
           navigator = navigator,
           snackbarHostState = snackbarHostState,
+          manualRefreshVisible = manualRefreshVisible,
+          canOpenSettings = canOpenSettings,
           permissionState = locationPermissionState,
         )
       }
