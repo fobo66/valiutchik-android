@@ -27,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -36,65 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ValiutchikTopBar(
-  currentScreen: ThreePaneScaffoldRole?,
-  onBackClick: () -> Unit,
-  onAboutClick: () -> Unit,
-  onSettingsClick: () -> Unit,
-  modifier: Modifier = Modifier,
-  updateTitle: Boolean = true,
-  settingsVisible: Boolean = true,
-) {
-  TopAppBar(
-    navigationIcon = {
-      AnimatedVisibility(currentScreen != ThreePaneScaffoldRole.Primary) {
-        IconButton(onClick = onBackClick) {
-          Icon(
-            Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(R.string.topbar_description_back),
-          )
-        }
-      }
-    },
-    title = {
-      Text(
-        text =
-          if (updateTitle) {
-            resolveTitle(currentScreen)
-          } else {
-            stringResource(id = R.string.app_name)
-          },
-        modifier = Modifier.testTag(TAG_TITLE),
-      )
-    },
-    actions = {
-      IconButton(onClick = onAboutClick) {
-        Icon(
-          Icons.Default.Info,
-          contentDescription =
-            stringResource(
-              id = R.string.action_about,
-            ),
-        )
-      }
-      this.AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
-        IconButton(onClick = onSettingsClick) {
-          Icon(
-            Icons.Default.Settings,
-            contentDescription =
-              stringResource(
-                id = R.string.action_settings,
-              ),
-          )
-        }
-      }
-    },
-    modifier = modifier,
-  )
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
