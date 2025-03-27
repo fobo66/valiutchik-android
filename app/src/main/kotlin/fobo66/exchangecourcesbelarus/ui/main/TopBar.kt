@@ -97,7 +97,7 @@ fun ValiutchikTopBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PanelTopBar(
+fun PrimaryTopBar(
   title: String,
   onBackClick: () -> Unit,
   onAboutClick: () -> Unit,
@@ -149,15 +149,52 @@ fun PanelTopBar(
   )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SecondaryTopBar(
+  title: String,
+  onBackClick: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  TopAppBar(
+    navigationIcon = {
+      IconButton(onClick = onBackClick) {
+        Icon(
+          Icons.AutoMirrored.Default.ArrowBack,
+          contentDescription = stringResource(R.string.topbar_description_back),
+        )
+      }
+    },
+    title = {
+      Text(
+        text = title,
+        modifier = Modifier.testTag(TAG_TITLE),
+      )
+    },
+    modifier = modifier,
+  )
+}
+
 @Preview
 @Composable
-private fun PanelTopbarPreview() {
+private fun PrimaryTopbarPreview() {
   ValiutchikTheme {
-    PanelTopBar(
+    PrimaryTopBar(
       title = "Test",
       onBackClick = {},
       onSettingsClick = {},
       onAboutClick = {}
+    )
+  }
+}
+
+@Preview
+@Composable
+private fun TertiaryTopbarPreview() {
+  ValiutchikTheme {
+    SecondaryTopBar(
+      title = "Test",
+      onBackClick = {},
     )
   }
 }
