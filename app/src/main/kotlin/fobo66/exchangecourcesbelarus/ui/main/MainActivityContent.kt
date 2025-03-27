@@ -35,11 +35,8 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -51,7 +48,6 @@ import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
-import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
@@ -61,7 +57,6 @@ fun MainActivityContent(
   modifier: Modifier = Modifier,
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
-  var isAboutDialogShown by remember { mutableStateOf(false) }
   val snackbarHostState = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
 
@@ -70,7 +65,7 @@ fun MainActivityContent(
       ValiutchikTopBar(
         currentScreen = navigator.currentDestination?.pane,
         onBackClick = { scope.launch { navigator.navigateBack() } },
-        onAboutClick = { isAboutDialogShown = true },
+        onAboutClick = {},
         onSettingsClick = {
           scope.launch {
             navigator.navigateTo(
@@ -104,9 +99,6 @@ fun MainActivityContent(
           top = it.calculateTopPadding(),
         ),
     )
-    if (isAboutDialogShown) {
-      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
-    }
   }
 }
 
