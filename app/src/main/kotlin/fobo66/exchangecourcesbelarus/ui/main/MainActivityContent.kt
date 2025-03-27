@@ -46,7 +46,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
-import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
+import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import kotlinx.coroutines.launch
 
@@ -128,14 +128,9 @@ fun MainScreenPanels(
     },
     supportingPane = {
       AnimatedPane {
-        PreferenceScreen(
-          onLicensesClick = {
-            scope.launch {
-              navigator.navigateTo(
-                ThreePaneScaffoldRole.Tertiary,
-              )
-            }
-          },
+        PreferenceScreenDestination(
+          navigator = navigator,
+          canOpenSettings = canOpenSettings
         )
       }
     },

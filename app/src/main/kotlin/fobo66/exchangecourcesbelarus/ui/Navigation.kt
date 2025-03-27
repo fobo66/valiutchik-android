@@ -19,6 +19,8 @@ package fobo66.exchangecourcesbelarus.ui
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -36,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
@@ -46,6 +49,7 @@ import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
+import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import io.github.aakira.napier.Napier
@@ -142,27 +146,48 @@ private suspend fun showSnackbar(
   )
 }
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun PreferenceScreen(
-  onLicensesClick: () -> Unit,
+fun PreferenceScreenDestination(
+  navigator: ThreePaneScaffoldNavigator<Any>,
+  canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
   preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
+  Column(modifier = modifier) {
+    val scope = rememberCoroutineScope()
+    val defaultCity by preferencesViewModel.defaultCityPreference
+      .collectAsStateWithLifecycle()
 
-  val defaultCity by preferencesViewModel.defaultCityPreference
-    .collectAsStateWithLifecycle()
+    val updateInterval by preferencesViewModel.updateIntervalPreference
+      .collectAsStateWithLifecycle()
 
-  val updateInterval by preferencesViewModel.updateIntervalPreference
-    .collectAsStateWithLifecycle()
+    this.AnimatedVisibility(canOpenSettings) {
+      SecondaryTopBar(
+        title = stringResource(string.title_activity_settings),
+        onBackClick = {
+          scope.launch {
+            navigator.navigateBack()
+          }
+        }
+      )
+    }
 
-  PreferenceScreenContent(
-    defaultCityValue = defaultCity,
-    updateIntervalValue = updateInterval,
-    onDefaultCityChange = preferencesViewModel::updateDefaultCity,
-    onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
-    onOpenSourceLicensesClick = onLicensesClick,
-    modifier = modifier
-  )
+    PreferenceScreenContent(
+      defaultCityValue = defaultCity,
+      updateIntervalValue = updateInterval,
+      onDefaultCityChange = preferencesViewModel::updateDefaultCity,
+      onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
+      onOpenSourceLicensesClick = {
+        scope.launch {
+          navigator.navigateTo(
+            ThreePaneScaffoldRole.Tertiary,
+          )
+        }
+      },
+      modifier = Modifier.weight(1f)
+    )
+  }
 }
 
 @Composable
