@@ -19,16 +19,29 @@ package fobo66.valiutchik.core.db
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
 import fobo66.valiutchik.core.entities.BestCourse
 
 @Database(
-    entities = [BestCourse::class],
-    version = 3,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3)
-    ]
+  entities = [BestCourse::class],
+  version = 3,
+  autoMigrations = [
+    AutoMigration(from = 1, to = 2),
+    AutoMigration(from = 2, to = 3),
+  ],
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
-    abstract fun currencyRatesDao(): CurrencyRatesDao
+  abstract fun currencyRatesDao(): CurrencyRatesDao
 }
+
+val MIGRATION_3_4 =
+  object : Migration(3, 4) {
+    private val CREATE_CURRENCIES_TABLE =
+      "CREATE TABLE IF NOT EXISTS currency(id INT PRIMARY KEY, name TEXT NOT NULL);"
+
+    override fun migrate(connection: SQLiteConnection) {
+      connection.execSQL(CREATE_CURRENCIES_TABLE)
+    }
+  }
