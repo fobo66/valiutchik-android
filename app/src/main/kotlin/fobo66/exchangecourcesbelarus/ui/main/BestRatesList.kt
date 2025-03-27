@@ -117,8 +117,7 @@ fun BestRatesGrid(
                 bankName = item.bank,
                 onClick = onBestRateClick,
                 onLongClick = onBestRateLongClick,
-                modifier =
-                  Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .animateItem(),
               )
@@ -129,12 +128,10 @@ fun BestRatesGrid(
     }
 
     if (isAboutDialogShown) {
-      AboutAppDialog(onDismiss = {isAboutDialogShown = false})
+      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
     }
   }
-  ReportDrawnWhen {
-    bestCurrencyRates.isNotEmpty()
-  }
+  ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
 }
 
 @Composable

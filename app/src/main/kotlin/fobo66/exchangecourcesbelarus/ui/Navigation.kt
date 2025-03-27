@@ -77,9 +77,7 @@ fun BestRatesScreenDestination(
 
   val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
 
-  var isLocationPermissionPromptShown by rememberSaveable {
-    mutableStateOf(false)
-  }
+  var isLocationPermissionPromptShown by rememberSaveable { mutableStateOf(false) }
 
   val scope = rememberCoroutineScope()
 
@@ -90,11 +88,9 @@ fun BestRatesScreenDestination(
   LaunchedEffect(permissionState.status) {
     val isPermissionGranted = permissionState.status.isGranted
     mainViewModel.handleLocationPermission(isPermissionGranted)
-    if (!isPermissionGranted) {
-      if (!isLocationPermissionPromptShown) {
-        isLocationPermissionPromptShown = true
-        showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
-      }
+    if (!isPermissionGranted && !isLocationPermissionPromptShown) {
+      isLocationPermissionPromptShown = true
+      showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
     }
   }
   LaunchedEffect(viewState) {

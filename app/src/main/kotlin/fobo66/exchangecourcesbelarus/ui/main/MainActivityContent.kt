@@ -30,7 +30,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -41,10 +40,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
-import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
@@ -133,11 +130,3 @@ fun MainScreenPanels(
     modifier = modifier,
   )
 }
-
-@Composable
-fun resolveTitle(currentScreen: ThreePaneScaffoldRole?): String =
-  when (currentScreen) {
-    ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
-    ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
-    else -> stringResource(id = string.app_name)
-  }
