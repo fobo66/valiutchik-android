@@ -54,7 +54,6 @@ fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
   modifier: Modifier = Modifier,
 ) {
-  val navigator = rememberSupportingPaneScaffoldNavigator()
   val snackbarHostState = remember { SnackbarHostState() }
 
   Scaffold(
@@ -71,7 +70,6 @@ fun MainActivityContent(
   ) {
     val layoutDirection = LocalLayoutDirection.current
     MainScreenPanels(
-      navigator = navigator,
       snackbarHostState = snackbarHostState,
       manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
       canOpenSettings = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
@@ -89,12 +87,12 @@ fun MainActivityContent(
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MainScreenPanels(
-  navigator: ThreePaneScaffoldNavigator<Any>,
   snackbarHostState: SnackbarHostState,
   manualRefreshVisible: Boolean,
   canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
 ) {
+  val navigator = rememberSupportingPaneScaffoldNavigator()
   val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
   val scope = rememberCoroutineScope()
 
