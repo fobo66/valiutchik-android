@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.LoadingIndicator
+import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.persistentListOf
 
@@ -39,18 +40,29 @@ import kotlinx.collections.immutable.persistentListOf
 fun OpenSourceLicensesScreen(
   licensesState: LicensesState,
   onItemClick: (String) -> Unit,
+  onBackClick: () -> Unit,
   modifier: Modifier = Modifier
 ) {
-  Crossfade(licensesState, label = "licenses") { state ->
-    if (state.licenses.isEmpty()) {
-      LoadingIndicator()
-    } else {
-      LazyColumn(modifier = modifier) {
-        items(licensesState.licenses) { item ->
-          OpenSourceLicense(
-            item = item,
-            onItemClick = onItemClick
-          )
+  Column(modifier = modifier) {
+    SecondaryTopBar(
+      title = stringResource(R.string.title_activity_oss_licenses),
+      onBackClick = onBackClick
+    )
+    Crossfade(
+      targetState = licensesState,
+      label = "licenses",
+      modifier = Modifier.weight(1f)
+    ) { state ->
+      if (state.licenses.isEmpty()) {
+        LoadingIndicator()
+      } else {
+        LazyColumn {
+          items(licensesState.licenses) { item ->
+            OpenSourceLicense(
+              item = item,
+              onItemClick = onItemClick
+            )
+          }
         }
       }
     }
@@ -113,6 +125,10 @@ private fun OpenSourceLicensePreview() {
 @Composable
 private fun OpenSourceLicensesPreview() {
   ValiutchikTheme {
-    OpenSourceLicensesScreen(licensesState = LicensesState(persistentListOf()), onItemClick = {})
+    OpenSourceLicensesScreen(
+      licensesState = LicensesState(persistentListOf()),
+      onItemClick = {},
+      onBackClick = {}
+    )
   }
 }
