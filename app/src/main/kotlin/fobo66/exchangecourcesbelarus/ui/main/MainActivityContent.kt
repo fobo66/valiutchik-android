@@ -16,7 +16,6 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
-import android.Manifest.permission
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -30,7 +29,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -40,15 +38,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainActivityContent(
   windowSizeClass: WindowSizeClass,
@@ -84,7 +80,7 @@ fun MainActivityContent(
   }
 }
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainScreenPanels(
   snackbarHostState: SnackbarHostState,
@@ -93,7 +89,6 @@ fun MainScreenPanels(
   modifier: Modifier = Modifier,
 ) {
   val navigator = rememberSupportingPaneScaffoldNavigator()
-  val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
   val scope = rememberCoroutineScope()
 
   BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
@@ -108,7 +103,6 @@ fun MainScreenPanels(
           snackbarHostState = snackbarHostState,
           manualRefreshVisible = manualRefreshVisible,
           canOpenSettings = canOpenSettings,
-          permissionState = locationPermissionState,
         )
       }
     },

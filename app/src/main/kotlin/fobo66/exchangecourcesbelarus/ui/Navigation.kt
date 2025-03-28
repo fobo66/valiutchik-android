@@ -16,6 +16,7 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import android.Manifest.permission
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,8 +42,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
@@ -61,7 +62,6 @@ import org.koin.androidx.compose.koinViewModel
 fun BestRatesScreenDestination(
   navigator: ThreePaneScaffoldNavigator<Any>,
   snackbarHostState: SnackbarHostState,
-  permissionState: PermissionState,
   manualRefreshVisible: Boolean,
   canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
@@ -81,9 +81,8 @@ fun BestRatesScreenDestination(
 
   val scope = rememberCoroutineScope()
 
-  LaunchedEffect(Unit) {
-    permissionState.launchPermissionRequest()
-  }
+  val permissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
+  LaunchedEffect(Unit) { permissionState.launchPermissionRequest() }
 
   LaunchedEffect(permissionState.status) {
     val isPermissionGranted = permissionState.status.isGranted
