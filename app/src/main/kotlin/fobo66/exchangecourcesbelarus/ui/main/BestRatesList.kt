@@ -18,6 +18,7 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -134,6 +135,7 @@ fun BestRatesGrid(
   ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
   currencyName: String,

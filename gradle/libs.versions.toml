@@ -73,7 +73,7 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "androidxTestUiAutomator" }
 androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidxTracing" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidxWindow" }
-compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 compose-material = { group = "androidx.compose.material3", name = "material3" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
