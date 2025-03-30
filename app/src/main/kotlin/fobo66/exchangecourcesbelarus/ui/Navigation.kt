@@ -20,8 +20,6 @@ import android.Manifest.permission
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -39,7 +37,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -50,7 +47,6 @@ import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
-import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import io.github.aakira.napier.Napier
