@@ -51,7 +51,7 @@ import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
+import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.launch
@@ -149,40 +149,33 @@ fun PreferenceScreenDestination(
   modifier: Modifier = Modifier,
   preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
-  Column(modifier = modifier) {
-    val scope = rememberCoroutineScope()
-    val defaultCity by preferencesViewModel.defaultCityPreference
-      .collectAsStateWithLifecycle()
+  val scope = rememberCoroutineScope()
+  val defaultCity by preferencesViewModel.defaultCityPreference
+    .collectAsStateWithLifecycle()
 
-    val updateInterval by preferencesViewModel.updateIntervalPreference
-      .collectAsStateWithLifecycle()
+  val updateInterval by preferencesViewModel.updateIntervalPreference
+    .collectAsStateWithLifecycle()
 
-    this.AnimatedVisibility(canOpenSettings) {
-      SecondaryTopBar(
-        title = stringResource(string.title_activity_settings),
-        onBackClick = {
-          scope.launch {
-            navigator.navigateBack()
-          }
-        }
-      )
-    }
-
-    PreferenceScreenContent(
-      defaultCityValue = defaultCity,
-      updateIntervalValue = updateInterval,
-      onDefaultCityChange = preferencesViewModel::updateDefaultCity,
-      onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
-      onOpenSourceLicensesClick = {
-        scope.launch {
-          navigator.navigateTo(
-            ThreePaneScaffoldRole.Tertiary,
-          )
-        }
-      },
-      modifier = Modifier.weight(1f)
-    )
-  }
+  PreferenceScreen(
+    defaultCityValue = defaultCity,
+    updateIntervalValue = updateInterval,
+    canOpenSettings = canOpenSettings,
+    onDefaultCityChange = preferencesViewModel::updateDefaultCity,
+    onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
+    onOpenSourceLicensesClick = {
+      scope.launch {
+        navigator.navigateTo(
+          ThreePaneScaffoldRole.Tertiary,
+        )
+      }
+    },
+    onBackClick = {
+      scope.launch {
+        navigator.navigateBack()
+      }
+    },
+    modifier = modifier
+  )
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)

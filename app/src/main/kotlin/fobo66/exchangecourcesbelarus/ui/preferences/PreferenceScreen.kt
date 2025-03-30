@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,10 @@
 
 package fobo66.exchangecourcesbelarus.ui.preferences
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -27,18 +30,50 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
+import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntry
 import fobo66.exchangecourcesbelarus.ui.TAG_DEFAULT_CITY
 import fobo66.exchangecourcesbelarus.ui.TAG_LICENSES
 import fobo66.exchangecourcesbelarus.ui.TAG_PREFERENCES
 import fobo66.exchangecourcesbelarus.ui.TAG_UPDATE_INTERVAL
+import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.launch
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
 const val UPDATE_INTERVAL_STEPS = 22
+
+@Composable
+fun PreferenceScreen(
+  defaultCityValue: String,
+  updateIntervalValue: Float,
+  canOpenSettings: Boolean,
+  onDefaultCityChange: (String) -> Unit,
+  onUpdateIntervalChange: (Float) -> Unit,
+  onOpenSourceLicensesClick: () -> Unit,
+  onBackClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Column(modifier = modifier) {
+    this.AnimatedVisibility(canOpenSettings) {
+      SecondaryTopBar(
+        title = stringResource(string.title_activity_settings),
+        onBackClick = onBackClick
+      )
+    }
+    PreferenceScreenContent(
+      defaultCityValue = defaultCityValue,
+      updateIntervalValue = updateIntervalValue,
+      onDefaultCityChange = onDefaultCityChange,
+      onUpdateIntervalChange = onUpdateIntervalChange,
+      onOpenSourceLicensesClick = onOpenSourceLicensesClick,
+      modifier = Modifier.weight(1f)
+    )
+  }
+}
 
 @Composable
 fun PreferenceScreenContent(
@@ -59,7 +94,9 @@ fun PreferenceScreenContent(
   }
 
   Column(
-    modifier = modifier.testTag(TAG_PREFERENCES)
+    modifier = modifier
+      .testTag(TAG_PREFERENCES)
+      .background(MaterialTheme.colorScheme.background)
   ) {
     ListPreference(
       title = {
@@ -96,6 +133,14 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 @Composable
 private fun PreferenceScreenPreview() {
   ValiutchikTheme {
-    PreferenceScreenContent("Minsk", PREVIEW_UPDATE_INTERVAL_VALUE, {}, {}, {})
+    PreferenceScreen(
+      defaultCityValue = "Minsk",
+      updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,
+      canOpenSettings = true,
+      onDefaultCityChange = {},
+      onUpdateIntervalChange = {},
+      onOpenSourceLicensesClick = {},
+      onBackClick = {}
+    )
   }
 }

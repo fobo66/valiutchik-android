@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.filters.SmallTest
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreenContent
+import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -42,14 +42,16 @@ class PreferencesScreenTest {
   fun showLicenses() {
     var showLicense = false
     composeRule.setContent {
-      PreferenceScreenContent(
+      PreferenceScreen(
         defaultCityValue = "Minsk",
         updateIntervalValue = 1f,
+        canOpenSettings = true,
         onDefaultCityChange = {},
         onUpdateIntervalChange = {},
         onOpenSourceLicensesClick = {
           showLicense = true
-        }
+        },
+        onBackClick = {}
       )
     }
 
@@ -63,12 +65,14 @@ class PreferencesScreenTest {
     var updateInterval = 1f
 
     composeRule.setContent {
-      PreferenceScreenContent(
+      PreferenceScreen(
         defaultCityValue = "Minsk",
         updateIntervalValue = updateInterval,
+        canOpenSettings = true,
         onDefaultCityChange = {},
         onUpdateIntervalChange = { updateInterval = it },
-        onOpenSourceLicensesClick = {}
+        onOpenSourceLicensesClick = {},
+        onBackClick = {}
       )
     }
 
@@ -83,12 +87,14 @@ class PreferencesScreenTest {
   fun defaultCityDialogShown() {
 
     composeRule.setContent {
-      PreferenceScreenContent(
+      PreferenceScreen(
         defaultCityValue = "Minsk",
         updateIntervalValue = 1f,
+        canOpenSettings = true,
         onDefaultCityChange = {},
         onUpdateIntervalChange = {},
-        onOpenSourceLicensesClick = {}
+        onOpenSourceLicensesClick = {},
+        onBackClick = {}
       )
     }
 
