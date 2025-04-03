@@ -23,6 +23,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.util.CurrencyName
 
 @Database(
   entities = [BestCourse::class],
@@ -43,5 +44,18 @@ val MIGRATION_3_4 =
 
     override fun migrate(connection: SQLiteConnection) {
       connection.execSQL(CREATE_CURRENCIES_TABLE)
+      val currencyFillQuery = buildString {
+        append("INSERT INTO currency(name) VALUES ")
+        repeat(CurrencyName.entries.size) {
+          append("(?), ")
+        }
+        replace(length - 2, length - 1, ";")
+      }
+      val currencyFillStatement = connection.prepare(currencyFillQuery)
+
+      CurrencyName.entries.forEachIndexed { index, name ->
+        currencyFillStatement.bindText(index, name.name)
+      }
+      currencyFillStatement.step()
     }
   }
