@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val credentialsModule = module {
-  single(qualifier(Api.USERNAME)) {
-    androidContext().getString(R.string.apiUsername)
-  }
-  single(qualifier(Api.PASSWORD)) {
-    androidContext().getString(R.string.apiPassword)
-  }
-  single(qualifier(Api.GEOCODING_API_KEY)) {
-    androidContext().getString(R.string.geocoderApiKey)
-  }
+    single(qualifier(Api.USERNAME)) {
+        androidContext().getString(R.string.apiUsername)
+    }
+    single(qualifier(Api.PASSWORD)) {
+        androidContext().getString(R.string.apiPassword)
+    }
+    single(qualifier(Api.GEOCODING_API_KEY)) {
+        androidContext().getString(R.string.geocoderApiKey)
+    }
 }

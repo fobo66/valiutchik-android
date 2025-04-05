@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@ package fobo66.valiutchik.core.model.datasource
 import android.net.Uri
 
 class UriDataSourceImpl : UriDataSource {
-  override fun prepareUri(
-    scheme: String,
-    authority: String,
-    queryParameterKey: String,
-    queryParameterValue: String
-  ): Uri = Uri.Builder()
-    .scheme(scheme)
-    .authority(authority)
-    .appendQueryParameter(queryParameterKey, queryParameterValue)
-    .build()
+    override fun prepareUri(
+        scheme: String,
+        authority: String,
+        queryParameterKey: String,
+        queryParameterValue: String
+    ): Uri = Uri.Builder()
+        .scheme(scheme)
+        .authority(authority)
+        .appendQueryParameter(queryParameterKey, queryParameterValue)
+        .build()
 }

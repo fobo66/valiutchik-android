@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,26 +23,29 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.xr.compose.material3.EnableXrComponentOverrides
+import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
 import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3XrApi::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+        super.onCreate(savedInstanceState)
 
-  @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-  override fun onCreate(savedInstanceState: Bundle?) {
-    installSplashScreen()
-    super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
-    enableEdgeToEdge()
-
-    setContent {
-      val windowSizeClass = calculateWindowSizeClass(this)
-      ValiutchikTheme {
-        KoinContext {
-          MainActivityContent(windowSizeClass)
+        setContent {
+            val windowSizeClass = calculateWindowSizeClass(this)
+            ValiutchikTheme {
+                KoinContext {
+                    EnableXrComponentOverrides {
+                        MainActivityContent(windowSizeClass)
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

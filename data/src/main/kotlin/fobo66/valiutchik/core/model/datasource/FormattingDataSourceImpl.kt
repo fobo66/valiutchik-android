@@ -28,28 +28,28 @@ import kotlin.LazyThreadSafetyMode.NONE
 private const val BYN = "BYN"
 
 class FormattingDataSourceImpl(
-  private val locale: Locale,
-  private val bankNameNormalizer: BankNameNormalizer,
+    private val locale: Locale,
+    private val bankNameNormalizer: BankNameNormalizer
 ) : FormattingDataSource {
-  override fun formatBankName(name: String): String = bankNameNormalizer.normalize(name)
+    override fun formatBankName(name: String): String = bankNameNormalizer.normalize(name)
 
-  private val currency: Currency by lazy(NONE) {
-    Currency.getInstance(BYN)
-  }
-
-  override fun formatCurrencyValue(value: Double): String =
-    if (VERSION.SDK_INT >= VERSION_CODES.R) {
-      NumberFormatter
-        .withLocale(locale)
-        .unit(currency)
-        .format(value)
-        .toString()
-    } else {
-      val format =
-        DecimalFormat.getCurrencyInstance(locale).apply {
-          currency = currency
-        }
-
-      format.format(value)
+    private val currency: Currency by lazy(NONE) {
+        Currency.getInstance(BYN)
     }
+
+    override fun formatCurrencyValue(value: Double): String =
+        if (VERSION.SDK_INT >= VERSION_CODES.R) {
+            NumberFormatter
+                .withLocale(locale)
+                .unit(currency)
+                .format(value)
+                .toString()
+        } else {
+            val format =
+                DecimalFormat.getCurrencyInstance(locale).apply {
+                    currency = currency
+                }
+
+            format.format(value)
+        }
 }
