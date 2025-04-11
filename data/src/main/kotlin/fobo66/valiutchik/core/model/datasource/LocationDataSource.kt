@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,9 +24,9 @@ import fobo66.valiutchik.core.entities.Location
  * Datasource for working with location
  */
 interface LocationDataSource {
-  /**
-   * Determine current location
-   */
-  @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-  suspend fun resolveLocation(): Location
+    /**
+     * Determine current location
+     */
+    @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+    suspend fun resolveLocation(): Location
 }

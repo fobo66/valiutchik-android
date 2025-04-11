@@ -17,9 +17,9 @@
 package fobo66.valiutchik.core.util
 
 enum class CurrencyName {
-  DOLLAR,
-  EUR,
-  RUB,
-  PLN,
-  UAH,
+    DOLLAR,
+    EUR,
+    RUB,
+    PLN,
+    UAH
 }

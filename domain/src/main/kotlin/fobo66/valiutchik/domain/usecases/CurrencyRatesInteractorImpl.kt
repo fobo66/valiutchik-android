@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,14 +23,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 
 class CurrencyRatesInteractorImpl(
-  private val loadExchangeRates: LoadExchangeRates,
-  private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
+    private val loadExchangeRates: LoadExchangeRates,
+    private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
 ) : CurrencyRatesInteractor {
-  override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = loadExchangeRates.execute(
-    Clock.System.now()
-  )
+    override fun loadExchangeRates(): Flow<List<BestCurrencyRate>> = loadExchangeRates.execute(
+        Clock.System.now()
+    )
 
-  override fun loadUpdateInterval(): Flow<Long> =
-    loadUpdateIntervalPreference.execute()
-      .map { it.roundToLong() }
+    override fun loadUpdateInterval(): Flow<Long> = loadUpdateIntervalPreference.execute()
+        .map { it.roundToLong() }
 }

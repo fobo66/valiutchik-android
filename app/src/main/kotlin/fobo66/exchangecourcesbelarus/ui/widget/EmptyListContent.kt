@@ -46,16 +46,16 @@ import fobo66.exchangecourcesbelarus.ui.MainActivity
  */
 @Composable
 fun EmptyListContent(modifier: GlanceModifier = GlanceModifier) {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  NoDataContent(
-    noDataText = context.getString(R.string.no_rates_indicator),
-    noDataIconRes = R.drawable.ic_empty_rates,
-    actionButtonText = context.getString(R.string.open_app),
-    actionButtonIcon = R.drawable.ic_open_in_app,
-    actionButtonOnClick = actionStartActivity<MainActivity>(),
-    modifier = modifier
-  )
+    NoDataContent(
+        noDataText = context.getString(R.string.no_rates_indicator),
+        noDataIconRes = R.drawable.ic_empty_rates,
+        actionButtonText = context.getString(R.string.open_app),
+        actionButtonIcon = R.drawable.ic_open_in_app,
+        actionButtonOnClick = actionStartActivity<MainActivity>(),
+        modifier = modifier
+    )
 }
 
 /**
@@ -75,42 +75,42 @@ fun EmptyListContent(modifier: GlanceModifier = GlanceModifier) {
  */
 @Composable
 internal fun NoDataContent(
-  noDataIconRes: Int,
-  noDataText: String,
-  actionButtonText: String,
-  actionButtonIcon: Int,
-  actionButtonOnClick: Action,
-  modifier: GlanceModifier = GlanceModifier
+    noDataIconRes: Int,
+    noDataText: String,
+    actionButtonText: String,
+    actionButtonIcon: Int,
+    actionButtonOnClick: Action,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  @Composable
-  fun showIcon() = LocalSize.current.height >= 180.dp
+    @Composable
+    fun showIcon() = LocalSize.current.height >= 180.dp
 
-  Column(
-    verticalAlignment = Alignment.CenterVertically,
-    horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = modifier.fillMaxSize()
-  ) {
-    if (showIcon()) {
-      Image(
-        provider = ImageProvider(noDataIconRes),
-        colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
-        contentDescription = null, // only decorative
-      )
-      Spacer(modifier = GlanceModifier.height(8.dp))
+    Column(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.fillMaxSize()
+    ) {
+        if (showIcon()) {
+            Image(
+                provider = ImageProvider(noDataIconRes),
+                colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
+                contentDescription = null // only decorative
+            )
+            Spacer(modifier = GlanceModifier.height(8.dp))
+        }
+        Text(
+            text = noDataText,
+            style = TextStyle(
+                fontWeight = FontWeight.Medium,
+                color = GlanceTheme.colors.onSurface,
+                fontSize = 16.sp // M3 - title/medium
+            )
+        )
+        Spacer(modifier = GlanceModifier.height(8.dp))
+        FilledButton(
+            text = actionButtonText,
+            icon = ImageProvider(actionButtonIcon),
+            onClick = actionButtonOnClick
+        )
     }
-    Text(
-      text = noDataText,
-      style = TextStyle(
-        fontWeight = FontWeight.Medium,
-        color = GlanceTheme.colors.onSurface,
-        fontSize = 16.sp // M3 - title/medium
-      )
-    )
-    Spacer(modifier = GlanceModifier.height(8.dp))
-    FilledButton(
-      text = actionButtonText,
-      icon = ImageProvider(actionButtonIcon),
-      onClick = actionButtonOnClick
-    )
-  }
 }
