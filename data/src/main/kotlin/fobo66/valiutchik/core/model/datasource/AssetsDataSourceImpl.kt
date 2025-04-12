@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,10 +21,7 @@ import okio.BufferedSource
 import okio.buffer
 import okio.source
 
-class AssetsDataSourceImpl(
-  private val assetManager: AssetManager
-) : AssetsDataSource {
-  override fun loadFile(fileName: String): BufferedSource {
-    return assetManager.open(fileName).source().buffer()
-  }
+class AssetsDataSourceImpl(private val assetManager: AssetManager) : AssetsDataSource {
+    override fun loadFile(fileName: String): BufferedSource =
+        assetManager.open(fileName).source().buffer()
 }

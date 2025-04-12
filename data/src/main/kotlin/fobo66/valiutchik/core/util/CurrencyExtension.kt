@@ -21,23 +21,21 @@ import fobo66.valiutchik.api.entity.Bank
 /**
  * Resolve currency buy rate based on the key
  */
-fun Bank.resolveCurrencyBuyRate(name: CurrencyName): String =
-  when (name) {
+fun Bank.resolveCurrencyBuyRate(name: CurrencyName): String = when (name) {
     CurrencyName.EUR -> eurBuy
     CurrencyName.RUB -> rubBuy
     CurrencyName.DOLLAR -> usdBuy
     CurrencyName.PLN -> plnBuy
     CurrencyName.UAH -> uahBuy
-  }
+}
 
 /**
  * Resolve currency sell rate based on the key
  */
-fun Bank.resolveCurrencySellRate(name: CurrencyName): String =
-  when (name) {
+fun Bank.resolveCurrencySellRate(name: CurrencyName): String = when (name) {
     CurrencyName.EUR -> eurSell
     CurrencyName.RUB -> rubSell
     CurrencyName.DOLLAR -> usdSell
     CurrencyName.PLN -> plnSell
     CurrencyName.UAH -> uahSell
-  }
+}

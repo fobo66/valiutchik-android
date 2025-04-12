@@ -98,254 +98,252 @@ import kotlinx.collections.immutable.persistentListOf
  */
 @Composable
 fun ActionListLayout(
-  title: String,
-  @DrawableRes titleIconRes: Int,
-  @DrawableRes titleBarActionIconRes: Int,
-  titleBarActionIconContentDescription: String,
-  titleBarAction: Action,
-  items: ImmutableList<BestCurrencyRate>,
-  actionButtonClick: Action,
-  modifier: GlanceModifier = GlanceModifier,
+    title: String,
+    @DrawableRes titleIconRes: Int,
+    @DrawableRes titleBarActionIconRes: Int,
+    titleBarActionIconContentDescription: String,
+    titleBarAction: Action,
+    items: ImmutableList<BestCurrencyRate>,
+    actionButtonClick: Action,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  fun titleBar(): @Composable (() -> Unit) =
-    {
-      TitleBar(
-        startIcon = ImageProvider(titleIconRes),
-        title = title.takeIf { ActionListLayoutSize.fromLocalSize() != Small } ?: "",
-        iconColor = GlanceTheme.colors.primary,
-        textColor = GlanceTheme.colors.onSurface,
-        actions = {
-          CircleIconButton(
-            imageProvider = ImageProvider(titleBarActionIconRes),
-            contentDescription = titleBarActionIconContentDescription,
-            contentColor = GlanceTheme.colors.secondary,
-            backgroundColor = null, // transparent
-            onClick = titleBarAction,
-          )
-        },
-      )
+    fun titleBar(): @Composable (() -> Unit) = {
+        TitleBar(
+            startIcon = ImageProvider(titleIconRes),
+            title = title.takeIf { ActionListLayoutSize.fromLocalSize() != Small } ?: "",
+            iconColor = GlanceTheme.colors.primary,
+            textColor = GlanceTheme.colors.onSurface,
+            actions = {
+                CircleIconButton(
+                    imageProvider = ImageProvider(titleBarActionIconRes),
+                    contentDescription = titleBarActionIconContentDescription,
+                    contentColor = GlanceTheme.colors.secondary,
+                    backgroundColor = null, // transparent
+                    onClick = titleBarAction
+                )
+            }
+        )
     }
 
-  val scaffoldTopPadding =
-    if (showTitleBar()) {
-      0.dp
-    } else {
-      widgetPadding
-    }
+    val scaffoldTopPadding =
+        if (showTitleBar()) {
+            0.dp
+        } else {
+            widgetPadding
+        }
 
-  Scaffold(
-    backgroundColor = GlanceTheme.colors.widgetBackground,
-    modifier = modifier.padding(top = scaffoldTopPadding),
-    titleBar =
-      if (showTitleBar()) {
-        titleBar()
-      } else {
-        null
-      },
-  ) {
-    Content(
-      items = items,
-      actionButtonClick = actionButtonClick,
-    )
-  }
+    Scaffold(
+        backgroundColor = GlanceTheme.colors.widgetBackground,
+        modifier = modifier.padding(top = scaffoldTopPadding),
+        titleBar =
+        if (showTitleBar()) {
+            titleBar()
+        } else {
+            null
+        }
+    ) {
+        Content(
+            items = items,
+            actionButtonClick = actionButtonClick
+        )
+    }
 }
 
 @Composable
 private fun Content(
-  items: ImmutableList<BestCurrencyRate>,
-  actionButtonClick: Action,
-  modifier: GlanceModifier = GlanceModifier,
+    items: ImmutableList<BestCurrencyRate>,
+    actionButtonClick: Action,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
+    val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
 
-  Box(modifier = modifier.padding(bottom = widgetPadding)) {
-    if (items.isEmpty()) {
-      EmptyListContent()
-    } else {
-      when (actionListLayoutSize) {
-        Large ->
-          GridView(
-            items = items,
-            actionButtonClick = actionButtonClick,
-          )
+    Box(modifier = modifier.padding(bottom = widgetPadding)) {
+        if (items.isEmpty()) {
+            EmptyListContent()
+        } else {
+            when (actionListLayoutSize) {
+                Large ->
+                    GridView(
+                        items = items,
+                        actionButtonClick = actionButtonClick
+                    )
 
-        else ->
-          ListView(
-            items = items,
-            actionButtonClick = actionButtonClick,
-          )
-      }
+                else ->
+                    ListView(
+                        items = items,
+                        actionButtonClick = actionButtonClick
+                    )
+            }
+        }
     }
-  }
 }
 
 @Composable
 private fun ListView(
-  items: ImmutableList<BestCurrencyRate>,
-  actionButtonClick: Action,
-  modifier: GlanceModifier = GlanceModifier,
+    items: ImmutableList<BestCurrencyRate>,
+    actionButtonClick: Action,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  RoundedScrollingLazyColumn(
-    modifier = modifier.fillMaxSize(),
-    items = items,
-    verticalItemsSpacing = verticalSpacing,
-    itemContentProvider = { item ->
-      CurrencyListItem(
-        currencyName = context.getString(item.currencyNameRes),
-        currencyValue = item.currencyValue,
-        bankName = item.bank,
-        actionButtonClick = actionButtonClick,
-        modifier = GlanceModifier.fillMaxSize(),
-      )
-    },
-  )
+    RoundedScrollingLazyColumn(
+        modifier = modifier.fillMaxSize(),
+        items = items,
+        verticalItemsSpacing = verticalSpacing,
+        itemContentProvider = { item ->
+            CurrencyListItem(
+                currencyName = context.getString(item.currencyNameRes),
+                currencyValue = item.currencyValue,
+                bankName = item.bank,
+                actionButtonClick = actionButtonClick,
+                modifier = GlanceModifier.fillMaxSize()
+            )
+        }
+    )
 }
 
 @Composable
 private fun GridView(
-  items: ImmutableList<BestCurrencyRate>,
-  actionButtonClick: Action,
-  modifier: GlanceModifier = GlanceModifier,
+    items: ImmutableList<BestCurrencyRate>,
+    actionButtonClick: Action,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  RoundedScrollingLazyVerticalGrid(
-    gridCells = GRID_SIZE,
-    items = items,
-    cellSpacing = itemContentSpacing,
-    itemContentProvider = { item ->
-      CurrencyListItem(
-        currencyName = context.getString(item.currencyNameRes),
-        currencyValue = item.currencyValue,
-        bankName = item.bank,
-        actionButtonClick = actionButtonClick,
-        modifier = GlanceModifier.fillMaxSize(),
-      )
-    },
-    modifier = modifier.fillMaxSize(),
-  )
+    RoundedScrollingLazyVerticalGrid(
+        gridCells = GRID_SIZE,
+        items = items,
+        cellSpacing = itemContentSpacing,
+        itemContentProvider = { item ->
+            CurrencyListItem(
+                currencyName = context.getString(item.currencyNameRes),
+                currencyValue = item.currencyValue,
+                bankName = item.bank,
+                actionButtonClick = actionButtonClick,
+                modifier = GlanceModifier.fillMaxSize()
+            )
+        },
+        modifier = modifier.fillMaxSize()
+    )
 }
 
 @Composable
 private fun CurrencyListItem(
-  currencyName: String,
-  currencyValue: String,
-  bankName: String,
-  actionButtonClick: Action,
-  modifier: GlanceModifier = GlanceModifier,
+    currencyName: String,
+    currencyValue: String,
+    bankName: String,
+    actionButtonClick: Action,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  ListItem(
-    modifier =
-      modifier
-        // We set a combined content description on list item since entire item is clickable.
-        .semantics {
-          contentDescription = combinedContentDescription(currencyName, currencyValue, bankName)
-        }.filledContainer(),
-    contentSpacing = itemContentSpacing,
-    leadingContent =
-      takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
-        Box(
-          GlanceModifier
-            .size(stateIconBackgroundSize)
-            .cornerRadius(circularCornerRadius),
-          contentAlignment = Alignment.Center,
-        ) {
-          Image(
-            provider = ImageProvider(R.drawable.ic_currency_exchange),
-            modifier = GlanceModifier.size(stateIconSize),
-            contentDescription = null, // already covered in list item container's description
-            colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant),
-          )
+    ListItem(
+        modifier =
+        modifier
+            // We set a combined content description on list item since entire item is clickable.
+            .semantics {
+                contentDescription =
+                    combinedContentDescription(currencyName, currencyValue, bankName)
+            }.filledContainer(),
+        contentSpacing = itemContentSpacing,
+        leadingContent =
+        takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
+            Box(
+                GlanceModifier
+                    .size(stateIconBackgroundSize)
+                    .cornerRadius(circularCornerRadius),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    provider = ImageProvider(R.drawable.ic_currency_exchange),
+                    modifier = GlanceModifier.size(stateIconSize),
+                    contentDescription = null, // already covered in list item container's description
+                    colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
+                )
+            }
+        },
+        headlineContent = {
+            Text(
+                text = currencyName,
+                style = ActionListLayoutTextStyles.titleText(),
+                maxLines = 1,
+                // Container's content description already reads this text
+                modifier = GlanceModifier.semantics { contentDescription = "" }
+            )
+        },
+        supportingContent = {
+            CurrencyValueContent(currencyValue, bankName)
+        },
+        trailingContent = {
+            CircleIconButton(
+                imageProvider = ImageProvider(R.drawable.ic_open_in_app),
+                contentDescription = context.getString(R.string.open_map),
+                onClick = actionButtonClick,
+                backgroundColor = null,
+                contentColor = GlanceTheme.colors.onSurface
+            )
         }
-      },
-    headlineContent = {
-      Text(
-        text = currencyName,
-        style = ActionListLayoutTextStyles.titleText(),
-        maxLines = 1,
-        // Container's content description already reads this text
-        modifier = GlanceModifier.semantics { contentDescription = "" },
-      )
-    },
-    supportingContent = {
-      CurrencyValueContent(currencyValue, bankName)
-    },
-    trailingContent = {
-      CircleIconButton(
-        imageProvider = ImageProvider(R.drawable.ic_open_in_app),
-        contentDescription = context.getString(R.string.open_map),
-        onClick = actionButtonClick,
-        backgroundColor = null,
-        contentColor = GlanceTheme.colors.onSurface,
-      )
-    },
-  )
+    )
 }
 
 @Composable
 private fun CurrencyValueContent(
-  currencyValue: String,
-  bankName: String,
-  modifier: GlanceModifier = GlanceModifier,
+    currencyValue: String,
+    bankName: String,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  Column(modifier = modifier) {
-    Text(
-      text = currencyValue,
-      maxLines = 2,
-      style = ActionListLayoutTextStyles.mainText(),
-      // Container's content description already reads this text
-      modifier = GlanceModifier.semantics { contentDescription = "" },
-    )
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      Image(
-        provider = ImageProvider(R.drawable.ic_bank),
-        colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
-        contentDescription = context.getString(R.string.bank_name_indicator),
-      )
-      Text(
-        text = bankName,
-        style = ActionListLayoutTextStyles.supportingText(),
-        modifier = GlanceModifier.padding(start = 8.dp),
-      )
+    Column(modifier = modifier) {
+        Text(
+            text = currencyValue,
+            maxLines = 2,
+            style = ActionListLayoutTextStyles.mainText(),
+            // Container's content description already reads this text
+            modifier = GlanceModifier.semantics { contentDescription = "" }
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                provider = ImageProvider(R.drawable.ic_bank),
+                colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
+                contentDescription = context.getString(R.string.bank_name_indicator)
+            )
+            Text(
+                text = bankName,
+                style = ActionListLayoutTextStyles.supportingText(),
+                modifier = GlanceModifier.padding(start = 8.dp)
+            )
+        }
     }
-  }
 }
 
 /**
  * Returns a combined content description that can be set on entire list item.
  */
 private fun combinedContentDescription(
-  currencyName: String,
-  currencyValue: String,
-  bankName: String,
-): String =
-  buildString {
+    currencyName: String,
+    currencyValue: String,
+    bankName: String
+): String = buildString {
     append(currencyName)
     append(" ")
     append(currencyValue)
     append(" ")
     append(bankName)
-  }
+}
 
 /** Returns the provided [block] composable if [predicate] is true, else returns null */
 @Composable
 private inline fun takeComposableIf(
-  predicate: Boolean,
-  crossinline block: @Composable () -> Unit,
-): (@Composable () -> Unit)? =
-  if (predicate) {
+    predicate: Boolean,
+    crossinline block: @Composable () -> Unit
+): (@Composable () -> Unit)? = if (predicate) {
     { block() }
-  } else {
+} else {
     null
-  }
+}
 
 /**
  * Converts an item into a filled container by applying the background color, padding and an
@@ -353,9 +351,9 @@ private inline fun takeComposableIf(
  */
 @Composable
 private fun GlanceModifier.filledContainer(): GlanceModifier =
-  cornerRadius(ActionListLayoutDimensions.filledItemCornerRadius)
-    .padding(ActionListLayoutDimensions.filledItemPadding)
-    .background(GlanceTheme.colors.secondaryContainer)
+    cornerRadius(ActionListLayoutDimensions.filledItemCornerRadius)
+        .padding(ActionListLayoutDimensions.filledItemPadding)
+        .background(GlanceTheme.colors.secondaryContainer)
 
 /**
  * Size of the widget per the reference breakpoints. Each size has its own display
@@ -363,112 +361,107 @@ private fun GlanceModifier.filledContainer(): GlanceModifier =
  *
  * In this layout, only width breakpoints are used to scale the layout.
  */
-private enum class ActionListLayoutSize(
-  val maxWidth: Dp,
-) {
-  // Single column list - compact view e.g. reduced fonts.
-  Small(maxWidth = 260.dp),
+private enum class ActionListLayoutSize(val maxWidth: Dp) {
+    // Single column list - compact view e.g. reduced fonts.
+    Small(maxWidth = 260.dp),
 
-  // Single column list
-  Medium(maxWidth = 439.dp),
+    // Single column list
+    Medium(maxWidth = 439.dp),
 
-  // 2 Column Grid
-  Large(maxWidth = 644.dp),
-  ;
+    // 2 Column Grid
+    Large(maxWidth = 644.dp)
+    ;
 
-  companion object {
-    /**
-     * Returns the corresponding [ActionListLayoutSize] to be considered for the current
-     * widget size.
-     */
-    @Composable
-    fun fromLocalSize(): ActionListLayoutSize {
-      val width = LocalSize.current.width
+    companion object {
+        /**
+         * Returns the corresponding [ActionListLayoutSize] to be considered for the current
+         * widget size.
+         */
+        @Composable
+        fun fromLocalSize(): ActionListLayoutSize {
+            val width = LocalSize.current.width
 
-      return if (width >= Medium.maxWidth) {
-        Large
-      } else if (width >= Small.maxWidth) {
-        Medium
-      } else {
-        Small
-      }
+            return if (width >= Medium.maxWidth) {
+                Large
+            } else if (width >= Small.maxWidth) {
+                Medium
+            } else {
+                Small
+            }
+        }
+
+        @Composable
+        fun showTitleBar(): Boolean = LocalSize.current.height >= 180.dp
     }
-
-    @Composable
-    fun showTitleBar(): Boolean = LocalSize.current.height >= 180.dp
-  }
 }
 
 private object ActionListLayoutTextStyles {
-  /**
-   * Style for the text displayed as title within each item.
-   */
-  @Composable
-  fun titleText(): TextStyle =
-    TextStyle(
-      fontWeight = FontWeight.Medium,
-      fontSize =
+    /**
+     * Style for the text displayed as title within each item.
+     */
+    @Composable
+    fun titleText(): TextStyle = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize =
         if (ActionListLayoutSize.fromLocalSize() == Small) {
-          14.sp // M3 Title Small
+            14.sp // M3 Title Small
         } else {
-          16.sp // M3 Title Medium
+            16.sp // M3 Title Medium
         },
-      color = GlanceTheme.colors.onSurface,
+        color = GlanceTheme.colors.onSurface
     )
 
-  /**
-   * Style for the text displayed as supporting text within each item.
-   */
-  @Composable
-  fun mainText(): TextStyle =
-    TextStyle(
-      color = GlanceTheme.colors.primary,
-      fontSize = 24.sp,
-      fontWeight = FontWeight.Bold,
+    /**
+     * Style for the text displayed as supporting text within each item.
+     */
+    @Composable
+    fun mainText(): TextStyle = TextStyle(
+        color = GlanceTheme.colors.primary,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold
     )
 
-  /**
-   * Style for the text displayed as supporting text within each item.
-   */
-  @Composable
-  fun supportingText(): TextStyle =
-    TextStyle(
-      fontWeight = FontWeight.Normal,
-      fontSize = 12.sp, // M3 Label Medium
-      color = GlanceTheme.colors.onSurfaceVariant,
+    /**
+     * Style for the text displayed as supporting text within each item.
+     */
+    @Composable
+    fun supportingText(): TextStyle = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp, // M3 Label Medium
+        color = GlanceTheme.colors.onSurfaceVariant
     )
 }
 
 private object ActionListLayoutDimensions {
-  /** Number of cells in the grid, when items are displayed as a grid. */
-  const val GRID_SIZE = 2
+    /** Number of cells in the grid, when items are displayed as a grid. */
+    const val GRID_SIZE = 2
 
-  /** Padding applied at bottom of the widget content */
-  val widgetPadding = 12.dp
+    /** Padding applied at bottom of the widget content */
+    val widgetPadding = 12.dp
 
-  /** Corner radius for each filled list item. */
-  val filledItemCornerRadius = 16.dp
+    /** Corner radius for each filled list item. */
+    val filledItemCornerRadius = 16.dp
 
-  /** Padding for filled list items. */
-  val filledItemPadding = 12.dp
+    /** Padding for filled list items. */
+    val filledItemPadding = 12.dp
 
-  /** Vertical spacing between items in the list.*/
-  val verticalSpacing = 4.dp
+    /** Vertical spacing between items in the list.*/
+    val verticalSpacing = 4.dp
 
-  /**
-   * Spacing between individual sections in within the list item (for instance, horizontal spacing
-   * between state icon & text section.
-   */
-  val itemContentSpacing = 4.dp
+    /**
+     * Spacing between individual sections in within the list item (for instance, horizontal spacing
+     * between state icon & text section.
+     */
+    val itemContentSpacing = 4.dp
 
-  /** Size of the background layer on the state icon. */
-  val stateIconBackgroundSize = 48.dp
+    /** Size of the background layer on the state icon. */
+    val stateIconBackgroundSize = 48.dp
 
-  /** Size of the state icon image. */
-  val stateIconSize = 24.dp
+    /** Size of the state icon image. */
+    val stateIconSize = 24.dp
 
-  /**  Corner radius to achieve circular shape. */
-  val circularCornerRadius = 200.dp
+    /**  Corner radius to achieve circular shape. */
+    val circularCornerRadius = 200.dp
 }
 
 /**
@@ -495,13 +488,13 @@ private annotation class PreviewActionListBreakpoints
 @PreviewLargeWidget
 @Composable
 private fun ActionListLayoutPreview() {
-  ActionListLayout(
-    title = "Test",
-    titleIconRes = R.drawable.ic_launcher_foreground,
-    titleBarActionIconRes = R.drawable.ic_refresh,
-    titleBarActionIconContentDescription = "test",
-    titleBarAction = action {},
-    items = persistentListOf(),
-    actionButtonClick = action {},
-  )
+    ActionListLayout(
+        title = "Test",
+        titleIconRes = R.drawable.ic_launcher_foreground,
+        titleBarActionIconRes = R.drawable.ic_refresh,
+        titleBarActionIconContentDescription = "test",
+        titleBarAction = action {},
+        items = persistentListOf(),
+        actionButtonClick = action {}
+    )
 }

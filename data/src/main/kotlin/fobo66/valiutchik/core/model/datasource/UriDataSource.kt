@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ import android.net.Uri
  * Datasource tp deal with URIs
  */
 interface UriDataSource {
-  /**
-   * Forge an URI for the intent with single query parameter
-   */
-  fun prepareUri(
-    scheme: String,
-    authority: String,
-    queryParameterKey: String,
-    queryParameterValue: String
-  ): Uri
+    /**
+     * Forge an URI for the intent with single query parameter
+     */
+    fun prepareUri(
+        scheme: String,
+        authority: String,
+        queryParameterKey: String,
+        queryParameterValue: String
+    ): Uri
 }

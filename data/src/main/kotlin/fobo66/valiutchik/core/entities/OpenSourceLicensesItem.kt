@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,20 +21,20 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OpenSourceLicensesItem(
-  @SerialName("dependency")
-  val dependency: String,
-  @SerialName("description")
-  val description: String?,
-  @SerialName("developers")
-  val developers: List<String>,
-  @SerialName("licenses")
-  val licenses: List<License>,
-  @SerialName("project")
-  val project: String,
-  @SerialName("url")
-  val url: String?,
-  @SerialName("version")
-  val version: String,
-  @SerialName("year")
-  val year: String?
+    @SerialName("dependency")
+    val dependency: String,
+    @SerialName("description")
+    val description: String?,
+    @SerialName("developers")
+    val developers: List<String>,
+    @SerialName("licenses")
+    val licenses: List<License>,
+    @SerialName("project")
+    val project: String,
+    @SerialName("url")
+    val url: String?,
+    @SerialName("version")
+    val version: String,
+    @SerialName("year")
+    val year: String?
 )

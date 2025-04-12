@@ -29,28 +29,28 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val networkModule =
-  module {
-    single<Json> {
-      Json {
-        isLenient = true
-        ignoreUnknownKeys = true
-      }
-    }
-    single {
-      HttpClient(OkHttp) {
-        install(ContentNegotiation) {
-          json(get())
-          xml()
+    module {
+        single<Json> {
+            Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            }
         }
-        install(ContentEncoding) {
-          gzip()
-          deflate()
-        }
-        install(HttpCache) {
-          publicStorage(FileStorage(androidContext().cacheDir))
-        }
+        single {
+            HttpClient(OkHttp) {
+                install(ContentNegotiation) {
+                    json(get())
+                    xml()
+                }
+                install(ContentEncoding) {
+                    gzip()
+                    deflate()
+                }
+                install(HttpCache) {
+                    publicStorage(FileStorage(androidContext().cacheDir))
+                }
 
-        expectSuccess = true
-      }
+                expectSuccess = true
+            }
+        }
     }
-  }
