@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,7 +45,10 @@ class MainScreenTest {
         onBestRateClick = {},
         onBestRateLongClick = { _, _ -> },
         isRefreshing = false,
-        onRefresh = {}
+        onRefresh = {},
+        showExplicitRefresh = true,
+        showSettings = true,
+        onSettingsClick = {}
       )
     }
     composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
@@ -63,7 +66,10 @@ class MainScreenTest {
         },
         onBestRateLongClick = { _, _ -> },
         isRefreshing = false,
-        onRefresh = {}
+        onRefresh = {},
+        showExplicitRefresh = true,
+        showSettings = true,
+        onSettingsClick = {}
       )
     }
     composeRule.onNodeWithTag(TAG_RATES)

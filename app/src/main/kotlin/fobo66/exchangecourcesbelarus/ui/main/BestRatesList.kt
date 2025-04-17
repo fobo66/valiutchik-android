@@ -18,8 +18,10 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -28,7 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,6 +39,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,10 +55,12 @@ import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
+import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,57 +68,74 @@ fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  showExplicitRefresh: Boolean,
+  showSettings: Boolean,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
+  onSettingsClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = modifier) {
-    if (it.isEmpty()) {
-      NoRatesIndicator()
-    } else {
-      PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
-        val density = LocalDensity.current
-        LazyVerticalGrid(
-          columns = GridCells.Adaptive(minSize = 220.dp),
-          verticalArrangement = Arrangement.spacedBy(16.dp),
-          horizontalArrangement = Arrangement.spacedBy(16.dp),
-          contentPadding =
-            PaddingValues(
-              top = 8.dp,
-              start = 8.dp,
-              end = 8.dp,
-              bottom =
-                with(density) {
-                  WindowInsets.systemBars.getBottom(this).toDp()
-                },
-            ),
-          modifier = Modifier.testTag(TAG_RATES),
-        ) {
-          itemsIndexed(
-            items = bestCurrencyRates,
-            key = { _, item -> item.id },
-          ) { index, item ->
-            BestCurrencyRateCard(
-              currencyName = stringResource(id = item.currencyNameRes),
-              currencyValue = item.currencyValue,
-              bankName = item.bank,
-              onClick = onBestRateClick,
-              onLongClick = onBestRateLongClick,
-              modifier =
-                Modifier
-                  .fillMaxWidth()
-                  .animateItem(),
-            )
+  Column(modifier = modifier) {
+    var isAboutDialogShown by remember { mutableStateOf(false) }
+
+    PrimaryTopBar(
+      title = stringResource(string.app_name),
+      onAboutClick = { isAboutDialogShown = true },
+      onRefreshClick = onRefresh,
+      showRefresh = showExplicitRefresh,
+      settingsVisible = showSettings,
+      onSettingsClick = onSettingsClick
+    )
+    Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
+      if (it.isEmpty()) {
+        NoRatesIndicator()
+      } else {
+        PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+          val density = LocalDensity.current
+          LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 220.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding =
+              PaddingValues(
+                top = 8.dp,
+                start = 8.dp,
+                end = 8.dp,
+                bottom =
+                  with(density) {
+                    WindowInsets.systemBars.getBottom(this).toDp()
+                  },
+              ),
+            modifier = Modifier.testTag(TAG_RATES),
+          ) {
+            items(
+              items = bestCurrencyRates,
+              key = { item -> item.id },
+            ) { item ->
+              BestCurrencyRateCard(
+                currencyName = stringResource(id = item.currencyNameRes),
+                currencyValue = item.currencyValue,
+                bankName = item.bank,
+                onClick = onBestRateClick,
+                onLongClick = onBestRateLongClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .animateItem(),
+              )
+            }
           }
         }
       }
     }
+
+    if (isAboutDialogShown) {
+      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
+    }
   }
-  ReportDrawnWhen {
-    bestCurrencyRates.isNotEmpty()
-  }
+  ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
   currencyName: String,
@@ -162,14 +187,24 @@ fun BestCurrencyRateCard(
 
 @Preview
 @Composable
-private fun BestCurrencyRatePreview() {
+private fun BestCurrencyRatesPreview() {
   ValiutchikTheme {
-    BestCurrencyRateCard(
-      currencyName = "US Dollar buy rate",
-      bankName = "Статусбанк (бывш. ОАО Евроторгинвестбанк)",
-      currencyValue = "2.56",
-      onClick = {},
-      onLongClick = { _, _ -> },
+    BestRatesGrid(
+      bestCurrencyRates = persistentListOf(
+        BestCurrencyRate(
+          id = 1,
+          bank = "test",
+          currencyNameRes = string.app_name,
+          currencyValue = "1.23"
+        )
+      ),
+      onBestRateClick = {},
+      onBestRateLongClick = { _, _ -> },
+      showExplicitRefresh = true,
+      showSettings = true,
+      isRefreshing = true,
+      onRefresh = {},
+      onSettingsClick = {}
     )
   }
 }
