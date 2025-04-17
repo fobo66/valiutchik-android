@@ -35,6 +35,7 @@ import fobo66.valiutchik.core.util.CurrencyName
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
   abstract fun currencyRatesDao(): CurrencyRatesDao
+  abstract fun currencyDao(): CurrencyDao
 }
 
 val MIGRATION_3_4 =
