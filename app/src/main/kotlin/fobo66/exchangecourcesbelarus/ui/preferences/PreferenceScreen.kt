@@ -40,7 +40,6 @@ import fobo66.exchangecourcesbelarus.ui.TAG_UPDATE_INTERVAL
 import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.launch
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
