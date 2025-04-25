@@ -16,13 +16,10 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import android.content.ComponentName
-import android.content.Intent
-import android.net.Uri
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.core.model.datasource.IntentDataSource
-import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.core.fake.FakeIntentDataSource
+import fobo66.valiutchik.core.fake.FakeUriDataSource
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -31,32 +28,9 @@ import org.junit.Test
 
 @SmallTest
 class MapRepositoryImplTest {
-  private val uriDataSource =
-    object : UriDataSource {
-      override fun prepareUri(
-        scheme: String,
-        authority: String,
-        queryParameterKey: String,
-        queryParameterValue: String,
-      ): Uri = Uri.EMPTY
-    }
-
+  private val uriDataSource = FakeUriDataSource()
   private val intentDataSource =
-    object : IntentDataSource {
-      var canResolveIntent = true
-
-      override fun createIntent(
-        uri: Uri,
-        action: String,
-      ): Intent = Intent()
-
-      override fun resolveIntent(intent: Intent): ComponentName? =
-        if (canResolveIntent) {
-          InstrumentationRegistry.getInstrumentation().componentName
-        } else {
-          null
-        }
-    }
+    FakeIntentDataSource(InstrumentationRegistry.getInstrumentation().componentName)
 
   private lateinit var mapRepository: MapRepository
 

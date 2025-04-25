@@ -14,19 +14,16 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.core.fake
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
 import com.eygraber.uri.Uri
-import com.eygraber.uri.toAndroidUri
+import fobo66.valiutchik.core.model.datasource.UriDataSource
 
-class IntentDataSourceImpl(
-  private val context: Context
-) : IntentDataSource {
-  override fun createIntent(uri: Uri, action: String): Intent = Intent(action, uri.toAndroidUri())
-
-  override fun resolveIntent(intent: Intent): ComponentName? =
-    intent.resolveActivity(context.packageManager)
+class FakeUriDataSource : UriDataSource {
+  override fun prepareUri(
+    scheme: String,
+    authority: String,
+    queryParameterKey: String,
+    queryParameterValue: String
+  ): Uri = Uri.EMPTY
 }

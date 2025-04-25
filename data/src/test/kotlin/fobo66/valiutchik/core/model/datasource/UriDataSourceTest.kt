@@ -16,19 +16,17 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
 import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
 import fobo66.valiutchik.core.model.repository.URI_SCHEME
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
-@SmallTest
 class UriDataSourceTest {
   private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
   @Test
-  fun prepareHttpUri() {
+  fun `prepare HTTP URI`() {
     val uri =
       uriDataSource.prepareUri(
         "https",
@@ -41,7 +39,7 @@ class UriDataSourceTest {
   }
 
   @Test
-  fun prepareMapUri() {
+  fun `prepare map URI`() {
     val uri =
       uriDataSource.prepareUri(
         URI_SCHEME,
