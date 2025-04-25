@@ -18,7 +18,6 @@ package fobo66.valiutchik.core.fake
 
 import android.content.ComponentName
 import android.content.Intent
-import androidx.test.platform.app.InstrumentationRegistry
 import com.eygraber.uri.Uri
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 
