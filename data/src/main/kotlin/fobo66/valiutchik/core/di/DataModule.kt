@@ -87,7 +87,7 @@ val dataSourcesModule =
     }
 
     single<LocationDataSource> {
-      LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.IO)))
+      LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.BACKGROUND)))
     }
 
     single<PersistenceDataSource> {
