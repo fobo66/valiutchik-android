@@ -16,14 +16,12 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import androidx.test.filters.SmallTest
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
 import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
 import fobo66.valiutchik.core.model.repository.URI_SCHEME
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
-@SmallTest
 class UriDataSourceTest {
   private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
@@ -37,7 +35,7 @@ class UriDataSourceTest {
         "value",
       )
 
-    assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
+    Truth.assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
   }
 
   @Test
@@ -50,6 +48,6 @@ class UriDataSourceTest {
         "test",
       )
 
-    assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+    Truth.assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
   }
 }
