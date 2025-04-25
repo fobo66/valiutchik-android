@@ -93,6 +93,7 @@ dependencies {
   ksp(libs.room.compiler)
   implementation(libs.androidx.datastore)
   implementation(libs.napier)
+  implementation(libs.uri)
 
   detektPlugins(libs.detekt.rules.formatting)
   detektPlugins(libs.detekt.rules.compose)

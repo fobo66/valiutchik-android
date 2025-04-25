@@ -42,6 +42,7 @@ profileinstallerVersion = "1.4.1"
 room = "2.7.1"
 truth = "1.4.4"
 turbine = "1.2.0"
+uri = "0.0.19"
 work = "2.10.1"
 
 [libraries]
@@ -122,6 +123,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+uri = { module = "com.eygraber:uri-kmp", version.ref = "uri" }
 work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 work-testing = { group = "androidx.work", name = "work-testing", version.ref = "work" }
 
