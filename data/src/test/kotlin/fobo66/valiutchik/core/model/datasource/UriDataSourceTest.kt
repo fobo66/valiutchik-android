@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
 import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
 import fobo66.valiutchik.core.model.repository.URI_SCHEME
@@ -26,7 +26,7 @@ class UriDataSourceTest {
   private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
   @Test
-  fun prepareHttpUri() {
+  fun `prepare HTTP URI`() {
     val uri =
       uriDataSource.prepareUri(
         "https",
@@ -35,11 +35,11 @@ class UriDataSourceTest {
         "value",
       )
 
-    Truth.assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
+    assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
   }
 
   @Test
-  fun prepareMapUri() {
+  fun `prepare map URI`() {
     val uri =
       uriDataSource.prepareUri(
         URI_SCHEME,
@@ -48,6 +48,6 @@ class UriDataSourceTest {
         "test",
       )
 
-    Truth.assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+    assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
   }
 }
