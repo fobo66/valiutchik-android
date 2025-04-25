@@ -18,7 +18,6 @@ package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
 
-
 /**
  * Datasource tp deal with URIs
  */
