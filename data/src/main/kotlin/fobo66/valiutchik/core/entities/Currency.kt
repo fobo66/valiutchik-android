@@ -28,4 +28,6 @@ data class Currency(
   val id: Long,
   @ColumnInfo(name = "name")
   val name: CurrencyName,
+  @ColumnInfo(name = "multiplier")
+  val multiplier: Int = 1,
 )

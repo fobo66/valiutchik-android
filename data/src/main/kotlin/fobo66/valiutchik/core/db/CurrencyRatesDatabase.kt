@@ -24,6 +24,7 @@ import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.util.CurrencyName
+import org.intellij.lang.annotations.Language
 
 @Database(
   entities = [BestCourse::class],
@@ -35,28 +36,28 @@ import fobo66.valiutchik.core.util.CurrencyName
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
   abstract fun currencyRatesDao(): CurrencyRatesDao
+
   abstract fun currencyDao(): CurrencyDao
 }
 
 val MIGRATION_3_4 =
   object : Migration(3, 4) {
+    @Language("RoomSql")
     private val CREATE_CURRENCIES_TABLE =
-      "CREATE TABLE IF NOT EXISTS currency(id INT PRIMARY KEY, name TEXT NOT NULL);"
+      "CREATE TABLE IF NOT EXISTS currency(id INT PRIMARY KEY, name TEXT NOT NULL, " +
+        "multiplier NUMBER NOT NULL DEFAULT 1);"
 
     override fun migrate(connection: SQLiteConnection) {
       connection.execSQL(CREATE_CURRENCIES_TABLE)
-      val currencyFillQuery = buildString {
-        append("INSERT INTO currency(name) VALUES ")
-        repeat(CurrencyName.entries.size) {
-          append("(?), ")
-        }
-        replace(length - 2, length - 1, ";")
-      }
-      val currencyFillStatement = connection.prepare(currencyFillQuery)
-
-      CurrencyName.entries.forEachIndexed { index, name ->
-        currencyFillStatement.bindText(index, name.name)
-      }
-      currencyFillStatement.step()
+      @Language("RoomSql")
+      val currencyFillQuery =
+        """INSERT INTO currency(name, multiplier) VALUES
+        | (${CurrencyName.DOLLAR}, 1),
+        | (${CurrencyName.EUR}, 1),
+        | (${CurrencyName.RUB}, 100),
+        | (${CurrencyName.PLN}, 1),
+        | (${CurrencyName.UAH}, 100),
+        """.trimMargin()
+      connection.execSQL(currencyFillQuery)
     }
   }
