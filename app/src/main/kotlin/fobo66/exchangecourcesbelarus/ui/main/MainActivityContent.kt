@@ -16,215 +16,109 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
-import android.Manifest.permission
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
-import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
-import fobo66.exchangecourcesbelarus.ui.PreferenceScreen
+import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
-import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
-import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
-    val navigator = rememberSupportingPaneScaffoldNavigator()
-    var isAboutDialogShown by remember { mutableStateOf(false) }
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+fun MainActivityContent(
+  windowSizeClass: WindowSizeClass,
+  modifier: Modifier = Modifier,
+) {
+  val snackbarHostState = remember { SnackbarHostState() }
 
-    Scaffold(
-        topBar = {
-            ValiutchikTopBar(
-                currentScreen = navigator.currentDestination?.pane,
-                onBackClick = { scope.launch { navigator.navigateBack() } },
-                onAboutClick = { isAboutDialogShown = true },
-                onSettingsClick = {
-                    scope.launch {
-                        navigator.navigateTo(
-                            ThreePaneScaffoldRole.Secondary
-                        )
-                    }
-                },
-                updateTitle = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-                settingsVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
-            )
+  Scaffold(
+    snackbarHost = {
+      SnackbarHost(
+        hostState = snackbarHostState,
+        modifier = Modifier.navigationBarsPadding(),
+        snackbar = {
+          Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
         },
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.navigationBarsPadding(),
-                snackbar = {
-                    Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
-                }
-            )
-        },
-        modifier = modifier
-    ) {
-        val layoutDirection = LocalLayoutDirection.current
-        MainScreenPanels(
-            navigator = navigator,
-            snackbarHostState = snackbarHostState,
-            modifier =
-            Modifier.padding(
-                start = it.calculateStartPadding(layoutDirection),
-                end = it.calculateEndPadding(layoutDirection),
-                top = it.calculateTopPadding()
-            )
+      )
+    },
+    modifier = modifier,
+  ) {
+    val layoutDirection = LocalLayoutDirection.current
+    MainScreenPanels(
+      snackbarHostState = snackbarHostState,
+      manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+      canOpenSettings = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
+      modifier =
+        Modifier.padding(
+          start = it.calculateStartPadding(layoutDirection),
+          end = it.calculateEndPadding(layoutDirection),
+          top = it.calculateTopPadding(),
         )
-        if (isAboutDialogShown) {
-            AboutAppDialog(onDismiss = { isAboutDialogShown = false })
-        }
-    }
+          .consumeWindowInsets(it),
+    )
+  }
 }
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainScreenPanels(
-    navigator: ThreePaneScaffoldNavigator<Any>,
-    snackbarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier
+  snackbarHostState: SnackbarHostState,
+  manualRefreshVisible: Boolean,
+  canOpenSettings: Boolean,
+  modifier: Modifier = Modifier,
 ) {
-    val locationPermissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
-    val scope = rememberCoroutineScope()
+  val navigator = rememberSupportingPaneScaffoldNavigator()
+  val scope = rememberCoroutineScope()
 
-    BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
+  BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
 
-    SupportingPaneScaffold(
-        directive = navigator.scaffoldDirective,
-        value = navigator.scaffoldValue,
-        mainPane = {
-            AnimatedPane {
-                BestRatesScreenDestination(
-                    snackbarHostState = snackbarHostState,
-                    permissionState = locationPermissionState
-                )
-            }
-        },
-        supportingPane = {
-            AnimatedPane {
-                PreferenceScreen(
-                    onLicensesClick = {
-                        scope.launch {
-                            navigator.navigateTo(
-                                ThreePaneScaffoldRole.Tertiary
-                            )
-                        }
-                    }
-                )
-            }
-        },
-        extraPane = {
-            AnimatedPane {
-                OpenSourceLicensesDestination()
-            }
-        },
-        modifier = modifier
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ValiutchikTopBar(
-    currentScreen: ThreePaneScaffoldRole?,
-    onBackClick: () -> Unit,
-    onAboutClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    updateTitle: Boolean = true,
-    settingsVisible: Boolean = true
-) {
-    TopAppBar(
-        navigationIcon = {
-            AnimatedVisibility(currentScreen != ThreePaneScaffoldRole.Primary) {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = stringResource(string.topbar_description_back)
-                    )
-                }
-            }
-        },
-        title = {
-            Text(
-                text =
-                if (updateTitle) {
-                    resolveTitle(currentScreen)
-                } else {
-                    stringResource(id = string.app_name)
-                },
-                modifier = Modifier.testTag(TAG_TITLE)
-            )
-        },
-        actions = {
-            IconButton(onClick = onAboutClick) {
-                Icon(
-                    Icons.Default.Info,
-                    contentDescription =
-                    stringResource(
-                        id = string.action_about
-                    )
-                )
-            }
-            AnimatedVisibility(currentScreen == ThreePaneScaffoldRole.Primary && settingsVisible) {
-                IconButton(onClick = onSettingsClick) {
-                    Icon(
-                        Icons.Default.Settings,
-                        contentDescription =
-                        stringResource(
-                            id = string.action_settings
-                        )
-                    )
-                }
-            }
-        },
-        modifier = modifier
-    )
-}
-
-@Composable
-fun resolveTitle(currentScreen: ThreePaneScaffoldRole?): String = when (currentScreen) {
-    ThreePaneScaffoldRole.Secondary -> stringResource(id = string.title_activity_settings)
-    ThreePaneScaffoldRole.Tertiary -> stringResource(id = string.title_activity_oss_licenses)
-    else -> stringResource(id = string.app_name)
+  SupportingPaneScaffold(
+    directive = navigator.scaffoldDirective,
+    value = navigator.scaffoldValue,
+    mainPane = {
+      AnimatedPane {
+        BestRatesScreenDestination(
+          navigator = navigator,
+          snackbarHostState = snackbarHostState,
+          manualRefreshVisible = manualRefreshVisible,
+          canOpenSettings = canOpenSettings,
+        )
+      }
+    },
+    supportingPane = {
+      AnimatedPane {
+        PreferenceScreenDestination(
+          navigator = navigator,
+          canOpenSettings = canOpenSettings
+        )
+      }
+    },
+    extraPane = {
+      AnimatedPane {
+        OpenSourceLicensesDestination(navigator = navigator)
+      }
+    },
+    modifier = modifier,
+  )
 }

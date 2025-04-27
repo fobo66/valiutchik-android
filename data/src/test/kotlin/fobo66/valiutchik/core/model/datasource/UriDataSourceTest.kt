@@ -16,40 +16,38 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
 import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
 import fobo66.valiutchik.core.model.repository.URI_SCHEME
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
-@SmallTest
 class UriDataSourceTest {
-    private val uriDataSource: UriDataSource = UriDataSourceImpl()
+  private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
-    @Test
-    fun prepareHttpUri() {
-        val uri =
-            uriDataSource.prepareUri(
-                "https",
-                "example.com",
-                "key",
-                "value"
-            )
+  @Test
+  fun `prepare HTTP URI`() {
+    val uri =
+      uriDataSource.prepareUri(
+        "https",
+        "example.com",
+        "key",
+        "value",
+      )
 
-        assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
-    }
+    assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
+  }
 
-    @Test
-    fun prepareMapUri() {
-        val uri =
-            uriDataSource.prepareUri(
-                URI_SCHEME,
-                URI_AUTHORITY,
-                URI_PARAM_KEY,
-                "test"
-            )
+  @Test
+  fun `prepare map URI`() {
+    val uri =
+      uriDataSource.prepareUri(
+        URI_SCHEME,
+        URI_AUTHORITY,
+        URI_PARAM_KEY,
+        "test",
+      )
 
-        assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
-    }
+    assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+  }
 }

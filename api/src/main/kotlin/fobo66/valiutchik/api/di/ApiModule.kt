@@ -27,22 +27,22 @@ import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val apiModule =
-    module {
-        includes(credentialsModule, networkModule, dispatchersModule)
-        singleOf<CurrencyRatesParser>(::CurrencyRatesParserSerializerImpl)
-        single<CurrencyRatesDataSource> {
-            CurrencyRatesDataSourceImpl(
-                get(),
-                get(qualifier(Api.USERNAME)),
-                get(qualifier(Api.PASSWORD)),
-                get(qualifier(Dispatcher.IO))
-            )
-        }
-        single<GeocodingDataSource> {
-            GeocodingDataSourceImpl(
-                get(),
-                get(qualifier(Api.GEOCODING_API_KEY)),
-                get(qualifier(Dispatcher.IO))
-            )
-        }
+  module {
+    includes(credentialsModule, networkModule, dispatchersModule)
+    singleOf<CurrencyRatesParser>(::CurrencyRatesParserSerializerImpl)
+    single<CurrencyRatesDataSource> {
+      CurrencyRatesDataSourceImpl(
+        get(),
+        get(qualifier(Api.USERNAME)),
+        get(qualifier(Api.PASSWORD)),
+        get(qualifier(Dispatcher.BACKGROUND)),
+      )
     }
+    single<GeocodingDataSource> {
+      GeocodingDataSourceImpl(
+        get(),
+        get(qualifier(Api.GEOCODING_API_KEY)),
+        get(qualifier(Dispatcher.BACKGROUND)),
+      )
+    }
+  }

@@ -59,83 +59,83 @@ import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val dataSourcesModule =
-    module {
-        includes(apiModule, systemModule, thirdPartyModule)
+  module {
+    includes(apiModule, systemModule, thirdPartyModule)
 
-        single<AssetsDataSource> {
-            AssetsDataSourceImpl(get())
-        }
-
-        single<BestCourseDataSource> {
-            BestCourseDataSourceImpl()
-        }
-
-        single<ClipboardDataSource> {
-            ClipboardDataSourceImpl(androidContext())
-        }
-
-        single<IntentDataSource> {
-            IntentDataSourceImpl(androidContext())
-        }
-
-        single<FormattingDataSource> {
-            FormattingDataSourceImpl(get(), get())
-        }
-
-        single<JsonDataSource> {
-            JsonDataSourceImpl(get())
-        }
-
-        single<LocationDataSource> {
-            LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.IO)))
-        }
-
-        single<PersistenceDataSource> {
-            PersistenceDataSourceImpl(get())
-        }
-
-        single<PreferencesDataSource> {
-            DataStorePreferencesDataSourceImpl(get())
-        }
-
-        single<UriDataSource> {
-            UriDataSourceImpl()
-        }
-
-        single<BankNameNormalizer> {
-            BankNameNormalizerImpl()
-        }
+    single<AssetsDataSource> {
+      AssetsDataSourceImpl(get())
     }
+
+    single<BestCourseDataSource> {
+      BestCourseDataSourceImpl()
+    }
+
+    single<ClipboardDataSource> {
+      ClipboardDataSourceImpl(androidContext())
+    }
+
+    single<IntentDataSource> {
+      IntentDataSourceImpl(androidContext())
+    }
+
+    single<FormattingDataSource> {
+      FormattingDataSourceImpl(get(), get())
+    }
+
+    single<JsonDataSource> {
+      JsonDataSourceImpl(get())
+    }
+
+    single<LocationDataSource> {
+      LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.BACKGROUND)))
+    }
+
+    single<PersistenceDataSource> {
+      PersistenceDataSourceImpl(get())
+    }
+
+    single<PreferencesDataSource> {
+      DataStorePreferencesDataSourceImpl(get())
+    }
+
+    single<UriDataSource> {
+      UriDataSourceImpl()
+    }
+
+    single<BankNameNormalizer> {
+      BankNameNormalizerImpl()
+    }
+  }
 
 val repositoriesModule =
-    module {
-        includes(dataSourcesModule)
+  module {
+    includes(dataSourcesModule)
 
-        single<ClipboardRepository> {
-            ClipboardRepositoryImpl(get())
-        }
-
-        single<CurrencyRateRepository> {
-            CurrencyRateRepositoryImpl(get(), get(), get(), get())
-        }
-
-        single<CurrencyRatesTimestampRepository> {
-            CurrencyRatesTimestampRepositoryImpl(get())
-        }
-
-        single<LicensesRepository> {
-            LicensesRepositoryImpl(get(), get())
-        }
-
-        single<LocationRepository> {
-            LocationRepositoryImpl(get(), get())
-        }
-
-        single<MapRepository> {
-            MapRepositoryImpl(get(), get())
-        }
-
-        single<PreferenceRepository> {
-            PreferenceRepositoryImpl(get())
-        }
+    single<ClipboardRepository> {
+      ClipboardRepositoryImpl(get())
     }
+
+    single<CurrencyRateRepository> {
+      CurrencyRateRepositoryImpl(get(), get(), get(), get())
+    }
+
+    single<CurrencyRatesTimestampRepository> {
+      CurrencyRatesTimestampRepositoryImpl(get())
+    }
+
+    single<LicensesRepository> {
+      LicensesRepositoryImpl(get(), get())
+    }
+
+    single<LocationRepository> {
+      LocationRepositoryImpl(get(), get())
+    }
+
+    single<MapRepository> {
+      MapRepositoryImpl(get(), get())
+    }
+
+    single<PreferenceRepository> {
+      PreferenceRepositoryImpl(get())
+    }
+  }

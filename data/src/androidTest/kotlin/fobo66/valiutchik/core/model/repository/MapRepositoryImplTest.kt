@@ -16,58 +16,43 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import android.content.ComponentName
-import android.content.Intent
-import android.net.Uri
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.core.model.datasource.IntentDataSource
-import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.core.fake.FakeIntentDataSource
+import fobo66.valiutchik.core.fake.FakeUriDataSource
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Before
 import org.junit.Test
 
 @SmallTest
 class MapRepositoryImplTest {
+  private val uriDataSource = FakeUriDataSource()
+  private val intentDataSource =
+    FakeIntentDataSource(InstrumentationRegistry.getInstrumentation().componentName)
 
-    private val uriDataSource = object : UriDataSource {
-        override fun prepareUri(
-            scheme: String,
-            authority: String,
-            queryParameterKey: String,
-            queryParameterValue: String
-        ): Uri = Uri.EMPTY
-    }
+  private lateinit var mapRepository: MapRepository
 
-    private val intentDataSource = object : IntentDataSource {
-        var canResolveIntent = true
+  @Before
+  fun setUp() {
+    mapRepository = MapRepositoryImpl(uriDataSource, intentDataSource)
+  }
 
-        override fun createIntent(uri: Uri, action: String): Intent = Intent()
+  @After
+  fun tearDown() {
+    intentDataSource.canResolveIntent = true
+  }
 
-        override fun resolveIntent(intent: Intent): ComponentName? = if (canResolveIntent) {
-            InstrumentationRegistry.getInstrumentation().componentName
-        } else {
-            null
-        }
-    }
+  @Test
+  fun canResolveIntent() {
+    assertNotNull(mapRepository.searchOnMap("test"))
+  }
 
-    private val mapRepository: MapRepository = MapRepositoryImpl(uriDataSource, intentDataSource)
+  @Test
+  fun cannotResolveIntent() {
+    intentDataSource.canResolveIntent = false
 
-    @After
-    fun tearDown() {
-        intentDataSource.canResolveIntent = true
-    }
-
-    @Test
-    fun canResolveIntent() {
-        assertNotNull(mapRepository.searchOnMap("test"))
-    }
-
-    @Test
-    fun cannotResolveIntent() {
-        intentDataSource.canResolveIntent = false
-
-        assertNull(mapRepository.searchOnMap("test"))
-    }
+    assertNull(mapRepository.searchOnMap("test"))
+  }
 }

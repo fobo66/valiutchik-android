@@ -14,25 +14,25 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.core.fake
 
 import android.content.ComponentName
 import android.content.Intent
 import com.eygraber.uri.Uri
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
 
-/**
- * Datasource for working with the Intents
- */
-interface IntentDataSource {
-    /**
-     * Create new Intent
-     */
-    fun createIntent(uri: Uri, action: String = Intent.ACTION_VIEW): Intent
+class FakeIntentDataSource(private val componentName: ComponentName) : IntentDataSource {
+  var canResolveIntent = true
 
-    /**
-     * Check if the given Intent can be resolved by the system
-     *
-     * @return null if there's no handler
-     */
-    fun resolveIntent(intent: Intent): ComponentName?
+  override fun createIntent(
+    uri: Uri,
+    action: String,
+  ): Intent = Intent()
+
+  override fun resolveIntent(intent: Intent): ComponentName? =
+    if (canResolveIntent) {
+      componentName
+    } else {
+      null
+    }
 }

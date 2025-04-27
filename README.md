@@ -20,3 +20,12 @@ Project's kanban board with plans and work in progress can be viewed [here](http
 It was my first Android app that I've started in 2015, but I've changed repos in the wrong way, and
 a lot of git history is missing. Plus there were a lot of refactorings, so this is not an app it was
 back then. It wasn't public because it was quite ugly and it had leaked signing keys in git.
+
+## Setup
+
+For local development, you can set up environment variables via `.env` file. To get started:
+
+```bash
+cp .env.sample .env
+```
+Replace placeholders with actual values when you need to.

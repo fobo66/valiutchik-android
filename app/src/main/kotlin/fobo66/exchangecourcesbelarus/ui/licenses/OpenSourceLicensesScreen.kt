@@ -32,90 +32,103 @@ import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.LoadingIndicator
+import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun OpenSourceLicensesScreen(
-    licensesState: LicensesState,
-    onItemClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+  licensesState: LicensesState,
+  onItemClick: (String) -> Unit,
+  onBackClick: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    Crossfade(licensesState, label = "licenses") { state ->
-        if (state.licenses.isEmpty()) {
-            LoadingIndicator()
-        } else {
-            LazyColumn(modifier = modifier) {
-                items(licensesState.licenses) { item ->
-                    OpenSourceLicense(
-                        item = item,
-                        onItemClick = onItemClick
-                    )
-                }
-            }
+  Column(modifier = modifier) {
+    SecondaryTopBar(
+      title = stringResource(R.string.title_activity_oss_licenses),
+      onBackClick = onBackClick
+    )
+    Crossfade(
+      targetState = licensesState,
+      label = "licenses",
+      modifier = Modifier.weight(1f)
+    ) { state ->
+      if (state.licenses.isEmpty()) {
+        LoadingIndicator()
+      } else {
+        LazyColumn {
+          items(licensesState.licenses) { item ->
+            OpenSourceLicense(
+              item = item,
+              onItemClick = onItemClick
+            )
+          }
         }
+      }
     }
+  }
 }
 
 @Composable
 fun OpenSourceLicense(
-    item: LicenseItem,
-    onItemClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+  item: LicenseItem,
+  onItemClick: (String) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    ListItem(
-        headlineContent = {
-            Text(text = item.project)
-        },
-        supportingContent = {
-            Column {
-                Text(text = item.licenses)
-                Text(
-                    text = buildAnnotatedString {
-                        append("Copyright © ")
-                        if (item.year.isNotEmpty()) {
-                            append(item.year)
-                            append(' ')
-                        }
-                        append(item.authors)
-                    }
-                )
-            }
-        },
-        modifier = modifier
-            .clickable(
-                enabled = item.url != null,
-                onClickLabel = stringResource(id = R.string.see_license_click_label)
-            ) {
-                item.url?.let {
-                    onItemClick(it)
-                }
-            }
-    )
+  ListItem(
+    headlineContent = {
+      Text(text = item.project)
+    },
+    supportingContent = {
+      Column {
+        Text(text = item.licenses)
+        Text(text = buildAnnotatedString {
+          append("Copyright © ")
+          if (item.year.isNotEmpty()) {
+            append(item.year)
+            append(' ')
+          }
+          append(item.authors)
+        })
+      }
+    },
+    modifier = modifier
+      .clickable(
+        enabled = item.url != null,
+        onClickLabel = stringResource(id = R.string.see_license_click_label)
+      ) {
+        item.url?.let {
+          onItemClick(it)
+        }
+      }
+  )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun OpenSourceLicensePreview() {
-    ValiutchikTheme {
-        OpenSourceLicense(
-            item = LicenseItem(
-                authors = "The Android Open Source Project",
-                licenses = "The Apache Software License, Version 2.0",
-                project = "Activity Compose",
-                url = null,
-                year = "2019"
-            ),
-            onItemClick = {}
-        )
-    }
+  ValiutchikTheme {
+    OpenSourceLicense(
+      item = LicenseItem(
+        authors = "The Android Open Source Project",
+        licenses = "The Apache Software License, Version 2.0",
+        project = "Activity Compose",
+        url = null,
+        year = "2019"
+      ),
+      onItemClick = {}
+    )
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun OpenSourceLicensesPreview() {
-    ValiutchikTheme {
-        OpenSourceLicensesScreen(licensesState = LicensesState(persistentListOf()), onItemClick = {
-        })
-    }
+  ValiutchikTheme {
+    OpenSourceLicensesScreen(
+      licensesState = LicensesState(persistentListOf()),
+      onItemClick = {},
+      onBackClick = {}
+    )
+  }
 }
