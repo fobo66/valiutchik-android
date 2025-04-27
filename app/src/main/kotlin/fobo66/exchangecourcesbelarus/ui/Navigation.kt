@@ -61,7 +61,7 @@ fun BestRatesScreenDestination(
   manualRefreshVisible: Boolean,
   canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
-  mainViewModel: MainViewModel = koinViewModel()
+  mainViewModel: MainViewModel = koinViewModel(),
 ) {
   val context = LocalContext.current
   val mapLauncher =
@@ -99,7 +99,7 @@ fun BestRatesScreenDestination(
       val mapIntent = mainViewModel.findBankOnMap(bankName)
       if (mapIntent != null) {
         mapLauncher.launch(
-          Intent.createChooser(mapIntent, context.getString(string.open_map))
+          Intent.createChooser(Intent.parseUri(mapIntent, 0), context.getString(string.open_map)),
         )
       } else {
         scope.launch {
@@ -122,18 +122,18 @@ fun BestRatesScreenDestination(
     },
     isRefreshing = viewState is MainScreenState.Loading,
     onRefresh = mainViewModel::manualRefresh,
-    modifier = modifier
+    modifier = modifier,
   )
 }
 
 private suspend fun showSnackbar(
   snackbarHostState: SnackbarHostState,
   message: String,
-  duration: SnackbarDuration = Short
+  duration: SnackbarDuration = Short,
 ) {
   snackbarHostState.showSnackbar(
     message = message,
-    duration = duration
+    duration = duration,
   )
 }
 
@@ -143,7 +143,7 @@ fun PreferenceScreenDestination(
   navigator: ThreePaneScaffoldNavigator<Any>,
   canOpenSettings: Boolean,
   modifier: Modifier = Modifier,
-  preferencesViewModel: PreferencesViewModel = koinViewModel()
+  preferencesViewModel: PreferencesViewModel = koinViewModel(),
 ) {
   val scope = rememberCoroutineScope()
   val defaultCity by preferencesViewModel.defaultCityPreference
@@ -170,7 +170,7 @@ fun PreferenceScreenDestination(
         navigator.navigateBack()
       }
     },
-    modifier = modifier
+    modifier = modifier,
   )
 }
 
@@ -179,7 +179,7 @@ fun PreferenceScreenDestination(
 fun OpenSourceLicensesDestination(
   navigator: ThreePaneScaffoldNavigator<Any>,
   modifier: Modifier = Modifier,
-  viewModel: OpenSourceLicensesViewModel = koinViewModel()
+  viewModel: OpenSourceLicensesViewModel = koinViewModel(),
 ) {
   val uriHandler = LocalUriHandler.current
   val scope = rememberCoroutineScope()
@@ -194,6 +194,6 @@ fun OpenSourceLicensesDestination(
         navigator.navigateBack()
       }
     },
-    modifier = modifier
+    modifier = modifier,
   )
 }
