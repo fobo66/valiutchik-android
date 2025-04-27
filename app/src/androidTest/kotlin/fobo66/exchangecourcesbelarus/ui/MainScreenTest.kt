@@ -34,47 +34,49 @@ import org.junit.Test
 @SmallTest
 class MainScreenTest {
 
-  @get:Rule
-  val composeRule = createComposeRule()
+    @get:Rule
+    val composeRule = createComposeRule()
 
-  @Test
-  fun emptyList() {
-    composeRule.setContent {
-      BestRatesGrid(
-        bestCurrencyRates = persistentListOf(),
-        onBestRateClick = {},
-        onBestRateLongClick = { _, _ -> },
-        isRefreshing = false,
-        onRefresh = {},
-        showExplicitRefresh = true,
-        showSettings = true,
-        onSettingsClick = {}
-      )
+    @Test
+    fun emptyList() {
+        composeRule.setContent {
+            BestRatesGrid(
+                bestCurrencyRates = persistentListOf(),
+                onBestRateClick = {},
+                onBestRateLongClick = { _, _ -> },
+                isRefreshing = false,
+                onRefresh = {},
+                showExplicitRefresh = true,
+                showSettings = true,
+                onSettingsClick = {}
+            )
+        }
+        composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
     }
-    composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
-  }
 
-  @OptIn(ExperimentalTestApi::class)
-  @Test
-  fun openMap() {
-    var isMapOpen = false
-    composeRule.setContent {
-      BestRatesGrid(
-        bestCurrencyRates = persistentListOf(BestCurrencyRate(0, "test", string.app_name, "0.0")),
-        onBestRateClick = {
-          isMapOpen = true
-        },
-        onBestRateLongClick = { _, _ -> },
-        isRefreshing = false,
-        onRefresh = {},
-        showExplicitRefresh = true,
-        showSettings = true,
-        onSettingsClick = {}
-      )
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun openMap() {
+        var isMapOpen = false
+        composeRule.setContent {
+            BestRatesGrid(
+                bestCurrencyRates = persistentListOf(
+                    BestCurrencyRate(0, "test", string.app_name, "0.0")
+                ),
+                onBestRateClick = {
+                    isMapOpen = true
+                },
+                onBestRateLongClick = { _, _ -> },
+                isRefreshing = false,
+                onRefresh = {},
+                showExplicitRefresh = true,
+                showSettings = true,
+                onSettingsClick = {}
+            )
+        }
+        composeRule.onNodeWithTag(TAG_RATES)
+            .onChild()
+            .performClick()
+        assertTrue(isMapOpen)
     }
-    composeRule.onNodeWithTag(TAG_RATES)
-      .onChild()
-      .performClick()
-    assertTrue(isMapOpen)
-  }
 }

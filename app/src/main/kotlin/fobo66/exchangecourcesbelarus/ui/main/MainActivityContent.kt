@@ -46,79 +46,76 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun MainActivityContent(
-  windowSizeClass: WindowSizeClass,
-  modifier: Modifier = Modifier,
-) {
-  val snackbarHostState = remember { SnackbarHostState() }
+fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
+    val snackbarHostState = remember { SnackbarHostState() }
 
-  Scaffold(
-    snackbarHost = {
-      SnackbarHost(
-        hostState = snackbarHostState,
-        modifier = Modifier.navigationBarsPadding(),
-        snackbar = {
-          Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.navigationBarsPadding(),
+                snackbar = {
+                    Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
+                }
+            )
         },
-      )
-    },
-    modifier = modifier,
-  ) {
-    val layoutDirection = LocalLayoutDirection.current
-    MainScreenPanels(
-      snackbarHostState = snackbarHostState,
-      manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-      canOpenSettings = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
-      modifier =
-        Modifier.padding(
-          start = it.calculateStartPadding(layoutDirection),
-          end = it.calculateEndPadding(layoutDirection),
-          top = it.calculateTopPadding(),
+        modifier = modifier
+    ) {
+        val layoutDirection = LocalLayoutDirection.current
+        MainScreenPanels(
+            snackbarHostState = snackbarHostState,
+            manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+            canOpenSettings = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
+            modifier =
+            Modifier.padding(
+                start = it.calculateStartPadding(layoutDirection),
+                end = it.calculateEndPadding(layoutDirection),
+                top = it.calculateTopPadding()
+            )
+                .consumeWindowInsets(it)
         )
-          .consumeWindowInsets(it),
-    )
-  }
+    }
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainScreenPanels(
-  snackbarHostState: SnackbarHostState,
-  manualRefreshVisible: Boolean,
-  canOpenSettings: Boolean,
-  modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState,
+    manualRefreshVisible: Boolean,
+    canOpenSettings: Boolean,
+    modifier: Modifier = Modifier
 ) {
-  val navigator = rememberSupportingPaneScaffoldNavigator()
-  val scope = rememberCoroutineScope()
+    val navigator = rememberSupportingPaneScaffoldNavigator()
+    val scope = rememberCoroutineScope()
 
-  BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
+    BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
 
-  SupportingPaneScaffold(
-    directive = navigator.scaffoldDirective,
-    value = navigator.scaffoldValue,
-    mainPane = {
-      AnimatedPane {
-        BestRatesScreenDestination(
-          navigator = navigator,
-          snackbarHostState = snackbarHostState,
-          manualRefreshVisible = manualRefreshVisible,
-          canOpenSettings = canOpenSettings,
-        )
-      }
-    },
-    supportingPane = {
-      AnimatedPane {
-        PreferenceScreenDestination(
-          navigator = navigator,
-          canOpenSettings = canOpenSettings
-        )
-      }
-    },
-    extraPane = {
-      AnimatedPane {
-        OpenSourceLicensesDestination(navigator = navigator)
-      }
-    },
-    modifier = modifier,
-  )
+    SupportingPaneScaffold(
+        directive = navigator.scaffoldDirective,
+        value = navigator.scaffoldValue,
+        mainPane = {
+            AnimatedPane {
+                BestRatesScreenDestination(
+                    navigator = navigator,
+                    snackbarHostState = snackbarHostState,
+                    manualRefreshVisible = manualRefreshVisible,
+                    canOpenSettings = canOpenSettings
+                )
+            }
+        },
+        supportingPane = {
+            AnimatedPane {
+                PreferenceScreenDestination(
+                    navigator = navigator,
+                    canOpenSettings = canOpenSettings
+                )
+            }
+        },
+        extraPane = {
+            AnimatedPane {
+                OpenSourceLicensesDestination(navigator = navigator)
+            }
+        },
+        modifier = modifier
+    )
 }

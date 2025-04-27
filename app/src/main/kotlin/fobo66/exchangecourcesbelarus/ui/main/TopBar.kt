@@ -39,105 +39,101 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrimaryTopBar(
-  title: String,
-  onAboutClick: () -> Unit,
-  onSettingsClick: () -> Unit,
-  onRefreshClick: () -> Unit,
-  showRefresh: Boolean,
-  modifier: Modifier = Modifier,
-  settingsVisible: Boolean = true,
+    title: String,
+    onAboutClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    onRefreshClick: () -> Unit,
+    showRefresh: Boolean,
+    modifier: Modifier = Modifier,
+    settingsVisible: Boolean = true
 ) {
-  TopAppBar(
-    title = {
-      Text(
-        text = title,
-        modifier = Modifier.testTag(TAG_TITLE),
-      )
-    },
-    actions = {
-      IconButton(onClick = onAboutClick) {
-        Icon(
-          Icons.Default.Info,
-          contentDescription =
-            stringResource(
-              id = R.string.action_about,
-            ),
-        )
-      }
-      this.AnimatedVisibility(showRefresh) {
-        IconButton(onClick = onRefreshClick) {
-          Icon(
-            Icons.Default.Refresh,
-            contentDescription =
-              stringResource(
-                id = R.string.widget_action_refresh,
-              ),
-          )
-        }
-      }
-      this.AnimatedVisibility(settingsVisible) {
-        IconButton(onClick = onSettingsClick) {
-          Icon(
-            Icons.Default.Settings,
-            contentDescription =
-              stringResource(
-                id = R.string.action_settings,
-              ),
-          )
-        }
-      }
-    },
-    modifier = modifier,
-  )
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.testTag(TAG_TITLE)
+            )
+        },
+        actions = {
+            IconButton(onClick = onAboutClick) {
+                Icon(
+                    Icons.Default.Info,
+                    contentDescription =
+                    stringResource(
+                        id = R.string.action_about
+                    )
+                )
+            }
+            this.AnimatedVisibility(showRefresh) {
+                IconButton(onClick = onRefreshClick) {
+                    Icon(
+                        Icons.Default.Refresh,
+                        contentDescription =
+                        stringResource(
+                            id = R.string.widget_action_refresh
+                        )
+                    )
+                }
+            }
+            this.AnimatedVisibility(settingsVisible) {
+                IconButton(onClick = onSettingsClick) {
+                    Icon(
+                        Icons.Default.Settings,
+                        contentDescription =
+                        stringResource(
+                            id = R.string.action_settings
+                        )
+                    )
+                }
+            }
+        },
+        modifier = modifier
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SecondaryTopBar(
-  title: String,
-  onBackClick: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  TopAppBar(
-    navigationIcon = {
-      IconButton(onClick = onBackClick) {
-        Icon(
-          Icons.AutoMirrored.Default.ArrowBack,
-          contentDescription = stringResource(R.string.topbar_description_back),
-        )
-      }
-    },
-    title = {
-      Text(
-        text = title,
-        modifier = Modifier.testTag(TAG_TITLE),
-      )
-    },
-    modifier = modifier,
-  )
+fun SecondaryTopBar(title: String, onBackClick: () -> Unit, modifier: Modifier = Modifier) {
+    TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    Icons.AutoMirrored.Default.ArrowBack,
+                    contentDescription = stringResource(R.string.topbar_description_back)
+                )
+            }
+        },
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.testTag(TAG_TITLE)
+            )
+        },
+        modifier = modifier
+    )
 }
 
 @Preview
 @Composable
 private fun PrimaryTopbarPreview() {
-  ValiutchikTheme {
-    PrimaryTopBar(
-      title = "Test",
-      showRefresh = true,
-      onSettingsClick = {},
-      onAboutClick = {},
-      onRefreshClick = {}
-    )
-  }
+    ValiutchikTheme {
+        PrimaryTopBar(
+            title = "Test",
+            showRefresh = true,
+            onSettingsClick = {},
+            onAboutClick = {},
+            onRefreshClick = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 private fun TertiaryTopbarPreview() {
-  ValiutchikTheme {
-    SecondaryTopBar(
-      title = "Test",
-      onBackClick = {},
-    )
-  }
+    ValiutchikTheme {
+        SecondaryTopBar(
+            title = "Test",
+            onBackClick = {}
+        )
+    }
 }

@@ -65,146 +65,146 @@ import kotlinx.collections.immutable.persistentListOf
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestRatesGrid(
-  bestCurrencyRates: ImmutableList<BestCurrencyRate>,
-  onBestRateClick: (String) -> Unit,
-  onBestRateLongClick: (String, String) -> Unit,
-  showExplicitRefresh: Boolean,
-  showSettings: Boolean,
-  isRefreshing: Boolean,
-  onRefresh: () -> Unit,
-  onSettingsClick: () -> Unit,
-  modifier: Modifier = Modifier,
+    bestCurrencyRates: ImmutableList<BestCurrencyRate>,
+    onBestRateClick: (String) -> Unit,
+    onBestRateLongClick: (String, String) -> Unit,
+    showExplicitRefresh: Boolean,
+    showSettings: Boolean,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
+    onSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  Column(modifier = modifier) {
-    var isAboutDialogShown by remember { mutableStateOf(false) }
+    Column(modifier = modifier) {
+        var isAboutDialogShown by remember { mutableStateOf(false) }
 
-    PrimaryTopBar(
-      title = stringResource(string.app_name),
-      onAboutClick = { isAboutDialogShown = true },
-      onRefreshClick = onRefresh,
-      showRefresh = showExplicitRefresh,
-      settingsVisible = showSettings,
-      onSettingsClick = onSettingsClick
-    )
-    Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
-      if (it.isEmpty()) {
-        NoRatesIndicator()
-      } else {
-        PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
-          val density = LocalDensity.current
-          LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 220.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding =
-              PaddingValues(
-                top = 8.dp,
-                start = 8.dp,
-                end = 8.dp,
-                bottom =
-                  with(density) {
-                    WindowInsets.systemBars.getBottom(this).toDp()
-                  },
-              ),
-            modifier = Modifier.testTag(TAG_RATES),
-          ) {
-            items(
-              items = bestCurrencyRates,
-              key = { item -> item.id },
-            ) { item ->
-              BestCurrencyRateCard(
-                currencyName = stringResource(id = item.currencyNameRes),
-                currencyValue = item.currencyValue,
-                bankName = item.bank,
-                onClick = onBestRateClick,
-                onLongClick = onBestRateLongClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .animateItem(),
-              )
+        PrimaryTopBar(
+            title = stringResource(string.app_name),
+            onAboutClick = { isAboutDialogShown = true },
+            onRefreshClick = onRefresh,
+            showRefresh = showExplicitRefresh,
+            settingsVisible = showSettings,
+            onSettingsClick = onSettingsClick
+        )
+        Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
+            if (it.isEmpty()) {
+                NoRatesIndicator()
+            } else {
+                PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+                    val density = LocalDensity.current
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(minSize = 220.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding =
+                        PaddingValues(
+                            top = 8.dp,
+                            start = 8.dp,
+                            end = 8.dp,
+                            bottom =
+                            with(density) {
+                                WindowInsets.systemBars.getBottom(this).toDp()
+                            }
+                        ),
+                        modifier = Modifier.testTag(TAG_RATES)
+                    ) {
+                        items(
+                            items = bestCurrencyRates,
+                            key = { item -> item.id }
+                        ) { item ->
+                            BestCurrencyRateCard(
+                                currencyName = stringResource(id = item.currencyNameRes),
+                                currencyValue = item.currencyValue,
+                                bankName = item.bank,
+                                onClick = onBestRateClick,
+                                onLongClick = onBestRateLongClick,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateItem()
+                            )
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    }
 
-    if (isAboutDialogShown) {
-      AboutAppDialog(onDismiss = { isAboutDialogShown = false })
+        if (isAboutDialogShown) {
+            AboutAppDialog(onDismiss = { isAboutDialogShown = false })
+        }
     }
-  }
-  ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
+    ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BestCurrencyRateCard(
-  currencyName: String,
-  currencyValue: String,
-  bankName: String,
-  onClick: (String) -> Unit,
-  onLongClick: (String, String) -> Unit,
-  modifier: Modifier = Modifier,
+    currencyName: String,
+    currencyValue: String,
+    bankName: String,
+    onClick: (String) -> Unit,
+    onLongClick: (String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  ElevatedCard(
-    modifier =
-      modifier
-        .clip(CardDefaults.elevatedShape)
-        .combinedClickable(
-          onLongClick = { onLongClick(currencyName, currencyValue) },
-          onClick = { onClick(bankName) },
-        ),
-  ) {
-    Text(
-      text = currencyName,
-      style = MaterialTheme.typography.headlineSmall,
-      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
-    )
-    Text(
-      text = currencyValue,
-      style = MaterialTheme.typography.displaySmall,
-      modifier =
-        Modifier
-          .padding(vertical = 16.dp, horizontal = 24.dp)
-          .testTag(TAG_RATE_VALUE),
-    )
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-      horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
+    ElevatedCard(
+        modifier =
+        modifier
+            .clip(CardDefaults.elevatedShape)
+            .combinedClickable(
+                onLongClick = { onLongClick(currencyName, currencyValue) },
+                onClick = { onClick(bankName) }
+            )
     ) {
-      Icon(
-        imageVector = Bank,
-        contentDescription = stringResource(id = string.bank_name_indicator),
-        modifier = Modifier.align(Alignment.CenterVertically),
-      )
-      Text(
-        text = bankName,
-        style = MaterialTheme.typography.bodyMedium,
-      )
+        Text(
+            text = currencyName,
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
+        )
+        Text(
+            text = currencyValue,
+            style = MaterialTheme.typography.displaySmall,
+            modifier =
+            Modifier
+                .padding(vertical = 16.dp, horizontal = 24.dp)
+                .testTag(TAG_RATE_VALUE)
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(start = 24.dp, bottom = 24.dp)
+        ) {
+            Icon(
+                imageVector = Bank,
+                contentDescription = stringResource(id = string.bank_name_indicator),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Text(
+                text = bankName,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
-  }
 }
 
 @Preview
 @Composable
 private fun BestCurrencyRatesPreview() {
-  ValiutchikTheme {
-    BestRatesGrid(
-      bestCurrencyRates = persistentListOf(
-        BestCurrencyRate(
-          id = 1,
-          bank = "test",
-          currencyNameRes = string.app_name,
-          currencyValue = "1.23"
+    ValiutchikTheme {
+        BestRatesGrid(
+            bestCurrencyRates = persistentListOf(
+                BestCurrencyRate(
+                    id = 1,
+                    bank = "test",
+                    currencyNameRes = string.app_name,
+                    currencyValue = "1.23"
+                )
+            ),
+            onBestRateClick = {},
+            onBestRateLongClick = { _, _ -> },
+            showExplicitRefresh = true,
+            showSettings = true,
+            isRefreshing = true,
+            onRefresh = {},
+            onSettingsClick = {}
         )
-      ),
-      onBestRateClick = {},
-      onBestRateLongClick = { _, _ -> },
-      showExplicitRefresh = true,
-      showSettings = true,
-      isRefreshing = true,
-      onRefresh = {},
-      onSettingsClick = {}
-    )
-  }
+    }
 }
