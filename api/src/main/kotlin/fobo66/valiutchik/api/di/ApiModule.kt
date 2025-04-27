@@ -35,14 +35,14 @@ val apiModule =
         get(),
         get(qualifier(Api.USERNAME)),
         get(qualifier(Api.PASSWORD)),
-        get(qualifier(Dispatcher.IO)),
+        get(qualifier(Dispatcher.BACKGROUND)),
       )
     }
     single<GeocodingDataSource> {
       GeocodingDataSourceImpl(
         get(),
         get(qualifier(Api.GEOCODING_API_KEY)),
-        get(qualifier(Dispatcher.IO)),
+        get(qualifier(Dispatcher.BACKGROUND)),
       )
     }
   }
