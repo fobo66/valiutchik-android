@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import android.content.Intent
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import io.github.aakira.napier.Napier
@@ -27,18 +26,19 @@ const val URI_PARAM_KEY = "q"
 
 class MapRepositoryImpl(
   private val uriDataSource: UriDataSource,
-  private val intentDataSource: IntentDataSource
+  private val intentDataSource: IntentDataSource,
 ) : MapRepository {
-  override fun searchOnMap(query: CharSequence): Intent? {
-    val mapUri = uriDataSource.prepareUri(
-      URI_SCHEME,
-      URI_AUTHORITY,
-      URI_PARAM_KEY,
-      query.toString()
-    )
-    val intent = intentDataSource.createIntent(mapUri)
+  override fun searchOnMap(query: CharSequence): String? {
+    val mapUri =
+      uriDataSource.prepareUri(
+        URI_SCHEME,
+        URI_AUTHORITY,
+        URI_PARAM_KEY,
+        query.toString(),
+      )
+    val intent = intentDataSource.createIntentUri(mapUri)
 
-    val canResolveIntent = intentDataSource.resolveIntent(intent) != null
+    val canResolveIntent = intentDataSource.checkIntentUri(intent)
 
     return if (canResolveIntent) {
       intent
