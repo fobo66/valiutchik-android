@@ -106,6 +106,7 @@ dependencies {
   testImplementation(libs.ktor.client)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.truth)
+  testApi(project(":data-testing"))
 
   androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.truth)
@@ -114,4 +115,5 @@ dependencies {
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.test.truth)
   androidTestImplementation(libs.androidx.test.espresso.intents)
+  androidTestApi(project(":data-testing"))
 }

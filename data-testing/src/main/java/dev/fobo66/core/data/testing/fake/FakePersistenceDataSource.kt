@@ -14,12 +14,20 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.datetime.Instant
 
-class FakeFormattingDataSource : FormattingDataSource {
-  override fun formatCurrencyValue(value: Double): String = value.toString()
+class FakePersistenceDataSource : PersistenceDataSource {
+  var isSaved = false
 
-  override fun formatBankName(name: String): String = name
+  override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
+    isSaved = true
+  }
+
+  override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
 }

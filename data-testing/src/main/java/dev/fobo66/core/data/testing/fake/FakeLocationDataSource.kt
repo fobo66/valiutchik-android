@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,20 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.datetime.Instant
+import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.datasource.LocationDataSource
 
-class FakePersistenceDataSource : PersistenceDataSource {
-  var isSaved = false
-
-  override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-    isSaved = true
-  }
-
-  override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
+class FakeLocationDataSource : LocationDataSource {
+  override suspend fun resolveLocation(): Location = Location(0.0, 0.0)
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
-import fobo66.valiutchik.core.fake.FakePreferenceDataSource
+import dev.fobo66.core.data.testing.fake.FakePreferenceDataSource
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 
 dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -47,4 +46,4 @@ pluginManagement {
 
 rootProject.name = "Valiutchik"
 
-include(":app", ":benchmark", ":data", ":domain", ":api", ":baselineprofile")
+include(":app", ":benchmark", ":data", ":domain", ":api", ":baselineprofile", ":data-testing")

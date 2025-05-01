@@ -14,19 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.entity.Bank
-import java.io.IOException
+import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
+import fobo66.valiutchik.core.util.CurrencyName
 
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-  var isError = false
+class FakeBestCourseDataSource : BestCourseDataSource {
+  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
 
-  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
-    if (isError) {
-      throw IOException("test")
-    } else {
-      setOf(Bank())
-    }
+  override fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
 }

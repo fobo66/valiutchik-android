@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import fobo66.valiutchik.core.fake.FakeGeocodingDataSource
-import fobo66.valiutchik.core.fake.FakeLocationDataSource
+import dev.fobo66.core.data.testing.fake.FakeGeocodingDataSource
+import dev.fobo66.core.data.testing.fake.FakeLocationDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -26,7 +26,6 @@ import org.junit.jupiter.api.assertThrows
 
 @ExperimentalCoroutinesApi
 class LocationRepositoryTest {
-
   private val locationDataSource = FakeLocationDataSource()
   private val geocodingDataSource = FakeGeocodingDataSource()
 
@@ -34,10 +33,11 @@ class LocationRepositoryTest {
     LocationRepositoryImpl(locationDataSource, geocodingDataSource)
 
   @Test
-  fun `resolve user city`() = runTest {
-    val city = locationRepository.resolveUserCity("default")
-    assertEquals("fake", city)
-  }
+  fun `resolve user city`() =
+    runTest {
+      val city = locationRepository.resolveUserCity("default")
+      assertEquals("fake", city)
+    }
 
   @Test
   fun `return default city on HTTP error`() {
