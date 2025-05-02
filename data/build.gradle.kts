@@ -98,6 +98,7 @@ dependencies {
   detektPlugins(libs.detekt.rules.formatting)
   detektPlugins(libs.detekt.rules.compose)
 
+  testApi(project(":data-testing"))
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
   testImplementation(platform(libs.koin.bom))
@@ -106,8 +107,8 @@ dependencies {
   testImplementation(libs.ktor.client)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.truth)
-  testApi(project(":data-testing"))
 
+  androidTestApi(project(":data-testing"))
   androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.truth)
   androidTestImplementation(libs.turbine)
@@ -115,5 +116,4 @@ dependencies {
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.test.truth)
   androidTestImplementation(libs.androidx.test.espresso.intents)
-  androidTestApi(project(":data-testing"))
 }

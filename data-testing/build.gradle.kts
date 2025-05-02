@@ -54,4 +54,5 @@ dependencies {
   api(project(":data"))
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.datetime)
+  implementation(libs.uri)
 }

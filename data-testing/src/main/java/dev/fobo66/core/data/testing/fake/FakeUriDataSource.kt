@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
 import com.eygraber.uri.Uri
 import fobo66.valiutchik.core.model.datasource.UriDataSource
@@ -24,6 +24,6 @@ class FakeUriDataSource : UriDataSource {
     scheme: String,
     authority: String,
     queryParameterKey: String,
-    queryParameterValue: String
+    queryParameterValue: String,
   ): Uri = Uri.EMPTY
 }
