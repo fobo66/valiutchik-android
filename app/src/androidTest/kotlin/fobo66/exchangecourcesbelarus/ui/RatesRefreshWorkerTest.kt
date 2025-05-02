@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import androidx.work.workDataOf
 import com.google.common.truth.Truth.assertThat
-import fobo66.exchangecourcesbelarus.ui.fake.FakeForceRefreshExchangeRates
-import fobo66.exchangecourcesbelarus.ui.fake.FakeForceRefreshExchangeRatesForDefaultCity
+import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRates
+import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRatesForDefaultCity
 import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
 import fobo66.exchangecourcesbelarus.work.WORKER_ARG_LOCATION_AVAILABLE
 import kotlinx.coroutines.test.runTest
@@ -61,22 +61,20 @@ class RatesRefreshWorkerTest {
   private fun prepareWorker(isLocationAvailable: Boolean = false): RatesRefreshWorker =
     TestListenableWorkerBuilder<RatesRefreshWorker>(
       context = ApplicationProvider.getApplicationContext(),
-      inputData = workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable)
-    )
-      .setWorkerFactory(object : WorkerFactory() {
+      inputData = workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable),
+    ).setWorkerFactory(
+      object : WorkerFactory() {
         override fun createWorker(
           appContext: Context,
           workerClassName: String,
-          workerParameters: WorkerParameters
-        ): ListenableWorker? {
-          return RatesRefreshWorker(
+          workerParameters: WorkerParameters,
+        ): ListenableWorker? =
+          RatesRefreshWorker(
             forceRefreshExchangeRates,
             forceRefreshExchangeRatesForDefaultCity,
             appContext,
-            workerParameters
+            workerParameters,
           )
-        }
-
-      })
-      .build()
+      },
+    ).build()
 }

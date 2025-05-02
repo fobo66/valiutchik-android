@@ -47,3 +47,4 @@ pluginManagement {
 rootProject.name = "Valiutchik"
 
 include(":app", ":benchmark", ":data", ":domain", ":api", ":baselineprofile", ":data-testing")
+include(":domain-testing")

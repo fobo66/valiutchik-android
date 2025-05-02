@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -183,12 +183,14 @@ dependencies {
   detektPlugins(libs.detekt.rules.compose)
 
   // tests
+  testApi(project(":domain-testing"))
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
   testImplementation(libs.turbine)
   testImplementation(libs.truth)
 
+  androidTestApi(project(":domain-testing"))
   androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.test.rules)
