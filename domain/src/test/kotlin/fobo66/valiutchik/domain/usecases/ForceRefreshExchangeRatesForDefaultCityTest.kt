@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.fake.FakeCurrencyRateRepository
-import fobo66.valiutchik.domain.fake.FakeCurrencyRatesTimestampRepository
-import fobo66.valiutchik.domain.fake.FakePreferenceRepository
+import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
+import dev.fobo66.core.data.testing.fake.FakeCurrencyRatesTimestampRepository
+import dev.fobo66.core.data.testing.fake.FakePreferenceRepository
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -35,21 +35,23 @@ class ForceRefreshExchangeRatesForDefaultCityTest {
     ForceRefreshExchangeRatesForDefaultCityImpl(
       timestampRepository,
       currencyRateRepository,
-      preferenceRepository
+      preferenceRepository,
     )
 
   @Test
-  fun `refresh exchange rates`() = runTest {
-    refreshExchangeRates.execute(now)
-    assertTrue(currencyRateRepository.isRefreshed)
-    assertTrue(timestampRepository.isSaveTimestampCalled)
-  }
+  fun `refresh exchange rates`() =
+    runTest {
+      refreshExchangeRates.execute(now)
+      assertTrue(currencyRateRepository.isRefreshed)
+      assertTrue(timestampRepository.isSaveTimestampCalled)
+    }
 
   @Test
-  fun `refresh even recent exchange rates`() = runTest {
-    timestampRepository.isNeededToUpdateCurrencyRates = false
+  fun `refresh even recent exchange rates`() =
+    runTest {
+      timestampRepository.isNeededToUpdateCurrencyRates = false
 
-    refreshExchangeRates.execute(now)
-    assertTrue(currencyRateRepository.isRefreshed)
-  }
+      refreshExchangeRates.execute(now)
+      assertTrue(currencyRateRepository.isRefreshed)
+    }
 }

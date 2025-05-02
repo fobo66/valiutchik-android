@@ -68,6 +68,7 @@ dependencies {
   detektPlugins(libs.detekt.rules.formatting)
   detektPlugins(libs.detekt.rules.compose)
 
+  testApi(project(":data-testing"))
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
   testImplementation(platform(libs.koin.bom))
