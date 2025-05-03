@@ -17,8 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui.preferences
 
 import app.cash.turbine.test
-import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
-import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
+import dev.fobo66.domain.testing.fake.FakeUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import kotlinx.coroutines.Dispatchers
@@ -34,20 +33,20 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+private const val INTERVAL = 1f
+private const val CITY = "test"
+
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesViewModelTest {
   private lateinit var viewModel: PreferencesViewModel
 
-  private val defaultCity = MutableStateFlow("test")
-  private val updateInterval = MutableStateFlow(1f)
-
-  private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(updateInterval)
+  private val defaultCity = MutableStateFlow(CITY)
 
   private val loadDefaultCityPreference = object : LoadDefaultCityPreference {
     override fun execute(): Flow<String> = defaultCity
   }
 
-  private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(updateInterval)
+  private val updateIntervalPreference = FakeUpdateIntervalPreference(INTERVAL)
 
   private val updateDefaultCityPreference = object : UpdateDefaultCityPreference {
     override suspend fun execute(newDefaultCity: String) {
@@ -60,9 +59,9 @@ class PreferencesViewModelTest {
     Dispatchers.setMain(UnconfinedTestDispatcher())
     viewModel = PreferencesViewModel(
       loadDefaultCityPreference,
-      loadUpdateIntervalPreference,
+      updateIntervalPreference,
       updateDefaultCityPreference,
-      updateUpdateIntervalPreference
+      updateIntervalPreference
     )
   }
 
@@ -75,7 +74,7 @@ class PreferencesViewModelTest {
   fun `load default city pref`() = runTest {
     viewModel.defaultCityPreference.test {
       val awaitItem = awaitItem()
-      assertEquals("test", awaitItem)
+      assertEquals(CITY, awaitItem)
     }
   }
 
@@ -93,7 +92,7 @@ class PreferencesViewModelTest {
   fun `load update interval pref`() = runTest {
     viewModel.updateIntervalPreference.test {
       val awaitItem = awaitItem()
-      assertEquals(1f, awaitItem)
+      assertEquals(INTERVAL, awaitItem)
     }
   }
 
