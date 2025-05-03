@@ -19,15 +19,17 @@ package dev.fobo66.domain.testing.fake
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
-class FakeDefaultCityPreference(value: String) : LoadDefaultCityPreference,
+class FakeDefaultCityPreference(private val storage: MutableMap<String, String>) :
+  LoadDefaultCityPreference,
   UpdateDefaultCityPreference {
-  private val preference = MutableStateFlow(value)
 
-  override fun execute(): Flow<String> = preference
+  override fun execute(): Flow<String> = flowOf(storage)
+    .map { it.getValue("city") }
 
   override suspend fun execute(newDefaultCity: String) {
-    preference.emit(newDefaultCity)
+    storage.put("city", newDefaultCity)
   }
 }

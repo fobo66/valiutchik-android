@@ -39,8 +39,13 @@ private const val NEW_CITY = "newcity"
 class PreferencesViewModelTest {
   private lateinit var viewModel: PreferencesViewModel
 
-  private val defaultCityPreference = FakeDefaultCityPreference(CITY)
-  private val updateIntervalPreference = FakeUpdateIntervalPreference(INTERVAL)
+  private val fakeStorage = buildMap {
+    put("city", CITY)
+    put("interval", INTERVAL.toString())
+  }.toMutableMap()
+
+  private val defaultCityPreference = FakeDefaultCityPreference(fakeStorage)
+  private val updateIntervalPreference = FakeUpdateIntervalPreference(fakeStorage)
 
 
   @BeforeEach

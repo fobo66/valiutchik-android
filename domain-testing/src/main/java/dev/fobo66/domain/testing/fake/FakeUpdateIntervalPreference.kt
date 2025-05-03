@@ -19,14 +19,15 @@ package dev.fobo66.domain.testing.fake
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
-class FakeUpdateIntervalPreference(value: Float) :
+class FakeUpdateIntervalPreference(private val storage: MutableMap<String, String>) :
   UpdateUpdateIntervalPreference, LoadUpdateIntervalPreference {
-  private val preference: MutableStateFlow<Float> = MutableStateFlow(value)
   override suspend fun execute(newUpdateInterval: Float) {
-    preference.emit(newUpdateInterval)
+    storage.put("interval", newUpdateInterval.toString())
   }
 
-  override fun execute(): Flow<Float> = preference
+  override fun execute(): Flow<Float> = flowOf(storage)
+    .map { it.getValue("interval").toFloat() }
 }
