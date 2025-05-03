@@ -18,7 +18,8 @@ package fobo66.exchangecourcesbelarus.ui.preferences
 
 import app.cash.turbine.test
 import dev.fobo66.domain.testing.fake.FakeDefaultCityPreference
-import dev.fobo66.domain.testing.fake.FakeUpdateIntervalPreference
+import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
+import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import kotlinx.coroutines.Dispatchers
@@ -48,16 +49,17 @@ class PreferencesViewModelTest {
   }.toMutableMap()
 
   private val defaultCityPreference = FakeDefaultCityPreference(fakeStorage)
-  private val updateIntervalPreference = FakeUpdateIntervalPreference(fakeStorage)
+  private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
+  private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
 
   @BeforeEach
   fun setUp() {
     Dispatchers.setMain(UnconfinedTestDispatcher())
     viewModel = PreferencesViewModel(
       defaultCityPreference,
-      updateIntervalPreference,
+      loadUpdateIntervalPreference,
       defaultCityPreference,
-      updateIntervalPreference
+      updateUpdateIntervalPreference
     )
   }
 
