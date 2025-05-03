@@ -17,8 +17,9 @@
 package fobo66.exchangecourcesbelarus.ui.preferences
 
 import app.cash.turbine.test
-import dev.fobo66.domain.testing.fake.FakeDefaultCityPreference
+import dev.fobo66.domain.testing.fake.FakeLoadDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
+import dev.fobo66.domain.testing.fake.FakeUpdateDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
@@ -35,7 +36,6 @@ import org.junit.jupiter.api.Test
 
 private const val INTERVAL = 1f
 private const val NEW_INTERVAL = 3f
-
 private const val CITY = "test"
 private const val NEW_CITY = "newcity"
 
@@ -48,7 +48,8 @@ class PreferencesViewModelTest {
     put(KEY_UPDATE_INTERVAL, INTERVAL.toString())
   }.toMutableMap()
 
-  private val defaultCityPreference = FakeDefaultCityPreference(fakeStorage)
+  private val loadDefaultCityPreference = FakeLoadDefaultCityPreference(fakeStorage)
+  private val updateDefaultCityPreference = FakeUpdateDefaultCityPreference(fakeStorage)
   private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
   private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
 
@@ -56,9 +57,9 @@ class PreferencesViewModelTest {
   fun setUp() {
     Dispatchers.setMain(UnconfinedTestDispatcher())
     viewModel = PreferencesViewModel(
-      defaultCityPreference,
+      loadDefaultCityPreference,
       loadUpdateIntervalPreference,
-      defaultCityPreference,
+      updateDefaultCityPreference,
       updateUpdateIntervalPreference
     )
   }
