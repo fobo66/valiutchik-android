@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 package fobo66.exchangecourcesbelarus.ui.preferences
 
 import app.cash.turbine.test
+import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
+import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
-import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
-import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -38,22 +38,16 @@ import org.junit.jupiter.api.Test
 class PreferencesViewModelTest {
   private lateinit var viewModel: PreferencesViewModel
 
-  val defaultCity = MutableStateFlow("test")
-  val updateInterval = MutableStateFlow(1f)
+  private val defaultCity = MutableStateFlow("test")
+  private val updateInterval = MutableStateFlow(1f)
 
-  private val loadUpdateIntervalPreference = object : LoadUpdateIntervalPreference {
-    override fun execute(): Flow<Float> = updateInterval
-  }
+  private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(updateInterval)
 
   private val loadDefaultCityPreference = object : LoadDefaultCityPreference {
     override fun execute(): Flow<String> = defaultCity
   }
 
-  private val updateUpdateIntervalPreference = object : UpdateUpdateIntervalPreference {
-    override suspend fun execute(newUpdateInterval: Float) {
-      updateInterval.emit(newUpdateInterval)
-    }
-  }
+  private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(updateInterval)
 
   private val updateDefaultCityPreference = object : UpdateDefaultCityPreference {
     override suspend fun execute(newDefaultCity: String) {
