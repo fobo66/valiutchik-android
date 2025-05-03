@@ -19,6 +19,8 @@ package fobo66.exchangecourcesbelarus.ui.preferences
 import app.cash.turbine.test
 import dev.fobo66.domain.testing.fake.FakeDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateIntervalPreference
+import fobo66.valiutchik.core.KEY_DEFAULT_CITY
+import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -32,6 +34,7 @@ import org.junit.jupiter.api.Test
 
 private const val INTERVAL = 1f
 private const val NEW_INTERVAL = 3f
+
 private const val CITY = "test"
 private const val NEW_CITY = "newcity"
 
@@ -40,13 +43,12 @@ class PreferencesViewModelTest {
   private lateinit var viewModel: PreferencesViewModel
 
   private val fakeStorage = buildMap {
-    put("city", CITY)
-    put("interval", INTERVAL.toString())
+    put(KEY_DEFAULT_CITY, CITY)
+    put(KEY_UPDATE_INTERVAL, INTERVAL.toString())
   }.toMutableMap()
 
   private val defaultCityPreference = FakeDefaultCityPreference(fakeStorage)
   private val updateIntervalPreference = FakeUpdateIntervalPreference(fakeStorage)
-
 
   @BeforeEach
   fun setUp() {
@@ -67,8 +69,8 @@ class PreferencesViewModelTest {
   @Test
   fun `load default city pref`() = runTest {
     viewModel.defaultCityPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals(CITY, awaitItem)
+      val pref = awaitItem()
+      assertEquals(CITY, pref)
     }
   }
 
@@ -77,16 +79,16 @@ class PreferencesViewModelTest {
     viewModel.updateDefaultCity(NEW_CITY)
 
     viewModel.defaultCityPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals(NEW_CITY, awaitItem)
+      val pref = awaitItem()
+      assertEquals(NEW_CITY, pref)
     }
   }
 
   @Test
   fun `load update interval pref`() = runTest {
     viewModel.updateIntervalPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals(INTERVAL, awaitItem)
+      val pref = awaitItem()
+      assertEquals(INTERVAL, pref)
     }
   }
 
@@ -95,8 +97,8 @@ class PreferencesViewModelTest {
     viewModel.updateUpdateInterval(NEW_INTERVAL)
 
     viewModel.updateIntervalPreference.test {
-      val awaitItem = awaitItem()
-      assertEquals(NEW_INTERVAL, awaitItem)
+      val pref = awaitItem()
+      assertEquals(NEW_INTERVAL, pref)
     }
   }
 }
