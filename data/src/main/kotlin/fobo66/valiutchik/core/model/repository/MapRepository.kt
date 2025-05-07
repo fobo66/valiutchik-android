@@ -16,11 +16,9 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import android.content.Intent
-
 /**
  * Repository to open map
  */
 interface MapRepository {
-    fun searchOnMap(query: CharSequence): Intent?
+  fun searchOnMap(query: CharSequence): String?
 }

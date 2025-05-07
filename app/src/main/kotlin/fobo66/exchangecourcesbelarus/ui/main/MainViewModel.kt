@@ -16,7 +16,6 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
-import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.Constraints
@@ -33,7 +32,6 @@ import fobo66.exchangecourcesbelarus.work.WORKER_ARG_LOCATION_AVAILABLE
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
-import java.util.concurrent.TimeUnit
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -47,99 +45,103 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 private const val WORK_BACKGROUND_REFRESH = "backgroundRefresh"
 
 class MainViewModel(
-    currencyRatesInteractor: CurrencyRatesInteractor,
-    private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
-    private val findBankOnMap: FindBankOnMap,
-    private val workManager: WorkManager
+  currencyRatesInteractor: CurrencyRatesInteractor,
+  private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
+  private val findBankOnMap: FindBankOnMap,
+  private val workManager: WorkManager,
 ) : ViewModel() {
-
-    val bestCurrencyRates = currencyRatesInteractor.loadExchangeRates()
-        .onEach {
-            if (it.isEmpty()) {
-                isRefreshTriggered.emit(true)
-            }
+  val bestCurrencyRates =
+    currencyRatesInteractor
+      .loadExchangeRates()
+      .onEach {
+        if (it.isEmpty()) {
+          isRefreshTriggered.emit(true)
         }
-        .map { it.toImmutableList() }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-            initialValue = persistentListOf()
-        )
+      }.map { it.toImmutableList() }
+      .stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+        initialValue = persistentListOf(),
+      )
 
-    private val isLocationPermissionGranted: MutableStateFlow<Boolean?> = MutableStateFlow(null)
-    private val isRefreshTriggered = MutableStateFlow(false)
+  private val isLocationPermissionGranted: MutableStateFlow<Boolean?> = MutableStateFlow(null)
+  private val isRefreshTriggered = MutableStateFlow(false)
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val screenState = combine(
-        isRefreshTriggered,
-        isLocationPermissionGranted,
-        currencyRatesInteractor.loadUpdateInterval(),
-        ::MainScreenStateTrigger
+  @OptIn(ExperimentalCoroutinesApi::class)
+  val screenState =
+    combine(
+      isRefreshTriggered,
+      isLocationPermissionGranted,
+      currencyRatesInteractor.loadUpdateInterval(),
+      ::MainScreenStateTrigger,
+    ).filter { it.isRefreshTriggered && it.isLocationAvailable != null }
+      .onEach {
+        handleRefresh(it.isLocationAvailable == true, it.updateInterval)
+        isRefreshTriggered.emit(false)
+      }.flatMapLatest { workManager.getWorkInfosForUniqueWorkFlow(WORK_BACKGROUND_REFRESH) }
+      .map { infos ->
+        infos.any { info ->
+          info.state == WorkInfo.State.RUNNING
+        }
+      }.map {
+        if (it) {
+          MainScreenState.Loading
+        } else {
+          MainScreenState.LoadedRates
+        }
+      }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+        initialValue = MainScreenState.Initial,
+      )
+
+  fun findBankOnMap(bankName: CharSequence): String? = findBankOnMap.execute(bankName)
+
+  fun handleRefresh(
+    isLocationAvailable: Boolean,
+    updateInterval: Long,
+  ) = viewModelScope.launch {
+    val workRequest =
+      PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
+        .setConstraints(
+          Constraints
+            .Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.NOT_ROAMING)
+            .build(),
+        ).setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+        .build()
+    workManager.enqueueUniquePeriodicWork(
+      WORK_BACKGROUND_REFRESH,
+      ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+      workRequest,
     )
-        .filter { it.isRefreshTriggered && it.isLocationAvailable != null }
-        .onEach {
-            handleRefresh(it.isLocationAvailable == true, it.updateInterval)
-            isRefreshTriggered.emit(false)
-        }
-        .flatMapLatest { workManager.getWorkInfosForUniqueWorkFlow(WORK_BACKGROUND_REFRESH) }
-        .map { infos ->
-            infos.any { info ->
-                info.state == WorkInfo.State.RUNNING
-            }
-        }
-        .map {
-            if (it) {
-                MainScreenState.Loading
-            } else {
-                MainScreenState.LoadedRates
-            }
-        }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-            initialValue = MainScreenState.Initial
-        )
+  }
 
-    fun findBankOnMap(bankName: CharSequence): Intent? = findBankOnMap.execute(bankName)
-
-    fun handleRefresh(isLocationAvailable: Boolean, updateInterval: Long) = viewModelScope.launch {
-        val workRequest = PeriodicWorkRequestBuilder<RatesRefreshWorker>(
-            updateInterval,
-            TimeUnit.HOURS
-        )
-            .setConstraints(
-                Constraints.Builder()
-                    .setRequiresBatteryNotLow(true)
-                    .setRequiredNetworkType(NetworkType.NOT_ROAMING)
-                    .build()
-            )
-            .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
-            .build()
-        workManager.enqueueUniquePeriodicWork(
-            WORK_BACKGROUND_REFRESH,
-            ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-            workRequest
-        )
+  fun manualRefresh() =
+    viewModelScope.launch {
+      isRefreshTriggered.emit(true)
     }
 
-    fun manualRefresh() = viewModelScope.launch {
-        isRefreshTriggered.emit(true)
-    }
-
-    fun handleLocationPermission(permissionGranted: Boolean) = viewModelScope.launch {
-        isLocationPermissionGranted.update {
-            if (it != permissionGranted) {
-                isRefreshTriggered.emit(true)
-            }
-            permissionGranted
+  fun handleLocationPermission(permissionGranted: Boolean) =
+    viewModelScope.launch {
+      isLocationPermissionGranted.update {
+        if (it != permissionGranted) {
+          isRefreshTriggered.emit(true)
         }
+        permissionGranted
+      }
     }
 
-    fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
-        copyCurrencyRateToClipboard.execute(currencyName, currencyValue)
-    }
+  fun copyCurrencyRateToClipboard(
+    currencyName: CharSequence,
+    currencyValue: CharSequence,
+  ) {
+    copyCurrencyRateToClipboard.execute(currencyName, currencyValue)
+  }
 }

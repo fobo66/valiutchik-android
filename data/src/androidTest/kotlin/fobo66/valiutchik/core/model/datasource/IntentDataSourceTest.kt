@@ -19,38 +19,38 @@ package fobo66.valiutchik.core.model.datasource
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 import androidx.test.filters.SmallTest
 import com.eygraber.uri.Uri
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
+import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 
 @SmallTest
 class IntentDataSourceTest {
-    private val uri: Uri = Uri.parse("geo:0,0?q=test")
+  private val uri: Uri = Uri.parse("geo:0,0?q=test")
 
-    @get:Rule
-    val intentsRule = IntentsRule()
+  @get:Rule
+  val intentsRule = IntentsRule()
 
-    private val intentDataSource: IntentDataSource =
-        IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
+  private val intentDataSource: IntentDataSource =
+    IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
 
-    @Test
-    fun createIntent() {
-        val intent = intentDataSource.createIntent(Uri.EMPTY)
-        assertIntent(intent).hasAction(Intent.ACTION_VIEW)
-    }
+  @Test
+  fun createIntent() {
+    val intent = Intent.parseUri(intentDataSource.createIntentUri(Uri.EMPTY), 0)
+    assertIntent(intent).hasAction(Intent.ACTION_VIEW)
+  }
 
-    @Test
-    fun canResolveIntent() {
-        val intent = intentDataSource.createIntent(uri)
-        assertThat(intentDataSource.resolveIntent(intent)).isNotNull()
-    }
+  @Test
+  fun canResolveIntent() {
+    val intent = intentDataSource.createIntentUri(uri)
+    assertThat(intentDataSource.checkIntentUri(intent)).isTrue()
+  }
 
-    @Test
-    fun cannotResolveEmptyIntent() {
-        val intent = intentDataSource.createIntent(Uri.EMPTY)
-        assertThat(intentDataSource.resolveIntent(intent)).isNull()
-    }
+  @Test
+  fun cannotResolveEmptyIntent() {
+    val intent = intentDataSource.createIntentUri(Uri.EMPTY)
+    assertThat(intentDataSource.checkIntentUri(intent)).isFalse()
+  }
 }

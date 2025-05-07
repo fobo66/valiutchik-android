@@ -16,23 +16,16 @@
 
 package fobo66.valiutchik.core.fake
 
-import android.content.ComponentName
-import android.content.Intent
 import com.eygraber.uri.Uri
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 
-class FakeIntentDataSource(private val componentName: ComponentName) : IntentDataSource {
+class FakeIntentDataSource : IntentDataSource {
   var canResolveIntent = true
 
-  override fun createIntent(
+  override fun createIntentUri(
     uri: Uri,
     action: String,
-  ): Intent = Intent()
+  ): String = Uri.EMPTY.toString()
 
-  override fun resolveIntent(intent: Intent): ComponentName? =
-    if (canResolveIntent) {
-      componentName
-    } else {
-      null
-    }
+  override fun checkIntentUri(uri: String): Boolean = canResolveIntent
 }
