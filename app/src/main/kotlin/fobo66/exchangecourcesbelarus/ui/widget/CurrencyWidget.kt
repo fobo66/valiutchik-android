@@ -83,6 +83,26 @@ class CurrencyWidget :
       }
     }
   }
+
+  override suspend fun providePreview(
+    context: Context,
+    widgetCategory: Int,
+  ) {
+    val ratesState =
+      loadExchangeRates
+        .execute(Clock.System.now())
+        .map { it.toImmutableList() }
+
+    provideContent {
+      ValiutchikWidgetTheme {
+        val rates by ratesState.collectAsState(initial = persistentListOf())
+        CurrencyWidgetContent(
+          rates = rates,
+          onTitleBarActionClick = {},
+        )
+      }
+    }
+  }
 }
 
 @Composable
