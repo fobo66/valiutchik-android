@@ -17,5 +17,5 @@
 package fobo66.valiutchik.domain.usecases
 
 interface FindBankOnMap {
-  fun execute(bankName: CharSequence): String?
+    fun execute(bankName: CharSequence): String?
 }
