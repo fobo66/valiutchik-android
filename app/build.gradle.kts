@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -39,11 +39,11 @@ android {
     }
   }
 
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
     minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
     versionCode = 23
     versionName = "1.14.2"
     multiDexEnabled = true

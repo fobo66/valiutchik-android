@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -48,7 +48,7 @@ android {
       isMinifyEnabled = true
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
-        "benchmark-proguard-rules.pro"
+        "benchmark-proguard-rules.pro",
       )
     }
     release {

@@ -25,7 +25,7 @@ plugins {
 
 android {
   namespace = "fobo66.valiutchik.domain"
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O

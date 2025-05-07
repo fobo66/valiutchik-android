@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ plugins {
 
 android {
   namespace = "dev.fobo66.baselineprofile"
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -53,13 +53,12 @@ android {
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   targetProjectPath = ":app"
-
 }
 
 // This is the configuration block for the Baseline Profile plugin.
@@ -80,7 +79,7 @@ androidComponents {
     val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
     v.instrumentationRunnerArguments.put(
       "targetAppId",
-      v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() }
+      v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() },
     )
   }
 }
