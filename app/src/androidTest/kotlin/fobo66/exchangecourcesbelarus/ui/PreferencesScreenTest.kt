@@ -35,70 +35,69 @@ import org.junit.Test
 @SmallTest
 class PreferencesScreenTest {
 
-  @get:Rule
-  val composeRule = createComposeRule()
+    @get:Rule
+    val composeRule = createComposeRule()
 
-  @Test
-  fun showLicenses() {
-    var showLicense = false
-    composeRule.setContent {
-      PreferenceScreen(
-        defaultCityValue = "Minsk",
-        updateIntervalValue = 1f,
-        canOpenSettings = true,
-        onDefaultCityChange = {},
-        onUpdateIntervalChange = {},
-        onOpenSourceLicensesClick = {
-          showLicense = true
-        },
-        onBackClick = {}
-      )
+    @Test
+    fun showLicenses() {
+        var showLicense = false
+        composeRule.setContent {
+            PreferenceScreen(
+                defaultCityValue = "Minsk",
+                updateIntervalValue = 1f,
+                canOpenSettings = true,
+                onDefaultCityChange = {},
+                onUpdateIntervalChange = {},
+                onOpenSourceLicensesClick = {
+                    showLicense = true
+                },
+                onBackClick = {}
+            )
+        }
+
+        composeRule.onNodeWithTag(TAG_LICENSES).performClick()
+        assertTrue(showLicense)
     }
 
-    composeRule.onNodeWithTag(TAG_LICENSES).performClick()
-    assertTrue(showLicense)
-  }
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun updateIntervalValueChanges() {
+        var updateInterval = 1f
 
-  @OptIn(ExperimentalTestApi::class)
-  @Test
-  fun updateIntervalValueChanges() {
-    var updateInterval = 1f
+        composeRule.setContent {
+            PreferenceScreen(
+                defaultCityValue = "Minsk",
+                updateIntervalValue = updateInterval,
+                canOpenSettings = true,
+                onDefaultCityChange = {},
+                onUpdateIntervalChange = { updateInterval = it },
+                onOpenSourceLicensesClick = {},
+                onBackClick = {}
+            )
+        }
 
-    composeRule.setContent {
-      PreferenceScreen(
-        defaultCityValue = "Minsk",
-        updateIntervalValue = updateInterval,
-        canOpenSettings = true,
-        onDefaultCityChange = {},
-        onUpdateIntervalChange = { updateInterval = it },
-        onOpenSourceLicensesClick = {},
-        onBackClick = {}
-      )
+        composeRule.onNodeWithTag(TAG_UPDATE_INTERVAL)
+            .onChildren()
+            .filterToOne(hasTestTag(TAG_SLIDER))
+            .performClick()
+        assertNotEquals(1f, updateInterval)
     }
 
-    composeRule.onNodeWithTag(TAG_UPDATE_INTERVAL)
-      .onChildren()
-      .filterToOne(hasTestTag(TAG_SLIDER))
-      .performClick()
-    assertNotEquals(1f, updateInterval)
-  }
+    @Test
+    fun defaultCityDialogShown() {
+        composeRule.setContent {
+            PreferenceScreen(
+                defaultCityValue = "Minsk",
+                updateIntervalValue = 1f,
+                canOpenSettings = true,
+                onDefaultCityChange = {},
+                onUpdateIntervalChange = {},
+                onOpenSourceLicensesClick = {},
+                onBackClick = {}
+            )
+        }
 
-  @Test
-  fun defaultCityDialogShown() {
-
-    composeRule.setContent {
-      PreferenceScreen(
-        defaultCityValue = "Minsk",
-        updateIntervalValue = 1f,
-        canOpenSettings = true,
-        onDefaultCityChange = {},
-        onUpdateIntervalChange = {},
-        onOpenSourceLicensesClick = {},
-        onBackClick = {}
-      )
+        composeRule.onNodeWithTag(TAG_DEFAULT_CITY).performClick()
+        composeRule.onNode(isDialog()).assertIsDisplayed()
     }
-
-    composeRule.onNodeWithTag(TAG_DEFAULT_CITY).performClick()
-    composeRule.onNode(isDialog()).assertIsDisplayed()
-  }
 }

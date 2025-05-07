@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,16 +21,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.getSystemService
 
-class ClipboardDataSourceImpl(
-  private val context: Context
-) : ClipboardDataSource {
+class ClipboardDataSourceImpl(private val context: Context) : ClipboardDataSource {
 
-  override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
-    val clipData = ClipData.newPlainText(label, value)
-    val clipboardManager = context.getSystemService<ClipboardManager>()
-    return clipboardManager?.let {
-      it.setPrimaryClip(clipData)
-      it.hasPrimaryClip()
-    } == true
-  }
+    override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
+        val clipData = ClipData.newPlainText(label, value)
+        val clipboardManager = context.getSystemService<ClipboardManager>()
+        return clipboardManager?.let {
+            it.setPrimaryClip(clipData)
+            it.hasPrimaryClip()
+        } == true
+    }
 }

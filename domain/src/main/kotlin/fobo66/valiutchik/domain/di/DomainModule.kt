@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,49 +42,49 @@ import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
 import org.koin.dsl.module
 
 val domainModule = module {
-  includes(repositoriesModule)
+    includes(repositoriesModule)
 
-  single<CopyCurrencyRateToClipboard> {
-    CopyCurrencyRateToClipboardImpl(get())
-  }
+    single<CopyCurrencyRateToClipboard> {
+        CopyCurrencyRateToClipboardImpl(get())
+    }
 
-  single<CurrencyRatesInteractor> {
-    CurrencyRatesInteractorImpl(get(), get())
-  }
+    single<CurrencyRatesInteractor> {
+        CurrencyRatesInteractorImpl(get(), get())
+    }
 
-  single<FindBankOnMap> {
-    FindBankOnMapImpl(get())
-  }
+    single<FindBankOnMap> {
+        FindBankOnMapImpl(get())
+    }
 
-  single<ForceRefreshExchangeRates> {
-    ForceRefreshExchangeRatesImpl(get(), get(), get(), get())
-  }
+    single<ForceRefreshExchangeRates> {
+        ForceRefreshExchangeRatesImpl(get(), get(), get(), get())
+    }
 
-  single<ForceRefreshExchangeRatesForDefaultCity> {
-    ForceRefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
-  }
+    single<ForceRefreshExchangeRatesForDefaultCity> {
+        ForceRefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
+    }
 
-  single<LoadDefaultCityPreference> {
-    LoadDefaultCityPreferenceImpl(get())
-  }
+    single<LoadDefaultCityPreference> {
+        LoadDefaultCityPreferenceImpl(get())
+    }
 
-  single<LoadExchangeRates> {
-    LoadExchangeRatesImpl(get(), get())
-  }
+    single<LoadExchangeRates> {
+        LoadExchangeRatesImpl(get(), get())
+    }
 
-  single<LoadOpenSourceLicenses> {
-    LoadOpenSourceLicensesImpl(get())
-  }
+    single<LoadOpenSourceLicenses> {
+        LoadOpenSourceLicensesImpl(get())
+    }
 
-  single<LoadUpdateIntervalPreference> {
-    LoadUpdateIntervalPreferenceImpl(get())
-  }
+    single<LoadUpdateIntervalPreference> {
+        LoadUpdateIntervalPreferenceImpl(get())
+    }
 
-  single<UpdateDefaultCityPreference> {
-    UpdateDefaultCityPreferenceImpl(get())
-  }
+    single<UpdateDefaultCityPreference> {
+        UpdateDefaultCityPreferenceImpl(get())
+    }
 
-  single<UpdateUpdateIntervalPreference> {
-    UpdateUpdateIntervalPreferenceImpl(get())
-  }
+    single<UpdateUpdateIntervalPreference> {
+        UpdateUpdateIntervalPreferenceImpl(get())
+    }
 }

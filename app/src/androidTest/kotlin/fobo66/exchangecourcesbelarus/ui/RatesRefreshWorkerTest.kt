@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,51 +32,48 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class RatesRefreshWorkerTest {
-  private val forceRefreshExchangeRates = FakeForceRefreshExchangeRates()
-  private val forceRefreshExchangeRatesForDefaultCity =
-    FakeForceRefreshExchangeRatesForDefaultCity()
+    private val forceRefreshExchangeRates = FakeForceRefreshExchangeRates()
+    private val forceRefreshExchangeRatesForDefaultCity =
+        FakeForceRefreshExchangeRatesForDefaultCity()
 
-  @Test
-  fun runWorkerWithNoPermission() {
-    val worker = prepareWorker(isLocationAvailable = false)
-    runTest {
-      val result = worker.doWork()
-      assertThat(result).isEqualTo(ListenableWorker.Result.success())
-      assertThat(forceRefreshExchangeRates.isRefreshed).isFalse()
-      assertThat(forceRefreshExchangeRatesForDefaultCity.isRefreshed).isTrue()
-    }
-  }
-
-  @Test
-  fun runWorkerWithPermission() {
-    val worker = prepareWorker(isLocationAvailable = true)
-    runTest {
-      val result = worker.doWork()
-      assertThat(result).isEqualTo(ListenableWorker.Result.success())
-      assertThat(forceRefreshExchangeRates.isRefreshed).isTrue()
-      assertThat(forceRefreshExchangeRatesForDefaultCity.isRefreshed).isFalse()
-    }
-  }
-
-  private fun prepareWorker(isLocationAvailable: Boolean = false): RatesRefreshWorker =
-    TestListenableWorkerBuilder<RatesRefreshWorker>(
-      context = ApplicationProvider.getApplicationContext(),
-      inputData = workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable)
-    )
-      .setWorkerFactory(object : WorkerFactory() {
-        override fun createWorker(
-          appContext: Context,
-          workerClassName: String,
-          workerParameters: WorkerParameters
-        ): ListenableWorker? {
-          return RatesRefreshWorker(
-            forceRefreshExchangeRates,
-            forceRefreshExchangeRatesForDefaultCity,
-            appContext,
-            workerParameters
-          )
+    @Test
+    fun runWorkerWithNoPermission() {
+        val worker = prepareWorker(isLocationAvailable = false)
+        runTest {
+            val result = worker.doWork()
+            assertThat(result).isEqualTo(ListenableWorker.Result.success())
+            assertThat(forceRefreshExchangeRates.isRefreshed).isFalse()
+            assertThat(forceRefreshExchangeRatesForDefaultCity.isRefreshed).isTrue()
         }
+    }
 
-      })
-      .build()
+    @Test
+    fun runWorkerWithPermission() {
+        val worker = prepareWorker(isLocationAvailable = true)
+        runTest {
+            val result = worker.doWork()
+            assertThat(result).isEqualTo(ListenableWorker.Result.success())
+            assertThat(forceRefreshExchangeRates.isRefreshed).isTrue()
+            assertThat(forceRefreshExchangeRatesForDefaultCity.isRefreshed).isFalse()
+        }
+    }
+
+    private fun prepareWorker(isLocationAvailable: Boolean = false): RatesRefreshWorker =
+        TestListenableWorkerBuilder<RatesRefreshWorker>(
+            context = ApplicationProvider.getApplicationContext(),
+            inputData = workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable)
+        )
+            .setWorkerFactory(object : WorkerFactory() {
+                override fun createWorker(
+                    appContext: Context,
+                    workerClassName: String,
+                    workerParameters: WorkerParameters
+                ): ListenableWorker? = RatesRefreshWorker(
+                    forceRefreshExchangeRates,
+                    forceRefreshExchangeRatesForDefaultCity,
+                    appContext,
+                    workerParameters
+                )
+            })
+            .build()
 }
