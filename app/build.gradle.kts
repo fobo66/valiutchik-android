@@ -183,12 +183,14 @@ dependencies {
   detektPlugins(libs.detekt.rules.compose)
 
   // tests
+  testApi(project(":domain-testing"))
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.engine)
   testImplementation(libs.turbine)
   testImplementation(libs.truth)
 
+  androidTestApi(project(":domain-testing"))
   androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.test.rules)

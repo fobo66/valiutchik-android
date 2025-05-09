@@ -14,14 +14,18 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.util.CurrencyName
+import fobo66.valiutchik.core.model.repository.LocationRepository
 
-class FakeBestCourseDataSource : BestCourseDataSource {
-  override fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
+/**
+ * Fake location repo implementation for tests
+ */
+class FakeLocationRepository : LocationRepository {
+  var isResolved = false
 
-  override fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
+  override suspend fun resolveUserCity(defaultCity: String): String {
+    isResolved = true
+    return "fake"
+  }
 }

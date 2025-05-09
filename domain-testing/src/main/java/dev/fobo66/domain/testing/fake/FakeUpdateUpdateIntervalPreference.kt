@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.fake
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
-import kotlinx.datetime.Instant
+import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 
-class FakeForceRefreshExchangeRates : ForceRefreshExchangeRates {
-  var isRefreshed: Boolean = false
-  override suspend fun execute(now: Instant) {
-    isRefreshed = true
+class FakeUpdateUpdateIntervalPreference(private val storage: MutableMap<String, String>) :
+  UpdateUpdateIntervalPreference {
+  override suspend fun execute(newUpdateInterval: Float) {
+    storage.put(KEY_UPDATE_INTERVAL, newUpdateInterval.toString())
   }
 }

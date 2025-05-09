@@ -14,18 +14,16 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
 import com.eygraber.uri.Uri
-import fobo66.valiutchik.core.model.datasource.IntentDataSource
+import fobo66.valiutchik.core.model.datasource.UriDataSource
 
-class FakeIntentDataSource : IntentDataSource {
-  var canResolveIntent = true
-
-  override fun createIntentUri(
-    uri: Uri,
-    action: String,
-  ): String = Uri.EMPTY.toString()
-
-  override fun checkIntentUri(uri: String): Boolean = canResolveIntent
+class FakeUriDataSource : UriDataSource {
+  override fun prepareUri(
+    scheme: String,
+    authority: String,
+    queryParameterKey: String,
+    queryParameterValue: String,
+  ): Uri = Uri.EMPTY
 }

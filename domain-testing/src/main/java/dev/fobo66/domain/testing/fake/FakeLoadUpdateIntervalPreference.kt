@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,27 +14,16 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.fake
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
+import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.datetime.Instant
+import kotlinx.coroutines.flow.map
 
-class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
-  var isNeededToUpdateCurrencyRates = true
-  var isSaveTimestampCalled = false
-
-  override suspend fun isNeededToUpdateCurrencyRates(
-    now: Instant,
-    updateInterval: Float
-  ): Boolean =
-    isNeededToUpdateCurrencyRates
-
-  override suspend fun saveTimestamp(now: Instant) {
-    isSaveTimestampCalled = true
-  }
-
-  override fun loadLatestTimestamp(now: Instant): Flow<Instant> =
-    flowOf(now)
+class FakeLoadUpdateIntervalPreference(private val storage: Map<String, String>) :
+  LoadUpdateIntervalPreference {
+  override fun execute(): Flow<Float> = flowOf(storage)
+    .map { it.getValue(KEY_UPDATE_INTERVAL).toFloat() }
 }

@@ -14,16 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.domain.testing.fake
 
-import com.eygraber.uri.Uri
-import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.core.KEY_DEFAULT_CITY
+import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 
-class FakeUriDataSource : UriDataSource {
-  override fun prepareUri(
-    scheme: String,
-    authority: String,
-    queryParameterKey: String,
-    queryParameterValue: String
-  ): Uri = Uri.EMPTY
+class FakeUpdateDefaultCityPreference(private val storage: MutableMap<String, String>) :
+  UpdateDefaultCityPreference {
+  override suspend fun execute(newDefaultCity: String) {
+    storage.put(KEY_DEFAULT_CITY, newDefaultCity)
+  }
 }

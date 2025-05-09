@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,12 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.core.entities.Location
-import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
+import kotlinx.datetime.Instant
 
-class FakeLocationDataSource : LocationDataSource {
-  override suspend fun resolveLocation(): Location =
-    Location(0.0, 0.0)
+class FakeForceRefreshExchangeRatesForDefaultCity : ForceRefreshExchangeRatesForDefaultCity {
+  var isRefreshed: Boolean = false
+
+  override suspend fun execute(now: Instant) {
+    isRefreshed = true
+  }
 }

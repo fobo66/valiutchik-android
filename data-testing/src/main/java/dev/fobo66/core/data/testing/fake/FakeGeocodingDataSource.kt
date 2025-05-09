@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.Feature
@@ -29,7 +29,7 @@ class FakeGeocodingDataSource : GeocodingDataSource {
 
   override suspend fun findPlace(
     latitude: Double,
-    longitude: Double
+    longitude: Double,
   ): List<Feature> =
     when {
       showError -> throw GeocodingFailedException(Throwable("Yikes!"))

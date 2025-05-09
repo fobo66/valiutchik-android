@@ -14,12 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
+import kotlinx.datetime.Instant
 
-class FakeFormattingDataSource : FormattingDataSource {
-  override fun formatCurrencyValue(value: Double): String = value.toString()
+class FakeForceRefreshExchangeRates : ForceRefreshExchangeRates {
+  var isRefreshed: Boolean = false
 
-  override fun formatBankName(name: String): String = name
+  override suspend fun execute(now: Instant) {
+    isRefreshed = true
+  }
 }

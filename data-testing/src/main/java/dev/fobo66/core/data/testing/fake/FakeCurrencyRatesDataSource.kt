@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,14 +14,19 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
-import kotlinx.datetime.Instant
+import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.entity.Bank
+import java.io.IOException
 
-class FakeForceRefreshExchangeRatesForDefaultCity : ForceRefreshExchangeRatesForDefaultCity {
-  var isRefreshed: Boolean = false
-  override suspend fun execute(now: Instant) {
-    isRefreshed = true
-  }
+class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
+  var isError = false
+
+  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
+    if (isError) {
+      throw IOException("test")
+    } else {
+      setOf(Bank())
+    }
 }

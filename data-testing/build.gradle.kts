@@ -18,14 +18,12 @@ import com.android.sdklib.AndroidVersion
 
 plugins {
   alias(libs.plugins.android.library)
-  kotlin("android")
-  alias(libs.plugins.detekt)
-  alias(libs.plugins.junit)
+  alias(libs.plugins.kotlin.android)
 }
 
 android {
-  namespace = "fobo66.valiutchik.domain"
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+  namespace = "dev.fobo66.core.data.testing"
+  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
 
   defaultConfig {
     minSdk = AndroidVersion.VersionCodes.O
@@ -36,6 +34,7 @@ android {
 
   buildTypes {
     release {
+      isMinifyEnabled = false
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro",
@@ -51,30 +50,9 @@ android {
   }
 }
 
-detekt {
-  autoCorrect = true
-}
-
 dependencies {
   api(project(":data"))
-  implementation(libs.androidx.annotation)
-  implementation(libs.androidx.collection)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.datetime)
-  implementation(platform(libs.koin.bom))
-  implementation(libs.koin.core)
-  implementation(libs.napier)
-
-  detektPlugins(libs.detekt.rules.formatting)
-  detektPlugins(libs.detekt.rules.compose)
-
-  testApi(project(":data-testing"))
-  testImplementation(libs.junit.api)
-  testRuntimeOnly(libs.junit.engine)
-  testImplementation(platform(libs.koin.bom))
-  testImplementation(libs.koin.test)
-  testImplementation(libs.ktor.client)
-  testImplementation(libs.kotlinx.coroutines.test)
-
-  androidTestImplementation(libs.androidx.test.runner)
+  implementation(libs.uri)
 }

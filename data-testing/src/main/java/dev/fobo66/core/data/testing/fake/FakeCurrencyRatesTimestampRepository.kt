@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,20 +14,25 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.Instant
 
-class FakePersistenceDataSource : PersistenceDataSource {
-  var isSaved = false
+class FakeCurrencyRatesTimestampRepository : CurrencyRatesTimestampRepository {
+  var isNeededToUpdateCurrencyRates = true
+  var isSaveTimestampCalled = false
 
-  override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-    isSaved = true
+  override suspend fun isNeededToUpdateCurrencyRates(
+    now: Instant,
+    updateInterval: Float,
+  ): Boolean = isNeededToUpdateCurrencyRates
+
+  override suspend fun saveTimestamp(now: Instant) {
+    isSaveTimestampCalled = true
   }
 
-  override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
+  override fun loadLatestTimestamp(now: Instant): Flow<Instant> = flowOf(now)
 }

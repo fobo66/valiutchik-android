@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,23 +14,27 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.model.repository.PreferenceRepository
+import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.datetime.Instant
 
-class FakePreferenceRepository : PreferenceRepository {
-  var defaultCity = "default"
-  var updateInterval = 3.0f
+class FakeCurrencyRateRepository : CurrencyRateRepository {
+  var isRefreshed = false
 
-  override fun observeDefaultCityPreference(): Flow<String> =
-    flowOf(defaultCity)
+  override suspend fun refreshExchangeRates(
+    city: String,
+    now: Instant,
+    defaultCity: String,
+  ) {
+    isRefreshed = true
+  }
 
-  override fun observeUpdateIntervalPreference(): Flow<Float> =
-    flowOf(updateInterval)
+  override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
+    flowOf(emptyList())
 
-  override suspend fun updateDefaultCityPreference(newValue: String) = Unit
-
-  override suspend fun updateUpdateIntervalPreference(newValue: Float) = Unit
+  override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
 }

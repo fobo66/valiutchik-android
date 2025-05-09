@@ -14,10 +14,18 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.fake
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.util.BankNameNormalizer
+import com.eygraber.uri.Uri
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
 
-class FakeBankNameNormalizer : BankNameNormalizer {
-  override fun normalize(bankName: String): String = bankName
+class FakeIntentDataSource : IntentDataSource {
+  var canResolveIntent = true
+
+  override fun createIntentUri(
+    uri: Uri,
+    action: String,
+  ): String = Uri.EMPTY.toString()
+
+  override fun checkIntentUri(uri: String): Boolean = canResolveIntent
 }
