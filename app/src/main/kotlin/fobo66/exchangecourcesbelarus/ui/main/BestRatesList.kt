@@ -21,6 +21,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -31,10 +32,13 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -118,9 +122,10 @@ fun BestRatesGrid(
                 bankName = item.bank,
                 onClick = onBestRateClick,
                 onLongClick = onBestRateLongClick,
+                onShareClick = onBestRateLongClick,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .animateItem(),
+                  .fillMaxWidth()
+                  .animateItem(),
               )
             }
           }
@@ -143,6 +148,7 @@ fun BestCurrencyRateCard(
   bankName: String,
   onClick: (String) -> Unit,
   onLongClick: (String, String) -> Unit,
+  onShareClick: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   ElevatedCard(
@@ -154,33 +160,42 @@ fun BestCurrencyRateCard(
           onClick = { onClick(bankName) },
         ),
   ) {
-    Text(
-      text = currencyName,
-      style = MaterialTheme.typography.headlineSmall,
-      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
-    )
-    Text(
-      text = currencyValue,
-      style = MaterialTheme.typography.displaySmall,
-      modifier =
-        Modifier
-          .padding(vertical = 16.dp, horizontal = 24.dp)
-          .testTag(TAG_RATE_VALUE),
-    )
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-      horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
-    ) {
-      Icon(
-        imageVector = Bank,
-        contentDescription = stringResource(id = string.bank_name_indicator),
-        modifier = Modifier.align(Alignment.CenterVertically),
-      )
-      Text(
-        text = bankName,
-        style = MaterialTheme.typography.bodyMedium,
-      )
+    Box(modifier = Modifier.fillMaxWidth()) {
+      Column {
+        Text(
+          text = currencyName,
+          style = MaterialTheme.typography.headlineSmall,
+          modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
+        )
+        Text(
+          text = currencyValue,
+          style = MaterialTheme.typography.displaySmall,
+          modifier =
+            Modifier
+              .padding(vertical = 16.dp, horizontal = 24.dp)
+              .testTag(TAG_RATE_VALUE),
+        )
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(8.dp),
+          modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
+        ) {
+          Icon(
+            imageVector = Bank,
+            contentDescription = stringResource(id = string.bank_name_indicator),
+            modifier = Modifier.align(Alignment.CenterVertically),
+          )
+          Text(
+            text = bankName,
+            style = MaterialTheme.typography.bodyMedium,
+          )
+        }
+      }
+      IconButton(onClick = {
+        onShareClick(currencyName, currencyValue)
+      }, modifier = Modifier.align(Alignment.TopEnd)) {
+        Icon(Icons.Default.Share, contentDescription = null)
+      }
     }
   }
 }
