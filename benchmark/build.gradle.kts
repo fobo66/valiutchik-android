@@ -25,7 +25,7 @@ plugins {
 }
 
 android {
-    compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -50,7 +50,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "benchmark-proguard-rules.pro"
+                "benchmark-proguard-rules.pro",
             )
         }
         release {

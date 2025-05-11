@@ -26,7 +26,7 @@ plugins {
 
 android {
     namespace = "dev.fobo66.baselineprofile"
-    compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -39,7 +39,7 @@ android {
 
     defaultConfig {
         minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
-        targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+        targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,7 +67,7 @@ androidComponents {
         val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
         v.instrumentationRunnerArguments.put(
             "targetAppId",
-            v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() }
+            v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() },
         )
     }
 }

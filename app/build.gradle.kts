@@ -40,11 +40,11 @@ android {
         }
     }
 
-    compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
         minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
-        targetSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+        targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
         versionCode = 23
         versionName = "1.14.2"
         multiDexEnabled = true
@@ -82,8 +82,6 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
-
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
     }
 
     buildFeatures {
@@ -189,13 +187,13 @@ dependencies {
     detektPlugins(libs.detekt.rules.compose)
 
     // tests
-    testImplementation(libs.kotlinx.coroutines.test)
+    testApi(project(":domain-testing"))testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
 
-    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestApi(project(":domain-testing"))androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.espresso.core)

@@ -17,12 +17,12 @@
 package fobo66.valiutchik.core.model.repository
 
 import com.google.common.truth.Truth.assertThat
+import dev.fobo66.core.data.testing.fake.FakeBestCourseDataSource
+import dev.fobo66.core.data.testing.fake.FakeCurrencyRatesDataSource
+import dev.fobo66.core.data.testing.fake.FakeFormattingDataSource
+import dev.fobo66.core.data.testing.fake.FakePersistenceDataSource
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
-import fobo66.valiutchik.core.fake.FakeBestCourseDataSource
-import fobo66.valiutchik.core.fake.FakeCurrencyRatesDataSource
-import fobo66.valiutchik.core.fake.FakeFormattingDataSource
-import fobo66.valiutchik.core.fake.FakePersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import java.util.concurrent.Executors

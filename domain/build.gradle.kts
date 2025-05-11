@@ -26,7 +26,7 @@ plugins {
 
 android {
     namespace = "fobo66.valiutchik.domain"
-    compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
 
     defaultConfig {
         minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
@@ -69,6 +69,7 @@ dependencies {
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 
+    testApi(project(":data-testing"))
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
     testImplementation(platform(libs.koin.bom))
