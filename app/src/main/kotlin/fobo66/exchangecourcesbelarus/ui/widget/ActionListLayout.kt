@@ -257,7 +257,7 @@ private fun CurrencyListItem(
                 Image(
                     provider = ImageProvider(R.drawable.ic_currency_exchange),
                     modifier = GlanceModifier.size(stateIconSize),
-                    contentDescription = null, // already covered in list item container's description
+                    contentDescription = null,
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
                 )
             }
