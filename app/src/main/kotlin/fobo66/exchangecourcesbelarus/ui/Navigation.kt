@@ -41,7 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
@@ -85,33 +85,47 @@ fun BestRatesScreenDestination(
     mainViewModel.handleLocationPermission(isPermissionGranted)
     if (!isPermissionGranted && !isLocationPermissionPromptShown) {
       isLocationPermissionPromptShown = true
-      showSnackbar(snackbarHostState, context.getString(string.permission_description), Long)
+      showSnackbar(snackbarHostState, context.getString(R.string.permission_description), Long)
     }
   }
   LaunchedEffect(viewState) {
     if (viewState is MainScreenState.Error) {
-      showSnackbar(snackbarHostState, context.getString(string.get_data_error))
+      showSnackbar(snackbarHostState, context.getString(R.string.get_data_error))
     }
   }
   BestRatesGrid(
     bestCurrencyRates = bestCurrencyRates,
     onBestRateClick = { bankName ->
-      val mapIntent = mainViewModel.findBankOnMap(bankName)
-      if (mapIntent != null) {
+      val mapIntentUri = mainViewModel.findBankOnMap(bankName)
+      if (mapIntentUri != null) {
         mapLauncher.launch(
-          Intent.createChooser(Intent.parseUri(mapIntent, 0), context.getString(string.open_map)),
+          Intent.createChooser(
+            Intent.parseUri(mapIntentUri, 0),
+            context.getString(R.string.open_map),
+          ),
         )
       } else {
         scope.launch {
-          showSnackbar(snackbarHostState, context.getString(string.maps_app_required))
+          showSnackbar(snackbarHostState, context.getString(R.string.maps_app_required))
         }
       }
     },
     onBestRateLongClick = { currencyName, currencyValue ->
       mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
       scope.launch {
-        showSnackbar(snackbarHostState, context.getString(string.currency_value_copied))
+        showSnackbar(snackbarHostState, context.getString(R.string.currency_value_copied))
       }
+    },
+    onShareClick = { currencyName, currencyValue ->
+      val shareIntent =
+        Intent(Intent.ACTION_SEND)
+          .putExtra(
+            Intent.EXTRA_TEXT,
+            context.getString(R.string.share_rate_text, currencyName, currencyValue),
+          ).setType("text/plain")
+      val sender =
+        Intent.createChooser(shareIntent, context.getString(R.string.share_rate, currencyName))
+      context.startActivity(sender)
     },
     showExplicitRefresh = manualRefreshVisible,
     showSettings = canOpenSettings,

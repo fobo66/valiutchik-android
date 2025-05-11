@@ -71,6 +71,7 @@ fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  onShareClick: (String, String) -> Unit,
   showExplicitRefresh: Boolean,
   showSettings: Boolean,
   isRefreshing: Boolean,
@@ -121,11 +122,8 @@ fun BestRatesGrid(
                 bankName = item.bank,
                 onClick = onBestRateClick,
                 onLongClick = onBestRateLongClick,
-                onShareClick = onBestRateLongClick,
-                modifier =
-                  Modifier
-                    .fillMaxWidth()
-                    .animateItem(),
+                onShareClick = onShareClick,
+                modifier = Modifier.animateItem(),
               )
             }
           }
@@ -222,6 +220,7 @@ private fun BestCurrencyRatesPreview() {
         ),
       onBestRateClick = {},
       onBestRateLongClick = { _, _ -> },
+      onShareClick = { _, _ -> },
       showExplicitRefresh = true,
       showSettings = true,
       isRefreshing = true,
