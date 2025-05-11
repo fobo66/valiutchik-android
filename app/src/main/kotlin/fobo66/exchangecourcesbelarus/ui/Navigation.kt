@@ -19,8 +19,6 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarDuration.Short
@@ -50,7 +48,7 @@ import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import io.github.aakira.napier.Napier
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -65,11 +63,6 @@ fun BestRatesScreenDestination(
   mainViewModel: MainViewModel = koinViewModel(),
 ) {
   val context = LocalContext.current
-  val mapLauncher =
-    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-      Napier.d("Opened map")
-    }
-
   val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
 
   val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
@@ -98,18 +91,7 @@ fun BestRatesScreenDestination(
     bestCurrencyRates = bestCurrencyRates,
     onBestRateClick = { bankName ->
       val mapIntentUri = mainViewModel.findBankOnMap(bankName)
-      if (mapIntentUri != null) {
-        mapLauncher.launch(
-          Intent.createChooser(
-            Intent.parseUri(mapIntentUri, 0),
-            context.getString(R.string.open_map),
-          ),
-        )
-      } else {
-        scope.launch {
-          showSnackbar(snackbarHostState, context.getString(R.string.maps_app_required))
-        }
-      }
+      openMap(mapIntentUri, context, scope, snackbarHostState)
     },
     onBestRateLongClick = { currencyName, currencyValue ->
       mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
@@ -192,6 +174,26 @@ fun OpenSourceLicensesDestination(
     },
     modifier = modifier,
   )
+}
+
+private fun openMap(
+  mapIntentUri: String?,
+  context: Context,
+  scope: CoroutineScope,
+  snackbarHostState: SnackbarHostState,
+) {
+  if (mapIntentUri != null) {
+    context.startActivity(
+      Intent.createChooser(
+        Intent.parseUri(mapIntentUri, 0),
+        context.getString(R.string.open_map),
+      ),
+    )
+  } else {
+    scope.launch {
+      showSnackbar(snackbarHostState, context.getString(R.string.maps_app_required))
+    }
+  }
 }
 
 private fun shareCurrencyRate(
