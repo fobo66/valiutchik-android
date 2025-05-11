@@ -21,7 +21,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -88,7 +87,7 @@ fun BestRatesGrid(
       onRefreshClick = onRefresh,
       showRefresh = showExplicitRefresh,
       settingsVisible = showSettings,
-      onSettingsClick = onSettingsClick
+      onSettingsClick = onSettingsClick,
     )
     Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
       if (it.isEmpty()) {
@@ -123,9 +122,10 @@ fun BestRatesGrid(
                 onClick = onBestRateClick,
                 onLongClick = onBestRateLongClick,
                 onShareClick = onBestRateLongClick,
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .animateItem(),
+                modifier =
+                  Modifier
+                    .fillMaxWidth()
+                    .animateItem(),
               )
             }
           }
@@ -160,40 +160,40 @@ fun BestCurrencyRateCard(
           onClick = { onClick(bankName) },
         ),
   ) {
-    Box(modifier = Modifier.fillMaxWidth()) {
-      Column {
-        Text(
-          text = currencyName,
-          style = MaterialTheme.typography.headlineSmall,
-          modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
-        )
-        Text(
-          text = currencyValue,
-          style = MaterialTheme.typography.displaySmall,
-          modifier =
-            Modifier
-              .padding(vertical = 16.dp, horizontal = 24.dp)
-              .testTag(TAG_RATE_VALUE),
-        )
-        Row(
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(8.dp),
-          modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
-        ) {
-          Icon(
-            imageVector = Bank,
-            contentDescription = stringResource(id = string.bank_name_indicator),
-            modifier = Modifier.align(Alignment.CenterVertically),
-          )
-          Text(
-            text = bankName,
-            style = MaterialTheme.typography.bodyMedium,
-          )
-        }
-      }
+    Text(
+      text = currencyName,
+      style = MaterialTheme.typography.headlineSmall,
+      modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
+    )
+    Text(
+      text = currencyValue,
+      style = MaterialTheme.typography.displaySmall,
+      modifier =
+        Modifier
+          .padding(vertical = 16.dp, horizontal = 24.dp)
+          .testTag(TAG_RATE_VALUE),
+    )
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+    ) {
+      Icon(
+        imageVector = Bank,
+        contentDescription = stringResource(id = string.bank_name_indicator),
+        modifier = Modifier.align(Alignment.CenterVertically),
+      )
+      Text(
+        text = bankName,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier =
+          Modifier
+            .weight(1f)
+            .padding(start = 8.dp),
+      )
       IconButton(onClick = {
         onShareClick(currencyName, currencyValue)
-      }, modifier = Modifier.align(Alignment.TopEnd)) {
+      }) {
         Icon(Icons.Default.Share, contentDescription = null)
       }
     }
@@ -205,21 +205,28 @@ fun BestCurrencyRateCard(
 private fun BestCurrencyRatesPreview() {
   ValiutchikTheme {
     BestRatesGrid(
-      bestCurrencyRates = persistentListOf(
-        BestCurrencyRate(
-          id = 1,
-          bank = "test",
-          currencyNameRes = string.app_name,
-          currencyValue = "1.23"
-        )
-      ),
+      bestCurrencyRates =
+        persistentListOf(
+          BestCurrencyRate(
+            id = 1,
+            bank = "test",
+            currencyNameRes = string.app_name,
+            currencyValue = "1.23",
+          ),
+          BestCurrencyRate(
+            id = 2,
+            bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
+            currencyNameRes = string.app_name,
+            currencyValue = "1.23",
+          ),
+        ),
       onBestRateClick = {},
       onBestRateLongClick = { _, _ -> },
       showExplicitRefresh = true,
       showSettings = true,
       isRefreshing = true,
       onRefresh = {},
-      onSettingsClick = {}
+      onSettingsClick = {},
     )
   }
 }
