@@ -53,7 +53,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
@@ -82,7 +82,7 @@ fun BestRatesGrid(
     var isAboutDialogShown by remember { mutableStateOf(false) }
 
     PrimaryTopBar(
-      title = stringResource(string.app_name),
+      title = stringResource(R.string.app_name),
       onAboutClick = { isAboutDialogShown = true },
       onRefreshClick = onRefresh,
       showRefresh = showExplicitRefresh,
@@ -177,7 +177,7 @@ fun BestCurrencyRateCard(
     ) {
       Icon(
         imageVector = Bank,
-        contentDescription = stringResource(id = string.bank_name_indicator),
+        contentDescription = stringResource(id = R.string.bank_name_indicator),
         modifier = Modifier.align(Alignment.CenterVertically),
       )
       Text(
@@ -191,7 +191,7 @@ fun BestCurrencyRateCard(
       IconButton(onClick = {
         onShareClick(currencyName, currencyValue)
       }) {
-        Icon(Icons.Default.Share, contentDescription = null)
+        Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share_description))
       }
     }
   }
@@ -207,13 +207,13 @@ private fun BestCurrencyRatesPreview() {
           BestCurrencyRate(
             id = 1,
             bank = "test",
-            currencyNameRes = string.app_name,
+            currencyNameRes = R.string.app_name,
             currencyValue = "1.23",
           ),
           BestCurrencyRate(
             id = 2,
             bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-            currencyNameRes = string.app_name,
+            currencyNameRes = R.string.app_name,
             currencyValue = "1.23",
           ),
         ),
