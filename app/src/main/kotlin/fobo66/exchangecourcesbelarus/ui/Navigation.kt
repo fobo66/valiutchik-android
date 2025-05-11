@@ -17,6 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
+import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -117,15 +118,7 @@ fun BestRatesScreenDestination(
       }
     },
     onShareClick = { currencyName, currencyValue ->
-      val shareIntent =
-        Intent(Intent.ACTION_SEND)
-          .putExtra(
-            Intent.EXTRA_TEXT,
-            context.getString(R.string.share_rate_text, currencyName, currencyValue),
-          ).setType("text/plain")
-      val sender =
-        Intent.createChooser(shareIntent, context.getString(R.string.share_rate, currencyName))
-      context.startActivity(sender)
+      shareCurrencyRate(context, currencyName, currencyValue)
     },
     showExplicitRefresh = manualRefreshVisible,
     showSettings = canOpenSettings,
@@ -137,17 +130,6 @@ fun BestRatesScreenDestination(
     isRefreshing = viewState is MainScreenState.Loading,
     onRefresh = mainViewModel::manualRefresh,
     modifier = modifier,
-  )
-}
-
-private suspend fun showSnackbar(
-  snackbarHostState: SnackbarHostState,
-  message: String,
-  duration: SnackbarDuration = Short,
-) {
-  snackbarHostState.showSnackbar(
-    message = message,
-    duration = duration,
   )
 }
 
@@ -209,5 +191,32 @@ fun OpenSourceLicensesDestination(
       }
     },
     modifier = modifier,
+  )
+}
+
+private fun shareCurrencyRate(
+  context: Context,
+  currencyName: String,
+  currencyValue: String,
+) {
+  val shareIntent =
+    Intent(Intent.ACTION_SEND)
+      .putExtra(
+        Intent.EXTRA_TEXT,
+        context.getString(R.string.share_rate_text, currencyName, currencyValue),
+      ).setType("text/plain")
+  val sender =
+    Intent.createChooser(shareIntent, context.getString(R.string.share_rate, currencyName))
+  context.startActivity(sender)
+}
+
+private suspend fun showSnackbar(
+  snackbarHostState: SnackbarHostState,
+  message: String,
+  duration: SnackbarDuration = Short,
+) {
+  snackbarHostState.showSnackbar(
+    message = message,
+    duration = duration,
   )
 }
