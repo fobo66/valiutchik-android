@@ -23,10 +23,10 @@ plugins {
 
 android {
   namespace = "dev.fobo66.core.data.testing"
-  compileSdk = AndroidVersion.VersionCodes.VANILLA_ICE_CREAM
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")

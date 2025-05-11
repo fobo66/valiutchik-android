@@ -17,92 +17,92 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-    alias(libs.plugins.android.library)
-    kotlin("android")
-    kotlin("plugin.serialization")
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
-    alias(libs.plugins.junit)
+  alias(libs.plugins.android.library)
+  kotlin("android")
+  kotlin("plugin.serialization")
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.kotlinter)
+  alias(libs.plugins.junit)
 }
 
 android {
-    namespace = "fobo66.valiutchik.api"
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+  namespace = "fobo66.valiutchik.api"
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
-    defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+  defaultConfig {
+    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles("consumer-rules.pro")
 
-        resValue(
-            "string",
-            "apiUsername",
-            loadSecret(rootProject, API_USERNAME)
-        )
+    resValue(
+      "string",
+      "apiUsername",
+      loadSecret(rootProject, API_USERNAME),
+    )
 
-        resValue(
-            "string",
-            "apiPassword",
-            loadSecret(rootProject, API_PASSWORD)
-        )
+    resValue(
+      "string",
+      "apiPassword",
+      loadSecret(rootProject, API_PASSWORD),
+    )
 
-        resValue(
-            "string",
-            "geocoderApiKey",
-            loadSecret(rootProject, GEOCODER_TOKEN)
-        )
+    resValue(
+      "string",
+      "geocoderApiKey",
+      loadSecret(rootProject, GEOCODER_TOKEN),
+    )
+  }
+
+  buildTypes {
+    release {
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro",
+      )
     }
-
-    buildTypes {
-        release {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+  }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+  }
+  kotlinOptions {
+    jvmTarget = "17"
+  }
 }
 
 detekt {
-    autoCorrect = true
+  autoCorrect = true
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.androidx.collection)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.androidx.collection)
 
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.android)
+  implementation(platform(libs.koin.bom))
+  implementation(libs.koin.android)
 
-    implementation(platform(libs.okhttp.bom))
-    implementation(libs.okhttp.core)
-    debugImplementation(libs.ktor.logging)
-    implementation(libs.ktor.client)
-    implementation(libs.ktor.auth)
-    implementation(libs.ktor.content)
-    implementation(libs.ktor.encoding)
-    implementation(libs.ktor.serialization)
-    implementation(libs.ktor.serialization.xml)
-    implementation(libs.kotlinx.serialization)
+  implementation(platform(libs.okhttp.bom))
+  implementation(libs.okhttp.core)
+  debugImplementation(libs.ktor.logging)
+  implementation(libs.ktor.client)
+  implementation(libs.ktor.auth)
+  implementation(libs.ktor.content)
+  implementation(libs.ktor.encoding)
+  implementation(libs.ktor.serialization)
+  implementation(libs.ktor.serialization.xml)
+  implementation(libs.kotlinx.serialization)
 
-    implementation(libs.napier)
+  implementation(libs.napier)
 
-    detektPlugins(libs.detekt.rules.formatting)
-    detektPlugins(libs.detekt.rules.compose)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 
-    testImplementation(libs.junit.api)
-    testImplementation(platform(libs.koin.bom))
-    testImplementation(libs.koin.test)
-    testRuntimeOnly(libs.junit.engine)
+  testImplementation(libs.junit.api)
+  testImplementation(platform(libs.koin.bom))
+  testImplementation(libs.koin.test)
+  testRuntimeOnly(libs.junit.engine)
 
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.junit)
 }

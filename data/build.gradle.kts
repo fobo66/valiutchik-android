@@ -27,10 +27,10 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
