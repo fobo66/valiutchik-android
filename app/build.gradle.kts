@@ -78,8 +78,6 @@ android {
 
   kotlinOptions {
     jvmTarget = "17"
-
-    freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
   }
 
   buildFeatures {
