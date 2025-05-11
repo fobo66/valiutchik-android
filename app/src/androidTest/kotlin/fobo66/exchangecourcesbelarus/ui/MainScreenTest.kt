@@ -33,7 +33,6 @@ import org.junit.Test
 
 @SmallTest
 class MainScreenTest {
-
   @get:Rule
   val composeRule = createComposeRule()
 
@@ -48,7 +47,8 @@ class MainScreenTest {
         onRefresh = {},
         showExplicitRefresh = true,
         showSettings = true,
-        onSettingsClick = {}
+        onSettingsClick = {},
+        onShareClick = { _, _ -> },
       )
     }
     composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
@@ -69,10 +69,12 @@ class MainScreenTest {
         onRefresh = {},
         showExplicitRefresh = true,
         showSettings = true,
-        onSettingsClick = {}
+        onSettingsClick = {},
+        onShareClick = { _, _ -> },
       )
     }
-    composeRule.onNodeWithTag(TAG_RATES)
+    composeRule
+      .onNodeWithTag(TAG_RATES)
       .onChild()
       .performClick()
     assertTrue(isMapOpen)
