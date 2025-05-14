@@ -21,15 +21,16 @@ plugins {
   kotlin("android")
   kotlin("plugin.serialization")
   alias(libs.plugins.detekt)
+  alias(libs.plugins.kotlinter)
   alias(libs.plugins.junit)
 }
 
 android {
   namespace = "fobo66.valiutchik.api"
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")

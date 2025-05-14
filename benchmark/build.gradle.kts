@@ -18,12 +18,14 @@ import com.android.sdklib.AndroidVersion
 
 plugins {
   alias(libs.plugins.android.library)
+  alias(libs.plugins.kotlin.android)
   alias(libs.plugins.benchmark)
-  kotlin("android")
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.kotlinter)
 }
 
 android {
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -35,7 +37,7 @@ android {
   }
 
   defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.O
+    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
 
     testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
   }
@@ -63,4 +65,6 @@ dependencies {
   implementation(project(":data"))
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.benchmark)
+  detektPlugins(libs.detekt.rules.formatting)
+  detektPlugins(libs.detekt.rules.compose)
 }

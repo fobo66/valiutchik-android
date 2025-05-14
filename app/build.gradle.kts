@@ -23,6 +23,7 @@ plugins {
   alias(libs.plugins.detekt)
   alias(libs.plugins.licenses)
   alias(libs.plugins.junit)
+  alias(libs.plugins.kotlinter)
   alias(libs.plugins.baseline.profile)
 }
 
@@ -39,11 +40,11 @@ android {
     }
   }
 
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
   defaultConfig {
     applicationId = "fobo66.exchangecourcesbelarus"
-    minSdk = AndroidVersion.VersionCodes.O
-    targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+    targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
     versionCode = 23
     versionName = "1.14.2"
     multiDexEnabled = true
@@ -67,7 +68,10 @@ android {
 
     release {
       isMinifyEnabled = true
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro",
+      )
       signingConfig = signingConfigs.getByName("releaseSignConfig")
     }
   }
@@ -142,7 +146,9 @@ dependencies {
   debugImplementation(composeBom)
   androidTestImplementation(composeBom)
   implementation(libs.compose.ui)
+  implementation(libs.compose.xr)
   implementation(libs.compose.material)
+  implementation(libs.compose.xr.material)
   implementation(libs.compose.material.icons)
   implementation(libs.compose.ui.preview)
   implementation(libs.compose.material.windowsize)

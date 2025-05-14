@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,5 +21,5 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
 interface LoadExchangeRates {
-  fun execute(now: Instant): Flow<List<BestCurrencyRate>>
+    fun execute(now: Instant): Flow<List<BestCurrencyRate>>
 }
