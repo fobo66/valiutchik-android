@@ -106,7 +106,7 @@ fun BestRatesGrid(
                 end = 8.dp,
                 bottom =
                   with(density) {
-                    WindowInsets.systemBars.getBottom(this).toDp()
+                    WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
                   },
               ),
             modifier = Modifier.testTag(TAG_RATES),
