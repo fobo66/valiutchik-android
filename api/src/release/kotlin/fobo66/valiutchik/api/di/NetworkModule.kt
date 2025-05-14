@@ -17,7 +17,7 @@
 package fobo66.valiutchik.api.di
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.compression.ContentEncoding
@@ -29,28 +29,28 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val networkModule =
-  module {
-    single<Json> {
-      Json {
-        isLenient = true
-        ignoreUnknownKeys = true
-      }
-    }
-    single {
-      HttpClient(OkHttp) {
-        install(ContentNegotiation) {
-          json(get())
-          xml()
+    module {
+        single<Json> {
+            Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            }
         }
-        install(ContentEncoding) {
-          gzip()
-          deflate()
-        }
-        install(HttpCache) {
-          publicStorage(FileStorage(androidContext().cacheDir))
-        }
+        single {
+            HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    json(get())
+                    xml()
+                }
+                install(ContentEncoding) {
+                    gzip()
+                    deflate()
+                }
+                install(HttpCache) {
+                    publicStorage(FileStorage(androidContext().cacheDir))
+                }
 
-        expectSuccess = true
-      }
+                expectSuccess = true
+            }
+        }
     }
-  }
