@@ -25,16 +25,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -51,7 +53,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import fobo66.exchangecourcesbelarus.R.string
+import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
 import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
@@ -68,6 +70,7 @@ fun BestRatesGrid(
   bestCurrencyRates: ImmutableList<BestCurrencyRate>,
   onBestRateClick: (String) -> Unit,
   onBestRateLongClick: (String, String) -> Unit,
+  onShareClick: (String, String) -> Unit,
   showExplicitRefresh: Boolean,
   showSettings: Boolean,
   isRefreshing: Boolean,
@@ -79,12 +82,12 @@ fun BestRatesGrid(
     var isAboutDialogShown by remember { mutableStateOf(false) }
 
     PrimaryTopBar(
-      title = stringResource(string.app_name),
+      title = stringResource(R.string.app_name),
       onAboutClick = { isAboutDialogShown = true },
       onRefreshClick = onRefresh,
       showRefresh = showExplicitRefresh,
       settingsVisible = showSettings,
-      onSettingsClick = onSettingsClick
+      onSettingsClick = onSettingsClick,
     )
     Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
       if (it.isEmpty()) {
@@ -103,7 +106,7 @@ fun BestRatesGrid(
                 end = 8.dp,
                 bottom =
                   with(density) {
-                    WindowInsets.systemBars.getBottom(this).toDp()
+                    WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
                   },
               ),
             modifier = Modifier.testTag(TAG_RATES),
@@ -118,9 +121,8 @@ fun BestRatesGrid(
                 bankName = item.bank,
                 onClick = onBestRateClick,
                 onLongClick = onBestRateLongClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .animateItem(),
+                onShareClick = onShareClick,
+                modifier = Modifier.animateItem(),
               )
             }
           }
@@ -143,6 +145,7 @@ fun BestCurrencyRateCard(
   bankName: String,
   onClick: (String) -> Unit,
   onLongClick: (String, String) -> Unit,
+  onShareClick: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   ElevatedCard(
@@ -170,17 +173,26 @@ fun BestCurrencyRateCard(
     Row(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
     ) {
       Icon(
         imageVector = Bank,
-        contentDescription = stringResource(id = string.bank_name_indicator),
+        contentDescription = stringResource(id = R.string.bank_name_indicator),
         modifier = Modifier.align(Alignment.CenterVertically),
       )
       Text(
         text = bankName,
         style = MaterialTheme.typography.bodyMedium,
+        modifier =
+          Modifier
+            .weight(1f)
+            .padding(start = 8.dp),
       )
+      IconButton(onClick = {
+        onShareClick(currencyName, currencyValue)
+      }) {
+        Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share_description))
+      }
     }
   }
 }
@@ -190,21 +202,29 @@ fun BestCurrencyRateCard(
 private fun BestCurrencyRatesPreview() {
   ValiutchikTheme {
     BestRatesGrid(
-      bestCurrencyRates = persistentListOf(
-        BestCurrencyRate(
-          id = 1,
-          bank = "test",
-          currencyNameRes = string.app_name,
-          currencyValue = "1.23"
-        )
-      ),
+      bestCurrencyRates =
+        persistentListOf(
+          BestCurrencyRate(
+            id = 1,
+            bank = "test",
+            currencyNameRes = R.string.app_name,
+            currencyValue = "1.23",
+          ),
+          BestCurrencyRate(
+            id = 2,
+            bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
+            currencyNameRes = R.string.app_name,
+            currencyValue = "1.23",
+          ),
+        ),
       onBestRateClick = {},
       onBestRateLongClick = { _, _ -> },
+      onShareClick = { _, _ -> },
       showExplicitRefresh = true,
       showSettings = true,
       isRefreshing = true,
       onRefresh = {},
-      onSettingsClick = {}
+      onSettingsClick = {},
     )
   }
 }

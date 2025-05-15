@@ -28,6 +28,8 @@
   <string name="currency_value_copied">Currency rate was copied to clipboard</string>
   <string name="title_activity_oss_licenses">Open source licenses</string>
   <string name="open_map">Search for exchange offices on map</string>
+  <string name="share_rate">Share %s</string>
+  <string name="share_rate_text">%1$s is %2$s today</string>
   <string name="permission_description">We need location permission to determine your location, so we can determine your location and show you the closest available currency rates. Without this permission, the app will use the default city from the settings.</string>
   <string name="no_rates_indicator">No rates available yet</string>
   <string name="bank_name_indicator">Bank name</string>
@@ -35,6 +37,7 @@
   <string name="topbar_description_back">Back</string>
   <string name="open_app">Open app</string>
   <string name="widget_action_refresh">Refresh</string>
+  <string name="share_description">Share currency rate</string>
   <string-array name="pref_cities_list">
     <item>Ashmyany</item>
     <item>Asipovichy</item>
