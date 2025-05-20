@@ -81,7 +81,7 @@ val dataSourcesModule =
         }
 
         single<FormattingDataSource> {
-            FormattingDataSourceImpl(get(), get())
+            FormattingDataSourceImpl(get(), get(), get())
         }
 
         single<JsonDataSource> {

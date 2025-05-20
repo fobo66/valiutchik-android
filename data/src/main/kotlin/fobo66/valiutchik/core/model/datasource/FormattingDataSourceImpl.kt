@@ -35,14 +35,10 @@ class FormattingDataSourceImpl(
 ) : FormattingDataSource {
     override fun formatBankName(name: String): String {
         val normalizedName = bankNameNormalizer.normalize(name)
-        return if (VERSION.SDK_INT >= VERSION_CODES.Q) {
-            bankNameTransliterator.transliterate(
-                normalizedName,
-                locale.isO3Language
-            )
-        } else {
-            normalizedName
-        }
+        return bankNameTransliterator.transliterate(
+            normalizedName,
+            locale.isO3Language
+        )
     }
 
     private val currency: Currency by lazy(NONE) {
