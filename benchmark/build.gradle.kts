@@ -17,54 +17,54 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(libs.plugins.android.library)
-  alias(libs.plugins.kotlin.android)
-  alias(libs.plugins.benchmark)
-  alias(libs.plugins.detekt)
-  alias(libs.plugins.kotlinter)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.benchmark)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 android {
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
-
-  kotlinOptions {
-    jvmTarget = "17"
-  }
-
-  defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
-
-    testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
-  }
-
-  testBuildType = "release"
-  buildTypes {
-    debug {
-      // Since debuggable can"t be modified by gradle for library modules,
-      // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
-      isMinifyEnabled = true
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "benchmark-proguard-rules.pro",
-      )
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    release {
-      isDefault = true
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
-  }
-  namespace = "fobo66.valiutchik.benchmark"
+
+    defaultConfig {
+        minSdk = AndroidVersion.VersionCodes.O
+
+        testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
+    }
+
+    testBuildType = "release"
+    buildTypes {
+        debug {
+            // Since debuggable can"t be modified by gradle for library modules,
+            // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "benchmark-proguard-rules.pro"
+            )
+        }
+        release {
+            isDefault = true
+        }
+    }
+    namespace = "fobo66.valiutchik.benchmark"
 }
 
 dependencies {
-  implementation(project(":api"))
-  implementation(project(":data"))
-  androidTestImplementation(libs.androidx.test.junit)
-  androidTestImplementation(libs.androidx.benchmark)
-  detektPlugins(libs.detekt.rules.formatting)
-  detektPlugins(libs.detekt.rules.compose)
+    implementation(project(":api"))
+    implementation(project(":data"))
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.benchmark)
+    detektPlugins(libs.detekt.rules.formatting)
+    detektPlugins(libs.detekt.rules.compose)
 }

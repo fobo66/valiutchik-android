@@ -17,57 +17,57 @@
 import com.android.sdklib.AndroidVersion
 
 plugins {
-  alias(libs.plugins.android.test)
-  alias(libs.plugins.kotlin.android)
-  alias(libs.plugins.baseline.profile)
-  alias(libs.plugins.detekt)
-  alias(libs.plugins.kotlinter)
+    alias(libs.plugins.android.test)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.baseline.profile)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 android {
-  namespace = "dev.fobo66.baselineprofile"
-  compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    namespace = "dev.fobo66.baselineprofile"
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
-  kotlinOptions {
-    jvmTarget = "17"
-  }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 
-  defaultConfig {
-    minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
-    targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    defaultConfig {
+        minSdk = AndroidVersion.VersionCodes.O
+        targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 
-  targetProjectPath = ":app"
+    targetProjectPath = ":app"
 }
 
 // This is the configuration block for the Baseline Profile plugin.
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
-  useConnectedDevices = true
+    useConnectedDevices = true
 }
 
 dependencies {
-  implementation(libs.androidx.test.junit)
-  implementation(libs.androidx.test.espresso.core)
-  implementation(libs.androidx.test.uiautomator)
-  implementation(libs.androidx.benchmark.macro)
-  detektPlugins(libs.detekt.rules.formatting)
-  detektPlugins(libs.detekt.rules.compose)
+    implementation(libs.androidx.test.junit)
+    implementation(libs.androidx.test.espresso.core)
+    implementation(libs.androidx.test.uiautomator)
+    implementation(libs.androidx.benchmark.macro)
+    detektPlugins(libs.detekt.rules.formatting)
+    detektPlugins(libs.detekt.rules.compose)
 }
 
 androidComponents {
-  onVariants { v ->
-    val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
-    v.instrumentationRunnerArguments.put(
-      "targetAppId",
-      v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() },
-    )
-  }
+    onVariants { v ->
+        val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
+        v.instrumentationRunnerArguments.put(
+            "targetAppId",
+            v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() }
+        )
+    }
 }

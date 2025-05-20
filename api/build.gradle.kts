@@ -30,7 +30,7 @@ android {
     compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.UPSIDE_DOWN_CAKE
+        minSdk = AndroidVersion.VersionCodes.O
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
