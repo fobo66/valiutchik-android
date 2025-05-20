@@ -47,83 +47,83 @@ const val UPDATE_INTERVAL_STEPS = 22
 
 @Composable
 fun PreferenceScreen(
-  defaultCityValue: String,
-  updateIntervalValue: Float,
-  canOpenSettings: Boolean,
-  onDefaultCityChange: (String) -> Unit,
-  onUpdateIntervalChange: (Float) -> Unit,
-  onOpenSourceLicensesClick: () -> Unit,
-  onBackClick: () -> Unit,
-  modifier: Modifier = Modifier
+    defaultCityValue: String,
+    updateIntervalValue: Float,
+    canOpenSettings: Boolean,
+    onDefaultCityChange: (String) -> Unit,
+    onUpdateIntervalChange: (Float) -> Unit,
+    onOpenSourceLicensesClick: () -> Unit,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  Column(modifier = modifier) {
-    this.AnimatedVisibility(canOpenSettings) {
-      SecondaryTopBar(
-        title = stringResource(string.title_activity_settings),
-        onBackClick = onBackClick
-      )
+    Column(modifier = modifier) {
+        this.AnimatedVisibility(canOpenSettings) {
+            SecondaryTopBar(
+                title = stringResource(string.title_activity_settings),
+                onBackClick = onBackClick
+            )
+        }
+        PreferenceScreenContent(
+            defaultCityValue = defaultCityValue,
+            updateIntervalValue = updateIntervalValue,
+            onDefaultCityChange = onDefaultCityChange,
+            onUpdateIntervalChange = onUpdateIntervalChange,
+            onOpenSourceLicensesClick = onOpenSourceLicensesClick,
+            modifier = Modifier.weight(1f)
+        )
     }
-    PreferenceScreenContent(
-      defaultCityValue = defaultCityValue,
-      updateIntervalValue = updateIntervalValue,
-      onDefaultCityChange = onDefaultCityChange,
-      onUpdateIntervalChange = onUpdateIntervalChange,
-      onOpenSourceLicensesClick = onOpenSourceLicensesClick,
-      modifier = Modifier.weight(1f)
-    )
-  }
 }
 
 @Composable
 fun PreferenceScreenContent(
-  defaultCityValue: String,
-  updateIntervalValue: Float,
-  onDefaultCityChange: (String) -> Unit,
-  onUpdateIntervalChange: (Float) -> Unit,
-  onOpenSourceLicensesClick: () -> Unit,
-  modifier: Modifier = Modifier
+    defaultCityValue: String,
+    updateIntervalValue: Float,
+    onDefaultCityChange: (String) -> Unit,
+    onUpdateIntervalChange: (Float) -> Unit,
+    onOpenSourceLicensesClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  val citiesKeys = stringArrayResource(id = array.pref_cities_list)
-  val citiesValues = stringArrayResource(id = array.pref_cities_values)
-  val entries = remember {
-    ListPreferenceEntries(
-      citiesKeys.mapIndexed { index, key -> ListPreferenceEntry(key, citiesValues[index]) }
-        .toImmutableList()
-    )
-  }
+    val citiesKeys = stringArrayResource(id = array.pref_cities_list)
+    val citiesValues = stringArrayResource(id = array.pref_cities_values)
+    val entries = remember {
+        ListPreferenceEntries(
+            citiesKeys.mapIndexed { index, key -> ListPreferenceEntry(key, citiesValues[index]) }
+                .toImmutableList()
+        )
+    }
 
-  Column(
-    modifier = modifier
-      .testTag(TAG_PREFERENCES)
-      .background(MaterialTheme.colorScheme.background)
-  ) {
-    ListPreference(
-      title = {
-        Text(text = stringResource(id = R.string.pref_title_default_city))
-      },
-      value = defaultCityValue,
-      entries = entries,
-      onValueChange = onDefaultCityChange,
-      modifier = Modifier.testTag(TAG_DEFAULT_CITY)
-    )
-    SeekBarPreference(
-      title = {
-        Text(text = stringResource(id = R.string.pref_title_update_interval))
-      },
-      value = updateIntervalValue,
-      valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
-      steps = UPDATE_INTERVAL_STEPS,
-      onValueChange = onUpdateIntervalChange,
-      modifier = Modifier.testTag(TAG_UPDATE_INTERVAL)
-    )
-    TextPreference(
-      title = {
-        Text(text = stringResource(id = R.string.title_activity_oss_licenses))
-      },
-      onClick = onOpenSourceLicensesClick,
-      modifier = Modifier.testTag(TAG_LICENSES)
-    )
-  }
+    Column(
+        modifier = modifier
+            .testTag(TAG_PREFERENCES)
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        ListPreference(
+            title = {
+                Text(text = stringResource(id = R.string.pref_title_default_city))
+            },
+            value = defaultCityValue,
+            entries = entries,
+            onValueChange = onDefaultCityChange,
+            modifier = Modifier.testTag(TAG_DEFAULT_CITY)
+        )
+        SeekBarPreference(
+            title = {
+                Text(text = stringResource(id = R.string.pref_title_update_interval))
+            },
+            value = updateIntervalValue,
+            valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
+            steps = UPDATE_INTERVAL_STEPS,
+            onValueChange = onUpdateIntervalChange,
+            modifier = Modifier.testTag(TAG_UPDATE_INTERVAL)
+        )
+        TextPreference(
+            title = {
+                Text(text = stringResource(id = R.string.title_activity_oss_licenses))
+            },
+            onClick = onOpenSourceLicensesClick,
+            modifier = Modifier.testTag(TAG_LICENSES)
+        )
+    }
 }
 
 private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
@@ -131,15 +131,15 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 @Preview(name = "Preferences", showBackground = true)
 @Composable
 private fun PreferenceScreenPreview() {
-  ValiutchikTheme {
-    PreferenceScreen(
-      defaultCityValue = "Minsk",
-      updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,
-      canOpenSettings = true,
-      onDefaultCityChange = {},
-      onUpdateIntervalChange = {},
-      onOpenSourceLicensesClick = {},
-      onBackClick = {}
-    )
-  }
+    ValiutchikTheme {
+        PreferenceScreen(
+            defaultCityValue = "Minsk",
+            updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,
+            canOpenSettings = true,
+            onDefaultCityChange = {},
+            onUpdateIntervalChange = {},
+            onOpenSourceLicensesClick = {},
+            onBackClick = {}
+        )
+    }
 }

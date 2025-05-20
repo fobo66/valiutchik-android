@@ -46,88 +46,82 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class CurrencyWidget :
-  GlanceAppWidget(),
-  KoinComponent {
-  private val loadExchangeRates: LoadExchangeRates by inject()
-  private val refreshExchangeRates: ForceRefreshExchangeRates by inject()
+    GlanceAppWidget(),
+    KoinComponent {
+    private val loadExchangeRates: LoadExchangeRates by inject()
+    private val refreshExchangeRates: ForceRefreshExchangeRates by inject()
 
-  override val sizeMode: SizeMode
-    get() = SizeMode.Exact
+    override val sizeMode: SizeMode
+        get() = SizeMode.Exact
 
-  override suspend fun provideGlance(
-    context: Context,
-    id: GlanceId,
-  ): Nothing {
-    val ratesState =
-      loadExchangeRates
-        .execute(Clock.System.now())
-        .map { it.toImmutableList() }
+    override suspend fun provideGlance(context: Context, id: GlanceId): Nothing {
+        val ratesState =
+            loadExchangeRates
+                .execute(Clock.System.now())
+                .map { it.toImmutableList() }
 
-    provideContent {
-      val scope = rememberCoroutineScope()
-      val rates by ratesState
-        .collectAsState(
-          initial = persistentListOf(),
-        )
+        provideContent {
+            val scope = rememberCoroutineScope()
+            val rates by ratesState
+                .collectAsState(
+                    initial = persistentListOf()
+                )
 
-      ValiutchikWidgetTheme {
-        CurrencyWidgetContent(
-          rates = rates,
-          onTitleBarActionClick = {
-            scope.launch {
-              refreshExchangeRates.execute(Clock.System.now())
-              update(context, id)
+            ValiutchikWidgetTheme {
+                CurrencyWidgetContent(
+                    rates = rates,
+                    onTitleBarActionClick = {
+                        scope.launch {
+                            refreshExchangeRates.execute(Clock.System.now())
+                            update(context, id)
+                        }
+                    }
+                )
             }
-          },
-        )
-      }
+        }
     }
-  }
 
-  override suspend fun providePreview(
-    context: Context,
-    widgetCategory: Int,
-  ) {
-    val ratesState =
-      loadExchangeRates
-        .execute(Clock.System.now())
-        .map { it.toImmutableList() }
+    override suspend fun providePreview(context: Context, widgetCategory: Int) {
+        val ratesState =
+            loadExchangeRates
+                .execute(Clock.System.now())
+                .map { it.toImmutableList() }
 
-    provideContent {
-      ValiutchikWidgetTheme {
-        val rates by ratesState.collectAsState(initial = persistentListOf())
-        CurrencyWidgetContent(
-          rates = rates,
-          onTitleBarActionClick = {},
-        )
-      }
+        provideContent {
+            ValiutchikWidgetTheme {
+                val rates by ratesState.collectAsState(initial = persistentListOf())
+                CurrencyWidgetContent(
+                    rates = rates,
+                    onTitleBarActionClick = {}
+                )
+            }
+        }
     }
-  }
 }
 
 @Composable
 fun CurrencyWidgetContent(
-  rates: ImmutableList<BestCurrencyRate>,
-  onTitleBarActionClick: () -> Unit,
-  modifier: GlanceModifier = GlanceModifier,
+    rates: ImmutableList<BestCurrencyRate>,
+    onTitleBarActionClick: () -> Unit,
+    modifier: GlanceModifier = GlanceModifier
 ) {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  ActionListLayout(
-    title = context.getString(R.string.app_name),
-    titleIconRes = R.drawable.ic_launcher_foreground,
-    titleBarActionIconRes = R.drawable.ic_refresh,
-    titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
-    titleBarAction = action(null, onTitleBarActionClick),
-    items = rates,
-    actionButtonClick = actionStartActivity<MainActivity>(),
-    modifier = modifier,
-  )
+    ActionListLayout(
+        title = context.getString(R.string.app_name),
+        titleIconRes = R.drawable.ic_launcher_foreground,
+        titleBarActionIconRes = R.drawable.ic_refresh,
+        titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
+        titleBarAction = action(null, onTitleBarActionClick),
+        items = rates,
+        actionButtonClick = actionStartActivity<MainActivity>(),
+        modifier = modifier
+    )
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
-  override val glanceAppWidget: GlanceAppWidget
-    get() = CurrencyWidget()
+    override val glanceAppWidget: GlanceAppWidget
+        get() = CurrencyWidget()
 }
 
 @PreviewSmallWidget
@@ -135,24 +129,24 @@ class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
 @PreviewLargeWidget
 @Composable
 private fun CurrencyWidgetPreview() {
-  ValiutchikWidgetTheme {
-    CurrencyWidgetContent(
-      rates =
-        persistentListOf(
-          BestCurrencyRate(
-            0,
-            "test",
-            fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
-            "1.23",
-          ),
-          BestCurrencyRate(
-            1,
-            "test",
-            fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
-            "1.23",
-          ),
-        ),
-      onTitleBarActionClick = {},
-    )
-  }
+    ValiutchikWidgetTheme {
+        CurrencyWidgetContent(
+            rates =
+            persistentListOf(
+                BestCurrencyRate(
+                    0,
+                    "test",
+                    fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
+                    "1.23"
+                ),
+                BestCurrencyRate(
+                    1,
+                    "test",
+                    fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
+                    "1.23"
+                )
+            ),
+            onTitleBarActionClick = {}
+        )
+    }
 }

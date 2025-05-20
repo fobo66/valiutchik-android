@@ -32,36 +32,36 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class BestCourseDataSourceBenchmark {
-  @get:Rule
-  val benchmarkRule = BenchmarkRule()
+    @get:Rule
+    val benchmarkRule = BenchmarkRule()
 
-  private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
+    private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
 
-  private val bestCourseDataSource = BestCourseDataSourceImpl()
+    private val bestCourseDataSource = BestCourseDataSourceImpl()
 
-  private lateinit var currencies: Set<Bank>
+    private lateinit var currencies: Set<Bank>
 
-  @Before
-  fun setUp() {
-    val myfinFeedFileStream =
-      InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open("myfinFeed.xml")
-    currencies = parser.parse(myfinFeedFileStream)
-  }
-
-  @Test
-  fun findBestBuyCurrencies() {
-    benchmarkRule.measureRepeated {
-      bestCourseDataSource.findBestBuyCurrencies(currencies)
+    @Before
+    fun setUp() {
+        val myfinFeedFileStream =
+            InstrumentationRegistry
+                .getInstrumentation()
+                .context.assets
+                .open("myfinFeed.xml")
+        currencies = parser.parse(myfinFeedFileStream)
     }
-  }
 
-  @Test
-  fun findBestSellCurrencies() {
-    benchmarkRule.measureRepeated {
-      bestCourseDataSource.findBestSellCurrencies(currencies)
+    @Test
+    fun findBestBuyCurrencies() {
+        benchmarkRule.measureRepeated {
+            bestCourseDataSource.findBestBuyCurrencies(currencies)
+        }
     }
-  }
+
+    @Test
+    fun findBestSellCurrencies() {
+        benchmarkRule.measureRepeated {
+            bestCourseDataSource.findBestSellCurrencies(currencies)
+        }
+    }
 }

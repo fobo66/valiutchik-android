@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-  bodyMedium = TextStyle(
-    fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Normal,
-    fontSize = 16.sp
-  )
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    )
   /* Other default text styles to override
   button = TextStyle(
       fontFamily = FontFamily.Default,
@@ -40,5 +40,5 @@ val Typography = Typography(
       fontWeight = FontWeight.Normal,
       fontSize = 12.sp
   )
-  */
+   */
 )

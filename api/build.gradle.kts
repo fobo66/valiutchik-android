@@ -22,11 +22,12 @@ plugins {
     kotlin("plugin.serialization")
     alias(libs.plugins.detekt)
     alias(libs.plugins.junit)
+    alias(libs.plugins.kotlinter)
 }
 
 android {
     namespace = "fobo66.valiutchik.api"
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api
+    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
 
     defaultConfig {
         minSdk = AndroidVersion.VersionCodes.O

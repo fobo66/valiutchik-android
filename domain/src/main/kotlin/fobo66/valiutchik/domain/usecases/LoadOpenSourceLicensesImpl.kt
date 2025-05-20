@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,21 +21,20 @@ import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class LoadOpenSourceLicensesImpl(
-  private val licensesRepository: LicensesRepository
-) : LoadOpenSourceLicenses {
-  override fun execute(): Flow<List<OpenSourceLicense>> = flow {
-    val licenses = licensesRepository.loadLicenses()
-      .map {
-        OpenSourceLicense(
-          developers = it.developers,
-          licenses = it.licenses.map { license -> license.license },
-          project = it.project,
-          url = it.url,
-          version = it.version,
-          year = it.year
-        )
-      }
-    emit(licenses)
-  }
+class LoadOpenSourceLicensesImpl(private val licensesRepository: LicensesRepository) :
+    LoadOpenSourceLicenses {
+    override fun execute(): Flow<List<OpenSourceLicense>> = flow {
+        val licenses = licensesRepository.loadLicenses()
+            .map {
+                OpenSourceLicense(
+                    developers = it.developers,
+                    licenses = it.licenses.map { license -> license.license },
+                    project = it.project,
+                    url = it.url,
+                    version = it.version,
+                    year = it.year
+                )
+            }
+        emit(licenses)
+    }
 }

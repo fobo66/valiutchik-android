@@ -30,45 +30,45 @@ import kotlin.LazyThreadSafetyMode.NONE
 private const val BYN = "BYN"
 
 class FormattingDataSourceImpl(
-  private val locale: Locale,
-  private val bankNameNormalizer: BankNameNormalizer,
+    private val locale: Locale,
+    private val bankNameNormalizer: BankNameNormalizer
 ) : FormattingDataSource {
-  override fun formatBankName(name: String): String {
-    val normalizedName = bankNameNormalizer.normalize(name)
-    return if (VERSION.SDK_INT >= VERSION_CODES.Q) {
-      normalizedName
-    } else {
-      normalizedName
+    override fun formatBankName(name: String): String {
+        val normalizedName = bankNameNormalizer.normalize(name)
+        return if (VERSION.SDK_INT >= VERSION_CODES.Q) {
+            transliterate(normalizedName)
+        } else {
+            normalizedName
+        }
     }
-  }
 
-  private val currency: Currency by lazy(NONE) {
-    Currency.getInstance(BYN)
-  }
+    private val currency: Currency by lazy(NONE) {
+        Currency.getInstance(BYN)
+    }
 
-  override fun formatCurrencyValue(value: Double): String =
-    if (VERSION.SDK_INT >= VERSION_CODES.R) {
-      NumberFormatter
-        .withLocale(locale)
-        .unit(currency)
-        .format(value)
-        .toString()
-    } else {
-      val format =
-        DecimalFormat.getCurrencyInstance(locale).apply {
-          currency = currency
+    override fun formatCurrencyValue(value: Double): String =
+        if (VERSION.SDK_INT >= VERSION_CODES.R) {
+            NumberFormatter
+                .withLocale(locale)
+                .unit(currency)
+                .format(value)
+                .toString()
+        } else {
+            val format =
+                DecimalFormat.getCurrencyInstance(locale).apply {
+                    currency = currency
+                }
+
+            format.format(value)
         }
 
-      format.format(value)
+    @RequiresApi(VERSION_CODES.Q)
+    private fun transliterate(value: String): String {
+        val transliteratorIds = Transliterator.getAvailableIDs()
+        var transliteratorId: String? = null
+        while (transliteratorIds.hasMoreElements()) {
+            val id = transliteratorIds.nextElement()
+        }
+        return value
     }
-
-  @RequiresApi(VERSION_CODES.Q)
-  private fun transliterate(value: String): String {
-    val transliteratorIds = Transliterator.getAvailableIDs()
-    var transliteratorId: String? = null
-    while (transliteratorIds.hasMoreElements()) {
-      val id = transliteratorIds.nextElement()
-    }
-    return value
-  }
 }

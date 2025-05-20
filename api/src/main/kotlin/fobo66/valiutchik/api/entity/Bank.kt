@@ -46,61 +46,61 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 @Serializable
 @XmlSerialName(ENTRY_TAG_NAME)
 data class Bank(
-  @XmlElement
-  @XmlSerialName(TAG_NAME_BANK_ID)
-  val bankId: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_FILIAL_ID)
-  val filialId: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_DATE)
-  val date: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_BANK_NAME)
-  val bankName: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_FILIAL_NAME)
-  val filialName: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_BANK_ADDRESS)
-  val bankAddress: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_BANK_PHONE)
-  val bankPhone: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_USD_BUY)
-  val usdBuy: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_USD_SELL)
-  val usdSell: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_EUR_BUY)
-  val eurBuy: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_EUR_SELL)
-  val eurSell: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_RUR_BUY)
-  val rubBuy: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_RUR_SELL)
-  val rubSell: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_PLN_BUY)
-  val plnBuy: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_PLN_SELL)
-  val plnSell: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_UAH_BUY)
-  val uahBuy: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_UAH_SELL)
-  val uahSell: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_EURUSD_SELL)
-  val conversionSell: String = "",
-  @XmlElement
-  @XmlSerialName(TAG_NAME_EURUSD_BUY)
-  val conversionBuy: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_BANK_ID)
+    val bankId: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_FILIAL_ID)
+    val filialId: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_DATE)
+    val date: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_BANK_NAME)
+    val bankName: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_FILIAL_NAME)
+    val filialName: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_BANK_ADDRESS)
+    val bankAddress: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_BANK_PHONE)
+    val bankPhone: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_USD_BUY)
+    val usdBuy: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_USD_SELL)
+    val usdSell: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_EUR_BUY)
+    val eurBuy: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_EUR_SELL)
+    val eurSell: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_RUR_BUY)
+    val rubBuy: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_RUR_SELL)
+    val rubSell: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_PLN_BUY)
+    val plnBuy: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_PLN_SELL)
+    val plnSell: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_UAH_BUY)
+    val uahBuy: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_UAH_SELL)
+    val uahSell: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_EURUSD_SELL)
+    val conversionSell: String = "",
+    @XmlElement
+    @XmlSerialName(TAG_NAME_EURUSD_BUY)
+    val conversionBuy: String = ""
 )

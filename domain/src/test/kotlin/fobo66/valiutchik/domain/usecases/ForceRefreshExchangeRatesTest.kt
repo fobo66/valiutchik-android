@@ -26,44 +26,41 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class ForceRefreshExchangeRatesTest {
-  private val locationRepository = FakeLocationRepository()
-  private val timestampRepository = FakeCurrencyRatesTimestampRepository()
-  private val currencyRateRepository = FakeCurrencyRateRepository()
-  private val preferenceRepository = FakePreferenceRepository()
+    private val locationRepository = FakeLocationRepository()
+    private val timestampRepository = FakeCurrencyRatesTimestampRepository()
+    private val currencyRateRepository = FakeCurrencyRateRepository()
+    private val preferenceRepository = FakePreferenceRepository()
 
-  private val now = Clock.System.now()
+    private val now = Clock.System.now()
 
-  private val refreshExchangeRates: ForceRefreshExchangeRates =
-    ForceRefreshExchangeRatesImpl(
-      locationRepository,
-      timestampRepository,
-      currencyRateRepository,
-      preferenceRepository,
-    )
+    private val refreshExchangeRates: ForceRefreshExchangeRates =
+        ForceRefreshExchangeRatesImpl(
+            locationRepository,
+            timestampRepository,
+            currencyRateRepository,
+            preferenceRepository
+        )
 
-  @Test
-  fun `refresh exchange rates`() =
-    runTest {
-      refreshExchangeRates.execute(now)
-      assertTrue(currencyRateRepository.isRefreshed)
-      assertTrue(timestampRepository.isSaveTimestampCalled)
+    @Test
+    fun `refresh exchange rates`() = runTest {
+        refreshExchangeRates.execute(now)
+        assertTrue(currencyRateRepository.isRefreshed)
+        assertTrue(timestampRepository.isSaveTimestampCalled)
     }
 
-  @Test
-  fun `refresh even recent exchange rates`() =
-    runTest {
-      timestampRepository.isNeededToUpdateCurrencyRates = false
+    @Test
+    fun `refresh even recent exchange rates`() = runTest {
+        timestampRepository.isNeededToUpdateCurrencyRates = false
 
-      refreshExchangeRates.execute(now)
-      assertTrue(currencyRateRepository.isRefreshed)
+        refreshExchangeRates.execute(now)
+        assertTrue(currencyRateRepository.isRefreshed)
     }
 
-  @Test
-  fun `resolve location for recent exchange rates`() =
-    runTest {
-      timestampRepository.isNeededToUpdateCurrencyRates = false
+    @Test
+    fun `resolve location for recent exchange rates`() = runTest {
+        timestampRepository.isNeededToUpdateCurrencyRates = false
 
-      refreshExchangeRates.execute(now)
-      assertTrue(locationRepository.isResolved)
+        refreshExchangeRates.execute(now)
+        assertTrue(locationRepository.isResolved)
     }
 }

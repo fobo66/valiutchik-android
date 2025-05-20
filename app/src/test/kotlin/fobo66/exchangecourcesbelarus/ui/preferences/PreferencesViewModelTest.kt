@@ -41,67 +41,67 @@ private const val NEW_CITY = "newcity"
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesViewModelTest {
-  private lateinit var viewModel: PreferencesViewModel
+    private lateinit var viewModel: PreferencesViewModel
 
-  private val fakeStorage = buildMap {
-    put(KEY_DEFAULT_CITY, CITY)
-    put(KEY_UPDATE_INTERVAL, INTERVAL.toString())
-  }.toMutableMap()
+    private val fakeStorage = buildMap {
+        put(KEY_DEFAULT_CITY, CITY)
+        put(KEY_UPDATE_INTERVAL, INTERVAL.toString())
+    }.toMutableMap()
 
-  private val loadDefaultCityPreference = FakeLoadDefaultCityPreference(fakeStorage)
-  private val updateDefaultCityPreference = FakeUpdateDefaultCityPreference(fakeStorage)
-  private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
-  private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
+    private val loadDefaultCityPreference = FakeLoadDefaultCityPreference(fakeStorage)
+    private val updateDefaultCityPreference = FakeUpdateDefaultCityPreference(fakeStorage)
+    private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
+    private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
 
-  @BeforeEach
-  fun setUp() {
-    Dispatchers.setMain(UnconfinedTestDispatcher())
-    viewModel = PreferencesViewModel(
-      loadDefaultCityPreference,
-      loadUpdateIntervalPreference,
-      updateDefaultCityPreference,
-      updateUpdateIntervalPreference
-    )
-  }
-
-  @AfterEach
-  fun tearDown() {
-    Dispatchers.resetMain()
-  }
-
-  @Test
-  fun `load default city pref`() = runTest {
-    viewModel.defaultCityPreference.test {
-      val pref = awaitItem()
-      assertEquals(CITY, pref)
+    @BeforeEach
+    fun setUp() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+        viewModel = PreferencesViewModel(
+            loadDefaultCityPreference,
+            loadUpdateIntervalPreference,
+            updateDefaultCityPreference,
+            updateUpdateIntervalPreference
+        )
     }
-  }
 
-  @Test
-  fun `update default city pref`() = runTest {
-    viewModel.updateDefaultCity(NEW_CITY)
-
-    viewModel.defaultCityPreference.test {
-      val pref = awaitItem()
-      assertEquals(NEW_CITY, pref)
+    @AfterEach
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
-  }
 
-  @Test
-  fun `load update interval pref`() = runTest {
-    viewModel.updateIntervalPreference.test {
-      val pref = awaitItem()
-      assertEquals(INTERVAL, pref)
+    @Test
+    fun `load default city pref`() = runTest {
+        viewModel.defaultCityPreference.test {
+            val pref = awaitItem()
+            assertEquals(CITY, pref)
+        }
     }
-  }
 
-  @Test
-  fun `update update interval pref`() = runTest {
-    viewModel.updateUpdateInterval(NEW_INTERVAL)
+    @Test
+    fun `update default city pref`() = runTest {
+        viewModel.updateDefaultCity(NEW_CITY)
 
-    viewModel.updateIntervalPreference.test {
-      val pref = awaitItem()
-      assertEquals(NEW_INTERVAL, pref)
+        viewModel.defaultCityPreference.test {
+            val pref = awaitItem()
+            assertEquals(NEW_CITY, pref)
+        }
     }
-  }
+
+    @Test
+    fun `load update interval pref`() = runTest {
+        viewModel.updateIntervalPreference.test {
+            val pref = awaitItem()
+            assertEquals(INTERVAL, pref)
+        }
+    }
+
+    @Test
+    fun `update update interval pref`() = runTest {
+        viewModel.updateUpdateInterval(NEW_INTERVAL)
+
+        viewModel.updateIntervalPreference.test {
+            val pref = awaitItem()
+            assertEquals(NEW_INTERVAL, pref)
+        }
+    }
 }
