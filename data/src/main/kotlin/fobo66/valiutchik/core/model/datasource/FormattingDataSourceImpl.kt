@@ -18,12 +18,11 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.icu.number.NumberFormatter
 import android.icu.text.DecimalFormat
-import android.icu.text.Transliterator
 import android.icu.util.Currency
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
-import androidx.annotation.RequiresApi
 import fobo66.valiutchik.core.util.BankNameNormalizer
+import fobo66.valiutchik.core.util.BankNameTransliterator
 import java.util.Locale
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -31,12 +30,16 @@ private const val BYN = "BYN"
 
 class FormattingDataSourceImpl(
     private val locale: Locale,
-    private val bankNameNormalizer: BankNameNormalizer
+    private val bankNameNormalizer: BankNameNormalizer,
+    private val bankNameTransliterator: BankNameTransliterator
 ) : FormattingDataSource {
     override fun formatBankName(name: String): String {
         val normalizedName = bankNameNormalizer.normalize(name)
         return if (VERSION.SDK_INT >= VERSION_CODES.Q) {
-            transliterate(normalizedName)
+            bankNameTransliterator.transliterate(
+                normalizedName,
+                locale.isO3Language
+            )
         } else {
             normalizedName
         }
@@ -61,14 +64,4 @@ class FormattingDataSourceImpl(
 
             format.format(value)
         }
-
-    @RequiresApi(VERSION_CODES.Q)
-    private fun transliterate(value: String): String {
-        val transliteratorIds = Transliterator.getAvailableIDs()
-        var transliteratorId: String? = null
-        while (transliteratorIds.hasMoreElements()) {
-            val id = transliteratorIds.nextElement()
-        }
-        return value
-    }
 }
