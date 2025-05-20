@@ -17,7 +17,7 @@
 package fobo66.valiutchik.api.di
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.compression.ContentEncoding
@@ -37,7 +37,7 @@ val networkModule =
             }
         }
         single {
-            HttpClient(OkHttp) {
+            HttpClient(CIO) {
                 install(ContentNegotiation) {
                     json(get())
                     xml()

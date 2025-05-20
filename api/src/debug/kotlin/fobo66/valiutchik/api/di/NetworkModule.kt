@@ -18,7 +18,7 @@ package fobo66.valiutchik.api.di
 
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.compression.ContentEncoding
@@ -51,7 +51,7 @@ val networkModule =
             }
         }
         single<HttpClient> {
-            HttpClient(OkHttp) {
+            HttpClient(CIO) {
                 install(HttpCache) {
                     publicStorage(FileStorage(androidContext().cacheDir))
                 }
