@@ -18,9 +18,12 @@ package fobo66.valiutchik.core.util
 
 import android.icu.text.Transliterator
 import android.os.Build
-import io.github.aakira.napier.Napier
 
 private const val LANG_BELARUSIAN = "bel"
+private const val LANG_RU = "rus"
+private const val CYRILLIC_LATIN = "Cyrillic-Latin"
+private const val BELARUSIAN_ID = "Any_be-Cyrillic"
+private const val BELARUSIAN_RULES = "ри>ры;ро>ра;ий>і;ый>і;те>тэ;Те>Тэ;Це>Цэ;и>і"
 
 class BankNameTransliteratorImpl : BankNameTransliterator {
     /**
@@ -28,13 +31,17 @@ class BankNameTransliteratorImpl : BankNameTransliterator {
      */
     override fun transliterate(bankName: String, languageCode: String): String =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val transliteratorIds = Transliterator.getAvailableIDs()
-            while (transliteratorIds.hasMoreElements()) {
-                Napier.d {
-                    "Transliterator id: ${transliteratorIds.nextElement()}"
-                }
+            val transliterator = when (languageCode) {
+                LANG_BELARUSIAN -> Transliterator.createFromRules(
+                    BELARUSIAN_ID,
+                    BELARUSIAN_RULES,
+                    Transliterator.FORWARD
+                )
+
+                LANG_RU -> return bankName
+                else -> Transliterator.getInstance(CYRILLIC_LATIN)
             }
-            bankName
+            transliterator.transliterate(bankName)
         } else {
             bankName
         }
