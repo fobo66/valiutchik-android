@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ import fobo66.valiutchik.api.entity.Feature
  */
 interface GeocodingDataSource {
 
-  /**
-   * Find possible city address on given location
-   *
-   * @param latitude Latitude for search
-   * @param longitude Longitude for search
-   */
-  suspend fun findPlace(latitude: Double, longitude: Double): List<Feature>
+    /**
+     * Find possible city address on given location
+     *
+     * @param latitude Latitude for search
+     * @param longitude Longitude for search
+     */
+    suspend fun findPlace(latitude: Double, longitude: Double): List<Feature>
 }

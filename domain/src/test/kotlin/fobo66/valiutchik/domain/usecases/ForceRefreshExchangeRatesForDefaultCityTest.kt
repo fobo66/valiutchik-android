@@ -25,33 +25,31 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class ForceRefreshExchangeRatesForDefaultCityTest {
-  private val timestampRepository = FakeCurrencyRatesTimestampRepository()
-  private val currencyRateRepository = FakeCurrencyRateRepository()
-  private val preferenceRepository = FakePreferenceRepository()
+    private val timestampRepository = FakeCurrencyRatesTimestampRepository()
+    private val currencyRateRepository = FakeCurrencyRateRepository()
+    private val preferenceRepository = FakePreferenceRepository()
 
-  private val now = Clock.System.now()
+    private val now = Clock.System.now()
 
-  private val refreshExchangeRates: ForceRefreshExchangeRatesForDefaultCity =
-    ForceRefreshExchangeRatesForDefaultCityImpl(
-      timestampRepository,
-      currencyRateRepository,
-      preferenceRepository,
-    )
+    private val refreshExchangeRates: ForceRefreshExchangeRatesForDefaultCity =
+        ForceRefreshExchangeRatesForDefaultCityImpl(
+            timestampRepository,
+            currencyRateRepository,
+            preferenceRepository
+        )
 
-  @Test
-  fun `refresh exchange rates`() =
-    runTest {
-      refreshExchangeRates.execute(now)
-      assertTrue(currencyRateRepository.isRefreshed)
-      assertTrue(timestampRepository.isSaveTimestampCalled)
+    @Test
+    fun `refresh exchange rates`() = runTest {
+        refreshExchangeRates.execute(now)
+        assertTrue(currencyRateRepository.isRefreshed)
+        assertTrue(timestampRepository.isSaveTimestampCalled)
     }
 
-  @Test
-  fun `refresh even recent exchange rates`() =
-    runTest {
-      timestampRepository.isNeededToUpdateCurrencyRates = false
+    @Test
+    fun `refresh even recent exchange rates`() = runTest {
+        timestampRepository.isNeededToUpdateCurrencyRates = false
 
-      refreshExchangeRates.execute(now)
-      assertTrue(currencyRateRepository.isRefreshed)
+        refreshExchangeRates.execute(now)
+        assertTrue(currencyRateRepository.isRefreshed)
     }
 }

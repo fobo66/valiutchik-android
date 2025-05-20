@@ -19,7 +19,7 @@ package dev.fobo66.core.data.testing.fake
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 
 class FakeFormattingDataSource : FormattingDataSource {
-  override fun formatCurrencyValue(value: Double): String = value.toString()
+    override fun formatCurrencyValue(value: Double): String = value.toString()
 
-  override fun formatBankName(name: String): String = name
+    override fun formatBankName(name: String): String = name
 }

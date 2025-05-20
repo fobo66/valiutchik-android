@@ -21,12 +21,11 @@ import fobo66.valiutchik.api.entity.Bank
 import java.io.IOException
 
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-  var isError = false
+    var isError = false
 
-  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
-    if (isError) {
-      throw IOException("test")
+    override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> = if (isError) {
+        throw IOException("test")
     } else {
-      setOf(Bank())
+        setOf(Bank())
     }
 }

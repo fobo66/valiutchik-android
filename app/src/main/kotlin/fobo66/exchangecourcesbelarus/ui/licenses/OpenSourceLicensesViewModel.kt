@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,27 +28,25 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class OpenSourceLicensesViewModel(
-  loadOpenSourceLicenses: LoadOpenSourceLicenses
-) : ViewModel() {
-  val licensesState = loadOpenSourceLicenses.execute()
-    .map {
-      it.map { item ->
-        LicenseItem(
-          project = item.project,
-          licenses = item.licenses.joinToString(),
-          year = item.year.orEmpty(),
-          authors = item.developers.joinToString(),
-          url = item.url
+class OpenSourceLicensesViewModel(loadOpenSourceLicenses: LoadOpenSourceLicenses) : ViewModel() {
+    val licensesState = loadOpenSourceLicenses.execute()
+        .map {
+            it.map { item ->
+                LicenseItem(
+                    project = item.project,
+                    licenses = item.licenses.joinToString(),
+                    year = item.year.orEmpty(),
+                    authors = item.developers.joinToString(),
+                    url = item.url
+                )
+            }
+        }
+        .map { LicensesState(it.toImmutableList()) }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            initialValue = LicensesState(
+                persistentListOf()
+            )
         )
-      }
-    }
-    .map { LicensesState(it.toImmutableList()) }
-    .stateIn(
-      viewModelScope,
-      started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-      initialValue = LicensesState(
-        persistentListOf()
-      )
-    )
 }

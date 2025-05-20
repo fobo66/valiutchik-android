@@ -23,21 +23,21 @@ import fobo66.valiutchik.core.util.CurrencyName
  * Datasource for determining best exchange rates in the dataset
  */
 interface BestCourseDataSource {
-  /**
-   * Find best buy rates (what bank buys for) for the given currency
-   *
-   * @param courses Raw set of rates
-   *
-   * @return Map of the currency name to its best rate
-   */
-  fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank>
+    /**
+     * Find best buy rates (what bank buys for) for the given currency
+     *
+     * @param courses Raw set of rates
+     *
+     * @return Map of the currency name to its best rate
+     */
+    fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank>
 
-  /**
-   * Find best sell rates (what bank sells for) for the given currency
-   *
-   * @param courses Raw set of rates
-   *
-   * @return Map of the currency name to its best rate
-   */
-  fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank>
+    /**
+     * Find best sell rates (what bank sells for) for the given currency
+     *
+     * @param courses Raw set of rates
+     *
+     * @return Map of the currency name to its best rate
+     */
+    fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank>
 }

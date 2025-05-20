@@ -39,61 +39,61 @@ const val BEST_UAH_SELL = "0.09"
  * data from server saved in resources
  */
 class BestCourseDataSourceTest {
-  private val testFile = javaClass.classLoader?.getResourceAsStream("myfinTestData.xml")!!
-  private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
-  private val currencies = parser.parse(testFile)
+    private val testFile = javaClass.classLoader?.getResourceAsStream("myfinTestData.xml")!!
+    private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
+    private val currencies = parser.parse(testFile)
 
-  private val bestCourseDataSource: BestCourseDataSource = BestCourseDataSourceImpl()
-  private val bestBuy = bestCourseDataSource.findBestBuyCurrencies(currencies)
-  private val bestSell = bestCourseDataSource.findBestSellCurrencies(currencies)
+    private val bestCourseDataSource: BestCourseDataSource = BestCourseDataSourceImpl()
+    private val bestBuy = bestCourseDataSource.findBestBuyCurrencies(currencies)
+    private val bestSell = bestCourseDataSource.findBestSellCurrencies(currencies)
 
-  @Test
-  fun testBestUSDBuyCoursesAreReallyBest() {
-    assertEquals(BEST_USD_BUY, bestBuy[CurrencyName.DOLLAR]?.usdBuy)
-  }
+    @Test
+    fun testBestUSDBuyCoursesAreReallyBest() {
+        assertEquals(BEST_USD_BUY, bestBuy[CurrencyName.DOLLAR]?.usdBuy)
+    }
 
-  @Test
-  fun testBestRURBuyCourseAreReallyBest() {
-    assertEquals(BEST_RUR_BUY, bestBuy[CurrencyName.RUB]?.rubBuy)
-  }
+    @Test
+    fun testBestRURBuyCourseAreReallyBest() {
+        assertEquals(BEST_RUR_BUY, bestBuy[CurrencyName.RUB]?.rubBuy)
+    }
 
-  @Test
-  fun testBestEURBuyCourseAreReallyBest() {
-    assertEquals(BEST_EUR_BUY, bestBuy[CurrencyName.EUR]?.eurBuy)
-  }
+    @Test
+    fun testBestEURBuyCourseAreReallyBest() {
+        assertEquals(BEST_EUR_BUY, bestBuy[CurrencyName.EUR]?.eurBuy)
+    }
 
-  @Test
-  fun testBestPLNBuyCourseAreReallyBest() {
-    assertEquals(BEST_PLN_BUY, bestBuy[CurrencyName.PLN]?.plnBuy)
-  }
+    @Test
+    fun testBestPLNBuyCourseAreReallyBest() {
+        assertEquals(BEST_PLN_BUY, bestBuy[CurrencyName.PLN]?.plnBuy)
+    }
 
-  @Test
-  fun testBestUAHBuyCourseAreReallyBest() {
-    assertEquals(BEST_UAH_BUY, bestBuy[CurrencyName.UAH]?.uahBuy)
-  }
+    @Test
+    fun testBestUAHBuyCourseAreReallyBest() {
+        assertEquals(BEST_UAH_BUY, bestBuy[CurrencyName.UAH]?.uahBuy)
+    }
 
-  @Test
-  fun testBestUSDSellCoursesAreReallyBest() {
-    assertEquals(BEST_USD_SELL, bestSell[CurrencyName.DOLLAR]?.usdSell)
-  }
+    @Test
+    fun testBestUSDSellCoursesAreReallyBest() {
+        assertEquals(BEST_USD_SELL, bestSell[CurrencyName.DOLLAR]?.usdSell)
+    }
 
-  @Test
-  fun testBestRURSellCourseAreReallyBest() {
-    assertEquals(BEST_RUR_SELL, bestSell[CurrencyName.RUB]?.rubSell)
-  }
+    @Test
+    fun testBestRURSellCourseAreReallyBest() {
+        assertEquals(BEST_RUR_SELL, bestSell[CurrencyName.RUB]?.rubSell)
+    }
 
-  @Test
-  fun testBestEURSellCourseAreReallyBest() {
-    assertEquals(BEST_EUR_SELL, bestSell[CurrencyName.EUR]?.eurSell)
-  }
+    @Test
+    fun testBestEURSellCourseAreReallyBest() {
+        assertEquals(BEST_EUR_SELL, bestSell[CurrencyName.EUR]?.eurSell)
+    }
 
-  @Test
-  fun testBestPLNSellCourseAreReallyBest() {
-    assertEquals(BEST_PLN_SELL, bestSell[CurrencyName.PLN]?.plnSell)
-  }
+    @Test
+    fun testBestPLNSellCourseAreReallyBest() {
+        assertEquals(BEST_PLN_SELL, bestSell[CurrencyName.PLN]?.plnSell)
+    }
 
-  @Test
-  fun testBestUAHSellCourseAreReallyBest() {
-    assertEquals(BEST_UAH_SELL, bestSell[CurrencyName.UAH]?.uahSell)
-  }
+    @Test
+    fun testBestUAHSellCourseAreReallyBest() {
+        assertEquals(BEST_UAH_SELL, bestSell[CurrencyName.UAH]?.uahSell)
+    }
 }

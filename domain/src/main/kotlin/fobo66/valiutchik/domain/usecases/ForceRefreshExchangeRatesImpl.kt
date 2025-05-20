@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,16 +24,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Instant
 
 class ForceRefreshExchangeRatesImpl(
-  private val locationRepository: LocationRepository,
-  private val timestampRepository: CurrencyRatesTimestampRepository,
-  private val currencyRateRepository: CurrencyRateRepository,
-  private val preferenceRepository: PreferenceRepository
+    private val locationRepository: LocationRepository,
+    private val timestampRepository: CurrencyRatesTimestampRepository,
+    private val currencyRateRepository: CurrencyRateRepository,
+    private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRates {
-  override suspend fun execute(now: Instant) {
-    val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
-    val city = locationRepository.resolveUserCity(defaultCity)
+    override suspend fun execute(now: Instant) {
+        val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
+        val city = locationRepository.resolveUserCity(defaultCity)
 
-    currencyRateRepository.refreshExchangeRates(city, now, defaultCity)
-    timestampRepository.saveTimestamp(now)
-  }
+        currencyRateRepository.refreshExchangeRates(city, now, defaultCity)
+        timestampRepository.saveTimestamp(now)
+    }
 }

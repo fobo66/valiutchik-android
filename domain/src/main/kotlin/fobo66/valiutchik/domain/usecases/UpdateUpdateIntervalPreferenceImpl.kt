@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,12 +19,11 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import io.github.aakira.napier.Napier
 
-class UpdateUpdateIntervalPreferenceImpl(
-  private val preferenceRepository: PreferenceRepository
-) : UpdateUpdateIntervalPreference {
-  override suspend fun execute(newUpdateInterval: Float) {
-    Napier.v { "Saving new update interval: $newUpdateInterval" }
-    preferenceRepository.updateUpdateIntervalPreference(newUpdateInterval)
-    Napier.v("Saved!")
-  }
+class UpdateUpdateIntervalPreferenceImpl(private val preferenceRepository: PreferenceRepository) :
+    UpdateUpdateIntervalPreference {
+    override suspend fun execute(newUpdateInterval: Float) {
+        Napier.v { "Saving new update interval: $newUpdateInterval" }
+        preferenceRepository.updateUpdateIntervalPreference(newUpdateInterval)
+        Napier.v("Saved!")
+    }
 }

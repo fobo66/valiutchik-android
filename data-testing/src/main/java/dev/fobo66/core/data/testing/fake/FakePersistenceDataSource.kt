@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.datetime.Instant
 
 class FakePersistenceDataSource : PersistenceDataSource {
-  var isSaved = false
+    var isSaved = false
 
-  override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-    isSaved = true
-  }
+    override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
+        isSaved = true
+    }
 
-  override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
+    override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
 }

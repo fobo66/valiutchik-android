@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ import kotlinx.datetime.Instant
  * Datasource for working with persistent database
  */
 interface PersistenceDataSource {
-  /**
-   * Save entries to the database
-   */
-  suspend fun saveBestCourses(bestCourses: List<BestCourse>)
+    /**
+     * Save entries to the database
+     */
+    suspend fun saveBestCourses(bestCourses: List<BestCourse>)
 
-  /**
-   * Read entries from the database
-   */
-  fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>>
+    /**
+     * Read entries from the database
+     */
+    fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>>
 }

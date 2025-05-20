@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import java.lang.IllegalStateException
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -52,34 +51,36 @@ import org.junit.runner.RunWith
 @LargeTest
 class BaselineProfileGenerator {
 
-  @get:Rule
-  val rule = BaselineProfileRule()
+    @get:Rule
+    val rule = BaselineProfileRule()
 
-  @Test
-  fun generate() {
-    // The application id for the running build variant is read from the instrumentation arguments.
-    rule.collect(
-      packageName = InstrumentationRegistry.getArguments().getString("targetAppId")
-        ?: throw IllegalStateException("targetAppId not passed as instrumentation runner arg"),
+    @Test
+    fun generate() {
+        // The application id for the running build variant is read from the instrumentation arguments.
+        rule.collect(
+            packageName = InstrumentationRegistry.getArguments().getString("targetAppId")
+                ?: throw IllegalStateException(
+                    "targetAppId not passed as instrumentation runner arg"
+                ),
 
-      // See: https://d.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
-      includeInStartupProfile = true
-    ) {
-      // This block defines the app's critical user journey. Here we are interested in
-      // optimizing for app startup. But you can also navigate and scroll through your most important UI.
+            // See: https://d.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
+            includeInStartupProfile = true
+        ) {
+            // This block defines the app's critical user journey. Here we are interested in
+            // optimizing for app startup. But you can also navigate and scroll through your most important UI.
 
-      // Start default activity for your app
-      pressHome()
-      startActivityAndWait()
+            // Start default activity for your app
+            pressHome()
+            startActivityAndWait()
 
-      // TODO Write more interactions to optimize advanced journeys of your app.
-      // For example:
-      // 1. Wait until the content is asynchronously loaded
-      // 2. Scroll the feed content
-      // 3. Navigate to detail screen
+            // TODO Write more interactions to optimize advanced journeys of your app.
+            // For example:
+            // 1. Wait until the content is asynchronously loaded
+            // 2. Scroll the feed content
+            // 3. Navigate to detail screen
 
-      // Check UiAutomator documentation for more information how to interact with the app.
-      // https://d.android.com/training/testing/other-components/ui-automator
+            // Check UiAutomator documentation for more information how to interact with the app.
+            // https://d.android.com/training/testing/other-components/ui-automator
+        }
     }
-  }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,19 +28,19 @@ import org.koin.dsl.module
 
 val thirdPartyModule = module {
 
-  single<CurrencyRatesDatabase> {
-    val dbFile = androidContext().getDatabasePath("currency-rates")
-    Room.databaseBuilder<CurrencyRatesDatabase>(
-      context = androidContext(),
-      name = dbFile.absolutePath
-    )
-      .setDriver(AndroidSQLiteDriver())
-      .build()
-  }
-
-  single<DataStore<Preferences>> {
-    PreferenceDataStoreFactory.create {
-      androidContext().preferencesDataStoreFile("valiutchik-prefs")
+    single<CurrencyRatesDatabase> {
+        val dbFile = androidContext().getDatabasePath("currency-rates")
+        Room.databaseBuilder<CurrencyRatesDatabase>(
+            context = androidContext(),
+            name = dbFile.absolutePath
+        )
+            .setDriver(AndroidSQLiteDriver())
+            .build()
     }
-  }
+
+    single<DataStore<Preferences>> {
+        PreferenceDataStoreFactory.create {
+            androidContext().preferencesDataStoreFile("valiutchik-prefs")
+        }
+    }
 }

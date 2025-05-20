@@ -17,25 +17,25 @@
 package fobo66.valiutchik.core.di
 
 import androidx.core.app.LocaleManagerCompat
+import java.util.Locale
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import java.util.Locale
 
 val systemModule =
-  module {
-    single {
-      androidContext().assets
-    }
-
-    single {
-      val applicationLocales = LocaleManagerCompat.getApplicationLocales(androidContext())
-      val systemLocales = LocaleManagerCompat.getSystemLocales(androidContext())
-      val currentLocale =
-        if (applicationLocales.isEmpty) {
-          systemLocales.get(0)
-        } else {
-          applicationLocales.get(0)
+    module {
+        single {
+            androidContext().assets
         }
-      currentLocale ?: Locale.getDefault()
+
+        single {
+            val applicationLocales = LocaleManagerCompat.getApplicationLocales(androidContext())
+            val systemLocales = LocaleManagerCompat.getSystemLocales(androidContext())
+            val currentLocale =
+                if (applicationLocales.isEmpty) {
+                    systemLocales.get(0)
+                } else {
+                    applicationLocales.get(0)
+                }
+            currentLocale ?: Locale.getDefault()
+        }
     }
-  }

@@ -22,13 +22,13 @@ import com.eygraber.uri.Uri
  * Datasource tp deal with URIs
  */
 interface UriDataSource {
-  /**
-   * Forge an URI for the intent with single query parameter
-   */
-  fun prepareUri(
-    scheme: String,
-    authority: String,
-    queryParameterKey: String,
-    queryParameterValue: String
-  ): Uri
+    /**
+     * Forge an URI for the intent with single query parameter
+     */
+    fun prepareUri(
+        scheme: String,
+        authority: String,
+        queryParameterKey: String,
+        queryParameterValue: String
+    ): Uri
 }

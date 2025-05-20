@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ import okio.BufferedSource
  * Datasource for accessing app's assets
  */
 interface AssetsDataSource {
-  /**
-   * Load file from assets
-   *
-   * @param fileName Name of the asset file. It should exist in the assets
-   */
-  fun loadFile(fileName: String): BufferedSource
+    /**
+     * Load file from assets
+     *
+     * @param fileName Name of the asset file. It should exist in the assets
+     */
+    fun loadFile(fileName: String): BufferedSource
 }

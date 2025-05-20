@@ -30,24 +30,23 @@ import kotlinx.datetime.Clock
 const val WORKER_ARG_LOCATION_AVAILABLE = "isLocationAvailable"
 
 class RatesRefreshWorker(
-  private val refreshExchangeRates: ForceRefreshExchangeRates,
-  private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
-  appContext: Context,
-  params: WorkerParameters
-) :
-  CoroutineWorker(appContext, params) {
-  override suspend fun doWork(): Result = try {
-    val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
+    private val refreshExchangeRates: ForceRefreshExchangeRates,
+    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
+    appContext: Context,
+    params: WorkerParameters
+) : CoroutineWorker(appContext, params) {
+    override suspend fun doWork(): Result = try {
+        val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
 
-    if (isLocationAvailable) {
-      refreshExchangeRates.execute(Clock.System.now())
-    } else {
-      refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
+        if (isLocationAvailable) {
+            refreshExchangeRates.execute(Clock.System.now())
+        } else {
+            refreshExchangeRatesForDefaultCity.execute(Clock.System.now())
+        }
+        CurrencyWidget().updateAll(applicationContext)
+        Result.success()
+    } catch (e: CurrencyRatesLoadFailedException) {
+        Napier.e("Background refresh failed", e)
+        Result.failure()
     }
-    CurrencyWidget().updateAll(applicationContext)
-    Result.success()
-  } catch (e: CurrencyRatesLoadFailedException) {
-    Napier.e("Background refresh failed", e)
-    Result.failure()
-  }
 }

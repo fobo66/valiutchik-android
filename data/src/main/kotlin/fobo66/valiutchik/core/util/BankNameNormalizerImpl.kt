@@ -23,29 +23,29 @@ private const val OPEN_TYPOGRAPHIC_QUOTE = '«'
 private const val CLOSING_TYPOGRAPHIC_QUOTE = '»'
 
 class BankNameNormalizerImpl : BankNameNormalizer {
-  private val quotes by lazy(NONE) {
-    charArrayOf(QUOTE, OPEN_TYPOGRAPHIC_QUOTE, CLOSING_TYPOGRAPHIC_QUOTE)
-  }
-
-  override fun normalize(bankName: String): String {
-    val startTypographicalQuotePosition = bankName.indexOfFirst { it == OPEN_TYPOGRAPHIC_QUOTE }
-    val startQuotePosition = bankName.indexOfFirst { it == QUOTE }
-
-    if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {
-      return bankName
+    private val quotes by lazy(NONE) {
+        charArrayOf(QUOTE, OPEN_TYPOGRAPHIC_QUOTE, CLOSING_TYPOGRAPHIC_QUOTE)
     }
 
-    val canonicalBankName =
-      if (startTypographicalQuotePosition == -1 ||
-        (startQuotePosition in 1 until startTypographicalQuotePosition)
-      ) {
-        val endQuotePosition = bankName.indexOf(QUOTE, startQuotePosition + 1)
-        bankName.substring(startQuotePosition + 1, endQuotePosition)
-      } else {
-        val endQuotePosition = bankName.indexOfFirst { it == CLOSING_TYPOGRAPHIC_QUOTE }
-        bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
-      }
+    override fun normalize(bankName: String): String {
+        val startTypographicalQuotePosition = bankName.indexOfFirst { it == OPEN_TYPOGRAPHIC_QUOTE }
+        val startQuotePosition = bankName.indexOfFirst { it == QUOTE }
 
-    return canonicalBankName.filterNot { quotes.contains(it) }
-  }
+        if (startQuotePosition == -1 && startTypographicalQuotePosition == -1) {
+            return bankName
+        }
+
+        val canonicalBankName =
+            if (startTypographicalQuotePosition == -1 ||
+                (startQuotePosition in 1 until startTypographicalQuotePosition)
+            ) {
+                val endQuotePosition = bankName.indexOf(QUOTE, startQuotePosition + 1)
+                bankName.substring(startQuotePosition + 1, endQuotePosition)
+            } else {
+                val endQuotePosition = bankName.indexOfFirst { it == CLOSING_TYPOGRAPHIC_QUOTE }
+                bankName.substring(startTypographicalQuotePosition + 1, endQuotePosition)
+            }
+
+        return canonicalBankName.filterNot { quotes.contains(it) }
+    }
 }

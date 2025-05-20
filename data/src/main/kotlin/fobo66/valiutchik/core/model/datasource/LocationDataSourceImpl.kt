@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,41 +31,42 @@ import kotlinx.coroutines.withContext
 private const val LOCATION_FIX_TIME_DURATION_HOURS = 3
 
 class LocationDataSourceImpl(
-  private val context: Context,
-  private val ioDispatcher: CoroutineDispatcher
+    private val context: Context,
+    private val ioDispatcher: CoroutineDispatcher
 ) : LocationDataSource {
 
-  private val noLocation by lazy {
-    Location(0.0, 0.0)
-  }
-
-  private val locationFixTimeMaximum: Long by lazy {
-    LOCATION_FIX_TIME_DURATION_HOURS.hours.inWholeNanoseconds
-  }
-
-  @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-  override suspend fun resolveLocation(): Location {
-    val locationManager = context.getSystemService<LocationManager>() ?: return noLocation
-
-    return if (LocationManagerCompat.isLocationEnabled(locationManager)) {
-      var location: android.location.Location? = null
-
-      withContext(ioDispatcher) {
-        location = locationManager.getProviders(true)
-          .asSequence()
-          .map { locationManager.getLastKnownLocation(it) }
-          .filterNotNull()
-          .filter {
-            SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <= locationFixTimeMaximum
-          }
-          .maxByOrNull { it.elapsedRealtimeNanos }
-      }
-
-      location?.let {
-        Location(it.latitude, it.longitude)
-      } ?: noLocation
-    } else {
-      noLocation
+    private val noLocation by lazy {
+        Location(0.0, 0.0)
     }
-  }
+
+    private val locationFixTimeMaximum: Long by lazy {
+        LOCATION_FIX_TIME_DURATION_HOURS.hours.inWholeNanoseconds
+    }
+
+    @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+    override suspend fun resolveLocation(): Location {
+        val locationManager = context.getSystemService<LocationManager>() ?: return noLocation
+
+        return if (LocationManagerCompat.isLocationEnabled(locationManager)) {
+            var location: android.location.Location? = null
+
+            withContext(ioDispatcher) {
+                location = locationManager.getProviders(true)
+                    .asSequence()
+                    .map { locationManager.getLastKnownLocation(it) }
+                    .filterNotNull()
+                    .filter {
+                        SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <=
+                            locationFixTimeMaximum
+                    }
+                    .maxByOrNull { it.elapsedRealtimeNanos }
+            }
+
+            location?.let {
+                Location(it.latitude, it.longitude)
+            } ?: noLocation
+        } else {
+            noLocation
+        }
+    }
 }

@@ -19,5 +19,5 @@ package dev.fobo66.core.data.testing.fake
 import fobo66.valiutchik.core.util.BankNameNormalizer
 
 class FakeBankNameNormalizer : BankNameNormalizer {
-  override fun normalize(bankName: String): String = bankName
+    override fun normalize(bankName: String): String = bankName
 }
