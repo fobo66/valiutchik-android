@@ -19,25 +19,27 @@ package fobo66.valiutchik.core.model.datasource
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import dev.fobo66.core.data.testing.fake.FakeBankNameNormalizer
-import org.junit.Test
+import dev.fobo66.core.data.testing.fake.FakeBankNameTransliterator
 import java.util.Locale
+import org.junit.Test
 
 @SmallTest
 class FormattingDataSourceImplTest {
-  private val locale = Locale.US
-  private val bankNameNormalizer = FakeBankNameNormalizer()
-  private val formattingDataSource: FormattingDataSource =
-    FormattingDataSourceImpl(locale, bankNameNormalizer)
+    private val locale = Locale.US
+    private val bankNameNormalizer = FakeBankNameNormalizer()
+    private val bankNameTransliterator = FakeBankNameTransliterator()
+    private val formattingDataSource: FormattingDataSource =
+        FormattingDataSourceImpl(locale, bankNameNormalizer, bankNameTransliterator)
 
-  @Test
-  fun formatCurrency() {
-    val rate = formattingDataSource.formatCurrencyValue(1.23)
-    assertThat(rate).isEqualTo("BYN 1.23")
-  }
+    @Test
+    fun formatCurrency() {
+        val rate = formattingDataSource.formatCurrencyValue(1.23)
+        assertThat(rate).isEqualTo("BYN 1.23")
+    }
 
-  @Test
-  fun formatLongCurrency() {
-    val rate = formattingDataSource.formatCurrencyValue(1.234567890)
-    assertThat(rate).isEqualTo("BYN 1.23")
-  }
+    @Test
+    fun formatLongCurrency() {
+        val rate = formattingDataSource.formatCurrencyValue(1.234567890)
+        assertThat(rate).isEqualTo("BYN 1.23")
+    }
 }
