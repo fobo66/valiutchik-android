@@ -31,14 +31,15 @@ class BankNameTransliteratorImpl : BankNameTransliterator {
      */
     override fun transliterate(bankName: String, languageCode: String): String =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (languageCode == LANG_RU) {
+                return bankName
+            }
             val transliterator = when (languageCode) {
                 LANG_BELARUSIAN -> Transliterator.createFromRules(
                     BELARUSIAN_ID,
                     BELARUSIAN_RULES,
                     Transliterator.FORWARD
                 )
-
-                LANG_RU -> return bankName
                 else -> Transliterator.getInstance(CYRILLIC_LATIN)
             }
             transliterator.transliterate(bankName)
