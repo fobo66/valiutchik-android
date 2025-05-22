@@ -63,7 +63,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun passThrough() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.of("ru"), bankNameNormalizer)
+            FormattingDataSourceImpl(Locale.forLanguageTag(LANG_RU), bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo(BANK_NAME)
     }
@@ -71,7 +71,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun transliterateToBelarusianLocale() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.of("be"), bankNameNormalizer)
+            FormattingDataSourceImpl(Locale.forLanguageTag(LANG_BELARUSIAN), bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo("Прыорбанк")
     }
