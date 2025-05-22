@@ -54,8 +54,6 @@ import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.BankNameNormalizerImpl
-import fobo66.valiutchik.core.util.BankNameTransliterator
-import fobo66.valiutchik.core.util.BankNameTransliteratorImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
@@ -81,7 +79,7 @@ val dataSourcesModule =
         }
 
         single<FormattingDataSource> {
-            FormattingDataSourceImpl(get(), get(), get())
+            FormattingDataSourceImpl(get(), get())
         }
 
         single<JsonDataSource> {
@@ -106,10 +104,6 @@ val dataSourcesModule =
 
         single<BankNameNormalizer> {
             BankNameNormalizerImpl()
-        }
-
-        single<BankNameTransliterator> {
-            BankNameTransliteratorImpl()
         }
     }
 
