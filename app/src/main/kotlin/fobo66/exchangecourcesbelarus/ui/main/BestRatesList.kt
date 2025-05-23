@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -137,7 +138,7 @@ fun BestRatesGrid(
     ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BestCurrencyRateCard(
     currencyName: String,
@@ -164,7 +165,7 @@ fun BestCurrencyRateCard(
         )
         Text(
             text = currencyValue,
-            style = MaterialTheme.typography.displaySmall,
+            style = MaterialTheme.typography.displayMediumEmphasized,
             modifier =
             Modifier
                 .padding(vertical = 16.dp, horizontal = 24.dp)
