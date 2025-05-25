@@ -41,6 +41,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -65,7 +67,7 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BestRatesGrid(
     bestCurrencyRates: ImmutableList<BestCurrencyRate>,
@@ -94,7 +96,19 @@ fun BestRatesGrid(
             if (it.isEmpty()) {
                 NoRatesIndicator()
             } else {
-                PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+                val state = rememberPullToRefreshState()
+                PullToRefreshBox(
+                    state = state,
+                    isRefreshing = isRefreshing,
+                    onRefresh = onRefresh,
+                    indicator = {
+                        PullToRefreshDefaults.LoadingIndicator(
+                            state = state,
+                            isRefreshing = isRefreshing,
+                            modifier = Modifier.align(Alignment.TopCenter)
+                        )
+                    }
+                ) {
                     val density = LocalDensity.current
                     LazyVerticalGrid(
                         columns = GridCells.Adaptive(minSize = 220.dp),
