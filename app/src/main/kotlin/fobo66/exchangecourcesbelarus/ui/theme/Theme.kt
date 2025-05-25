@@ -18,10 +18,12 @@ package fobo66.exchangecourcesbelarus.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -101,6 +103,7 @@ private val WidgetColors =
         dark = DarkColors
     )
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ValiutchikTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
@@ -120,10 +123,10 @@ fun ValiutchikTheme(
             }
 
             isDarkTheme -> DarkColors
-            else -> LightColors
+            else -> expressiveLightColorScheme()
         }
 
-    MaterialTheme(
+    MaterialExpressiveTheme(
         colorScheme = colorScheme,
         typography = Typography,
         shapes = Shapes,
@@ -132,12 +135,11 @@ fun ValiutchikTheme(
 }
 
 @Composable
-@Suppress("ktlint:standard:function-type-modifier-spacing") // bug with ktlint
 fun ValiutchikWidgetTheme(
     isDynamicColor: Boolean = true,
     content:
-    @GlanceComposable @Composable
-    () -> Unit
+    @GlanceComposable
+    @Composable () -> Unit
 ) {
     val dynamicColor = isDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     GlanceTheme(
