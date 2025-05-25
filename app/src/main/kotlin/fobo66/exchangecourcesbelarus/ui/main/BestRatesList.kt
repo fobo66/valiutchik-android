@@ -109,21 +109,11 @@ fun BestRatesGrid(
                         )
                     }
                 ) {
-                    val density = LocalDensity.current
                     LazyVerticalGrid(
                         columns = GridCells.Adaptive(minSize = 220.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        contentPadding =
-                        PaddingValues(
-                            top = 8.dp,
-                            start = 8.dp,
-                            end = 8.dp,
-                            bottom =
-                            with(density) {
-                                WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
-                            }
-                        ),
+                        contentPadding = resolveRatesGridPadding(),
                         modifier = Modifier.testTag(TAG_RATES)
                     ) {
                         items(
@@ -150,6 +140,22 @@ fun BestRatesGrid(
         }
     }
     ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
+}
+
+@Composable
+private fun resolveRatesGridPadding(): PaddingValues {
+    val density = LocalDensity.current
+
+    return with(density) {
+        PaddingValues(
+            top = 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = with(density) {
+                WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
+            }
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
