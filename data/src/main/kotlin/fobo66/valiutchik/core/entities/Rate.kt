@@ -14,24 +14,25 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.db
+package fobo66.valiutchik.core.entities
 
-import androidx.room.AutoMigration
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.Rate
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Database(
-    entities = [BestCourse::class, Rate::class],
-    version = 4,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3),
-        AutoMigration(from = 3, to = 4)
-    ]
+@Entity(tableName = "rates")
+data class Rate(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    val date: String,
+    val bankName: String,
+    val usdBuy: Double = 0.0,
+    val usdSell: Double = 0.0,
+    val eurBuy: Double = 0.0,
+    val eurSell: Double = 0.0,
+    val rubBuy: Double = 0.0,
+    val rubSell: Double = 0.0,
+    val plnBuy: Double = 0.0,
+    val plnSell: Double = 0.0,
+    val uahBuy: Double = 0.0,
+    val uahSell: Double = 0.0
 )
-abstract class CurrencyRatesDatabase : RoomDatabase() {
-    abstract fun currencyRatesDao(): CurrencyRatesDao
-    abstract fun ratesDao(): RatesDao
-}
