@@ -21,5 +21,5 @@ import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val dispatchersModule = module {
-  single(qualifier(Dispatcher.BACKGROUND)) { Dispatchers.Default }
+    single(qualifier(Dispatcher.BACKGROUND)) { Dispatchers.Default }
 }

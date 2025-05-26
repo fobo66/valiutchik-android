@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,30 +28,30 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PreferencesViewModel(
-  loadDefaultCityPreference: LoadDefaultCityPreference,
-  loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
-  private val updateDefaultCityPreference: UpdateDefaultCityPreference,
-  private val updateUpdateIntervalPreference: UpdateUpdateIntervalPreference
+    loadDefaultCityPreference: LoadDefaultCityPreference,
+    loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
+    private val updateDefaultCityPreference: UpdateDefaultCityPreference,
+    private val updateUpdateIntervalPreference: UpdateUpdateIntervalPreference
 ) : ViewModel() {
 
-  val defaultCityPreference = loadDefaultCityPreference.execute()
-    .stateIn(
-      viewModelScope,
-      started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-      initialValue = ""
-    )
-  val updateIntervalPreference = loadUpdateIntervalPreference.execute()
-    .stateIn(
-      viewModelScope,
-      started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-      initialValue = 0.0f
-    )
+    val defaultCityPreference = loadDefaultCityPreference.execute()
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            initialValue = ""
+        )
+    val updateIntervalPreference = loadUpdateIntervalPreference.execute()
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            initialValue = 0.0f
+        )
 
-  fun updateDefaultCity(newDefaultCity: String) = viewModelScope.launch {
-    updateDefaultCityPreference.execute(newDefaultCity)
-  }
+    fun updateDefaultCity(newDefaultCity: String) = viewModelScope.launch {
+        updateDefaultCityPreference.execute(newDefaultCity)
+    }
 
-  fun updateUpdateInterval(newUpdateInterval: Float) = viewModelScope.launch {
-    updateUpdateIntervalPreference.execute(newUpdateInterval)
-  }
+    fun updateUpdateInterval(newUpdateInterval: Float) = viewModelScope.launch {
+        updateUpdateIntervalPreference.execute(newUpdateInterval)
+    }
 }

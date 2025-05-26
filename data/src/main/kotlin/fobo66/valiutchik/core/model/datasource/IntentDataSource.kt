@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import android.content.ComponentName
 import android.content.Intent
 import com.eygraber.uri.Uri
 
@@ -27,12 +26,15 @@ interface IntentDataSource {
   /**
    * Create new Intent
    */
-  fun createIntent(uri: Uri, action: String = Intent.ACTION_VIEW): Intent
+  fun createIntentUri(
+    uri: Uri,
+    action: String = Intent.ACTION_VIEW,
+  ): String
 
   /**
    * Check if the given Intent can be resolved by the system
    *
    * @return null if there's no handler
    */
-  fun resolveIntent(intent: Intent): ComponentName?
+  fun checkIntentUri(uri: String): Boolean
 }

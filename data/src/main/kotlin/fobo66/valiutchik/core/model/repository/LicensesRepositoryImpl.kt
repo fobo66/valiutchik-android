@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,13 +22,15 @@ import fobo66.valiutchik.core.model.datasource.JsonDataSource
 import java.nio.charset.Charset
 
 class LicensesRepositoryImpl(
-  private val assetsDataSource: AssetsDataSource,
-  private val jsonDataSource: JsonDataSource
+    private val assetsDataSource: AssetsDataSource,
+    private val jsonDataSource: JsonDataSource
 ) : LicensesRepository {
 
-  override fun loadLicenses(): List<OpenSourceLicensesItem> {
-    val licensesFile =
-      assetsDataSource.loadFile("open_source_licenses.json").readString(Charset.defaultCharset())
-    return jsonDataSource.decodeLicenses(licensesFile) ?: emptyList()
-  }
+    override fun loadLicenses(): List<OpenSourceLicensesItem> {
+        val licensesFile =
+            assetsDataSource.loadFile(
+                "open_source_licenses.json"
+            ).readString(Charset.defaultCharset())
+        return jsonDataSource.decodeLicenses(licensesFile) ?: emptyList()
+    }
 }

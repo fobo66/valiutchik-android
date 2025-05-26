@@ -29,33 +29,34 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class CurrencyRatesParserImplBenchmark {
-  @get:Rule
-  val benchmarkRule = BenchmarkRule()
+    @get:Rule
+    val benchmarkRule = BenchmarkRule()
 
-  private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
-  private val kotlinxSerializationParser = fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl()
+    private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
+    private val kotlinxSerializationParser =
+        fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl()
 
-  @Test
-  fun customParser() {
-    benchmarkRule.measureRepeated {
-      val myfinFeedFileStream =
-        InstrumentationRegistry
-          .getInstrumentation()
-          .context.assets
-          .open("myfinFeed.xml")
-      parser.parse(myfinFeedFileStream)
+    @Test
+    fun customParser() {
+        benchmarkRule.measureRepeated {
+            val myfinFeedFileStream =
+                InstrumentationRegistry
+                    .getInstrumentation()
+                    .context.assets
+                    .open("myfinFeed.xml")
+            parser.parse(myfinFeedFileStream)
+        }
     }
-  }
 
-  @Test
-  fun kotlinxSerialization() {
-    benchmarkRule.measureRepeated {
-      val myfinFeedFileStream =
-        InstrumentationRegistry
-          .getInstrumentation()
-          .context.assets
-          .open("myfinFeed.xml")
-      kotlinxSerializationParser.parse(myfinFeedFileStream)
+    @Test
+    fun kotlinxSerialization() {
+        benchmarkRule.measureRepeated {
+            val myfinFeedFileStream =
+                InstrumentationRegistry
+                    .getInstrumentation()
+                    .context.assets
+                    .open("myfinFeed.xml")
+            kotlinxSerializationParser.parse(myfinFeedFileStream)
+        }
     }
-  }
 }

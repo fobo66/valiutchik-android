@@ -16,17 +16,19 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import com.eygraber.uri.Uri
 import com.eygraber.uri.toAndroidUri
 
 class IntentDataSourceImpl(
-  private val context: Context
+  private val context: Context,
 ) : IntentDataSource {
-  override fun createIntent(uri: Uri, action: String): Intent = Intent(action, uri.toAndroidUri())
+  override fun createIntentUri(
+    uri: Uri,
+    action: String,
+  ): String = Intent(action, uri.toAndroidUri()).toUri(0)
 
-  override fun resolveIntent(intent: Intent): ComponentName? =
-    intent.resolveActivity(context.packageManager)
+  override fun checkIntentUri(uri: String): Boolean =
+    Intent.parseUri(uri, 0).resolveActivity(context.packageManager) != null
 }

@@ -16,12 +16,13 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AppBarRow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,105 +41,117 @@ import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrimaryTopBar(
-  title: String,
-  onAboutClick: () -> Unit,
-  onSettingsClick: () -> Unit,
-  onRefreshClick: () -> Unit,
-  showRefresh: Boolean,
-  modifier: Modifier = Modifier,
-  settingsVisible: Boolean = true,
+    title: String,
+    onAboutClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    onRefreshClick: () -> Unit,
+    showRefresh: Boolean,
+    modifier: Modifier = Modifier,
+    settingsVisible: Boolean = true
 ) {
-  TopAppBar(
-    title = {
-      Text(
-        text = title,
-        modifier = Modifier.testTag(TAG_TITLE),
-      )
-    },
-    actions = {
-      IconButton(onClick = onAboutClick) {
-        Icon(
-          Icons.Default.Info,
-          contentDescription =
-            stringResource(
-              id = R.string.action_about,
-            ),
-        )
-      }
-      this.AnimatedVisibility(showRefresh) {
-        IconButton(onClick = onRefreshClick) {
-          Icon(
-            Icons.Default.Refresh,
-            contentDescription =
-              stringResource(
-                id = R.string.widget_action_refresh,
-              ),
-          )
-        }
-      }
-      this.AnimatedVisibility(settingsVisible) {
-        IconButton(onClick = onSettingsClick) {
-          Icon(
-            Icons.Default.Settings,
-            contentDescription =
-              stringResource(
-                id = R.string.action_settings,
-              ),
-          )
-        }
-      }
-    },
-    modifier = modifier,
-  )
+    val context = LocalContext.current
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.testTag(TAG_TITLE)
+            )
+        },
+        actions = {
+            AppBarRow(
+                overflowIndicator = {
+                    IconButton(onClick = { it.show() }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert,
+                            contentDescription = "More"
+                        )
+                    }
+                }
+            ) {
+                clickableItem(
+                    onClick = onAboutClick,
+                    icon = {
+                        Icon(
+                            Icons.Default.Info,
+                            contentDescription = null
+                        )
+                    },
+                    label = context.getString(R.string.action_about)
+                )
+                if (showRefresh) {
+                    clickableItem(
+                        onClick = onRefreshClick,
+                        icon = {
+                            Icon(
+                                Icons.Default.Refresh,
+                                contentDescription = null
+
+                            )
+                        },
+                        label = context.getString(R.string.widget_action_refresh)
+                    )
+                }
+                if (settingsVisible) {
+                    clickableItem(
+                        onClick = onSettingsClick,
+                        icon = {
+                            Icon(
+                                Icons.Default.Settings,
+                                contentDescription = null
+                            )
+                        },
+                        label = context.getString(R.string.action_settings)
+                    )
+                }
+            }
+        },
+        modifier = modifier
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SecondaryTopBar(
-  title: String,
-  onBackClick: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  TopAppBar(
-    navigationIcon = {
-      IconButton(onClick = onBackClick) {
-        Icon(
-          Icons.AutoMirrored.Default.ArrowBack,
-          contentDescription = stringResource(R.string.topbar_description_back),
-        )
-      }
-    },
-    title = {
-      Text(
-        text = title,
-        modifier = Modifier.testTag(TAG_TITLE),
-      )
-    },
-    modifier = modifier,
-  )
+fun SecondaryTopBar(title: String, onBackClick: () -> Unit, modifier: Modifier = Modifier) {
+    TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    Icons.AutoMirrored.Default.ArrowBack,
+                    contentDescription = stringResource(R.string.topbar_description_back)
+                )
+            }
+        },
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.testTag(TAG_TITLE)
+            )
+        },
+        modifier = modifier
+    )
 }
 
 @Preview
 @Composable
 private fun PrimaryTopbarPreview() {
-  ValiutchikTheme {
-    PrimaryTopBar(
-      title = "Test",
-      showRefresh = true,
-      onSettingsClick = {},
-      onAboutClick = {},
-      onRefreshClick = {}
-    )
-  }
+    ValiutchikTheme {
+        PrimaryTopBar(
+            title = "Test",
+            showRefresh = true,
+            onSettingsClick = {},
+            onAboutClick = {},
+            onRefreshClick = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 private fun TertiaryTopbarPreview() {
-  ValiutchikTheme {
-    SecondaryTopBar(
-      title = "Test",
-      onBackClick = {},
-    )
-  }
+    ValiutchikTheme {
+        SecondaryTopBar(
+            title = "Test",
+            onBackClick = {}
+        )
+    }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import androidx.annotation.StringRes
  * for consumption on the presentation layer
  */
 data class BestCurrencyRate(
-  val id: Long,
-  val bank: String,
-  @StringRes val currencyNameRes: Int,
-  val currencyValue: String
+    val id: Long,
+    val bank: String,
+    @StringRes val currencyNameRes: Int,
+    val currencyValue: String
 )

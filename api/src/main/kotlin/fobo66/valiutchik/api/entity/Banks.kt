@@ -22,6 +22,4 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
 @Serializable
 @XmlSerialName(ROOT_TAG_NAME)
-data class Banks(
-  val banks: Set<Bank>,
-)
+data class Banks(val banks: Set<Bank>)

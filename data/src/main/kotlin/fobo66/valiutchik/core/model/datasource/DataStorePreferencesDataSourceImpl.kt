@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,34 +25,32 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-class DataStorePreferencesDataSourceImpl(
-  private val dataStore: DataStore<Preferences>
-) : PreferencesDataSource {
-  override suspend fun loadString(key: String, defaultValue: String): String {
-    return dataStore.data.first()[stringPreferencesKey(key)] ?: defaultValue
-  }
+class DataStorePreferencesDataSourceImpl(private val dataStore: DataStore<Preferences>) :
+    PreferencesDataSource {
+    override suspend fun loadString(key: String, defaultValue: String): String =
+        dataStore.data.first()[stringPreferencesKey(key)] ?: defaultValue
 
-  override fun observeString(key: String, defaultValue: String): Flow<String> {
-    return dataStore.data.map { it[stringPreferencesKey(key)] ?: defaultValue }
-  }
+    override fun observeString(key: String, defaultValue: String): Flow<String> =
+        dataStore.data.map {
+            it[stringPreferencesKey(key)] ?: defaultValue
+        }
 
-  override suspend fun saveString(key: String, value: String) {
-    dataStore.edit {
-      it[stringPreferencesKey(key)] = value
+    override suspend fun saveString(key: String, value: String) {
+        dataStore.edit {
+            it[stringPreferencesKey(key)] = value
+        }
     }
-  }
 
-  override suspend fun loadInt(key: String, defaultValue: Int): Int {
-    return dataStore.data.first()[intPreferencesKey(key)] ?: defaultValue
-  }
+    override suspend fun loadInt(key: String, defaultValue: Int): Int =
+        dataStore.data.first()[intPreferencesKey(key)] ?: defaultValue
 
-  override fun observeInt(key: String, defaultValue: Int): Flow<Int> {
-    return dataStore.data.map { it[intPreferencesKey(key)] ?: defaultValue }
-  }
-
-  override suspend fun saveInt(key: String, value: Int) {
-    dataStore.edit {
-      it[intPreferencesKey(key)] = value
+    override fun observeInt(key: String, defaultValue: Int): Flow<Int> = dataStore.data.map {
+        it[intPreferencesKey(key)] ?: defaultValue
     }
-  }
+
+    override suspend fun saveInt(key: String, value: Int) {
+        dataStore.edit {
+            it[intPreferencesKey(key)] = value
+        }
+    }
 }

@@ -17,10 +17,8 @@
 package fobo66.valiutchik.core.model.repository
 
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.core.fake.FakeIntentDataSource
-import fobo66.valiutchik.core.fake.FakeUriDataSource
-import org.junit.After
+import dev.fobo66.core.data.testing.fake.FakeIntentDataSource
+import dev.fobo66.core.data.testing.fake.FakeUriDataSource
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -30,18 +28,13 @@ import org.junit.Test
 class MapRepositoryImplTest {
   private val uriDataSource = FakeUriDataSource()
   private val intentDataSource =
-    FakeIntentDataSource(InstrumentationRegistry.getInstrumentation().componentName)
+    FakeIntentDataSource()
 
   private lateinit var mapRepository: MapRepository
 
   @Before
   fun setUp() {
     mapRepository = MapRepositoryImpl(uriDataSource, intentDataSource)
-  }
-
-  @After
-  fun tearDown() {
-    intentDataSource.canResolveIntent = true
   }
 
   @Test

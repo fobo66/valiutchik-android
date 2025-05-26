@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 
 class LogInitializer : Initializer<Antilog> {
-  override fun create(context: Context): Antilog {
-    val antilog = DebugAntilog()
-    Napier.base(antilog)
-    return antilog
-  }
+    override fun create(context: Context): Antilog {
+        val antilog = DebugAntilog()
+        Napier.base(antilog)
+        return antilog
+    }
 
-  override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

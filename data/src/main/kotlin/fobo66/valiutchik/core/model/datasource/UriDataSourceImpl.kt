@@ -19,14 +19,14 @@ package fobo66.valiutchik.core.model.datasource
 import com.eygraber.uri.Uri
 
 class UriDataSourceImpl : UriDataSource {
-  override fun prepareUri(
-    scheme: String,
-    authority: String,
-    queryParameterKey: String,
-    queryParameterValue: String
-  ): Uri = Uri.Builder()
-    .scheme(scheme)
-    .authority(authority)
-    .appendQueryParameter(queryParameterKey, queryParameterValue)
-    .build()
+    override fun prepareUri(
+        scheme: String,
+        authority: String,
+        queryParameterKey: String,
+        queryParameterValue: String
+    ): Uri = Uri.Builder()
+        .scheme(scheme)
+        .authority(authority)
+        .appendQueryParameter(queryParameterKey, queryParameterValue)
+        .build()
 }

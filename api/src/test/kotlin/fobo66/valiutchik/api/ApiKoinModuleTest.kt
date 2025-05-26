@@ -27,39 +27,39 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
 class ApiKoinModuleTest {
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check dispatchers module`() {
-    dispatchersModule.verify()
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check dispatchers module`() {
+        dispatchersModule.verify()
+    }
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check network module`() {
-    networkModule.verify(
-      extraTypes =
-        listOf(
-          HttpClientEngine::class,
-          HttpClientConfig::class,
-        ),
-    )
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check network module`() {
+        networkModule.verify(
+            extraTypes =
+            listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
+    }
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check credentials module`() {
-    credentialsModule.verify()
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check credentials module`() {
+        credentialsModule.verify()
+    }
 
-  @OptIn(KoinExperimentalAPI::class)
-  @Test
-  fun `check api module`() {
-    apiModule.verify(
-      extraTypes =
-        listOf(
-          HttpClientEngine::class,
-          HttpClientConfig::class,
-        ),
-    )
-  }
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check api module`() {
+        apiModule.verify(
+            extraTypes =
+            listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
+    }
 }

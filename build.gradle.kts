@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,34 +15,35 @@
  */
 
 plugins {
-  alias(libs.plugins.android.app) apply false
-  alias(libs.plugins.android.library) apply false
-  alias(libs.plugins.android.test) apply false
-  alias(libs.plugins.kotlin.android) apply false
-  alias(libs.plugins.kotlin.serialization) apply false
-  alias(libs.plugins.compose) apply false
-  alias(libs.plugins.licenses) apply false
-  alias(libs.plugins.ksp) apply false
-  alias(libs.plugins.benchmark) apply false
-  alias(libs.plugins.junit) apply false
-  alias(libs.plugins.detekt) apply false
-  alias(libs.plugins.room) apply false
-  alias(libs.plugins.baseline.profile) apply false
+    alias(libs.plugins.android.app) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.compose) apply false
+    alias(libs.plugins.licenses) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.benchmark) apply false
+    alias(libs.plugins.junit) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.kotlinter) apply false
+    alias(libs.plugins.room) apply false
+    alias(libs.plugins.baseline.profile) apply false
 }
 
 tasks.register<Delete>("clean") {
-  delete(rootProject.layout.buildDirectory)
+    delete(rootProject.layout.buildDirectory)
 }
 
 subprojects {
-  tasks {
-    withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-      // Target version of the generated JVM bytecode. It is used for type resolution.
-      jvmTarget = "17"
+    tasks {
+        withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+            // Target version of the generated JVM bytecode. It is used for type resolution.
+            jvmTarget = "17"
+        }
+        withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+            // Target version of the generated JVM bytecode. It is used for type resolution.
+            jvmTarget = "17"
+        }
     }
-    withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-      // Target version of the generated JVM bytecode. It is used for type resolution.
-      jvmTarget = "17"
-    }
-  }
 }

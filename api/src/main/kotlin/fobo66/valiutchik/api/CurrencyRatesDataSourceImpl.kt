@@ -24,32 +24,32 @@ import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
 import io.ktor.http.path
+import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 const val BASE_URL = "https://admin.myfin.by/"
 
 class CurrencyRatesDataSourceImpl(
-  private val client: HttpClient,
-  private val username: String,
-  private val password: String,
-  private val ioDispatcher: CoroutineDispatcher,
+    private val client: HttpClient,
+    private val username: String,
+    private val password: String,
+    private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
-  override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
-    withContext(ioDispatcher) {
-      try {
-        val response =
-          client.get(BASE_URL) {
-            url {
-              path("outer", "authXml", cityIndex)
-            }
-            basicAuth(username, password)
-          }
+    override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
+        withContext(ioDispatcher) {
+            try {
+                val response =
+                    client.get(BASE_URL) {
+                        url {
+                            path("outer", "authXml", cityIndex)
+                        }
+                        basicAuth(username, password)
+                    }
 
-        response.body<Banks>().banks
-      } catch (e: ResponseException) {
-        throw IOException(e)
-      }
-    }
+                response.body<Banks>().banks
+            } catch (e: ResponseException) {
+                throw IOException(e)
+            }
+        }
 }
