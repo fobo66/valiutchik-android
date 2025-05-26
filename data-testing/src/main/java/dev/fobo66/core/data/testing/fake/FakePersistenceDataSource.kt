@@ -17,6 +17,7 @@
 package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -26,6 +27,10 @@ class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
 
     override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
+        isSaved = true
+    }
+
+    override suspend fun saveRates(rates: List<Rate>) {
         isSaved = true
     }
 

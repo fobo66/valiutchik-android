@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.Rate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
@@ -28,6 +29,7 @@ interface PersistenceDataSource {
      * Save entries to the database
      */
     suspend fun saveBestCourses(bestCourses: List<BestCourse>)
+    suspend fun saveRates(rates: List<Rate>)
 
     /**
      * Read entries from the database

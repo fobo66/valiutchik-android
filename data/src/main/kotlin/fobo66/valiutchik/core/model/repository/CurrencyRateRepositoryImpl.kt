@@ -24,6 +24,7 @@ import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.entities.Rate
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -34,6 +35,8 @@ import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format.char
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
 
@@ -116,6 +119,16 @@ class CurrencyRateRepositoryImpl(
         )
     }
 
+    private val apiDateFormat by lazy(mode = LazyThreadSafetyMode.NONE) {
+        LocalDate.Format {
+            dayOfMonth()
+            char('.')
+            monthNumber()
+            char('.')
+            year()
+        }
+    }
+
     override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
         val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
         val currencies =
@@ -124,6 +137,26 @@ class CurrencyRateRepositoryImpl(
             } catch (e: IOException) {
                 throw CurrencyRatesLoadFailedException(e)
             }
+
+        persistenceDataSource.saveRates(
+            currencies.map {
+                Rate(
+                    id = 0L,
+                    date = LocalDate.parse(it.date, apiDateFormat).toString(),
+                    bankName = it.bankName,
+                    usdBuy = it.usdBuy.toDoubleOrNull() ?: 0.0,
+                    usdSell = it.usdSell.toDoubleOrNull() ?: 0.0,
+                    eurBuy = it.eurBuy.toDoubleOrNull() ?: 0.0,
+                    eurSell = it.eurSell.toDoubleOrNull() ?: 0.0,
+                    rubBuy = it.rubBuy.toDoubleOrNull() ?: 0.0,
+                    rubSell = it.rubSell.toDoubleOrNull() ?: 0.0,
+                    plnBuy = it.plnBuy.toDoubleOrNull() ?: 0.0,
+                    plnSell = it.plnSell.toDoubleOrNull() ?: 0.0,
+                    uahBuy = it.uahBuy.toDoubleOrNull() ?: 0.0,
+                    uahSell = it.uahSell.toDoubleOrNull() ?: 0.0
+                )
+            }
+        )
 
         val bestCourses = findBestCourses(currencies, now.toString())
 
