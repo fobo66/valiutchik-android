@@ -19,8 +19,10 @@ package fobo66.valiutchik.core.db
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.BestRate
 import fobo66.valiutchik.core.entities.Rate
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RatesDao {
@@ -31,19 +33,18 @@ interface RatesDao {
     suspend fun resolveBestEurBuyRate(): BestRate
 
     @Query(
-        "SELECT CASE WHEN :rate = 'usdBuy' THEN max(usdBuy) " +
-            "WHEN :rate = 'usdSell' THEN min(usdSell) " +
-            "WHEN :rate = 'eurBuy' THEN max(eurBuy) " +
-            "WHEN :rate = 'eurSell' THEN min(eurSell) " +
-            "WHEN :rate = 'rubBuy' THEN max(rubBuy) " +
-            "WHEN :rate = 'rubSell' THEN min(rubSell) " +
-            "WHEN :rate = 'plnBuy' THEN max(plnBuy) " +
-            "WHEN :rate = 'plnSell' THEN min(plnSell) " +
-            "WHEN :rate = 'uahBuy' THEN max(uahBuy) " +
-            "WHEN :rate = 'uahSell' THEN min(uahSell) " +
-            "END AS bestRate, bankName FROM rates " +
-            "WHERE bestRate != 0.0 " +
-            "ORDER by date(date) DESC"
+        """
+    SELECT id, bankName as bank, max(usdBuy) as currency_value, 'DOLLAR' as currency_name, datetime(date) as timestamp, 1 as is_buy FROM rates WHERE timestamp >= date('now')
+    UNION ALL SELECT id, bankName as bank, min(usdSell) as currency_value, 'DOLLAR' as currency_name, datetime(date) as timestamp, 0 as is_buy FROM rates WHERE timestamp >= date('now') AND usdSell != 0.0
+    UNION ALL SELECT id, bankName as bank, max(eurBuy) as currency_value, 'EUR' as currency_name, datetime(date) as timestamp, 1 as is_buy FROM rates WHERE timestamp >= date('now')
+    UNION ALL SELECT id, bankName as bank, min(eurSell) as currency_value, 'EUR' as currency_name, datetime(date) as timestamp, 0 as is_buy FROM rates WHERE timestamp >= date('now') AND eurSell != 0.0
+    UNION ALL SELECT id, bankName as bank, max(rubBuy) as currency_value, 'RUB' as currency_name, datetime(date) as timestamp, 1 as is_buy FROM rates WHERE timestamp >= date('now')
+    UNION ALL SELECT id, bankName as bank, min(rubSell) as currency_value, 'RUB' as currency_name, datetime(date) as timestamp, 0 as is_buy FROM rates  WHERE timestamp >= date('now') AND rubSell != 0.0
+    UNION ALL SELECT id, bankName as bank, max(plnBuy) as currency_value, 'PLN' as currency_name, datetime(date) as timestamp, 1 as is_buy FROM rates WHERE timestamp >= date('now')
+    UNION ALL SELECT id, bankName as bank, min(plnSell) as currency_value, 'PLN' as currency_name, datetime(date) as timestamp, 0 as is_buy FROM rates WHERE timestamp >= date('now')  AND plnSell != 0.0
+    UNION ALL SELECT id, bankName as bank, max(uahBuy) as currency_value, 'UAH' as currency_name, datetime(date) as timestamp, 1 as is_buy FROM rates WHERE timestamp >= date('now')
+    UNION ALL SELECT id, bankName as bank, min(uahSell) as currency_value, 'UAH' as currency_name, datetime(date) as timestamp, 0 as is_buy FROM rates WHERE timestamp >= date('now') AND uahSell != 0.0
+    ORDER BY currency_name"""
     )
-    suspend fun resolveBestRate(rate: String): BestRate
+    fun resolveBestRates(): Flow<List<BestCourse>>
 }
