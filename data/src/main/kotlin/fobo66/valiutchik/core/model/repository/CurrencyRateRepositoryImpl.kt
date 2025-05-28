@@ -143,7 +143,7 @@ class CurrencyRateRepositoryImpl(
                 Rate(
                     id = 0L,
                     date = LocalDate.parse(it.date, apiDateFormat).toString(),
-                    bankName = it.bankName,
+                    bankName = formattingDataSource.formatBankName(it.bankName),
                     usdBuy = it.usdBuy.toDoubleOrNull() ?: 0.0,
                     usdSell = it.usdSell.toDoubleOrNull() ?: 0.0,
                     eurBuy = it.eurBuy.toDoubleOrNull() ?: 0.0,
