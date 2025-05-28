@@ -117,8 +117,7 @@ fun BestRatesGrid(
                         modifier = Modifier.testTag(TAG_RATES)
                     ) {
                         items(
-                            items = bestCurrencyRates,
-                            key = { item -> item.id }
+                            items = bestCurrencyRates
                         ) { item ->
                             BestCurrencyRateCard(
                                 currencyName = stringResource(id = item.currencyNameRes),
@@ -126,8 +125,7 @@ fun BestRatesGrid(
                                 bankName = item.bank,
                                 onClick = onBestRateClick,
                                 onLongClick = onBestRateLongClick,
-                                onShareClick = onShareClick,
-                                modifier = Modifier.animateItem()
+                                onShareClick = onShareClick
                             )
                         }
                     }
