@@ -34,5 +34,5 @@ class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
     }
 
     override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> =
-        database.currencyRatesDao().loadLatestBestCurrencyRates(latestTimestamp.toString())
+        database.ratesDao().resolveBestRates()
 }
