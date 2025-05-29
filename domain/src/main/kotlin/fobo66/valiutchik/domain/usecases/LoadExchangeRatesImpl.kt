@@ -21,7 +21,6 @@ import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -30,10 +29,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class LoadExchangeRatesImpl(
-    private val currencyRateRepository: CurrencyRateRepository,
-    private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
-) : LoadExchangeRates {
+class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
+    LoadExchangeRates {
     private val buyLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
         mutableScatterMapOf(
             CurrencyName.DOLLAR to R.string.currency_name_usd_buy,

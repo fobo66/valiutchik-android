@@ -19,29 +19,21 @@ package fobo66.valiutchik.core.model.repository
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.core.BUY_COURSE
-import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.Rate
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
-import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
-import fobo66.valiutchik.core.util.resolveCurrencySellRate
 import java.io.IOException
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
 
 class CurrencyRateRepositoryImpl(
-    private val bestCourseDataSource: BestCourseDataSource,
     private val persistenceDataSource: PersistenceDataSource,
     private val currencyRatesDataSource: CurrencyRatesDataSource,
     private val formattingDataSource: FormattingDataSource
@@ -129,7 +121,7 @@ class CurrencyRateRepositoryImpl(
         }
     }
 
-    override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
+    override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
         val currencies =
             try {
@@ -157,30 +149,10 @@ class CurrencyRateRepositoryImpl(
                 )
             }
         )
-
-        val bestCourses = findBestCourses(currencies, now.toString())
-
-        persistenceDataSource.saveBestCourses(bestCourses)
     }
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()
-
-    private fun findBestCourses(currencies: Set<Bank>, now: String): List<BestCourse> =
-        resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
-
-    private fun resolveBuyRates(currencies: Set<Bank>, now: String) = bestCourseDataSource
-        .findBestBuyCurrencies(currencies)
-        .map { (currencyKey, currency) ->
-            BestCourse(
-                0L,
-                formattingDataSource.formatBankName(currency.bankName),
-                currency.resolveCurrencyBuyRate(currencyKey).toDoubleOrNull() ?: 0.0,
-                currencyKey,
-                now,
-                BUY_COURSE
-            )
-        }
 
     override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(
         when (rate.currencyName) {
@@ -188,17 +160,4 @@ class CurrencyRateRepositoryImpl(
             else -> rate.currencyValue
         }
     )
-
-    private fun resolveSellRates(currencies: Set<Bank>, now: String) = bestCourseDataSource
-        .findBestSellCurrencies(currencies)
-        .map { (currencyKey, currency) ->
-            BestCourse(
-                0L,
-                formattingDataSource.formatBankName(currency.bankName),
-                currency.resolveCurrencySellRate(currencyKey).toDoubleOrNull() ?: 0.0,
-                currencyKey,
-                now,
-                SELL_COURSE
-            )
-        }
 }

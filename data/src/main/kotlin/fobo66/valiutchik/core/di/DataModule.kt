@@ -116,7 +116,7 @@ val repositoriesModule =
         }
 
         single<CurrencyRateRepository> {
-            CurrencyRateRepositoryImpl(get(), get(), get(), get())
+            CurrencyRateRepositoryImpl(get(), get(), get())
         }
 
         single<CurrencyRatesTimestampRepository> {
