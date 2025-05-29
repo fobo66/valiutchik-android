@@ -57,7 +57,7 @@ class CurrencyWidget :
     override suspend fun provideGlance(context: Context, id: GlanceId): Nothing {
         val ratesState =
             loadExchangeRates
-                .execute(Clock.System.now())
+                .execute()
                 .map { it.toImmutableList() }
 
         provideContent {
@@ -84,7 +84,7 @@ class CurrencyWidget :
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         val ratesState =
             loadExchangeRates
-                .execute(Clock.System.now())
+                .execute()
                 .map { it.toImmutableList() }
 
         provideContent {

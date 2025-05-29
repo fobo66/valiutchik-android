@@ -29,8 +29,7 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
         isRefreshed = true
     }
 
-    override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
-        flowOf(emptyList())
+    override fun loadExchangeRates(): Flow<List<BestCourse>> = flowOf(emptyList())
 
     override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
 }

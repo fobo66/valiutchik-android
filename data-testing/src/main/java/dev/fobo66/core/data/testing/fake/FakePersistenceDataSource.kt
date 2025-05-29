@@ -21,7 +21,6 @@ import fobo66.valiutchik.core.entities.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.datetime.Instant
 
 class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
@@ -34,5 +33,5 @@ class FakePersistenceDataSource : PersistenceDataSource {
         isSaved = true
     }
 
-    override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> = emptyFlow()
+    override fun readBestCourses(): Flow<List<BestCourse>> = emptyFlow()
 }

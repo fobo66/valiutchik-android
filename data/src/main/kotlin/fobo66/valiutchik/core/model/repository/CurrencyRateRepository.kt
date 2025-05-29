@@ -32,7 +32,7 @@ interface CurrencyRateRepository {
     /**
      * Load exchange rates from database or from network
      */
-    fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>>
+    fun loadExchangeRates(): Flow<List<BestCourse>>
 
     /**
      * Format currency rate into human-readable form

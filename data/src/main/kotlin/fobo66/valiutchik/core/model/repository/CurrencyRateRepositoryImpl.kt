@@ -163,8 +163,8 @@ class CurrencyRateRepositoryImpl(
         persistenceDataSource.saveBestCourses(bestCourses)
     }
 
-    override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
-        persistenceDataSource.readBestCourses(latestTimestamp)
+    override fun loadExchangeRates(): Flow<List<BestCourse>> =
+        persistenceDataSource.readBestCourses()
 
     private fun findBestCourses(currencies: Set<Bank>, now: String): List<BestCourse> =
         resolveBuyRates(currencies, now) + resolveSellRates(currencies, now)
