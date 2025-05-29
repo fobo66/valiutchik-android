@@ -65,6 +65,8 @@ dependencies {
     implementation(project(":data"))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.benchmark)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
