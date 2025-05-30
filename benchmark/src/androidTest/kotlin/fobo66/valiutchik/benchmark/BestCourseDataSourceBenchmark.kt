@@ -52,16 +52,10 @@ class BestCourseDataSourceBenchmark {
     }
 
     @Test
-    fun findBestBuyCurrencies() {
+    fun findBestCurrencies() {
         benchmarkRule.measureRepeated {
-            bestCourseDataSource.findBestBuyCurrencies(currencies)
-        }
-    }
-
-    @Test
-    fun findBestSellCurrencies() {
-        benchmarkRule.measureRepeated {
-            bestCourseDataSource.findBestSellCurrencies(currencies)
+            bestCourseDataSource.findBestBuyCurrencies(currencies) +
+                bestCourseDataSource.findBestSellCurrencies(currencies)
         }
     }
 }

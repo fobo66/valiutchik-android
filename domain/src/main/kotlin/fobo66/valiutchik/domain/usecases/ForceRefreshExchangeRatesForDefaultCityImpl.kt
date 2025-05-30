@@ -29,7 +29,7 @@ class ForceRefreshExchangeRatesForDefaultCityImpl(
 ) : ForceRefreshExchangeRatesForDefaultCity {
     override suspend fun execute(now: Instant) {
         val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
-        currencyRateRepository.refreshExchangeRates(defaultCity, now)
+        currencyRateRepository.refreshExchangeRates(defaultCity)
         timestampRepository.saveTimestamp(now)
     }
 }

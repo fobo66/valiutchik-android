@@ -14,21 +14,25 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.core.data.testing.fake
+package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class FakeCurrencyRateRepository : CurrencyRateRepository {
-    var isRefreshed = false
-
-    override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
-        isRefreshed = true
-    }
-
-    override fun loadExchangeRates(): Flow<List<BestCourse>> = flowOf(emptyList())
-
-    override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
-}
+@Entity(tableName = "rates")
+data class Rate(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    val date: String,
+    val bankName: String,
+    val usdBuy: Double = 0.0,
+    val usdSell: Double = 0.0,
+    val eurBuy: Double = 0.0,
+    val eurSell: Double = 0.0,
+    val rubBuy: Double = 0.0,
+    val rubSell: Double = 0.0,
+    val plnBuy: Double = 0.0,
+    val plnSell: Double = 0.0,
+    val uahBuy: Double = 0.0,
+    val uahSell: Double = 0.0
+)

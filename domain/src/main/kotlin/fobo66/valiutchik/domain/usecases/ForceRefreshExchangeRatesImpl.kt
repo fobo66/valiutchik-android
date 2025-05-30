@@ -33,7 +33,7 @@ class ForceRefreshExchangeRatesImpl(
         val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
         val city = locationRepository.resolveUserCity(defaultCity)
 
-        currencyRateRepository.refreshExchangeRates(city, now, defaultCity)
+        currencyRateRepository.refreshExchangeRates(city, defaultCity)
         timestampRepository.saveTimestamp(now)
     }
 }
