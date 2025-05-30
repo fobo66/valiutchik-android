@@ -20,7 +20,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.BestRate
 import fobo66.valiutchik.core.entities.Rate
 import kotlinx.coroutines.flow.Flow
 
@@ -28,9 +27,6 @@ import kotlinx.coroutines.flow.Flow
 interface RatesDao {
     @Upsert
     suspend fun insertRates(rates: List<Rate>)
-
-    @Query("SELECT max(eurBuy) AS bestRate, bankName FROM rates ORDER by date(date) DESC")
-    suspend fun resolveBestEurBuyRate(): BestRate
 
     @Query(
         """
