@@ -117,7 +117,8 @@ fun BestRatesGrid(
                         modifier = Modifier.testTag(TAG_RATES)
                     ) {
                         items(
-                            items = bestCurrencyRates
+                            items = bestCurrencyRates,
+                            key = { it.id }
                         ) { item ->
                             BestCurrencyRateCard(
                                 currencyName = stringResource(id = item.currencyNameRes),
