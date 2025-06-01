@@ -17,50 +17,33 @@
 package fobo66.valiutchik.domain.usecases
 
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
-import dev.fobo66.core.data.testing.fake.FakeCurrencyRatesTimestampRepository
 import dev.fobo66.core.data.testing.fake.FakeLocationRepository
 import dev.fobo66.core.data.testing.fake.FakePreferenceRepository
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class ForceRefreshExchangeRatesTest {
     private val locationRepository = FakeLocationRepository()
-    private val timestampRepository = FakeCurrencyRatesTimestampRepository()
     private val currencyRateRepository = FakeCurrencyRateRepository()
     private val preferenceRepository = FakePreferenceRepository()
-
-    private val now = Clock.System.now()
 
     private val refreshExchangeRates: ForceRefreshExchangeRates =
         ForceRefreshExchangeRatesImpl(
             locationRepository,
-            timestampRepository,
             currencyRateRepository,
             preferenceRepository
         )
 
     @Test
     fun `refresh exchange rates`() = runTest {
-        refreshExchangeRates.execute(now)
-        assertTrue(currencyRateRepository.isRefreshed)
-        assertTrue(timestampRepository.isSaveTimestampCalled)
-    }
-
-    @Test
-    fun `refresh even recent exchange rates`() = runTest {
-        timestampRepository.isNeededToUpdateCurrencyRates = false
-
-        refreshExchangeRates.execute(now)
+        refreshExchangeRates.execute()
         assertTrue(currencyRateRepository.isRefreshed)
     }
 
     @Test
     fun `resolve location for recent exchange rates`() = runTest {
-        timestampRepository.isNeededToUpdateCurrencyRates = false
-
-        refreshExchangeRates.execute(now)
+        refreshExchangeRates.execute()
         assertTrue(locationRepository.isResolved)
     }
 }

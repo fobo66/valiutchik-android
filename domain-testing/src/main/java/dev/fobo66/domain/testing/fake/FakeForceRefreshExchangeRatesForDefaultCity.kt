@@ -17,12 +17,11 @@
 package dev.fobo66.domain.testing.fake
 
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
-import kotlinx.datetime.Instant
 
 class FakeForceRefreshExchangeRatesForDefaultCity : ForceRefreshExchangeRatesForDefaultCity {
-  var isRefreshed: Boolean = false
+    var isRefreshed: Boolean = false
 
-  override suspend fun execute(now: Instant) {
-    isRefreshed = true
-  }
+    override suspend fun execute() {
+        isRefreshed = true
+    }
 }

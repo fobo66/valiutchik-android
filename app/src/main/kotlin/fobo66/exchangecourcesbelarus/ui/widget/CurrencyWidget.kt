@@ -41,7 +41,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -72,7 +71,7 @@ class CurrencyWidget :
                     rates = rates,
                     onTitleBarActionClick = {
                         scope.launch {
-                            refreshExchangeRates.execute(Clock.System.now())
+                            refreshExchangeRates.execute()
                             update(context, id)
                         }
                     }
