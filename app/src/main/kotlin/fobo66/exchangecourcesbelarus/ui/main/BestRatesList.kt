@@ -125,7 +125,8 @@ fun BestRatesGrid(
                                 bankName = item.bank,
                                 onClick = onBestRateClick,
                                 onLongClick = onBestRateLongClick,
-                                onShareClick = onShareClick
+                                onShareClick = onShareClick,
+                                modifier = Modifier.animateItem()
                             )
                         }
                     }
