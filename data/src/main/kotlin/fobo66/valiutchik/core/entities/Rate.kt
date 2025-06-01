@@ -24,7 +24,7 @@ data class Rate(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val date: String,
-    val bankName: String,
+    val bankName: String = "",
     val usdBuy: Double = 0.0,
     val usdSell: Double = 0.0,
     val eurBuy: Double = 0.0,
