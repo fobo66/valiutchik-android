@@ -65,6 +65,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.napier)
+    compileOnly(libs.compose.stable.marker)
 
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)

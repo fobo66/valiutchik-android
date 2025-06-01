@@ -17,11 +17,13 @@
 package fobo66.valiutchik.domain.entities
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 
 /**
  * Entity that represents the best currency exchange rate
  * for consumption on the presentation layer
  */
+@Immutable
 data class BestCurrencyRate(
     val id: Long,
     val bank: String,
