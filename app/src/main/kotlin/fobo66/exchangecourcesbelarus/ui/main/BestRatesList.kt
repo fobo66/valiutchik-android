@@ -118,7 +118,7 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { it.id }
+                            key = { item -> item.currencyNameRes }
                         ) { item ->
                             BestCurrencyRateCard(
                                 currencyName = stringResource(id = item.currencyNameRes),
