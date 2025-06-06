@@ -61,7 +61,7 @@ class MainScreenTest {
         composeRule.setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(
-                    BestCurrencyRate(0, "test", string.app_name, "0.0")
+                    BestCurrencyRate("test", string.app_name, "0.0")
                 ),
                 onBestRateClick = {
                     isMapOpen = true

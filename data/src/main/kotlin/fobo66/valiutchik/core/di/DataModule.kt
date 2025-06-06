@@ -42,8 +42,6 @@ import fobo66.valiutchik.core.model.repository.ClipboardRepository
 import fobo66.valiutchik.core.model.repository.ClipboardRepositoryImpl
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepositoryImpl
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.core.model.repository.LicensesRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
@@ -116,11 +114,7 @@ val repositoriesModule =
         }
 
         single<CurrencyRateRepository> {
-            CurrencyRateRepositoryImpl(get(), get(), get(), get())
-        }
-
-        single<CurrencyRatesTimestampRepository> {
-            CurrencyRatesTimestampRepositoryImpl(get())
+            CurrencyRateRepositoryImpl(get(), get(), get())
         }
 
         single<LicensesRepository> {

@@ -21,21 +21,16 @@ import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlin.LazyThreadSafetyMode.NONE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Instant
 
-class LoadExchangeRatesImpl(
-    private val currencyRateRepository: CurrencyRateRepository,
-    private val currencyRatesTimestampRepository: CurrencyRatesTimestampRepository
-) : LoadExchangeRates {
+class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
+    LoadExchangeRates {
     private val buyLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
         mutableScatterMapOf(
             CurrencyName.DOLLAR to R.string.currency_name_usd_buy,
@@ -57,10 +52,8 @@ class LoadExchangeRatesImpl(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(now: Instant): Flow<List<BestCurrencyRate>> =
-        currencyRatesTimestampRepository
-            .loadLatestTimestamp(now)
-            .flatMapLatest { currencyRateRepository.loadExchangeRates(it) }
+    override fun execute(): Flow<List<BestCurrencyRate>> =
+        currencyRateRepository.loadExchangeRates()
             .map {
                 it.map { bestCourse ->
                     @StringRes val currencyNameRes =
@@ -88,5 +81,5 @@ class LoadExchangeRatesImpl(
     private fun BestCourse.toBestCurrencyRate(
         @StringRes currencyNameRes: Int,
         currencyValue: String
-    ): BestCurrencyRate = BestCurrencyRate(id, bank, currencyNameRes, currencyValue)
+    ): BestCurrencyRate = BestCurrencyRate(bank, currencyNameRes, currencyValue)
 }

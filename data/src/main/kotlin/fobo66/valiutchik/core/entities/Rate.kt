@@ -14,17 +14,25 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.repository
+package fobo66.valiutchik.core.entities
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-/**
- * Repository to handle timestamps of currency rates refresh
- */
-interface CurrencyRatesTimestampRepository {
-    suspend fun isNeededToUpdateCurrencyRates(now: Instant, updateInterval: Float): Boolean
-    suspend fun saveTimestamp(now: Instant)
-
-    fun loadLatestTimestamp(now: Instant): Flow<Instant>
-}
+@Entity(tableName = "rates")
+data class Rate(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    val date: String,
+    val bankName: String = "",
+    val usdBuy: Double = 0.0,
+    val usdSell: Double = 0.0,
+    val eurBuy: Double = 0.0,
+    val eurSell: Double = 0.0,
+    val rubBuy: Double = 0.0,
+    val rubSell: Double = 0.0,
+    val plnBuy: Double = 0.0,
+    val plnSell: Double = 0.0,
+    val uahBuy: Double = 0.0,
+    val uahSell: Double = 0.0
+)

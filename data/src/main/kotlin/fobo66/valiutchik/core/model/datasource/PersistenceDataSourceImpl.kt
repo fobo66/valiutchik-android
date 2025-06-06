@@ -18,8 +18,8 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.Rate
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 
 class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
     PersistenceDataSource {
@@ -28,6 +28,9 @@ class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
         database.currencyRatesDao().insertBestCurrencyRates(bestCourses)
     }
 
-    override fun readBestCourses(latestTimestamp: Instant): Flow<List<BestCourse>> =
-        database.currencyRatesDao().loadLatestBestCurrencyRates(latestTimestamp.toString())
+    override suspend fun saveRates(rates: List<Rate>) {
+        database.ratesDao().insertRates(rates)
+    }
+
+    override fun readBestCourses(): Flow<List<BestCourse>> = database.ratesDao().resolveBestRates()
 }
