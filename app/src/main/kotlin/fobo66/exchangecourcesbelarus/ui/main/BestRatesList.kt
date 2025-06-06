@@ -229,13 +229,11 @@ private fun BestCurrencyRatesPreview() {
             bestCurrencyRates =
             persistentListOf(
                 BestCurrencyRate(
-                    id = 1,
                     bank = "test",
                     currencyNameRes = R.string.app_name,
                     currencyValue = "1.23"
                 ),
                 BestCurrencyRate(
-                    id = 2,
                     bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
                     currencyNameRes = R.string.app_name,
                     currencyValue = "1.23"

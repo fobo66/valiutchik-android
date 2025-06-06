@@ -25,7 +25,6 @@ import androidx.compose.runtime.Immutable
  */
 @Immutable
 data class BestCurrencyRate(
-    val id: Long,
     val bank: String,
     @StringRes val currencyNameRes: Int,
     val currencyValue: String

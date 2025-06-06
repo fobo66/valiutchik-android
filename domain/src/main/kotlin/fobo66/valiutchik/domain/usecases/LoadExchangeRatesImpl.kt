@@ -81,5 +81,5 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
     private fun BestCourse.toBestCurrencyRate(
         @StringRes currencyNameRes: Int,
         currencyValue: String
-    ): BestCurrencyRate = BestCurrencyRate(id, bank, currencyNameRes, currencyValue)
+    ): BestCurrencyRate = BestCurrencyRate(bank, currencyNameRes, currencyValue)
 }

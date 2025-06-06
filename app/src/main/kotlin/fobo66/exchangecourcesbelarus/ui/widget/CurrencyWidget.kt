@@ -133,13 +133,11 @@ private fun CurrencyWidgetPreview() {
             rates =
             persistentListOf(
                 BestCurrencyRate(
-                    0,
                     "test",
                     fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
                     "1.23"
                 ),
                 BestCurrencyRate(
-                    1,
                     "test",
                     fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
                     "1.23"
