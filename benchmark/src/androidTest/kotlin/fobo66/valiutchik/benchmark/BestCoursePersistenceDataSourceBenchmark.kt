@@ -28,7 +28,7 @@ import fobo66.valiutchik.core.entities.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import java.time.LocalDate
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -87,7 +87,7 @@ class BestCoursePersistenceDataSourceBenchmark {
     fun readBestCourses() {
         benchmarkRule.measureRepeated {
             runTest {
-                persistenceDataSource.readBestCourses().collect()
+                persistenceDataSource.readBestCourses().first()
             }
         }
     }
