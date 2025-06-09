@@ -39,11 +39,12 @@ class CurrencyRatesParserImplBenchmark {
     @Test
     fun customParser() {
         benchmarkRule.measureRepeated {
-            val myfinFeedFileStream =
+            val myfinFeedFileStream = runWithMeasurementDisabled {
                 InstrumentationRegistry
                     .getInstrumentation()
                     .context.assets
                     .open("myfinFeed.xml")
+            }
             parser.parse(myfinFeedFileStream)
         }
     }
@@ -51,11 +52,12 @@ class CurrencyRatesParserImplBenchmark {
     @Test
     fun kotlinxSerialization() {
         benchmarkRule.measureRepeated {
-            val myfinFeedFileStream =
+            val myfinFeedFileStream = runWithMeasurementDisabled {
                 InstrumentationRegistry
                     .getInstrumentation()
                     .context.assets
                     .open("myfinFeed.xml")
+            }
             kotlinxSerializationParser.parse(myfinFeedFileStream)
         }
     }
