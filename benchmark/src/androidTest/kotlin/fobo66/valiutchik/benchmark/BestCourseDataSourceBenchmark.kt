@@ -32,6 +32,7 @@ import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -69,6 +70,11 @@ class BestCourseDataSourceBenchmark {
                 .context.assets
                 .open("myfinFeed.xml")
         currencies = parser.parse(myfinFeedFileStream)
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
     }
 
     @Test
