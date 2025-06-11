@@ -18,16 +18,21 @@ package fobo66.valiutchik.benchmark
 
 import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.BUY_COURSE
 import fobo66.valiutchik.core.SELL_COURSE
+import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.util.resolveCurrencyBuyRate
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,6 +53,13 @@ class BestCourseDataSourceBenchmark {
     @OptIn(ExperimentalTime::class)
     private val now = Clock.System.now().toString()
 
+    private val db: CurrencyRatesDatabase =
+        Room
+            .inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                CurrencyRatesDatabase::class.java
+            ).build()
+
     private lateinit var currencies: Set<Bank>
 
     @Before
@@ -60,10 +72,15 @@ class BestCourseDataSourceBenchmark {
         currencies = parser.parse(myfinFeedFileStream)
     }
 
+    @After
+    fun tearDown() {
+        db.close()
+    }
+
     @Test
     fun findBestCurrencies() {
         benchmarkRule.measureRepeated {
-            bestCourseDataSource.findBestBuyCurrencies(currencies)
+            val bestRates = bestCourseDataSource.findBestBuyCurrencies(currencies)
                 .map { (currencyKey, currency) ->
                     BestCourse(
                         0L,
@@ -86,6 +103,11 @@ class BestCourseDataSourceBenchmark {
                             SELL_COURSE
                         )
                     }
+
+            runTest {
+                db.currencyRatesDao().insertBestCurrencyRates(bestRates)
+                db.currencyRatesDao().loadAllBestCurrencyRates().first()
+            }
         }
     }
 }

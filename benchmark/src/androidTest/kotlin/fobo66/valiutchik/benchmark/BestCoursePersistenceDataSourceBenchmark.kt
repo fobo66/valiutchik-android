@@ -30,6 +30,7 @@ import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import java.time.LocalDate
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -81,6 +82,11 @@ class BestCoursePersistenceDataSourceBenchmark {
                     )
                 }
         )
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
     }
 
     @Test
