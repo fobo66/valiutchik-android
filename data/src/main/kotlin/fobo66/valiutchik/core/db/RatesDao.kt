@@ -28,6 +28,9 @@ interface RatesDao {
     @Upsert
     suspend fun insertRates(rates: List<Rate>)
 
+    @Query("SELECT * FROM rates")
+    suspend fun loadAllRates(): List<Rate>
+
     @Query(
         """
     SELECT id, bankName as bank, max(usdBuy) as currency_value, 'DOLLAR' as currency_name, datetime(date) as timestamp, 1 as is_buy FROM rates WHERE timestamp >= date('now')
