@@ -24,10 +24,6 @@ import kotlinx.coroutines.flow.Flow
 class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
     PersistenceDataSource {
 
-    override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-        database.currencyRatesDao().insertBestCurrencyRates(bestCourses)
-    }
-
     override suspend fun saveRates(rates: List<Rate>) {
         database.ratesDao().insertRates(rates)
     }

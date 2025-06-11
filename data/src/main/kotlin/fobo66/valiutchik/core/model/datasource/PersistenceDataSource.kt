@@ -27,7 +27,6 @@ interface PersistenceDataSource {
     /**
      * Save entries to the database
      */
-    suspend fun saveBestCourses(bestCourses: List<BestCourse>)
     suspend fun saveRates(rates: List<Rate>)
 
     /**

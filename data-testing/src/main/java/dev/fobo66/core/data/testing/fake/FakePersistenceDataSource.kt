@@ -25,10 +25,6 @@ import kotlinx.coroutines.flow.emptyFlow
 class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
 
-    override suspend fun saveBestCourses(bestCourses: List<BestCourse>) {
-        isSaved = true
-    }
-
     override suspend fun saveRates(rates: List<Rate>) {
         isSaved = true
     }
