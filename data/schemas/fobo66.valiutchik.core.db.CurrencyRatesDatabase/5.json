@@ -1,0 +1,103 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 5,
+    "identityHash": "a08f1410853ba9b356007e2e5910f523",
+    "entities": [
+      {
+        "tableName": "rates",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` TEXT NOT NULL, `bankName` TEXT NOT NULL, `usdBuy` REAL NOT NULL, `usdSell` REAL NOT NULL, `eurBuy` REAL NOT NULL, `eurSell` REAL NOT NULL, `rubBuy` REAL NOT NULL, `rubSell` REAL NOT NULL, `plnBuy` REAL NOT NULL, `plnSell` REAL NOT NULL, `uahBuy` REAL NOT NULL, `uahSell` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bankName",
+            "columnName": "bankName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "usdBuy",
+            "columnName": "usdBuy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "usdSell",
+            "columnName": "usdSell",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eurBuy",
+            "columnName": "eurBuy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eurSell",
+            "columnName": "eurSell",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rubBuy",
+            "columnName": "rubBuy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rubSell",
+            "columnName": "rubSell",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plnBuy",
+            "columnName": "plnBuy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plnSell",
+            "columnName": "plnSell",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uahBuy",
+            "columnName": "uahBuy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uahSell",
+            "columnName": "uahSell",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a08f1410853ba9b356007e2e5910f523')"
+    ]
+  }
+}

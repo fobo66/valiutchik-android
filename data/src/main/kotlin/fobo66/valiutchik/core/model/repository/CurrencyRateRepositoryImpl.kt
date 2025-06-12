@@ -28,6 +28,7 @@ import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import java.io.IOException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
 
@@ -153,6 +154,11 @@ class CurrencyRateRepositoryImpl(
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()
+            .map { courses ->
+                courses.filter {
+                    it.currencyValue != 0.0
+                }
+            }
 
     override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(
         when (rate.currencyName) {
