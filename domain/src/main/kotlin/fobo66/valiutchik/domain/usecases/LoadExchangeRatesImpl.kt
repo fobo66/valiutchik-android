@@ -19,7 +19,6 @@ package fobo66.valiutchik.domain.usecases
 import androidx.annotation.StringRes
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
-import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
@@ -59,9 +58,10 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                     @StringRes val currencyNameRes =
                         resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
 
-                    bestCourse.toBestCurrencyRate(
-                        currencyNameRes,
-                        currencyRateRepository.formatRate(bestCourse)
+                    BestCurrencyRate(
+                        bank = bestCourse.bank,
+                        currencyNameRes = currencyNameRes,
+                        currencyValue = currencyRateRepository.formatRate(bestCourse)
                     )
                 }
             }
@@ -77,9 +77,4 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
 
         return labelRes ?: 0
     }
-
-    private fun BestCourse.toBestCurrencyRate(
-        @StringRes currencyNameRes: Int,
-        currencyValue: String
-    ): BestCurrencyRate = BestCurrencyRate(bank, currencyNameRes, currencyValue)
 }
