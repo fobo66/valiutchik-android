@@ -20,15 +20,19 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
+import com.google.common.truth.Correspondence
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
+import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.Rate
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.junit.After
 import org.junit.Test
 
-private const val DATE = "2025-06-11"
-private const val RATE = 1.23
+private const val RATE = 1.23456
 
 @SmallTest
 class PersistenceDataSourceTest {
@@ -40,6 +44,9 @@ class PersistenceDataSourceTest {
             ).build()
     private val persistenceDataSource: PersistenceDataSource = PersistenceDataSourceImpl(db)
 
+    private val date =
+        Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
+
     @After
     fun tearDown() {
         db.close()
@@ -49,8 +56,8 @@ class PersistenceDataSourceTest {
     fun saveRates() = runTest {
         val rates =
             listOf(
-                Rate(0, DATE, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
-                Rate(0, DATE, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -63,8 +70,8 @@ class PersistenceDataSourceTest {
     fun loadBestRates() = runTest {
         val rates =
             listOf(
-                Rate(0, DATE, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
-                Rate(0, DATE, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -72,6 +79,26 @@ class PersistenceDataSourceTest {
         db.ratesDao().resolveBestRates()
             .test {
                 assertThat(awaitItem()).hasSize(10)
+            }
+    }
+
+    @Test
+    fun someBestRatesAreMissing() = runTest {
+        val rates =
+            listOf(
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0, RATE, RATE)
+            )
+
+        persistenceDataSource.saveRates(rates)
+
+        db.ratesDao().resolveBestRates()
+            .test {
+                assertThat(
+                    awaitItem()
+                ).comparingElementsUsing(
+                    Correspondence.transforming(BestCourse::currencyValue, "Currency value")
+                ).contains(0.0)
             }
     }
 }
