@@ -64,14 +64,14 @@ class CurrencyRateRepositoryTest {
 
     @Test
     fun `normalize hryvnia rate`() {
-        val rate = BestCourse(id = 0, currencyValue = 0.0123, currencyName = CurrencyName.UAH)
+        val rate = BestCourse(currencyValue = 0.0123, currencyName = CurrencyName.UAH)
         val result = currencyRateRepository.formatRate(rate)
         assertThat(result).isEqualTo("1.23")
     }
 
     @Test
     fun `do not normalize dollar rate`() {
-        val rate = BestCourse(id = 0, currencyValue = 1.23, currencyName = DOLLAR)
+        val rate = BestCourse(currencyValue = 1.23, currencyName = DOLLAR)
         val result = currencyRateRepository.formatRate(rate)
         assertThat(result).isEqualTo("1.23")
     }
