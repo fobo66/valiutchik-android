@@ -28,5 +28,5 @@ class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
         database.ratesDao().insertRates(rates)
     }
 
-    override fun readBestCourses(): Flow<List<BestCourse>> = database.ratesDao().resolveBestRates()
+    override fun readBestCourses(): Flow<List<BestCourse?>> = database.ratesDao().resolveBestRates()
 }

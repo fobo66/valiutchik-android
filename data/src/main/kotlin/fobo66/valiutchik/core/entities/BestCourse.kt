@@ -23,7 +23,7 @@ import fobo66.valiutchik.core.util.CurrencyName
  * Database entity for best available exchange courses
  */
 data class BestCourse(
-    @ColumnInfo(name = "bank") val bank: String = "",
+    @ColumnInfo(name = "bankName") val bank: String = "",
     @ColumnInfo(name = "currency_value") val currencyValue: Double = 0.0,
     @ColumnInfo(name = "currency_name")
     val currencyName: CurrencyName = CurrencyName.DOLLAR,

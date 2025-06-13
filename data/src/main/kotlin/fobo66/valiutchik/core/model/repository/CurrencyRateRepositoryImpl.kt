@@ -155,9 +155,11 @@ class CurrencyRateRepositoryImpl(
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()
             .map { courses ->
-                courses.filter {
-                    it.currencyValue != 0.0
-                }
+                courses
+                    .filterNotNull()
+                    .filter {
+                        it.currencyValue != 0.0
+                    }
             }
 
     override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(

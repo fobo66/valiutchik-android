@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "a08f1410853ba9b356007e2e5910f523",
+    "identityHash": "b906ea3264768dafb0207dc387d6a0b1",
     "entities": [
       {
         "tableName": "rates",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` TEXT NOT NULL, `bankName` TEXT NOT NULL, `usdBuy` REAL NOT NULL, `usdSell` REAL NOT NULL, `eurBuy` REAL NOT NULL, `eurSell` REAL NOT NULL, `rubBuy` REAL NOT NULL, `rubSell` REAL NOT NULL, `plnBuy` REAL NOT NULL, `plnSell` REAL NOT NULL, `uahBuy` REAL NOT NULL, `uahSell` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` TEXT NOT NULL, `bankName` TEXT, `usdBuy` REAL NOT NULL, `usdSell` REAL NOT NULL, `eurBuy` REAL NOT NULL, `eurSell` REAL NOT NULL, `rubBuy` REAL NOT NULL, `rubSell` REAL NOT NULL, `plnBuy` REAL NOT NULL, `plnSell` REAL NOT NULL, `uahBuy` REAL NOT NULL, `uahSell` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -23,8 +23,7 @@
           {
             "fieldPath": "bankName",
             "columnName": "bankName",
-            "affinity": "TEXT",
-            "notNull": true
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "usdBuy",
@@ -97,7 +96,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a08f1410853ba9b356007e2e5910f523')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b906ea3264768dafb0207dc387d6a0b1')"
     ]
   }
 }

@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(platform(libs.koin.bom))
+    implementation(platform(libs.compose.bom))
     implementation(libs.koin.core)
     implementation(libs.napier)
     compileOnly(libs.compose.stable.marker)

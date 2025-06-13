@@ -32,5 +32,5 @@ interface PersistenceDataSource {
     /**
      * Read entries from the database
      */
-    fun readBestCourses(): Flow<List<BestCourse>>
+    fun readBestCourses(): Flow<List<BestCourse?>>
 }
