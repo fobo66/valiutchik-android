@@ -20,8 +20,6 @@ import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
@@ -62,10 +60,6 @@ val dataSourcesModule =
 
         single<AssetsDataSource> {
             AssetsDataSourceImpl(get())
-        }
-
-        single<BestCourseDataSource> {
-            BestCourseDataSourceImpl()
         }
 
         single<ClipboardDataSource> {
