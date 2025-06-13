@@ -53,16 +53,21 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun execute(): Flow<List<BestCurrencyRate>> =
         currencyRateRepository.loadExchangeRates()
-            .map {
-                it.map { bestCourse ->
+            .map { rates ->
+                rates.map {
                     @StringRes val currencyNameRes =
-                        resolveCurrencyName(bestCourse.currencyName, bestCourse.isBuy)
+                        resolveCurrencyName(
+                            it.currencyName ?: CurrencyName.DOLLAR,
+                            it.isBuy == true
+                        )
 
                     BestCurrencyRate(
-                        bank = bestCourse.bank,
+                        bank = it.bank.orEmpty(),
                         currencyNameRes = currencyNameRes,
-                        currencyValue = currencyRateRepository.formatRate(bestCourse)
+                        currencyValue = currencyRateRepository.formatRate(it)
                     )
+                }.filter {
+                    it.bank.isNotEmpty()
                 }
             }
 

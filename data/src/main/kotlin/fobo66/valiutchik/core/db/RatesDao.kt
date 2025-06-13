@@ -45,5 +45,5 @@ interface RatesDao {
     UNION ALL SELECT bankName, min(uahSell) as currency_value, 'UAH' as currency_name, datetime(date) as timestamp, 0 as is_buy FROM rates WHERE timestamp >= date('now')
     ORDER BY currency_name"""
     )
-    fun resolveBestRates(): Flow<List<BestCourse?>>
+    fun resolveBestRates(): Flow<List<BestCourse>>
 }
