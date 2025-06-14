@@ -52,7 +52,7 @@ class FormattingDataSourceImpl(
         }
     }
 
-    private val currency: Currency by lazy(NONE) {
+    private val targetCurrency: Currency by lazy(NONE) {
         Currency.getInstance(BYN)
     }
 
@@ -60,13 +60,13 @@ class FormattingDataSourceImpl(
         if (VERSION.SDK_INT >= VERSION_CODES.R) {
             NumberFormatter
                 .withLocale(locale)
-                .unit(currency)
+                .unit(targetCurrency)
                 .format(value)
                 .toString()
         } else {
             val format =
                 DecimalFormat.getCurrencyInstance(locale).apply {
-                    currency = currency
+                    currency = targetCurrency
                 }
 
             format.format(value)

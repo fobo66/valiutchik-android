@@ -41,7 +41,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -57,7 +56,7 @@ class CurrencyWidget :
     override suspend fun provideGlance(context: Context, id: GlanceId): Nothing {
         val ratesState =
             loadExchangeRates
-                .execute(Clock.System.now())
+                .execute()
                 .map { it.toImmutableList() }
 
         provideContent {
@@ -72,7 +71,7 @@ class CurrencyWidget :
                     rates = rates,
                     onTitleBarActionClick = {
                         scope.launch {
-                            refreshExchangeRates.execute(Clock.System.now())
+                            refreshExchangeRates.execute()
                             update(context, id)
                         }
                     }
@@ -84,7 +83,7 @@ class CurrencyWidget :
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         val ratesState =
             loadExchangeRates
-                .execute(Clock.System.now())
+                .execute()
                 .map { it.toImmutableList() }
 
         provideContent {
@@ -134,13 +133,11 @@ private fun CurrencyWidgetPreview() {
             rates =
             persistentListOf(
                 BestCurrencyRate(
-                    0,
                     "test",
                     fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
                     "1.23"
                 ),
                 BestCurrencyRate(
-                    1,
                     "test",
                     fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
                     "1.23"

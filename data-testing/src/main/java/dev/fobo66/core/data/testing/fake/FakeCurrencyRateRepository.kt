@@ -20,17 +20,15 @@ import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.datetime.Instant
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
     var isRefreshed = false
 
-    override suspend fun refreshExchangeRates(city: String, now: Instant, defaultCity: String) {
+    override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         isRefreshed = true
     }
 
-    override fun loadExchangeRates(latestTimestamp: Instant): Flow<List<BestCourse>> =
-        flowOf(emptyList())
+    override fun loadExchangeRates(): Flow<List<BestCourse>> = flowOf(emptyList())
 
     override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
 }

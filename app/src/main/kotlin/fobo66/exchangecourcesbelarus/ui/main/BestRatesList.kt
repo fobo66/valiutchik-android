@@ -118,7 +118,7 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { item -> item.id }
+                            key = { item -> item.currencyNameRes }
                         ) { item ->
                             BestCurrencyRateCard(
                                 currencyName = stringResource(id = item.currencyNameRes),
@@ -229,13 +229,11 @@ private fun BestCurrencyRatesPreview() {
             bestCurrencyRates =
             persistentListOf(
                 BestCurrencyRate(
-                    id = 1,
                     bank = "test",
                     currencyNameRes = R.string.app_name,
                     currencyValue = "1.23"
                 ),
                 BestCurrencyRate(
-                    id = 2,
                     bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
                     currencyNameRes = R.string.app_name,
                     currencyValue = "1.23"
