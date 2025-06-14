@@ -57,7 +57,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                 rates.map {
                     @StringRes val currencyNameRes =
                         resolveCurrencyName(
-                            it.currencyName ?: CurrencyName.DOLLAR,
+                            it.currencyName,
                             it.isBuy == true
                         )
 
@@ -67,18 +67,19 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                         currencyValue = currencyRateRepository.formatRate(it)
                     )
                 }.filter {
-                    it.bank.isNotEmpty()
+                    it.bank.isNotEmpty() && it.currencyNameRes != 0
                 }
             }
 
     @StringRes
-    private fun resolveCurrencyName(currencyName: CurrencyName, isBuy: Boolean): Int {
-        val labelRes =
+    private fun resolveCurrencyName(currencyName: CurrencyName?, isBuy: Boolean): Int {
+        val labelRes = currencyName?.let {
             if (isBuy) {
-                buyLabels[currencyName]
+                buyLabels[it]
             } else {
-                sellLabels[currencyName]
+                sellLabels[it]
             }
+        }
 
         return labelRes ?: 0
     }
