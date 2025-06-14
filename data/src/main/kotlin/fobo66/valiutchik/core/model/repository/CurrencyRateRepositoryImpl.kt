@@ -156,9 +156,10 @@ class CurrencyRateRepositoryImpl(
         persistenceDataSource.readBestCourses()
             .map { courses ->
                 courses
-                    .filterNotNull()
                     .filter {
-                        it.currencyValue != 0.0
+                        it.bank != null &&
+                            it.currencyValue != null &&
+                            it.currencyValue != 0.0
                     }
             }
 

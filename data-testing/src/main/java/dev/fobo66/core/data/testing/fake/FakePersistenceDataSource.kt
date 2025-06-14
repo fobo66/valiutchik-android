@@ -29,5 +29,5 @@ class FakePersistenceDataSource : PersistenceDataSource {
         isSaved = true
     }
 
-    override fun readBestCourses(): Flow<List<BestCourse?>> = emptyFlow()
+    override fun readBestCourses(): Flow<List<BestCourse>> = emptyFlow()
 }
