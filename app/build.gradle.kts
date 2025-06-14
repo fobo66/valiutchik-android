@@ -97,7 +97,7 @@ android {
 
     testOptions {
         animationsDisabled = true
-        unitTests.isIncludeAndroidResources = true
+        unitTests.isIncludeAndroidResources = false
     }
 
     namespace = "fobo66.exchangecourcesbelarus"
