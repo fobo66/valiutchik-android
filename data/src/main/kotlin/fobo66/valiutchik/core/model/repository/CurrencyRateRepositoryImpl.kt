@@ -33,6 +33,8 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
+private const val UNDEFINED_BUY_RATE = 0.0
+private const val UNDEFINED_SELL_RATE = 999.0
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
@@ -134,19 +136,19 @@ class CurrencyRateRepositoryImpl(
         persistenceDataSource.saveRates(
             currencies.map {
                 Rate(
-                    id = 0L,
+                    id = (it.bankId + it.filialId).toLong(),
                     date = LocalDate.parse(it.date, apiDateFormat).toString(),
                     bankName = formattingDataSource.formatBankName(it.bankName),
-                    usdBuy = it.usdBuy.toDoubleOrNull() ?: 0.0,
-                    usdSell = it.usdSell.toDoubleOrNull() ?: 0.0,
-                    eurBuy = it.eurBuy.toDoubleOrNull() ?: 0.0,
-                    eurSell = it.eurSell.toDoubleOrNull() ?: 0.0,
-                    rubBuy = it.rubBuy.toDoubleOrNull() ?: 0.0,
-                    rubSell = it.rubSell.toDoubleOrNull() ?: 0.0,
-                    plnBuy = it.plnBuy.toDoubleOrNull() ?: 0.0,
-                    plnSell = it.plnSell.toDoubleOrNull() ?: 0.0,
-                    uahBuy = it.uahBuy.toDoubleOrNull() ?: 0.0,
-                    uahSell = it.uahSell.toDoubleOrNull() ?: 0.0
+                    usdBuy = it.usdBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+                    usdSell = it.usdSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+                    eurBuy = it.eurBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+                    eurSell = it.eurSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+                    rubBuy = it.rubBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+                    rubSell = it.rubSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+                    plnBuy = it.plnBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+                    plnSell = it.plnSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+                    uahBuy = it.uahBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+                    uahSell = it.uahSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
                 )
             }
         )
@@ -157,9 +159,10 @@ class CurrencyRateRepositoryImpl(
             .map { courses ->
                 courses
                     .filter {
-                        it.bank != null &&
+                        it.bankName != null &&
                             it.currencyValue != null &&
-                            it.currencyValue != 0.0
+                            it.currencyValue != UNDEFINED_BUY_RATE &&
+                            it.currencyValue != UNDEFINED_SELL_RATE
                     }
             }
 

@@ -62,7 +62,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                         )
 
                     BestCurrencyRate(
-                        bank = it.bank.orEmpty(),
+                        bank = it.bankName.orEmpty(),
                         currencyNameRes = currencyNameRes,
                         currencyValue = currencyRateRepository.formatRate(it)
                     )
