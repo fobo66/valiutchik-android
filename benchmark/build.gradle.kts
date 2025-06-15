@@ -25,7 +25,7 @@ plugins {
 }
 
 android {
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.O
+        minSdk = AndroidVersion.VersionCodes.R
 
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }
