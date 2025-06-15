@@ -17,23 +17,19 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import kotlinx.coroutines.flow.first
-import kotlinx.datetime.Instant
 
 class ForceRefreshExchangeRatesImpl(
     private val locationRepository: LocationRepository,
-    private val timestampRepository: CurrencyRatesTimestampRepository,
     private val currencyRateRepository: CurrencyRateRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRates {
-    override suspend fun execute(now: Instant) {
+    override suspend fun execute() {
         val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
         val city = locationRepository.resolveUserCity(defaultCity)
 
-        currencyRateRepository.refreshExchangeRates(city, now, defaultCity)
-        timestampRepository.saveTimestamp(now)
+        currencyRateRepository.refreshExchangeRates(city, defaultCity)
     }
 }

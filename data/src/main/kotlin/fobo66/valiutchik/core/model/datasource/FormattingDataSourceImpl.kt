@@ -17,11 +17,8 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.icu.number.NumberFormatter
-import android.icu.text.DecimalFormat
 import android.icu.text.Transliterator
 import android.icu.util.Currency
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import java.util.Locale
 import kotlin.LazyThreadSafetyMode.NONE
@@ -52,40 +49,27 @@ class FormattingDataSourceImpl(
         }
     }
 
-    private val currency: Currency by lazy(NONE) {
+    private val targetCurrency: Currency by lazy(NONE) {
         Currency.getInstance(BYN)
     }
 
-    override fun formatCurrencyValue(value: Double): String =
-        if (VERSION.SDK_INT >= VERSION_CODES.R) {
-            NumberFormatter
-                .withLocale(locale)
-                .unit(currency)
-                .format(value)
-                .toString()
-        } else {
-            val format =
-                DecimalFormat.getCurrencyInstance(locale).apply {
-                    currency = currency
-                }
+    override fun formatCurrencyValue(value: Double): String = NumberFormatter
+        .withLocale(locale)
+        .unit(targetCurrency)
+        .format(value)
+        .toString()
 
-            format.format(value)
-        }
-
-    private fun transliterate(bankName: String, languageCode: String): String =
-        if (VERSION.SDK_INT >= VERSION_CODES.Q) {
-            val transliterator =
-                if (languageCode == LANG_BELARUSIAN) {
-                    Transliterator.createFromRules(
-                        BELARUSIAN_TRANSLITERATOR_ID,
-                        BELARUSIAN_RULES,
-                        Transliterator.FORWARD
-                    )
-                } else {
-                    Transliterator.getInstance(CYRILLIC_LATIN)
-                }
-            transliterator.transliterate(bankName)
-        } else {
-            bankName
-        }
+    private fun transliterate(bankName: String, languageCode: String): String {
+        val transliterator =
+            if (languageCode == LANG_BELARUSIAN) {
+                Transliterator.createFromRules(
+                    BELARUSIAN_TRANSLITERATOR_ID,
+                    BELARUSIAN_RULES,
+                    Transliterator.FORWARD
+                )
+            } else {
+                Transliterator.getInstance(CYRILLIC_LATIN)
+            }
+        return transliterator.transliterate(bankName)
+    }
 }

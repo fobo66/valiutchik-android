@@ -26,7 +26,7 @@ plugins {
 
 android {
     namespace = "dev.fobo66.baselineprofile"
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -38,8 +38,8 @@ android {
     }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.O
-        targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+        minSdk = AndroidVersion.VersionCodes.R
+        targetSdk = AndroidVersion.VersionCodes.BAKLAVA
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

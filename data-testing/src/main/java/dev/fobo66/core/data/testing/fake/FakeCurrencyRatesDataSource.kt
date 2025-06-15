@@ -26,6 +26,6 @@ class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
     override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> = if (isError) {
         throw IOException("test")
     } else {
-        setOf(Bank())
+        setOf(Bank(date = "01.01.1970"))
     }
 }

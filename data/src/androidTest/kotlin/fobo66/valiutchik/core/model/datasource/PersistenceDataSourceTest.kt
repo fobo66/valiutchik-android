@@ -20,20 +20,19 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
+import com.google.common.truth.Correspondence
 import com.google.common.truth.Truth.assertThat
-import fobo66.valiutchik.core.BUY_COURSE
-import fobo66.valiutchik.core.SELL_COURSE
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
-import fobo66.valiutchik.core.util.CurrencyName.EUR
-import fobo66.valiutchik.core.util.CurrencyName.RUB
-import kotlinx.coroutines.flow.map
+import fobo66.valiutchik.core.entities.Rate
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.junit.After
 import org.junit.Test
 
-private const val TIMESTAMP = "2025-03-09T18:51:06+02:00"
+private const val RATE = 1.23456
 
 @SmallTest
 class PersistenceDataSourceTest {
@@ -45,70 +44,61 @@ class PersistenceDataSourceTest {
             ).build()
     private val persistenceDataSource: PersistenceDataSource = PersistenceDataSourceImpl(db)
 
+    private val date =
+        Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
+
     @After
     fun tearDown() {
         db.close()
     }
 
     @Test
-    fun saveBestBuyCourses() = runTest {
-        val bestCourses =
+    fun saveRates() = runTest {
+        val rates =
             listOf(
-                BestCourse(0, "test", 1.925, DOLLAR, TIMESTAMP, BUY_COURSE),
-                BestCourse(0, "test", 2.25, EUR, TIMESTAMP, BUY_COURSE)
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
             )
 
-        persistenceDataSource.saveBestCourses(bestCourses)
+        persistenceDataSource.saveRates(rates)
 
-        val bestBuyRates = db.currencyRatesDao().loadAllBestCurrencyRates()
-        assertThat(bestBuyRates).hasSize(2)
+        val savedRates = db.ratesDao().loadAllRates()
+        assertThat(savedRates).hasSize(2)
     }
 
     @Test
-    fun saveBestSellCourses() = runTest {
-        val bestCourses =
+    fun loadBestRates() = runTest {
+        val rates =
             listOf(
-                BestCourse(0, "test", 1.925, DOLLAR, TIMESTAMP, SELL_COURSE),
-                BestCourse(0, "test", 2.25, EUR, TIMESTAMP, SELL_COURSE)
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
             )
 
-        persistenceDataSource.saveBestCourses(bestCourses)
-        val bestSellRates = db.currencyRatesDao().loadAllBestCurrencyRates()
-        assertThat(bestSellRates).hasSize(2)
-    }
+        persistenceDataSource.saveRates(rates)
 
-    @Test
-    fun saveMixedCourses() = runTest {
-        val bestCourses =
-            listOf(
-                BestCourse(0, "test", 1.925, DOLLAR, TIMESTAMP, BUY_COURSE),
-                BestCourse(0, "test", 2.25, EUR, TIMESTAMP, BUY_COURSE),
-                BestCourse(0, "test", 0.0325, RUB, TIMESTAMP, SELL_COURSE)
-            )
-
-        persistenceDataSource.saveBestCourses(bestCourses)
-        val bestRates = db.currencyRatesDao().loadAllBestCurrencyRates()
-        assertThat(bestRates).hasSize(3)
-    }
-
-    @Test
-    fun loadOnlySellCoursesFromMixedCourses() = runTest {
-        val bestCourses =
-            listOf(
-                BestCourse(0, "test", 1.925, DOLLAR, TIMESTAMP, BUY_COURSE),
-                BestCourse(0, "test", 2.25, EUR, TIMESTAMP, BUY_COURSE),
-                BestCourse(0, "test", 0.0325, RUB, TIMESTAMP, SELL_COURSE),
-                BestCourse(0, "test", 2.0325, DOLLAR, TIMESTAMP, SELL_COURSE)
-            )
-
-        persistenceDataSource.saveBestCourses(bestCourses)
-
-        db
-            .currencyRatesDao()
-            .loadLatestBestCurrencyRates(TIMESTAMP)
-            .map { courses -> courses.filter { !it.isBuy } }
+        db.ratesDao().resolveBestRates()
             .test {
-                assertThat(awaitItem()).hasSize(2)
+                assertThat(awaitItem()).hasSize(10)
+            }
+    }
+
+    @Test
+    fun someBestRatesAreMissing() = runTest {
+        val rates =
+            listOf(
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0, RATE, RATE)
+            )
+
+        persistenceDataSource.saveRates(rates)
+
+        db.ratesDao().resolveBestRates()
+            .test {
+                assertThat(
+                    awaitItem()
+                ).comparingElementsUsing(
+                    Correspondence.transforming(BestCourse::currencyValue, "Currency value")
+                ).contains(0.0)
             }
     }
 }

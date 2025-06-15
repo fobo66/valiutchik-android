@@ -27,10 +27,10 @@ plugins {
 
 android {
     namespace = "fobo66.valiutchik.api"
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.O
+        minSdk = AndroidVersion.VersionCodes.R
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

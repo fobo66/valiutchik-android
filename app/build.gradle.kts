@@ -40,11 +40,11 @@ android {
         }
     }
 
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
-        minSdk = AndroidVersion.VersionCodes.O
-        targetSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+        minSdk = AndroidVersion.VersionCodes.R
+        targetSdk = AndroidVersion.VersionCodes.BAKLAVA
         versionCode = 23
         versionName = "1.14.2"
         multiDexEnabled = true
@@ -97,7 +97,7 @@ android {
 
     testOptions {
         animationsDisabled = true
-        unitTests.isIncludeAndroidResources = true
+        unitTests.isIncludeAndroidResources = false
     }
 
     namespace = "fobo66.exchangecourcesbelarus"

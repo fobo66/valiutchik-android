@@ -26,10 +26,10 @@ plugins {
 
 android {
     namespace = "fobo66.valiutchik.domain"
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.O
+        minSdk = AndroidVersion.VersionCodes.R
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -63,8 +63,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(platform(libs.koin.bom))
+    implementation(platform(libs.compose.bom))
     implementation(libs.koin.core)
     implementation(libs.napier)
+    compileOnly(libs.compose.stable.marker)
 
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)

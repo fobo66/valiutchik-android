@@ -27,10 +27,10 @@ plugins {
 }
 
 android {
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.O
+        minSdk = AndroidVersion.VersionCodes.R
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -69,13 +69,8 @@ android {
 }
 
 room {
+    generateKotlin = true
     schemaDirectory("$projectDir/schemas/")
-}
-
-ksp {
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-    arg("room.generateKotlin", "true")
 }
 
 detekt {
