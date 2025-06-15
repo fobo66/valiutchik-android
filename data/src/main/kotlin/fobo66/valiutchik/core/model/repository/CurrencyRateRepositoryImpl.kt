@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.Rate
@@ -30,6 +31,7 @@ import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format.DateTimeFormat
 import kotlinx.datetime.format.char
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
@@ -135,21 +137,7 @@ class CurrencyRateRepositoryImpl(
 
         persistenceDataSource.saveRates(
             currencies.map {
-                Rate(
-                    id = (it.bankId + it.filialId).toLong(),
-                    date = LocalDate.parse(it.date, apiDateFormat).toString(),
-                    bankName = formattingDataSource.formatBankName(it.bankName),
-                    usdBuy = it.usdBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-                    usdSell = it.usdSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-                    eurBuy = it.eurBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-                    eurSell = it.eurSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-                    rubBuy = it.rubBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-                    rubSell = it.rubSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-                    plnBuy = it.plnBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-                    plnSell = it.plnSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-                    uahBuy = it.uahBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-                    uahSell = it.uahSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-                )
+                it.toRate(apiDateFormat)
             }
         )
     }
@@ -171,5 +159,21 @@ class CurrencyRateRepositoryImpl(
             RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0
             else -> rate.currencyValue ?: 0.0
         }
+    )
+
+    private fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
+        id = (bankId + filialId).toLongOrNull() ?: 0L,
+        date = LocalDate.parse(date, dateFormat).toString(),
+        bankName = formattingDataSource.formatBankName(bankName),
+        usdBuy = usdBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+        usdSell = usdSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+        eurBuy = eurBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+        eurSell = eurSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+        rubBuy = rubBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+        rubSell = rubSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+        plnBuy = plnBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+        plnSell = plnSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
+        uahBuy = uahBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
+        uahSell = uahSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
     )
 }
