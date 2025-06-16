@@ -24,11 +24,11 @@ import kotlinx.datetime.format.DateTimeFormat
 const val UNDEFINED_BUY_RATE = 0.0
 const val UNDEFINED_SELL_RATE = 999.0
 
-private const val UNDEFINED_DATE = "01.01.1970"
+private const val UNDEFINED_DATE = "1970-01-01"
 
 fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String): Rate = Rate(
     id = (bankId + filialId).toLongOrNull() ?: 0L,
-    date = LocalDate.parse(date.ifEmpty { UNDEFINED_DATE }, dateFormat).toString(),
+    date = resolveDate(date, dateFormat),
     bankName = formattedBankName,
     usdBuy = resolveRate(usdBuy, UNDEFINED_BUY_RATE),
     usdSell = resolveRate(usdSell, UNDEFINED_SELL_RATE),
@@ -47,4 +47,11 @@ private fun resolveRate(rate: String, defaultValue: Double): Double =
         rate.toDoubleOrNull() ?: defaultValue
     } else {
         defaultValue
+    }
+
+private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): String =
+    if (rawDate.isEmpty()) {
+        UNDEFINED_DATE
+    } else {
+        LocalDate.parse(rawDate, format).toString()
     }
