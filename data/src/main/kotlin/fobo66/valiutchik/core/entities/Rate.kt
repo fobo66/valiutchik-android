@@ -14,14 +14,25 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.core.data.testing.fake
+package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.util.CurrencyName
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class FakeBestCourseDataSource : BestCourseDataSource {
-    override fun findBestBuyCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
-
-    override fun findBestSellCurrencies(courses: Set<Bank>): Map<CurrencyName, Bank> = emptyMap()
-}
+@Entity(tableName = "rates")
+data class Rate(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    val date: String,
+    val bankName: String? = "",
+    val usdBuy: Double = 0.0,
+    val usdSell: Double = 0.0,
+    val eurBuy: Double = 0.0,
+    val eurSell: Double = 0.0,
+    val rubBuy: Double = 0.0,
+    val rubSell: Double = 0.0,
+    val plnBuy: Double = 0.0,
+    val plnSell: Double = 0.0,
+    val uahBuy: Double = 0.0,
+    val uahSell: Double = 0.0
+)

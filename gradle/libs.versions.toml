@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.37.3"
-androidGradlePlugin = "8.12.0-alpha04"
+androidGradlePlugin = "8.12.0-alpha05"
 androidxActivity = "1.12.0-alpha02"
 androidxAnnotations = "1.9.1"
 androidxBenchmark = "1.4.0-beta02"
@@ -34,7 +34,7 @@ kotlinxCoroutines = "1.10.2"
 kotlinxDatetime = "0.6.2"
 kotlinxSerialization = "1.8.1"
 ksp = "2.1.21-2.0.2"
-ktor = "3.1.3"
+ktor = "3.2.0"
 leakCanary = "2.14"
 licensesPlugin = "0.9.8"
 napier = "2.7.1"
@@ -83,6 +83,7 @@ compose-material-adaptive = { group = "androidx.compose.material3.adaptive", nam
 compose-material-adaptive-layout = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout" }
 compose-material-adaptive-navigation = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation" }
 compose-material-windowsize = { group = "androidx.compose.material3", name = "material3-window-size-class" }
+compose-stable-marker = { group = "androidx.compose.runtime", name = "runtime-annotation" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-ui-testing = { group = "androidx.compose.ui", name = "ui-test-junit4" }

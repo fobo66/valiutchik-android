@@ -57,11 +57,11 @@ val domainModule = module {
     }
 
     single<ForceRefreshExchangeRates> {
-        ForceRefreshExchangeRatesImpl(get(), get(), get(), get())
+        ForceRefreshExchangeRatesImpl(get(), get(), get())
     }
 
     single<ForceRefreshExchangeRatesForDefaultCity> {
-        ForceRefreshExchangeRatesForDefaultCityImpl(get(), get(), get())
+        ForceRefreshExchangeRatesForDefaultCityImpl(get(), get())
     }
 
     single<LoadDefaultCityPreference> {
@@ -69,7 +69,7 @@ val domainModule = module {
     }
 
     single<LoadExchangeRates> {
-        LoadExchangeRatesImpl(get(), get())
+        LoadExchangeRatesImpl(get())
     }
 
     single<LoadOpenSourceLicenses> {

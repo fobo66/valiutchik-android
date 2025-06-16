@@ -25,7 +25,7 @@ plugins {
 }
 
 android {
-    compileSdk = AndroidVersion.ApiBaseExtension.BAKLAVA.api.majorVersion
+    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.O
+        minSdk = AndroidVersion.VersionCodes.R
 
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }
@@ -65,6 +65,9 @@ dependencies {
     implementation(project(":data"))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.benchmark)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.datetime)
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }

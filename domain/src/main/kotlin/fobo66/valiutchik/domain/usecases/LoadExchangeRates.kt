@@ -18,8 +18,7 @@ package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 
 interface LoadExchangeRates {
-    fun execute(now: Instant): Flow<List<BestCurrencyRate>>
+    fun execute(): Flow<List<BestCurrencyRate>>
 }

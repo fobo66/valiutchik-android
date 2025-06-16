@@ -20,8 +20,6 @@ import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSource
-import fobo66.valiutchik.core.model.datasource.BestCourseDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
@@ -42,8 +40,6 @@ import fobo66.valiutchik.core.model.repository.ClipboardRepository
 import fobo66.valiutchik.core.model.repository.ClipboardRepositoryImpl
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepositoryImpl
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepository
-import fobo66.valiutchik.core.model.repository.CurrencyRatesTimestampRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.core.model.repository.LicensesRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
@@ -64,10 +60,6 @@ val dataSourcesModule =
 
         single<AssetsDataSource> {
             AssetsDataSourceImpl(get())
-        }
-
-        single<BestCourseDataSource> {
-            BestCourseDataSourceImpl()
         }
 
         single<ClipboardDataSource> {
@@ -116,11 +108,7 @@ val repositoriesModule =
         }
 
         single<CurrencyRateRepository> {
-            CurrencyRateRepositoryImpl(get(), get(), get(), get())
-        }
-
-        single<CurrencyRatesTimestampRepository> {
-            CurrencyRatesTimestampRepositoryImpl(get())
+            CurrencyRateRepositoryImpl(get(), get(), get())
         }
 
         single<LicensesRepository> {

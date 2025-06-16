@@ -16,8 +16,6 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import kotlinx.datetime.Instant
-
 interface ForceRefreshExchangeRates {
-    suspend fun execute(now: Instant)
+    suspend fun execute()
 }
