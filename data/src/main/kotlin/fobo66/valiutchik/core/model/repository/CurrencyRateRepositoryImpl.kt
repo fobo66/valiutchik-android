@@ -19,10 +19,11 @@ package fobo66.valiutchik.core.model.repository
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
-import fobo66.valiutchik.core.entities.Rate
+import fobo66.valiutchik.core.entities.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.core.entities.UNDEFINED_SELL_RATE
+import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.RUB
@@ -31,12 +32,9 @@ import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format.DateTimeFormat
 import kotlinx.datetime.format.char
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
-private const val UNDEFINED_BUY_RATE = 0.0
-private const val UNDEFINED_SELL_RATE = 999.0
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
@@ -137,7 +135,7 @@ class CurrencyRateRepositoryImpl(
 
         persistenceDataSource.saveRates(
             currencies.map {
-                it.toRate(apiDateFormat)
+                it.toRate(apiDateFormat, formattingDataSource.formatBankName(it.bankName))
             }
         )
     }
@@ -159,21 +157,5 @@ class CurrencyRateRepositoryImpl(
             RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0
             else -> rate.currencyValue ?: 0.0
         }
-    )
-
-    private fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
-        id = (bankId + filialId).toLongOrNull() ?: 0L,
-        date = LocalDate.parse(date.ifEmpty { "01.01.1970" }, dateFormat).toString(),
-        bankName = formattingDataSource.formatBankName(bankName),
-        usdBuy = usdBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-        usdSell = usdSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-        eurBuy = eurBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-        eurSell = eurSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-        rubBuy = rubBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-        rubSell = rubSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-        plnBuy = plnBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-        plnSell = plnSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,
-        uahBuy = uahBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
-        uahSell = uahSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
     )
 }
