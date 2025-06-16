@@ -163,7 +163,7 @@ class CurrencyRateRepositoryImpl(
 
     private fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
         id = (bankId + filialId).toLongOrNull() ?: 0L,
-        date = LocalDate.parse(date, dateFormat).toString(),
+        date = LocalDate.parse(date.ifEmpty { "01.01.1970" }, dateFormat).toString(),
         bankName = formattingDataSource.formatBankName(bankName),
         usdBuy = usdBuy.toDoubleOrNull() ?: UNDEFINED_BUY_RATE,
         usdSell = usdSell.toDoubleOrNull() ?: UNDEFINED_SELL_RATE,

@@ -29,6 +29,11 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+private const val RATE = 1.23
+private const val LOW_RATE = 0.0123
+private const val FORMATTED_RATE = "1.23"
+private const val CITY = "test"
+
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
     private val persistenceDataSource = FakePersistenceDataSource()
@@ -43,36 +48,32 @@ class CurrencyRateRepositoryTest {
         )
 
     @Test
-    fun `load exchange rates`() {
-        runTest {
-            currencyRateRepository.refreshExchangeRates("Minsk")
-        }
+    fun `load exchange rates`() = runTest {
+        currencyRateRepository.refreshExchangeRates(CITY)
 
         assertThat(persistenceDataSource.isSaved).isTrue()
     }
 
     @Test
-    fun `do not load exchange rates when there was an error`() {
+    fun `do not load exchange rates when there was an error`() = runTest {
         currencyRatesDataSource.isError = true
 
-        runTest {
-            assertThrows<CurrencyRatesLoadFailedException> {
-                currencyRateRepository.refreshExchangeRates("Minsk")
-            }
+        assertThrows<CurrencyRatesLoadFailedException> {
+            currencyRateRepository.refreshExchangeRates(CITY)
         }
     }
 
     @Test
     fun `normalize hryvnia rate`() {
-        val rate = BestCourse(currencyValue = 0.0123, currencyName = CurrencyName.UAH)
+        val rate = BestCourse(currencyValue = LOW_RATE, currencyName = CurrencyName.UAH)
         val result = currencyRateRepository.formatRate(rate)
-        assertThat(result).isEqualTo("1.23")
+        assertThat(result).isEqualTo(FORMATTED_RATE)
     }
 
     @Test
     fun `do not normalize dollar rate`() {
-        val rate = BestCourse(currencyValue = 1.23, currencyName = DOLLAR)
+        val rate = BestCourse(currencyValue = RATE, currencyName = DOLLAR)
         val result = currencyRateRepository.formatRate(rate)
-        assertThat(result).isEqualTo("1.23")
+        assertThat(result).isEqualTo(FORMATTED_RATE)
     }
 }
