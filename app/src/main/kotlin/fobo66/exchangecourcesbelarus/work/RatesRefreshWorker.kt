@@ -25,6 +25,7 @@ import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
 import io.github.aakira.napier.Napier
+import kotlin.time.measureTime
 
 const val WORKER_ARG_LOCATION_AVAILABLE = "isLocationAvailable"
 
@@ -35,14 +36,20 @@ class RatesRefreshWorker(
     params: WorkerParameters
 ) : CoroutineWorker(appContext, params) {
     override suspend fun doWork(): Result = try {
-        val isLocationAvailable = this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
+        val refreshTime = measureTime {
+            val isLocationAvailable =
+                this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
 
-        if (isLocationAvailable) {
-            refreshExchangeRates.execute()
-        } else {
-            refreshExchangeRatesForDefaultCity.execute()
+            if (isLocationAvailable) {
+                refreshExchangeRates.execute()
+            } else {
+                refreshExchangeRatesForDefaultCity.execute()
+            }
+            CurrencyWidget().updateAll(applicationContext)
         }
-        CurrencyWidget().updateAll(applicationContext)
+        Napier.d {
+            "Refresh took ${refreshTime.inWholeMilliseconds} ms"
+        }
         Result.success()
     } catch (e: CurrencyRatesLoadFailedException) {
         Napier.e("Background refresh failed", e)
