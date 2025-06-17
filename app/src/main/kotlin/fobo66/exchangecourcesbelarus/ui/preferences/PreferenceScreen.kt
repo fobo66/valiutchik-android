@@ -17,9 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui.preferences
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -28,7 +26,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
@@ -68,8 +65,7 @@ fun PreferenceScreen(
             updateIntervalValue = updateIntervalValue,
             onDefaultCityChange = onDefaultCityChange,
             onUpdateIntervalChange = onUpdateIntervalChange,
-            onOpenSourceLicensesClick = onOpenSourceLicensesClick,
-            modifier = Modifier.weight(1f)
+            onOpenSourceLicensesClick = onOpenSourceLicensesClick
         )
     }
 }
@@ -93,13 +89,11 @@ fun PreferenceScreenContent(
     }
 
     Column(
-        modifier = modifier
-            .testTag(TAG_PREFERENCES)
-            .background(MaterialTheme.colorScheme.background)
+        modifier = modifier.testTag(TAG_PREFERENCES)
     ) {
         ListPreference(
             title = {
-                Text(text = stringResource(id = R.string.pref_title_default_city))
+                Text(text = stringResource(id = string.pref_title_default_city))
             },
             value = defaultCityValue,
             entries = entries,
@@ -108,7 +102,7 @@ fun PreferenceScreenContent(
         )
         SeekBarPreference(
             title = {
-                Text(text = stringResource(id = R.string.pref_title_update_interval))
+                Text(text = stringResource(id = string.pref_title_update_interval))
             },
             value = updateIntervalValue,
             valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
@@ -118,7 +112,7 @@ fun PreferenceScreenContent(
         )
         TextPreference(
             title = {
-                Text(text = stringResource(id = R.string.title_activity_oss_licenses))
+                Text(text = stringResource(id = string.title_activity_oss_licenses))
             },
             onClick = onOpenSourceLicensesClick,
             modifier = Modifier.testTag(TAG_LICENSES)
@@ -128,7 +122,7 @@ fun PreferenceScreenContent(
 
 private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 
-@Preview(name = "Preferences", showBackground = true)
+@Preview
 @Composable
 private fun PreferenceScreenPreview() {
     ValiutchikTheme {
