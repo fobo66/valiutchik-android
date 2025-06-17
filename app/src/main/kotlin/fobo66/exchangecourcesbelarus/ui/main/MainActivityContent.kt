@@ -16,12 +16,12 @@
 
 package fobo66.exchangecourcesbelarus.ui.main
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -31,12 +31,13 @@ import androidx.compose.material3.adaptive.layout.AdaptStrategy
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldDefaults
+import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldPredictiveBackHandler
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -44,7 +45,6 @@ import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -93,15 +93,17 @@ fun MainScreenPanels(
             supportingPaneAdaptStrategy = AdaptStrategy.Hide
         )
     )
-    val scope = rememberCoroutineScope()
 
-    BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
+    ThreePaneScaffoldPredictiveBackHandler(
+        navigator = navigator,
+        backBehavior = BackNavigationBehavior.PopUntilScaffoldValueChange
+    )
 
     SupportingPaneScaffold(
         directive = navigator.scaffoldDirective,
         value = navigator.scaffoldValue,
         mainPane = {
-            AnimatedPane {
+            AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 BestRatesScreenDestination(
                     navigator = navigator,
                     snackbarHostState = snackbarHostState,
@@ -111,7 +113,7 @@ fun MainScreenPanels(
             }
         },
         supportingPane = {
-            AnimatedPane {
+            AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 PreferenceScreenDestination(
                     navigator = navigator,
                     canOpenSettings = canOpenSettings
@@ -119,7 +121,7 @@ fun MainScreenPanels(
             }
         },
         extraPane = {
-            AnimatedPane {
+            AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 OpenSourceLicensesDestination(navigator = navigator)
             }
         },
