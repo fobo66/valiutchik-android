@@ -27,10 +27,11 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.AdaptStrategy
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
+import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldDefaults
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
-import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -67,8 +68,7 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
             snackbarHostState = snackbarHostState,
             manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
             canOpenSettings =
-            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded &&
-                windowSizeClass.heightSizeClass != WindowHeightSizeClass.Expanded,
+            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
             modifier =
             Modifier.padding(
                 start = it.calculateStartPadding(layoutDirection),
@@ -88,7 +88,11 @@ fun MainScreenPanels(
     canOpenSettings: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val navigator = rememberSupportingPaneScaffoldNavigator()
+    val navigator = rememberSupportingPaneScaffoldNavigator(
+        adaptStrategies = SupportingPaneScaffoldDefaults.adaptStrategies(
+            supportingPaneAdaptStrategy = AdaptStrategy.Hide
+        )
+    )
     val scope = rememberCoroutineScope()
 
     BackHandler(navigator.canNavigateBack()) { scope.launch { navigator.navigateBack() } }
