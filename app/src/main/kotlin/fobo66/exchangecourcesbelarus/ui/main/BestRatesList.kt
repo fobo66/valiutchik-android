@@ -57,7 +57,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.NoRatesIndicator
+import fobo66.exchangecourcesbelarus.ui.ProgressIndicator
+import fobo66.exchangecourcesbelarus.ui.TAG_NO_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
@@ -94,7 +95,7 @@ fun BestRatesGrid(
         )
         Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
             if (it.isEmpty()) {
-                NoRatesIndicator()
+                ProgressIndicator(modifier = Modifier.testTag(TAG_NO_RATES))
             } else {
                 val state = rememberPullToRefreshState()
                 PullToRefreshBox(
@@ -235,7 +236,7 @@ private fun BestCurrencyRatesPreview() {
                 ),
                 BestCurrencyRate(
                     bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-                    currencyNameRes = R.string.app_name,
+                    currencyNameRes = R.string.action_about,
                     currencyValue = "1.23"
                 )
             ),

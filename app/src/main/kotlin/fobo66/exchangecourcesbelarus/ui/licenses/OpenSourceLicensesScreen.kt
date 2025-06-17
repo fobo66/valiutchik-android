@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
-import fobo66.exchangecourcesbelarus.ui.LoadingIndicator
+import fobo66.exchangecourcesbelarus.ui.ProgressIndicator
 import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -54,7 +54,7 @@ fun OpenSourceLicensesScreen(
             modifier = Modifier.weight(1f)
         ) { state ->
             if (state.licenses.isEmpty()) {
-                LoadingIndicator()
+                ProgressIndicator()
             } else {
                 LazyColumn {
                     items(licensesState.licenses) { item ->
