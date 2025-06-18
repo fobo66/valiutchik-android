@@ -15,6 +15,7 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.app)
@@ -80,10 +81,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         compose = true
     }
@@ -101,6 +98,12 @@ android {
     }
 
     namespace = "fobo66.exchangecourcesbelarus"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
 }
 
 detekt {

@@ -15,6 +15,7 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
@@ -59,13 +60,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+
     packaging {
         jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
     }
     namespace = "fobo66.valiutchik.core"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
 }
 
 room {

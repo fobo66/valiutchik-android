@@ -15,6 +15,7 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.test)
@@ -33,10 +34,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     defaultConfig {
         minSdk = AndroidVersion.VersionCodes.R
         targetSdk = AndroidVersion.VersionCodes.BAKLAVA
@@ -45,6 +42,12 @@ android {
     }
 
     targetProjectPath = ":app"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
 }
 
 // This is the configuration block for the Baseline Profile plugin.
