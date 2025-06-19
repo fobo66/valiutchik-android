@@ -17,9 +17,26 @@
 package fobo66.valiutchik.core.entities
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "rates")
+@Entity(
+    tableName = "rates",
+    indices = [
+        Index(
+            "usdBuy",
+            "usdSell",
+            "eurBuy",
+            "eurSell",
+            "rubBuy",
+            "rubSell",
+            "plnBuy",
+            "plnSell",
+            "uahBuy",
+            "uahSell"
+        )
+    ]
+)
 data class Rate(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
