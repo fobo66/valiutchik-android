@@ -69,16 +69,16 @@ class BestCoursePersistenceDataSourceBenchmark {
                         id = 0L,
                         date = LocalDate.now().toString(),
                         bankName = it.bankName,
-                        usdBuy = it.usdBuy.toDoubleOrNull() ?: 0.0,
-                        usdSell = it.usdSell.toDoubleOrNull() ?: 0.0,
-                        eurBuy = it.eurBuy.toDoubleOrNull() ?: 0.0,
-                        eurSell = it.eurSell.toDoubleOrNull() ?: 0.0,
-                        rubBuy = it.rubBuy.toDoubleOrNull() ?: 0.0,
-                        rubSell = it.rubSell.toDoubleOrNull() ?: 0.0,
-                        plnBuy = it.plnBuy.toDoubleOrNull() ?: 0.0,
-                        plnSell = it.plnSell.toDoubleOrNull() ?: 0.0,
-                        uahBuy = it.uahBuy.toDoubleOrNull() ?: 0.0,
-                        uahSell = it.uahSell.toDoubleOrNull() ?: 0.0
+                        usdBuy = it.usdBuy.rate,
+                        usdSell = it.usdSell.rate,
+                        eurBuy = it.eurBuy.rate,
+                        eurSell = it.eurSell.rate,
+                        rubBuy = it.rubBuy.rate,
+                        rubSell = it.rubSell.rate,
+                        plnBuy = it.plnBuy.rate,
+                        plnSell = it.plnSell.rate,
+                        uahBuy = it.uahBuy.rate,
+                        uahSell = it.uahSell.rate
                     )
                 }
         )

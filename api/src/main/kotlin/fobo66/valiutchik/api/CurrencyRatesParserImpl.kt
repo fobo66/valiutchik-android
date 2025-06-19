@@ -22,6 +22,7 @@ import androidx.collection.mutableScatterMapOf
 import androidx.collection.mutableScatterSetOf
 import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.ExchangeRateValue
 import java.io.IOException
 import java.io.InputStream
 import org.xmlpull.v1.XmlPullParser
@@ -146,16 +147,16 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
         bankAddress = get(TAG_NAME_BANK_ADDRESS).orEmpty(),
         bankPhone = get(TAG_NAME_BANK_PHONE).orEmpty(),
         bankName = get(TAG_NAME_BANK_NAME).orEmpty(),
-        usdBuy = get(TAG_NAME_USD_BUY).orEmpty(),
-        usdSell = get(TAG_NAME_USD_SELL).orEmpty(),
-        eurBuy = get(TAG_NAME_EUR_BUY).orEmpty(),
-        eurSell = get(TAG_NAME_EUR_SELL).orEmpty(),
-        rubBuy = get(TAG_NAME_RUR_BUY).orEmpty(),
-        rubSell = get(TAG_NAME_RUR_SELL).orEmpty(),
-        plnBuy = get(TAG_NAME_PLN_BUY).orEmpty(),
-        plnSell = get(TAG_NAME_PLN_SELL).orEmpty(),
-        uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
-        uahSell = get(TAG_NAME_UAH_SELL).orEmpty(),
+        usdBuy = ExchangeRateValue(get(TAG_NAME_USD_BUY)?.toDoubleOrNull() ?: 0.0),
+        usdSell = ExchangeRateValue(get(TAG_NAME_USD_SELL)?.toDoubleOrNull() ?: 0.0),
+        eurBuy = ExchangeRateValue(get(TAG_NAME_EUR_BUY)?.toDoubleOrNull() ?: 0.0),
+        eurSell = ExchangeRateValue(get(TAG_NAME_EUR_SELL)?.toDoubleOrNull() ?: 0.0),
+        rubBuy = ExchangeRateValue(get(TAG_NAME_RUR_BUY)?.toDoubleOrNull() ?: 0.0),
+        rubSell = ExchangeRateValue(get(TAG_NAME_RUR_SELL)?.toDoubleOrNull() ?: 0.0),
+        plnBuy = ExchangeRateValue(get(TAG_NAME_PLN_BUY)?.toDoubleOrNull() ?: 0.0),
+        plnSell = ExchangeRateValue(get(TAG_NAME_PLN_SELL)?.toDoubleOrNull() ?: 0.0),
+        uahBuy = ExchangeRateValue(get(TAG_NAME_UAH_BUY)?.toDoubleOrNull() ?: 0.0),
+        uahSell = ExchangeRateValue(get(TAG_NAME_UAH_SELL)?.toDoubleOrNull() ?: 0.0),
         conversionBuy = get(TAG_NAME_EURUSD_BUY).orEmpty(),
         conversionSell = get(TAG_NAME_EURUSD_SELL).orEmpty()
     )

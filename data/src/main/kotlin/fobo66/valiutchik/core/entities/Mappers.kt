@@ -17,7 +17,7 @@
 package fobo66.valiutchik.core.entities
 
 import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.core.UNKNOWN_COURSE
+import fobo66.valiutchik.api.entity.ExchangeRateValue
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.DateTimeFormat
 
@@ -42,9 +42,9 @@ fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String
     uahSell = resolveRate(uahSell, UNDEFINED_SELL_RATE)
 )
 
-private fun resolveRate(rate: String, defaultValue: Double): Double =
-    if (rate.isNotEmpty() && rate != UNKNOWN_COURSE) {
-        rate.toDoubleOrNull() ?: defaultValue
+private fun resolveRate(rate: ExchangeRateValue, defaultValue: Double): Double =
+    if (rate.rate != -1.0) {
+        rate.rate
     } else {
         defaultValue
     }

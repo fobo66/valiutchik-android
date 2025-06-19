@@ -69,34 +69,34 @@ data class Bank(
     val bankPhone: String = "",
     @XmlElement
     @XmlSerialName(TAG_NAME_USD_BUY)
-    val usdBuy: String = "",
+    val usdBuy: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_USD_SELL)
-    val usdSell: String = "",
+    val usdSell: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_EUR_BUY)
-    val eurBuy: String = "",
+    val eurBuy: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_EUR_SELL)
-    val eurSell: String = "",
+    val eurSell: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_RUR_BUY)
-    val rubBuy: String = "",
+    val rubBuy: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_RUR_SELL)
-    val rubSell: String = "",
+    val rubSell: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_PLN_BUY)
-    val plnBuy: String = "",
+    val plnBuy: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_PLN_SELL)
-    val plnSell: String = "",
+    val plnSell: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_BUY)
-    val uahBuy: String = "",
+    val uahBuy: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_SELL)
-    val uahSell: String = "",
+    val uahSell: ExchangeRateValue = ExchangeRateValue(0.0),
     @XmlElement
     @XmlSerialName(TAG_NAME_EURUSD_SELL)
     val conversionSell: String = "",
