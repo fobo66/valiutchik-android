@@ -23,12 +23,16 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.http.path
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 const val BASE_URL = "https://admin.myfin.by/"
+
+private const val CLACKS_KEY = "X-Clacks-Overhead"
+private const val CLACKS_VALUE = "GNU Terry Pratchett"
 
 class CurrencyRatesDataSourceImpl(
     private val client: HttpClient,
@@ -45,6 +49,7 @@ class CurrencyRatesDataSourceImpl(
                             path("outer", "authXml", cityIndex)
                         }
                         basicAuth(username, password)
+                        header(CLACKS_KEY, CLACKS_VALUE)
                     }
 
                 response.body<Banks>().banks
