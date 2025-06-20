@@ -27,6 +27,7 @@ import io.ktor.http.path
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.job
 import kotlinx.coroutines.withContext
 
 const val BASE_URL = "https://admin.myfin.by/"
@@ -53,7 +54,7 @@ class CurrencyRatesDataSourceImpl(
                         header(CLACKS_KEY, CLACKS_VALUE)
                     }
 
-                parser.parse(response.bodyAsChannel().toInputStream())
+                parser.parse(response.bodyAsChannel().toInputStream(coroutineContext.job))
             } catch (e: ResponseException) {
                 throw IOException(e)
             }
