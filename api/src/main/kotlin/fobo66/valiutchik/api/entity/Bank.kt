@@ -48,10 +48,10 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 data class Bank(
     @XmlElement
     @XmlSerialName(TAG_NAME_BANK_ID)
-    val bankId: String = "",
+    val bankId: Long = 0L,
     @XmlElement
     @XmlSerialName(TAG_NAME_FILIAL_ID)
-    val filialId: String = "",
+    val filialId: Long = 0L,
     @XmlElement
     @XmlSerialName(TAG_NAME_DATE)
     val date: String = "",

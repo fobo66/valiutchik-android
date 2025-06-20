@@ -140,8 +140,8 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
      * Builder for currency object
      */
     private fun MutableScatterMap<String, String>.toCurrency(): Bank = Bank(
-        bankId = get(TAG_NAME_BANK_ID).orEmpty(),
-        filialId = get(TAG_NAME_FILIAL_ID).orEmpty(),
+        bankId = get(TAG_NAME_BANK_ID)?.toLongOrNull() ?: 0L,
+        filialId = get(TAG_NAME_FILIAL_ID)?.toLongOrNull() ?: 0L,
         date = get(TAG_NAME_DATE).orEmpty(),
         filialName = get(TAG_NAME_FILIAL_NAME).orEmpty(),
         bankAddress = get(TAG_NAME_BANK_ADDRESS).orEmpty(),

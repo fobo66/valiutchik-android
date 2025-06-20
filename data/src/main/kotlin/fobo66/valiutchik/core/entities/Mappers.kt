@@ -27,7 +27,7 @@ const val UNDEFINED_SELL_RATE = 999.0
 private const val UNDEFINED_DATE = "1970-01-01"
 
 fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String): Rate = Rate(
-    id = (bankId + filialId).toLongOrNull() ?: 0L,
+    id = bankId + filialId,
     date = resolveDate(date, dateFormat),
     bankName = formattedBankName,
     usdBuy = resolveRate(usdBuy, UNDEFINED_BUY_RATE),
