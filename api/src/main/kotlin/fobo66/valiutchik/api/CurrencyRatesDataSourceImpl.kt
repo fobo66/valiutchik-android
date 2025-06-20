@@ -17,14 +17,14 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.api.entity.Banks
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.path
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -38,6 +38,7 @@ class CurrencyRatesDataSourceImpl(
     private val client: HttpClient,
     private val username: String,
     private val password: String,
+    private val parser: CurrencyRatesParser,
     private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
     override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
@@ -52,7 +53,7 @@ class CurrencyRatesDataSourceImpl(
                         header(CLACKS_KEY, CLACKS_VALUE)
                     }
 
-                response.body<Banks>().banks
+                parser.parse(response.bodyAsChannel().toInputStream())
             } catch (e: ResponseException) {
                 throw IOException(e)
             }
