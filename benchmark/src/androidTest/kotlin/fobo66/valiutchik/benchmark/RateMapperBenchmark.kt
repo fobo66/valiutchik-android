@@ -27,7 +27,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-private const val ID = "1"
+private const val ID = 1L
 private const val NAME = "test"
 private val RATE = ExchangeRateValue(1.23)
 private val UNKNOWN_COURSE = ExchangeRateValue(-1.0)
