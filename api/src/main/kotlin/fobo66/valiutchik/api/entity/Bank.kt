@@ -69,34 +69,34 @@ data class Bank(
     val bankPhone: String = "",
     @XmlElement
     @XmlSerialName(TAG_NAME_USD_BUY)
-    val usdBuy: ExchangeRateValue = ExchangeRateValue(0.0),
+    val usdBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_USD_SELL)
-    val usdSell: ExchangeRateValue = ExchangeRateValue(0.0),
+    val usdSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_EUR_BUY)
-    val eurBuy: ExchangeRateValue = ExchangeRateValue(0.0),
+    val eurBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_EUR_SELL)
-    val eurSell: ExchangeRateValue = ExchangeRateValue(0.0),
+    val eurSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_RUR_BUY)
-    val rubBuy: ExchangeRateValue = ExchangeRateValue(0.0),
+    val rubBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_RUR_SELL)
-    val rubSell: ExchangeRateValue = ExchangeRateValue(0.0),
+    val rubSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_PLN_BUY)
-    val plnBuy: ExchangeRateValue = ExchangeRateValue(0.0),
+    val plnBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_PLN_SELL)
-    val plnSell: ExchangeRateValue = ExchangeRateValue(0.0),
+    val plnSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_BUY)
-    val uahBuy: ExchangeRateValue = ExchangeRateValue(0.0),
+    val uahBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_SELL)
-    val uahSell: ExchangeRateValue = ExchangeRateValue(0.0),
+    val uahSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_EURUSD_SELL)
     val conversionSell: String = "",

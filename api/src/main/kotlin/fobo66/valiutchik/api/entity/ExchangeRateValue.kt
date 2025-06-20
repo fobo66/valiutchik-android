@@ -25,6 +25,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 const val UNDEFINED_RATE = -1.0
+const val UNDEFINED_BUY_RATE = 0.0
+const val UNDEFINED_SELL_RATE = 999.0
 
 @JvmInline
 @Serializable(with = ExchangeRateValueSerializer::class)

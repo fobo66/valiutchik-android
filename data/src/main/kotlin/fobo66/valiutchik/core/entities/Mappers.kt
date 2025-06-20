@@ -18,11 +18,10 @@ package fobo66.valiutchik.core.entities
 
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.ExchangeRateValue
+import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.DateTimeFormat
-
-const val UNDEFINED_BUY_RATE = 0.0
-const val UNDEFINED_SELL_RATE = 999.0
 
 private const val UNDEFINED_DATE = "1970-01-01"
 
