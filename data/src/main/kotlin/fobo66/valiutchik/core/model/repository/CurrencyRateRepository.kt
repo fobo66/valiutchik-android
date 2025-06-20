@@ -37,4 +37,5 @@ interface CurrencyRateRepository {
      * Format currency rate into human-readable form
      */
     fun formatRate(rate: BestCourse): String
+    fun formatBankName(rate: BestCourse): String
 }

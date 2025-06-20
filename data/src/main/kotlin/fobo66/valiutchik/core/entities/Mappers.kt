@@ -19,16 +19,17 @@ package fobo66.valiutchik.core.entities
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.ExchangeRateValue
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.DateTimeFormat
 
 private const val UNDEFINED_DATE = "1970-01-01"
 
-fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String): Rate = Rate(
+fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
     id = bankId + filialId,
     date = resolveDate(date, dateFormat),
-    bankName = formattedBankName,
+    bankName = bankName,
     usdBuy = resolveRate(usdBuy, UNDEFINED_BUY_RATE),
     usdSell = resolveRate(usdSell, UNDEFINED_SELL_RATE),
     eurBuy = resolveRate(eurBuy, UNDEFINED_BUY_RATE),
@@ -42,7 +43,7 @@ fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String
 )
 
 private fun resolveRate(rate: ExchangeRateValue, defaultValue: Double): Double =
-    if (rate.rate != -1.0) {
+    if (rate.rate != UNDEFINED_RATE) {
         rate.rate
     } else {
         defaultValue

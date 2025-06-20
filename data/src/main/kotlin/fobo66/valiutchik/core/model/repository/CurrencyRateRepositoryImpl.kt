@@ -135,10 +135,13 @@ class CurrencyRateRepositoryImpl(
 
         persistenceDataSource.saveRates(
             currencies.map {
-                it.toRate(apiDateFormat, formattingDataSource.formatBankName(it.bankName))
+                it.toRate(apiDateFormat)
             }
         )
     }
+
+    override fun formatBankName(rate: BestCourse): String =
+        formattingDataSource.formatBankName(rate.bankName.orEmpty())
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()

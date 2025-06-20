@@ -75,16 +75,16 @@ class RateMapperBenchmark {
 
     @Test
     fun parseFullBank() = benchmarkRule.measureRepeated {
-        fullBank.toRate(LocalDate.Formats.ISO, NAME)
+        fullBank.toRate(LocalDate.Formats.ISO)
     }
 
     @Test
     fun parseEmptyBank() = benchmarkRule.measureRepeated {
-        emptyBank.toRate(LocalDate.Formats.ISO, NAME)
+        emptyBank.toRate(LocalDate.Formats.ISO)
     }
 
     @Test
     fun parsePartialBank() = benchmarkRule.measureRepeated {
-        partialBank.toRate(LocalDate.Formats.ISO, NAME)
+        partialBank.toRate(LocalDate.Formats.ISO)
     }
 }
