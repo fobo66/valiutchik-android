@@ -21,7 +21,6 @@ import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.BankNameNormalizerImpl
-import fobo66.valiutchik.core.util.BankNameNormalizerRegexImpl
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,12 +37,6 @@ class BankNameNormalizerBenchmark {
     val benchmarkRule = BenchmarkRule()
 
     private val codeNormalizer: BankNameNormalizer = BankNameNormalizerImpl()
-    private val regexNormalizer: BankNameNormalizer = BankNameNormalizerRegexImpl()
-
-    @Test
-    fun normalizeViaRegex() = benchmarkRule.measureRepeated {
-        regexNormalizer.normalize(BANK_NAME)
-    }
 
     @Test
     fun normalizeViaCode() = benchmarkRule.measureRepeated {
