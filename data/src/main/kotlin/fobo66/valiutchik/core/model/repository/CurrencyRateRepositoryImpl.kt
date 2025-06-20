@@ -19,10 +19,10 @@ package fobo66.valiutchik.core.model.repository
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
-import fobo66.valiutchik.core.entities.UNDEFINED_BUY_RATE
-import fobo66.valiutchik.core.entities.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -135,10 +135,13 @@ class CurrencyRateRepositoryImpl(
 
         persistenceDataSource.saveRates(
             currencies.map {
-                it.toRate(apiDateFormat, formattingDataSource.formatBankName(it.bankName))
+                it.toRate(apiDateFormat)
             }
         )
     }
+
+    override fun formatBankName(rate: BestCourse): String =
+        formattingDataSource.formatBankName(rate.bankName.orEmpty())
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()

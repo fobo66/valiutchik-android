@@ -48,10 +48,10 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 data class Bank(
     @XmlElement
     @XmlSerialName(TAG_NAME_BANK_ID)
-    val bankId: String = "",
+    val bankId: Long = 0L,
     @XmlElement
     @XmlSerialName(TAG_NAME_FILIAL_ID)
-    val filialId: String = "",
+    val filialId: Long = 0L,
     @XmlElement
     @XmlSerialName(TAG_NAME_DATE)
     val date: String = "",
@@ -69,34 +69,34 @@ data class Bank(
     val bankPhone: String = "",
     @XmlElement
     @XmlSerialName(TAG_NAME_USD_BUY)
-    val usdBuy: String = "",
+    val usdBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_USD_SELL)
-    val usdSell: String = "",
+    val usdSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_EUR_BUY)
-    val eurBuy: String = "",
+    val eurBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_EUR_SELL)
-    val eurSell: String = "",
+    val eurSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_RUR_BUY)
-    val rubBuy: String = "",
+    val rubBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_RUR_SELL)
-    val rubSell: String = "",
+    val rubSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_PLN_BUY)
-    val plnBuy: String = "",
+    val plnBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_PLN_SELL)
-    val plnSell: String = "",
+    val plnSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_BUY)
-    val uahBuy: String = "",
+    val uahBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_SELL)
-    val uahSell: String = "",
+    val uahSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_EURUSD_SELL)
     val conversionSell: String = "",

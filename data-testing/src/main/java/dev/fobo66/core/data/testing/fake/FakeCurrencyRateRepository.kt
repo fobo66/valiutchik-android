@@ -31,4 +31,6 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
     override fun loadExchangeRates(): Flow<List<BestCourse>> = flowOf(emptyList())
 
     override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
+
+    override fun formatBankName(rate: BestCourse): String = rate.bankName.orEmpty()
 }

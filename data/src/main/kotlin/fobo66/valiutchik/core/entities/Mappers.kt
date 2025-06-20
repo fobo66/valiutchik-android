@@ -17,19 +17,19 @@
 package fobo66.valiutchik.core.entities
 
 import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.core.UNKNOWN_COURSE
+import fobo66.valiutchik.api.entity.ExchangeRateValue
+import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.DateTimeFormat
 
-const val UNDEFINED_BUY_RATE = 0.0
-const val UNDEFINED_SELL_RATE = 999.0
-
 private const val UNDEFINED_DATE = "1970-01-01"
 
-fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String): Rate = Rate(
-    id = (bankId + filialId).toLongOrNull() ?: 0L,
+fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
+    id = bankId + filialId,
     date = resolveDate(date, dateFormat),
-    bankName = formattedBankName,
+    bankName = bankName,
     usdBuy = resolveRate(usdBuy, UNDEFINED_BUY_RATE),
     usdSell = resolveRate(usdSell, UNDEFINED_SELL_RATE),
     eurBuy = resolveRate(eurBuy, UNDEFINED_BUY_RATE),
@@ -42,9 +42,9 @@ fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>, formattedBankName: String
     uahSell = resolveRate(uahSell, UNDEFINED_SELL_RATE)
 )
 
-private fun resolveRate(rate: String, defaultValue: Double): Double =
-    if (rate.isNotEmpty() && rate != UNKNOWN_COURSE) {
-        rate.toDoubleOrNull() ?: defaultValue
+private fun resolveRate(rate: ExchangeRateValue, defaultValue: Double): Double =
+    if (rate.rate != UNDEFINED_RATE) {
+        rate.rate
     } else {
         defaultValue
     }

@@ -19,6 +19,7 @@ package fobo66.valiutchik.domain.usecases
 import androidx.annotation.StringRes
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
+import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
@@ -55,14 +56,10 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
         currencyRateRepository.loadExchangeRates()
             .map { rates ->
                 rates.map {
-                    @StringRes val currencyNameRes =
-                        resolveCurrencyName(
-                            it.currencyName,
-                            it.isBuy == true
-                        )
+                    @StringRes val currencyNameRes = resolveCurrencyName(it)
 
                     BestCurrencyRate(
-                        bank = it.bankName.orEmpty(),
+                        bank = currencyRateRepository.formatBankName(it),
                         currencyNameRes = currencyNameRes,
                         currencyValue = currencyRateRepository.formatRate(it)
                     )
@@ -72,9 +69,9 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
             }
 
     @StringRes
-    private fun resolveCurrencyName(currencyName: CurrencyName?, isBuy: Boolean): Int {
-        val labelRes = currencyName?.let {
-            if (isBuy) {
+    private fun resolveCurrencyName(rate: BestCourse): Int {
+        val labelRes = rate.currencyName?.let {
+            if (rate.isBuy == true) {
                 buyLabels[it]
             } else {
                 sellLabels[it]

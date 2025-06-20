@@ -22,6 +22,9 @@ import androidx.collection.mutableScatterMapOf
 import androidx.collection.mutableScatterSetOf
 import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.ExchangeRateValue
+import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import java.io.IOException
 import java.io.InputStream
 import org.xmlpull.v1.XmlPullParser
@@ -139,23 +142,33 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
      * Builder for currency object
      */
     private fun MutableScatterMap<String, String>.toCurrency(): Bank = Bank(
-        bankId = get(TAG_NAME_BANK_ID).orEmpty(),
-        filialId = get(TAG_NAME_FILIAL_ID).orEmpty(),
+        bankId = get(TAG_NAME_BANK_ID)?.toLongOrNull() ?: 0L,
+        filialId = get(TAG_NAME_FILIAL_ID)?.toLongOrNull() ?: 0L,
         date = get(TAG_NAME_DATE).orEmpty(),
         filialName = get(TAG_NAME_FILIAL_NAME).orEmpty(),
         bankAddress = get(TAG_NAME_BANK_ADDRESS).orEmpty(),
         bankPhone = get(TAG_NAME_BANK_PHONE).orEmpty(),
         bankName = get(TAG_NAME_BANK_NAME).orEmpty(),
-        usdBuy = get(TAG_NAME_USD_BUY).orEmpty(),
-        usdSell = get(TAG_NAME_USD_SELL).orEmpty(),
-        eurBuy = get(TAG_NAME_EUR_BUY).orEmpty(),
-        eurSell = get(TAG_NAME_EUR_SELL).orEmpty(),
-        rubBuy = get(TAG_NAME_RUR_BUY).orEmpty(),
-        rubSell = get(TAG_NAME_RUR_SELL).orEmpty(),
-        plnBuy = get(TAG_NAME_PLN_BUY).orEmpty(),
-        plnSell = get(TAG_NAME_PLN_SELL).orEmpty(),
-        uahBuy = get(TAG_NAME_UAH_BUY).orEmpty(),
-        uahSell = get(TAG_NAME_UAH_SELL).orEmpty(),
+        usdBuy = ExchangeRateValue(get(TAG_NAME_USD_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
+        usdSell = ExchangeRateValue(
+            get(TAG_NAME_USD_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
+        ),
+        eurBuy = ExchangeRateValue(get(TAG_NAME_EUR_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
+        eurSell = ExchangeRateValue(
+            get(TAG_NAME_EUR_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
+        ),
+        rubBuy = ExchangeRateValue(get(TAG_NAME_RUR_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
+        rubSell = ExchangeRateValue(
+            get(TAG_NAME_RUR_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
+        ),
+        plnBuy = ExchangeRateValue(get(TAG_NAME_PLN_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
+        plnSell = ExchangeRateValue(
+            get(TAG_NAME_PLN_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
+        ),
+        uahBuy = ExchangeRateValue(get(TAG_NAME_UAH_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
+        uahSell = ExchangeRateValue(
+            get(TAG_NAME_UAH_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
+        ),
         conversionBuy = get(TAG_NAME_EURUSD_BUY).orEmpty(),
         conversionSell = get(TAG_NAME_EURUSD_SELL).orEmpty()
     )
