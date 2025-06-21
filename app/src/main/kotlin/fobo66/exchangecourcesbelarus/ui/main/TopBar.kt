@@ -52,10 +52,7 @@ fun PrimaryTopBar(
     val context = LocalContext.current
     TopAppBar(
         title = {
-            Text(
-                text = title,
-                modifier = Modifier.testTag(TAG_TITLE)
-            )
+            Text(text = title, modifier = Modifier.testTag(TAG_TITLE))
         },
         actions = {
             AppBarRow(
