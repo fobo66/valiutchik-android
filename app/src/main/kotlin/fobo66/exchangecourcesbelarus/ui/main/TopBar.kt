@@ -84,8 +84,9 @@ fun PrimaryTopBar(
                         icon = {
                             Icon(
                                 Icons.Default.Refresh,
-                                contentDescription = context.getString(R.string.widget_action_refresh)
-
+                                contentDescription = context.getString(
+                                    R.string.widget_action_refresh
+                                )
                             )
                         },
                         label = context.getString(R.string.widget_action_refresh)
