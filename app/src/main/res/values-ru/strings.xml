@@ -108,4 +108,5 @@
   <string name="share_rate">%s</string>
   <string name="share_rate_text">%1$s сегодня %2$s</string>
   <string name="share_description">Поделиться курсом валюты</string>
+  <string name="toolbar_action_more">Больше</string>
 </resources>

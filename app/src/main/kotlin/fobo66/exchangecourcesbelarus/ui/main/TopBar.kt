@@ -63,7 +63,7 @@ fun PrimaryTopBar(
                     IconButton(onClick = { it.show() }) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
-                            contentDescription = "More"
+                            contentDescription = stringResource(R.string.toolbar_action_more)
                         )
                     }
                 }
@@ -73,7 +73,7 @@ fun PrimaryTopBar(
                     icon = {
                         Icon(
                             Icons.Default.Info,
-                            contentDescription = null
+                            contentDescription = context.getString(R.string.action_about)
                         )
                     },
                     label = context.getString(R.string.action_about)
@@ -84,7 +84,7 @@ fun PrimaryTopBar(
                         icon = {
                             Icon(
                                 Icons.Default.Refresh,
-                                contentDescription = null
+                                contentDescription = context.getString(R.string.widget_action_refresh)
 
                             )
                         },
@@ -97,7 +97,7 @@ fun PrimaryTopBar(
                         icon = {
                             Icon(
                                 Icons.Default.Settings,
-                                contentDescription = null
+                                contentDescription = context.getString(R.string.action_settings)
                             )
                         },
                         label = context.getString(R.string.action_settings)

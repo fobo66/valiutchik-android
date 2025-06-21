@@ -38,6 +38,7 @@
   <string name="open_app">Open app</string>
   <string name="widget_action_refresh">Refresh</string>
   <string name="share_description">Share currency rate</string>
+  <string name="toolbar_action_more">More</string>
   <string-array name="pref_cities_list">
     <item>Ashmyany</item>
     <item>Asipovichy</item>
