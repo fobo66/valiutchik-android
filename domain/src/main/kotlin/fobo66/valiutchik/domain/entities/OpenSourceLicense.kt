@@ -16,10 +16,13 @@
 
 package fobo66.valiutchik.domain.entities
 
+import androidx.compose.runtime.Immutable
+
 /**
  * Entity that represents open source license information
  * for the given dependency to consume on the presentation layer
  */
+@Immutable
 data class OpenSourceLicense(
     val developers: List<String>,
     val licenses: List<String>,
