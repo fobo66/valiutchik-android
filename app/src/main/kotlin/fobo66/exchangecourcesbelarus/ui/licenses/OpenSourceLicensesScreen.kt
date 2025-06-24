@@ -29,11 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.entities.LicenseItem
 import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.ProgressIndicator
 import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -71,7 +71,7 @@ fun OpenSourceLicensesScreen(
 
 @Composable
 fun OpenSourceLicense(
-    item: LicenseItem,
+    item: OpenSourceLicense,
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -111,7 +111,7 @@ fun OpenSourceLicense(
 private fun OpenSourceLicensePreview() {
     ValiutchikTheme {
         OpenSourceLicense(
-            item = LicenseItem(
+            item = OpenSourceLicense(
                 authors = "The Android Open Source Project",
                 licenses = "The Apache Software License, Version 2.0",
                 project = "Activity Compose",

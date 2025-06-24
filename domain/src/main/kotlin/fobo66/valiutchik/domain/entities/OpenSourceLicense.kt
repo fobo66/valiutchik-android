@@ -24,10 +24,9 @@ import androidx.compose.runtime.Immutable
  */
 @Immutable
 data class OpenSourceLicense(
-    val developers: List<String>,
-    val licenses: List<String>,
     val project: String,
-    val url: String?,
-    val version: String,
-    val year: String?
+    val licenses: String,
+    val year: String,
+    val authors: String,
+    val url: String? = null
 )

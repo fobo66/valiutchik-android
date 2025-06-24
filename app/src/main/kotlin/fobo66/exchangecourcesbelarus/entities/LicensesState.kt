@@ -17,7 +17,8 @@
 package fobo66.exchangecourcesbelarus.entities
 
 import androidx.compose.runtime.Immutable
+import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-data class LicensesState(val licenses: ImmutableList<LicenseItem>)
+data class LicensesState(val licenses: ImmutableList<OpenSourceLicense>)
