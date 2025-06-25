@@ -80,17 +80,14 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.collection)
 
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.enforcedPlatform(libs.koin.android))
-
                 implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.client))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.auth))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.content))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.encoding))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.serialization))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.serialization.xml))
-                implementation(project.dependencies.enforcedPlatform(libs.kotlinx.serialization))
+                implementation(libs.ktor.client)
+                implementation(libs.ktor.auth)
+                implementation(libs.ktor.content)
+                implementation(libs.ktor.encoding)
+                implementation(libs.ktor.serialization)
+                implementation(libs.ktor.serialization.xml)
+                implementation(libs.kotlinx.serialization)
 
                 implementation(libs.napier)
             }
@@ -100,15 +97,17 @@ kotlin {
             dependencies {
                 implementation(libs.junit.api)
                 implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.enforcedPlatform(libs.koin.test))
+                implementation(libs.koin.test)
                 runtimeOnly(libs.junit.engine)
             }
         }
 
         androidMain {
             dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.android)
                 implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(project.dependencies.enforcedPlatform(libs.ktor.logging))
+                implementation(libs.ktor.logging)
             }
         }
 
