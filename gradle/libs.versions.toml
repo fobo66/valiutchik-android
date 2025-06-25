@@ -134,6 +134,7 @@ work-testing = { group = "androidx.work", name = "work-testing", version.ref = "
 [plugins]
 android-app = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-library-multiplatform = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 baseline-profile = { id = "androidx.baselineprofile", version.ref = "baselineProfilePlugin" }
 benchmark = { id = "androidx.benchmark", version.ref = "androidxBenchmark" }
