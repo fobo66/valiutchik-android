@@ -26,7 +26,6 @@ import fobo66.valiutchik.api.entity.ExchangeRateValue
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import java.io.IOException
-import java.io.InputStream
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 
@@ -56,7 +55,7 @@ class CurrencyRatesParserImpl : CurrencyRatesParser {
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    override fun parse(inputStream: InputStream): Set<Bank> = inputStream.bufferedReader().use {
+    override fun parse(body: String): Set<Bank> = body.reader().buffered().use {
         val parser =
             Xml.newPullParser().apply {
                 setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)

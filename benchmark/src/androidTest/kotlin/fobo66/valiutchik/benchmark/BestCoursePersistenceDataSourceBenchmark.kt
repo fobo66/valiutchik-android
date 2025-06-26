@@ -63,7 +63,7 @@ class BestCoursePersistenceDataSourceBenchmark {
                 .context.assets
                 .open("myfinFeed.xml")
         persistenceDataSource.saveRates(
-            parser.parse(myfinFeedFileStream)
+            parser.parse()
                 .map {
                     Rate(
                         id = 0L,

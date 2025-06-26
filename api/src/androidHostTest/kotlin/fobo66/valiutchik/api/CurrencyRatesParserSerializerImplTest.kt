@@ -27,21 +27,21 @@ class CurrencyRatesParserSerializerImplTest {
     @Test
     fun singleCurrency() {
         val testFileStream = openTestFile("singleCurrency.xml")
-        val currencies = parser.parse(testFileStream)
+        val currencies = parser.parse()
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun multipleCurrencies() {
         val testFileStream = openTestFile("multipleCurrencies.xml")
-        val currencies = parser.parse(testFileStream)
+        val currencies = parser.parse()
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun sameCurrenciesFilteredOut() {
         val testFileStream = openTestFile("sameCurrencies.xml")
-        val currencies = parser.parse(testFileStream)
+        val currencies = parser.parse()
         assertEquals(2, currencies.size)
     }
 
@@ -49,7 +49,7 @@ class CurrencyRatesParserSerializerImplTest {
     fun errorForIncorrectXml() {
         val testFileStream = openTestFile("wrongData.xml")
         assertFails {
-            parser.parse(testFileStream)
+            parser.parse()
         }
     }
 
