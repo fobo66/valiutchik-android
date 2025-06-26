@@ -116,7 +116,7 @@ class CurrencyRateRepositoryImpl(
 
     private val apiDateFormat by lazy(mode = LazyThreadSafetyMode.NONE) {
         LocalDate.Format {
-            dayOfMonth()
+            day()
             char('.')
             monthNumber()
             char('.')
