@@ -25,9 +25,9 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.io.IOException
 
 private const val GEOCODING_API_URL = "https://api.geoapify.com/v1/geocode/reverse"
 

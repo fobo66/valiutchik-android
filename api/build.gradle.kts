@@ -80,6 +80,9 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.collection)
 
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client)
                 implementation(libs.ktor.auth)
@@ -113,6 +116,9 @@ kotlin {
 
         getByName("androidHostTest") {
             dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.test)
+                implementation(kotlin("test"))
             }
         }
 

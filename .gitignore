@@ -21,4 +21,4 @@ build
 /keystore.properties
 .env
 *.log
-.kotlin/sessions
+.kotlin/

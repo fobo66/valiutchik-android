@@ -22,7 +22,7 @@ import fobo66.valiutchik.api.di.dispatchersModule
 import fobo66.valiutchik.api.di.networkModule
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngine
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 

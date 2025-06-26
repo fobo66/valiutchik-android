@@ -17,9 +17,9 @@
 package fobo66.valiutchik.api
 
 import java.io.InputStream
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import org.junit.jupiter.api.Test
 
 class CurrencyRatesParserSerializerImplTest {
     private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
