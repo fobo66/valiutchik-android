@@ -25,8 +25,9 @@ import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.Rate
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.junit.After
@@ -44,6 +45,7 @@ class PersistenceDataSourceTest {
             ).build()
     private val persistenceDataSource: PersistenceDataSource = PersistenceDataSourceImpl(db)
 
+    @OptIn(ExperimentalTime::class)
     private val date =
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
 
