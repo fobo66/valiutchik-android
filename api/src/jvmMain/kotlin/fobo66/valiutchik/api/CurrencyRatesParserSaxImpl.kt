@@ -30,7 +30,7 @@ import org.w3c.dom.Document
 import org.w3c.dom.NodeList
 import org.xml.sax.SAXException
 
-class CurrencyRatesParserImpl : CurrencyRatesParser {
+class CurrencyRatesParserSaxImpl : CurrencyRatesParser {
     private val neededTagNames by lazy(LazyThreadSafetyMode.NONE) {
         scatterSetOf(
             TAG_NAME_BANK_ID,
