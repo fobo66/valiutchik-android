@@ -16,19 +16,18 @@
 
 package fobo66.valiutchik.api.di
 
-import fobo66.valiutchik.api.R
-import org.koin.android.ext.koin.androidContext
+import Secrets
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val credentialsModule = module {
     single(qualifier(Api.USERNAME)) {
-        androidContext().getString(R.string.apiUsername)
+        Secrets.API_USERNAME
     }
     single(qualifier(Api.PASSWORD)) {
-        androidContext().getString(R.string.apiPassword)
+        Secrets.API_PASSWORD
     }
     single(qualifier(Api.GEOCODING_API_KEY)) {
-        androidContext().getString(R.string.geocoderApiKey)
+        Secrets.GEOAPIFY_API_KEY
     }
 }

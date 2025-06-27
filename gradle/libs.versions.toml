@@ -28,6 +28,7 @@ junit = "5.13.2"
 junitPlugin = "1.13.0.0"
 koin = "4.1.0"
 kotlin = "2.2.0"
+kotlinPoet = "2.2.0"
 kotlinter = "5.1.1"
 kotlinxCollections = "0.4.0"
 kotlinxCoroutines = "1.10.2"
@@ -104,6 +105,7 @@ koin-test = { group = "io.insert-koin", name = "koin-test-junit5" }
 koin-viewmodel = { group = "io.insert-koin", name = "koin-androidx-compose" }
 koin-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
 koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager" }
+kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
 kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollections" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
