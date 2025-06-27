@@ -39,6 +39,8 @@ fun generateSecrets(project: Project) {
         )
         .build()
     val secretsFile = FileSpec.builder("", "Secrets")
+        .indent("    ")
+        .addFileComment("%S", "Automatically generated file. DO NOT MODIFY")
         .addType(secretObject)
         .build()
 
