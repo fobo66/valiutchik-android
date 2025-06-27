@@ -21,8 +21,8 @@ import androidx.collection.mutableScatterSetOf
 import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.toCurrency
-import java.io.IOException
 import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.ParserConfigurationException
 import org.w3c.dom.Document
 import org.w3c.dom.NodeList
 import org.xml.sax.SAXException
@@ -52,7 +52,7 @@ class CurrencyRatesParserSaxImpl : CurrencyRatesParser {
         )
     }
 
-    @Throws(SAXException::class, IOException::class)
+    @Throws(SAXException::class, ParserConfigurationException::class)
     override fun parse(body: String): Set<Bank> {
         val dbFactory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
 
@@ -64,7 +64,6 @@ class CurrencyRatesParserSaxImpl : CurrencyRatesParser {
         return readCurrencies(document)
     }
 
-    @Throws(SAXException::class, IOException::class)
     private fun readCurrencies(document: Document): Set<Bank> {
         val result = mutableScatterSetOf<Bank>()
         val nodes = document.getElementsByTagName(ENTRY_TAG_NAME)
