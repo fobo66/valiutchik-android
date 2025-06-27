@@ -15,6 +15,7 @@
  */
 
 import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import org.gradle.api.Project
@@ -22,17 +23,17 @@ import org.gradle.api.Project
 fun generateSecrets(project: Project) {
     val secretObject = TypeSpec.objectBuilder("Secrets")
         .addProperty(
-            PropertySpec.builder(API_USERNAME, String::class)
+            PropertySpec.builder(API_USERNAME, String::class, KModifier.CONST)
                 .initializer("%S", loadSecret(project, API_USERNAME))
                 .build()
         )
         .addProperty(
-            PropertySpec.builder(API_PASSWORD, String::class)
+            PropertySpec.builder(API_PASSWORD, String::class, KModifier.CONST)
                 .initializer("%S", loadSecret(project, API_PASSWORD))
                 .build()
         )
         .addProperty(
-            PropertySpec.builder(GEOCODER_TOKEN, String::class)
+            PropertySpec.builder(GEOCODER_TOKEN, String::class, KModifier.CONST)
                 .initializer("%S", loadSecret(project, GEOCODER_TOKEN))
                 .build()
         )
