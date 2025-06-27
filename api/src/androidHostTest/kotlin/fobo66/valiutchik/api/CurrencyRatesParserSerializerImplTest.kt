@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.api
 
-import java.io.InputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
@@ -26,33 +25,34 @@ class CurrencyRatesParserSerializerImplTest {
 
     @Test
     fun singleCurrency() {
-        val testFileStream = openTestFile("singleCurrency.xml")
-        val currencies = parser.parse()
+        val testBody = openTestFile("singleCurrency.xml")
+        val currencies = parser.parse(testBody)
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun multipleCurrencies() {
-        val testFileStream = openTestFile("multipleCurrencies.xml")
-        val currencies = parser.parse()
+        val testBody = openTestFile("multipleCurrencies.xml")
+        val currencies = parser.parse(testBody)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun sameCurrenciesFilteredOut() {
-        val testFileStream = openTestFile("sameCurrencies.xml")
-        val currencies = parser.parse()
+        val testBody = openTestFile("sameCurrencies.xml")
+        val currencies = parser.parse(testBody)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun errorForIncorrectXml() {
-        val testFileStream = openTestFile("wrongData.xml")
+        val testBody = openTestFile("wrongData.xml")
         assertFails {
-            parser.parse()
+            parser.parse(testBody)
         }
     }
 
-    private fun openTestFile(fileName: String): InputStream =
-        javaClass.classLoader?.getResourceAsStream(fileName)!!
+    private fun openTestFile(fileName: String): String =
+        javaClass.classLoader?.getResourceAsStream(fileName)?.bufferedReader()
+            ?.readText().orEmpty()
 }
