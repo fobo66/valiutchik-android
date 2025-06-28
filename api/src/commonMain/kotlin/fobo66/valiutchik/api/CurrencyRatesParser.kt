@@ -13,28 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-plugins {
-    `kotlin-dsl`
-}
+package fobo66.valiutchik.api
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_21
-    }
-}
+import fobo66.valiutchik.api.entity.Bank
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(libs.dotenv.kotlin)
-    implementation(libs.kotlinpoet)
+/**
+ * XML parser for [MyFIN](myfin.by) dataset
+ */
+interface CurrencyRatesParser {
+    fun parse(body: String): Set<Bank>
 }

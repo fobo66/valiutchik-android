@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,6 @@ import io.github.cdimascio.dotenv.dotenv
 import org.gradle.api.Project
 
 fun loadSecret(project: Project, key: String): String = dotenv {
-  ignoreIfMissing = true
-  directory = project.layout.projectDirectory.asFile.path
+    ignoreIfMissing = true
+    directory = project.rootProject.layout.projectDirectory.asFile.path
 }[key]

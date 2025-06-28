@@ -18,60 +18,104 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
-    kotlin("android")
+    alias(libs.plugins.android.library.multiplatform)
+    kotlin("multiplatform")
     kotlin("plugin.serialization")
     alias(libs.plugins.detekt)
     alias(libs.plugins.junit)
     alias(libs.plugins.kotlinter)
 }
 
-android {
-    namespace = "fobo66.valiutchik.api"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
-
-    defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
-        resValue(
-            "string",
-            "apiUsername",
-            loadSecret(rootProject, API_USERNAME)
-        )
-
-        resValue(
-            "string",
-            "apiPassword",
-            loadSecret(rootProject, API_PASSWORD)
-        )
-
-        resValue(
-            "string",
-            "geocoderApiKey",
-            loadSecret(rootProject, GEOCODER_TOKEN)
-        )
-    }
-
-    buildTypes {
-        release {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+kotlin {
+    jvm {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
+    androidLibrary {
+        namespace = "fobo66.valiutchik.api"
+        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+
+        minSdk = AndroidVersion.VersionCodes.R
+
+        withHostTestBuilder {}.configure {}
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }
+
+        compilations.configureEach {
+            compilerOptions.configure {
+                jvmTarget = JvmTarget.JVM_17
+            }
+        }
+    }
+
+    iosArm64()
+    iosSimulatorArm64()
+
+    sourceSets {
+        commonMain {
+            generateSecrets(project)
+            dependencies {
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.androidx.collection)
+
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(libs.ktor.client)
+                implementation(libs.ktor.auth)
+                implementation(libs.ktor.content)
+                implementation(libs.ktor.encoding)
+                implementation(libs.ktor.logging)
+                implementation(libs.ktor.serialization)
+                implementation(libs.ktor.serialization.xml)
+                implementation(libs.kotlinx.serialization)
+
+                implementation(libs.napier)
+            }
+            kotlin.srcDir(project.layout.buildDirectory.dir("generated/source/secret"))
+        }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.test)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.android)
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(libs.ktor.logging)
+            }
+        }
+
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.test)
+                implementation(kotlin("test"))
+            }
+        }
+
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(libs.androidx.test.rules)
+                implementation(libs.androidx.test.junit)
+            }
+        }
     }
 }
 
@@ -80,32 +124,6 @@ detekt {
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.androidx.collection)
-
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.android)
-
-    implementation(platform(libs.ktor.bom))
-    debugImplementation(libs.ktor.logging)
-    implementation(libs.ktor.client)
-    implementation(libs.ktor.auth)
-    implementation(libs.ktor.content)
-    implementation(libs.ktor.encoding)
-    implementation(libs.ktor.serialization)
-    implementation(libs.ktor.serialization.xml)
-    implementation(libs.kotlinx.serialization)
-
-    implementation(libs.napier)
-
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
-
-    testImplementation(libs.junit.api)
-    testImplementation(platform(libs.koin.bom))
-    testImplementation(libs.koin.test)
-    testRuntimeOnly(libs.junit.engine)
-
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.androidx.test.junit)
 }

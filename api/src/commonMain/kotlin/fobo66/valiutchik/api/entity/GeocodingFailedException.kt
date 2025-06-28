@@ -13,28 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-plugins {
-    `kotlin-dsl`
-}
+package fobo66.valiutchik.api.entity
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_21
-    }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(libs.dotenv.kotlin)
-    implementation(libs.kotlinpoet)
-}
+class GeocodingFailedException(cause: Throwable?) : Throwable(cause)

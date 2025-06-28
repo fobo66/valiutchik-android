@@ -13,28 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-plugins {
-    `kotlin-dsl`
-}
+package fobo66.valiutchik.api.di
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_21
+import Secrets
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
+
+val credentialsModule = module {
+    single(qualifier(Api.USERNAME)) {
+        Secrets.API_USERNAME
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(libs.dotenv.kotlin)
-    implementation(libs.kotlinpoet)
+    single(qualifier(Api.PASSWORD)) {
+        Secrets.API_PASSWORD
+    }
+    single(qualifier(Api.GEOCODING_API_KEY)) {
+        Secrets.GEOAPIFY_API_KEY
+    }
 }

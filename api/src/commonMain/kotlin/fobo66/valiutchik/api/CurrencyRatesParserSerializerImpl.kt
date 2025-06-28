@@ -13,28 +13,18 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-plugins {
-    `kotlin-dsl`
-}
+package fobo66.valiutchik.api
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_21
+import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.Banks
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
+import nl.adaptivity.xmlutil.serialization.XML
+
+class CurrencyRatesParserSerializerImpl : CurrencyRatesParser {
+    @OptIn(ExperimentalXmlUtilApi::class)
+    override fun parse(body: String): Set<Bank> {
+        val banks = XML.decodeFromString<Banks>(body)
+        return banks.banks
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(libs.dotenv.kotlin)
-    implementation(libs.kotlinpoet)
 }
