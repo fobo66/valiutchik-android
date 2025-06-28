@@ -18,38 +18,36 @@ package fobo66.valiutchik.api
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 
 class CurrencyRatesParserSaxImplTest {
     private val parser: CurrencyRatesParser = CurrencyRatesParserSaxImpl()
 
     @Test
-    fun singleCurrency() {
+    fun `single currency`() {
         val testBody = openTestFile("singleCurrency.xml")
         val currencies = parser.parse(testBody)
         assertEquals(1, currencies.size)
     }
 
     @Test
-    fun multipleCurrencies() {
+    fun `multiple currencies`() {
         val testBody = openTestFile("multipleCurrencies.xml")
         val currencies = parser.parse(testBody)
         assertEquals(2, currencies.size)
     }
 
     @Test
-    fun sameCurrenciesFilteredOut() {
+    fun `same currencies filtered out`() {
         val testBody = openTestFile("sameCurrencies.xml")
         val currencies = parser.parse(testBody)
         assertEquals(2, currencies.size)
     }
 
     @Test
-    fun errorForIncorrectXml() {
+    fun `no currencies for incorrect xml`() {
         val testBody = openTestFile("wrongData.xml")
-        assertFails {
-            parser.parse(testBody)
-        }
+        val currencies = parser.parse(testBody)
+        assertEquals(0, currencies.size)
     }
 
     private fun openTestFile(fileName: String): String =

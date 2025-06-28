@@ -25,6 +25,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.ParserConfigurationException
 import org.w3c.dom.Document
 import org.w3c.dom.NodeList
+import org.xml.sax.InputSource
 import org.xml.sax.SAXException
 
 class CurrencyRatesParserSaxImpl : CurrencyRatesParser {
@@ -58,7 +59,7 @@ class CurrencyRatesParserSaxImpl : CurrencyRatesParser {
 
         val documentBuilder = dbFactory.newDocumentBuilder()
 
-        val document = documentBuilder.parse(body)
+        val document = documentBuilder.parse(InputSource(body.byteInputStream().buffered()))
 
         document.normalizeDocument()
         return readCurrencies(document)
