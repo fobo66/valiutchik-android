@@ -95,9 +95,15 @@ kotlin {
             kotlin.srcDir(project.layout.buildDirectory.dir("generated/source/secret"))
         }
 
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+
         jvmTest {
             dependencies {
-                implementation(kotlin("test-junit5"))
+                implementation(kotlin("test"))
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
             }
@@ -116,7 +122,7 @@ kotlin {
             dependencies {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
-                implementation(kotlin("test-junit5"))
+                implementation(kotlin("test"))
             }
         }
 
