@@ -57,13 +57,15 @@ class BestCoursePersistenceDataSourceBenchmark {
 
     @Before
     fun setUp() = runTest {
-        val myfinFeedFileStream =
+        val ratesResponseContent =
             InstrumentationRegistry
                 .getInstrumentation()
                 .context.assets
                 .open("myfinFeed.xml")
+                .bufferedReader()
+                .readText()
         persistenceDataSource.saveRates(
-            parser.parse()
+            parser.parse(ratesResponseContent)
                 .map {
                     Rate(
                         id = 0L,
