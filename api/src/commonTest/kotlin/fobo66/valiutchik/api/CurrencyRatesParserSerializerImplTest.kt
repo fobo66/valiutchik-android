@@ -20,39 +20,197 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
+private const val SINGLE_CURRENCY = """<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <bank>
+    <bankid>6</bankid>
+    <filialid>15</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.026</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </bank>
+</root>"""
+
+private const val MULTIPLE_CURRENCIES = """<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <bank>
+    <bankid>6</bankid>
+    <filialid>15</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.026</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </bank>
+  <bank>
+    <bankid>7</bankid>
+    <filialid>16</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.028</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </bank>
+</root>
+"""
+
+private const val SAME_CURRENCIES = """<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <bank>
+    <bankid>6</bankid>
+    <filialid>15</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.026</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </bank>
+  <bank>
+    <bankid>7</bankid>
+    <filialid>16</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.028</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </bank>
+  <bank>
+    <bankid>6</bankid>
+    <filialid>15</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.026</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </bank>
+</root>
+"""
+
+private const val WRONG_XML = """<?xml version="1.0" encoding="utf-8"?>
+<test>
+  <currency>
+    <bankid>6</bankid>
+    <filialid>15</filialid>
+    <date>14.03.2017</date>
+    <bankname>ЗАО «Альфа-Банк»</bankname>
+    <bankaddress>г. Минск, ул. Сурганова, 43</bankaddress>
+    <bankphone>(017) 217 64 64, 200 68 80, факс: (017) 200 17 00</bankphone>
+    <filialname>Головной офис ЗАО «Альфа-Банк»</filialname>
+    <usd_buy>1.904</usd_buy>
+    <usd_sell>1.922</usd_sell>
+    <eur_buy>2.026</eur_buy>
+    <eur_sell>2.045</eur_sell>
+    <rub_buy>0.0317</rub_buy>
+    <rub_sell>0.0326</rub_sell>
+    <pln_buy>-</pln_buy>
+    <pln_sell>-</pln_sell>
+    <uah_buy>-</uah_buy>
+    <uah_sell>-</uah_sell>
+    <eurusd_buy>1.05</eurusd_buy>
+    <eurusd_sell>1.079</eurusd_sell>
+  </currency>
+</test>
+"""
+
 class CurrencyRatesParserSerializerImplTest {
     private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl()
 
     @Test
-    fun singleCurrency() {
-        val testBody = openTestFile("singleCurrency.xml")
-        val currencies = parser.parse(testBody)
+    fun `single currency`() {
+        val currencies = parser.parse(SINGLE_CURRENCY)
         assertEquals(1, currencies.size)
     }
 
     @Test
-    fun multipleCurrencies() {
-        val testBody = openTestFile("multipleCurrencies.xml")
-        val currencies = parser.parse(testBody)
+    fun `multiple currencies`() {
+        val currencies = parser.parse(MULTIPLE_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
-    fun sameCurrenciesFilteredOut() {
-        val testBody = openTestFile("sameCurrencies.xml")
-        val currencies = parser.parse(testBody)
+    fun `same currencies filtered out`() {
+        val currencies = parser.parse(SAME_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
-    fun errorForIncorrectXml() {
-        val testBody = openTestFile("wrongData.xml")
+    fun `error for incorrect xml`() {
         assertFails {
-            parser.parse(testBody)
+            parser.parse(WRONG_XML)
         }
     }
-
-    private fun openTestFile(fileName: String): String =
-        javaClass.classLoader?.getResourceAsStream(fileName)?.bufferedReader()
-            ?.readText().orEmpty()
 }
