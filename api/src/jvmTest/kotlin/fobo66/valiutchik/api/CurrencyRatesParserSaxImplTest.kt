@@ -24,33 +24,25 @@ class CurrencyRatesParserSaxImplTest {
 
     @Test
     fun `single currency`() {
-        val testBody = openTestFile("singleCurrency.xml")
-        val currencies = parser.parse(testBody)
+        val currencies = parser.parse(SINGLE_CURRENCY)
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun `multiple currencies`() {
-        val testBody = openTestFile("multipleCurrencies.xml")
-        val currencies = parser.parse(testBody)
+        val currencies = parser.parse(MULTIPLE_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun `same currencies filtered out`() {
-        val testBody = openTestFile("sameCurrencies.xml")
-        val currencies = parser.parse(testBody)
+        val currencies = parser.parse(SAME_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun `no currencies for incorrect xml`() {
-        val testBody = openTestFile("wrongData.xml")
-        val currencies = parser.parse(testBody)
+        val currencies = parser.parse(WRONG_XML)
         assertEquals(0, currencies.size)
     }
-
-    private fun openTestFile(fileName: String): String =
-        javaClass.classLoader?.getResourceAsStream(fileName)?.bufferedReader()
-            ?.readText().orEmpty()
 }

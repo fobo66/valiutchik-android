@@ -17,7 +17,6 @@
 package fobo66.valiutchik.api
 
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.xmlpull.v1.XmlPullParserException
@@ -28,35 +27,24 @@ class CurrencyRatesParserImplTest {
 
     @Test
     fun singleCurrency() {
-        val body = openTestFile("singleCurrency.xml")
-        val currencies = parser.parse(body)
+        val currencies = parser.parse(SINGLE_CURRENCY)
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun multipleCurrencies() {
-        val body = openTestFile("multipleCurrencies.xml")
-        val currencies = parser.parse(body)
+        val currencies = parser.parse(MULTIPLE_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun sameCurrenciesFilteredOut() {
-        val body = openTestFile("sameCurrencies.xml")
-        val currencies = parser.parse(body)
+        val currencies = parser.parse(SAME_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test(expected = XmlPullParserException::class)
     fun errorForIncorrectXml() {
-        val body = openTestFile("wrongData.xml")
-        parser.parse(body)
+        parser.parse(WRONG_XML)
     }
-
-    private fun openTestFile(fileName: String): String = InstrumentationRegistry
-        .getInstrumentation()
-        .context.assets
-        .open(fileName)
-        .bufferedReader()
-        .readText()
 }
