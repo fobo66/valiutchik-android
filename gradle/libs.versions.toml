@@ -124,7 +124,6 @@ leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.re
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
