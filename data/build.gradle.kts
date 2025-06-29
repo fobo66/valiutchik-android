@@ -107,6 +107,7 @@ kotlin {
         getByName("androidHostTest") {
             dependencies {
                 api(project(":data-testing"))
+                implementation(libs.truth)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
