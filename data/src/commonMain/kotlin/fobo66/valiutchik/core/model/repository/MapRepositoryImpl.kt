@@ -25,26 +25,26 @@ const val URI_AUTHORITY = "0,0"
 const val URI_PARAM_KEY = "q"
 
 class MapRepositoryImpl(
-  private val uriDataSource: UriDataSource,
-  private val intentDataSource: IntentDataSource,
+    private val uriDataSource: UriDataSource,
+    private val intentDataSource: IntentDataSource
 ) : MapRepository {
-  override fun searchOnMap(query: CharSequence): String? {
-    val mapUri =
-      uriDataSource.prepareUri(
-        URI_SCHEME,
-        URI_AUTHORITY,
-        URI_PARAM_KEY,
-        query.toString(),
-      )
-    val intent = intentDataSource.createIntentUri(mapUri)
+    override fun searchOnMap(query: CharSequence): String? {
+        val mapUri =
+            uriDataSource.prepareUri(
+                URI_SCHEME,
+                URI_AUTHORITY,
+                URI_PARAM_KEY,
+                query.toString()
+            )
+        val intent = intentDataSource.createIntentUri(mapUri, "TODO")
 
-    val canResolveIntent = intentDataSource.checkIntentUri(intent)
+        val canResolveIntent = intentDataSource.checkIntentUri(intent)
 
-    return if (canResolveIntent) {
-      intent
-    } else {
-      Napier.e("Cannot show banks on map: maps app not found")
-      null
+        return if (canResolveIntent) {
+            intent
+        } else {
+            Napier.e("Cannot show banks on map: maps app not found")
+            null
+        }
     }
-  }
 }

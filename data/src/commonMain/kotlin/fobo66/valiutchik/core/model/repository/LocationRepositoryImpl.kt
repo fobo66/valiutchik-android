@@ -16,8 +16,6 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import android.Manifest
-import androidx.annotation.RequiresPermission
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
@@ -28,7 +26,6 @@ class LocationRepositoryImpl(
     private val geocodingDataSource: GeocodingDataSource
 ) : LocationRepository {
 
-    @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     override suspend fun resolveUserCity(defaultCity: String): String {
         val response = try {
             Napier.v("Resolving user's location")
