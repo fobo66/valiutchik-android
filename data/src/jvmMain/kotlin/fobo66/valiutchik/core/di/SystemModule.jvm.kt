@@ -16,13 +16,18 @@
 
 package fobo66.valiutchik.core.di
 
+import com.ibm.icu.util.ULocale
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSourceIcuImpl
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val systemModule: Module = module {
+    single {
+        ULocale.getDefault()
+    }
+
     single<FormattingDataSource> {
-        FormattingDataSourceIcuImpl()
+        FormattingDataSourceIcuImpl(get(), get())
     }
 }

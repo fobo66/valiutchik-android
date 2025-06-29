@@ -16,6 +16,14 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+internal const val LANG_BELARUSIAN = "bel"
+internal const val LANG_RU = "rus"
+internal const val BYN = "BYN"
+internal const val CYRILLIC_LATIN = "Cyrillic-Latin"
+internal const val BELARUSIAN_TRANSLITERATOR_ID = "Any_be-Cyrillic"
+internal const val BELARUSIAN_RULES =
+    "сск>ск;ло>ла;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Те>Тэ;Це>Цэ;и>і"
+
 interface FormattingDataSource {
     /**
      * Format currency rate as a monetary value

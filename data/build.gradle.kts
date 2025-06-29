@@ -87,6 +87,12 @@ kotlin {
             }
         }
 
+        jvmMain {
+            dependencies {
+                implementation(libs.icu)
+            }
+        }
+
         jvmTest {
             dependencies {
                 implementation(kotlin("test"))

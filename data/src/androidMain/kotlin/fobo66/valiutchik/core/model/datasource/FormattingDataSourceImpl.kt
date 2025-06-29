@@ -23,14 +23,6 @@ import fobo66.valiutchik.core.util.BankNameNormalizer
 import java.util.Locale
 import kotlin.LazyThreadSafetyMode.NONE
 
-internal const val LANG_BELARUSIAN = "bel"
-internal const val LANG_RU = "rus"
-private const val BYN = "BYN"
-private const val CYRILLIC_LATIN = "Cyrillic-Latin"
-private const val BELARUSIAN_TRANSLITERATOR_ID = "Any_be-Cyrillic"
-private const val BELARUSIAN_RULES =
-    "сск>ск;ло>ла;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Те>Тэ;Це>Цэ;и>і"
-
 class FormattingDataSourceImpl(
     private val locale: Locale,
     private val bankNameNormalizer: BankNameNormalizer

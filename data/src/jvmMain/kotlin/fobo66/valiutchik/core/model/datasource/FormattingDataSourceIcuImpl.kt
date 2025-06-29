@@ -16,14 +16,58 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-class FormattingDataSourceIcuImpl : FormattingDataSource {
+import com.ibm.icu.number.NumberFormatter
+import com.ibm.icu.text.Transliterator
+import com.ibm.icu.util.Currency
+import com.ibm.icu.util.ULocale
+import fobo66.valiutchik.core.util.BankNameNormalizer
+import kotlin.LazyThreadSafetyMode.NONE
+
+class FormattingDataSourceIcuImpl(
+    private val locale: ULocale,
+    private val bankNameNormalizer: BankNameNormalizer
+) : FormattingDataSource {
+    private val targetCurrency: Currency by lazy(NONE) {
+        Currency.getInstance(BYN)
+    }
+
     /**
      * Format currency rate as a monetary value
      */
-    override fun formatCurrencyValue(value: Double): String = value.toString()
+    override fun formatCurrencyValue(value: Double): String = NumberFormatter
+        .withLocale(locale)
+        .unit(targetCurrency)
+        .format(value)
+        .toString()
 
     /**
      * Clean up all the unnecessary parts from the bank name
      */
-    override fun formatBankName(name: String): String = name
+    override fun formatBankName(name: String): String {
+        val normalizedName = bankNameNormalizer.normalize(name)
+        val languageCode = locale.isO3Language
+
+        return if (languageCode == LANG_RU) {
+            normalizedName
+        } else {
+            transliterate(
+                normalizedName,
+                languageCode
+            )
+        }
+    }
+
+    private fun transliterate(bankName: String, languageCode: String): String {
+        val transliterator =
+            if (languageCode == LANG_BELARUSIAN) {
+                Transliterator.createFromRules(
+                    BELARUSIAN_TRANSLITERATOR_ID,
+                    BELARUSIAN_RULES,
+                    Transliterator.FORWARD
+                )
+            } else {
+                Transliterator.getInstance(CYRILLIC_LATIN)
+            }
+        return transliterator.transliterate(bankName)
+    }
 }
