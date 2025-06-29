@@ -19,7 +19,6 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
-import java.nio.charset.Charset
 
 class LicensesRepositoryImpl(
     private val assetsDataSource: AssetsDataSource,
@@ -30,7 +29,7 @@ class LicensesRepositoryImpl(
         val licensesFile =
             assetsDataSource.loadFile(
                 "open_source_licenses.json"
-            ).readString(Charset.defaultCharset())
+            ).readByteArray().decodeToString()
         return jsonDataSource.decodeLicenses(licensesFile) ?: emptyList()
     }
 }
