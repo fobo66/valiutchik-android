@@ -117,6 +117,7 @@ kotlin {
 
         getByName("androidDeviceTest") {
             dependencies {
+                api(project(":data-testing"))
                 implementation(kotlin("test"))
                 implementation(libs.truth)
                 implementation(libs.turbine)
