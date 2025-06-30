@@ -39,10 +39,7 @@ class RefreshInteractorWorkManagerImpl(private val workManager: WorkManager) : R
                 }
             }
 
-    override suspend fun handleRefresh(
-        isLocationAvailable: Boolean,
-        updateInterval: Long
-    ) {
+    override suspend fun handleRefresh(isLocationAvailable: Boolean, updateInterval: Long) {
         val workRequest =
             PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
                 .setConstraints(
