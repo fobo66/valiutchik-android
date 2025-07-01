@@ -45,7 +45,7 @@ class RefreshInteractorWorkManagerImpl(
                 }
             }
 
-    override suspend fun handleRefresh(isLocationAvailable: Boolean) {
+    override suspend fun initiateRefresh(isLocationAvailable: Boolean) {
         val updateIntervalHours = loadUpdateIntervalPreference.execute()
             .map { it.roundToLong() }
             .first()

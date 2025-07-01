@@ -31,7 +31,7 @@ class RefreshInteractorImpl(
 
     override val isRefreshInProgress: Flow<Boolean> = _isRefreshInProgress.asStateFlow()
 
-    override suspend fun handleRefresh(isLocationAvailable: Boolean) = try {
+    override suspend fun initiateRefresh(isLocationAvailable: Boolean) = try {
         _isRefreshInProgress.emit(true)
         val refreshTime = measureTime {
             if (isLocationAvailable) {

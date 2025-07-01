@@ -68,7 +68,7 @@ class MainViewModel(
             ::MainScreenStateTrigger
         ).filter { it.isRefreshTriggered && it.isLocationAvailable != null }
             .onEach {
-                refreshInteractor.handleRefresh(it.isLocationAvailable == true)
+                refreshInteractor.initiateRefresh(it.isLocationAvailable == true)
                 isRefreshTriggered.emit(false)
             }.flatMapLatest { refreshInteractor.isRefreshInProgress }
             .map {

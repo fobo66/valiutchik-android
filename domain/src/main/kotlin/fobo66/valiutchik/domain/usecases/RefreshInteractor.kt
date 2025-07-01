@@ -19,6 +19,16 @@ package fobo66.valiutchik.domain.usecases
 import kotlinx.coroutines.flow.Flow
 
 interface RefreshInteractor {
+
+    /**
+     * Flow to observe refresh progress
+     */
     val isRefreshInProgress: Flow<Boolean>
-    suspend fun handleRefresh(isLocationAvailable: Boolean)
+
+    /**
+     * Trigger rates refresh
+     *
+     * @param isLocationAvailable Whether the user's location can be obtained
+     */
+    suspend fun initiateRefresh(isLocationAvailable: Boolean)
 }
