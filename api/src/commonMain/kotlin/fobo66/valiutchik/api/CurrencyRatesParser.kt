@@ -16,11 +16,36 @@
 
 package fobo66.valiutchik.api
 
+import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 
 /**
  * XML parser for [MyFIN](myfin.by) dataset
  */
-interface CurrencyRatesParser {
-    fun parse(body: String): Set<Bank>
+abstract class CurrencyRatesParser {
+    internal val neededTagNames by lazy(LazyThreadSafetyMode.NONE) {
+        scatterSetOf(
+            TAG_NAME_BANK_ID,
+            TAG_NAME_FILIAL_ID,
+            TAG_NAME_DATE,
+            TAG_NAME_BANK_NAME,
+            TAG_NAME_FILIAL_NAME,
+            TAG_NAME_BANK_ADDRESS,
+            TAG_NAME_BANK_PHONE,
+            TAG_NAME_USD_BUY,
+            TAG_NAME_USD_SELL,
+            TAG_NAME_EUR_BUY,
+            TAG_NAME_EUR_SELL,
+            TAG_NAME_RUR_BUY,
+            TAG_NAME_RUR_SELL,
+            TAG_NAME_PLN_BUY,
+            TAG_NAME_PLN_SELL,
+            TAG_NAME_UAH_BUY,
+            TAG_NAME_UAH_SELL,
+            TAG_NAME_EURUSD_BUY,
+            TAG_NAME_EURUSD_SELL
+        )
+    }
+
+    abstract fun parse(body: String): Set<Bank>
 }
