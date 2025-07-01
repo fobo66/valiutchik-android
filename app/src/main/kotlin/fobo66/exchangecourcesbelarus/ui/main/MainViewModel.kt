@@ -21,8 +21,8 @@ import androidx.lifecycle.viewModelScope
 import fobo66.exchangecourcesbelarus.entities.MainScreenState
 import fobo66.exchangecourcesbelarus.ui.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
-import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
+import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.RefreshInteractor
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -39,14 +39,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    currencyRatesInteractor: CurrencyRatesInteractor,
+    loadExchangeRates: LoadExchangeRates,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap,
     private val refreshInteractor: RefreshInteractor
 ) : ViewModel() {
     val bestCurrencyRates =
-        currencyRatesInteractor
-            .loadExchangeRates()
+        loadExchangeRates.execute()
             .onEach {
                 if (it.isEmpty()) {
                     isRefreshTriggered.emit(true)
