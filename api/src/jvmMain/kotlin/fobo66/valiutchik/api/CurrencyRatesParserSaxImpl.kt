@@ -18,7 +18,6 @@ package fobo66.valiutchik.api
 
 import androidx.collection.mutableScatterMapOf
 import androidx.collection.mutableScatterSetOf
-import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.toCurrency
 import javax.xml.parsers.DocumentBuilderFactory
@@ -26,30 +25,7 @@ import org.w3c.dom.Document
 import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
 
-class CurrencyRatesParserSaxImpl : CurrencyRatesParser {
-    private val neededTagNames by lazy(LazyThreadSafetyMode.NONE) {
-        scatterSetOf(
-            TAG_NAME_BANK_ID,
-            TAG_NAME_FILIAL_ID,
-            TAG_NAME_DATE,
-            TAG_NAME_BANK_NAME,
-            TAG_NAME_FILIAL_NAME,
-            TAG_NAME_BANK_ADDRESS,
-            TAG_NAME_BANK_PHONE,
-            TAG_NAME_USD_BUY,
-            TAG_NAME_USD_SELL,
-            TAG_NAME_EUR_BUY,
-            TAG_NAME_EUR_SELL,
-            TAG_NAME_RUR_BUY,
-            TAG_NAME_RUR_SELL,
-            TAG_NAME_PLN_BUY,
-            TAG_NAME_PLN_SELL,
-            TAG_NAME_UAH_BUY,
-            TAG_NAME_UAH_SELL,
-            TAG_NAME_EURUSD_BUY,
-            TAG_NAME_EURUSD_SELL
-        )
-    }
+class CurrencyRatesParserSaxImpl : CurrencyRatesParser() {
 
     override fun parse(body: String): Set<Bank> {
         val dbFactory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
