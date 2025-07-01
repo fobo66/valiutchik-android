@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class RefreshInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
-    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
+    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity
 ) : RefreshInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
