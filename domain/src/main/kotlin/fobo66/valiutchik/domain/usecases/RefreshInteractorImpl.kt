@@ -38,7 +38,6 @@ class RefreshInteractorImpl(
         } else {
             refreshExchangeRatesForDefaultCity.execute()
         }
-
     } catch (e: CurrencyRatesLoadFailedException) {
         Napier.e("Refresh failed", e)
     } finally {
