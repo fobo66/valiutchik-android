@@ -60,6 +60,10 @@ private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): Str
     }
 
 private fun concatIds(primary: Long, secondary: Long): Long {
-    val secondaryLength = log10(secondary.toFloat()) + 1
+    val secondaryLength = if (secondary == 0L) {
+        1f
+    } else {
+        log10(secondary.toFloat()) + 1
+    }
     return (10f.pow(secondaryLength).roundToLong() * primary) + secondary
 }
