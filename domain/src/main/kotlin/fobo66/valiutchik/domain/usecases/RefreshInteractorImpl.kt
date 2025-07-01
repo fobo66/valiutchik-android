@@ -18,25 +18,31 @@ package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import io.github.aakira.napier.Napier
+import kotlin.time.measureTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class RefreshInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
-    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity
+    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
 ) : RefreshInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     override val isRefreshInProgress: Flow<Boolean> = _isRefreshInProgress.asStateFlow()
 
-    override suspend fun handleRefresh(isLocationAvailable: Boolean, updateInterval: Long) = try {
+    override suspend fun handleRefresh(isLocationAvailable: Boolean) = try {
         _isRefreshInProgress.emit(true)
+        val refreshTime = measureTime {
+            if (isLocationAvailable) {
+                refreshExchangeRates.execute()
+            } else {
+                refreshExchangeRatesForDefaultCity.execute()
+            }
+        }
 
-        if (isLocationAvailable) {
-            refreshExchangeRates.execute()
-        } else {
-            refreshExchangeRatesForDefaultCity.execute()
+        Napier.d {
+            "Refresh took ${refreshTime.inWholeMilliseconds} ms"
         }
     } catch (e: CurrencyRatesLoadFailedException) {
         Napier.e("Refresh failed", e)

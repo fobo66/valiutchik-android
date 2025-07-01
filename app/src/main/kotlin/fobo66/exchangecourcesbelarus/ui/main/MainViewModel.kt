@@ -66,11 +66,10 @@ class MainViewModel(
         combine(
             isRefreshTriggered,
             isLocationPermissionGranted,
-            currencyRatesInteractor.loadUpdateInterval(),
             ::MainScreenStateTrigger
         ).filter { it.isRefreshTriggered && it.isLocationAvailable != null }
             .onEach {
-                refreshInteractor.handleRefresh(it.isLocationAvailable == true, it.updateInterval)
+                refreshInteractor.handleRefresh(it.isLocationAvailable == true)
                 isRefreshTriggered.emit(false)
             }.flatMapLatest { refreshInteractor.isRefreshInProgress }
             .map {

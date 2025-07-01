@@ -23,14 +23,20 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.RefreshInteractor
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToLong
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 private const val WORK_BACKGROUND_REFRESH = "backgroundRefresh"
 
-class RefreshInteractorWorkManagerImpl(private val workManager: WorkManager) : RefreshInteractor {
+class RefreshInteractorWorkManagerImpl(
+    private val workManager: WorkManager,
+    private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
+) : RefreshInteractor {
     override val isRefreshInProgress: Flow<Boolean>
         get() = workManager.getWorkInfosForUniqueWorkFlow(WORK_BACKGROUND_REFRESH)
             .map { infos ->
@@ -39,9 +45,13 @@ class RefreshInteractorWorkManagerImpl(private val workManager: WorkManager) : R
                 }
             }
 
-    override suspend fun handleRefresh(isLocationAvailable: Boolean, updateInterval: Long) {
+    override suspend fun handleRefresh(isLocationAvailable: Boolean) {
+        val updateIntervalHours = loadUpdateIntervalPreference.execute()
+            .map { it.roundToLong() }
+            .first()
+
         val workRequest =
-            PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateInterval, TimeUnit.HOURS)
+            PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateIntervalHours, TimeUnit.HOURS)
                 .setConstraints(
                     Constraints
                         .Builder()

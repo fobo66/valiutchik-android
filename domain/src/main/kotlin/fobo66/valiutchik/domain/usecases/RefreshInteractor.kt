@@ -20,5 +20,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RefreshInteractor {
     val isRefreshInProgress: Flow<Boolean>
-    suspend fun handleRefresh(isLocationAvailable: Boolean, updateInterval: Long)
+    suspend fun handleRefresh(isLocationAvailable: Boolean)
 }

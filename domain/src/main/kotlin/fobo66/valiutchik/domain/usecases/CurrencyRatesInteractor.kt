@@ -24,5 +24,4 @@ import kotlinx.coroutines.flow.Flow
  */
 interface CurrencyRatesInteractor {
     fun loadExchangeRates(): Flow<List<BestCurrencyRate>>
-    fun loadUpdateInterval(): Flow<Long>
 }

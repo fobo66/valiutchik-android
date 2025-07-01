@@ -26,6 +26,6 @@ import org.koin.dsl.module
 
 val workersModule = module {
     single { WorkManager.getInstance(androidContext()) }
-    single<RefreshInteractor> { RefreshInteractorWorkManagerImpl(get()) }
+    single<RefreshInteractor> { RefreshInteractorWorkManagerImpl(get(), get()) }
     worker { RatesRefreshWorker(get(), get(), androidContext(), get()) }
 }
