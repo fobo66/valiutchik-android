@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test
 
 private const val ID = 1L
 private const val TEST = "test"
+private const val RAW_RATE = 1.23
 private val RATE = ExchangeRateValue(1.23)
 private val UNKNOWN_COURSE = ExchangeRateValue(-1.0)
 private const val DATE = "2025-07-01"
@@ -79,6 +80,12 @@ class MappersTest {
             }
         )
         assertThat(rate.date).isEqualTo(DATE)
+    }
+
+    @Test
+    fun `parse rate`() {
+        val rate = buildBank().toRate(LocalDate.Formats.ISO)
+        assertThat(rate.usdBuy).isEqualTo(RAW_RATE)
     }
 
     @Test
