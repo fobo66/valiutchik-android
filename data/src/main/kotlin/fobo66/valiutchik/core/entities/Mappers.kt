@@ -21,13 +21,16 @@ import fobo66.valiutchik.api.entity.ExchangeRateValue
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
+import kotlin.math.log10
+import kotlin.math.pow
+import kotlin.math.roundToLong
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.DateTimeFormat
 
 private const val UNDEFINED_DATE = "1970-01-01"
 
 fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
-    id = bankId + filialId,
+    id = concatIds(bankId, filialId),
     date = resolveDate(date, dateFormat),
     bankName = bankName,
     usdBuy = resolveRate(usdBuy, UNDEFINED_BUY_RATE),
@@ -55,3 +58,8 @@ private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): Str
     } else {
         LocalDate.parse(rawDate, format).toString()
     }
+
+private fun concatIds(primary: Long, secondary: Long): Long {
+    val secondaryLength = log10(secondary.toFloat()) + 1
+    return (10f.pow(secondaryLength).roundToLong() * primary) + secondary
+}
