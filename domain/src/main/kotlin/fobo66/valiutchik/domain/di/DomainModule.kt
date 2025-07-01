@@ -19,8 +19,6 @@ package fobo66.valiutchik.domain.di
 import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
-import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractor
-import fobo66.valiutchik.domain.usecases.CurrencyRatesInteractorImpl
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.FindBankOnMapImpl
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
@@ -46,10 +44,6 @@ val domainModule = module {
 
     single<CopyCurrencyRateToClipboard> {
         CopyCurrencyRateToClipboardImpl(get())
-    }
-
-    single<CurrencyRatesInteractor> {
-        CurrencyRatesInteractorImpl(get(), get())
     }
 
     single<FindBankOnMap> {

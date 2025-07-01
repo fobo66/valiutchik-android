@@ -18,11 +18,14 @@ package fobo66.exchangecourcesbelarus.di
 
 import androidx.work.WorkManager
 import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
+import fobo66.exchangecourcesbelarus.work.RefreshInteractorWorkManagerImpl
+import fobo66.valiutchik.domain.usecases.RefreshInteractor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 
 val workersModule = module {
     single { WorkManager.getInstance(androidContext()) }
+    single<RefreshInteractor> { RefreshInteractorWorkManagerImpl(get(), get()) }
     worker { RatesRefreshWorker(get(), get(), androidContext(), get()) }
 }

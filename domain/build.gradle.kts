@@ -76,12 +76,15 @@ dependencies {
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 
+    testApi(project(":domain-testing"))
     testApi(project(":data-testing"))
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
     testImplementation(platform(libs.koin.bom))
     testImplementation(libs.koin.test)
     testImplementation(libs.ktor.client)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.androidx.test.runner)

@@ -16,12 +16,17 @@
 
 package dev.fobo66.domain.testing.fake
 
+import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 
 class FakeForceRefreshExchangeRates : ForceRefreshExchangeRates {
     var isRefreshed: Boolean = false
 
-    override suspend fun execute() {
+    var error: Boolean = false
+
+    override suspend fun execute() = if (error) {
+        throw CurrencyRatesLoadFailedException(Throwable("test"))
+    } else {
         isRefreshed = true
     }
 }

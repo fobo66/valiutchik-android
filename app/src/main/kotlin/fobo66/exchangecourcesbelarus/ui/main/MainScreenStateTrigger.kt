@@ -18,6 +18,5 @@ package fobo66.exchangecourcesbelarus.ui.main
 
 data class MainScreenStateTrigger(
     val isRefreshTriggered: Boolean,
-    val isLocationAvailable: Boolean?,
-    val updateInterval: Long
+    val isLocationAvailable: Boolean?
 )
