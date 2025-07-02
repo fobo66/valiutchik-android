@@ -19,37 +19,13 @@ package fobo66.valiutchik.api
 import android.util.Xml
 import androidx.collection.mutableScatterMapOf
 import androidx.collection.mutableScatterSetOf
-import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.toCurrency
 import java.io.IOException
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 
-class CurrencyRatesParserImpl : CurrencyRatesParser {
-    private val neededTagNames by lazy(LazyThreadSafetyMode.NONE) {
-        scatterSetOf(
-            TAG_NAME_BANK_ID,
-            TAG_NAME_FILIAL_ID,
-            TAG_NAME_DATE,
-            TAG_NAME_BANK_NAME,
-            TAG_NAME_FILIAL_NAME,
-            TAG_NAME_BANK_ADDRESS,
-            TAG_NAME_BANK_PHONE,
-            TAG_NAME_USD_BUY,
-            TAG_NAME_USD_SELL,
-            TAG_NAME_EUR_BUY,
-            TAG_NAME_EUR_SELL,
-            TAG_NAME_RUR_BUY,
-            TAG_NAME_RUR_SELL,
-            TAG_NAME_PLN_BUY,
-            TAG_NAME_PLN_SELL,
-            TAG_NAME_UAH_BUY,
-            TAG_NAME_UAH_SELL,
-            TAG_NAME_EURUSD_BUY,
-            TAG_NAME_EURUSD_SELL
-        )
-    }
+class CurrencyRatesParserImpl : CurrencyRatesParser() {
 
     @Throws(XmlPullParserException::class, IOException::class)
     override fun parse(body: String): Set<Bank> = body.reader().buffered().use {

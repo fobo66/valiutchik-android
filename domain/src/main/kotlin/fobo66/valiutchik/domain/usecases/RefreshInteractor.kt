@@ -16,13 +16,19 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Collection of use cases related to currency rates
- */
-interface CurrencyRatesInteractor {
-    fun loadExchangeRates(): Flow<List<BestCurrencyRate>>
-    fun loadUpdateInterval(): Flow<Long>
+interface RefreshInteractor {
+
+    /**
+     * Flow to observe refresh progress
+     */
+    val isRefreshInProgress: Flow<Boolean>
+
+    /**
+     * Trigger rates refresh
+     *
+     * @param isLocationAvailable Whether the user's location can be obtained
+     */
+    suspend fun initiateRefresh(isLocationAvailable: Boolean)
 }

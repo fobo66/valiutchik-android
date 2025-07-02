@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.api.entity
 
+import kotlin.jvm.JvmInline
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
