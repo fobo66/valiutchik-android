@@ -16,32 +16,16 @@
 
 package fobo66.valiutchik.core.di
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import androidx.sqlite.driver.AndroidSQLiteDriver
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
-import org.koin.android.ext.koin.androidContext
+import java.io.File
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val thirdPartyModule: Module = module {
 
-    single<CurrencyRatesDatabase> {
-        val dbFile = androidContext().getDatabasePath(DATABASE_NAME)
-        Room.databaseBuilder<CurrencyRatesDatabase>(
-            context = androidContext(),
-            name = dbFile.absolutePath
-        )
-            .setDriver(AndroidSQLiteDriver())
-            .build()
-    }
-
-    single<DataStore<Preferences>> {
-        PreferenceDataStoreFactory.create {
-            androidContext().preferencesDataStoreFile("valiutchik-prefs")
-        }
+    single {
+        val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
+        Room.databaseBuilder<CurrencyRatesDatabase>(name = dbFile.absolutePath)
     }
 }

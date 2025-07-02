@@ -20,6 +20,7 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.DeleteTable
 import androidx.room.RoomDatabase
+import androidx.room.RoomDatabaseConstructor
 import androidx.room.migration.AutoMigrationSpec
 import fobo66.valiutchik.core.entities.Rate
 
@@ -36,6 +37,12 @@ import fobo66.valiutchik.core.entities.Rate
 )
 abstract class CurrencyRatesDatabase : RoomDatabase() {
     abstract fun ratesDao(): RatesDao
+}
+
+// The Room compiler generates the `actual` implementations.
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<CurrencyRatesDatabase> {
+    override fun initialize(): CurrencyRatesDatabase
 }
 
 @DeleteTable.Entries(
