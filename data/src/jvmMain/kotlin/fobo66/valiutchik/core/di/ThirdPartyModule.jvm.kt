@@ -16,16 +16,28 @@
 
 package fobo66.valiutchik.core.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import java.io.File
+import okio.Path.Companion.toPath
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val thirdPartyModule: Module = module {
 
-    single {
+    single<CurrencyRatesDatabase> {
         val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
         Room.databaseBuilder<CurrencyRatesDatabase>(name = dbFile.absolutePath)
+            .build()
+    }
+
+    single<DataStore<Preferences>> {
+        PreferenceDataStoreFactory.createWithPath {
+            val file = File(System.getProperty("java.io.tmpdir"), PREFERENCES_NAME)
+            file.absolutePath.toPath()
+        }
     }
 }

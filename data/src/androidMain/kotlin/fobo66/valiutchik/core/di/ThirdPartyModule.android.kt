@@ -41,7 +41,7 @@ actual val thirdPartyModule: Module = module {
 
     single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.create {
-            androidContext().preferencesDataStoreFile("valiutchik-prefs")
+            androidContext().preferencesDataStoreFile(PREFERENCES_NAME)
         }
     }
 }

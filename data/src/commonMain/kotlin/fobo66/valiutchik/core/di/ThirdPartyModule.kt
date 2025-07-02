@@ -19,4 +19,6 @@ package fobo66.valiutchik.core.di
 import org.koin.core.module.Module
 
 internal const val DATABASE_NAME = "currency-rates"
+internal const val PREFERENCES_NAME = "valiutchik-prefs"
+
 expect val thirdPartyModule: Module
