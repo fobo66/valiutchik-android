@@ -19,6 +19,8 @@ package fobo66.valiutchik.core.di
 import com.ibm.icu.util.ULocale
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSourceIcuImpl
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
+import fobo66.valiutchik.core.model.datasource.IntentDataSourceDesktopImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceStubImpl
 import org.koin.core.module.Module
@@ -34,4 +36,6 @@ actual val systemModule: Module = module {
     }
 
     single<LocationDataSource> { LocationDataSourceStubImpl() }
+
+    single<IntentDataSource> { IntentDataSourceDesktopImpl() }
 }

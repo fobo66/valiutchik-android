@@ -16,15 +16,13 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import android.content.Context
-import android.content.Intent
 import com.eygraber.uri.Uri
-import com.eygraber.uri.toAndroidUri
+import java.awt.Desktop
 
-class IntentDataSourceImpl(private val context: Context) : IntentDataSource {
-    override fun createIntentUri(uri: Uri, action: String): String =
-        Intent(action, uri.toAndroidUri()).toUri(0)
+class IntentDataSourceDesktopImpl : IntentDataSource {
+    override fun createIntentUri(uri: Uri, action: String): String = uri.toString()
 
-    override fun checkIntentUri(uri: String): Boolean =
-        Intent.parseUri(uri, 0).resolveActivity(context.packageManager) != null
+    override fun checkIntentUri(uri: String): Boolean = Desktop.isDesktopSupported() &&
+        Desktop.getDesktop()
+            .isSupported(Desktop.Action.BROWSE)
 }
