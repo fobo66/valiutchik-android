@@ -16,10 +16,10 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import okio.BufferedSource
+import kotlinx.io.Source
+import kotlinx.io.asSource
+import kotlinx.io.buffered
 import okio.FileNotFoundException
-import okio.buffer
-import okio.source
 
 class AssetsDataSourceJvmImpl : AssetsDataSource {
     /**
@@ -27,7 +27,7 @@ class AssetsDataSourceJvmImpl : AssetsDataSource {
      *
      * @param fileName Name of the asset file. It should exist in the assets
      */
-    override fun loadFile(fileName: String): BufferedSource =
-        javaClass.classLoader.getResourceAsStream(fileName)?.source()?.buffer()
+    override fun loadFile(fileName: String): Source =
+        javaClass.classLoader.getResourceAsStream(fileName)?.asSource()?.buffered()
             ?: throw FileNotFoundException("Asset not found")
 }

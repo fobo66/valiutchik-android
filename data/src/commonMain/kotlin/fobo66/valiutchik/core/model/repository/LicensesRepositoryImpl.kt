@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
+import kotlinx.io.readByteArray
 
 class LicensesRepositoryImpl(
     private val assetsDataSource: AssetsDataSource,

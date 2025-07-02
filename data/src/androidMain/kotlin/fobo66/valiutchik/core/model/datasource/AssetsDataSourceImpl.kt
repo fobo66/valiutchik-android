@@ -17,11 +17,11 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.content.res.AssetManager
-import okio.BufferedSource
-import okio.buffer
-import okio.source
+import kotlinx.io.Source
+import kotlinx.io.asSource
+import kotlinx.io.buffered
 
 class AssetsDataSourceImpl(private val assetManager: AssetManager) : AssetsDataSource {
-    override fun loadFile(fileName: String): BufferedSource =
-        assetManager.open(fileName).source().buffer()
+    override fun loadFile(fileName: String): Source =
+        assetManager.open(fileName).asSource().buffered()
 }
