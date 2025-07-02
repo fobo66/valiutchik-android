@@ -17,6 +17,8 @@
 package fobo66.valiutchik.core.di
 
 import com.ibm.icu.util.ULocale
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSourceIcuImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
@@ -38,4 +40,6 @@ actual val systemModule: Module = module {
     single<LocationDataSource> { LocationDataSourceStubImpl() }
 
     single<IntentDataSource> { IntentDataSourceDesktopImpl() }
+
+    single<ClipboardDataSource> { ClipboardDataSourceJvmImpl() }
 }
