@@ -14,17 +14,21 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.di
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
-import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceUIKitImpl
-import fobo66.valiutchik.core.model.datasource.FormattingDataSource
-import fobo66.valiutchik.core.model.datasource.FormattingDataSourceNSStringImpl
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import platform.UIKit.UIPasteboard
 
-actual val systemModule: Module = module {
-    single<FormattingDataSource> { FormattingDataSourceNSStringImpl(get()) }
-
-    single<ClipboardDataSource> { ClipboardDataSourceUIKitImpl() }
+class ClipboardDataSourceUIKitImpl : ClipboardDataSource {
+    /**
+     * Add provided entry to the device's clipboard
+     *
+     * @param label Clipboard item label
+     * @param value String value of the item
+     *
+     * @return Whether or not clipboard operation was successful
+     */
+    override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
+        UIPasteboard.generalPasteboard().setString(value.toString())
+        return true
+    }
 }
