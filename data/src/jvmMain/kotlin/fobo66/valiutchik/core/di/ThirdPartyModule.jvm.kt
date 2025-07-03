@@ -20,6 +20,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import java.io.File
 import okio.Path.Companion.toPath
@@ -31,6 +32,7 @@ actual val thirdPartyModule: Module = module {
     single<CurrencyRatesDatabase> {
         val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
         Room.databaseBuilder<CurrencyRatesDatabase>(name = dbFile.absolutePath)
+            .setDriver(BundledSQLiteDriver())
             .build()
     }
 

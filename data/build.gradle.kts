@@ -88,6 +88,7 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation(libs.icu)
+                implementation(libs.room.driver.bundled)
             }
         }
 

@@ -11,6 +11,7 @@ androidxGlance = "1.2.0-alpha01"
 androidxGlancePreview = "1.2.0-alpha01"
 androidxLifecycle = "2.9.1"
 androidxSplashscreen = "1.2.0-rc01"
+androidxSqlite = "2.5.2"
 androidxStartup = "1.2.0"
 androidxTest = "1.7.0-beta01"
 androidxTestEspresso = "3.7.0-beta01"
@@ -127,6 +128,7 @@ ktor-serialization-xml = { group = "io.ktor", name = "ktor-serialization-kotlinx
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }
+room-driver-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "androidxSqlite" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
