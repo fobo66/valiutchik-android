@@ -94,7 +94,6 @@ kotlin {
 
         jvmTest {
             dependencies {
-                implementation(kotlin("test"))
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
                 implementation(libs.truth)
@@ -117,14 +116,12 @@ kotlin {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
-                implementation(kotlin("test"))
             }
         }
 
         getByName("androidDeviceTest") {
             dependencies {
                 api(project(":data-testing"))
-                implementation(kotlin("test"))
                 implementation(libs.truth)
                 implementation(libs.turbine)
                 implementation(libs.androidx.test.rules)
