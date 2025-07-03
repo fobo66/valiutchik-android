@@ -25,15 +25,16 @@ import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.Rate
+import kotlin.test.AfterTest
+import kotlin.test.Test
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.junit.After
-import org.junit.Test
 
 private const val RATE = 1.23456
+private const val DEFAULT_BEST_RATES_COUNT = 10
 
 @SmallTest
 class PersistenceDataSourceTest {
@@ -49,7 +50,7 @@ class PersistenceDataSourceTest {
     private val date =
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
 
-    @After
+    @AfterTest
     fun tearDown() {
         db.close()
     }
@@ -80,7 +81,7 @@ class PersistenceDataSourceTest {
 
         db.ratesDao().resolveBestRates()
             .test {
-                assertThat(awaitItem()).hasSize(10)
+                assertThat(awaitItem()).hasSize(DEFAULT_BEST_RATES_COUNT)
             }
     }
 

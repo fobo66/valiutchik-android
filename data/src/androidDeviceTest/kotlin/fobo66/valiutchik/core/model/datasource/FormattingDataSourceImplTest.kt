@@ -20,7 +20,7 @@ import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import dev.fobo66.core.data.testing.fake.FakeBankNameNormalizer
 import java.util.Locale
-import org.junit.Test
+import kotlin.test.Test
 
 private const val BANK_NAME = "Приорбанк" // taken from API
 

@@ -24,9 +24,9 @@ import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.core.util.CurrencyName.DOLLAR
+import kotlin.test.Test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 private const val RATE = 1.23
