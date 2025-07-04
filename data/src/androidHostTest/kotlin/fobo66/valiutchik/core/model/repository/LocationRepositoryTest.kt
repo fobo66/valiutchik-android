@@ -24,6 +24,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 
+private const val DEFAULT = "default"
+
 @ExperimentalCoroutinesApi
 class LocationRepositoryTest {
     private val locationDataSource = FakeLocationDataSource()
@@ -34,7 +36,7 @@ class LocationRepositoryTest {
 
     @Test
     fun `resolve user city`() = runTest {
-        val city = locationRepository.resolveUserCity("default")
+        val city = locationRepository.resolveUserCity(DEFAULT)
         assertEquals("fake", city)
     }
 
@@ -43,8 +45,8 @@ class LocationRepositoryTest {
         geocodingDataSource.showError = true
 
         runTest {
-            val city = locationRepository.resolveUserCity("default")
-            assertEquals("default", city)
+            val city = locationRepository.resolveUserCity(DEFAULT)
+            assertEquals(DEFAULT, city)
         }
     }
 
@@ -54,8 +56,8 @@ class LocationRepositoryTest {
 
         runTest {
             assertThrows<KotlinNullPointerException> {
-                locationRepository.resolveUserCity("default")
-      }
+                locationRepository.resolveUserCity(DEFAULT)
+            }
+        }
     }
-  }
 }
