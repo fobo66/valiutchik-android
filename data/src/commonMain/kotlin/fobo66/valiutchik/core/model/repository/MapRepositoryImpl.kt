@@ -28,7 +28,7 @@ class MapRepositoryImpl(
     private val uriDataSource: UriDataSource,
     private val intentDataSource: IntentDataSource
 ) : MapRepository {
-    override fun searchOnMap(query: CharSequence): String? {
+    override fun searchOnMap(query: CharSequence, searchAction: String): String? {
         val mapUri =
             uriDataSource.prepareUri(
                 URI_SCHEME,
@@ -36,7 +36,7 @@ class MapRepositoryImpl(
                 URI_PARAM_KEY,
                 query.toString()
             )
-        val intent = intentDataSource.createIntentUri(mapUri, "TODO")
+        val intent = intentDataSource.createIntentUri(mapUri, searchAction)
 
         val canResolveIntent = intentDataSource.checkIntentUri(intent)
 

@@ -38,19 +38,20 @@ class IntentDataSourceTest {
 
     @Test
     fun createIntent() {
-        val intent = Intent.parseUri(intentDataSource.createIntentUri(Uri.EMPTY), 0)
+        val intent =
+            Intent.parseUri(intentDataSource.createIntentUri(Uri.EMPTY, Intent.ACTION_VIEW), 0)
         assertIntent(intent).hasAction(Intent.ACTION_VIEW)
     }
 
     @Test
     fun canResolveIntent() {
-        val intent = intentDataSource.createIntentUri(uri)
+        val intent = intentDataSource.createIntentUri(uri, Intent.ACTION_VIEW)
         assertThat(intentDataSource.checkIntentUri(intent)).isTrue()
     }
 
     @Test
     fun cannotResolveEmptyIntent() {
-        val intent = intentDataSource.createIntentUri(Uri.EMPTY)
+        val intent = intentDataSource.createIntentUri(Uri.EMPTY, Intent.ACTION_VIEW)
         assertThat(intentDataSource.checkIntentUri(intent)).isFalse()
     }
 }
