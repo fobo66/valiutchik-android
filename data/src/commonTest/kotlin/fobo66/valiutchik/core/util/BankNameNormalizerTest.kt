@@ -17,7 +17,7 @@
 package fobo66.valiutchik.core.util
 
 import kotlin.test.Test
-import org.junit.jupiter.api.Assertions.assertEquals
+import kotlin.test.assertEquals
 
 class BankNameNormalizerTest {
     private val bankNameNormalizer: BankNameNormalizer = BankNameNormalizerImpl()

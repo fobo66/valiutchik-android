@@ -16,11 +16,11 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
 import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
 import fobo66.valiutchik.core.model.repository.URI_SCHEME
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class UriDataSourceTest {
     private val uriDataSource: UriDataSource = UriDataSourceImpl()
@@ -35,7 +35,7 @@ class UriDataSourceTest {
                 "value"
             )
 
-        assertThat(uri.toString()).isEqualTo("https://example.com?key=value")
+        assertEquals("https://example.com?key=value", uri.toString())
     }
 
     @Test
@@ -48,6 +48,6 @@ class UriDataSourceTest {
                 "test"
             )
 
-        assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+        assertEquals("test", uri.getQueryParameter(URI_PARAM_KEY))
     }
 }
