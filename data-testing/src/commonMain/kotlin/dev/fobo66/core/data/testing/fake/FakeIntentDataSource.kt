@@ -16,9 +16,13 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.entities.Location
-import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import com.eygraber.uri.Uri
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
 
-class FakeLocationDataSource : LocationDataSource {
-  override suspend fun resolveLocation(): Location = Location(0.0, 0.0)
+class FakeIntentDataSource : IntentDataSource {
+    var canResolveIntent = true
+
+    override fun createIntentUri(uri: Uri, action: String): String = Uri.EMPTY.toString()
+
+    override fun checkIntentUri(uri: String): Boolean = canResolveIntent
 }

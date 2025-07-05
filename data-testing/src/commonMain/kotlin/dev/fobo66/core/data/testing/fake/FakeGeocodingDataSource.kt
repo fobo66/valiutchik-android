@@ -16,16 +16,20 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Bank
-import java.io.IOException
+import fobo66.valiutchik.api.GeocodingDataSource
+import fobo66.valiutchik.api.entity.Feature
+import fobo66.valiutchik.api.entity.GeocodingFailedException
+import fobo66.valiutchik.api.entity.Properties
 
-class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
-    var isError = false
+class FakeGeocodingDataSource : GeocodingDataSource {
+    var showError = false
+    var unexpectedError = false
 
-    override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> = if (isError) {
-        throw IOException("test")
-    } else {
-        setOf(Bank())
+    private val searchResult = Feature(Properties(city = "fake"))
+
+    override suspend fun findPlace(latitude: Double, longitude: Double): List<Feature> = when {
+        showError -> throw GeocodingFailedException(Throwable("Yikes!"))
+        unexpectedError -> throw NullPointerException("Yikes!")
+        else -> listOf(searchResult)
     }
 }

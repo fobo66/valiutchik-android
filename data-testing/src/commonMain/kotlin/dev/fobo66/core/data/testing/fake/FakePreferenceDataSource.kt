@@ -16,19 +16,23 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.model.repository.PreferenceRepository
+import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakePreferenceRepository : PreferenceRepository {
-  var defaultCity = "default"
-  var updateInterval = 3.0f
+class FakePreferenceDataSource : PreferencesDataSource {
+    var string = "default"
+    var int = 3
 
-  override fun observeDefaultCityPreference(): Flow<String> = flowOf(defaultCity)
+    override suspend fun loadString(key: String, defaultValue: String): String = string
 
-  override fun observeUpdateIntervalPreference(): Flow<Float> = flowOf(updateInterval)
+    override suspend fun saveString(key: String, value: String) = Unit
 
-  override suspend fun updateDefaultCityPreference(newValue: String) = Unit
+    override suspend fun loadInt(key: String, defaultValue: Int): Int = int
 
-  override suspend fun updateUpdateIntervalPreference(newValue: Float) = Unit
+    override fun observeString(key: String, defaultValue: String): Flow<String> = flowOf(string)
+
+    override fun observeInt(key: String, defaultValue: Int): Flow<Int> = flowOf(int)
+
+    override suspend fun saveInt(key: String, value: Int) = Unit
 }

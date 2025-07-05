@@ -16,16 +16,9 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.model.repository.LocationRepository
+import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.datasource.LocationDataSource
 
-/**
- * Fake location repo implementation for tests
- */
-class FakeLocationRepository : LocationRepository {
-  var isResolved = false
-
-  override suspend fun resolveUserCity(defaultCity: String): String {
-    isResolved = true
-    return "fake"
-  }
+class FakeLocationDataSource : LocationDataSource {
+    override suspend fun resolveLocation(): Location = Location(0.0, 0.0)
 }

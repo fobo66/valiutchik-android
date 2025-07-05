@@ -16,24 +16,16 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.api.GeocodingDataSource
-import fobo66.valiutchik.api.entity.Feature
-import fobo66.valiutchik.api.entity.GeocodingFailedException
-import fobo66.valiutchik.api.entity.Properties
+import fobo66.valiutchik.core.model.repository.LocationRepository
 
-class FakeGeocodingDataSource : GeocodingDataSource {
-  var showError = false
-  var unexpectedError = false
+/**
+ * Fake location repo implementation for tests
+ */
+class FakeLocationRepository : LocationRepository {
+    var isResolved = false
 
-  private val searchResult = Feature(Properties(city = "fake"))
-
-  override suspend fun findPlace(
-    latitude: Double,
-    longitude: Double,
-  ): List<Feature> =
-    when {
-      showError -> throw GeocodingFailedException(Throwable("Yikes!"))
-      unexpectedError -> throw KotlinNullPointerException("Yikes!")
-      else -> listOf(searchResult)
+    override suspend fun resolveUserCity(defaultCity: String): String {
+        isResolved = true
+        return "fake"
     }
 }

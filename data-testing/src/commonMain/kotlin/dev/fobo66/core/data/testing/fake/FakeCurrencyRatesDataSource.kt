@@ -16,14 +16,16 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import com.eygraber.uri.Uri
-import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.entity.Bank
+import kotlinx.io.IOException
 
-class FakeUriDataSource : UriDataSource {
-  override fun prepareUri(
-    scheme: String,
-    authority: String,
-    queryParameterKey: String,
-    queryParameterValue: String,
-  ): Uri = Uri.EMPTY
+class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
+    var isError = false
+
+    override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> = if (isError) {
+        throw IOException("test")
+    } else {
+        setOf(Bank())
+    }
 }

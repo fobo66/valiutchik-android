@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="data-testing-jvm">
+    <output-path>$PROJECT_DIR$/data-testing/build/libs</output-path>
+    <root id="archive" name="data-testing-jvm.jar">
+      <element id="module-output" name="Valiutchik.data-testing.jvmMain" />
+    </root>
+  </artifact>
+</component>
