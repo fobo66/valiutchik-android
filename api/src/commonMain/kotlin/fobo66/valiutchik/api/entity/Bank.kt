@@ -17,17 +17,12 @@
 package fobo66.valiutchik.api.entity
 
 import fobo66.valiutchik.api.ENTRY_TAG_NAME
-import fobo66.valiutchik.api.TAG_NAME_BANK_ADDRESS
 import fobo66.valiutchik.api.TAG_NAME_BANK_ID
 import fobo66.valiutchik.api.TAG_NAME_BANK_NAME
-import fobo66.valiutchik.api.TAG_NAME_BANK_PHONE
 import fobo66.valiutchik.api.TAG_NAME_DATE
-import fobo66.valiutchik.api.TAG_NAME_EURUSD_BUY
-import fobo66.valiutchik.api.TAG_NAME_EURUSD_SELL
 import fobo66.valiutchik.api.TAG_NAME_EUR_BUY
 import fobo66.valiutchik.api.TAG_NAME_EUR_SELL
 import fobo66.valiutchik.api.TAG_NAME_FILIAL_ID
-import fobo66.valiutchik.api.TAG_NAME_FILIAL_NAME
 import fobo66.valiutchik.api.TAG_NAME_PLN_BUY
 import fobo66.valiutchik.api.TAG_NAME_PLN_SELL
 import fobo66.valiutchik.api.TAG_NAME_RUR_BUY
@@ -59,15 +54,6 @@ data class Bank(
     @XmlSerialName(TAG_NAME_BANK_NAME)
     val bankName: String = "",
     @XmlElement
-    @XmlSerialName(TAG_NAME_FILIAL_NAME)
-    val filialName: String = "",
-    @XmlElement
-    @XmlSerialName(TAG_NAME_BANK_ADDRESS)
-    val bankAddress: String = "",
-    @XmlElement
-    @XmlSerialName(TAG_NAME_BANK_PHONE)
-    val bankPhone: String = "",
-    @XmlElement
     @XmlSerialName(TAG_NAME_USD_BUY)
     val usdBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
@@ -96,11 +82,5 @@ data class Bank(
     val uahBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
     @XmlElement
     @XmlSerialName(TAG_NAME_UAH_SELL)
-    val uahSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_EURUSD_SELL)
-    val conversionSell: String = "",
-    @XmlElement
-    @XmlSerialName(TAG_NAME_EURUSD_BUY)
-    val conversionBuy: String = ""
+    val uahSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE)
 )

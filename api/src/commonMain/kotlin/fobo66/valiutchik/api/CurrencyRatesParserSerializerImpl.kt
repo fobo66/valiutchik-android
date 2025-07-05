@@ -18,13 +18,14 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.Banks
+import kotlinx.serialization.decodeFromString
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
 import nl.adaptivity.xmlutil.serialization.XML
 
-class CurrencyRatesParserSerializerImpl : CurrencyRatesParser() {
+class CurrencyRatesParserSerializerImpl(private val xml: XML) : CurrencyRatesParser() {
     @OptIn(ExperimentalXmlUtilApi::class)
     override fun parse(body: String): Set<Bank> {
-        val banks = XML.decodeFromString<Banks>(body)
+        val banks = xml.decodeFromString<Banks>(body)
         return banks.banks
     }
 }

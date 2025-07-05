@@ -17,17 +17,12 @@
 package fobo66.valiutchik.api.entity
 
 import androidx.collection.MutableScatterMap
-import fobo66.valiutchik.api.TAG_NAME_BANK_ADDRESS
 import fobo66.valiutchik.api.TAG_NAME_BANK_ID
 import fobo66.valiutchik.api.TAG_NAME_BANK_NAME
-import fobo66.valiutchik.api.TAG_NAME_BANK_PHONE
 import fobo66.valiutchik.api.TAG_NAME_DATE
-import fobo66.valiutchik.api.TAG_NAME_EURUSD_BUY
-import fobo66.valiutchik.api.TAG_NAME_EURUSD_SELL
 import fobo66.valiutchik.api.TAG_NAME_EUR_BUY
 import fobo66.valiutchik.api.TAG_NAME_EUR_SELL
 import fobo66.valiutchik.api.TAG_NAME_FILIAL_ID
-import fobo66.valiutchik.api.TAG_NAME_FILIAL_NAME
 import fobo66.valiutchik.api.TAG_NAME_PLN_BUY
 import fobo66.valiutchik.api.TAG_NAME_PLN_SELL
 import fobo66.valiutchik.api.TAG_NAME_RUR_BUY
@@ -44,9 +39,6 @@ fun MutableScatterMap<String, String>.toCurrency(): Bank = Bank(
     bankId = get(TAG_NAME_BANK_ID)?.toLongOrNull() ?: 0L,
     filialId = get(TAG_NAME_FILIAL_ID)?.toLongOrNull() ?: 0L,
     date = get(TAG_NAME_DATE).orEmpty(),
-    filialName = get(TAG_NAME_FILIAL_NAME).orEmpty(),
-    bankAddress = get(TAG_NAME_BANK_ADDRESS).orEmpty(),
-    bankPhone = get(TAG_NAME_BANK_PHONE).orEmpty(),
     bankName = get(TAG_NAME_BANK_NAME).orEmpty(),
     usdBuy = ExchangeRateValue(get(TAG_NAME_USD_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
     usdSell = ExchangeRateValue(
@@ -67,7 +59,5 @@ fun MutableScatterMap<String, String>.toCurrency(): Bank = Bank(
     uahBuy = ExchangeRateValue(get(TAG_NAME_UAH_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
     uahSell = ExchangeRateValue(
         get(TAG_NAME_UAH_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-    ),
-    conversionBuy = get(TAG_NAME_EURUSD_BUY).orEmpty(),
-    conversionSell = get(TAG_NAME_EURUSD_SELL).orEmpty()
+    )
 )

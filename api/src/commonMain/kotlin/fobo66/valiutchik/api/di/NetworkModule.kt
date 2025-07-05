@@ -28,6 +28,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
+import nl.adaptivity.xmlutil.serialization.XML
 import org.koin.dsl.module
 
 @OptIn(ExperimentalXmlUtilApi::class)
@@ -46,6 +47,13 @@ val networkModule =
                 ignoreUnknownKeys = true
             }
         }
+
+        single<XML> {
+            XML {
+                defaultPolicy { ignoreUnknownChildren() }
+            }
+        }
+
         single<HttpClient> {
             HttpClient(CIO) {
                 install(ContentNegotiation) {

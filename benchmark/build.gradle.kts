@@ -69,6 +69,7 @@ dependencies {
     androidTestImplementation(libs.androidx.benchmark)
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.serialization.xml)
     androidTestImplementation(libs.kotlinx.datetime)
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
