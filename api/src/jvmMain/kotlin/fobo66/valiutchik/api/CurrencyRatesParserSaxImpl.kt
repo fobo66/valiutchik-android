@@ -27,13 +27,13 @@ import org.xml.sax.InputSource
 
 class CurrencyRatesParserSaxImpl : CurrencyRatesParser() {
 
-    override fun parse(body: String): Set<Bank> {
+    override fun parse(body: String): Set<Bank> = body.reader().buffered().use {
         val dbFactory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
 
         val documentBuilder = dbFactory.newDocumentBuilder()
 
         val result = runCatching {
-            val document = documentBuilder.parse(InputSource(body.byteInputStream().buffered()))
+            val document = documentBuilder.parse(InputSource(it))
 
             document.normalizeDocument()
             readCurrencies(document)
