@@ -19,10 +19,9 @@ package fobo66.valiutchik.core.model.repository
 import dev.fobo66.core.data.testing.fake.FakeGeocodingDataSource
 import dev.fobo66.core.data.testing.fake.FakeLocationDataSource
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.assertThrows
 
 private const val DEFAULT = "default"
 
@@ -50,14 +49,12 @@ class LocationRepositoryTest {
         }
     }
 
-    @Test
+    @Test(expected = NullPointerException::class)
     fun `crash on unexpected error`() {
         geocodingDataSource.unexpectedError = true
 
         runTest {
-            assertThrows<NullPointerException> {
-                locationRepository.resolveUserCity(DEFAULT)
-            }
+            locationRepository.resolveUserCity(DEFAULT)
         }
     }
 }
