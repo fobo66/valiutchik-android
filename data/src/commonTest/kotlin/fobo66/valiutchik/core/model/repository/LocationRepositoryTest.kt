@@ -20,6 +20,7 @@ import dev.fobo66.core.data.testing.fake.FakeGeocodingDataSource
 import dev.fobo66.core.data.testing.fake.FakeLocationDataSource
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
@@ -49,12 +50,14 @@ class LocationRepositoryTest {
         }
     }
 
-    @Test(expected = NullPointerException::class)
+    @Test
     fun `crash on unexpected error`() {
         geocodingDataSource.unexpectedError = true
 
         runTest {
-            locationRepository.resolveUserCity(DEFAULT)
+            assertFails {
+                locationRepository.resolveUserCity(DEFAULT)
+            }
         }
     }
 }
