@@ -18,8 +18,8 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
-    kotlin("android")
+    alias(libs.plugins.android.library.multiplatform)
+    kotlin("multiplatform")
     kotlin("plugin.serialization")
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
@@ -27,55 +27,115 @@ plugins {
     alias(libs.plugins.room)
 }
 
-android {
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+kotlin {
+    jvm {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
+    }
 
-    defaultConfig {
+    androidLibrary {
+        namespace = "fobo66.valiutchik.core"
+        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+
         minSdk = AndroidVersion.VersionCodes.R
 
-        multiDexEnabled = true
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildFeatures {
-        buildConfig = false
-    }
-
-    buildTypes {
-        release {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        withHostTestBuilder {}.configure {}
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
         }
-        register("benchmark") {
-            initWith(getByName("release"))
-            signingConfig = signingConfigs.getByName("debug")
 
-            matchingFallbacks += listOf("release")
+        compilations.configureEach {
+            compilerOptions.configure {
+                jvmTarget = JvmTarget.JVM_17
+            }
+        }
+
+        packaging {
+            jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 
-    packaging {
-        jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
-    }
-    namespace = "fobo66.valiutchik.core"
-}
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":api"))
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.androidx.annotation)
+                implementation(libs.androidx.collection)
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+                implementation(libs.kotlinx.serialization)
+                implementation(libs.kotlinx.io)
+
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.room.runtime)
+                implementation(libs.androidx.datastore)
+                implementation(libs.napier)
+                implementation(libs.uri)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(libs.room.testing)
+                implementation(libs.kotlinx.coroutines.test)
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                implementation(libs.icu)
+                implementation(libs.room.driver.bundled)
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.test)
+                implementation(libs.truth)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.android)
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(libs.ktor.logging)
+            }
+        }
+
+        getByName("androidHostTest") {
+            dependencies {
+                api(project(":data-testing"))
+                implementation(libs.truth)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.test)
+                implementation(libs.ktor.client)
+            }
+        }
+
+        getByName("androidDeviceTest") {
+            dependencies {
+                api(project(":data-testing"))
+                implementation(libs.truth)
+                implementation(libs.turbine)
+                implementation(libs.androidx.test.rules)
+                implementation(libs.androidx.test.junit)
+                implementation(libs.androidx.test.truth)
+                implementation(libs.androidx.test.espresso.intents)
+            }
+        }
     }
 }
 
 room {
     generateKotlin = true
-    schemaDirectory("$projectDir/schemas/")
+    schemaDirectory(layout.projectDirectory.dir("schemas"))
 }
 
 detekt {
@@ -83,40 +143,8 @@ detekt {
 }
 
 dependencies {
-    api(project(":api"))
-    implementation(libs.androidx.annotation)
-    implementation(libs.androidx.collection)
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.android)
-    implementation(libs.kotlinx.serialization)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-    implementation(libs.androidx.datastore)
-    implementation(libs.napier)
-    implementation(libs.uri)
-
+    add("kspJvm", libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
-
-    testApi(project(":data-testing"))
-    testImplementation(libs.junit.api)
-    testRuntimeOnly(libs.junit.engine)
-    testImplementation(platform(libs.koin.bom))
-    testImplementation(libs.koin.test)
-    testImplementation(libs.room.testing)
-    testImplementation(libs.ktor.client)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.truth)
-
-    androidTestApi(project(":data-testing"))
-    androidTestImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.truth)
-    androidTestImplementation(libs.turbine)
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.truth)
-    androidTestImplementation(libs.androidx.test.espresso.intents)
 }

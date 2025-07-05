@@ -14,12 +14,20 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+import kotlinx.io.Source
+import kotlinx.io.asSource
+import kotlinx.io.buffered
+import okio.FileNotFoundException
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+class AssetsDataSourceJvmImpl : AssetsDataSource {
+    /**
+     * Load file from assets
+     *
+     * @param fileName Name of the asset file. It should exist in the assets
+     */
+    override fun loadFile(fileName: String): Source =
+        javaClass.classLoader.getResourceAsStream(fileName)?.asSource()?.buffered()
+            ?: throw FileNotFoundException("Asset not found")
 }

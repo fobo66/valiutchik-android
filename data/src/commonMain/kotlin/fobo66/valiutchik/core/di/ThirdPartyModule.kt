@@ -14,12 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.di
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+import org.koin.core.module.Module
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
-}
+internal const val DATABASE_NAME = "currency-rates"
+internal const val PREFERENCES_NAME = "valiutchik-prefs"
+
+expect val thirdPartyModule: Module

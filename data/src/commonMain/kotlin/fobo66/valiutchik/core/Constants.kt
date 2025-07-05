@@ -14,12 +14,18 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+/**
+ * Constants used in project
+ * Created by fobo66 on 09.08.2015.
+ */
+const val BUY_COURSE = true
+const val SELL_COURSE = false
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
-}
+const val TIMESTAMP = "fobo66.exchangecourcesbelarus.TIMESTAMP"
+
+const val KEY_DEFAULT_CITY = "default_city"
+const val KEY_UPDATE_INTERVAL = "update_interval"
+
+const val UNKNOWN_COURSE = "-"

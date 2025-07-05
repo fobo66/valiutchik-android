@@ -14,12 +14,17 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
+import android.content.Context
 import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+import com.eygraber.uri.Uri
+import com.eygraber.uri.toAndroidUri
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+class IntentDataSourceImpl(private val context: Context) : IntentDataSource {
+    override fun createIntentUri(uri: Uri, action: String): String =
+        Intent(action, uri.toAndroidUri()).toUri(0)
+
+    override fun checkIntentUri(uri: String): Boolean =
+        Intent.parseUri(uri, 0).resolveActivity(context.packageManager) != null
 }

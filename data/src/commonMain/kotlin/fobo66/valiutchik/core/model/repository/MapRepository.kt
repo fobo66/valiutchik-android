@@ -14,12 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.repository
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
-
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+/**
+ * Repository to open map
+ */
+interface MapRepository {
+    fun searchOnMap(query: CharSequence, searchAction: String): String?
 }

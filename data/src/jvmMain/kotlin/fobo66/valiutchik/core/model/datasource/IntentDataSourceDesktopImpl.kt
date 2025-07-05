@@ -14,12 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+import com.eygraber.uri.Uri
+import java.awt.Desktop
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+class IntentDataSourceDesktopImpl : IntentDataSource {
+    override fun createIntentUri(uri: Uri, action: String): String = uri.toString()
+
+    override fun checkIntentUri(uri: String): Boolean = Desktop.isDesktopSupported() &&
+        Desktop.getDesktop()
+            .isSupported(Desktop.Action.BROWSE)
 }

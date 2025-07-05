@@ -51,9 +51,6 @@ kotlin {
         }
     }
 
-    iosArm64()
-    iosSimulatorArm64()
-
     sourceSets {
         commonMain {
             generateSecrets(project)
@@ -73,6 +70,7 @@ kotlin {
                 implementation(libs.ktor.serialization)
                 implementation(libs.ktor.serialization.xml)
                 implementation(libs.kotlinx.serialization)
+                implementation(libs.kotlinx.io)
 
                 implementation(libs.napier)
             }
@@ -87,7 +85,6 @@ kotlin {
 
         jvmTest {
             dependencies {
-                implementation(kotlin("test"))
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
             }
@@ -106,7 +103,6 @@ kotlin {
             dependencies {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
-                implementation(kotlin("test"))
             }
         }
 

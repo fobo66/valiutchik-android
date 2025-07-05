@@ -14,12 +14,23 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+import io.github.aakira.napier.Napier
+import java.awt.Toolkit
+import java.awt.datatransfer.StringSelection
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+class ClipboardDataSourceJvmImpl : ClipboardDataSource {
+    override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
+        Toolkit.getDefaultToolkit()
+            .systemClipboard
+            .setContents(
+                StringSelection(value.toString()),
+                null
+            )
+
+        Napier.v { "Copied $label: $value" }
+
+        return true
+    }
 }

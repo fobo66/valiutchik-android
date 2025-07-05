@@ -14,12 +14,18 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
-import android.content.Intent
-import fobo66.valiutchik.core.model.repository.MapRepository
+import kotlinx.io.Source
 
-class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+/**
+ * Datasource for accessing app's assets
+ */
+interface AssetsDataSource {
+    /**
+     * Load file from assets
+     *
+     * @param fileName Name of the asset file. It should exist in the assets
+     */
+    fun loadFile(fileName: String): Source
 }
