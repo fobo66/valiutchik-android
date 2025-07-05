@@ -68,8 +68,8 @@ kotlin {
                 implementation(libs.ktor.encoding)
                 implementation(libs.ktor.logging)
                 implementation(libs.ktor.serialization)
-                implementation(libs.ktor.serialization.xml)
                 implementation(libs.kotlinx.serialization)
+                implementation(libs.kotlinx.serialization.xml)
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.napier)

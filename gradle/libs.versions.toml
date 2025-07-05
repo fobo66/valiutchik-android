@@ -48,6 +48,7 @@ truth = "1.4.4"
 turbine = "1.2.1"
 uri = "0.0.20"
 work = "2.10.2"
+xml = "0.91.1"
 xr = "1.0.0-alpha04"
 xrMaterial = "1.0.0-alpha08"
 
@@ -117,6 +118,7 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinxIo" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-xml = { group = "io.github.pdvrieze.xmlutil", name = "serialization", version.ref = "xml" }
 ktor-auth = { group = "io.ktor", name = "ktor-client-auth" }
 ktor-bom = { group = "io.ktor", name = "ktor-bom", version.ref = "ktor" }
 ktor-client = { group = "io.ktor", name = "ktor-client-cio" }
@@ -124,7 +126,6 @@ ktor-content = { group = "io.ktor", name = "ktor-client-content-negotiation" }
 ktor-encoding = { group = "io.ktor", name = "ktor-client-encoding" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
-ktor-serialization-xml = { group = "io.ktor", name = "ktor-serialization-kotlinx-xml" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }

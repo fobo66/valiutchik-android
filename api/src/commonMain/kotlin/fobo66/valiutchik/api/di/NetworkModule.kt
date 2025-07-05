@@ -26,7 +26,6 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.json.Json
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
 import org.koin.dsl.module
@@ -51,7 +50,6 @@ val networkModule =
             HttpClient(CIO) {
                 install(ContentNegotiation) {
                     json(get())
-                    xml()
                 }
                 install(ContentEncoding) {
                     gzip()
