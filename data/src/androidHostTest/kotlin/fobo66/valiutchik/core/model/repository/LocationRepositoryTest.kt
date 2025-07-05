@@ -55,7 +55,7 @@ class LocationRepositoryTest {
         geocodingDataSource.unexpectedError = true
 
         runTest {
-            assertThrows<KotlinNullPointerException> {
+            assertThrows<NullPointerException> {
                 locationRepository.resolveUserCity(DEFAULT)
             }
         }
