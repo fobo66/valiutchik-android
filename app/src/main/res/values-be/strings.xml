@@ -109,4 +109,14 @@
   <string name="share_rate_text">%1$s сёння %2$s</string>
   <string name="share_description">Абагуліць курс валюты</string>
   <string name="toolbar_action_more">Болей</string>
+  <string name="currency_name_usd_buy">Даляр ЗША курс пакупкі</string>
+  <string name="currency_name_usd_sell">Даляр ЗША курс прадажы</string>
+  <string name="currency_name_eur_buy">Еўра курс пакупкі</string>
+  <string name="currency_name_eur_sell">Еўра курс прадажы</string>
+  <string name="currency_name_rub_buy">100 рублёў курс пакупкі</string>
+  <string name="currency_name_rub_sell">100 рублёў курс прадажы</string>
+  <string name="currency_name_pln_buy">Злоты курс пакупкі</string>
+  <string name="currency_name_pln_sell">Злоты курс прадажы</string>
+  <string name="currency_name_uah_buy">100 грыўняў курс пакупкі</string>
+  <string name="currency_name_uah_sell">100 грыўняў курс прадажы</string>
 </resources>
