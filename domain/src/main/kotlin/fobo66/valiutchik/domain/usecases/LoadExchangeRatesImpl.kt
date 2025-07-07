@@ -47,7 +47,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
         val bank = currencyRateRepository.formatBankName(this)
         val rateValue = currencyRateRepository.formatRate(this)
         val currency = requireNotNull(currencyName) {
-            "Null currency name here means the error with the query!"
+            "Null currency name should not happen here!"
         }
 
         return if (isBuy == true) {
