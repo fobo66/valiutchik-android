@@ -16,14 +16,14 @@
 
 package fobo66.valiutchik.core.entities
 
-import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.ExchangeRateValue
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
-import org.junit.jupiter.api.Test
 
 private const val ID = 1L
 private const val TEST = "test"
@@ -37,7 +37,7 @@ class MappersTest {
     @Test
     fun `ids are concatenated`() {
         val rate = buildBank().toRate(LocalDate.Formats.ISO)
-        assertThat(rate.id).isEqualTo(11L)
+        assertEquals(11L, rate.id)
     }
 
     @Test
@@ -46,7 +46,7 @@ class MappersTest {
             bankId = 12L,
             filialId = 3L
         ).toRate(LocalDate.Formats.ISO)
-        assertThat(rate.id).isEqualTo(123L)
+        assertEquals(123L, rate.id)
     }
 
     @Test
@@ -54,7 +54,7 @@ class MappersTest {
         val rate = buildBank(
             bankId = 0L
         ).toRate(LocalDate.Formats.ISO)
-        assertThat(rate.id).isEqualTo(ID)
+        assertEquals(ID, rate.id)
     }
 
     @Test
@@ -63,7 +63,7 @@ class MappersTest {
             bankId = 12L,
             filialId = 0L
         ).toRate(LocalDate.Formats.ISO)
-        assertThat(rate.id).isEqualTo(120L)
+        assertEquals(120L, rate.id)
     }
 
     @Test
@@ -79,13 +79,13 @@ class MappersTest {
                 year()
             }
         )
-        assertThat(rate.date).isEqualTo(DATE)
+        assertEquals(DATE, rate.date)
     }
 
     @Test
     fun `parse rate`() {
         val rate = buildBank().toRate(LocalDate.Formats.ISO)
-        assertThat(rate.usdBuy).isEqualTo(RAW_RATE)
+        assertEquals(RAW_RATE, rate.usdBuy)
     }
 
     @Test
@@ -93,7 +93,7 @@ class MappersTest {
         val rate = buildBank(
             usdBuy = UNKNOWN_COURSE
         ).toRate(LocalDate.Formats.ISO)
-        assertThat(rate.usdBuy).isEqualTo(UNDEFINED_BUY_RATE)
+        assertEquals(UNDEFINED_BUY_RATE, rate.usdBuy)
     }
 
     @Test
@@ -101,7 +101,7 @@ class MappersTest {
         val rate = buildBank(
             usdSell = UNKNOWN_COURSE
         ).toRate(LocalDate.Formats.ISO)
-        assertThat(rate.usdSell).isEqualTo(UNDEFINED_SELL_RATE)
+        assertEquals(UNDEFINED_SELL_RATE, rate.usdSell)
     }
 
     @Suppress("LongParameterList") // ok for tests
