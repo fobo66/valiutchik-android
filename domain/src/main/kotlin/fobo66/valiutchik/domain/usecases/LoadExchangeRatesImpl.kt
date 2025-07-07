@@ -19,12 +19,12 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.util.CurrencyName
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.DollarBuyRate
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.EuroBuyRate
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.HryvniaBuyRate
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.RubleBuyRate
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.ZlotyBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.DollarBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.EuroBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.HryvniaBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.RubleBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.ZlotyBuyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -33,7 +33,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
     LoadExchangeRates {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<NewBestCurrencyRate>> =
+    override fun execute(): Flow<List<BestCurrencyRate>> =
         currencyRateRepository.loadExchangeRates()
             .map { rates ->
                 rates.map {
@@ -43,7 +43,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                 }
             }
 
-    private fun BestCourse.toRate(): NewBestCurrencyRate {
+    private fun BestCourse.toRate(): BestCurrencyRate {
         val bank = currencyRateRepository.formatBankName(this)
         val rateValue = currencyRateRepository.formatRate(this)
         val currency = requireNotNull(currencyName) {
@@ -60,11 +60,11 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
             }
         } else {
             when (currency) {
-                CurrencyName.DOLLAR -> NewBestCurrencyRate.DollarSellRate(bank, rateValue)
-                CurrencyName.EUR -> NewBestCurrencyRate.EuroSellRate(bank, rateValue)
-                CurrencyName.RUB -> NewBestCurrencyRate.RubleSellRate(bank, rateValue)
-                CurrencyName.PLN -> NewBestCurrencyRate.ZlotySellRate(bank, rateValue)
-                CurrencyName.UAH -> NewBestCurrencyRate.HryvniaSellRate(bank, rateValue)
+                CurrencyName.DOLLAR -> BestCurrencyRate.DollarSellRate(bank, rateValue)
+                CurrencyName.EUR -> BestCurrencyRate.EuroSellRate(bank, rateValue)
+                CurrencyName.RUB -> BestCurrencyRate.RubleSellRate(bank, rateValue)
+                CurrencyName.PLN -> BestCurrencyRate.ZlotySellRate(bank, rateValue)
+                CurrencyName.UAH -> BestCurrencyRate.HryvniaSellRate(bank, rateValue)
             }
         }
     }

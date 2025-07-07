@@ -16,50 +16,38 @@
 
 package fobo66.valiutchik.domain.entities
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 
-/**
- * Entity that represents the best currency exchange rate
- * for consumption on the presentation layer
- */
-@Immutable
-data class BestCurrencyRate(
-    val bank: String,
-    @StringRes val currencyNameRes: Int,
-    val currencyValue: String
-)
-
 @Stable
-sealed class NewBestCurrencyRate(open val bank: String, open val rateValue: String) {
+sealed class BestCurrencyRate(open val bank: String, open val rateValue: String) {
     @Immutable
-    class DollarBuyRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class DollarBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class DollarSellRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class DollarSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class EuroBuyRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class EuroBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class EuroSellRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class EuroSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class HryvniaBuyRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class HryvniaBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class HryvniaSellRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class HryvniaSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class ZlotyBuyRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class ZlotyBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class ZlotySellRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class ZlotySellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class RubleBuyRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class RubleBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class RubleSellRate(bank: String, rateValue: String) : NewBestCurrencyRate(bank, rateValue)
+    class RubleSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
 }

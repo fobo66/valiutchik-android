@@ -18,18 +18,18 @@ package fobo66.exchangecourcesbelarus.ui
 
 import androidx.annotation.StringRes
 import fobo66.exchangecourcesbelarus.R
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 
 @StringRes
-fun NewBestCurrencyRate.resolveCurrencyName(): Int = when (this) {
-    is NewBestCurrencyRate.DollarBuyRate -> R.string.currency_name_usd_buy
-    is NewBestCurrencyRate.DollarSellRate -> R.string.currency_name_usd_sell
-    is NewBestCurrencyRate.EuroBuyRate -> R.string.currency_name_eur_buy
-    is NewBestCurrencyRate.EuroSellRate -> R.string.currency_name_eur_sell
-    is NewBestCurrencyRate.HryvniaBuyRate -> R.string.currency_name_uah_buy
-    is NewBestCurrencyRate.HryvniaSellRate -> R.string.currency_name_uah_sell
-    is NewBestCurrencyRate.ZlotyBuyRate -> R.string.currency_name_pln_buy
-    is NewBestCurrencyRate.ZlotySellRate -> R.string.currency_name_pln_sell
-    is NewBestCurrencyRate.RubleBuyRate -> R.string.currency_name_rub_buy
-    is NewBestCurrencyRate.RubleSellRate -> R.string.currency_name_rub_sell
+fun BestCurrencyRate.resolveCurrencyName(): Int = when (this) {
+    is BestCurrencyRate.DollarBuyRate -> R.string.currency_name_usd_buy
+    is BestCurrencyRate.DollarSellRate -> R.string.currency_name_usd_sell
+    is BestCurrencyRate.EuroBuyRate -> R.string.currency_name_eur_buy
+    is BestCurrencyRate.EuroSellRate -> R.string.currency_name_eur_sell
+    is BestCurrencyRate.HryvniaBuyRate -> R.string.currency_name_uah_buy
+    is BestCurrencyRate.HryvniaSellRate -> R.string.currency_name_uah_sell
+    is BestCurrencyRate.ZlotyBuyRate -> R.string.currency_name_pln_buy
+    is BestCurrencyRate.ZlotySellRate -> R.string.currency_name_pln_sell
+    is BestCurrencyRate.RubleBuyRate -> R.string.currency_name_rub_buy
+    is BestCurrencyRate.RubleSellRate -> R.string.currency_name_rub_sell
 }

@@ -24,7 +24,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.filters.SmallTest
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -60,7 +60,7 @@ class MainScreenTest {
         composeRule.setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(
-                    NewBestCurrencyRate.DollarBuyRate("test", "0.0")
+                    BestCurrencyRate.DollarBuyRate("test", "0.0")
                 ),
                 onBestRateClick = {
                     isMapOpen = true

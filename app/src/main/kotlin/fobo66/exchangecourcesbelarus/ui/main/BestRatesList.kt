@@ -65,14 +65,14 @@ import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BestRatesGrid(
-    bestCurrencyRates: ImmutableList<NewBestCurrencyRate>,
+    bestCurrencyRates: ImmutableList<BestCurrencyRate>,
     onBestRateClick: (String) -> Unit,
     onBestRateLongClick: (String, String) -> Unit,
     onShareClick: (String, String) -> Unit,
@@ -230,11 +230,11 @@ private fun BestCurrencyRatesPreview() {
         BestRatesGrid(
             bestCurrencyRates =
             persistentListOf(
-                NewBestCurrencyRate.DollarBuyRate(
+                BestCurrencyRate.DollarBuyRate(
                     bank = "test",
                     rateValue = "1.23"
                 ),
-                NewBestCurrencyRate.DollarSellRate(
+                BestCurrencyRate.DollarSellRate(
                     bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
                     rateValue = "4.56"
                 )

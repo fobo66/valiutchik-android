@@ -61,7 +61,7 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.widget
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.showTitleBar
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
-import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -104,7 +104,7 @@ fun ActionListLayout(
     @DrawableRes titleBarActionIconRes: Int,
     titleBarActionIconContentDescription: String,
     titleBarAction: Action,
-    items: ImmutableList<NewBestCurrencyRate>,
+    items: ImmutableList<BestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -152,7 +152,7 @@ fun ActionListLayout(
 
 @Composable
 private fun Content(
-    items: ImmutableList<NewBestCurrencyRate>,
+    items: ImmutableList<BestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -181,7 +181,7 @@ private fun Content(
 
 @Composable
 private fun ListView(
-    items: ImmutableList<NewBestCurrencyRate>,
+    items: ImmutableList<BestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -205,7 +205,7 @@ private fun ListView(
 
 @Composable
 private fun GridView(
-    items: ImmutableList<NewBestCurrencyRate>,
+    items: ImmutableList<BestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
