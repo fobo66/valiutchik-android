@@ -108,7 +108,7 @@ fun CurrencyWidgetContent(
 
     ActionListLayout(
         title = context.getString(R.string.app_name),
-        titleIconRes = R.drawable.ic_launcher_foreground,
+        titleIconRes = R.drawable.ic_widget_logo,
         titleBarActionIconRes = R.drawable.ic_refresh,
         titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
         titleBarAction = action(null, onTitleBarActionClick),

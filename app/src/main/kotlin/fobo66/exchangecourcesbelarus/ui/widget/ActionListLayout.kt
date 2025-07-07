@@ -305,15 +305,18 @@ private fun CurrencyValueContent(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                provider = ImageProvider(R.drawable.ic_bank),
-                colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
-                contentDescription = context.getString(R.string.bank_name_indicator)
-            )
+            if (ActionListLayoutSize.fromLocalSize() != Small) {
+                Image(
+                    provider = ImageProvider(R.drawable.ic_bank),
+                    colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
+                    contentDescription = context.getString(R.string.bank_name_indicator),
+                    modifier = GlanceModifier.padding(end = 8.dp)
+
+                )
+            }
             Text(
                 text = bankName,
-                style = ActionListLayoutTextStyles.supportingText(),
-                modifier = GlanceModifier.padding(start = 8.dp)
+                style = ActionListLayoutTextStyles.supportingText()
             )
         }
     }
@@ -404,7 +407,7 @@ private object ActionListLayoutTextStyles {
         fontWeight = FontWeight.Normal,
         fontSize =
         if (ActionListLayoutSize.fromLocalSize() == Small) {
-            24.sp // M3 Headline Small
+            14.sp // M3 Title Small Expressive
         } else {
             28.sp // M3 Headline Medium
         },
@@ -417,8 +420,16 @@ private object ActionListLayoutTextStyles {
     @Composable
     fun mainText(): TextStyle = TextStyle(
         color = GlanceTheme.colors.primary,
-        fontSize = 45.sp,
-        fontWeight = FontWeight.Medium
+        fontSize = if (ActionListLayoutSize.fromLocalSize() == Small) {
+            16.sp // M3 Title Medium Expressive
+        } else {
+            45.sp // M3 Display Medium Expressive
+        },
+        fontWeight = if (ActionListLayoutSize.fromLocalSize() == Small) {
+            FontWeight.Bold
+        } else {
+            FontWeight.Medium
+        }
     )
 
     /**
@@ -427,7 +438,11 @@ private object ActionListLayoutTextStyles {
     @Composable
     fun supportingText(): TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp, // M3 Body Medium
+        fontSize = if (ActionListLayoutSize.fromLocalSize() == Small) {
+            14.sp // M3 Body Medium
+        } else {
+            18.sp // M3 Headline Medium
+        },
         color = GlanceTheme.colors.onSurfaceVariant
     )
 }
