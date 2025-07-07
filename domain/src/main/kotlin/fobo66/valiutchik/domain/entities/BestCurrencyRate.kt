@@ -22,32 +22,42 @@ import androidx.compose.runtime.Stable
 @Stable
 sealed class BestCurrencyRate(open val bank: String, open val rateValue: String) {
     @Immutable
-    class DollarBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class DollarBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class DollarSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class DollarSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class EuroBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class EuroBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class EuroSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class EuroSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class HryvniaBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class HryvniaBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class HryvniaSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class HryvniaSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class ZlotyBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class ZlotyBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class ZlotySellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class ZlotySellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class RubleBuyRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class RubleBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 
     @Immutable
-    class RubleSellRate(bank: String, rateValue: String) : BestCurrencyRate(bank, rateValue)
+    data class RubleSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
 }
