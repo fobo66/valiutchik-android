@@ -19,7 +19,7 @@ package fobo66.valiutchik.core.model.datasource
 import kotlinx.io.Source
 import kotlinx.io.asSource
 import kotlinx.io.buffered
-import okio.FileNotFoundException
+import kotlinx.io.files.FileNotFoundException
 
 class AssetsDataSourceJvmImpl : AssetsDataSource {
     /**
