@@ -266,8 +266,7 @@ private fun CurrencyListItem(
         headlineContent = {
             Text(
                 text = currencyName,
-                style = ActionListLayoutTextStyles.titleText(),
-                maxLines = 1,
+                style = ActionListLayoutTextStyles.headlineText(),
                 // Container's content description already reads this text
                 modifier = GlanceModifier.semantics { contentDescription = "" }
             )
@@ -275,7 +274,7 @@ private fun CurrencyListItem(
         supportingContent = {
             CurrencyValueContent(currencyValue, bankName)
         },
-        trailingContent = {
+        trailingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
             CircleIconButton(
                 imageProvider = ImageProvider(R.drawable.ic_open_in_app),
                 contentDescription = context.getString(R.string.open_map),
@@ -401,13 +400,13 @@ private object ActionListLayoutTextStyles {
      * Style for the text displayed as title within each item.
      */
     @Composable
-    fun titleText(): TextStyle = TextStyle(
-        fontWeight = FontWeight.Medium,
+    fun headlineText(): TextStyle = TextStyle(
+        fontWeight = FontWeight.Normal,
         fontSize =
         if (ActionListLayoutSize.fromLocalSize() == Small) {
-            14.sp // M3 Title Small
+            24.sp // M3 Headline Small
         } else {
-            16.sp // M3 Title Medium
+            28.sp // M3 Headline Medium
         },
         color = GlanceTheme.colors.onSurface
     )
@@ -418,8 +417,8 @@ private object ActionListLayoutTextStyles {
     @Composable
     fun mainText(): TextStyle = TextStyle(
         color = GlanceTheme.colors.primary,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.Bold
+        fontSize = 45.sp,
+        fontWeight = FontWeight.Medium
     )
 
     /**
@@ -428,7 +427,7 @@ private object ActionListLayoutTextStyles {
     @Composable
     fun supportingText(): TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp, // M3 Label Medium
+        fontSize = 14.sp, // M3 Body Medium
         color = GlanceTheme.colors.onSurfaceVariant
     )
 }
