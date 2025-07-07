@@ -20,6 +20,8 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import fobo66.valiutchik.api.CurrencyRatesParserImpl
+import fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl
 import nl.adaptivity.xmlutil.serialization.XML
 import org.junit.Rule
 import org.junit.Test
@@ -33,9 +35,9 @@ class CurrencyRatesParserImplBenchmark {
     @get:Rule
     val benchmarkRule = BenchmarkRule()
 
-    private val parser = fobo66.valiutchik.api.CurrencyRatesParserImpl()
+    private val parser = CurrencyRatesParserImpl()
     private val kotlinxSerializationParser =
-        fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl(
+        CurrencyRatesParserSerializerImpl(
             XML {
                 defaultPolicy { ignoreUnknownChildren() }
             }
