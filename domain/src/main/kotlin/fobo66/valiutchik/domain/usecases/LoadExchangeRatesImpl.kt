@@ -16,14 +16,18 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import androidx.annotation.StringRes
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.R
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.DollarBuyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.EuroBuyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.HryvniaBuyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.RubleBuyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate.ZlotyBuyRate
 import kotlin.LazyThreadSafetyMode.NONE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -52,32 +56,39 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<BestCurrencyRate>> =
+    override fun execute(): Flow<List<NewBestCurrencyRate>> =
         currencyRateRepository.loadExchangeRates()
             .map { rates ->
                 rates.map {
-                    @StringRes val currencyNameRes = resolveCurrencyName(it)
-
-                    BestCurrencyRate(
-                        bank = currencyRateRepository.formatBankName(it),
-                        currencyNameRes = currencyNameRes,
-                        currencyValue = currencyRateRepository.formatRate(it)
-                    )
+                    it.toRate()
                 }.filter {
-                    it.bank.isNotEmpty() && it.currencyNameRes != 0
+                    it.bank.isNotEmpty()
                 }
             }
 
-    @StringRes
-    private fun resolveCurrencyName(rate: BestCourse): Int {
-        val labelRes = rate.currencyName?.let {
-            if (rate.isBuy == true) {
-                buyLabels[it]
-            } else {
-                sellLabels[it]
-            }
+    private fun BestCourse.toRate(): NewBestCurrencyRate {
+        val bank = currencyRateRepository.formatBankName(this)
+        val rateValue = currencyRateRepository.formatRate(this)
+        val currency = requireNotNull(currencyName) {
+            "Null currency name here means the error with the query!"
         }
 
-        return labelRes ?: 0
+        return if (isBuy == true) {
+            when (currency) {
+                CurrencyName.DOLLAR -> DollarBuyRate(bank, rateValue)
+                CurrencyName.EUR -> EuroBuyRate(bank, rateValue)
+                CurrencyName.RUB -> RubleBuyRate(bank, rateValue)
+                CurrencyName.PLN -> ZlotyBuyRate(bank, rateValue)
+                CurrencyName.UAH -> HryvniaBuyRate(bank, rateValue)
+            }
+        } else {
+            when (currency) {
+                CurrencyName.DOLLAR -> NewBestCurrencyRate.DollarSellRate(bank, rateValue)
+                CurrencyName.EUR -> NewBestCurrencyRate.EuroSellRate(bank, rateValue)
+                CurrencyName.RUB -> NewBestCurrencyRate.RubleSellRate(bank, rateValue)
+                CurrencyName.PLN -> NewBestCurrencyRate.ZlotySellRate(bank, rateValue)
+                CurrencyName.UAH -> NewBestCurrencyRate.HryvniaSellRate(bank, rateValue)
+            }
+        }
     }
 }
