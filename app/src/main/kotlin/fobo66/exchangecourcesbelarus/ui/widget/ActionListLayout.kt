@@ -50,6 +50,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
@@ -60,7 +61,7 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.widget
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.showTitleBar
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -103,7 +104,7 @@ fun ActionListLayout(
     @DrawableRes titleBarActionIconRes: Int,
     titleBarActionIconContentDescription: String,
     titleBarAction: Action,
-    items: ImmutableList<BestCurrencyRate>,
+    items: ImmutableList<NewBestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -151,7 +152,7 @@ fun ActionListLayout(
 
 @Composable
 private fun Content(
-    items: ImmutableList<BestCurrencyRate>,
+    items: ImmutableList<NewBestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -180,7 +181,7 @@ private fun Content(
 
 @Composable
 private fun ListView(
-    items: ImmutableList<BestCurrencyRate>,
+    items: ImmutableList<NewBestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -192,8 +193,8 @@ private fun ListView(
         verticalItemsSpacing = verticalSpacing,
         itemContentProvider = { item ->
             CurrencyListItem(
-                currencyName = context.getString(item.currencyNameRes),
-                currencyValue = item.currencyValue,
+                currencyName = context.getString(item.resolveCurrencyName()),
+                currencyValue = item.rateValue,
                 bankName = item.bank,
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
@@ -204,7 +205,7 @@ private fun ListView(
 
 @Composable
 private fun GridView(
-    items: ImmutableList<BestCurrencyRate>,
+    items: ImmutableList<NewBestCurrencyRate>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -216,8 +217,8 @@ private fun GridView(
         cellSpacing = itemContentSpacing,
         itemContentProvider = { item ->
             CurrencyListItem(
-                currencyName = context.getString(item.currencyNameRes),
-                currencyValue = item.currencyValue,
+                currencyName = context.getString(item.resolveCurrencyName()),
+                currencyValue = item.rateValue,
                 bankName = item.bank,
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()

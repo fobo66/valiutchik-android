@@ -33,7 +33,7 @@ import androidx.glance.appwidget.provideContent
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.MainActivity
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.entities.NewBestCurrencyRate
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import kotlinx.collections.immutable.ImmutableList
@@ -100,7 +100,7 @@ class CurrencyWidget :
 
 @Composable
 fun CurrencyWidgetContent(
-    rates: ImmutableList<BestCurrencyRate>,
+    rates: ImmutableList<NewBestCurrencyRate>,
     onTitleBarActionClick: () -> Unit,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -132,15 +132,13 @@ private fun CurrencyWidgetPreview() {
         CurrencyWidgetContent(
             rates =
             persistentListOf(
-                BestCurrencyRate(
-                    "test",
-                    fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
-                    "1.23"
+                NewBestCurrencyRate.DollarBuyRate(
+                    bank = "test",
+                    rateValue = "1.23"
                 ),
-                BestCurrencyRate(
-                    "test",
-                    fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
-                    "1.23"
+                NewBestCurrencyRate.DollarSellRate(
+                    bank = "test",
+                    rateValue = "4.56"
                 )
             ),
             onTitleBarActionClick = {}
