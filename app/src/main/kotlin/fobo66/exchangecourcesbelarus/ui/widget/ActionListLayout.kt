@@ -50,6 +50,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import fobo66.exchangecourcesbelarus.R
+import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
@@ -192,8 +193,8 @@ private fun ListView(
         verticalItemsSpacing = verticalSpacing,
         itemContentProvider = { item ->
             CurrencyListItem(
-                currencyName = context.getString(item.currencyNameRes),
-                currencyValue = item.currencyValue,
+                currencyName = context.getString(item.resolveCurrencyName()),
+                currencyValue = item.rateValue,
                 bankName = item.bank,
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
@@ -216,8 +217,8 @@ private fun GridView(
         cellSpacing = itemContentSpacing,
         itemContentProvider = { item ->
             CurrencyListItem(
-                currencyName = context.getString(item.currencyNameRes),
-                currencyValue = item.currencyValue,
+                currencyName = context.getString(item.resolveCurrencyName()),
+                currencyValue = item.rateValue,
                 bankName = item.bank,
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
@@ -265,8 +266,7 @@ private fun CurrencyListItem(
         headlineContent = {
             Text(
                 text = currencyName,
-                style = ActionListLayoutTextStyles.titleText(),
-                maxLines = 1,
+                style = ActionListLayoutTextStyles.headlineText(),
                 // Container's content description already reads this text
                 modifier = GlanceModifier.semantics { contentDescription = "" }
             )
@@ -274,7 +274,7 @@ private fun CurrencyListItem(
         supportingContent = {
             CurrencyValueContent(currencyValue, bankName)
         },
-        trailingContent = {
+        trailingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
             CircleIconButton(
                 imageProvider = ImageProvider(R.drawable.ic_open_in_app),
                 contentDescription = context.getString(R.string.open_map),
@@ -305,15 +305,18 @@ private fun CurrencyValueContent(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                provider = ImageProvider(R.drawable.ic_bank),
-                colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
-                contentDescription = context.getString(R.string.bank_name_indicator)
-            )
+            if (ActionListLayoutSize.fromLocalSize() != Small) {
+                Image(
+                    provider = ImageProvider(R.drawable.ic_bank),
+                    colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
+                    contentDescription = context.getString(R.string.bank_name_indicator),
+                    modifier = GlanceModifier.padding(end = 8.dp)
+
+                )
+            }
             Text(
                 text = bankName,
-                style = ActionListLayoutTextStyles.supportingText(),
-                modifier = GlanceModifier.padding(start = 8.dp)
+                style = ActionListLayoutTextStyles.supportingText()
             )
         }
     }
@@ -400,13 +403,13 @@ private object ActionListLayoutTextStyles {
      * Style for the text displayed as title within each item.
      */
     @Composable
-    fun titleText(): TextStyle = TextStyle(
-        fontWeight = FontWeight.Medium,
+    fun headlineText(): TextStyle = TextStyle(
+        fontWeight = FontWeight.Normal,
         fontSize =
         if (ActionListLayoutSize.fromLocalSize() == Small) {
-            14.sp // M3 Title Small
+            14.sp // M3 Title Small Expressive
         } else {
-            16.sp // M3 Title Medium
+            28.sp // M3 Headline Medium
         },
         color = GlanceTheme.colors.onSurface
     )
@@ -417,8 +420,16 @@ private object ActionListLayoutTextStyles {
     @Composable
     fun mainText(): TextStyle = TextStyle(
         color = GlanceTheme.colors.primary,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.Bold
+        fontSize = if (ActionListLayoutSize.fromLocalSize() == Small) {
+            16.sp // M3 Title Medium Expressive
+        } else {
+            45.sp // M3 Display Medium Expressive
+        },
+        fontWeight = if (ActionListLayoutSize.fromLocalSize() == Small) {
+            FontWeight.Bold
+        } else {
+            FontWeight.Medium
+        }
     )
 
     /**
@@ -427,7 +438,11 @@ private object ActionListLayoutTextStyles {
     @Composable
     fun supportingText(): TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp, // M3 Label Medium
+        fontSize = if (ActionListLayoutSize.fromLocalSize() == Small) {
+            14.sp // M3 Body Medium
+        } else {
+            18.sp // M3 Headline Medium
+        },
         color = GlanceTheme.colors.onSurfaceVariant
     )
 }

@@ -16,18 +16,6 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import kotlinx.io.Source
-import kotlinx.io.asSource
-import kotlinx.io.buffered
-import kotlinx.io.files.FileNotFoundException
-
-class AssetsDataSourceJvmImpl : AssetsDataSource {
-    /**
-     * Load file from assets
-     *
-     * @param fileName Name of the asset file. It should exist in the assets
-     */
-    override fun loadFile(fileName: String): Source =
-        javaClass.classLoader.getResourceAsStream(fileName)?.asSource()?.buffered()
-            ?: throw FileNotFoundException("Asset not found")
-}
+internal const val RAW_RATE = 1.23
+internal const val RATE = "BYN 1.23"
+internal const val BANK_NAME = "Приорбанк" // taken from API

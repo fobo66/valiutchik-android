@@ -63,6 +63,7 @@ import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
 import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
+import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
@@ -119,11 +120,11 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { item -> item.currencyNameRes }
+                            key = { item -> item.resolveCurrencyName() }
                         ) { item ->
                             BestCurrencyRateCard(
-                                currencyName = stringResource(id = item.currencyNameRes),
-                                currencyValue = item.currencyValue,
+                                currencyName = stringResource(id = item.resolveCurrencyName()),
+                                currencyValue = item.rateValue,
                                 bankName = item.bank,
                                 onClick = onBestRateClick,
                                 onLongClick = onBestRateLongClick,
@@ -229,15 +230,13 @@ private fun BestCurrencyRatesPreview() {
         BestRatesGrid(
             bestCurrencyRates =
             persistentListOf(
-                BestCurrencyRate(
+                BestCurrencyRate.DollarBuyRate(
                     bank = "test",
-                    currencyNameRes = R.string.app_name,
-                    currencyValue = "1.23"
+                    rateValue = "1.23"
                 ),
-                BestCurrencyRate(
+                BestCurrencyRate.DollarSellRate(
                     bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-                    currencyNameRes = R.string.action_about,
-                    currencyValue = "1.23"
+                    rateValue = "4.56"
                 )
             ),
             onBestRateClick = {},

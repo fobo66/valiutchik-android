@@ -109,4 +109,14 @@
   <string name="share_rate_text">%1$s сегодня %2$s</string>
   <string name="share_description">Поделиться курсом валюты</string>
   <string name="toolbar_action_more">Больше</string>
+  <string name="currency_name_usd_buy">Доллар США курс покупки</string>
+  <string name="currency_name_usd_sell">Доллар США курс продажи</string>
+  <string name="currency_name_eur_buy">Евро курс покупки</string>
+  <string name="currency_name_eur_sell">Евро курс продажи</string>
+  <string name="currency_name_rub_buy">100 рублей курс покупки</string>
+  <string name="currency_name_rub_sell">100 рублей курс продажи</string>
+  <string name="currency_name_pln_buy">Злотый курс покупки</string>
+  <string name="currency_name_pln_sell">Злотый курс продажи</string>
+  <string name="currency_name_uah_buy">100 гривен курс покупки</string>
+  <string name="currency_name_uah_sell">100 гривен курс продажи</string>
 </resources>

@@ -16,68 +16,56 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import androidx.annotation.StringRes
-import androidx.collection.ScatterMap
-import androidx.collection.mutableScatterMapOf
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.util.CurrencyName
-import fobo66.valiutchik.domain.R
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlin.LazyThreadSafetyMode.NONE
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.DollarBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.EuroBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.HryvniaBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.RubleBuyRate
+import fobo66.valiutchik.domain.entities.BestCurrencyRate.ZlotyBuyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
     LoadExchangeRates {
-    private val buyLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
-        mutableScatterMapOf(
-            CurrencyName.DOLLAR to R.string.currency_name_usd_buy,
-            CurrencyName.EUR to R.string.currency_name_eur_buy,
-            CurrencyName.RUB to R.string.currency_name_rub_buy,
-            CurrencyName.PLN to R.string.currency_name_pln_buy,
-            CurrencyName.UAH to R.string.currency_name_uah_buy
-        )
-    }
-
-    private val sellLabels: ScatterMap<CurrencyName, Int> by lazy(NONE) {
-        mutableScatterMapOf(
-            CurrencyName.DOLLAR to R.string.currency_name_usd_sell,
-            CurrencyName.EUR to R.string.currency_name_eur_sell,
-            CurrencyName.RUB to R.string.currency_name_rub_sell,
-            CurrencyName.PLN to R.string.currency_name_pln_sell,
-            CurrencyName.UAH to R.string.currency_name_uah_sell
-        )
-    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun execute(): Flow<List<BestCurrencyRate>> =
         currencyRateRepository.loadExchangeRates()
             .map { rates ->
                 rates.map {
-                    @StringRes val currencyNameRes = resolveCurrencyName(it)
-
-                    BestCurrencyRate(
-                        bank = currencyRateRepository.formatBankName(it),
-                        currencyNameRes = currencyNameRes,
-                        currencyValue = currencyRateRepository.formatRate(it)
-                    )
+                    it.toRate()
                 }.filter {
-                    it.bank.isNotEmpty() && it.currencyNameRes != 0
+                    it.bank.isNotEmpty()
                 }
             }
 
-    @StringRes
-    private fun resolveCurrencyName(rate: BestCourse): Int {
-        val labelRes = rate.currencyName?.let {
-            if (rate.isBuy == true) {
-                buyLabels[it]
-            } else {
-                sellLabels[it]
-            }
+    private fun BestCourse.toRate(): BestCurrencyRate {
+        val bank = currencyRateRepository.formatBankName(this)
+        val rateValue = currencyRateRepository.formatRate(this)
+        val currency = requireNotNull(currencyName) {
+            "Null currency name should not happen here!"
         }
 
-        return labelRes ?: 0
+        return if (isBuy == true) {
+            when (currency) {
+                CurrencyName.DOLLAR -> DollarBuyRate(bank, rateValue)
+                CurrencyName.EUR -> EuroBuyRate(bank, rateValue)
+                CurrencyName.RUB -> RubleBuyRate(bank, rateValue)
+                CurrencyName.PLN -> ZlotyBuyRate(bank, rateValue)
+                CurrencyName.UAH -> HryvniaBuyRate(bank, rateValue)
+            }
+        } else {
+            when (currency) {
+                CurrencyName.DOLLAR -> BestCurrencyRate.DollarSellRate(bank, rateValue)
+                CurrencyName.EUR -> BestCurrencyRate.EuroSellRate(bank, rateValue)
+                CurrencyName.RUB -> BestCurrencyRate.RubleSellRate(bank, rateValue)
+                CurrencyName.PLN -> BestCurrencyRate.ZlotySellRate(bank, rateValue)
+                CurrencyName.UAH -> BestCurrencyRate.HryvniaSellRate(bank, rateValue)
+            }
+        }
     }
 }
