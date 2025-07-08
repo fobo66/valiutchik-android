@@ -17,12 +17,12 @@
 package fobo66.valiutchik.api.di
 
 import fobo66.valiutchik.api.CurrencyRatesParser
-import fobo66.valiutchik.api.CurrencyRatesParserSaxImpl
+import fobo66.valiutchik.api.CurrencyRatesParserCommonImpl
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val parserModule: Module = module {
     single<CurrencyRatesParser> {
-        CurrencyRatesParserSaxImpl()
+        CurrencyRatesParserCommonImpl()
     }
 }

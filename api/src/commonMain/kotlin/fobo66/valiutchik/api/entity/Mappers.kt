@@ -40,24 +40,27 @@ fun MutableScatterMap<String, String>.toCurrency(): Bank = Bank(
     filialId = get(TAG_NAME_FILIAL_ID)?.toLongOrNull() ?: 0L,
     date = get(TAG_NAME_DATE).orEmpty(),
     bankName = get(TAG_NAME_BANK_NAME).orEmpty(),
-    usdBuy = ExchangeRateValue(get(TAG_NAME_USD_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
-    usdSell = ExchangeRateValue(
-        get(TAG_NAME_USD_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-    ),
-    eurBuy = ExchangeRateValue(get(TAG_NAME_EUR_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
-    eurSell = ExchangeRateValue(
-        get(TAG_NAME_EUR_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-    ),
-    rubBuy = ExchangeRateValue(get(TAG_NAME_RUR_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
-    rubSell = ExchangeRateValue(
-        get(TAG_NAME_RUR_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-    ),
-    plnBuy = ExchangeRateValue(get(TAG_NAME_PLN_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
-    plnSell = ExchangeRateValue(
-        get(TAG_NAME_PLN_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-    ),
-    uahBuy = ExchangeRateValue(get(TAG_NAME_UAH_BUY)?.toDoubleOrNull() ?: UNDEFINED_BUY_RATE),
-    uahSell = ExchangeRateValue(
-        get(TAG_NAME_UAH_SELL)?.toDoubleOrNull() ?: UNDEFINED_SELL_RATE
-    )
+    usdBuy = resolveRateValue(get(TAG_NAME_USD_BUY), UNDEFINED_BUY_RATE),
+    usdSell =
+    resolveRateValue(get(TAG_NAME_USD_SELL), UNDEFINED_SELL_RATE),
+    eurBuy = resolveRateValue(get(TAG_NAME_EUR_BUY), UNDEFINED_BUY_RATE),
+    eurSell =
+    resolveRateValue(get(TAG_NAME_EUR_SELL), UNDEFINED_SELL_RATE),
+    rubBuy = resolveRateValue(get(TAG_NAME_RUR_BUY), UNDEFINED_BUY_RATE),
+    rubSell =
+    resolveRateValue(get(TAG_NAME_RUR_SELL), UNDEFINED_SELL_RATE),
+    plnBuy = resolveRateValue(get(TAG_NAME_PLN_BUY), UNDEFINED_BUY_RATE),
+    plnSell =
+    resolveRateValue(get(TAG_NAME_PLN_SELL), UNDEFINED_SELL_RATE),
+    uahBuy = resolveRateValue(get(TAG_NAME_UAH_BUY), UNDEFINED_BUY_RATE),
+    uahSell =
+    resolveRateValue(get(TAG_NAME_UAH_SELL), UNDEFINED_SELL_RATE)
+
 )
+
+fun resolveRateValue(rawValue: String?, defaultValue: Double = UNDEFINED_RATE): Double =
+    if (rawValue.isNullOrEmpty() || rawValue == UNKNOWN_RAW_RATE) {
+        defaultValue
+    } else {
+        rawValue.toDouble()
+    }

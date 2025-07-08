@@ -17,10 +17,6 @@
 package fobo66.valiutchik.core.entities
 
 import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.api.entity.ExchangeRateValue
-import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
-import fobo66.valiutchik.api.entity.UNDEFINED_RATE
-import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import kotlin.math.log10
 import kotlin.math.roundToInt
 import kotlinx.datetime.LocalDate
@@ -32,24 +28,17 @@ fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
     id = concatIds(bankId, filialId),
     date = resolveDate(date, dateFormat),
     bankName = bankName,
-    usdBuy = resolveRate(usdBuy, UNDEFINED_BUY_RATE),
-    usdSell = resolveRate(usdSell, UNDEFINED_SELL_RATE),
-    eurBuy = resolveRate(eurBuy, UNDEFINED_BUY_RATE),
-    eurSell = resolveRate(eurSell, UNDEFINED_SELL_RATE),
-    rubBuy = resolveRate(rubBuy, UNDEFINED_BUY_RATE),
-    rubSell = resolveRate(rubSell, UNDEFINED_SELL_RATE),
-    plnBuy = resolveRate(plnBuy, UNDEFINED_BUY_RATE),
-    plnSell = resolveRate(plnSell, UNDEFINED_SELL_RATE),
-    uahBuy = resolveRate(uahBuy, UNDEFINED_BUY_RATE),
-    uahSell = resolveRate(uahSell, UNDEFINED_SELL_RATE)
+    usdBuy = usdBuy,
+    usdSell = usdSell,
+    eurBuy = eurBuy,
+    eurSell = eurSell,
+    rubBuy = rubBuy,
+    rubSell = rubSell,
+    plnBuy = plnBuy,
+    plnSell = plnSell,
+    uahBuy = uahBuy,
+    uahSell = uahSell
 )
-
-private fun resolveRate(rate: ExchangeRateValue, defaultValue: Double): Double =
-    if (rate.rate != UNDEFINED_RATE) {
-        rate.rate
-    } else {
-        defaultValue
-    }
 
 private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): String =
     if (rawDate.isEmpty()) {

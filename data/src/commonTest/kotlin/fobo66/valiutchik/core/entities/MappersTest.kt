@@ -16,22 +16,15 @@
 
 package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.api.entity.ExchangeRateValue
-import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
-import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
+import dev.fobo66.core.data.testing.fake.DATE
+import dev.fobo66.core.data.testing.fake.ID
+import dev.fobo66.core.data.testing.fake.RATE
+import dev.fobo66.core.data.testing.fake.RAW_DATE
+import dev.fobo66.core.data.testing.fake.buildBank
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
-
-private const val ID = 1L
-private const val TEST = "test"
-private const val RAW_RATE = 1.23
-private val RATE = ExchangeRateValue(1.23)
-private val UNKNOWN_COURSE = ExchangeRateValue(-1.0)
-private const val DATE = "2025-07-01"
-private const val RAW_DATE = "01.07.2025"
 
 class MappersTest {
     @Test
@@ -85,55 +78,6 @@ class MappersTest {
     @Test
     fun `parse rate`() {
         val rate = buildBank().toRate(LocalDate.Formats.ISO)
-        assertEquals(RAW_RATE, rate.usdBuy)
+        assertEquals(RATE, rate.usdBuy)
     }
-
-    @Test
-    fun `unknown buy rate`() {
-        val rate = buildBank(
-            usdBuy = UNKNOWN_COURSE
-        ).toRate(LocalDate.Formats.ISO)
-        assertEquals(UNDEFINED_BUY_RATE, rate.usdBuy)
-    }
-
-    @Test
-    fun `unknown sell rate`() {
-        val rate = buildBank(
-            usdSell = UNKNOWN_COURSE
-        ).toRate(LocalDate.Formats.ISO)
-        assertEquals(UNDEFINED_SELL_RATE, rate.usdSell)
-    }
-
-    @Suppress("LongParameterList") // ok for tests
-    private fun buildBank(
-        bankId: Long = ID,
-        filialId: Long = ID,
-        date: String = DATE,
-        bankName: String = TEST,
-        usdBuy: ExchangeRateValue = RATE,
-        usdSell: ExchangeRateValue = RATE,
-        eurBuy: ExchangeRateValue = RATE,
-        eurSell: ExchangeRateValue = RATE,
-        rubBuy: ExchangeRateValue = RATE,
-        rubSell: ExchangeRateValue = RATE,
-        plnBuy: ExchangeRateValue = RATE,
-        plnSell: ExchangeRateValue = RATE,
-        uahBuy: ExchangeRateValue = RATE,
-        uahSell: ExchangeRateValue = RATE
-    ): Bank = Bank(
-        bankId,
-        filialId,
-        date,
-        bankName,
-        usdBuy,
-        usdSell,
-        eurBuy,
-        eurSell,
-        rubBuy,
-        rubSell,
-        plnBuy,
-        plnSell,
-        uahBuy,
-        uahSell
-    )
 }
