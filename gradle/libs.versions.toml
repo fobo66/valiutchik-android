@@ -39,6 +39,7 @@ kotlinxIo = "0.8.0"
 kotlinxSerialization = "1.9.0"
 ksp = "2.2.0-2.0.2"
 ktor = "3.2.1"
+ktxml = "1.0.0"
 leakCanary = "2.14"
 licensesPlugin = "0.9.8"
 napier = "2.7.1"
@@ -126,6 +127,7 @@ ktor-content = { group = "io.ktor", name = "ktor-client-content-negotiation" }
 ktor-encoding = { group = "io.ktor", name = "ktor-client-encoding" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
+ktxml = { group = "org.kobjects.ktxml", name = "core", version.ref = "ktxml" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }

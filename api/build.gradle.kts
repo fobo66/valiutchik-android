@@ -70,6 +70,7 @@ kotlin {
                 implementation(libs.ktor.serialization)
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.xml)
+                implementation(libs.ktxml)
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.napier)
