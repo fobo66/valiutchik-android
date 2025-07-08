@@ -24,5 +24,5 @@ interface ClipboardRepository {
     /**
      * Copy string to clipboard
      */
-    fun copyToClipboard(label: CharSequence, value: CharSequence)
+    fun copyToClipboard(value: CharSequence)
 }

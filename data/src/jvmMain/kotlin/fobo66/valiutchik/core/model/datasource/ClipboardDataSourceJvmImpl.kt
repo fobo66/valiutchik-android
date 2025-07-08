@@ -16,20 +16,17 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import io.github.aakira.napier.Napier
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 class ClipboardDataSourceJvmImpl : ClipboardDataSource {
-    override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
+    override fun copyToClipboard(value: CharSequence): Boolean {
         Toolkit.getDefaultToolkit()
             .systemClipboard
             .setContents(
                 StringSelection(value.toString()),
                 null
             )
-
-        Napier.v { "Copied $label: $value" }
 
         return true
     }
