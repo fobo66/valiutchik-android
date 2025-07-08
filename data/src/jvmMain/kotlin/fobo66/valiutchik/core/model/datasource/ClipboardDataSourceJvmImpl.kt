@@ -16,11 +16,13 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import io.github.aakira.napier.Napier
+import java.awt.HeadlessException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 class ClipboardDataSourceJvmImpl : ClipboardDataSource {
-    override fun copyToClipboard(value: CharSequence): Boolean {
+    override fun copyToClipboard(value: CharSequence): Boolean = try {
         Toolkit.getDefaultToolkit()
             .systemClipboard
             .setContents(
@@ -28,6 +30,16 @@ class ClipboardDataSourceJvmImpl : ClipboardDataSource {
                 null
             )
 
-        return true
+        true
+    } catch (e: HeadlessException) {
+        Napier.e(e) {
+            "Cannot copy in headless mode"
+        }
+        false
+    } catch (e: IllegalStateException) {
+        Napier.e(e) {
+            "Clipboard is unavailable"
+        }
+        false
     }
 }
