@@ -22,8 +22,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.api.CurrencyRatesParserCommonImpl
 import fobo66.valiutchik.api.CurrencyRatesParserImpl
-import fobo66.valiutchik.api.CurrencyRatesParserSerializerImpl
-import nl.adaptivity.xmlutil.serialization.XML
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,12 +36,6 @@ class CurrencyRatesParserImplBenchmark {
 
     private val androidParser = CurrencyRatesParserImpl()
     private val commonParser = CurrencyRatesParserCommonImpl()
-    private val kotlinxSerializationParser =
-        CurrencyRatesParserSerializerImpl(
-            XML {
-                defaultPolicy { ignoreUnknownChildren() }
-            }
-        )
 
     @Test
     fun customParser() {
@@ -62,16 +54,6 @@ class CurrencyRatesParserImplBenchmark {
                 loadResponseBody()
             }
             commonParser.parse(body)
-        }
-    }
-
-    @Test
-    fun kotlinxSerialization() {
-        benchmarkRule.measureRepeated {
-            val body = runWithMeasurementDisabled {
-                loadResponseBody()
-            }
-            kotlinxSerializationParser.parse(body)
         }
     }
 
