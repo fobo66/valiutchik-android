@@ -16,71 +16,22 @@
 
 package fobo66.valiutchik.api.entity
 
-import fobo66.valiutchik.api.ENTRY_TAG_NAME
-import fobo66.valiutchik.api.TAG_NAME_BANK_ID
-import fobo66.valiutchik.api.TAG_NAME_BANK_NAME
-import fobo66.valiutchik.api.TAG_NAME_DATE
-import fobo66.valiutchik.api.TAG_NAME_EUR_BUY
-import fobo66.valiutchik.api.TAG_NAME_EUR_SELL
-import fobo66.valiutchik.api.TAG_NAME_FILIAL_ID
-import fobo66.valiutchik.api.TAG_NAME_PLN_BUY
-import fobo66.valiutchik.api.TAG_NAME_PLN_SELL
-import fobo66.valiutchik.api.TAG_NAME_RUR_BUY
-import fobo66.valiutchik.api.TAG_NAME_RUR_SELL
-import fobo66.valiutchik.api.TAG_NAME_UAH_BUY
-import fobo66.valiutchik.api.TAG_NAME_UAH_SELL
-import fobo66.valiutchik.api.TAG_NAME_USD_BUY
-import fobo66.valiutchik.api.TAG_NAME_USD_SELL
-import kotlinx.serialization.Serializable
-import nl.adaptivity.xmlutil.serialization.XmlElement
-import nl.adaptivity.xmlutil.serialization.XmlSerialName
-
 /**
  * Currency model from XML
  */
-@Serializable
-@XmlSerialName(ENTRY_TAG_NAME)
 data class Bank(
-    @XmlElement
-    @XmlSerialName(TAG_NAME_BANK_ID)
     val bankId: Long = 0L,
-    @XmlElement
-    @XmlSerialName(TAG_NAME_FILIAL_ID)
     val filialId: Long = 0L,
-    @XmlElement
-    @XmlSerialName(TAG_NAME_DATE)
     val date: String = "",
-    @XmlElement
-    @XmlSerialName(TAG_NAME_BANK_NAME)
     val bankName: String = "",
-    @XmlElement
-    @XmlSerialName(TAG_NAME_USD_BUY)
-    val usdBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_USD_SELL)
-    val usdSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_EUR_BUY)
-    val eurBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_EUR_SELL)
-    val eurSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_RUR_BUY)
-    val rubBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_RUR_SELL)
-    val rubSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_PLN_BUY)
-    val plnBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_PLN_SELL)
-    val plnSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_UAH_BUY)
-    val uahBuy: ExchangeRateValue = ExchangeRateValue(UNDEFINED_BUY_RATE),
-    @XmlElement
-    @XmlSerialName(TAG_NAME_UAH_SELL)
-    val uahSell: ExchangeRateValue = ExchangeRateValue(UNDEFINED_SELL_RATE)
+    val usdBuy: Double = UNDEFINED_BUY_RATE,
+    val usdSell: Double = UNDEFINED_SELL_RATE,
+    val eurBuy: Double = UNDEFINED_BUY_RATE,
+    val eurSell: Double = UNDEFINED_SELL_RATE,
+    val rubBuy: Double = UNDEFINED_BUY_RATE,
+    val rubSell: Double = UNDEFINED_SELL_RATE,
+    val plnBuy: Double = UNDEFINED_BUY_RATE,
+    val plnSell: Double = UNDEFINED_SELL_RATE,
+    val uahBuy: Double = UNDEFINED_BUY_RATE,
+    val uahSell: Double = UNDEFINED_SELL_RATE
 )

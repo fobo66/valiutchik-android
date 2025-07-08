@@ -20,7 +20,7 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.api.entity.ExchangeRateValue
+import fobo66.valiutchik.api.entity.UNDEFINED_RATE
 import fobo66.valiutchik.core.entities.toRate
 import kotlinx.datetime.LocalDate
 import org.junit.Rule
@@ -29,8 +29,7 @@ import org.junit.runner.RunWith
 
 private const val ID = 1L
 private const val NAME = "test"
-private val RATE = ExchangeRateValue(1.23)
-private val UNKNOWN_COURSE = ExchangeRateValue(-1.0)
+private const val RATE = 1.23
 private const val DATE = "2025-06-16"
 
 @RunWith(AndroidJUnit4::class)
@@ -63,12 +62,12 @@ class RateMapperBenchmark {
         usdSell = RATE,
         eurBuy = RATE,
         eurSell = RATE,
-        rubBuy = UNKNOWN_COURSE,
-        rubSell = UNKNOWN_COURSE,
+        rubBuy = UNDEFINED_RATE,
+        rubSell = UNDEFINED_RATE,
         plnBuy = RATE,
-        plnSell = UNKNOWN_COURSE,
+        plnSell = UNDEFINED_RATE,
         uahBuy = RATE,
-        uahSell = UNKNOWN_COURSE
+        uahSell = UNDEFINED_RATE
     )
 
     private val emptyBank = Bank()
