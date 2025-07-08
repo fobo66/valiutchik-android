@@ -23,7 +23,7 @@ class ClipboardRepositoryImpl(private val clipboardDataSource: ClipboardDataSour
     ClipboardRepository {
 
     override fun copyToClipboard(value: CharSequence) {
-        Napier.v { "Copying to clipboard: value = $value" }
+        Napier.v { "Copying to clipboard" }
         if (clipboardDataSource.copyToClipboard(value)) {
             Napier.v("Copied successfully")
         } else {
