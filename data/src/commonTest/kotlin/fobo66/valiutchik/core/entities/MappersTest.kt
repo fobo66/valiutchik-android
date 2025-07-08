@@ -16,17 +16,15 @@
 
 package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.api.entity.Bank
+import dev.fobo66.core.data.testing.fake.DATE
+import dev.fobo66.core.data.testing.fake.ID
+import dev.fobo66.core.data.testing.fake.RATE
+import dev.fobo66.core.data.testing.fake.RAW_DATE
+import dev.fobo66.core.data.testing.fake.buildBank
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
-
-private const val ID = 1L
-private const val TEST = "test"
-private const val RATE = 1.23
-private const val DATE = "2025-07-01"
-private const val RAW_DATE = "01.07.2025"
 
 class MappersTest {
     @Test
@@ -82,37 +80,4 @@ class MappersTest {
         val rate = buildBank().toRate(LocalDate.Formats.ISO)
         assertEquals(RATE, rate.usdBuy)
     }
-
-    @Suppress("LongParameterList") // ok for tests
-    private fun buildBank(
-        bankId: Long = ID,
-        filialId: Long = ID,
-        date: String = DATE,
-        bankName: String = TEST,
-        usdBuy: Double = RATE,
-        usdSell: Double = RATE,
-        eurBuy: Double = RATE,
-        eurSell: Double = RATE,
-        rubBuy: Double = RATE,
-        rubSell: Double = RATE,
-        plnBuy: Double = RATE,
-        plnSell: Double = RATE,
-        uahBuy: Double = RATE,
-        uahSell: Double = RATE
-    ): Bank = Bank(
-        bankId,
-        filialId,
-        date,
-        bankName,
-        usdBuy,
-        usdSell,
-        eurBuy,
-        eurSell,
-        rubBuy,
-        rubSell,
-        plnBuy,
-        plnSell,
-        uahBuy,
-        uahSell
-    )
 }
