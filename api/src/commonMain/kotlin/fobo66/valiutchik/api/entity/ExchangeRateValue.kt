@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.api.entity
 
-import kotlin.jvm.JvmInline
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -25,6 +24,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+const val UNKNOWN_RAW_RATE = "-"
 const val UNDEFINED_RATE = -1.0
 const val UNDEFINED_BUY_RATE = 0.0
 const val UNDEFINED_SELL_RATE = 999.0
@@ -45,12 +45,7 @@ class ExchangeRateValueSerializer : KSerializer<ExchangeRateValue> {
 
     override fun deserialize(decoder: Decoder): ExchangeRateValue {
         val rawValue = decoder.decodeString()
-        val rate = if (rawValue.isNotEmpty() && rawValue != "-") {
-            rawValue.toDoubleOrNull() ?: UNDEFINED_RATE
-        } else {
-            UNDEFINED_RATE
-        }
-
+        val rate = resolveRateValue(rawValue)
         return ExchangeRateValue(rate)
     }
 }
