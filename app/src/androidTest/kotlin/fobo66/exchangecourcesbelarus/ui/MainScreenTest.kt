@@ -41,7 +41,7 @@ class MainScreenTest {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(),
                 onBestRateClick = {},
-                onBestRateLongClick = { _, _ -> },
+                onBestRateLongClick = {},
                 isRefreshing = false,
                 onRefresh = {},
                 showExplicitRefresh = true,
@@ -65,7 +65,7 @@ class MainScreenTest {
                 onBestRateClick = {
                     isMapOpen = true
                 },
-                onBestRateLongClick = { _, _ -> },
+                onBestRateLongClick = {},
                 isRefreshing = false,
                 onRefresh = {},
                 showExplicitRefresh = true,

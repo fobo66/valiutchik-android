@@ -74,7 +74,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun BestRatesGrid(
     bestCurrencyRates: ImmutableList<BestCurrencyRate>,
     onBestRateClick: (String) -> Unit,
-    onBestRateLongClick: (String, String) -> Unit,
+    onBestRateLongClick: (String) -> Unit,
     onShareClick: (String, String) -> Unit,
     showExplicitRefresh: Boolean,
     showSettings: Boolean,
@@ -167,7 +167,7 @@ fun BestCurrencyRateCard(
     currencyValue: String,
     bankName: String,
     onClick: (String) -> Unit,
-    onLongClick: (String, String) -> Unit,
+    onLongClick: (String) -> Unit,
     onShareClick: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -176,7 +176,7 @@ fun BestCurrencyRateCard(
         modifier
             .clip(CardDefaults.elevatedShape)
             .combinedClickable(
-                onLongClick = { onLongClick(currencyName, currencyValue) },
+                onLongClick = { onLongClick(currencyValue) },
                 onClick = { onClick(bankName) }
             )
     ) {
@@ -240,7 +240,7 @@ private fun BestCurrencyRatesPreview() {
                 )
             ),
             onBestRateClick = {},
-            onBestRateLongClick = { _, _ -> },
+            onBestRateLongClick = {},
             onShareClick = { _, _ -> },
             showExplicitRefresh = true,
             showSettings = true,

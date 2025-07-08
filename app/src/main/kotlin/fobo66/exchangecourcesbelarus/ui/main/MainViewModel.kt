@@ -98,7 +98,7 @@ class MainViewModel(
         }
     }
 
-    fun copyCurrencyRateToClipboard(currencyName: CharSequence, currencyValue: CharSequence) {
-        copyCurrencyRateToClipboard.execute(currencyName, currencyValue)
+    fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
+        copyCurrencyRateToClipboard.execute(currencyValue)
     }
 }

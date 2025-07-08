@@ -97,8 +97,8 @@ fun BestRatesScreenDestination(
             val mapIntentUri = mainViewModel.findBankOnMap(bankName)
             openMap(mapIntentUri, context, scope, snackbarHostState)
         },
-        onBestRateLongClick = { currencyName, currencyValue ->
-            mainViewModel.copyCurrencyRateToClipboard(currencyName, currencyValue)
+        onBestRateLongClick = { currencyValue ->
+            mainViewModel.copyCurrencyRateToClipboard(currencyValue)
             scope.launch {
                 showSnackbar(snackbarHostState, context.getString(R.string.currency_value_copied))
             }

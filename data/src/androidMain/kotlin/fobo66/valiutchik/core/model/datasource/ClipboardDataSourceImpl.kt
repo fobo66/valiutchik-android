@@ -21,10 +21,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.getSystemService
 
+private const val CLIP_LABEL = "CURRENCY_EXCHANGE_RATE"
+
 class ClipboardDataSourceImpl(private val context: Context) : ClipboardDataSource {
 
-    override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean {
-        val clipData = ClipData.newPlainText(label, value)
+    override fun copyToClipboard(value: CharSequence): Boolean {
+        val clipData = ClipData.newPlainText(CLIP_LABEL, value)
         val clipboardManager = context.getSystemService<ClipboardManager>()
         return clipboardManager?.let {
             it.setPrimaryClip(clipData)
