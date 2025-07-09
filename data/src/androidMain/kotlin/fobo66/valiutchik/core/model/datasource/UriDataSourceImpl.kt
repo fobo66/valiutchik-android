@@ -14,11 +14,18 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.core.data.testing.fake
+package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
-import fobo66.valiutchik.core.model.datasource.UriDataSource
 
-class FakeUriDataSource : UriDataSource {
-    override fun prepareUri(query: CharSequence): Uri = Uri.EMPTY
+internal const val URI_SCHEME = "geo"
+internal const val URI_AUTHORITY = "0,0"
+internal const val URI_PARAM_KEY = "q"
+
+class UriDataSourceImpl : UriDataSource {
+    override fun prepareUri(query: CharSequence): Uri = Uri.Builder()
+        .scheme(URI_SCHEME)
+        .authority(URI_AUTHORITY)
+        .appendQueryParameter(URI_PARAM_KEY, query.toString())
+        .build()
 }

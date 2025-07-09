@@ -16,38 +16,20 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.model.repository.URI_AUTHORITY
-import fobo66.valiutchik.core.model.repository.URI_PARAM_KEY
-import fobo66.valiutchik.core.model.repository.URI_SCHEME
+import androidx.test.filters.SmallTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@SmallTest
 class UriDataSourceTest {
     private val uriDataSource: UriDataSource = UriDataSourceImpl()
 
     @Test
-    fun `prepare HTTP URI`() {
-        val uri =
-            uriDataSource.prepareUri(
-                "https",
-                "example.com",
-                "key",
-                "value"
-            )
-
-        assertEquals("https://example.com?key=value", uri.toString())
-    }
-
-    @Test
     fun `prepare map URI`() {
         val uri =
-            uriDataSource.prepareUri(
-                URI_SCHEME,
-                URI_AUTHORITY,
-                URI_PARAM_KEY,
-                "test"
-            )
+            uriDataSource.prepareUri("test")
 
         assertEquals("test", uri.getQueryParameter(URI_PARAM_KEY))
+        assertEquals(URI_SCHEME, uri.scheme)
     }
 }

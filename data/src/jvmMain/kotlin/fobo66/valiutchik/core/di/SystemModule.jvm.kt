@@ -27,6 +27,8 @@ import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceDesktopImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceStubImpl
+import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.core.model.datasource.UriDataSourceJvmImpl
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -46,4 +48,6 @@ actual val systemModule: Module = module {
     single<ClipboardDataSource> { ClipboardDataSourceJvmImpl() }
 
     single<AssetsDataSource> { AssetsDataSourceJvmImpl() }
+
+    single<UriDataSource> { UriDataSourceJvmImpl() }
 }

@@ -16,17 +16,17 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import com.eygraber.uri.Uri
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class UriDataSourceImpl : UriDataSource {
-    override fun prepareUri(
-        scheme: String,
-        authority: String,
-        queryParameterKey: String,
-        queryParameterValue: String
-    ): Uri = Uri.Builder()
-        .scheme(scheme)
-        .authority(authority)
-        .appendQueryParameter(queryParameterKey, queryParameterValue)
-        .build()
+class UriDataSourceJvmImplTest {
+    private val uriDataSource = UriDataSourceJvmImpl()
+
+    @Test
+    fun `prepare HTTP URI`() {
+        val uri =
+            uriDataSource.prepareUri("test")
+
+        assertEquals(URI_AUTHORITY, uri.authority)
+    }
 }
