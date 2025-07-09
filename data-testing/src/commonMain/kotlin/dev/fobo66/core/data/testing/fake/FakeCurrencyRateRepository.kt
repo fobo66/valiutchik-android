@@ -19,16 +19,20 @@ package dev.fobo66.core.data.testing.fake
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
+
+    val rates = MutableStateFlow(emptyList<BestCourse>())
+
     var isRefreshed = false
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         isRefreshed = true
     }
 
-    override fun loadExchangeRates(): Flow<List<BestCourse>> = flowOf(emptyList())
+    override fun loadExchangeRates(): Flow<List<BestCourse>> = rates.asStateFlow()
 
     override fun formatRate(rate: BestCourse): String = rate.currencyValue.toString()
 

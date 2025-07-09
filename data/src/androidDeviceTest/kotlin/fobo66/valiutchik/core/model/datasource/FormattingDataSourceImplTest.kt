@@ -22,8 +22,6 @@ import dev.fobo66.core.data.testing.fake.FakeBankNameNormalizer
 import java.util.Locale
 import kotlin.test.Test
 
-private const val BANK_NAME = "Приорбанк" // taken from API
-
 @SmallTest
 class FormattingDataSourceImplTest {
     private val bankNameNormalizer = FakeBankNameNormalizer()
@@ -32,8 +30,8 @@ class FormattingDataSourceImplTest {
     fun formatCurrency() {
         val formattingDataSource: FormattingDataSource =
             FormattingDataSourceImpl(Locale.US, bankNameNormalizer)
-        val rate = formattingDataSource.formatCurrencyValue(1.23)
-        assertThat(rate).isEqualTo("BYN 1.23")
+        val rate = formattingDataSource.formatCurrencyValue(RAW_RATE)
+        assertThat(rate).isEqualTo(RATE)
     }
 
     @Test
@@ -41,7 +39,7 @@ class FormattingDataSourceImplTest {
         val formattingDataSource: FormattingDataSource =
             FormattingDataSourceImpl(Locale.US, bankNameNormalizer)
         val rate = formattingDataSource.formatCurrencyValue(1.234567890)
-        assertThat(rate).isEqualTo("BYN 1.23")
+        assertThat(rate).isEqualTo(RATE)
     }
 
     @Test
@@ -66,6 +64,14 @@ class FormattingDataSourceImplTest {
             FormattingDataSourceImpl(Locale.forLanguageTag(LANG_RU), bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo(BANK_NAME)
+    }
+
+    @Test
+    fun emptyName() {
+        val formattingDataSource: FormattingDataSource =
+            FormattingDataSourceImpl(Locale.getDefault(), bankNameNormalizer)
+        val result = formattingDataSource.formatBankName("")
+        assertThat(result).isEmpty()
     }
 
     @Test

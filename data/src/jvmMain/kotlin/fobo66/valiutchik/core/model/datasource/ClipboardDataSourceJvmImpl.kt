@@ -23,7 +23,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 class ClipboardDataSourceJvmImpl : ClipboardDataSource {
-    override fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean = try {
+    override fun copyToClipboard(value: CharSequence): Boolean = try {
         Toolkit.getDefaultToolkit()
             .systemClipboard
             .setContents(
@@ -31,22 +31,20 @@ class ClipboardDataSourceJvmImpl : ClipboardDataSource {
                 null
             )
 
-        Napier.v { "Copied $label: $value" }
-
         true
-    } catch (e: AWTError) {
-        Napier.e(e) {
-            "AWT toolkit is not available"
-        }
-        false
     } catch (e: HeadlessException) {
         Napier.e(e) {
-            "Clipboard cannot be used in headless mode"
+            "Cannot copy in headless mode"
         }
         false
     } catch (e: IllegalStateException) {
         Napier.e(e) {
-            "Clipboard is not available"
+            "Clipboard is unavailable"
+        }
+        false
+    } catch (e: AWTError) {
+        Napier.e(e) {
+            "AWT toolkit is not available"
         }
         false
     }

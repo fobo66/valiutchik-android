@@ -23,7 +23,6 @@ import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.filters.SmallTest
-import fobo66.exchangecourcesbelarus.R.string
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.persistentListOf
@@ -42,7 +41,7 @@ class MainScreenTest {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(),
                 onBestRateClick = {},
-                onBestRateLongClick = { _, _ -> },
+                onBestRateLongClick = {},
                 isRefreshing = false,
                 onRefresh = {},
                 showExplicitRefresh = true,
@@ -61,12 +60,12 @@ class MainScreenTest {
         composeRule.setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(
-                    BestCurrencyRate("test", string.app_name, "0.0")
+                    BestCurrencyRate.DollarBuyRate("test", "0.0")
                 ),
                 onBestRateClick = {
                     isMapOpen = true
                 },
-                onBestRateLongClick = { _, _ -> },
+                onBestRateLongClick = {},
                 isRefreshing = false,
                 onRefresh = {},
                 showExplicitRefresh = true,

@@ -26,7 +26,7 @@ detektCompose = "0.4.22"
 dotenvKotlin = "6.5.1"
 espresso = "3.6.1"
 icu = "77.1"
-junit = "5.13.2"
+junit = "5.13.3"
 junitPlugin = "1.13.1.0"
 koin = "4.1.0"
 kotlin = "2.2.0"
@@ -34,11 +34,12 @@ kotlinPoet = "2.2.0"
 kotlinter = "5.1.1"
 kotlinxCollections = "0.4.0"
 kotlinxCoroutines = "1.10.2"
-kotlinxDatetime = "0.7.0"
+kotlinxDatetime = "0.7.1"
 kotlinxIo = "0.8.0"
 kotlinxSerialization = "1.9.0"
 ksp = "2.2.0-2.0.2"
-ktor = "3.2.0"
+ktor = "3.2.1"
+ktxml = "1.0.0"
 leakCanary = "2.14"
 licensesPlugin = "0.9.8"
 napier = "2.7.1"
@@ -48,7 +49,6 @@ truth = "1.4.4"
 turbine = "1.2.1"
 uri = "0.0.20"
 work = "2.10.2"
-xml = "0.91.1"
 xr = "1.0.0-alpha04"
 xrMaterial = "1.0.0-alpha08"
 
@@ -118,7 +118,6 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinxIo" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-kotlinx-serialization-xml = { group = "io.github.pdvrieze.xmlutil", name = "serialization", version.ref = "xml" }
 ktor-auth = { group = "io.ktor", name = "ktor-client-auth" }
 ktor-bom = { group = "io.ktor", name = "ktor-bom", version.ref = "ktor" }
 ktor-client = { group = "io.ktor", name = "ktor-client-cio" }
@@ -126,6 +125,7 @@ ktor-content = { group = "io.ktor", name = "ktor-client-content-negotiation" }
 ktor-encoding = { group = "io.ktor", name = "ktor-client-encoding" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
+ktxml = { group = "org.kobjects.ktxml", name = "core", version.ref = "ktxml" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }

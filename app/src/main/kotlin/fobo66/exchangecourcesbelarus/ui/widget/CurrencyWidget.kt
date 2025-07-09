@@ -108,7 +108,7 @@ fun CurrencyWidgetContent(
 
     ActionListLayout(
         title = context.getString(R.string.app_name),
-        titleIconRes = R.drawable.ic_launcher_foreground,
+        titleIconRes = R.drawable.ic_widget_logo,
         titleBarActionIconRes = R.drawable.ic_refresh,
         titleBarActionIconContentDescription = context.getString(R.string.widget_action_refresh),
         titleBarAction = action(null, onTitleBarActionClick),
@@ -132,15 +132,13 @@ private fun CurrencyWidgetPreview() {
         CurrencyWidgetContent(
             rates =
             persistentListOf(
-                BestCurrencyRate(
-                    "test",
-                    fobo66.valiutchik.domain.R.string.currency_name_eur_buy,
-                    "1.23"
+                BestCurrencyRate.DollarBuyRate(
+                    bank = "test",
+                    rateValue = "1.23"
                 ),
-                BestCurrencyRate(
-                    "test",
-                    fobo66.valiutchik.domain.R.string.currency_name_eur_sell,
-                    "1.23"
+                BestCurrencyRate.DollarSellRate(
+                    bank = "test",
+                    rateValue = "4.56"
                 )
             ),
             onTitleBarActionClick = {}

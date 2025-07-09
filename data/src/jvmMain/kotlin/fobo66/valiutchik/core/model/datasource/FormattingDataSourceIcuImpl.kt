@@ -44,6 +44,9 @@ class FormattingDataSourceIcuImpl(
      * Clean up all the unnecessary parts from the bank name
      */
     override fun formatBankName(name: String): String {
+        if (name.isEmpty()) {
+            return name
+        }
         val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = locale.isO3Language
 

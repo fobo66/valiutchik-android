@@ -19,14 +19,9 @@ package fobo66.valiutchik.api
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import nl.adaptivity.xmlutil.serialization.XML
 
-class CurrencyRatesParserSerializerImplTest {
-    private val parser: CurrencyRatesParser = CurrencyRatesParserSerializerImpl(
-        XML {
-            defaultPolicy { ignoreUnknownChildren() }
-        }
-    )
+class CurrencyRatesParserCommonImplTest {
+    private val parser: CurrencyRatesParser = CurrencyRatesParserCommonImpl()
 
     @Test
     fun `single currency`() {

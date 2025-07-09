@@ -28,6 +28,10 @@ class FormattingDataSourceImpl(
     private val bankNameNormalizer: BankNameNormalizer
 ) : FormattingDataSource {
     override fun formatBankName(name: String): String {
+        if (name.isEmpty()) {
+            return name
+        }
+
         val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = locale.isO3Language
 

@@ -14,18 +14,8 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.api.entity.Bank
-import fobo66.valiutchik.api.entity.Banks
-import kotlinx.serialization.decodeFromString
-import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
-import nl.adaptivity.xmlutil.serialization.XML
-
-class CurrencyRatesParserSerializerImpl(private val xml: XML) : CurrencyRatesParser() {
-    @OptIn(ExperimentalXmlUtilApi::class)
-    override fun parse(body: String): Set<Bank> {
-        val banks = xml.decodeFromString<Banks>(body)
-        return banks.banks
-    }
-}
+internal const val RAW_RATE = 1.23
+internal const val RATE = "BYN 1.23"
+internal const val BANK_NAME = "Приорбанк" // taken from API

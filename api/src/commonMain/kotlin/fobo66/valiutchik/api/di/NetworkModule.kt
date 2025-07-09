@@ -27,11 +27,8 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
-import nl.adaptivity.xmlutil.serialization.XML
 import org.koin.dsl.module
 
-@OptIn(ExperimentalXmlUtilApi::class)
 val networkModule =
     module {
         single<Logger> {
@@ -45,12 +42,6 @@ val networkModule =
             Json {
                 isLenient = true
                 ignoreUnknownKeys = true
-            }
-        }
-
-        single<XML> {
-            XML {
-                defaultPolicy { ignoreUnknownChildren() }
             }
         }
 

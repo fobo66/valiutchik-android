@@ -23,10 +23,9 @@ interface ClipboardDataSource {
     /**
      * Add provided entry to the device's clipboard
      *
-     * @param label Clipboard item label
      * @param value String value of the item
      *
      * @return Whether or not clipboard operation was successful
      */
-    fun copyToClipboard(label: CharSequence, value: CharSequence): Boolean
+    fun copyToClipboard(value: CharSequence): Boolean
 }

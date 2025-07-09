@@ -39,6 +39,16 @@
   <string name="widget_action_refresh">Refresh</string>
   <string name="share_description">Share currency rate</string>
   <string name="toolbar_action_more">More</string>
+  <string name="currency_name_usd_buy">US Dollar buy rate</string>
+  <string name="currency_name_usd_sell">US Dollar sell rate</string>
+  <string name="currency_name_eur_buy">Euro buy rate</string>
+  <string name="currency_name_eur_sell">Euro sell rate</string>
+  <string name="currency_name_rub_buy">100 rubles buy rate</string>
+  <string name="currency_name_rub_sell">100 rubles sell rate</string>
+  <string name="currency_name_pln_buy">Zloty buy rate</string>
+  <string name="currency_name_pln_sell">Zloty sell rate</string>
+  <string name="currency_name_uah_buy">100 hryvnias buy rate</string>
+  <string name="currency_name_uah_sell">100 hryvnias sell rate</string>
   <string-array name="pref_cities_list">
     <item>Ashmyany</item>
     <item>Asipovichy</item>

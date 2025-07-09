@@ -14,12 +14,26 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.entity
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.api.ROOT_TAG_NAME
-import kotlinx.serialization.Serializable
-import nl.adaptivity.xmlutil.serialization.XmlSerialName
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlinx.io.readString
 
-@Serializable
-@XmlSerialName(ROOT_TAG_NAME)
-data class Banks(val banks: Set<Bank>)
+class AssetsDataSourceJvmTest {
+    private val assetsDataSource: AssetsDataSource = AssetsDataSourceJvmImpl()
+
+    @Test
+    fun `open file`() {
+        val file = assetsDataSource.loadFile("test.txt")
+        assertEquals("test\n", file.readString())
+    }
+
+    @Test
+    fun `missing file`() {
+        assertFails {
+            assetsDataSource.loadFile("missing.file")
+        }
+    }
+}

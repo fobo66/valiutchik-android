@@ -21,8 +21,6 @@ import com.ibm.icu.util.ULocale
 import fobo66.valiutchik.core.util.BankNameNormalizerImpl
 import kotlin.test.Test
 
-private const val BANK_NAME = "Приорбанк" // taken from API
-
 class FormattingDataSourceIcuImplTest {
     private val bankNameNormalizer = BankNameNormalizerImpl()
 
@@ -30,8 +28,8 @@ class FormattingDataSourceIcuImplTest {
     fun formatCurrency() {
         val formattingDataSource: FormattingDataSource =
             FormattingDataSourceIcuImpl(ULocale.US, bankNameNormalizer)
-        val rate = formattingDataSource.formatCurrencyValue(1.23)
-        assertThat(rate).isEqualTo("BYN 1.23")
+        val rate = formattingDataSource.formatCurrencyValue(RAW_RATE)
+        assertThat(rate).isEqualTo(RATE)
     }
 
     @Test
@@ -39,7 +37,7 @@ class FormattingDataSourceIcuImplTest {
         val formattingDataSource: FormattingDataSource =
             FormattingDataSourceIcuImpl(ULocale.US, bankNameNormalizer)
         val rate = formattingDataSource.formatCurrencyValue(1.234567890)
-        assertThat(rate).isEqualTo("BYN 1.23")
+        assertThat(rate).isEqualTo(RATE)
     }
 
     @Test
@@ -56,6 +54,14 @@ class FormattingDataSourceIcuImplTest {
             FormattingDataSourceIcuImpl(ULocale.SIMPLIFIED_CHINESE, bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo("Priorbank")
+    }
+
+    @Test
+    fun emptyName() {
+        val formattingDataSource: FormattingDataSource =
+            FormattingDataSourceIcuImpl(ULocale.getDefault(), bankNameNormalizer)
+        val result = formattingDataSource.formatBankName("")
+        assertThat(result).isEmpty()
     }
 
     @Test

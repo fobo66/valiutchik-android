@@ -22,9 +22,9 @@ import io.github.aakira.napier.Napier
 class ClipboardRepositoryImpl(private val clipboardDataSource: ClipboardDataSource) :
     ClipboardRepository {
 
-    override fun copyToClipboard(label: CharSequence, value: CharSequence) {
-        Napier.v { "Copying to clipboard: label = $label, value = $value" }
-        if (clipboardDataSource.copyToClipboard(label, value)) {
+    override fun copyToClipboard(value: CharSequence) {
+        Napier.v { "Copying to clipboard" }
+        if (clipboardDataSource.copyToClipboard(value)) {
             Napier.v("Copied successfully")
         } else {
             Napier.v("Copying failed")

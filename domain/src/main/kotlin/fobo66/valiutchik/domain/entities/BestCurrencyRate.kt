@@ -16,16 +16,48 @@
 
 package fobo66.valiutchik.domain.entities
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
-/**
- * Entity that represents the best currency exchange rate
- * for consumption on the presentation layer
- */
-@Immutable
-data class BestCurrencyRate(
-    val bank: String,
-    @StringRes val currencyNameRes: Int,
-    val currencyValue: String
-)
+@Stable
+sealed class BestCurrencyRate(open val bank: String, open val rateValue: String) {
+    @Immutable
+    data class DollarBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class DollarSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class EuroBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class EuroSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class HryvniaBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class HryvniaSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class ZlotyBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class ZlotySellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class RubleBuyRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class RubleSellRate(override val bank: String, override val rateValue: String) :
+        BestCurrencyRate(bank, rateValue)
+}
