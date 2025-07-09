@@ -16,10 +16,8 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import android.content.Intent
 import fobo66.valiutchik.core.model.repository.MapRepository
 
 class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
-    override fun execute(bankName: CharSequence): String? =
-        mapRepository.searchOnMap(bankName, Intent.ACTION_VIEW)
+    override fun execute(bankName: CharSequence): Boolean = mapRepository.searchOnMap(bankName)
 }

@@ -83,7 +83,7 @@ class MainViewModel(
                 initialValue = MainScreenState.Initial
             )
 
-    fun findBankOnMap(bankName: CharSequence): String? = findBankOnMap.execute(bankName)
+    fun findBankOnMap(bankName: CharSequence): Boolean = findBankOnMap.execute(bankName)
 
     fun manualRefresh() = viewModelScope.launch {
         isRefreshTriggered.emit(true)

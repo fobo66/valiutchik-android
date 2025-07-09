@@ -94,8 +94,8 @@ fun BestRatesScreenDestination(
     BestRatesGrid(
         bestCurrencyRates = bestCurrencyRates,
         onBestRateClick = { bankName ->
-            val mapIntentUri = mainViewModel.findBankOnMap(bankName)
-            openMap(mapIntentUri, context, scope, snackbarHostState)
+            val isMapOpened = mainViewModel.findBankOnMap(bankName)
+            handleOpenMap(isMapOpened, context, scope, snackbarHostState)
         },
         onBestRateLongClick = { currencyValue ->
             mainViewModel.copyCurrencyRateToClipboard(currencyValue)
@@ -180,20 +180,13 @@ fun OpenSourceLicensesDestination(
     )
 }
 
-private fun openMap(
-    mapIntentUri: String?,
+private fun handleOpenMap(
+    isMapOpened: Boolean,
     context: Context,
     scope: CoroutineScope,
     snackbarHostState: SnackbarHostState
 ) {
-    if (mapIntentUri != null) {
-        context.startActivity(
-            Intent.createChooser(
-                Intent.parseUri(mapIntentUri, 0),
-                context.getString(R.string.open_map)
-            )
-        )
-    } else {
+    if (!isMapOpened) {
         scope.launch {
             showSnackbar(snackbarHostState, context.getString(R.string.maps_app_required))
         }
