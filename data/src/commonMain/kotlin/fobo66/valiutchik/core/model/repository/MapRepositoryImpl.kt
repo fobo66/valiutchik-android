@@ -20,31 +20,20 @@ import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import io.github.aakira.napier.Napier
 
-const val URI_SCHEME = "geo"
-const val URI_AUTHORITY = "0,0"
-const val URI_PARAM_KEY = "q"
-
 class MapRepositoryImpl(
     private val uriDataSource: UriDataSource,
     private val intentDataSource: IntentDataSource
 ) : MapRepository {
-    override fun searchOnMap(query: CharSequence, searchAction: String): String? {
-        val mapUri =
-            uriDataSource.prepareUri(
-                URI_SCHEME,
-                URI_AUTHORITY,
-                URI_PARAM_KEY,
-                query.toString()
-            )
-        val intent = intentDataSource.createIntentUri(mapUri, searchAction)
+    override fun searchOnMap(query: CharSequence): Boolean {
+        val mapUri = uriDataSource.prepareUri(query)
 
-        val canResolveIntent = intentDataSource.checkIntentUri(intent)
+        val canResolveIntent = intentDataSource.checkIntentUri(mapUri)
 
         return if (canResolveIntent) {
-            intent
+            intentDataSource.resolveIntent(mapUri)
         } else {
             Napier.e("Cannot show banks on map: maps app not found")
-            null
+            false
         }
     }
 }
