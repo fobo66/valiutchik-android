@@ -22,7 +22,7 @@ import fobo66.valiutchik.core.model.datasource.IntentDataSource
 class FakeIntentDataSource : IntentDataSource {
     var canResolveIntent = true
 
-    override fun createIntentUri(uri: Uri, action: String): String = Uri.EMPTY.toString()
+    override fun resolveIntent(intentUri: Uri): Boolean = canResolveIntent
 
-    override fun checkIntentUri(uri: String): Boolean = canResolveIntent
+    override fun checkIntentUri(uri: Uri): Boolean = canResolveIntent
 }

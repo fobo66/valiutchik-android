@@ -23,8 +23,6 @@ import fobo66.valiutchik.core.model.datasource.JsonDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
-import fobo66.valiutchik.core.model.datasource.UriDataSource
-import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
 import fobo66.valiutchik.core.model.repository.ClipboardRepository
 import fobo66.valiutchik.core.model.repository.ClipboardRepositoryImpl
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
@@ -55,10 +53,6 @@ val dataSourcesModule =
 
         single<PreferencesDataSource> {
             DataStorePreferencesDataSourceImpl(get())
-        }
-
-        single<UriDataSource> {
-            UriDataSourceImpl()
         }
 
         single<BankNameNormalizer> {

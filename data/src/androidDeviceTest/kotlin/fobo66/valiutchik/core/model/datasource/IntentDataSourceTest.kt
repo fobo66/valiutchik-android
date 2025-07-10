@@ -18,12 +18,14 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsRule
-import androidx.test.ext.truth.content.IntentSubject.assertThat as assertIntent
 import androidx.test.filters.SmallTest
 import com.eygraber.uri.Uri
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.Test
+import org.hamcrest.Matchers
 import org.junit.Rule
 
 @SmallTest
@@ -37,21 +39,23 @@ class IntentDataSourceTest {
         IntentDataSourceImpl(ApplicationProvider.getApplicationContext())
 
     @Test
-    fun createIntent() {
-        val intent =
-            Intent.parseUri(intentDataSource.createIntentUri(Uri.EMPTY, Intent.ACTION_VIEW), 0)
-        assertIntent(intent).hasAction(Intent.ACTION_VIEW)
+    fun resolveIntent() {
+        intentDataSource.resolveIntent(uri)
+        intended(
+            Matchers.allOf(
+                IntentMatchers.hasAction(Intent.ACTION_CHOOSER),
+                IntentMatchers.hasExtraWithKey(Intent.EXTRA_INTENT)
+            )
+        )
     }
 
     @Test
     fun canResolveIntent() {
-        val intent = intentDataSource.createIntentUri(uri, Intent.ACTION_VIEW)
-        assertThat(intentDataSource.checkIntentUri(intent)).isTrue()
+        assertThat(intentDataSource.checkIntentUri(uri)).isTrue()
     }
 
     @Test
     fun cannotResolveEmptyIntent() {
-        val intent = intentDataSource.createIntentUri(Uri.EMPTY, Intent.ACTION_VIEW)
-        assertThat(intentDataSource.checkIntentUri(intent)).isFalse()
+        assertThat(intentDataSource.checkIntentUri(Uri.EMPTY)).isFalse()
     }
 }

@@ -20,5 +20,5 @@ package fobo66.valiutchik.core.model.repository
  * Repository to open map
  */
 interface MapRepository {
-    fun searchOnMap(query: CharSequence, searchAction: String): String?
+    fun searchOnMap(query: CharSequence): Boolean
 }

@@ -28,6 +28,8 @@ import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.UriDataSource
+import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
 import java.util.Locale
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -70,4 +72,6 @@ actual val systemModule: Module = module {
     single<LocationDataSource> {
         LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.BACKGROUND)))
     }
+
+    single<UriDataSource> { UriDataSourceImpl() }
 }

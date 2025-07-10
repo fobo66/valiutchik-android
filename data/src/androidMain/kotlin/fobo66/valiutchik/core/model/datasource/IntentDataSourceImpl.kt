@@ -16,15 +16,41 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import com.eygraber.uri.Uri
 import com.eygraber.uri.toAndroidUri
+import io.github.aakira.napier.Napier
+import java.net.URISyntaxException
 
 class IntentDataSourceImpl(private val context: Context) : IntentDataSource {
-    override fun createIntentUri(uri: Uri, action: String): String =
-        Intent(action, uri.toAndroidUri()).toUri(0)
+    override fun resolveIntent(intentUri: Uri): Boolean = try {
+        context.startActivity(
+            Intent.createChooser(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    intentUri.toAndroidUri()
+                ),
+                "Open map"
+            )
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        true
+    } catch (e: ActivityNotFoundException) {
+        Napier.e(e) {
+            "Intent cannot be resolved"
+        }
+        false
+    } catch (e: URISyntaxException) {
+        Napier.e(e) {
+            "Intent URI is malformed"
+        }
+        false
+    }
 
-    override fun checkIntentUri(uri: String): Boolean =
-        Intent.parseUri(uri, 0).resolveActivity(context.packageManager) != null
+    override fun checkIntentUri(uri: Uri): Boolean = Intent(
+        Intent.ACTION_VIEW,
+        uri.toAndroidUri()
+    ).resolveActivity(context.packageManager) != null
 }

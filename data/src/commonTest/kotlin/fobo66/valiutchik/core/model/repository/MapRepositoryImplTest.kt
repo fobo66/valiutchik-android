@@ -16,31 +16,27 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import android.content.Intent
-import androidx.test.filters.SmallTest
 import dev.fobo66.core.data.testing.fake.FakeIntentDataSource
 import dev.fobo66.core.data.testing.fake.FakeUriDataSource
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@SmallTest
 class MapRepositoryImplTest {
     private val uriDataSource = FakeUriDataSource()
-    private val intentDataSource =
-        FakeIntentDataSource()
+    private val intentDataSource = FakeIntentDataSource()
 
     private val mapRepository: MapRepository = MapRepositoryImpl(uriDataSource, intentDataSource)
 
     @Test
     fun canResolveIntent() {
-        assertNotNull(mapRepository.searchOnMap("test", Intent.ACTION_VIEW))
+        assertTrue(mapRepository.searchOnMap("test"))
     }
 
     @Test
     fun cannotResolveIntent() {
         intentDataSource.canResolveIntent = false
 
-        assertNull(mapRepository.searchOnMap("test", Intent.ACTION_VIEW))
+        assertFalse(mapRepository.searchOnMap("test"))
     }
 }

@@ -25,12 +25,12 @@ interface IntentDataSource {
     /**
      * Create new Intent
      */
-    fun createIntentUri(uri: Uri, action: String): String
+    fun resolveIntent(intentUri: Uri): Boolean
 
     /**
      * Check if the given Intent can be resolved by the system
      *
      * @return null if there's no handler
      */
-    fun checkIntentUri(uri: String): Boolean
+    fun checkIntentUri(uri: Uri): Boolean
 }
