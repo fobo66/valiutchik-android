@@ -34,6 +34,7 @@ class IntentDataSourceImpl(private val context: Context) : IntentDataSource {
                 ),
                 "Open map"
             )
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
         true
     } catch (e: ActivityNotFoundException) {

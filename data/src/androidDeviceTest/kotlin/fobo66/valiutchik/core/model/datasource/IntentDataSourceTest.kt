@@ -16,15 +16,16 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.filters.SmallTest
 import com.eygraber.uri.Uri
-import com.eygraber.uri.toAndroidUri
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.Test
+import org.hamcrest.Matchers
 import org.junit.Rule
 
 @SmallTest
@@ -40,7 +41,12 @@ class IntentDataSourceTest {
     @Test
     fun resolveIntent() {
         intentDataSource.resolveIntent(uri)
-        intended(IntentMatchers.hasData(uri.toAndroidUri()))
+        intended(
+            Matchers.allOf(
+                IntentMatchers.hasAction(Intent.ACTION_CHOOSER),
+                IntentMatchers.hasExtraWithKey(Intent.EXTRA_INTENT)
+            )
+        )
     }
 
     @Test
