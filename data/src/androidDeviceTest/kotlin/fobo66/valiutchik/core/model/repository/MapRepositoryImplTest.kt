@@ -19,8 +19,8 @@ package fobo66.valiutchik.core.model.repository
 import androidx.test.filters.SmallTest
 import dev.fobo66.core.data.testing.fake.FakeIntentDataSource
 import dev.fobo66.core.data.testing.fake.FakeUriDataSource
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import org.junit.Test
 
 @SmallTest
@@ -33,13 +33,13 @@ class MapRepositoryImplTest {
 
     @Test
     fun canResolveIntent() {
-        assertNotNull(mapRepository.searchOnMap("test"))
+        assertTrue(mapRepository.searchOnMap("test"))
     }
 
     @Test
     fun cannotResolveIntent() {
         intentDataSource.canResolveIntent = false
 
-        assertNull(mapRepository.searchOnMap("test"))
+        assertFalse(mapRepository.searchOnMap("test"))
     }
 }
