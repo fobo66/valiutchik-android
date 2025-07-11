@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class FakeLoadUpdateIntervalPreference(private val storage: Map<String, String>) :
-  LoadUpdateIntervalPreference {
-  override fun execute(): Flow<Float> = flowOf(storage)
-    .map { it.getValue(KEY_UPDATE_INTERVAL).toFloat() }
+    LoadUpdateIntervalPreference {
+    override fun execute(): Flow<Float> = flowOf(storage)
+        .map { it.getValue(KEY_UPDATE_INTERVAL).toFloat() }
 }
