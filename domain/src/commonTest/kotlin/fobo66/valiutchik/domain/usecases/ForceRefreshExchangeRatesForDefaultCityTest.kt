@@ -18,9 +18,9 @@ package fobo66.valiutchik.domain.usecases
 
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
 import dev.fobo66.core.data.testing.fake.FakePreferenceRepository
+import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
 
 class ForceRefreshExchangeRatesForDefaultCityTest {
     private val currencyRateRepository = FakeCurrencyRateRepository()
