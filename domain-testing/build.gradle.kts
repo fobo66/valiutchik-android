@@ -18,45 +18,51 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-}
-
-android {
-    namespace = "dev.fobo66.domain.testing"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
-
-    defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    alias(libs.plugins.android.library.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
+    jvm {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
+    }
+
+    androidLibrary {
+        namespace = "dev.fobo66.domain.testing"
+        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+
+        minSdk = AndroidVersion.VersionCodes.R
+
+        compilations.configureEach {
+            compilerOptions.configure {
+                jvmTarget = JvmTarget.JVM_17
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":domain"))
+                api(project(":data"))
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.io)
+                implementation(libs.uri)
+            }
+        }
     }
 }
 
+detekt {
+    autoCorrect = true
+}
+
 dependencies {
-    api(project(":domain"))
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.uri)
+    detektPlugins(libs.detekt.rules.formatting)
+    detektPlugins(libs.detekt.rules.compose)
 }

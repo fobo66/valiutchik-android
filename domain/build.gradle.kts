@@ -18,42 +18,62 @@ import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
-    kotlin("android")
+    alias(libs.plugins.android.library.multiplatform)
+    kotlin("multiplatform")
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.junit)
 }
 
-android {
-    namespace = "fobo66.valiutchik.domain"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
-
-    defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+kotlin {
+    jvm {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
+    androidLibrary {
+        namespace = "fobo66.valiutchik.domain"
+        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+
+        minSdk = AndroidVersion.VersionCodes.R
+
+        compilations.configureEach {
+            compilerOptions.configure {
+                jvmTarget = JvmTarget.JVM_17
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":data"))
+                implementation(libs.androidx.annotation)
+                implementation(libs.androidx.collection)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(project.dependencies.platform(libs.compose.bom))
+                implementation(libs.koin.core)
+                implementation(libs.napier)
+                compileOnly(libs.compose.stable.marker)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+                api(project(":data-testing"))
+                api(project(":domain-testing"))
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.test)
+                implementation(libs.ktor.client)
+                implementation(libs.turbine)
+                implementation(libs.kotlinx.coroutines.test)
+            }
+        }
     }
 }
 
@@ -62,30 +82,6 @@ detekt {
 }
 
 dependencies {
-    api(project(":data"))
-    implementation(libs.androidx.annotation)
-    implementation(libs.androidx.collection)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.datetime)
-    implementation(platform(libs.koin.bom))
-    implementation(platform(libs.compose.bom))
-    implementation(libs.koin.core)
-    implementation(libs.napier)
-    compileOnly(libs.compose.stable.marker)
-
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
-
-    testApi(project(":domain-testing"))
-    testApi(project(":data-testing"))
-    testImplementation(libs.junit.api)
-    testRuntimeOnly(libs.junit.engine)
-    testImplementation(platform(libs.koin.bom))
-    testImplementation(libs.koin.test)
-    testImplementation(libs.ktor.client)
-    testImplementation(libs.turbine)
-    testImplementation(libs.truth)
-    testImplementation(libs.kotlinx.coroutines.test)
-
-    androidTestImplementation(libs.androidx.test.runner)
 }

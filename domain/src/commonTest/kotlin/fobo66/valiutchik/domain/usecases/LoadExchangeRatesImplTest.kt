@@ -17,12 +17,12 @@
 package fobo66.valiutchik.domain.usecases
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
 import fobo66.valiutchik.core.entities.BestCourse
+import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Test
 
 class LoadExchangeRatesImplTest {
     private val currencyRateRepository = FakeCurrencyRateRepository()
@@ -31,7 +31,7 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `empty list`() = runTest {
         loadExchangeRates.execute().test {
-            assertThat(awaitItem()).isEmpty()
+            assertTrue(awaitItem().isEmpty())
         }
     }
 
@@ -41,7 +41,7 @@ class LoadExchangeRatesImplTest {
             listOf(BestCourse())
         }
         loadExchangeRates.execute().test {
-            assertThat(awaitItem()).isEmpty()
+            assertTrue(awaitItem().isEmpty())
         }
     }
 }

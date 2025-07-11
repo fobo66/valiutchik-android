@@ -17,13 +17,11 @@
 package dev.fobo66.domain.testing.fake
 
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
-import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 
-class FakeLoadUpdateIntervalPreference(private val storage: Map<String, String>) :
-  LoadUpdateIntervalPreference {
-  override fun execute(): Flow<Float> = flowOf(storage)
-    .map { it.getValue(KEY_UPDATE_INTERVAL).toFloat() }
+class FakeUpdateUpdateIntervalPreference(private val storage: MutableMap<String, String>) :
+    UpdateUpdateIntervalPreference {
+    override suspend fun execute(newUpdateInterval: Float) {
+        storage.put(KEY_UPDATE_INTERVAL, newUpdateInterval.toString())
+    }
 }

@@ -17,17 +17,20 @@
 package fobo66.valiutchik.domain.usecases
 
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
+import dev.fobo66.core.data.testing.fake.FakeLocationRepository
 import dev.fobo66.core.data.testing.fake.FakePreferenceRepository
+import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
 
-class ForceRefreshExchangeRatesForDefaultCityTest {
+class ForceRefreshExchangeRatesTest {
+    private val locationRepository = FakeLocationRepository()
     private val currencyRateRepository = FakeCurrencyRateRepository()
     private val preferenceRepository = FakePreferenceRepository()
 
-    private val refreshExchangeRates: ForceRefreshExchangeRatesForDefaultCity =
-        ForceRefreshExchangeRatesForDefaultCityImpl(
+    private val refreshExchangeRates: ForceRefreshExchangeRates =
+        ForceRefreshExchangeRatesImpl(
+            locationRepository,
             currencyRateRepository,
             preferenceRepository
         )
@@ -36,5 +39,11 @@ class ForceRefreshExchangeRatesForDefaultCityTest {
     fun `refresh exchange rates`() = runTest {
         refreshExchangeRates.execute()
         assertTrue(currencyRateRepository.isRefreshed)
+    }
+
+    @Test
+    fun `resolve location for recent exchange rates`() = runTest {
+        refreshExchangeRates.execute()
+        assertTrue(locationRepository.isResolved)
     }
 }

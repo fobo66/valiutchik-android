@@ -17,11 +17,12 @@
 package fobo66.valiutchik.domain.usecases
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRates
 import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRatesForDefaultCity
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Test
 
 class RefreshInteractorImplTest {
     private val refreshExchangeRates = FakeForceRefreshExchangeRates()
@@ -33,11 +34,11 @@ class RefreshInteractorImplTest {
     @Test
     fun `progress updated`() = runTest {
         refreshInteractor.isRefreshInProgress.test {
-            assertThat(awaitItem()).isFalse()
+            assertFalse(awaitItem())
             refreshInteractor.initiateRefresh(true)
-            assertThat(awaitItem()).isTrue()
-            assertThat(awaitItem()).isFalse()
-            assertThat(refreshExchangeRates.isRefreshed).isTrue()
+            assertTrue(awaitItem())
+            assertFalse(awaitItem())
+            assertTrue(refreshExchangeRates.isRefreshed)
         }
     }
 
@@ -45,11 +46,11 @@ class RefreshInteractorImplTest {
     fun `progress updated on error`() = runTest {
         refreshExchangeRates.error = true
         refreshInteractor.isRefreshInProgress.test {
-            assertThat(awaitItem()).isFalse()
+            assertFalse(awaitItem())
             refreshInteractor.initiateRefresh(true)
-            assertThat(awaitItem()).isTrue()
-            assertThat(awaitItem()).isFalse()
-            assertThat(refreshExchangeRates.isRefreshed).isFalse()
+            assertTrue(awaitItem())
+            assertFalse(awaitItem())
+            assertFalse(refreshExchangeRates.isRefreshed)
         }
     }
 }
