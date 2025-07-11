@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class FakeLoadDefaultCityPreference(private val storage: Map<String, String>) :
-  LoadDefaultCityPreference {
-  override fun execute(): Flow<String> = flowOf(storage)
-    .map { it.getValue(KEY_DEFAULT_CITY) }
+    LoadDefaultCityPreference {
+    override fun execute(): Flow<String> = flowOf(storage)
+        .map { it.getValue(KEY_DEFAULT_CITY) }
 }
