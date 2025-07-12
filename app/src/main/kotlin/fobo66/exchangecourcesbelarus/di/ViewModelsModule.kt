@@ -16,8 +16,8 @@
 
 package fobo66.exchangecourcesbelarus.di
 
+import dev.fobo66.valiutchik.presentation.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
-import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module

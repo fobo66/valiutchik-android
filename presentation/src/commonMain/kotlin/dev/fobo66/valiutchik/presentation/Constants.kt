@@ -14,22 +14,6 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.entities
+package dev.fobo66.valiutchik.presentation
 
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
-
-@Stable
-sealed class MainScreenState {
-    @Immutable
-    object Initial : MainScreenState()
-
-    @Immutable
-    object Loading : MainScreenState()
-
-    @Immutable
-    object LoadedRates : MainScreenState()
-
-    @Immutable
-    object Error : MainScreenState()
-}
+const val STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS = 5000L

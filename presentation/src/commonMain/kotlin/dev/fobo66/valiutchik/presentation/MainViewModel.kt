@@ -14,12 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fobo66.exchangecourcesbelarus.entities.MainScreenState
-import fobo66.exchangecourcesbelarus.ui.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates

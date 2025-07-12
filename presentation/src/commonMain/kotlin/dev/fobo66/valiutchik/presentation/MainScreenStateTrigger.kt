@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.presentation
 
 data class MainScreenStateTrigger(
     val isRefreshTriggered: Boolean,

@@ -62,7 +62,10 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":domain"))
-                // Add KMP dependencies here
+                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.kotlinx.collections)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.androidx.lifecycle.viewmodel)
             }
         }
 

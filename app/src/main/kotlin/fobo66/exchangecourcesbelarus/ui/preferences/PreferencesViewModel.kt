@@ -18,7 +18,7 @@ package fobo66.exchangecourcesbelarus.ui.preferences
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fobo66.exchangecourcesbelarus.ui.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
+import dev.fobo66.valiutchik.presentation.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
