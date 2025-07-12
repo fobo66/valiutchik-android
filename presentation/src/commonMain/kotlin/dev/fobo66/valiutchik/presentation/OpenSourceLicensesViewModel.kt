@@ -17,22 +17,8 @@
 package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.StateFlow
 
-class OpenSourceLicensesViewModel(loadOpenSourceLicenses: LoadOpenSourceLicenses) : ViewModel() {
-    val licensesState = loadOpenSourceLicenses.execute()
-        .map { LicensesState(it.toImmutableList()) }
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-            initialValue = LicensesState(
-                persistentListOf()
-            )
-        )
+abstract class OpenSourceLicensesViewModel : ViewModel() {
+    abstract val licensesState: StateFlow<LicensesState>
 }

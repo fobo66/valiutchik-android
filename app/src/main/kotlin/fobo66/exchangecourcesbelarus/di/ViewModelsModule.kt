@@ -18,12 +18,16 @@ package fobo66.exchangecourcesbelarus.di
 
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.OpenSourceLicensesViewModel
+import dev.fobo66.valiutchik.presentation.OpenSourceLicensesViewModelImpl
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelsModule = module {
     viewModelOf(::MainViewModel)
-    viewModelOf(::OpenSourceLicensesViewModel)
+    viewModel<OpenSourceLicensesViewModel> {
+        OpenSourceLicensesViewModelImpl(get())
+    }
     viewModelOf(::PreferencesViewModel)
 }
