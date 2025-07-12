@@ -17,6 +17,7 @@
 package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.ViewModel
+import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import kotlinx.coroutines.flow.StateFlow
 
 abstract class OpenSourceLicensesViewModel : ViewModel() {

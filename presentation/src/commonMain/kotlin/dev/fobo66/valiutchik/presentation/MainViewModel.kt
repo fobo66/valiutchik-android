@@ -18,6 +18,8 @@ package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.fobo66.valiutchik.presentation.entity.MainScreenState
+import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates

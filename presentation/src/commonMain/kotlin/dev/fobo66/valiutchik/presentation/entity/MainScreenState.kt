@@ -14,9 +14,22 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.valiutchik.presentation.entity
 
-data class MainScreenStateTrigger(
-    val isRefreshTriggered: Boolean,
-    val isLocationAvailable: Boolean?
-)
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
+
+@Stable
+sealed class MainScreenState {
+    @Immutable
+    object Initial : MainScreenState()
+
+    @Immutable
+    object Loading : MainScreenState()
+
+    @Immutable
+    object LoadedRates : MainScreenState()
+
+    @Immutable
+    object Error : MainScreenState()
+}

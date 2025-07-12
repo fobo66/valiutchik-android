@@ -17,6 +17,7 @@
 package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.viewModelScope
+import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

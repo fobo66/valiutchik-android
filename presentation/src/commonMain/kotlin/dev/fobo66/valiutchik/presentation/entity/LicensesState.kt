@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.valiutchik.presentation.entity
 
 import androidx.compose.runtime.Immutable
 import fobo66.valiutchik.domain.entities.OpenSourceLicense
