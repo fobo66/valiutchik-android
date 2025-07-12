@@ -28,8 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
+import dev.fobo66.valiutchik.presentation.LicensesState
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.exchangecourcesbelarus.ui.ProgressIndicator
 import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme

@@ -14,12 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.licenses
+package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.fobo66.valiutchik.presentation.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
-import fobo66.exchangecourcesbelarus.entities.LicensesState
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

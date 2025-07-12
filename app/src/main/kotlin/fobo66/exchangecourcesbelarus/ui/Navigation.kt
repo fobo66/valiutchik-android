@@ -42,9 +42,9 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dev.fobo66.valiutchik.presentation.MainScreenState
 import dev.fobo66.valiutchik.presentation.MainViewModel
+import dev.fobo66.valiutchik.presentation.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
-import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
