@@ -27,7 +27,7 @@ class AssetsDataSourceJvmTest {
     @Test
     fun `open file`() {
         val file = assetsDataSource.loadFile("test.txt")
-        assertEquals("test\n", file.readString())
+        assertEquals("test" + System.lineSeparator(), file.readString())
     }
 
     @Test
