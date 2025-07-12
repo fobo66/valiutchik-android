@@ -15,36 +15,45 @@
  */
 
 dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 
-  repositories {
-    google {
-      content {
-        includeGroupAndSubgroups("androidx")
-        includeGroupAndSubgroups("com.android")
-        includeGroupAndSubgroups("com.google")
-      }
+    repositories {
+        google {
+            content {
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroupAndSubgroups("com.google")
+            }
+        }
+        mavenCentral()
     }
-    mavenCentral()
-  }
 }
 
 pluginManagement {
-  repositories {
-    exclusiveContent {
-      forRepository { google() }
-      filter {
-        includeGroupAndSubgroups("androidx")
-        includeGroupAndSubgroups("com.android")
-        includeGroup("com.google.testing.platform")
-      }
+    repositories {
+        exclusiveContent {
+            forRepository { google() }
+            filter {
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroup("com.google.testing.platform")
+            }
+        }
+        gradlePluginPortal()
+        mavenCentral()
     }
-    gradlePluginPortal()
-    mavenCentral()
-  }
 }
 
 rootProject.name = "Valiutchik"
 
-include(":app", ":benchmark", ":data", ":domain", ":api", ":baselineprofile", ":data-testing")
-include(":domain-testing")
+include(
+    ":app",
+    ":benchmark",
+    ":data",
+    ":domain",
+    ":api",
+    ":baselineprofile",
+    ":data-testing",
+    ":domain-testing",
+    ":presentation"
+)

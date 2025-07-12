@@ -124,7 +124,7 @@ licenseReport {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":presentation"))
 
     // kotlin
     implementation(libs.kotlinx.coroutines.android)
