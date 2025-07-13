@@ -21,19 +21,20 @@ import dev.fobo66.domain.testing.fake.FakeLoadDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
+import dev.fobo66.valiutchik.presentation.PreferencesViewModel
 import dev.fobo66.valiutchik.presentation.PreferencesViewModelImpl
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 
 private const val INTERVAL = 1f
 private const val NEW_INTERVAL = 3f
@@ -42,7 +43,7 @@ private const val NEW_CITY = "newcity"
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesViewModelTest {
-    private lateinit var viewModel: PreferencesViewModelImpl
+    private lateinit var viewModel: PreferencesViewModel
 
     private val fakeStorage = buildMap {
         put(KEY_DEFAULT_CITY, CITY)
@@ -54,7 +55,7 @@ class PreferencesViewModelTest {
     private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
     private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
 
-    @BeforeEach
+    @BeforeTest
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         viewModel = PreferencesViewModelImpl(
@@ -65,7 +66,7 @@ class PreferencesViewModelTest {
         )
     }
 
-    @AfterEach
+    @AfterTest
     fun tearDown() {
         Dispatchers.resetMain()
     }
