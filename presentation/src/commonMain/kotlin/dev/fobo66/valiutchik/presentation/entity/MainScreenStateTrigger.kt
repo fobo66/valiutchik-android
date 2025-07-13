@@ -16,7 +16,7 @@
 
 package dev.fobo66.valiutchik.presentation.entity
 
-data class MainScreenStateTrigger(
+internal data class MainScreenStateTrigger(
     val isRefreshTriggered: Boolean,
     val isLocationAvailable: Boolean?
 )

@@ -17,88 +17,18 @@
 package dev.fobo66.valiutchik.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
-import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
-import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
-import fobo66.valiutchik.domain.usecases.FindBankOnMap
-import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
 
-class MainViewModel(
-    loadExchangeRates: LoadExchangeRates,
-    private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
-    private val findBankOnMap: FindBankOnMap,
-    private val refreshInteractor: RefreshInteractor
-) : ViewModel() {
-    val bestCurrencyRates =
-        loadExchangeRates.execute()
-            .onEach {
-                if (it.isEmpty()) {
-                    isRefreshTriggered.emit(true)
-                }
-            }.map { it.toImmutableList() }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-                initialValue = persistentListOf()
-            )
+abstract class MainViewModel : ViewModel() {
+    abstract val bestCurrencyRates: StateFlow<ImmutableList<BestCurrencyRate>>
+    abstract val screenState: StateFlow<MainScreenState>
 
-    private val isLocationPermissionGranted: MutableStateFlow<Boolean?> = MutableStateFlow(null)
-    private val isRefreshTriggered = MutableStateFlow(false)
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val screenState =
-        combine(
-            isRefreshTriggered,
-            isLocationPermissionGranted,
-            ::MainScreenStateTrigger
-        ).filter { it.isRefreshTriggered && it.isLocationAvailable != null }
-            .onEach {
-                refreshInteractor.initiateRefresh(it.isLocationAvailable == true)
-                isRefreshTriggered.emit(false)
-            }.flatMapLatest { refreshInteractor.isRefreshInProgress }
-            .map {
-                if (it) {
-                    MainScreenState.Loading
-                } else {
-                    MainScreenState.LoadedRates
-                }
-            }.stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-                initialValue = MainScreenState.Initial
-            )
-
-    fun findBankOnMap(bankName: CharSequence): Boolean = findBankOnMap.execute(bankName)
-
-    fun manualRefresh() = viewModelScope.launch {
-        isRefreshTriggered.emit(true)
-    }
-
-    fun handleLocationPermission(permissionGranted: Boolean) = viewModelScope.launch {
-        isLocationPermissionGranted.update {
-            if (it != permissionGranted) {
-                isRefreshTriggered.emit(true)
-            }
-            permissionGranted
-        }
-    }
-
-    fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
-        copyCurrencyRateToClipboard.execute(currencyValue)
-    }
+    abstract fun findBankOnMap(bankName: CharSequence): Boolean
+    abstract fun manualRefresh(): Job
+    abstract fun handleLocationPermission(permissionGranted: Boolean): Job
+    abstract fun copyCurrencyRateToClipboard(currencyValue: CharSequence)
 }
