@@ -21,6 +21,7 @@ import dev.fobo66.domain.testing.fake.FakeLoadDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
+import dev.fobo66.valiutchik.presentation.PreferencesViewModelImpl
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +42,7 @@ private const val NEW_CITY = "newcity"
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesViewModelTest {
-    private lateinit var viewModel: PreferencesViewModel
+    private lateinit var viewModel: PreferencesViewModelImpl
 
     private val fakeStorage = buildMap {
         put(KEY_DEFAULT_CITY, CITY)
@@ -56,7 +57,7 @@ class PreferencesViewModelTest {
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        viewModel = PreferencesViewModel(
+        viewModel = PreferencesViewModelImpl(
             loadDefaultCityPreference,
             loadUpdateIntervalPreference,
             updateDefaultCityPreference,
