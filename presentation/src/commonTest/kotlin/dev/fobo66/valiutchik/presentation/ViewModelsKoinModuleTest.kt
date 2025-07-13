@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.preferences
+package dev.fobo66.valiutchik.presentation
 
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import io.ktor.client.HttpClientConfig
