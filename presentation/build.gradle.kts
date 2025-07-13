@@ -37,15 +37,6 @@ kotlin {
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R
 
-        withHostTestBuilder {
-        }
-
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
-
         compilations.configureEach {
             compilerOptions.configure {
                 jvmTarget = JvmTarget.JVM_17
@@ -66,6 +57,12 @@ kotlin {
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(project.dependencies.platform(libs.compose.bom))
+                implementation(libs.koin.core)
+                implementation(libs.koin.viewmodel)
+                implementation(libs.napier)
+                compileOnly(libs.compose.stable.marker)
             }
         }
 
@@ -81,21 +78,6 @@ kotlin {
                 implementation(libs.ktor.client)
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
-            }
-        }
-
-        getByName("androidDeviceTest") {
-            dependencies {
-                implementation(libs.androidx.test.runner)
-                implementation(libs.androidx.test.junit)
             }
         }
     }

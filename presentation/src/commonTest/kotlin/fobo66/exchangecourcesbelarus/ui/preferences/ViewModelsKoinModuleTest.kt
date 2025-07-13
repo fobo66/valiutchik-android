@@ -14,19 +14,24 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package fobo66.exchangecourcesbelarus.ui.preferences
 
+import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngine
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.test.verify.verify
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class ViewModelsKoinModuleTest {
+    @OptIn(KoinExperimentalAPI::class)
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun `check domain module`() {
+        viewModelsModule.verify(
+            extraTypes = listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
     }
 }

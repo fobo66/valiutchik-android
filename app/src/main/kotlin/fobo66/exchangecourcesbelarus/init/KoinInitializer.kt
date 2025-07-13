@@ -18,7 +18,7 @@ package fobo66.exchangecourcesbelarus.init
 
 import android.content.Context
 import androidx.startup.Initializer
-import fobo66.exchangecourcesbelarus.di.viewModelsModule
+import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import fobo66.exchangecourcesbelarus.di.workersModule
 import fobo66.valiutchik.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext

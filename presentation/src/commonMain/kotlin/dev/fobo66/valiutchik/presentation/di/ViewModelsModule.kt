@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.di
+package dev.fobo66.valiutchik.presentation.di
 
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.MainViewModelImpl
