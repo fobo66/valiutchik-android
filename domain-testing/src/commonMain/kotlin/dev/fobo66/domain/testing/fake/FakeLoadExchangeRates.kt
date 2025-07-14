@@ -14,20 +14,17 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.domain.testing.fake
 
-import androidx.lifecycle.ViewModel
-import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.StateFlow
+import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-abstract class MainViewModel : ViewModel() {
-    abstract val bestCurrencyRates: StateFlow<ImmutableList<BestCurrencyRate>>
-    abstract val screenState: StateFlow<MainScreenState>
+class FakeLoadExchangeRates : LoadExchangeRates {
 
-    abstract fun findBankOnMap(bankName: CharSequence): Boolean
-    abstract fun manualRefresh()
-    abstract fun handleLocationPermission(permissionGranted: Boolean)
-    abstract fun copyCurrencyRateToClipboard(currencyValue: CharSequence)
+    val rates = MutableStateFlow<List<BestCurrencyRate>>(emptyList())
+
+    override fun execute(): Flow<List<BestCurrencyRate>> = rates.asStateFlow()
 }

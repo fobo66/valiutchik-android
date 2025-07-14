@@ -38,7 +38,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class MainViewModelImpl(
     loadExchangeRates: LoadExchangeRates,
@@ -87,18 +86,17 @@ class MainViewModelImpl(
 
     override fun findBankOnMap(bankName: CharSequence): Boolean = findBankOnMap.execute(bankName)
 
-    override fun manualRefresh() = viewModelScope.launch {
-        isRefreshTriggered.emit(true)
+    override fun manualRefresh() = isRefreshTriggered.update {
+        true
     }
 
-    override fun handleLocationPermission(permissionGranted: Boolean) = viewModelScope.launch {
+    override fun handleLocationPermission(permissionGranted: Boolean) =
         isLocationPermissionGranted.update {
             if (it != permissionGranted) {
-                isRefreshTriggered.emit(true)
+                isRefreshTriggered.update { true }
             }
             permissionGranted
         }
-    }
 
     override fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
         copyCurrencyRateToClipboard.execute(currencyValue)
