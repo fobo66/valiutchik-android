@@ -29,7 +29,9 @@ import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.char
 import kotlinx.io.IOException
@@ -133,10 +135,13 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        persistenceDataSource.saveRates(
-            currencies.map {
+        val rates = currencies.asFlow()
+            .map {
                 it.toRate(apiDateFormat)
-            }
+            }.toList()
+
+        persistenceDataSource.saveRates(
+            rates
         )
     }
 
