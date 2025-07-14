@@ -14,15 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.valiutchik.presentation
 
-const val TAG_RATES = "Rates"
-const val TAG_NO_RATES = "No rates"
-const val TAG_RATE_VALUE = "Currency rate value"
-const val TAG_PREFERENCES = "Preferences"
-const val TAG_SNACKBAR = "Snackbar"
-const val TAG_TITLE = "Title"
-const val TAG_DEFAULT_CITY = "Default city"
-const val TAG_UPDATE_INTERVAL = "Update interval"
-const val TAG_LICENSES = "Licenses"
-const val TAG_SLIDER = "Slider"
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
+
+abstract class PreferencesViewModel : ViewModel() {
+    abstract val defaultCityPreference: StateFlow<String>
+    abstract val updateIntervalPreference: StateFlow<Float>
+    abstract fun updateDefaultCity(newDefaultCity: String): Job
+    abstract fun updateUpdateInterval(newUpdateInterval: Float): Job
+}

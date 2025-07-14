@@ -107,7 +107,7 @@ koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-test = { group = "io.insert-koin", name = "koin-test-junit5" }
-koin-viewmodel = { group = "io.insert-koin", name = "koin-androidx-compose" }
+koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
 koin-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
 koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager" }
 kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
@@ -138,11 +138,13 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 uri = { module = "com.eygraber:uri-kmp", version.ref = "uri" }
 work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 work-testing = { group = "androidx.work", name = "work-testing", version.ref = "work" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-library-multiplatform = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidGradlePlugin" }
+android-lint = { id = "com.android.lint", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 baseline-profile = { id = "androidx.baselineprofile", version.ref = "baselineProfilePlugin" }
 benchmark = { id = "androidx.benchmark", version.ref = "androidxBenchmark" }

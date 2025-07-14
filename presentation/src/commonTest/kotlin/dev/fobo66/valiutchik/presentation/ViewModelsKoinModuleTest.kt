@@ -14,11 +14,24 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.entities
+package dev.fobo66.valiutchik.presentation
 
-import androidx.compose.runtime.Immutable
-import fobo66.valiutchik.domain.entities.OpenSourceLicense
-import kotlinx.collections.immutable.ImmutableList
+import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngine
+import kotlin.test.Test
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.test.verify.verify
 
-@Immutable
-data class LicensesState(val licenses: ImmutableList<OpenSourceLicense>)
+class ViewModelsKoinModuleTest {
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check domain module`() {
+        viewModelsModule.verify(
+            extraTypes = listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
+    }
+}

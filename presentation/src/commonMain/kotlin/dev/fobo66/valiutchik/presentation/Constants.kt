@@ -14,15 +14,6 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.valiutchik.presentation
 
-const val TAG_RATES = "Rates"
-const val TAG_NO_RATES = "No rates"
-const val TAG_RATE_VALUE = "Currency rate value"
-const val TAG_PREFERENCES = "Preferences"
-const val TAG_SNACKBAR = "Snackbar"
-const val TAG_TITLE = "Title"
-const val TAG_DEFAULT_CITY = "Default city"
-const val TAG_UPDATE_INTERVAL = "Update interval"
-const val TAG_LICENSES = "Licenses"
-const val TAG_SLIDER = "Slider"
+const val STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS = 5000L

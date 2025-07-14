@@ -14,12 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.licenses
+package dev.fobo66.valiutchik.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fobo66.exchangecourcesbelarus.entities.LicensesState
-import fobo66.exchangecourcesbelarus.ui.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
+import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -27,8 +25,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class OpenSourceLicensesViewModel(loadOpenSourceLicenses: LoadOpenSourceLicenses) : ViewModel() {
-    val licensesState = loadOpenSourceLicenses.execute()
+class OpenSourceLicensesViewModelImpl(loadOpenSourceLicenses: LoadOpenSourceLicenses) :
+    OpenSourceLicensesViewModel() {
+    override val licensesState = loadOpenSourceLicenses.execute()
         .map { LicensesState(it.toImmutableList()) }
         .stateIn(
             viewModelScope,

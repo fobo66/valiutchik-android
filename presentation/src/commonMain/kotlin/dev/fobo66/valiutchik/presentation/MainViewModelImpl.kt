@@ -14,21 +14,23 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fobo66.exchangecourcesbelarus.entities.MainScreenState
-import fobo66.exchangecourcesbelarus.ui.STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS
+import dev.fobo66.valiutchik.presentation.entity.MainScreenState
+import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
@@ -36,15 +38,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
-class MainViewModel(
+class MainViewModelImpl(
     loadExchangeRates: LoadExchangeRates,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap,
     private val refreshInteractor: RefreshInteractor
-) : ViewModel() {
-    val bestCurrencyRates =
+) : MainViewModel() {
+    override val bestCurrencyRates: StateFlow<ImmutableList<BestCurrencyRate>> =
         loadExchangeRates.execute()
             .onEach {
                 if (it.isEmpty()) {
@@ -61,7 +62,7 @@ class MainViewModel(
     private val isRefreshTriggered = MutableStateFlow(false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val screenState =
+    override val screenState: StateFlow<MainScreenState> =
         combine(
             isRefreshTriggered,
             isLocationPermissionGranted,
@@ -83,22 +84,21 @@ class MainViewModel(
                 initialValue = MainScreenState.Initial
             )
 
-    fun findBankOnMap(bankName: CharSequence): Boolean = findBankOnMap.execute(bankName)
+    override fun findBankOnMap(bankName: CharSequence): Boolean = findBankOnMap.execute(bankName)
 
-    fun manualRefresh() = viewModelScope.launch {
-        isRefreshTriggered.emit(true)
+    override fun manualRefresh() = isRefreshTriggered.update {
+        true
     }
 
-    fun handleLocationPermission(permissionGranted: Boolean) = viewModelScope.launch {
+    override fun handleLocationPermission(permissionGranted: Boolean) =
         isLocationPermissionGranted.update {
             if (it != permissionGranted) {
-                isRefreshTriggered.emit(true)
+                isRefreshTriggered.update { true }
             }
             permissionGranted
         }
-    }
 
-    fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
+    override fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
         copyCurrencyRateToClipboard.execute(currencyValue)
     }
 }

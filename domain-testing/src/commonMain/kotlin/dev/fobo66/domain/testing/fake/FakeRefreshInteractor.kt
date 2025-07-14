@@ -14,15 +14,17 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.domain.testing.fake
 
-const val TAG_RATES = "Rates"
-const val TAG_NO_RATES = "No rates"
-const val TAG_RATE_VALUE = "Currency rate value"
-const val TAG_PREFERENCES = "Preferences"
-const val TAG_SNACKBAR = "Snackbar"
-const val TAG_TITLE = "Title"
-const val TAG_DEFAULT_CITY = "Default city"
-const val TAG_UPDATE_INTERVAL = "Update interval"
-const val TAG_LICENSES = "Licenses"
-const val TAG_SLIDER = "Slider"
+import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+class FakeRefreshInteractor : RefreshInteractor {
+    val isInProgress = MutableStateFlow(false)
+
+    override val isRefreshInProgress: Flow<Boolean> = isInProgress.asStateFlow()
+
+    override suspend fun initiateRefresh(isLocationAvailable: Boolean) = Unit
+}

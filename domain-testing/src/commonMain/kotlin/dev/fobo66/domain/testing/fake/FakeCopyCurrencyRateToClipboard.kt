@@ -14,22 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.entities
+package dev.fobo66.domain.testing.fake
 
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
+import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 
-@Stable
-sealed class MainScreenState {
-    @Immutable
-    object Initial : MainScreenState()
+class FakeCopyCurrencyRateToClipboard : CopyCurrencyRateToClipboard {
+    var isCopied = false
 
-    @Immutable
-    object Loading : MainScreenState()
-
-    @Immutable
-    object LoadedRates : MainScreenState()
-
-    @Immutable
-    object Error : MainScreenState()
+    override fun execute(currencyValue: CharSequence) {
+        isCopied = true
+    }
 }

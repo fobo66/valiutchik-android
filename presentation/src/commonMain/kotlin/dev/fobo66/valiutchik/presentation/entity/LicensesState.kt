@@ -14,16 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.di
+package dev.fobo66.valiutchik.presentation.entity
 
-import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesViewModel
-import fobo66.exchangecourcesbelarus.ui.main.MainViewModel
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferencesViewModel
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
+import androidx.compose.runtime.Immutable
+import fobo66.valiutchik.domain.entities.OpenSourceLicense
+import kotlinx.collections.immutable.ImmutableList
 
-val viewModelsModule = module {
-    viewModelOf(::MainViewModel)
-    viewModelOf(::OpenSourceLicensesViewModel)
-    viewModelOf(::PreferencesViewModel)
-}
+@Immutable
+data class LicensesState(val licenses: ImmutableList<OpenSourceLicense>)

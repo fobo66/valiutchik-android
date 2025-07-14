@@ -14,9 +14,12 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.presentation
 
-data class MainScreenStateTrigger(
-    val isRefreshTriggered: Boolean,
-    val isLocationAvailable: Boolean?
-)
+import androidx.lifecycle.ViewModel
+import dev.fobo66.valiutchik.presentation.entity.LicensesState
+import kotlinx.coroutines.flow.StateFlow
+
+abstract class OpenSourceLicensesViewModel : ViewModel() {
+    abstract val licensesState: StateFlow<LicensesState>
+}

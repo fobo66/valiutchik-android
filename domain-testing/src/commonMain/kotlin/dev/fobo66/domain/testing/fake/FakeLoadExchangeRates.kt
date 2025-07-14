@@ -14,15 +14,17 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.domain.testing.fake
 
-const val TAG_RATES = "Rates"
-const val TAG_NO_RATES = "No rates"
-const val TAG_RATE_VALUE = "Currency rate value"
-const val TAG_PREFERENCES = "Preferences"
-const val TAG_SNACKBAR = "Snackbar"
-const val TAG_TITLE = "Title"
-const val TAG_DEFAULT_CITY = "Default city"
-const val TAG_UPDATE_INTERVAL = "Update interval"
-const val TAG_LICENSES = "Licenses"
-const val TAG_SLIDER = "Slider"
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+class FakeLoadExchangeRates : LoadExchangeRates {
+
+    val rates = MutableStateFlow<List<BestCurrencyRate>>(emptyList())
+
+    override fun execute(): Flow<List<BestCurrencyRate>> = rates.asStateFlow()
+}

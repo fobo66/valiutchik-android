@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.preferences
+package dev.fobo66.valiutchik.presentation
 
 import app.cash.turbine.test
 import dev.fobo66.domain.testing.fake.FakeLoadDefaultCityPreference
@@ -23,16 +23,16 @@ import dev.fobo66.domain.testing.fake.FakeUpdateDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 
 private const val INTERVAL = 1f
 private const val NEW_INTERVAL = 3f
@@ -53,10 +53,10 @@ class PreferencesViewModelTest {
     private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
     private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
 
-    @BeforeEach
+    @BeforeTest
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        viewModel = PreferencesViewModel(
+        viewModel = PreferencesViewModelImpl(
             loadDefaultCityPreference,
             loadUpdateIntervalPreference,
             updateDefaultCityPreference,
@@ -64,7 +64,7 @@ class PreferencesViewModelTest {
         )
     }
 
-    @AfterEach
+    @AfterTest
     fun tearDown() {
         Dispatchers.resetMain()
     }
