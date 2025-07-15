@@ -67,6 +67,15 @@ detekt {
 }
 
 dependencies {
+    val composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+    debugImplementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.preview)
+    androidTestImplementation(libs.compose.ui.testing)
+    debugImplementation(libs.compose.ui.testing.manifest)
+    debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.material)

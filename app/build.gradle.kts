@@ -125,6 +125,7 @@ licenseReport {
 
 dependencies {
     api(project(":presentation"))
+    implementation(project(":widget"))
 
     // kotlin
     implementation(libs.kotlinx.coroutines.android)
