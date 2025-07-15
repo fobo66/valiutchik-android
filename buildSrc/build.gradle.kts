@@ -21,13 +21,13 @@ plugins {
 
 kotlin {
     compilerOptions {
-        jvmTarget = JvmTarget.JVM_21
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
