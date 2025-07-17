@@ -67,7 +67,6 @@ import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.widget
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.showTitleBar
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -104,13 +103,13 @@ import kotlinx.collections.immutable.persistentListOf
  * @param actionButtonClick handler to toggle the state.
  */
 @Composable
-fun ActionListLayout(
+fun <T> ActionListLayout(
     title: String,
     @DrawableRes titleIconRes: Int,
     @DrawableRes titleBarActionIconRes: Int,
     titleBarActionIconContentDescription: String,
     titleBarAction: Action,
-    items: ImmutableList<BestCurrencyRate>,
+    items: ImmutableList<T>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -157,8 +156,8 @@ fun ActionListLayout(
 }
 
 @Composable
-private fun Content(
-    items: ImmutableList<BestCurrencyRate>,
+private fun <T> Content(
+    items: ImmutableList<T>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -186,8 +185,8 @@ private fun Content(
 }
 
 @Composable
-private fun ListView(
-    items: ImmutableList<BestCurrencyRate>,
+private fun <T> ListView(
+    items: ImmutableList<T>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -198,10 +197,10 @@ private fun ListView(
         items = items,
         verticalItemsSpacing = verticalSpacing,
         itemContentProvider = { item ->
-            CurrencyListItem(
-                currencyName = context.getString(item.resolveCurrencyName()),
-                currencyValue = item.rateValue,
-                bankName = item.bank,
+            ListItem(
+                headlineText = context.getString(item.resolveCurrencyName()),
+                mainText = item.rateValue,
+                supportingText = item.bank,
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
             )
@@ -210,8 +209,8 @@ private fun ListView(
 }
 
 @Composable
-private fun GridView(
-    items: ImmutableList<BestCurrencyRate>,
+private fun <T> GridView(
+    items: ImmutableList<T>,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -222,10 +221,10 @@ private fun GridView(
         items = items,
         cellSpacing = itemContentSpacing,
         itemContentProvider = { item ->
-            CurrencyListItem(
-                currencyName = context.getString(item.resolveCurrencyName()),
-                currencyValue = item.rateValue,
-                bankName = item.bank,
+            ListItem(
+                headlineText = context.getString(item.resolveCurrencyName()),
+                mainText = item.rateValue,
+                supportingText = item.bank,
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
             )
@@ -235,10 +234,10 @@ private fun GridView(
 }
 
 @Composable
-private fun CurrencyListItem(
-    currencyName: String,
-    currencyValue: String,
-    bankName: String,
+private fun ListItem(
+    headlineText: String,
+    mainText: String,
+    supportingText: String,
     actionButtonClick: Action,
     modifier: GlanceModifier = GlanceModifier
 ) {
@@ -250,7 +249,7 @@ private fun CurrencyListItem(
             // We set a combined content description on list item since entire item is clickable.
             .semantics {
                 contentDescription =
-                    combinedContentDescription(currencyName, currencyValue, bankName)
+                    combinedContentDescription(headlineText, mainText, supportingText)
             }.filledContainer(),
         contentSpacing = itemContentSpacing,
         leadingContent =
@@ -271,14 +270,14 @@ private fun CurrencyListItem(
         },
         headlineContent = {
             Text(
-                text = currencyName,
+                text = headlineText,
                 style = ActionListLayoutTextStyles.headlineText(),
                 // Container's content description already reads this text
                 modifier = GlanceModifier.semantics { contentDescription = "" }
             )
         },
         supportingContent = {
-            CurrencyValueContent(currencyValue, bankName)
+            MainListItemContent(mainText, supportingText)
         },
         trailingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
             CircleIconButton(
@@ -293,16 +292,16 @@ private fun CurrencyListItem(
 }
 
 @Composable
-private fun CurrencyValueContent(
-    currencyValue: String,
-    bankName: String,
+private fun MainListItemContent(
+    text: String,
+    supportingText: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     val context = LocalContext.current
 
     Column(modifier = modifier) {
         Text(
-            text = currencyValue,
+            text = text,
             maxLines = 2,
             style = ActionListLayoutTextStyles.mainText(),
             // Container's content description already reads this text
@@ -321,7 +320,7 @@ private fun CurrencyValueContent(
                 )
             }
             Text(
-                text = bankName,
+                text = supportingText,
                 style = ActionListLayoutTextStyles.supportingText()
             )
         }
@@ -332,15 +331,15 @@ private fun CurrencyValueContent(
  * Returns a combined content description that can be set on entire list item.
  */
 private fun combinedContentDescription(
-    currencyName: String,
-    currencyValue: String,
-    bankName: String
+    headlineText: String,
+    mainText: String,
+    supportingText: String
 ): String = buildString {
-    append(currencyName)
+    append(headlineText)
     append(" ")
-    append(currencyValue)
+    append(mainText)
     append(" ")
-    append(bankName)
+    append(supportingText)
 }
 
 /** Returns the provided [block] composable if [predicate] is true, else returns null */
@@ -515,7 +514,7 @@ private fun ActionListLayoutPreview() {
         titleBarActionIconRes = R.drawable.ic_refresh,
         titleBarActionIconContentDescription = "test",
         titleBarAction = action {},
-        items = persistentListOf(),
+        items = persistentListOf<String>(),
         actionButtonClick = action {}
     )
 }
