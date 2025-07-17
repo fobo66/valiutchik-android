@@ -35,6 +35,7 @@ import dev.fobo66.valiutchik.android.widget.PreviewMediumWidget
 import dev.fobo66.valiutchik.android.widget.PreviewSmallWidget
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.MainActivity
+import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
@@ -117,6 +118,9 @@ fun CurrencyWidgetContent(
         titleBarAction = action(null, onTitleBarActionClick),
         items = rates,
         actionButtonClick = actionStartActivity<MainActivity>(),
+        itemHeadlineTextProvider = { context.getString(resolveCurrencyName()) },
+        itemMainTextProvider = { rateValue },
+        itemSupportingTextProvider = { bank },
         modifier = modifier
     )
 }

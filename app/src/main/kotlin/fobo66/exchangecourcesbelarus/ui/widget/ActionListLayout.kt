@@ -56,7 +56,6 @@ import dev.fobo66.valiutchik.android.widget.PreviewSmallWidget
 import dev.fobo66.valiutchik.android.widget.RoundedScrollingLazyColumn
 import dev.fobo66.valiutchik.android.widget.RoundedScrollingLazyVerticalGrid
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
 import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
@@ -111,6 +110,9 @@ fun <T> ActionListLayout(
     titleBarAction: Action,
     items: ImmutableList<T>,
     actionButtonClick: Action,
+    itemHeadlineTextProvider: T.() -> String,
+    itemMainTextProvider: T.() -> String,
+    itemSupportingTextProvider: T.() -> String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     fun titleBar(): @Composable (() -> Unit) = {
@@ -150,6 +152,9 @@ fun <T> ActionListLayout(
     ) {
         Content(
             items = items,
+            headlineTextProvider = itemHeadlineTextProvider,
+            mainTextProvider = itemMainTextProvider,
+            supportingTextProvider = itemSupportingTextProvider,
             actionButtonClick = actionButtonClick
         )
     }
@@ -159,6 +164,9 @@ fun <T> ActionListLayout(
 private fun <T> Content(
     items: ImmutableList<T>,
     actionButtonClick: Action,
+    headlineTextProvider: T.() -> String,
+    mainTextProvider: T.() -> String,
+    supportingTextProvider: T.() -> String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
@@ -171,13 +179,19 @@ private fun <T> Content(
                 Large ->
                     GridView(
                         items = items,
-                        actionButtonClick = actionButtonClick
+                        actionButtonClick = actionButtonClick,
+                        headlineTextProvider = headlineTextProvider,
+                        mainTextProvider = mainTextProvider,
+                        supportingTextProvider = supportingTextProvider
                     )
 
                 else ->
                     ListView(
                         items = items,
-                        actionButtonClick = actionButtonClick
+                        actionButtonClick = actionButtonClick,
+                        headlineTextProvider = headlineTextProvider,
+                        mainTextProvider = mainTextProvider,
+                        supportingTextProvider = supportingTextProvider
                     )
             }
         }
@@ -188,19 +202,20 @@ private fun <T> Content(
 private fun <T> ListView(
     items: ImmutableList<T>,
     actionButtonClick: Action,
+    headlineTextProvider: T.() -> String,
+    mainTextProvider: T.() -> String,
+    supportingTextProvider: T.() -> String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     RoundedScrollingLazyColumn(
         modifier = modifier.fillMaxSize(),
         items = items,
         verticalItemsSpacing = verticalSpacing,
         itemContentProvider = { item ->
             ListItem(
-                headlineText = context.getString(item.resolveCurrencyName()),
-                mainText = item.rateValue,
-                supportingText = item.bank,
+                headlineText = item.headlineTextProvider(),
+                mainText = item.mainTextProvider(),
+                supportingText = item.supportingTextProvider(),
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
             )
@@ -212,19 +227,20 @@ private fun <T> ListView(
 private fun <T> GridView(
     items: ImmutableList<T>,
     actionButtonClick: Action,
+    headlineTextProvider: T.() -> String,
+    mainTextProvider: T.() -> String,
+    supportingTextProvider: T.() -> String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     RoundedScrollingLazyVerticalGrid(
         gridCells = GRID_SIZE,
         items = items,
         cellSpacing = itemContentSpacing,
         itemContentProvider = { item ->
             ListItem(
-                headlineText = context.getString(item.resolveCurrencyName()),
-                mainText = item.rateValue,
-                supportingText = item.bank,
+                headlineText = item.headlineTextProvider(),
+                mainText = item.mainTextProvider(),
+                supportingText = item.supportingTextProvider(),
                 actionButtonClick = actionButtonClick,
                 modifier = GlanceModifier.fillMaxSize()
             )
@@ -515,6 +531,9 @@ private fun ActionListLayoutPreview() {
         titleBarActionIconContentDescription = "test",
         titleBarAction = action {},
         items = persistentListOf<String>(),
-        actionButtonClick = action {}
+        actionButtonClick = action {},
+        itemHeadlineTextProvider = { this },
+        itemMainTextProvider = { this },
+        itemSupportingTextProvider = { this }
     )
 }
