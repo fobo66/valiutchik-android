@@ -113,6 +113,7 @@ fun <T> ActionListLayout(
     itemHeadlineTextProvider: T.() -> String,
     itemMainTextProvider: T.() -> String,
     itemSupportingTextProvider: T.() -> String,
+    emptyListContent: @Composable () -> Unit,
     modifier: GlanceModifier = GlanceModifier
 ) {
     fun titleBar(): @Composable (() -> Unit) = {
@@ -155,7 +156,8 @@ fun <T> ActionListLayout(
             headlineTextProvider = itemHeadlineTextProvider,
             mainTextProvider = itemMainTextProvider,
             supportingTextProvider = itemSupportingTextProvider,
-            actionButtonClick = actionButtonClick
+            actionButtonClick = actionButtonClick,
+            emptyListContent = emptyListContent
         )
     }
 }
@@ -167,13 +169,14 @@ private fun <T> Content(
     headlineTextProvider: T.() -> String,
     mainTextProvider: T.() -> String,
     supportingTextProvider: T.() -> String,
+    emptyListContent: @Composable () -> Unit,
     modifier: GlanceModifier = GlanceModifier
 ) {
     val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
 
     Box(modifier = modifier.padding(bottom = widgetPadding)) {
         if (items.isEmpty()) {
-            EmptyListContent()
+            emptyListContent()
         } else {
             when (actionListLayoutSize) {
                 Large ->
@@ -534,6 +537,7 @@ private fun ActionListLayoutPreview() {
         actionButtonClick = action {},
         itemHeadlineTextProvider = { this },
         itemMainTextProvider = { this },
-        itemSupportingTextProvider = { this }
+        itemSupportingTextProvider = { this },
+        emptyListContent = { Text("test") }
     )
 }

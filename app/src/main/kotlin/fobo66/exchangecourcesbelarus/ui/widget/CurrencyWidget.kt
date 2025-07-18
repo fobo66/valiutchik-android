@@ -121,6 +121,7 @@ fun CurrencyWidgetContent(
         itemHeadlineTextProvider = { context.getString(resolveCurrencyName()) },
         itemMainTextProvider = { rateValue },
         itemSupportingTextProvider = { bank },
+        emptyListContent = { EmptyListContent() },
         modifier = modifier
     )
 }
