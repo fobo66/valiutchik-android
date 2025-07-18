@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.widget
+package dev.fobo66.valiutchik.android.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
@@ -49,23 +49,16 @@ import androidx.glance.semantics.semantics
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dev.fobo66.valiutchik.android.widget.ListItem
-import dev.fobo66.valiutchik.android.widget.PreviewLargeWidget
-import dev.fobo66.valiutchik.android.widget.PreviewMediumWidget
-import dev.fobo66.valiutchik.android.widget.PreviewSmallWidget
-import dev.fobo66.valiutchik.android.widget.RoundedScrollingLazyColumn
-import dev.fobo66.valiutchik.android.widget.RoundedScrollingLazyVerticalGrid
-import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.stateIconBackgroundSize
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.stateIconSize
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.verticalSpacing
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.widgetPadding
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.showTitleBar
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.GRID_SIZE
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.circularCornerRadius
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.itemContentSpacing
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.stateIconBackgroundSize
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.stateIconSize
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.verticalSpacing
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.widgetPadding
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Companion.showTitleBar
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Large
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Small
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
