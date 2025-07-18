@@ -123,6 +123,11 @@ fun CurrencyWidgetContent(
         itemMainTextProvider = { rateValue },
         itemSupportingTextProvider = { bank },
         emptyListContent = { EmptyListContent() },
+        supportingTextIcon = R.drawable.ic_bank,
+        supportingTextIconDescription = context.getString(R.string.bank_name_indicator),
+        leadingIcon = R.drawable.ic_currency_exchange,
+        trailingIcon = R.drawable.ic_open_in_app,
+        trailingIconDescription = context.getString(R.string.open_app),
         modifier = modifier
     )
 }

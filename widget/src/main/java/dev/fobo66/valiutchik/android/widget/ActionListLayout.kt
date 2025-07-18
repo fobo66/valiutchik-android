@@ -26,10 +26,8 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
-import androidx.glance.action.action
 import androidx.glance.appwidget.components.CircleIconButton
 import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.components.TitleBar
@@ -42,8 +40,6 @@ import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
-import androidx.glance.preview.ExperimentalGlancePreviewApi
-import androidx.glance.preview.Preview
 import androidx.glance.semantics.contentDescription
 import androidx.glance.semantics.semantics
 import androidx.glance.text.FontWeight
@@ -60,7 +56,6 @@ import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Companion.showT
 import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Large
 import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Small
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 /**
  * A layout focused on presenting list of two-state actions represented by a title (1-2 words),
@@ -107,6 +102,11 @@ fun <T> ActionListLayout(
     itemMainTextProvider: T.() -> String,
     itemSupportingTextProvider: T.() -> String,
     emptyListContent: @Composable () -> Unit,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     fun titleBar(): @Composable (() -> Unit) = {
@@ -150,7 +150,12 @@ fun <T> ActionListLayout(
             mainTextProvider = itemMainTextProvider,
             supportingTextProvider = itemSupportingTextProvider,
             actionButtonClick = actionButtonClick,
-            emptyListContent = emptyListContent
+            emptyListContent = emptyListContent,
+            supportingTextIcon = supportingTextIcon,
+            supportingTextIconDescription = supportingTextIconDescription,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            trailingIconDescription = trailingIconDescription
         )
     }
 }
@@ -163,6 +168,11 @@ private fun <T> Content(
     mainTextProvider: T.() -> String,
     supportingTextProvider: T.() -> String,
     emptyListContent: @Composable () -> Unit,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
@@ -178,7 +188,12 @@ private fun <T> Content(
                         actionButtonClick = actionButtonClick,
                         headlineTextProvider = headlineTextProvider,
                         mainTextProvider = mainTextProvider,
-                        supportingTextProvider = supportingTextProvider
+                        supportingTextProvider = supportingTextProvider,
+                        supportingTextIcon = supportingTextIcon,
+                        supportingTextIconDescription = supportingTextIconDescription,
+                        leadingIcon = leadingIcon,
+                        trailingIcon = trailingIcon,
+                        trailingIconDescription = trailingIconDescription
                     )
 
                 else ->
@@ -187,7 +202,12 @@ private fun <T> Content(
                         actionButtonClick = actionButtonClick,
                         headlineTextProvider = headlineTextProvider,
                         mainTextProvider = mainTextProvider,
-                        supportingTextProvider = supportingTextProvider
+                        supportingTextProvider = supportingTextProvider,
+                        supportingTextIcon = supportingTextIcon,
+                        supportingTextIconDescription = supportingTextIconDescription,
+                        leadingIcon = leadingIcon,
+                        trailingIcon = trailingIcon,
+                        trailingIconDescription = trailingIconDescription
                     )
             }
         }
@@ -201,6 +221,11 @@ private fun <T> ListView(
     headlineTextProvider: T.() -> String,
     mainTextProvider: T.() -> String,
     supportingTextProvider: T.() -> String,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     RoundedScrollingLazyColumn(
@@ -213,6 +238,11 @@ private fun <T> ListView(
                 mainText = item.mainTextProvider(),
                 supportingText = item.supportingTextProvider(),
                 actionButtonClick = actionButtonClick,
+                supportingTextIcon = supportingTextIcon,
+                supportingTextIconDescription = supportingTextIconDescription,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                trailingIconDescription = trailingIconDescription,
                 modifier = GlanceModifier.fillMaxSize()
             )
         }
@@ -226,6 +256,11 @@ private fun <T> GridView(
     headlineTextProvider: T.() -> String,
     mainTextProvider: T.() -> String,
     supportingTextProvider: T.() -> String,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     RoundedScrollingLazyVerticalGrid(
@@ -238,6 +273,11 @@ private fun <T> GridView(
                 mainText = item.mainTextProvider(),
                 supportingText = item.supportingTextProvider(),
                 actionButtonClick = actionButtonClick,
+                supportingTextIcon = supportingTextIcon,
+                supportingTextIconDescription = supportingTextIconDescription,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                trailingIconDescription = trailingIconDescription,
                 modifier = GlanceModifier.fillMaxSize()
             )
         },
@@ -251,10 +291,13 @@ private fun ListItem(
     mainText: String,
     supportingText: String,
     actionButtonClick: Action,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     ListItem(
         modifier =
         modifier
@@ -273,7 +316,7 @@ private fun ListItem(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    provider = ImageProvider(R.drawable.ic_currency_exchange),
+                    provider = ImageProvider(leadingIcon),
                     modifier = GlanceModifier.size(stateIconSize),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
@@ -289,12 +332,17 @@ private fun ListItem(
             )
         },
         supportingContent = {
-            MainListItemContent(mainText, supportingText)
+            MainListItemContent(
+                text = mainText,
+                supportingText = supportingText,
+                supportingTextIcon = supportingTextIcon,
+                supportingTextIconDescription = supportingTextIconDescription
+            )
         },
         trailingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
             CircleIconButton(
-                imageProvider = ImageProvider(R.drawable.ic_open_in_app),
-                contentDescription = context.getString(R.string.open_map),
+                imageProvider = ImageProvider(trailingIcon),
+                contentDescription = trailingIconDescription,
                 onClick = actionButtonClick,
                 backgroundColor = null,
                 contentColor = GlanceTheme.colors.onSurface
@@ -307,10 +355,10 @@ private fun ListItem(
 private fun MainListItemContent(
     text: String,
     supportingText: String,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     Column(modifier = modifier) {
         Text(
             text = text,
@@ -324,9 +372,9 @@ private fun MainListItemContent(
         ) {
             if (ActionListLayoutSize.fromLocalSize() != Small) {
                 Image(
-                    provider = ImageProvider(R.drawable.ic_bank),
+                    provider = ImageProvider(supportingTextIcon),
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
-                    contentDescription = context.getString(R.string.bank_name_indicator),
+                    contentDescription = supportingTextIconDescription,
                     modifier = GlanceModifier.padding(end = 8.dp)
 
                 )
@@ -494,43 +542,4 @@ private object ActionListLayoutDimensions {
 
     /**  Corner radius to achieve circular shape. */
     val circularCornerRadius = 200.dp
-}
-
-/**
- * Preview sizes for the widget covering the breakpoints.
- *
- * This allows verifying updates across multiple breakpoints.
- */
-@OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 259, heightDp = 200)
-@Preview(widthDp = 438, heightDp = 200)
-@Preview(widthDp = 644, heightDp = 200)
-private annotation class PreviewActionListBreakpoints
-
-/**
- * Previews for the action list layout.
- *
- * First we look at the previews at defined breakpoints, tweaking them as necessary. In addition,
- * the previews at standard sizes allows us to quickly verify updates across min / max and common
- * widget sizes without needing to run the app or manually place the widget.
- */
-@PreviewActionListBreakpoints
-@PreviewSmallWidget
-@PreviewMediumWidget
-@PreviewLargeWidget
-@Composable
-private fun ActionListLayoutPreview() {
-    ActionListLayout(
-        title = "Test",
-        titleIconRes = R.drawable.ic_launcher_foreground,
-        titleBarActionIconRes = R.drawable.ic_refresh,
-        titleBarActionIconContentDescription = "test",
-        titleBarAction = action {},
-        items = persistentListOf<String>(),
-        actionButtonClick = action {},
-        itemHeadlineTextProvider = { this },
-        itemMainTextProvider = { this },
-        itemSupportingTextProvider = { this },
-        emptyListContent = { Text("test") }
-    )
 }
