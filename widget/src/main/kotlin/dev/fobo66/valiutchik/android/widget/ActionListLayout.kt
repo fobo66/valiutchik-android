@@ -195,7 +195,8 @@ private fun <T> Content(
                         supportingTextIconDescription = supportingTextIconDescription,
                         leadingIcon = leadingIcon,
                         trailingIcon = trailingIcon,
-                        trailingIconDescription = trailingIconDescription
+                        trailingIconDescription = trailingIconDescription,
+                        modifier = GlanceModifier.semantics { testTag = TAG_GRID }
                     )
 
                 else ->
@@ -209,7 +210,8 @@ private fun <T> Content(
                         supportingTextIconDescription = supportingTextIconDescription,
                         leadingIcon = leadingIcon,
                         trailingIcon = trailingIcon,
-                        trailingIconDescription = trailingIconDescription
+                        trailingIconDescription = trailingIconDescription,
+                        modifier = GlanceModifier.semantics { testTag = TAG_LIST }
                     )
             }
         }
@@ -319,7 +321,8 @@ private fun ListItem(
             ) {
                 Image(
                     provider = ImageProvider(leadingIcon),
-                    modifier = GlanceModifier.size(stateIconSize),
+                    modifier = GlanceModifier.size(stateIconSize)
+                        .semantics { testTag = TAG_LEADING_ICON },
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
                 )
@@ -347,7 +350,8 @@ private fun ListItem(
                 contentDescription = trailingIconDescription,
                 onClick = actionButtonClick,
                 backgroundColor = null,
-                contentColor = GlanceTheme.colors.onSurface
+                contentColor = GlanceTheme.colors.onSurface,
+                modifier = GlanceModifier.semantics { testTag = TAG_TRAILING_ICON }
             )
         }
     )
@@ -378,6 +382,7 @@ private fun MainListItemContent(
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
                     contentDescription = supportingTextIconDescription,
                     modifier = GlanceModifier.padding(end = 8.dp)
+                        .semantics { testTag = TAG_SUPPORTING_ICON }
 
                 )
             }

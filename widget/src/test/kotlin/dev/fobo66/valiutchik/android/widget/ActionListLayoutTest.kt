@@ -113,4 +113,144 @@ class ActionListLayoutTest {
 
         onNode(hasText("Empty")).assertExists()
     }
+
+    @Test
+    fun `list shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(150.dp, 150.dp))
+
+        provideComposable {
+            ActionListLayout(
+                title = "test",
+                titleIconRes = 0,
+                titleBarActionIconRes = 0,
+                titleBarActionIconContentDescription = "action",
+                titleBarAction = action { },
+                items = persistentListOf("test1", "test2"),
+                actionButtonClick = action { },
+                itemHeadlineTextProvider = { this },
+                itemMainTextProvider = { this },
+                itemSupportingTextProvider = { this },
+                emptyListContent = { Text("Empty") },
+                supportingTextIcon = 0,
+                supportingTextIconDescription = "support",
+                leadingIcon = 0,
+                trailingIcon = 0,
+                trailingIconDescription = "trailing"
+            )
+        }
+
+        onNode(hasTestTag(TAG_LIST)).assertExists()
+    }
+
+    @Test
+    fun `grid shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(500.dp, 200.dp))
+
+        provideComposable {
+            ActionListLayout(
+                title = "test",
+                titleIconRes = 0,
+                titleBarActionIconRes = 0,
+                titleBarActionIconContentDescription = "action",
+                titleBarAction = action { },
+                items = persistentListOf("test1", "test2"),
+                actionButtonClick = action { },
+                itemHeadlineTextProvider = { this },
+                itemMainTextProvider = { this },
+                itemSupportingTextProvider = { this },
+                emptyListContent = { Text("Empty") },
+                supportingTextIcon = 0,
+                supportingTextIconDescription = "support",
+                leadingIcon = 0,
+                trailingIcon = 0,
+                trailingIconDescription = "trailing"
+            )
+        }
+
+        onNode(hasTestTag(TAG_GRID)).assertExists()
+    }
+
+    @Test
+    fun `trailing icon shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(500.dp, 200.dp))
+
+        provideComposable {
+            ActionListLayout(
+                title = "test",
+                titleIconRes = 0,
+                titleBarActionIconRes = 0,
+                titleBarActionIconContentDescription = "action",
+                titleBarAction = action { },
+                items = persistentListOf("test1"),
+                actionButtonClick = action { },
+                itemHeadlineTextProvider = { this },
+                itemMainTextProvider = { this },
+                itemSupportingTextProvider = { this },
+                emptyListContent = { Text("Empty") },
+                supportingTextIcon = 0,
+                supportingTextIconDescription = "support",
+                leadingIcon = 0,
+                trailingIcon = 0,
+                trailingIconDescription = "trailing"
+            )
+        }
+
+        onNode(hasTestTag(TAG_TRAILING_ICON)).assertExists()
+    }
+
+    @Test
+    fun `leading icon shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(500.dp, 200.dp))
+
+        provideComposable {
+            ActionListLayout(
+                title = "test",
+                titleIconRes = 0,
+                titleBarActionIconRes = 0,
+                titleBarActionIconContentDescription = "action",
+                titleBarAction = action { },
+                items = persistentListOf("test1"),
+                actionButtonClick = action { },
+                itemHeadlineTextProvider = { this },
+                itemMainTextProvider = { this },
+                itemSupportingTextProvider = { this },
+                emptyListContent = { Text("Empty") },
+                supportingTextIcon = 0,
+                supportingTextIconDescription = "support",
+                leadingIcon = 0,
+                trailingIcon = 0,
+                trailingIconDescription = "trailing"
+            )
+        }
+
+        onNode(hasTestTag(TAG_LEADING_ICON)).assertExists()
+    }
+
+    @Test
+    fun `supporting icon shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(500.dp, 200.dp))
+
+        provideComposable {
+            ActionListLayout(
+                title = "test",
+                titleIconRes = 0,
+                titleBarActionIconRes = 0,
+                titleBarActionIconContentDescription = "action",
+                titleBarAction = action { },
+                items = persistentListOf("test1"),
+                actionButtonClick = action { },
+                itemHeadlineTextProvider = { this },
+                itemMainTextProvider = { this },
+                itemSupportingTextProvider = { this },
+                emptyListContent = { Text("Empty") },
+                supportingTextIcon = 0,
+                supportingTextIconDescription = "support",
+                leadingIcon = 0,
+                trailingIcon = 0,
+                trailingIconDescription = "trailing"
+            )
+        }
+
+        onNode(hasTestTag(TAG_SUPPORTING_ICON)).assertExists()
+    }
 }
