@@ -16,17 +16,28 @@
 
 package dev.fobo66.valiutchik.android.widget
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.glance.action.action
+import androidx.glance.appwidget.testing.unit.runGlanceAppWidgetUnitTest
+import androidx.glance.testing.unit.hasTestTag
 import org.junit.jupiter.api.Test
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class NoDataContentTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun `icon is shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(200.dp, 200.dp))
+
+        provideComposable {
+            NoDataContent(
+                noDataIconRes = 0,
+                noDataText = "test",
+                actionButtonText = "action",
+                actionButtonIcon = 0,
+                actionButtonOnClick = action { }
+            )
+        }
+
+        onNode(hasTestTag(TAG_NO_DATA_ICON)).assertExists()
     }
 }

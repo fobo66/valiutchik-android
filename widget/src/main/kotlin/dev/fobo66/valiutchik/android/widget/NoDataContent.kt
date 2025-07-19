@@ -32,6 +32,8 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.height
+import androidx.glance.semantics.semantics
+import androidx.glance.semantics.testTag
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -72,7 +74,8 @@ fun NoDataContent(
             Image(
                 provider = ImageProvider(noDataIconRes),
                 colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
-                contentDescription = null // only decorative
+                contentDescription = null, // only decorative
+                modifier = GlanceModifier.semantics { testTag = TAG_NO_DATA_ICON }
             )
             Spacer(modifier = GlanceModifier.height(8.dp))
         }
