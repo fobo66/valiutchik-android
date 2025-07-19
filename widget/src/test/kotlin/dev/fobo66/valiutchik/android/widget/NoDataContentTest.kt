@@ -22,7 +22,10 @@ import androidx.glance.action.action
 import androidx.glance.appwidget.testing.unit.runGlanceAppWidgetUnitTest
 import androidx.glance.testing.unit.hasTestTag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import tech.apter.junit.jupiter.robolectric.RobolectricExtension
 
+@ExtendWith(RobolectricExtension::class)
 class NoDataContentTest {
     @Test
     fun `icon is shown`() = runGlanceAppWidgetUnitTest {
@@ -39,5 +42,22 @@ class NoDataContentTest {
         }
 
         onNode(hasTestTag(TAG_NO_DATA_ICON)).assertExists()
+    }
+
+    @Test
+    fun `icon is not shown`() = runGlanceAppWidgetUnitTest {
+        setAppWidgetSize(DpSize(150.dp, 150.dp))
+
+        provideComposable {
+            NoDataContent(
+                noDataIconRes = 0,
+                noDataText = "test",
+                actionButtonText = "action",
+                actionButtonIcon = 0,
+                actionButtonOnClick = action { }
+            )
+        }
+
+        onNode(hasTestTag(TAG_NO_DATA_ICON)).assertDoesNotExist()
     }
 }

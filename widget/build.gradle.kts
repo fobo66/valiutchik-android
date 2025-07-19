@@ -23,6 +23,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.detekt)
     alias(libs.plugins.junit)
+    alias(libs.plugins.robolectric.junit5)
     alias(libs.plugins.kotlinter)
 }
 
@@ -86,6 +87,7 @@ dependencies {
     detektPlugins(libs.detekt.rules.compose)
     testImplementation(libs.androidx.glance.test)
     testImplementation(libs.androidx.glance.appwidget.test)
+    testImplementation(libs.robolectric)
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
     androidTestImplementation(libs.androidx.test.runner)
