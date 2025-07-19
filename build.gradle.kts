@@ -32,6 +32,7 @@ plugins {
     alias(libs.plugins.kotlinter) apply false
     alias(libs.plugins.room) apply false
     alias(libs.plugins.baseline.profile) apply false
+    alias(libs.plugins.robolectric.junit5) apply false
 }
 
 tasks.register<Delete>("clean") {

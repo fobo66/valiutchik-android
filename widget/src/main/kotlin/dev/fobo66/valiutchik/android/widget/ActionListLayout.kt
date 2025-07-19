@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.widget
+package dev.fobo66.valiutchik.android.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
@@ -26,10 +26,8 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
-import androidx.glance.action.action
 import androidx.glance.appwidget.components.CircleIconButton
 import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.components.TitleBar
@@ -42,28 +40,23 @@ import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
-import androidx.glance.preview.ExperimentalGlancePreviewApi
-import androidx.glance.preview.Preview
 import androidx.glance.semantics.contentDescription
 import androidx.glance.semantics.semantics
+import androidx.glance.semantics.testTag
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.GRID_SIZE
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.circularCornerRadius
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.itemContentSpacing
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.stateIconBackgroundSize
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.stateIconSize
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.verticalSpacing
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutDimensions.widgetPadding
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Companion.showTitleBar
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Large
-import fobo66.exchangecourcesbelarus.ui.widget.ActionListLayoutSize.Small
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.GRID_SIZE
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.circularCornerRadius
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.itemContentSpacing
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.stateIconBackgroundSize
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.stateIconSize
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.verticalSpacing
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutDimensions.widgetPadding
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Companion.showTitleBar
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Large
+import dev.fobo66.valiutchik.android.widget.ActionListLayoutSize.Small
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 /**
  * A layout focused on presenting list of two-state actions represented by a title (1-2 words),
@@ -98,14 +91,23 @@ import kotlinx.collections.immutable.persistentListOf
  * @param actionButtonClick handler to toggle the state.
  */
 @Composable
-fun ActionListLayout(
+fun <T> ActionListLayout(
     title: String,
     @DrawableRes titleIconRes: Int,
     @DrawableRes titleBarActionIconRes: Int,
     titleBarActionIconContentDescription: String,
     titleBarAction: Action,
-    items: ImmutableList<BestCurrencyRate>,
+    items: ImmutableList<T>,
     actionButtonClick: Action,
+    itemHeadlineTextProvider: T.() -> String,
+    itemMainTextProvider: T.() -> String,
+    itemSupportingTextProvider: T.() -> String,
+    emptyListContent: @Composable () -> Unit,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     fun titleBar(): @Composable (() -> Unit) = {
@@ -122,7 +124,8 @@ fun ActionListLayout(
                     backgroundColor = null, // transparent
                     onClick = titleBarAction
                 )
-            }
+            },
+            modifier = GlanceModifier.semantics { testTag = TAG_TITLE_BAR }
         )
     }
 
@@ -145,34 +148,70 @@ fun ActionListLayout(
     ) {
         Content(
             items = items,
-            actionButtonClick = actionButtonClick
+            headlineTextProvider = itemHeadlineTextProvider,
+            mainTextProvider = itemMainTextProvider,
+            supportingTextProvider = itemSupportingTextProvider,
+            actionButtonClick = actionButtonClick,
+            emptyListContent = emptyListContent,
+            supportingTextIcon = supportingTextIcon,
+            supportingTextIconDescription = supportingTextIconDescription,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            trailingIconDescription = trailingIconDescription
         )
     }
 }
 
 @Composable
-private fun Content(
-    items: ImmutableList<BestCurrencyRate>,
+private fun <T> Content(
+    items: ImmutableList<T>,
     actionButtonClick: Action,
+    headlineTextProvider: T.() -> String,
+    mainTextProvider: T.() -> String,
+    supportingTextProvider: T.() -> String,
+    emptyListContent: @Composable () -> Unit,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
     val actionListLayoutSize = ActionListLayoutSize.fromLocalSize()
 
     Box(modifier = modifier.padding(bottom = widgetPadding)) {
         if (items.isEmpty()) {
-            EmptyListContent()
+            emptyListContent()
         } else {
             when (actionListLayoutSize) {
                 Large ->
                     GridView(
                         items = items,
-                        actionButtonClick = actionButtonClick
+                        actionButtonClick = actionButtonClick,
+                        headlineTextProvider = headlineTextProvider,
+                        mainTextProvider = mainTextProvider,
+                        supportingTextProvider = supportingTextProvider,
+                        supportingTextIcon = supportingTextIcon,
+                        supportingTextIconDescription = supportingTextIconDescription,
+                        leadingIcon = leadingIcon,
+                        trailingIcon = trailingIcon,
+                        trailingIconDescription = trailingIconDescription,
+                        modifier = GlanceModifier.semantics { testTag = TAG_GRID }
                     )
 
                 else ->
                     ListView(
                         items = items,
-                        actionButtonClick = actionButtonClick
+                        actionButtonClick = actionButtonClick,
+                        headlineTextProvider = headlineTextProvider,
+                        mainTextProvider = mainTextProvider,
+                        supportingTextProvider = supportingTextProvider,
+                        supportingTextIcon = supportingTextIcon,
+                        supportingTextIconDescription = supportingTextIconDescription,
+                        leadingIcon = leadingIcon,
+                        trailingIcon = trailingIcon,
+                        trailingIconDescription = trailingIconDescription,
+                        modifier = GlanceModifier.semantics { testTag = TAG_LIST }
                     )
             }
         }
@@ -180,23 +219,34 @@ private fun Content(
 }
 
 @Composable
-private fun ListView(
-    items: ImmutableList<BestCurrencyRate>,
+private fun <T> ListView(
+    items: ImmutableList<T>,
     actionButtonClick: Action,
+    headlineTextProvider: T.() -> String,
+    mainTextProvider: T.() -> String,
+    supportingTextProvider: T.() -> String,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     RoundedScrollingLazyColumn(
         modifier = modifier.fillMaxSize(),
         items = items,
         verticalItemsSpacing = verticalSpacing,
         itemContentProvider = { item ->
-            CurrencyListItem(
-                currencyName = context.getString(item.resolveCurrencyName()),
-                currencyValue = item.rateValue,
-                bankName = item.bank,
+            ListItem(
+                headlineText = item.headlineTextProvider(),
+                mainText = item.mainTextProvider(),
+                supportingText = item.supportingTextProvider(),
                 actionButtonClick = actionButtonClick,
+                supportingTextIcon = supportingTextIcon,
+                supportingTextIconDescription = supportingTextIconDescription,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                trailingIconDescription = trailingIconDescription,
                 modifier = GlanceModifier.fillMaxSize()
             )
         }
@@ -204,23 +254,34 @@ private fun ListView(
 }
 
 @Composable
-private fun GridView(
-    items: ImmutableList<BestCurrencyRate>,
+private fun <T> GridView(
+    items: ImmutableList<T>,
     actionButtonClick: Action,
+    headlineTextProvider: T.() -> String,
+    mainTextProvider: T.() -> String,
+    supportingTextProvider: T.() -> String,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     RoundedScrollingLazyVerticalGrid(
         gridCells = GRID_SIZE,
         items = items,
         cellSpacing = itemContentSpacing,
         itemContentProvider = { item ->
-            CurrencyListItem(
-                currencyName = context.getString(item.resolveCurrencyName()),
-                currencyValue = item.rateValue,
-                bankName = item.bank,
+            ListItem(
+                headlineText = item.headlineTextProvider(),
+                mainText = item.mainTextProvider(),
+                supportingText = item.supportingTextProvider(),
                 actionButtonClick = actionButtonClick,
+                supportingTextIcon = supportingTextIcon,
+                supportingTextIconDescription = supportingTextIconDescription,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                trailingIconDescription = trailingIconDescription,
                 modifier = GlanceModifier.fillMaxSize()
             )
         },
@@ -229,22 +290,25 @@ private fun GridView(
 }
 
 @Composable
-private fun CurrencyListItem(
-    currencyName: String,
-    currencyValue: String,
-    bankName: String,
+private fun ListItem(
+    headlineText: String,
+    mainText: String,
+    supportingText: String,
     actionButtonClick: Action,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
+    @DrawableRes leadingIcon: Int,
+    @DrawableRes trailingIcon: Int,
+    trailingIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     ListItem(
         modifier =
         modifier
             // We set a combined content description on list item since entire item is clickable.
             .semantics {
                 contentDescription =
-                    combinedContentDescription(currencyName, currencyValue, bankName)
+                    combinedContentDescription(headlineText, mainText, supportingText)
             }.filledContainer(),
         contentSpacing = itemContentSpacing,
         leadingContent =
@@ -256,8 +320,9 @@ private fun CurrencyListItem(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    provider = ImageProvider(R.drawable.ic_currency_exchange),
-                    modifier = GlanceModifier.size(stateIconSize),
+                    provider = ImageProvider(leadingIcon),
+                    modifier = GlanceModifier.size(stateIconSize)
+                        .semantics { testTag = TAG_LEADING_ICON },
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
                 )
@@ -265,38 +330,44 @@ private fun CurrencyListItem(
         },
         headlineContent = {
             Text(
-                text = currencyName,
+                text = headlineText,
                 style = ActionListLayoutTextStyles.headlineText(),
                 // Container's content description already reads this text
                 modifier = GlanceModifier.semantics { contentDescription = "" }
             )
         },
         supportingContent = {
-            CurrencyValueContent(currencyValue, bankName)
+            MainListItemContent(
+                text = mainText,
+                supportingText = supportingText,
+                supportingTextIcon = supportingTextIcon,
+                supportingTextIconDescription = supportingTextIconDescription
+            )
         },
         trailingContent = takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
             CircleIconButton(
-                imageProvider = ImageProvider(R.drawable.ic_open_in_app),
-                contentDescription = context.getString(R.string.open_map),
+                imageProvider = ImageProvider(trailingIcon),
+                contentDescription = trailingIconDescription,
                 onClick = actionButtonClick,
                 backgroundColor = null,
-                contentColor = GlanceTheme.colors.onSurface
+                contentColor = GlanceTheme.colors.onSurface,
+                modifier = GlanceModifier.semantics { testTag = TAG_TRAILING_ICON }
             )
         }
     )
 }
 
 @Composable
-private fun CurrencyValueContent(
-    currencyValue: String,
-    bankName: String,
+private fun MainListItemContent(
+    text: String,
+    supportingText: String,
+    @DrawableRes supportingTextIcon: Int,
+    supportingTextIconDescription: String,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    val context = LocalContext.current
-
     Column(modifier = modifier) {
         Text(
-            text = currencyValue,
+            text = text,
             maxLines = 2,
             style = ActionListLayoutTextStyles.mainText(),
             // Container's content description already reads this text
@@ -307,15 +378,16 @@ private fun CurrencyValueContent(
         ) {
             if (ActionListLayoutSize.fromLocalSize() != Small) {
                 Image(
-                    provider = ImageProvider(R.drawable.ic_bank),
+                    provider = ImageProvider(supportingTextIcon),
                     colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
-                    contentDescription = context.getString(R.string.bank_name_indicator),
+                    contentDescription = supportingTextIconDescription,
                     modifier = GlanceModifier.padding(end = 8.dp)
+                        .semantics { testTag = TAG_SUPPORTING_ICON }
 
                 )
             }
             Text(
-                text = bankName,
+                text = supportingText,
                 style = ActionListLayoutTextStyles.supportingText()
             )
         }
@@ -326,15 +398,15 @@ private fun CurrencyValueContent(
  * Returns a combined content description that can be set on entire list item.
  */
 private fun combinedContentDescription(
-    currencyName: String,
-    currencyValue: String,
-    bankName: String
+    headlineText: String,
+    mainText: String,
+    supportingText: String
 ): String = buildString {
-    append(currencyName)
+    append(headlineText)
     append(" ")
-    append(currencyValue)
+    append(mainText)
     append(" ")
-    append(bankName)
+    append(supportingText)
 }
 
 /** Returns the provided [block] composable if [predicate] is true, else returns null */
@@ -477,39 +549,4 @@ private object ActionListLayoutDimensions {
 
     /**  Corner radius to achieve circular shape. */
     val circularCornerRadius = 200.dp
-}
-
-/**
- * Preview sizes for the widget covering the breakpoints.
- *
- * This allows verifying updates across multiple breakpoints.
- */
-@OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 259, heightDp = 200)
-@Preview(widthDp = 438, heightDp = 200)
-@Preview(widthDp = 644, heightDp = 200)
-private annotation class PreviewActionListBreakpoints
-
-/**
- * Previews for the action list layout.
- *
- * First we look at the previews at defined breakpoints, tweaking them as necessary. In addition,
- * the previews at standard sizes allows us to quickly verify updates across min / max and common
- * widget sizes without needing to run the app or manually place the widget.
- */
-@PreviewActionListBreakpoints
-@PreviewSmallWidget
-@PreviewMediumWidget
-@PreviewLargeWidget
-@Composable
-private fun ActionListLayoutPreview() {
-    ActionListLayout(
-        title = "Test",
-        titleIconRes = R.drawable.ic_launcher_foreground,
-        titleBarActionIconRes = R.drawable.ic_refresh,
-        titleBarActionIconContentDescription = "test",
-        titleBarAction = action {},
-        items = persistentListOf(),
-        actionButtonClick = action {}
-    )
 }

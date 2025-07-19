@@ -30,8 +30,13 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.provideContent
+import dev.fobo66.valiutchik.android.widget.ActionListLayout
+import dev.fobo66.valiutchik.android.widget.PreviewLargeWidget
+import dev.fobo66.valiutchik.android.widget.PreviewMediumWidget
+import dev.fobo66.valiutchik.android.widget.PreviewSmallWidget
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.MainActivity
+import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
@@ -114,6 +119,15 @@ fun CurrencyWidgetContent(
         titleBarAction = action(null, onTitleBarActionClick),
         items = rates,
         actionButtonClick = actionStartActivity<MainActivity>(),
+        itemHeadlineTextProvider = { context.getString(resolveCurrencyName()) },
+        itemMainTextProvider = { rateValue },
+        itemSupportingTextProvider = { bank },
+        emptyListContent = { EmptyListContent() },
+        supportingTextIcon = R.drawable.ic_bank,
+        supportingTextIconDescription = context.getString(R.string.bank_name_indicator),
+        leadingIcon = R.drawable.ic_currency_exchange,
+        trailingIcon = R.drawable.ic_open_in_app,
+        trailingIconDescription = context.getString(R.string.open_app),
         modifier = modifier
     )
 }

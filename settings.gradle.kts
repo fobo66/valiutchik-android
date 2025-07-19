@@ -55,5 +55,6 @@ include(
     ":baselineprofile",
     ":data-testing",
     ":domain-testing",
-    ":presentation"
+    ":presentation",
+    ":widget"
 )
