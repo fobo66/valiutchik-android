@@ -19,18 +19,13 @@ package fobo66.exchangecourcesbelarus.ui.theme
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MaterialExpressiveTheme
-import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceTheme
 import androidx.glance.material3.ColorProviders
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 
 private val LightColors =
     lightColorScheme(
@@ -106,32 +101,9 @@ private val WidgetColors =
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun ValiutchikTheme(
-    isDarkTheme: Boolean = isSystemInDarkTheme(),
-    isDynamicColor: Boolean = true,
-    content: @Composable () -> Unit
-) {
-    val dynamicColor = isDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-
-    val colorScheme =
-        when {
-            dynamicColor && isDarkTheme -> {
-                dynamicDarkColorScheme(LocalContext.current)
-            }
-
-            dynamicColor && !isDarkTheme -> {
-                dynamicLightColorScheme(LocalContext.current)
-            }
-
-            isDarkTheme -> DarkColors
-            else -> expressiveLightColorScheme()
-        }
-
-    MaterialExpressiveTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        shapes = Shapes,
-        motionScheme = MotionScheme.expressive(),
+fun ValiutchikTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+    AppTheme(
+        isDarkTheme = isDarkTheme,
         content = content
     )
 }
