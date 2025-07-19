@@ -42,6 +42,7 @@ import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.semantics.contentDescription
 import androidx.glance.semantics.semantics
+import androidx.glance.semantics.testTag
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -123,7 +124,8 @@ fun <T> ActionListLayout(
                     backgroundColor = null, // transparent
                     onClick = titleBarAction
                 )
-            }
+            },
+            modifier = GlanceModifier.semantics { testTag = TAG_TITLE_BAR }
         )
     }
 

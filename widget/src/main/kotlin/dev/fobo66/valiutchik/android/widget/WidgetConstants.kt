@@ -17,3 +17,4 @@
 package dev.fobo66.valiutchik.android.widget
 
 internal const val TAG_NO_DATA_ICON = "NoDataIcon"
+internal const val TAG_TITLE_BAR = "TitleBar"
