@@ -84,6 +84,8 @@ dependencies {
     implementation(libs.kotlinx.collections)
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
+    testImplementation(libs.androidx.glance.test)
+    testImplementation(libs.androidx.glance.appwidget.test)
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
     androidTestImplementation(libs.androidx.test.runner)
