@@ -56,12 +56,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.fobo66.valiutchik.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.ProgressIndicator
 import fobo66.exchangecourcesbelarus.ui.TAG_NO_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATES
 import fobo66.exchangecourcesbelarus.ui.TAG_RATE_VALUE
-import fobo66.exchangecourcesbelarus.ui.about.AboutAppDialog
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
 import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
