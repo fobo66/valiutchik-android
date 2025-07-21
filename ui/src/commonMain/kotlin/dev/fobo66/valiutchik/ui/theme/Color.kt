@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,8 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.theme
+package dev.fobo66.valiutchik.ui.theme
 
-import androidx.compose.material3.Shapes
+import androidx.compose.ui.graphics.Color
 
-val Shapes = Shapes()
+private const val RAW_SEED_COLOR = 0xFF4CAF50
+
+internal val SeedColor = Color(RAW_SEED_COLOR)

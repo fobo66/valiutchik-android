@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.about
+package dev.fobo66.valiutchik.ui.about
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,16 +27,19 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import dev.fobo66.valiutchik.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.about_app_description
+import valiutchik.ui.generated.resources.action_about_close
+import valiutchik.ui.generated.resources.title_about
 
 private const val DESCRIPTION_URL = "https://myfin.by"
 private const val LINK_TEXT = "myfin.by"
@@ -56,12 +59,12 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
                 ).padding(24.dp)
         ) {
             Text(
-                text = stringResource(id = string.title_about),
+                text = stringResource(Res.string.title_about),
                 style = MaterialTheme.typography.headlineSmall
             )
             val descriptionAnnotatedText =
                 buildAnnotatedString {
-                    val description = stringResource(id = string.about_app_description)
+                    val description = stringResource(Res.string.about_app_description)
                     val linkIndex = description.indexOf(LINK_TEXT)
                     val linkEndIndex = linkIndex + LINK_TEXT.length
                     append(description)
@@ -96,7 +99,7 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
                     .padding(top = 24.dp)
                     .align(Alignment.End)
             ) {
-                Text(text = stringResource(id = android.R.string.ok))
+                Text(text = stringResource(Res.string.action_about_close))
             }
         }
     }
@@ -105,7 +108,7 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun AboutAppPreview() {
-    ValiutchikTheme {
+    AppTheme {
         AboutAppDialog(onDismiss = {})
     }
 }
