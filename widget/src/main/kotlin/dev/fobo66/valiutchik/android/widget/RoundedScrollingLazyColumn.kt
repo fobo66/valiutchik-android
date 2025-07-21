@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.widget
+package dev.fobo66.valiutchik.android.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
