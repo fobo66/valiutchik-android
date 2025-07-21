@@ -75,6 +75,7 @@ kotlin {
                 implementation(compose.material3AdaptiveNavigationSuite)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
+                implementation(libs.kotlinx.collections)
             }
         }
 

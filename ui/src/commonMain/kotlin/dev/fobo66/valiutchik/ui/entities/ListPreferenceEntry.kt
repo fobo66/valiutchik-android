@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.entities
+package dev.fobo66.valiutchik.ui.entities
 
 import androidx.compose.runtime.Immutable
 

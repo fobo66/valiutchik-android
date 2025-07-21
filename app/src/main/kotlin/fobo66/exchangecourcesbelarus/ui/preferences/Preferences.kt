@@ -46,7 +46,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
-import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
+import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntries
 import fobo66.exchangecourcesbelarus.ui.TAG_SLIDER
 import kotlin.math.roundToInt
 
@@ -132,7 +132,8 @@ private fun ListPreferenceDialog(
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.large
-                ).padding(24.dp)
+                )
+                .padding(24.dp)
         ) {
             ProvideTextStyle(MaterialTheme.typography.headlineSmall) {
                 title()

@@ -26,10 +26,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntries
+import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntry
 import fobo66.exchangecourcesbelarus.R.array
 import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntries
-import fobo66.exchangecourcesbelarus.entities.ListPreferenceEntry
 import fobo66.exchangecourcesbelarus.ui.TAG_DEFAULT_CITY
 import fobo66.exchangecourcesbelarus.ui.TAG_LICENSES
 import fobo66.exchangecourcesbelarus.ui.TAG_PREFERENCES
