@@ -60,6 +60,7 @@ import dev.fobo66.valiutchik.ui.TAG_NO_RATES
 import dev.fobo66.valiutchik.ui.TAG_RATES
 import dev.fobo66.valiutchik.ui.TAG_RATE_VALUE
 import dev.fobo66.valiutchik.ui.about.AboutAppDialog
+import dev.fobo66.valiutchik.ui.element.PrimaryTopBar
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.icons.Bank
@@ -89,10 +90,10 @@ fun BestRatesGrid(
         PrimaryTopBar(
             title = stringResource(R.string.app_name),
             onAboutClick = { isAboutDialogShown = true },
+            onSettingsClick = onSettingsClick,
             onRefreshClick = onRefresh,
             showRefresh = showExplicitRefresh,
-            settingsVisible = showSettings,
-            onSettingsClick = onSettingsClick
+            settingsVisible = showSettings
         )
         Crossfade(bestCurrencyRates, label = "bestRatesGrid", modifier = Modifier.weight(1f)) {
             if (it.isEmpty()) {

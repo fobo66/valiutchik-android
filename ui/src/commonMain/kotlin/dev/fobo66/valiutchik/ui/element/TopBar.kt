@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.ui.element
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -30,13 +30,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.ui.TAG_TITLE
-import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import dev.fobo66.valiutchik.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.action_about
+import valiutchik.ui.generated.resources.action_settings
+import valiutchik.ui.generated.resources.toolbar_action_more
+import valiutchik.ui.generated.resources.topbar_description_back
+import valiutchik.ui.generated.resources.widget_action_refresh
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,9 +51,11 @@ fun PrimaryTopBar(
     onRefreshClick: () -> Unit,
     showRefresh: Boolean,
     modifier: Modifier = Modifier,
-    settingsVisible: Boolean = true
+    settingsVisible: Boolean = true,
+    aboutLabel: String = stringResource(Res.string.action_about),
+    refreshLabel: String = stringResource(Res.string.widget_action_refresh),
+    settingsLabel: String = stringResource(Res.string.action_settings)
 ) {
-    val context = LocalContext.current
     TopAppBar(
         title = {
             Text(text = title, modifier = Modifier.testTag(TAG_TITLE))
@@ -60,7 +66,7 @@ fun PrimaryTopBar(
                     IconButton(onClick = { it.show() }) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
-                            contentDescription = stringResource(R.string.toolbar_action_more)
+                            contentDescription = stringResource(Res.string.toolbar_action_more)
                         )
                     }
                 }
@@ -70,10 +76,10 @@ fun PrimaryTopBar(
                     icon = {
                         Icon(
                             Icons.Default.Info,
-                            contentDescription = context.getString(R.string.action_about)
+                            contentDescription = aboutLabel
                         )
                     },
-                    label = context.getString(R.string.action_about)
+                    label = aboutLabel
                 )
                 if (showRefresh) {
                     clickableItem(
@@ -81,12 +87,10 @@ fun PrimaryTopBar(
                         icon = {
                             Icon(
                                 Icons.Default.Refresh,
-                                contentDescription = context.getString(
-                                    R.string.widget_action_refresh
-                                )
+                                contentDescription = refreshLabel
                             )
                         },
-                        label = context.getString(R.string.widget_action_refresh)
+                        label = refreshLabel
                     )
                 }
                 if (settingsVisible) {
@@ -95,10 +99,10 @@ fun PrimaryTopBar(
                         icon = {
                             Icon(
                                 Icons.Default.Settings,
-                                contentDescription = context.getString(R.string.action_settings)
+                                contentDescription = settingsLabel
                             )
                         },
-                        label = context.getString(R.string.action_settings)
+                        label = settingsLabel
                     )
                 }
             }
@@ -115,7 +119,7 @@ fun SecondaryTopBar(title: String, onBackClick: () -> Unit, modifier: Modifier =
             IconButton(onClick = onBackClick) {
                 Icon(
                     Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = stringResource(R.string.topbar_description_back)
+                    contentDescription = stringResource(Res.string.topbar_description_back)
                 )
             }
         },
@@ -132,13 +136,14 @@ fun SecondaryTopBar(title: String, onBackClick: () -> Unit, modifier: Modifier =
 @Preview
 @Composable
 private fun PrimaryTopbarPreview() {
-    ValiutchikTheme {
+    AppTheme {
         PrimaryTopBar(
             title = "Test",
-            showRefresh = true,
-            onSettingsClick = {},
             onAboutClick = {},
-            onRefreshClick = {}
+            onSettingsClick = {},
+            onRefreshClick = {},
+            showRefresh = true,
+            settingsLabel = stringResource(Res.string.action_settings)
         )
     }
 }
@@ -146,7 +151,7 @@ private fun PrimaryTopbarPreview() {
 @Preview
 @Composable
 private fun TertiaryTopbarPreview() {
-    ValiutchikTheme {
+    AppTheme {
         SecondaryTopBar(
             title = "Test",
             onBackClick = {}

@@ -30,8 +30,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
+import dev.fobo66.valiutchik.ui.element.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.collections.immutable.persistentListOf
