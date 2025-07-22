@@ -30,6 +30,7 @@ import com.materialkolor.rememberDynamicMaterialThemeState
 fun AppTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val dynamicThemeState = rememberDynamicMaterialThemeState(
         isDark = isDarkTheme,
+        isAmoled = true,
         style = PaletteStyle.Expressive,
         specVersion = ColorSpec.SpecVersion.SPEC_2025,
         seedColor = SeedColor
