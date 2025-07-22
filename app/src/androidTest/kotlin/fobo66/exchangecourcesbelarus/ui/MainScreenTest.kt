@@ -25,7 +25,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.filters.SmallTest
 import dev.fobo66.valiutchik.ui.TAG_NO_RATES
 import dev.fobo66.valiutchik.ui.TAG_RATES
-import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
+import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertTrue

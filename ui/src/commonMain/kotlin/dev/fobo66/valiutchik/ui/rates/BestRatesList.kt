@@ -14,9 +14,8 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.ui.rates
 
-import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -31,6 +30,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -53,8 +53,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.fobo66.valiutchik.ui.TAG_NO_RATES
 import dev.fobo66.valiutchik.ui.TAG_RATES
@@ -62,13 +60,16 @@ import dev.fobo66.valiutchik.ui.TAG_RATE_VALUE
 import dev.fobo66.valiutchik.ui.about.AboutAppDialog
 import dev.fobo66.valiutchik.ui.element.PrimaryTopBar
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
-import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.icons.Bank
-import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.app_name
+import valiutchik.ui.generated.resources.bank_name_indicator
+import valiutchik.ui.generated.resources.share_description
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -88,7 +89,7 @@ fun BestRatesGrid(
         var isAboutDialogShown by remember { mutableStateOf(false) }
 
         PrimaryTopBar(
-            title = stringResource(R.string.app_name),
+            title = stringResource(Res.string.app_name),
             onAboutClick = { isAboutDialogShown = true },
             onSettingsClick = onSettingsClick,
             onRefreshClick = onRefresh,
@@ -121,10 +122,10 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { item -> item.resolveCurrencyName() }
+                            key = { item -> item.resolveCurrencyName().key }
                         ) { item ->
                             BestCurrencyRateCard(
-                                currencyName = stringResource(id = item.resolveCurrencyName()),
+                                currencyName = stringResource(item.resolveCurrencyName()),
                                 currencyValue = item.rateValue,
                                 bankName = item.bank,
                                 onClick = onBestRateClick,
@@ -142,7 +143,6 @@ fun BestRatesGrid(
             AboutAppDialog(onDismiss = { isAboutDialogShown = false })
         }
     }
-    ReportDrawnWhen { bestCurrencyRates.isNotEmpty() }
 }
 
 @Composable
@@ -200,8 +200,8 @@ fun BestCurrencyRateCard(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         ) {
             Icon(
-                imageVector = Bank,
-                contentDescription = stringResource(id = R.string.bank_name_indicator),
+                imageVector = Icons.Default.AccountBalance,
+                contentDescription = stringResource(Res.string.bank_name_indicator),
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             Text(
@@ -217,7 +217,7 @@ fun BestCurrencyRateCard(
             }) {
                 Icon(
                     Icons.Default.Share,
-                    contentDescription = stringResource(R.string.share_description)
+                    contentDescription = stringResource(Res.string.share_description)
                 )
             }
         }
@@ -227,7 +227,7 @@ fun BestCurrencyRateCard(
 @Preview
 @Composable
 private fun BestCurrencyRatesPreview() {
-    ValiutchikTheme {
+    AppTheme {
         BestRatesGrid(
             bestCurrencyRates =
             persistentListOf(
