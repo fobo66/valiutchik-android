@@ -67,6 +67,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":presentation"))
+                api(project(":domain"))
                 implementation(libs.materialKolor)
                 implementation(compose.runtime)
                 implementation(compose.foundation)

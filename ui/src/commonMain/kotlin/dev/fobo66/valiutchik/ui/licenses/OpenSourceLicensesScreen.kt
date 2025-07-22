@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.licenses
+package dev.fobo66.valiutchik.ui.licenses
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
@@ -25,16 +25,18 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
 import dev.fobo66.valiutchik.ui.element.SecondaryTopBar
-import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.see_license_click_label
+import valiutchik.ui.generated.resources.title_activity_oss_licenses
 
 @Composable
 fun OpenSourceLicensesScreen(
@@ -45,7 +47,7 @@ fun OpenSourceLicensesScreen(
 ) {
     Column(modifier = modifier) {
         SecondaryTopBar(
-            title = stringResource(R.string.title_activity_oss_licenses),
+            title = stringResource(Res.string.title_activity_oss_licenses),
             onBackClick = onBackClick
         )
         Crossfade(
@@ -97,7 +99,7 @@ fun OpenSourceLicense(
         modifier = modifier
             .clickable(
                 enabled = item.url != null,
-                onClickLabel = stringResource(id = R.string.see_license_click_label)
+                onClickLabel = stringResource(Res.string.see_license_click_label)
             ) {
                 item.url?.let {
                     onItemClick(it)
@@ -106,10 +108,10 @@ fun OpenSourceLicense(
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun OpenSourceLicensePreview() {
-    ValiutchikTheme {
+    AppTheme {
         OpenSourceLicense(
             item = OpenSourceLicense(
                 authors = "The Android Open Source Project",
@@ -123,10 +125,10 @@ private fun OpenSourceLicensePreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun OpenSourceLicensesPreview() {
-    ValiutchikTheme {
+    AppTheme {
         OpenSourceLicensesScreen(
             licensesState = LicensesState(persistentListOf()),
             onItemClick = {},

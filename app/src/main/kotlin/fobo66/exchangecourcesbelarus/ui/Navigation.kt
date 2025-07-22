@@ -44,9 +44,9 @@ import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.OpenSourceLicensesViewModel
 import dev.fobo66.valiutchik.presentation.PreferencesViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
+import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesScreen
 import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.licenses.OpenSourceLicensesScreen
 import fobo66.exchangecourcesbelarus.ui.main.BestRatesGrid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
