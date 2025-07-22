@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.preferences
+package dev.fobo66.valiutchik.ui.preferences
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -23,20 +23,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.ui.TAG_DEFAULT_CITY
 import dev.fobo66.valiutchik.ui.TAG_LICENSES
 import dev.fobo66.valiutchik.ui.TAG_PREFERENCES
 import dev.fobo66.valiutchik.ui.TAG_UPDATE_INTERVAL
+import dev.fobo66.valiutchik.ui.element.SecondaryTopBar
 import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntries
 import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntry
-import fobo66.exchangecourcesbelarus.R.array
-import fobo66.exchangecourcesbelarus.R.string
-import fobo66.exchangecourcesbelarus.ui.main.SecondaryTopBar
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.pref_cities_list
+import valiutchik.ui.generated.resources.pref_cities_values
+import valiutchik.ui.generated.resources.pref_title_default_city
+import valiutchik.ui.generated.resources.pref_title_update_interval
+import valiutchik.ui.generated.resources.title_activity_oss_licenses
+import valiutchik.ui.generated.resources.title_activity_settings
 
 const val MIN_UPDATE_INTERVAL_VALUE = 1f
 const val MAX_UPDATE_INTERVAL_VALUE = 24f
@@ -56,7 +61,7 @@ fun PreferenceScreen(
     Column(modifier = modifier) {
         this.AnimatedVisibility(canOpenSettings) {
             SecondaryTopBar(
-                title = stringResource(string.title_activity_settings),
+                title = stringResource(Res.string.title_activity_settings),
                 onBackClick = onBackClick
             )
         }
@@ -79,8 +84,8 @@ fun PreferenceScreenContent(
     onOpenSourceLicensesClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val citiesKeys = stringArrayResource(id = array.pref_cities_list)
-    val citiesValues = stringArrayResource(id = array.pref_cities_values)
+    val citiesKeys = stringArrayResource(Res.array.pref_cities_list)
+    val citiesValues = stringArrayResource(Res.array.pref_cities_values)
     val entries = remember {
         ListPreferenceEntries(
             citiesKeys.mapIndexed { index, key -> ListPreferenceEntry(key, citiesValues[index]) }
@@ -93,7 +98,7 @@ fun PreferenceScreenContent(
     ) {
         ListPreference(
             title = {
-                Text(text = stringResource(id = string.pref_title_default_city))
+                Text(text = stringResource(Res.string.pref_title_default_city))
             },
             value = defaultCityValue,
             entries = entries,
@@ -102,7 +107,7 @@ fun PreferenceScreenContent(
         )
         SeekBarPreference(
             title = {
-                Text(text = stringResource(id = string.pref_title_update_interval))
+                Text(text = stringResource(Res.string.pref_title_update_interval))
             },
             value = updateIntervalValue,
             valueRange = MIN_UPDATE_INTERVAL_VALUE..MAX_UPDATE_INTERVAL_VALUE,
@@ -112,7 +117,7 @@ fun PreferenceScreenContent(
         )
         TextPreference(
             title = {
-                Text(text = stringResource(id = string.title_activity_oss_licenses))
+                Text(text = stringResource(Res.string.title_activity_oss_licenses))
             },
             onClick = onOpenSourceLicensesClick,
             modifier = Modifier.testTag(TAG_LICENSES)
@@ -125,7 +130,7 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 @Preview
 @Composable
 private fun PreferenceScreenPreview() {
-    ValiutchikTheme {
+    AppTheme {
         PreferenceScreen(
             defaultCityValue = "Minsk",
             updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,

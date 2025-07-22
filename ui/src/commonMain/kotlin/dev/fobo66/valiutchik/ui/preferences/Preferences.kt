@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.preferences
+package dev.fobo66.valiutchik.ui.preferences
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
