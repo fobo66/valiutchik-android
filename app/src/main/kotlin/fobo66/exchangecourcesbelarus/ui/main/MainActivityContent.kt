@@ -45,10 +45,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
+import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
 import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
-import fobo66.exchangecourcesbelarus.ui.TAG_SNACKBAR
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable

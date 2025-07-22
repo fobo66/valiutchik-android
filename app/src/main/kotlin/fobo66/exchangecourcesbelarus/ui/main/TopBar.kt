@@ -34,8 +34,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.fobo66.valiutchik.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.R
-import fobo66.exchangecourcesbelarus.ui.TAG_TITLE
 import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

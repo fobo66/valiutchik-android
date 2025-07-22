@@ -34,6 +34,9 @@ import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import dev.fobo66.valiutchik.ui.TAG_PREFERENCES
+import dev.fobo66.valiutchik.ui.TAG_RATES
+import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
 import fobo66.exchangecourcesbelarus.R
 import org.junit.Rule
 import org.junit.Test

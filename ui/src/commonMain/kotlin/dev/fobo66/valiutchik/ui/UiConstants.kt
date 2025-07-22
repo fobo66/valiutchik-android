@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.valiutchik.ui
 
 const val TAG_RATES = "Rates"
 const val TAG_NO_RATES = "No rates"

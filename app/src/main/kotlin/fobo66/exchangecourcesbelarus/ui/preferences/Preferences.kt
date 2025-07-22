@@ -46,8 +46,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
+import dev.fobo66.valiutchik.ui.TAG_SLIDER
 import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntries
-import fobo66.exchangecourcesbelarus.ui.TAG_SLIDER
 import kotlin.math.roundToInt
 
 @Composable
