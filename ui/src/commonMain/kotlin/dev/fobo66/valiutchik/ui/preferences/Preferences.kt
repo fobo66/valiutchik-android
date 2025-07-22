@@ -123,9 +123,7 @@ private fun ListPreferenceDialog(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    BasicAlertDialog(
-        onDismissRequest = onDismiss
-    ) {
+    BasicAlertDialog(onDismissRequest = onDismiss) {
         Column(
             modifier =
             modifier
