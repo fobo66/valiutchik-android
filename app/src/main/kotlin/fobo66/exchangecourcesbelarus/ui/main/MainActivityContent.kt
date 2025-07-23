@@ -38,8 +38,6 @@ import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldPredictiveBackHandler
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -52,7 +50,11 @@ import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = Modifier) {
+fun MainActivityContent(
+    modifier: Modifier = Modifier,
+    showManualRefresh: Boolean = false,
+    canOpenSettings: Boolean = true
+) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -70,15 +72,15 @@ fun MainActivityContent(windowSizeClass: WindowSizeClass, modifier: Modifier = M
         val layoutDirection = LocalLayoutDirection.current
         MainScreenPanels(
             snackbarHostState = snackbarHostState,
-            manualRefreshVisible = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-            canOpenSettings =
-            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded,
+            manualRefreshVisible = showManualRefresh,
+            canOpenSettings = canOpenSettings,
             modifier =
-            Modifier.padding(
-                start = it.calculateStartPadding(layoutDirection),
-                end = it.calculateEndPadding(layoutDirection),
-                top = it.calculateTopPadding()
-            )
+            Modifier
+                .padding(
+                    start = it.calculateStartPadding(layoutDirection),
+                    end = it.calculateEndPadding(layoutDirection),
+                    top = it.calculateTopPadding()
+                )
                 .consumeWindowInsets(it)
         )
     }

@@ -21,6 +21,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.xr.compose.material3.EnableXrComponentOverrides
@@ -42,7 +43,12 @@ class MainActivity : ComponentActivity() {
             ValiutchikTheme {
                 KoinContext {
                     EnableXrComponentOverrides {
-                        MainActivityContent(windowSizeClass)
+                        MainActivityContent(
+                            showManualRefresh =
+                            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+                            canOpenSettings =
+                            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
+                        )
                     }
                 }
             }
