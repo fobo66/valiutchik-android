@@ -33,6 +33,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -53,7 +54,10 @@ fun BestRatesScreenDestination(
     manualRefreshVisible: Boolean,
     canOpenSettings: Boolean,
     modifier: Modifier = Modifier,
-    mainViewModel: MainViewModel = koinViewModel()
+    mainViewModel: MainViewModel = koinViewModel(),
+    permissionPrompt: String = stringResource(R.string.permission_description),
+    errorMessage: String = stringResource(R.string.get_data_error),
+    rateCopiedMessage: String = stringResource(R.string.currency_value_copied)
 ) {
     val context = LocalContext.current
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
@@ -73,7 +77,7 @@ fun BestRatesScreenDestination(
         if (!isPermissionGranted && !isLocationPermissionPromptShown) {
             isLocationPermissionPromptShown = true
             snackbarHostState.showSnackbar(
-                message = context.getString(R.string.permission_description),
+                message = permissionPrompt,
                 duration = Long
             )
         }
@@ -81,7 +85,7 @@ fun BestRatesScreenDestination(
     LaunchedEffect(viewState) {
         if (viewState is MainScreenState.Error) {
             snackbarHostState.showSnackbar(
-                message = context.getString(R.string.get_data_error)
+                message = errorMessage
             )
         }
     }
@@ -95,7 +99,7 @@ fun BestRatesScreenDestination(
             mainViewModel.copyCurrencyRateToClipboard(currencyValue)
             scope.launch {
                 snackbarHostState.showSnackbar(
-                    message = context.getString(R.string.currency_value_copied)
+                    message = rateCopiedMessage
                 )
             }
         },
