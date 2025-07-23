@@ -44,8 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
+import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
-import fobo66.exchangecourcesbelarus.ui.OpenSourceLicensesDestination
 import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -128,7 +128,7 @@ fun MainScreenPanels(
         },
         extraPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
-                OpenSourceLicensesDestination(navigator = navigator)
+                OpenSourceLicensesPanel(navigator = navigator)
             }
         },
         paneExpansionState = rememberPaneExpansionState(

@@ -33,16 +33,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dev.fobo66.valiutchik.presentation.MainViewModel
-import dev.fobo66.valiutchik.presentation.OpenSourceLicensesViewModel
 import dev.fobo66.valiutchik.presentation.PreferencesViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
-import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesScreen
 import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
 import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
 import fobo66.exchangecourcesbelarus.R
@@ -148,30 +145,6 @@ fun PreferenceScreenDestination(
                 )
             }
         },
-        onBackClick = {
-            scope.launch {
-                navigator.navigateBack()
-            }
-        },
-        modifier = modifier
-    )
-}
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-@Composable
-fun OpenSourceLicensesDestination(
-    navigator: ThreePaneScaffoldNavigator<Any>,
-    modifier: Modifier = Modifier,
-    viewModel: OpenSourceLicensesViewModel = koinViewModel()
-) {
-    val uriHandler = LocalUriHandler.current
-    val scope = rememberCoroutineScope()
-
-    val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
-
-    OpenSourceLicensesScreen(
-        licensesState = licensesState,
-        onItemClick = uriHandler::openUri,
         onBackClick = {
             scope.launch {
                 navigator.navigateBack()

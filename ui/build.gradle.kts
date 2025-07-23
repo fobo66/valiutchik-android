@@ -69,6 +69,8 @@ kotlin {
                 api(project(":presentation"))
                 api(project(":domain"))
                 implementation(libs.materialKolor)
+                implementation(project.dependencies.platform(libs.compose.bom))
+                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.ui)
@@ -78,6 +80,11 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.kotlinx.collections)
+                implementation(libs.compose.material.adaptive)
+                implementation(libs.compose.material.adaptive.layout)
+                implementation(libs.compose.material.adaptive.navigation)
+                implementation(libs.koin.core)
+                implementation(libs.koin.viewmodel)
             }
         }
 
@@ -90,6 +97,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(compose.preview)
+                implementation(libs.accompanist.permissions)
             }
         }
 
