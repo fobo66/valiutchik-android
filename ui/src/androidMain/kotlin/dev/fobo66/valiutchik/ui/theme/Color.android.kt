@@ -16,30 +16,31 @@
 
 package dev.fobo66.valiutchik.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import android.os.Build
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MotionScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.runtime.Composable
-import com.materialkolor.DynamicMaterialExpressiveTheme
-import com.materialkolor.PaletteStyle
-import com.materialkolor.dynamiccolor.ColorSpec
-import com.materialkolor.rememberDynamicMaterialThemeState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun AppTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val dynamicThemeState = rememberDynamicMaterialThemeState(
-        isDark = isDarkTheme,
-        isAmoled = true,
-        style = PaletteStyle.Expressive,
-        specVersion = ColorSpec.SpecVersion.SPEC_2025,
-        seedColor = resolveSeedColor(isDarkTheme)
-    )
+internal actual fun resolveSeedColor(isDark: Boolean, isDynamic: Boolean): Color {
+    val dynamicColor = isDynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val colorScheme =
+        when {
+            dynamicColor && isDark -> {
+                dynamicDarkColorScheme(LocalContext.current)
+            }
 
-    DynamicMaterialExpressiveTheme(
-        state = dynamicThemeState,
-        motionScheme = MotionScheme.expressive(),
-        animate = true,
-        content = content
-    )
+            dynamicColor && !isDark -> {
+                dynamicLightColorScheme(LocalContext.current)
+            }
+
+            else -> expressiveLightColorScheme()
+        }
+
+    return colorScheme.primary
 }

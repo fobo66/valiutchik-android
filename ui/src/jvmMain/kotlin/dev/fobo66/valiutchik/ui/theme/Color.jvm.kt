@@ -19,7 +19,6 @@ package dev.fobo66.valiutchik.ui.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-internal const val DEFAULT_SEED_COLOR = 0xFF4CAF50
-
 @Composable
-internal expect fun resolveSeedColor(isDark: Boolean, isDynamic: Boolean = true): Color
+internal actual fun resolveSeedColor(isDark: Boolean, isDynamic: Boolean): Color =
+    Color(DEFAULT_SEED_COLOR)
