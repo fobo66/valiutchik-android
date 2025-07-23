@@ -14,17 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.theme
+package fobo66.exchangecourcesbelarus.ui.widget
 
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceTheme
 import androidx.glance.material3.ColorProviders
-import dev.fobo66.valiutchik.ui.theme.AppTheme
 import dev.fobo66.valiutchik.ui.theme.DarkColors
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -33,15 +31,6 @@ private val WidgetColors =
         light = expressiveLightColorScheme(),
         dark = DarkColors
     )
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-fun ValiutchikTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    AppTheme(
-        isDarkTheme = isDarkTheme,
-        content = content
-    )
-}
 
 @Composable
 fun ValiutchikWidgetTheme(
