@@ -19,9 +19,7 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarDuration.Long
-import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
@@ -79,16 +77,17 @@ fun BestRatesScreenDestination(
         mainViewModel.handleLocationPermission(isPermissionGranted)
         if (!isPermissionGranted && !isLocationPermissionPromptShown) {
             isLocationPermissionPromptShown = true
-            showSnackbar(
-                snackbarHostState,
-                context.getString(R.string.permission_description),
-                Long
+            snackbarHostState.showSnackbar(
+                message = context.getString(R.string.permission_description),
+                duration = Long
             )
         }
     }
     LaunchedEffect(viewState) {
         if (viewState is MainScreenState.Error) {
-            showSnackbar(snackbarHostState, context.getString(R.string.get_data_error))
+            snackbarHostState.showSnackbar(
+                message = context.getString(R.string.get_data_error)
+            )
         }
     }
     BestRatesGrid(
@@ -100,7 +99,9 @@ fun BestRatesScreenDestination(
         onBestRateLongClick = { currencyValue ->
             mainViewModel.copyCurrencyRateToClipboard(currencyValue)
             scope.launch {
-                showSnackbar(snackbarHostState, context.getString(R.string.currency_value_copied))
+                snackbarHostState.showSnackbar(
+                    message = context.getString(R.string.currency_value_copied)
+                )
             }
         },
         onShareClick = { currencyName, currencyValue ->
@@ -188,7 +189,9 @@ private fun handleOpenMap(
 ) {
     if (!isMapOpened) {
         scope.launch {
-            showSnackbar(snackbarHostState, context.getString(R.string.maps_app_required))
+            snackbarHostState.showSnackbar(
+                message = context.getString(R.string.maps_app_required)
+            )
         }
     }
 }
@@ -203,15 +206,4 @@ private fun shareCurrencyRate(context: Context, currencyName: String, currencyVa
     val sender =
         Intent.createChooser(shareIntent, context.getString(R.string.share_rate, currencyName))
     context.startActivity(sender)
-}
-
-private suspend fun showSnackbar(
-    snackbarHostState: SnackbarHostState,
-    message: String,
-    duration: SnackbarDuration = Short
-) {
-    snackbarHostState.showSnackbar(
-        message = message,
-        duration = duration
-    )
 }
