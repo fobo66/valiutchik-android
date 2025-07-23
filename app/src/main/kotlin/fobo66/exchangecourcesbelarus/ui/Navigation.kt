@@ -38,9 +38,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dev.fobo66.valiutchik.presentation.MainViewModel
-import dev.fobo66.valiutchik.presentation.PreferencesViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
-import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
 import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
 import fobo66.exchangecourcesbelarus.R
 import kotlinx.coroutines.CoroutineScope
@@ -113,43 +111,6 @@ fun BestRatesScreenDestination(
         },
         isRefreshing = viewState is MainScreenState.Loading,
         onRefresh = mainViewModel::manualRefresh,
-        modifier = modifier
-    )
-}
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-@Composable
-fun PreferenceScreenDestination(
-    navigator: ThreePaneScaffoldNavigator<Any>,
-    canOpenSettings: Boolean,
-    modifier: Modifier = Modifier,
-    preferencesViewModel: PreferencesViewModel = koinViewModel()
-) {
-    val scope = rememberCoroutineScope()
-    val defaultCity by preferencesViewModel.defaultCityPreference
-        .collectAsStateWithLifecycle()
-
-    val updateInterval by preferencesViewModel.updateIntervalPreference
-        .collectAsStateWithLifecycle()
-
-    PreferenceScreen(
-        defaultCityValue = defaultCity,
-        updateIntervalValue = updateInterval,
-        canOpenSettings = canOpenSettings,
-        onDefaultCityChange = preferencesViewModel::updateDefaultCity,
-        onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
-        onOpenSourceLicensesClick = {
-            scope.launch {
-                navigator.navigateTo(
-                    ThreePaneScaffoldRole.Tertiary
-                )
-            }
-        },
-        onBackClick = {
-            scope.launch {
-                navigator.navigateBack()
-            }
-        },
         modifier = modifier
     )
 }

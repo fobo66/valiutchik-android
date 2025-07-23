@@ -45,8 +45,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
 import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
+import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
-import fobo66.exchangecourcesbelarus.ui.PreferenceScreenDestination
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -120,7 +120,7 @@ fun MainScreenPanels(
         },
         supportingPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
-                PreferenceScreenDestination(
+                PreferencesPanel(
                     navigator = navigator,
                     canOpenSettings = canOpenSettings
                 )
