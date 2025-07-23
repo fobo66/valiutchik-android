@@ -39,6 +39,8 @@ internal actual fun resolveSeedColor(isDark: Boolean, isDynamic: Boolean): Color
                 dynamicLightColorScheme(LocalContext.current)
             }
 
+            isDark -> DarkColors
+
             else -> expressiveLightColorScheme()
         }
 
