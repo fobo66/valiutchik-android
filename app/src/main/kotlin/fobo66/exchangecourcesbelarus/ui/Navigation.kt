@@ -17,8 +17,6 @@
 package fobo66.exchangecourcesbelarus.ui
 
 import android.Manifest.permission
-import android.content.Context
-import android.content.Intent
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -33,7 +31,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -42,6 +39,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
+import dev.fobo66.valiutchik.ui.share.rememberShareProvider
 import fobo66.exchangecourcesbelarus.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -62,7 +60,7 @@ fun BestRatesScreenDestination(
     noMapMessage: String = stringResource(R.string.maps_app_required),
     permissionAction: String = "Grant"
 ) {
-    val context = LocalContext.current
+    val shareProvider = rememberShareProvider()
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
 
     val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
@@ -99,7 +97,7 @@ fun BestRatesScreenDestination(
             }
         },
         onShareClick = { currencyName, currencyValue ->
-            shareCurrencyRate(context, currencyName, currencyValue)
+            shareProvider.shareText(currencyName, currencyValue)
         },
         showExplicitRefresh = manualRefreshVisible,
         showSettings = canOpenSettings,
@@ -157,16 +155,4 @@ private fun handleOpenMap(
             )
         }
     }
-}
-
-private fun shareCurrencyRate(context: Context, currencyName: String, currencyValue: String) {
-    val shareIntent =
-        Intent(Intent.ACTION_SEND)
-            .putExtra(
-                Intent.EXTRA_TEXT,
-                context.getString(R.string.share_rate_text, currencyName, currencyValue)
-            ).setType("text/plain")
-    val sender =
-        Intent.createChooser(shareIntent, context.getString(R.string.share_rate, currencyName))
-    context.startActivity(sender)
 }

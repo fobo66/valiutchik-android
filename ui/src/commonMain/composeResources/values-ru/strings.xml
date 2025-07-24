@@ -105,8 +105,6 @@
   <string name="topbar_description_back">Назад</string>
   <string name="open_app">Открыть приложение</string>
   <string name="action_refresh">Обновить</string>
-  <string name="share_rate">%s</string>
-  <string name="share_rate_text">%1$s сегодня %2$s</string>
   <string name="share_description">Поделиться курсом валюты</string>
   <string name="toolbar_action_more">Больше</string>
   <string name="action_about_close">ОК</string>
