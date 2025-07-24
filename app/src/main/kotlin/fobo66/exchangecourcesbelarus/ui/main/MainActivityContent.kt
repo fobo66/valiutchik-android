@@ -35,8 +35,6 @@ import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldDefaults
 import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
-import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldPredictiveBackHandler
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -44,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
+import dev.fobo66.valiutchik.ui.element.PanelsBackHandler
 import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
 import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import dev.fobo66.valiutchik.ui.rates.RatesPanel
@@ -100,10 +99,7 @@ fun MainScreenPanels(
         )
     )
 
-    ThreePaneScaffoldPredictiveBackHandler(
-        navigator = navigator,
-        backBehavior = BackNavigationBehavior.PopUntilScaffoldValueChange
-    )
+    PanelsBackHandler(navigator)
 
     SupportingPaneScaffold(
         directive = navigator.scaffoldDirective,
