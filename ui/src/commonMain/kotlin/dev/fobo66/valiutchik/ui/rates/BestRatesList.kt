@@ -59,17 +59,16 @@ import dev.fobo66.valiutchik.ui.TAG_RATE_VALUE
 import dev.fobo66.valiutchik.ui.about.AboutAppDialog
 import dev.fobo66.valiutchik.ui.element.PrimaryTopBar
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
+import dev.fobo66.valiutchik.ui.icon.Bank
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.app_name
 import valiutchik.ui.generated.resources.bank_name_indicator
-import valiutchik.ui.generated.resources.ic_bank
 import valiutchik.ui.generated.resources.share_description
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
@@ -201,7 +200,7 @@ fun BestCurrencyRateCard(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         ) {
             Icon(
-                painter = painterResource(Res.drawable.ic_bank),
+                Icons.Default.Bank,
                 contentDescription = stringResource(Res.string.bank_name_indicator),
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
