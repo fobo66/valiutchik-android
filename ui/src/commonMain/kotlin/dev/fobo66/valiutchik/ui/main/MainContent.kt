@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui.main
+package dev.fobo66.valiutchik.ui.main
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -49,7 +49,7 @@ import dev.fobo66.valiutchik.ui.rates.RatesPanel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun MainActivityContent(
+fun MainContent(
     modifier: Modifier = Modifier,
     showManualRefresh: Boolean = false,
     canOpenSettings: Boolean = true

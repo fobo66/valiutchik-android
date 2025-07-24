@@ -26,8 +26,8 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.xr.compose.material3.EnableXrComponentOverrides
 import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
+import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
-import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
 import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 KoinContext {
                     EnableXrComponentOverrides {
-                        MainActivityContent(
+                        MainContent(
                             showManualRefresh =
                             windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
                             canOpenSettings =
