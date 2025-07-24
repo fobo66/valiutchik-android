@@ -16,29 +16,22 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
-import android.Manifest.permission
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
+import dev.fobo66.valiutchik.ui.rates.PermissionsEffect
 import dev.fobo66.valiutchik.ui.share.rememberShareProvider
 import fobo66.exchangecourcesbelarus.R
 import kotlinx.coroutines.CoroutineScope
@@ -110,36 +103,6 @@ fun BestRatesScreenDestination(
         onRefresh = mainViewModel::manualRefresh,
         modifier = modifier
     )
-}
-
-@Composable
-@OptIn(ExperimentalPermissionsApi::class)
-fun PermissionsEffect(
-    snackbarHostState: SnackbarHostState,
-    permissionPrompt: String,
-    permissionAction: String,
-    onHandlePermissions: (Boolean) -> Unit
-) {
-    var isLocationPermissionPromptShown by rememberSaveable { mutableStateOf(false) }
-    val permissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
-    val permissionsHandler by rememberUpdatedState(onHandlePermissions)
-
-    LaunchedEffect(permissionState.status) {
-        val isPermissionGranted = permissionState.status.isGranted
-        permissionsHandler(isPermissionGranted)
-        if (!isPermissionGranted && !isLocationPermissionPromptShown) {
-            isLocationPermissionPromptShown = true
-            val result = snackbarHostState.showSnackbar(
-                message = permissionPrompt,
-                withDismissAction = true,
-                actionLabel = permissionAction
-            )
-
-            if (result == SnackbarResult.ActionPerformed) {
-                permissionState.launchPermissionRequest()
-            }
-        }
-    }
 }
 
 private fun handleOpenMap(
