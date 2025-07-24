@@ -37,10 +37,10 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.action_about
+import valiutchik.ui.generated.resources.action_refresh
 import valiutchik.ui.generated.resources.action_settings
 import valiutchik.ui.generated.resources.toolbar_action_more
 import valiutchik.ui.generated.resources.topbar_description_back
-import valiutchik.ui.generated.resources.widget_action_refresh
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +53,7 @@ fun PrimaryTopBar(
     modifier: Modifier = Modifier,
     settingsVisible: Boolean = true,
     aboutLabel: String = stringResource(Res.string.action_about),
-    refreshLabel: String = stringResource(Res.string.widget_action_refresh),
+    refreshLabel: String = stringResource(Res.string.action_refresh),
     settingsLabel: String = stringResource(Res.string.action_settings)
 ) {
     TopAppBar(
