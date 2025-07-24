@@ -58,6 +58,7 @@ fun BestRatesScreenDestination(
     permissionPrompt: String = stringResource(R.string.permission_description),
     errorMessage: String = stringResource(R.string.get_data_error),
     rateCopiedMessage: String = stringResource(R.string.currency_value_copied),
+    noMapMessage: String = stringResource(R.string.maps_app_required),
     permissionAction: String = "Grant"
 ) {
     val context = LocalContext.current
@@ -98,7 +99,7 @@ fun BestRatesScreenDestination(
         bestCurrencyRates = bestCurrencyRates,
         onBestRateClick = { bankName ->
             val isMapOpened = mainViewModel.findBankOnMap(bankName)
-            handleOpenMap(isMapOpened, context, scope, snackbarHostState)
+            handleOpenMap(isMapOpened, scope, snackbarHostState, noMapMessage)
         },
         onBestRateLongClick = { currencyValue ->
             mainViewModel.copyCurrencyRateToClipboard(currencyValue)
@@ -126,14 +127,14 @@ fun BestRatesScreenDestination(
 
 private fun handleOpenMap(
     isMapOpened: Boolean,
-    context: Context,
     scope: CoroutineScope,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    noMapMessage: String
 ) {
     if (!isMapOpened) {
         scope.launch {
             snackbarHostState.showSnackbar(
-                message = context.getString(R.string.maps_app_required)
+                message = noMapMessage
             )
         }
     }
