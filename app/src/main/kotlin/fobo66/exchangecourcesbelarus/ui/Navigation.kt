@@ -19,8 +19,8 @@ package fobo66.exchangecourcesbelarus.ui
 import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
-import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
@@ -57,7 +57,8 @@ fun BestRatesScreenDestination(
     mainViewModel: MainViewModel = koinViewModel(),
     permissionPrompt: String = stringResource(R.string.permission_description),
     errorMessage: String = stringResource(R.string.get_data_error),
-    rateCopiedMessage: String = stringResource(R.string.currency_value_copied)
+    rateCopiedMessage: String = stringResource(R.string.currency_value_copied),
+    permissionAction: String = "Grant"
 ) {
     val context = LocalContext.current
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
@@ -69,17 +70,21 @@ fun BestRatesScreenDestination(
     val scope = rememberCoroutineScope()
 
     val permissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
-    LaunchedEffect(Unit) { permissionState.launchPermissionRequest() }
 
     LaunchedEffect(permissionState.status) {
         val isPermissionGranted = permissionState.status.isGranted
         mainViewModel.handleLocationPermission(isPermissionGranted)
         if (!isPermissionGranted && !isLocationPermissionPromptShown) {
             isLocationPermissionPromptShown = true
-            snackbarHostState.showSnackbar(
+            val result = snackbarHostState.showSnackbar(
                 message = permissionPrompt,
-                duration = Long
+                withDismissAction = true,
+                actionLabel = permissionAction
             )
+
+            if (result == SnackbarResult.ActionPerformed) {
+                permissionState.launchPermissionRequest()
+            }
         }
     }
     LaunchedEffect(viewState) {
