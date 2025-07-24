@@ -46,7 +46,7 @@ import androidx.compose.ui.platform.testTag
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
 import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
 import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
-import fobo66.exchangecourcesbelarus.ui.BestRatesScreenDestination
+import dev.fobo66.valiutchik.ui.rates.RatesPanel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -110,7 +110,7 @@ fun MainScreenPanels(
         value = navigator.scaffoldValue,
         mainPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
-                BestRatesScreenDestination(
+                RatesPanel(
                     navigator = navigator,
                     snackbarHostState = snackbarHostState,
                     manualRefreshVisible = manualRefreshVisible,

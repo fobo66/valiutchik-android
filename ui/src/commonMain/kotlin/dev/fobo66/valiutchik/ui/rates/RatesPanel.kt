@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -25,33 +25,35 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
-import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
-import dev.fobo66.valiutchik.ui.rates.PermissionsEffect
 import dev.fobo66.valiutchik.ui.share.rememberShareProvider
-import fobo66.exchangecourcesbelarus.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.currency_value_copied
+import valiutchik.ui.generated.resources.get_data_error
+import valiutchik.ui.generated.resources.maps_app_required
+import valiutchik.ui.generated.resources.permission_action
+import valiutchik.ui.generated.resources.permission_description
 
-@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3AdaptiveApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun BestRatesScreenDestination(
+fun RatesPanel(
     navigator: ThreePaneScaffoldNavigator<Any>,
     snackbarHostState: SnackbarHostState,
     manualRefreshVisible: Boolean,
     canOpenSettings: Boolean,
     modifier: Modifier = Modifier,
     mainViewModel: MainViewModel = koinViewModel(),
-    permissionPrompt: String = stringResource(R.string.permission_description),
-    errorMessage: String = stringResource(R.string.get_data_error),
-    rateCopiedMessage: String = stringResource(R.string.currency_value_copied),
-    noMapMessage: String = stringResource(R.string.maps_app_required),
-    permissionAction: String = "Grant"
+    permissionPrompt: String = stringResource(Res.string.permission_description),
+    errorMessage: String = stringResource(Res.string.get_data_error),
+    rateCopiedMessage: String = stringResource(Res.string.currency_value_copied),
+    noMapMessage: String = stringResource(Res.string.maps_app_required),
+    permissionAction: String = stringResource(Res.string.permission_action)
 ) {
     val shareProvider = rememberShareProvider()
     val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()

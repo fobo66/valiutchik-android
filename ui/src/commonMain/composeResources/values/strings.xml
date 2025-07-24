@@ -30,6 +30,7 @@
   <string name="title_activity_oss_licenses">Open source licenses</string>
   <string name="open_map">Search for exchange offices on map</string>
   <string name="permission_description">We need location permission to determine your location, so we can determine your location and show you the closest available currency rates. Without this permission, the app will use the default city from the settings.</string>
+  <string name="permission_action">Grant</string>
   <string name="no_rates_indicator">No rates available yet</string>
   <string name="bank_name_indicator">Bank name</string>
   <string name="see_license_click_label">See %1$s license</string>

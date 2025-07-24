@@ -99,6 +99,7 @@
   <string name="open_map">Искать обменники на карте</string>
   <string name="pref_title_update_interval">Интервал обновления, ч</string>
   <string name="permission_description">Нам необходимо разрешение на использование местоположения, чтобы узнать ваш город и показать курсы валют в нём. Без этого разрешения приложение будет использовать город по умолчанию из настроек.</string>
+  <string name="permission_action">Разрешить</string>
   <string name="no_rates_indicator">Пока нет курсов</string>
   <string name="bank_name_indicator">Название банка</string>
   <string name="see_license_click_label">Посмотреть лицензию %1$s</string>
