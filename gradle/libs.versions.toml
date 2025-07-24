@@ -23,6 +23,7 @@ baselineProfilePlugin = "1.4.0-rc01"
 composeBom = "2025.07.00"
 composeHotReload = "1.0.0-beta04"
 composeMultiplatform = "1.9.0-beta01"
+composeMultiplatformIcons = "1.7.3"
 detekt = "1.23.8"
 detektCompose = "0.4.25"
 dotenvKotlin = "6.5.1"
@@ -91,6 +92,7 @@ androidx-window = { module = "androidx.window:window", version.ref = "androidxWi
 compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
 compose-material = { group = "androidx.compose.material3", name = "material3" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
+compose-material-icons-core = { group = "org.jetbrains.compose.material", name = "material-icons-core", version.ref = "composeMultiplatformIcons" }
 compose-material-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
 compose-material-adaptive-layout = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout" }
 compose-material-adaptive-navigation = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation" }
