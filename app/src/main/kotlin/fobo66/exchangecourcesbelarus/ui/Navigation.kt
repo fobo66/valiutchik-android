@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -66,28 +67,16 @@ fun BestRatesScreenDestination(
 
     val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
 
-    var isLocationPermissionPromptShown by rememberSaveable { mutableStateOf(false) }
-
     val scope = rememberCoroutineScope()
 
-    val permissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
-
-    LaunchedEffect(permissionState.status) {
-        val isPermissionGranted = permissionState.status.isGranted
-        mainViewModel.handleLocationPermission(isPermissionGranted)
-        if (!isPermissionGranted && !isLocationPermissionPromptShown) {
-            isLocationPermissionPromptShown = true
-            val result = snackbarHostState.showSnackbar(
-                message = permissionPrompt,
-                withDismissAction = true,
-                actionLabel = permissionAction
-            )
-
-            if (result == SnackbarResult.ActionPerformed) {
-                permissionState.launchPermissionRequest()
-            }
-        }
+    PermissionsEffect(
+        snackbarHostState,
+        permissionPrompt,
+        permissionAction
+    ) {
+        mainViewModel.handleLocationPermission(it)
     }
+
     LaunchedEffect(viewState) {
         if (viewState is MainScreenState.Error) {
             snackbarHostState.showSnackbar(
@@ -123,6 +112,36 @@ fun BestRatesScreenDestination(
         onRefresh = mainViewModel::manualRefresh,
         modifier = modifier
     )
+}
+
+@Composable
+@OptIn(ExperimentalPermissionsApi::class)
+fun PermissionsEffect(
+    snackbarHostState: SnackbarHostState,
+    permissionPrompt: String,
+    permissionAction: String,
+    onHandlePermissions: (Boolean) -> Unit
+) {
+    var isLocationPermissionPromptShown by rememberSaveable { mutableStateOf(false) }
+    val permissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
+    val permissionsHandler by rememberUpdatedState(onHandlePermissions)
+
+    LaunchedEffect(permissionState.status) {
+        val isPermissionGranted = permissionState.status.isGranted
+        permissionsHandler(isPermissionGranted)
+        if (!isPermissionGranted && !isLocationPermissionPromptShown) {
+            isLocationPermissionPromptShown = true
+            val result = snackbarHostState.showSnackbar(
+                message = permissionPrompt,
+                withDismissAction = true,
+                actionLabel = permissionAction
+            )
+
+            if (result == SnackbarResult.ActionPerformed) {
+                permissionState.launchPermissionRequest()
+            }
+        }
+    }
 }
 
 private fun handleOpenMap(
