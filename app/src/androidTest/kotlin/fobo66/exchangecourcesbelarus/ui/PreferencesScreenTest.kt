@@ -26,7 +26,11 @@ import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.filters.SmallTest
-import fobo66.exchangecourcesbelarus.ui.preferences.PreferenceScreen
+import dev.fobo66.valiutchik.ui.TAG_DEFAULT_CITY
+import dev.fobo66.valiutchik.ui.TAG_LICENSES
+import dev.fobo66.valiutchik.ui.TAG_SLIDER
+import dev.fobo66.valiutchik.ui.TAG_UPDATE_INTERVAL
+import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule

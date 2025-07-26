@@ -18,105 +18,18 @@
   <string name="app_name">Валютчык</string>
   <string name="action_about">Пра прыкладанне</string>
   <string name="action_settings">Налады</string>
-  <string name="about_app_description">Прыкладанне дазваляе хутка атрымаць інфармацыю пра найлепшыя курсы валют у абласных цэнтрах Беларусі. Па націску па картачцы курса вы можаце знайсці бліжэйшае аддзяленне банка, дзе валюта прапаноўваецца па найлепшай цане, на мапе ў вашым горадзе. По доўгім націску вы можаце скапіяваць курс у буфер абмену. Таксама ў наладах вы можаце памяняць інтэрвал аднаўлення курсаў ці змяніць горад па ўмаўчанні. Звярніце ўвагу, што інфармацыя можа быць неактуальнай. Удакладняйце ў банку. Інфармацыя прапанавана сайтам <a href="myfin.by">myfin.by</a></string>
-  <string name="title_about">Інфармацыя пра прыкладанне</string>
-  <string name="title_activity_settings">Налады</string>
-  <string-array name="pref_cities_list">
-    <item>Ашмяны</item>
-    <item>Асіповічы</item>
-    <item>Астравец</item>
-    <item>Бабруйск</item>
-    <item>Баранавічы</item>
-    <item>Барысаў</item>
-    <item>Бяроза</item>
-    <item>Браслаў</item>
-    <item>Брэст</item>
-    <item>Быхаў</item>
-    <item>Чавусы</item>
-    <item>Добруш</item>
-    <item>Драгічын</item>
-    <item>Дзяржынск</item>
-    <item>Ганцавічы</item>
-    <item>Глыбокае</item>
-    <item>Гомель</item>
-    <item>Горкі</item>
-    <item>Гродна</item>
-    <item>Іванава</item>
-    <item>Івацэвічы</item>
-    <item>Калінкавічы</item>
-    <item>Касцюковічы</item>
-    <item>Хойнікі</item>
-    <item>Кобрын</item>
-    <item>Крычаў</item>
-    <item>Лепель</item>
-    <item>Ліда</item>
-    <item>Лунінец</item>
-    <item>Магілёў</item>
-    <item>Маладзечна</item>
-    <item>Маларыта</item>
-    <item>Мар\'іна Горка</item>
-    <item>Масты</item>
-    <item>Мазыр</item>
-    <item>Мінск</item>
-    <item>Мсціслаў</item>
-    <item>Навагрудак</item>
-    <item>Навалукомль</item>
-    <item>Наваполацк</item>
-    <item>Нясвіж</item>
-    <item>Орша</item>
-    <item>Паставы</item>
-    <item>Пінск</item>
-    <item>Полацк</item>
-    <item>Пружаны</item>
-    <item>Петрыкаў</item>
-    <item>Рагачоў</item>
-    <item>Рэчыца</item>
-    <item>Салігорск</item>
-    <item>Шчучын</item>
-    <item>Шклоў</item>
-    <item>Слонім</item>
-    <item>Слуцк</item>
-    <item>Смалявічы</item>
-    <item>Смаргонь</item>
-    <item>Столін</item>
-    <item>Стаўбцы</item>
-    <item>Светлагорск</item>
-    <item>Свіслач</item>
-    <item>Талочын</item>
-    <item>Ваўкавыск</item>
-    <item>Вілейка</item>
-    <item>Віцебск</item>
-    <item>Заслаўе</item>
-    <item>Жлобін</item>
-    <item>Жодзіна</item>
-    <item>Жыткавічы</item>
-  </string-array>
-  <string name="pref_title_default_city">Горад па ўмаўчанні</string>
-  <string name="maps_app_required">Немагчыма паказаць аддзяленнi банкаў на мапе: няма прылады мапаў</string>
-  <string name="get_data_error">Немагчыма аднавіць дадзеныя</string>
-  <string name="currency_value_copied">Курс валюты быў скапіяваны ў буфер абмену</string>
-  <string name="title_activity_oss_licenses">Ліцэнзіі адкрытага праграмнага забяспечання</string>
-  <string name="open_map">Шукаць абменнікі на мапе</string>
-  <string name="pref_title_update_interval">Інтэрвал аднаўлення, гадзін</string>
-  <string name="permission_description">Нам неабходны дазвол скарыстаць вашае месцазнаходжанне, каб мы маглі вызначыць ваш горад і паказаць курсы там. Без дазволу прылада будзе карыстаць горад па змаўчанні з налад.</string>
   <string name="no_rates_indicator">Пакуль што няма курсаў</string>
   <string name="bank_name_indicator">Назва банка</string>
-  <string name="see_license_click_label">Глядзець ліцэнзію %1$s</string>
-  <string name="topbar_description_back">Назад</string>
   <string name="open_app">Адкрыць прыкладанне</string>
   <string name="widget_action_refresh">Аднавіць</string>
-  <string name="share_rate">%s</string>
-  <string name="share_rate_text">%1$s сёння %2$s</string>
-  <string name="share_description">Абагуліць курс валюты</string>
-  <string name="toolbar_action_more">Болей</string>
-  <string name="currency_name_usd_buy">Даляр ЗША курс пакупкі</string>
-  <string name="currency_name_usd_sell">Даляр ЗША курс прадажы</string>
-  <string name="currency_name_eur_buy">Еўра курс пакупкі</string>
-  <string name="currency_name_eur_sell">Еўра курс прадажы</string>
-  <string name="currency_name_rub_buy">100 рублёў курс пакупкі</string>
-  <string name="currency_name_rub_sell">100 рублёў курс прадажы</string>
-  <string name="currency_name_pln_buy">Злоты курс пакупкі</string>
-  <string name="currency_name_pln_sell">Злоты курс прадажы</string>
-  <string name="currency_name_uah_buy">100 грыўняў курс пакупкі</string>
-  <string name="currency_name_uah_sell">100 грыўняў курс прадажы</string>
+  <string name="currency_name_usd_buy">USD пакупка</string>
+  <string name="currency_name_usd_sell">USD продаж</string>
+  <string name="currency_name_eur_buy">EUR пакупка</string>
+  <string name="currency_name_eur_sell">EUR продаж</string>
+  <string name="currency_name_rub_buy">100 RUB пакупка</string>
+  <string name="currency_name_rub_sell">100 RUB продаж</string>
+  <string name="currency_name_pln_buy">PLN пакупка</string>
+  <string name="currency_name_pln_sell">PLN продаж</string>
+  <string name="currency_name_uah_buy">100 UAH пакупка</string>
+  <string name="currency_name_uah_sell">100 UAH продаж</string>
 </resources>

@@ -18,105 +18,18 @@
   <string name="app_name">Валютчик</string>
   <string name="action_settings">Настройки</string>
   <string name="action_about">О приложении</string>
-  <string name="title_about">О приложении</string>
-  <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. По нажатию на карточку курса валюты вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте в вашем городе. По долгому нажатию на карточку вы можете скопировать курс в буфер обмена. Также вы можете настроить интервал обновления курсов или поменять город по умолчанию. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
-  <string name="title_activity_settings">Настройки</string>
-  <string-array name="pref_cities_list">
-    <item>Ошмяны</item>
-    <item>Осиповичи</item>
-    <item>Островец</item>
-    <item>Бобруйск</item>
-    <item>Барановичи</item>
-    <item>Борисов</item>
-    <item>Берёза</item>
-    <item>Браслав</item>
-    <item>Брест</item>
-    <item>Быхов</item>
-    <item>Чаусы</item>
-    <item>Добруш</item>
-    <item>Дрогичин</item>
-    <item>Дзержинск</item>
-    <item>Ганцевичи</item>
-    <item>Глубокое</item>
-    <item>Гомель</item>
-    <item>Горки</item>
-    <item>Гродно</item>
-    <item>Иваново</item>
-    <item>Ивацевичи</item>
-    <item>Калинковичи</item>
-    <item>Костюковичи</item>
-    <item>Хойники</item>
-    <item>Кобрин</item>
-    <item>Кричев</item>
-    <item>Лепель</item>
-    <item>Лида</item>
-    <item>Лунинец</item>
-    <item>Могилёв</item>
-    <item>Молодечно</item>
-    <item>Малорита</item>
-    <item>Марьина Горка</item>
-    <item>Мосты</item>
-    <item>Мозырь</item>
-    <item>Минск</item>
-    <item>Мстиславль</item>
-    <item>Новогрудок</item>
-    <item>Новолукомль</item>
-    <item>Новополоцк</item>
-    <item>Несвиж</item>
-    <item>Орша</item>
-    <item>Поставы</item>
-    <item>Пинск</item>
-    <item>Полоцк</item>
-    <item>Пружаны</item>
-    <item>Петрыков</item>
-    <item>Рогачёв</item>
-    <item>Речица</item>
-    <item>Солигорск</item>
-    <item>Щучин</item>
-    <item>Шклов</item>
-    <item>Слоним</item>
-    <item>Слуцк</item>
-    <item>Смолевичи</item>
-    <item>Сморгонь</item>
-    <item>Столин</item>
-    <item>Столбцы</item>
-    <item>Светлогорск</item>
-    <item>Свислочь</item>
-    <item>Толочин</item>
-    <item>Волковыск</item>
-    <item>Вилейка</item>
-    <item>Витебск</item>
-    <item>Заславль</item>
-    <item>Жлобин</item>
-    <item>Жодино</item>
-    <item>Житковичи</item>
-  </string-array>
-  <string name="get_data_error">Не получилось обновить данные</string>
-  <string name="pref_title_default_city">Город по умолчанию</string>
-  <string name="maps_app_required">Невозможно показать отделения банка на карте: не найдено приложение карт</string>
-  <string name="currency_value_copied">Курс валюты скопирован в буфер обмена</string>
-  <string name="title_activity_oss_licenses">Лизензии открытого ПО</string>
-  <string name="open_map">Искать обменники на карте</string>
-  <string name="pref_title_update_interval">Интервал обновления, ч</string>
-  <string name="permission_description">Нам необходимо разрешение на использование местоположения, чтобы узнать ваш город и показать курсы валют в нём. Без этого разрешения приложение будет использовать город по умолчанию из настроек.</string>
   <string name="no_rates_indicator">Пока нет курсов</string>
   <string name="bank_name_indicator">Название банка</string>
-  <string name="see_license_click_label">Посмотреть лицензию %1$s</string>
-  <string name="topbar_description_back">Назад</string>
   <string name="open_app">Открыть приложение</string>
   <string name="widget_action_refresh">Обновить</string>
-  <string name="share_rate">%s</string>
-  <string name="share_rate_text">%1$s сегодня %2$s</string>
-  <string name="share_description">Поделиться курсом валюты</string>
-  <string name="toolbar_action_more">Больше</string>
-  <string name="currency_name_usd_buy">Доллар США курс покупки</string>
-  <string name="currency_name_usd_sell">Доллар США курс продажи</string>
-  <string name="currency_name_eur_buy">Евро курс покупки</string>
-  <string name="currency_name_eur_sell">Евро курс продажи</string>
-  <string name="currency_name_rub_buy">100 рублей курс покупки</string>
-  <string name="currency_name_rub_sell">100 рублей курс продажи</string>
-  <string name="currency_name_pln_buy">Злотый курс покупки</string>
-  <string name="currency_name_pln_sell">Злотый курс продажи</string>
-  <string name="currency_name_uah_buy">100 гривен курс покупки</string>
-  <string name="currency_name_uah_sell">100 гривен курс продажи</string>
+  <string name="currency_name_usd_buy">USD покупка</string>
+  <string name="currency_name_usd_sell">USD продажа</string>
+  <string name="currency_name_eur_buy">EUR покупка</string>
+  <string name="currency_name_eur_sell">EUR продажа</string>
+  <string name="currency_name_rub_buy">100 RUB покупка</string>
+  <string name="currency_name_rub_sell">100 RUB продажа</string>
+  <string name="currency_name_pln_buy">PLN покупка</string>
+  <string name="currency_name_pln_sell">PLN продажа</string>
+  <string name="currency_name_uah_buy">100 UAH покупка</string>
+  <string name="currency_name_uah_sell">100 UAH продажа</string>
 </resources>

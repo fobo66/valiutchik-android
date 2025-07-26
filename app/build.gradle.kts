@@ -124,6 +124,7 @@ licenseReport {
 }
 
 dependencies {
+    api(project(":ui"))
     api(project(":presentation"))
     implementation(project(":widget"))
 

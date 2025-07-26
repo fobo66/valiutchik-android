@@ -21,12 +21,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.xr.compose.material3.EnableXrComponentOverrides
 import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
-import fobo66.exchangecourcesbelarus.ui.main.MainActivityContent
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikTheme
+import dev.fobo66.valiutchik.ui.main.MainContent
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
@@ -39,10 +40,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
-            ValiutchikTheme {
+            AppTheme {
                 KoinContext {
                     EnableXrComponentOverrides {
-                        MainActivityContent(windowSizeClass)
+                        MainContent(
+                            showManualRefresh =
+                            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+                            canOpenSettings =
+                            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
+                        )
                     }
                 }
             }
