@@ -118,7 +118,6 @@ koin-compose = { group = "io.insert-koin", name = "koin-compose" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-test = { group = "io.insert-koin", name = "koin-test-junit5" }
 koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
-koin-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
 koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager" }
 kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
 kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollections" }
