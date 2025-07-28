@@ -154,17 +154,11 @@ dependencies {
     implementation(libs.compose.xr)
     implementation(libs.compose.material)
     implementation(libs.compose.xr.material)
-    implementation(libs.compose.material.icons)
     implementation(libs.compose.ui.preview)
     implementation(libs.compose.material.windowsize)
-    implementation(libs.compose.material.adaptive)
-    implementation(libs.compose.material.adaptive.layout)
-    implementation(libs.compose.material.adaptive.navigation)
     androidTestImplementation(libs.compose.ui.testing)
     debugImplementation(libs.compose.ui.testing.manifest)
     debugImplementation(libs.compose.ui.tooling)
-
-    implementation(libs.accompanist.permissions)
 
     // lifecycle
     implementation(libs.androidx.lifecycle.compose)
@@ -173,7 +167,6 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
-    implementation(libs.koin.navigation)
     implementation(libs.koin.viewmodel)
     implementation(libs.koin.work)
 
