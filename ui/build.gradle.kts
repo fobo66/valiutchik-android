@@ -52,7 +52,7 @@ kotlin {
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
-    jvm {
+    jvm("desktop") {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
         }
