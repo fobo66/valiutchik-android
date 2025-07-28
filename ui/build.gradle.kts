@@ -74,7 +74,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.ui)
-                implementation(compose.material3)
+                implementation(libs.compose.material)
                 implementation(compose.material3AdaptiveNavigationSuite)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)

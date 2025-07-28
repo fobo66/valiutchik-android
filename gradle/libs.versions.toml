@@ -24,6 +24,7 @@ composeBom = "2025.07.00"
 composeHotReload = "1.0.0-beta04"
 composeMultiplatform = "1.9.0-beta01"
 composeMultiplatformIcons = "1.7.3"
+composeMultiplatformMaterial = "1.9.0-alpha04"
 detekt = "1.23.8"
 detektCompose = "0.4.26"
 dotenvKotlin = "6.5.1"
@@ -90,7 +91,7 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidxTracing" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidxWindow" }
 compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
-compose-material = { group = "androidx.compose.material3", name = "material3" }
+compose-material = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "composeMultiplatformMaterial" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-icons-core = { group = "org.jetbrains.compose.material", name = "material-icons-core", version.ref = "composeMultiplatformIcons" }
 compose-material-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
