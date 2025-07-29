@@ -14,32 +14,27 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.valiutchik.ui
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.runComposeUiTest
 import androidx.test.filters.SmallTest
-import dev.fobo66.valiutchik.ui.TAG_NO_RATES
-import dev.fobo66.valiutchik.ui.TAG_RATES
 import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlinx.collections.immutable.persistentListOf
-import org.junit.Assert.assertTrue
-import org.junit.Rule
-import org.junit.Test
 
 @SmallTest
+@OptIn(ExperimentalTestApi::class)
 class MainScreenTest {
-    @get:Rule
-    val composeRule = createComposeRule()
-
     @Test
-    fun emptyList() {
-        composeRule.setContent {
+    fun emptyList() = runComposeUiTest {
+        setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(),
                 onBestRateClick = {},
@@ -52,14 +47,13 @@ class MainScreenTest {
                 onShareClick = { _, _ -> }
             )
         }
-        composeRule.onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
+        onNodeWithTag(TAG_NO_RATES).assertIsDisplayed()
     }
 
-    @OptIn(ExperimentalTestApi::class)
     @Test
-    fun openMap() {
+    fun openMap() = runComposeUiTest {
         var isMapOpen = false
-        composeRule.setContent {
+        setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(
                     BestCurrencyRate.DollarBuyRate("test", "0.0")
@@ -76,8 +70,7 @@ class MainScreenTest {
                 onShareClick = { _, _ -> }
             )
         }
-        composeRule
-            .onNodeWithTag(TAG_RATES)
+        onNodeWithTag(TAG_RATES)
             .onChild()
             .performClick()
         assertTrue(isMapOpen)
