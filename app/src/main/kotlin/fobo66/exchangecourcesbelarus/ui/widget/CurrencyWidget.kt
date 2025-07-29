@@ -17,6 +17,7 @@
 package fobo66.exchangecourcesbelarus.ui.widget
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,8 +37,6 @@ import dev.fobo66.valiutchik.android.widget.PreviewMediumWidget
 import dev.fobo66.valiutchik.android.widget.PreviewSmallWidget
 import fobo66.exchangecourcesbelarus.R
 import fobo66.exchangecourcesbelarus.ui.MainActivity
-import fobo66.exchangecourcesbelarus.ui.resolveCurrencyName
-import fobo66.exchangecourcesbelarus.ui.theme.ValiutchikWidgetTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
@@ -130,6 +129,20 @@ fun CurrencyWidgetContent(
         trailingIconDescription = context.getString(R.string.open_app),
         modifier = modifier
     )
+}
+
+@StringRes
+private fun BestCurrencyRate.resolveCurrencyName(): Int = when (this) {
+    is BestCurrencyRate.DollarBuyRate -> R.string.currency_name_usd_buy
+    is BestCurrencyRate.DollarSellRate -> R.string.currency_name_usd_sell
+    is BestCurrencyRate.EuroBuyRate -> R.string.currency_name_eur_buy
+    is BestCurrencyRate.EuroSellRate -> R.string.currency_name_eur_sell
+    is BestCurrencyRate.HryvniaBuyRate -> R.string.currency_name_uah_buy
+    is BestCurrencyRate.HryvniaSellRate -> R.string.currency_name_uah_sell
+    is BestCurrencyRate.ZlotyBuyRate -> R.string.currency_name_pln_buy
+    is BestCurrencyRate.ZlotySellRate -> R.string.currency_name_pln_sell
+    is BestCurrencyRate.RubleBuyRate -> R.string.currency_name_rub_buy
+    is BestCurrencyRate.RubleSellRate -> R.string.currency_name_rub_sell
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {

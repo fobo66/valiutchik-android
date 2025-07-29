@@ -74,7 +74,7 @@ jobs:
       - name: Run tests
         uses: reactivecircus/android-emulator-runner@v2.34.0
         with:
-          script: ./gradlew connectedDebugAndroidTest :api:connectedAndroidDeviceTest :data:connectedAndroidDeviceTest --no-watch-fs -Pandroid.testInstrumentationRunnerArguments.size=small
+          script: ./gradlew connectedDebugAndroidTest :api:connectedAndroidDeviceTest :data:connectedAndroidDeviceTest :ui:connectedAndroidDeviceTest --no-watch-fs -Pandroid.testInstrumentationRunnerArguments.size=small
           arch: x86_64
           target: google_apis
           force-avd-creation: false
