@@ -23,6 +23,8 @@ import androidx.compose.material3.LoadingIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import dev.fobo66.valiutchik.ui.TAG_PROGRESS
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -30,7 +32,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ProgressIndicator(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize()) {
-        LoadingIndicator(modifier = Modifier.align(Alignment.Center))
+        LoadingIndicator(
+            modifier = Modifier.align(Alignment.Center)
+                .testTag(TAG_PROGRESS)
+        )
     }
 }
 

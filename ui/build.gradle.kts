@@ -92,6 +92,8 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.uiTest)
             }
         }
 
@@ -99,6 +101,12 @@ kotlin {
             dependencies {
                 implementation(compose.preview)
                 implementation(libs.accompanist.permissions)
+            }
+        }
+
+        getByName("desktopTest") {
+            dependencies {
+                implementation(compose.desktop.currentOs)
             }
         }
 
