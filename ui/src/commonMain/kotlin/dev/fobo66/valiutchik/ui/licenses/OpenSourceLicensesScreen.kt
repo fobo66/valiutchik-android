@@ -25,8 +25,10 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.buildAnnotatedString
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
+import dev.fobo66.valiutchik.ui.TAG_LICENSES_LIST
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
 import dev.fobo66.valiutchik.ui.element.SecondaryTopBar
 import dev.fobo66.valiutchik.ui.theme.AppTheme
@@ -58,7 +60,7 @@ fun OpenSourceLicensesScreen(
             if (state.licenses.isEmpty()) {
                 ProgressIndicator()
             } else {
-                LazyColumn {
+                LazyColumn(modifier = Modifier.testTag(TAG_LICENSES_LIST)) {
                     items(licensesState.licenses) { item ->
                         OpenSourceLicense(
                             item = item,
