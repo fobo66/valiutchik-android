@@ -14,38 +14,31 @@
  *    limitations under the License.
  */
 
-package fobo66.exchangecourcesbelarus.ui
+package dev.fobo66.valiutchik.ui
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.isDialog
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.runComposeUiTest
 import androidx.test.filters.SmallTest
-import dev.fobo66.valiutchik.ui.TAG_DEFAULT_CITY
-import dev.fobo66.valiutchik.ui.TAG_LICENSES
-import dev.fobo66.valiutchik.ui.TAG_SLIDER
-import dev.fobo66.valiutchik.ui.TAG_UPDATE_INTERVAL
 import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
-import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertTrue
-import org.junit.Rule
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 @SmallTest
+@OptIn(ExperimentalTestApi::class)
 class PreferencesScreenTest {
 
-    @get:Rule
-    val composeRule = createComposeRule()
-
     @Test
-    fun showLicenses() {
+    fun showLicenses() = runComposeUiTest {
         var showLicense = false
-        composeRule.setContent {
+        setContent {
             PreferenceScreen(
                 defaultCityValue = "Minsk",
                 updateIntervalValue = 1f,
@@ -59,16 +52,15 @@ class PreferencesScreenTest {
             )
         }
 
-        composeRule.onNodeWithTag(TAG_LICENSES).performClick()
+        onNodeWithTag(TAG_LICENSES).performClick()
         assertTrue(showLicense)
     }
 
-    @OptIn(ExperimentalTestApi::class)
     @Test
-    fun updateIntervalValueChanges() {
+    fun updateIntervalValueChanges() = runComposeUiTest {
         var updateInterval = 1f
 
-        composeRule.setContent {
+        setContent {
             PreferenceScreen(
                 defaultCityValue = "Minsk",
                 updateIntervalValue = updateInterval,
@@ -80,7 +72,7 @@ class PreferencesScreenTest {
             )
         }
 
-        composeRule.onNodeWithTag(TAG_UPDATE_INTERVAL)
+        onNodeWithTag(TAG_UPDATE_INTERVAL)
             .onChildren()
             .filterToOne(hasTestTag(TAG_SLIDER))
             .performClick()
@@ -88,8 +80,8 @@ class PreferencesScreenTest {
     }
 
     @Test
-    fun defaultCityDialogShown() {
-        composeRule.setContent {
+    fun defaultCityDialogShown() = runComposeUiTest {
+        setContent {
             PreferenceScreen(
                 defaultCityValue = "Minsk",
                 updateIntervalValue = 1f,
@@ -101,7 +93,7 @@ class PreferencesScreenTest {
             )
         }
 
-        composeRule.onNodeWithTag(TAG_DEFAULT_CITY).performClick()
-        composeRule.onNode(isDialog()).assertIsDisplayed()
+        onNodeWithTag(TAG_DEFAULT_CITY).performClick()
+        onNode(isDialog()).assertIsDisplayed()
     }
 }
