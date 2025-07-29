@@ -59,3 +59,4 @@ include(
     ":widget",
     ":ui"
 )
+include(":desktop")
