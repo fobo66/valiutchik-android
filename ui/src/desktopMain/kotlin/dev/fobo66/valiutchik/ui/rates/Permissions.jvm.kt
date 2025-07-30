@@ -18,6 +18,9 @@ package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 
 @Composable
 actual fun PermissionsEffect(
@@ -25,4 +28,10 @@ actual fun PermissionsEffect(
     permissionPrompt: String,
     permissionAction: String,
     onHandlePermissions: (Boolean) -> Unit
-) = Unit
+) {
+    val actualHandlePermissions by rememberUpdatedState(onHandlePermissions)
+
+    LaunchedEffect(Unit) {
+        actualHandlePermissions(false)
+    }
+}
