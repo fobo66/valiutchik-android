@@ -50,6 +50,8 @@ dependencies {
     api(project(":ui"))
     implementation(compose.ui)
     implementation(compose.desktop.currentOs)
+    implementation(libs.compose.material)
+    implementation(libs.kotlinx.coroutines.test)
     implementation(libs.kotlinx.coroutines.swing)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)

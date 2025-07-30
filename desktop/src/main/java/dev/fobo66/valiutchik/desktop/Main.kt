@@ -16,34 +16,81 @@
 
 package dev.fobo66.valiutchik.desktop
 
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
 import dev.fobo66.valiutchik.desktop.di.refreshModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
-import dev.fobo66.valiutchik.ui.main.MainContent
+import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
+import dev.fobo66.valiutchik.ui.rates.RatesPanel
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.Napier
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.swing.Swing
+import kotlinx.coroutines.test.setMain
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
+@OptIn(KoinExperimentalAPI::class, ExperimentalCoroutinesApi::class)
 fun main() = application {
     LaunchedEffect(Unit) {
         Napier.base(JvmAntilog())
     }
-    val state = rememberWindowState(size = DpSize(1920.dp, 1080.dp))
-    Window(state = state, onCloseRequest = ::exitApplication, title = "Valiutchik") {
+
+    LaunchedEffect(Unit) {
+        Dispatchers.setMain(Dispatchers.Swing)
+    }
+
+    Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
         KoinApplication(
             application = {
                 modules(viewModelsModule, domainModule, refreshModule)
             }
         ) {
-            MainContent()
+            val snackbarHostState = remember { SnackbarHostState() }
+
+            Scaffold(
+                snackbarHost = {
+                    SnackbarHost(
+                        hostState = snackbarHostState,
+                        modifier = Modifier.navigationBarsPadding(),
+                        snackbar = {
+                            Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
+                        }
+                    )
+                }
+            ) {
+                val layoutDirection = LocalLayoutDirection.current
+                RatesPanel(
+                    snackbarHostState = snackbarHostState,
+                    manualRefreshVisible = true,
+                    canOpenSettings = false,
+                    onOpenSettings = {},
+                    modifier =
+                    Modifier
+                        .padding(
+                            start = it.calculateStartPadding(layoutDirection),
+                            end = it.calculateEndPadding(layoutDirection),
+                            top = it.calculateTopPadding()
+                        )
+                        .consumeWindowInsets(it)
+                )
+            }
         }
     }
 }
