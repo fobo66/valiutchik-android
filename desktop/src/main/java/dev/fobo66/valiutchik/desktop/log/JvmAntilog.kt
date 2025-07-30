@@ -32,9 +32,13 @@ class JvmAntilog : Antilog() {
         throwable: Throwable?,
         message: String?
     ) {
-        logger.atLevel(priority.toSlf4jLevel())
-            .addMarker(MarkerFactory.getMarker(tag))
-            .setCause(throwable)
+        val builder = logger.atLevel(priority.toSlf4jLevel())
+
+        tag?.let {
+            builder.addMarker(MarkerFactory.getMarker(tag))
+        }
+
+        builder.setCause(throwable)
             .log(message)
     }
 
