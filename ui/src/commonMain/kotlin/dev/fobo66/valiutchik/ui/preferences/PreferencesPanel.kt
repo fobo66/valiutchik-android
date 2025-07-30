@@ -17,8 +17,6 @@
 package dev.fobo66.valiutchik.ui.preferences
 
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,8 +29,9 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun PreferencesPanel(
-    navigator: ThreePaneScaffoldNavigator<Any>,
     canOpenSettings: Boolean,
+    onOpenLicenses: suspend () -> Unit,
+    onBack: suspend () -> Unit,
     modifier: Modifier = Modifier,
     preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
@@ -51,14 +50,12 @@ fun PreferencesPanel(
         onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
         onOpenSourceLicensesClick = {
             scope.launch {
-                navigator.navigateTo(
-                    ThreePaneScaffoldRole.Tertiary
-                )
+                onOpenLicenses()
             }
         },
         onBackClick = {
             scope.launch {
-                navigator.navigateBack()
+                onBack()
             }
         },
         modifier = modifier

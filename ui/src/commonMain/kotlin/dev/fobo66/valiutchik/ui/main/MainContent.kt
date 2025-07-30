@@ -120,8 +120,13 @@ fun MainScreenPanels(
         supportingPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 PreferencesPanel(
-                    navigator = navigator,
-                    canOpenSettings = canOpenSettings
+                    canOpenSettings = canOpenSettings,
+                    onBack = { navigator.navigateBack() },
+                    onOpenLicenses = {
+                        navigator.navigateTo(
+                            ThreePaneScaffoldRole.Tertiary
+                        )
+                    }
                 )
             }
         },
