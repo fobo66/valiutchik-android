@@ -16,9 +16,6 @@
 
 package dev.fobo66.valiutchik.desktop
 
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -28,7 +25,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -75,20 +71,12 @@ fun main() = application {
                     )
                 }
             ) {
-                val layoutDirection = LocalLayoutDirection.current
                 RatesPanel(
                     snackbarHostState = snackbarHostState,
                     manualRefreshVisible = true,
                     canOpenSettings = false,
                     onOpenSettings = {},
-                    modifier =
-                    Modifier
-                        .padding(
-                            start = it.calculateStartPadding(layoutDirection),
-                            end = it.calculateEndPadding(layoutDirection),
-                            top = it.calculateTopPadding()
-                        )
-                        .consumeWindowInsets(it)
+                    modifier = Modifier.padding(it)
                 )
             }
         }
