@@ -23,7 +23,10 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.window.Window
@@ -32,6 +35,7 @@ import dev.fobo66.valiutchik.desktop.di.refreshModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
+import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import dev.fobo66.valiutchik.ui.rates.RatesPanel
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.Napier
@@ -52,12 +56,25 @@ fun main() = application {
         Dispatchers.setMain(Dispatchers.Swing)
     }
 
-    Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
-        KoinApplication(
-            application = {
-                modules(viewModelsModule, domainModule, refreshModule)
+    KoinApplication(
+        application = {
+            modules(viewModelsModule, domainModule, refreshModule)
+        }
+    ) {
+        var isSettingsOpen by remember { mutableStateOf(false) }
+        if (isSettingsOpen) {
+            Window(onCloseRequest = { isSettingsOpen = false }, title = "Settings") {
+                Scaffold {
+                    PreferencesPanel(
+                        canOpenSettings = false,
+                        onOpenLicenses = {},
+                        onBack = { isSettingsOpen = false }
+                    )
+                }
             }
-        ) {
+        }
+
+        Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
             val snackbarHostState = remember { SnackbarHostState() }
 
             Scaffold(
@@ -74,8 +91,8 @@ fun main() = application {
                 RatesPanel(
                     snackbarHostState = snackbarHostState,
                     manualRefreshVisible = true,
-                    canOpenSettings = false,
-                    onOpenSettings = {},
+                    canOpenSettings = true,
+                    onOpenSettings = { isSettingsOpen = true },
                     modifier = Modifier.padding(it)
                 )
             }
