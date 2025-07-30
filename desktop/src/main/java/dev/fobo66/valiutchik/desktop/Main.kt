@@ -16,12 +16,24 @@
 
 package dev.fobo66.valiutchik.desktop
 
-import androidx.compose.material.Text
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import dev.fobo66.valiutchik.desktop.di.refreshModule
+import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import dev.fobo66.valiutchik.ui.main.MainContent
+import fobo66.valiutchik.domain.di.domainModule
+import org.koin.compose.KoinApplication
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 fun main() = application {
     Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
-        Text("Hello desktop!")
+        KoinApplication(
+            application = {
+                modules(viewModelsModule, domainModule, refreshModule)
+            }
+        ) {
+            MainContent()
+        }
     }
 }
