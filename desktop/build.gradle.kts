@@ -55,4 +55,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.viewmodel)
+    implementation(libs.napier)
+    implementation(libs.slf4j)
+    implementation(libs.logback)
 }

@@ -47,12 +47,14 @@ ktor = "3.2.3"
 ktxml = "1.0.0"
 leakCanary = "2.14"
 licensesPlugin = "0.9.8"
+logback = "1.5.18"
 materialKolor = "3.0.1"
 napier = "2.7.1"
 profileinstallerVersion = "1.4.1"
 robolectric = "4.15.1"
 robolectricJunit5 = "0.9.0"
 room = "2.7.2"
+slf4j = "2.0.17"
 truth = "1.4.4"
 turbine = "1.2.1"
 uri = "0.0.20"
@@ -137,6 +139,7 @@ ktor-logging = { group = "io.ktor", name = "ktor-client-logging" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
 ktxml = { group = "org.kobjects.ktxml", name = "core", version.ref = "ktxml" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }
@@ -145,6 +148,7 @@ room-driver-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", vers
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 uri = { module = "com.eygraber:uri-kmp", version.ref = "uri" }

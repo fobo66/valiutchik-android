@@ -16,18 +16,28 @@
 
 package dev.fobo66.valiutchik.desktop
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import dev.fobo66.valiutchik.desktop.di.refreshModule
+import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.main.MainContent
 import fobo66.valiutchik.domain.di.domainModule
+import io.github.aakira.napier.Napier
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(KoinExperimentalAPI::class)
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
+    LaunchedEffect(Unit) {
+        Napier.base(JvmAntilog())
+    }
+    val state = rememberWindowState(size = DpSize(1920.dp, 1080.dp))
+    Window(state = state, onCloseRequest = ::exitApplication, title = "Valiutchik") {
         KoinApplication(
             application = {
                 modules(viewModelsModule, domainModule, refreshModule)
