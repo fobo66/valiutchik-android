@@ -21,6 +21,8 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
@@ -60,4 +62,6 @@ dependencies {
     implementation(libs.napier)
     implementation(libs.slf4j)
     implementation(libs.logback)
+    detektPlugins(libs.detekt.rules.formatting)
+    detektPlugins(libs.detekt.rules.compose)
 }
