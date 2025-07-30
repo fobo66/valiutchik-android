@@ -37,6 +37,7 @@ import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
 import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import dev.fobo66.valiutchik.ui.rates.RatesPanel
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
@@ -64,12 +65,14 @@ fun main() = application {
         var isSettingsOpen by remember { mutableStateOf(false) }
         if (isSettingsOpen) {
             Window(onCloseRequest = { isSettingsOpen = false }, title = "Settings") {
-                Scaffold {
-                    PreferencesPanel(
-                        canOpenSettings = false,
-                        onOpenLicenses = {},
-                        onBack = { isSettingsOpen = false }
-                    )
+                AppTheme {
+                    Scaffold {
+                        PreferencesPanel(
+                            canOpenSettings = false,
+                            onOpenLicenses = {},
+                            onBack = { isSettingsOpen = false }
+                        )
+                    }
                 }
             }
         }
@@ -77,24 +80,29 @@ fun main() = application {
         Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
             val snackbarHostState = remember { SnackbarHostState() }
 
-            Scaffold(
-                snackbarHost = {
-                    SnackbarHost(
-                        hostState = snackbarHostState,
-                        modifier = Modifier.navigationBarsPadding(),
-                        snackbar = {
-                            Snackbar(snackbarData = it, modifier = Modifier.testTag(TAG_SNACKBAR))
-                        }
+            AppTheme {
+                Scaffold(
+                    snackbarHost = {
+                        SnackbarHost(
+                            hostState = snackbarHostState,
+                            modifier = Modifier.navigationBarsPadding(),
+                            snackbar = {
+                                Snackbar(
+                                    snackbarData = it,
+                                    modifier = Modifier.testTag(TAG_SNACKBAR)
+                                )
+                            }
+                        )
+                    }
+                ) {
+                    RatesPanel(
+                        snackbarHostState = snackbarHostState,
+                        manualRefreshVisible = true,
+                        canOpenSettings = true,
+                        onOpenSettings = { isSettingsOpen = true },
+                        modifier = Modifier.padding(it)
                     )
                 }
-            ) {
-                RatesPanel(
-                    snackbarHostState = snackbarHostState,
-                    manualRefreshVisible = true,
-                    canOpenSettings = true,
-                    onOpenSettings = { isSettingsOpen = true },
-                    modifier = Modifier.padding(it)
-                )
             }
         }
     }
