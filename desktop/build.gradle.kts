@@ -40,6 +40,8 @@ compose.desktop {
     application {
         mainClass = "dev.fobo66.valiutchik.desktop.MainKt"
 
+        jvmArgs("-Dapple.awt.application.appearance=system")
+
         nativeDistributions {
             targetFormats(TargetFormat.Exe, TargetFormat.Deb, TargetFormat.Dmg)
             packageName = "dev.fobo66.valiutchik.desktop"
