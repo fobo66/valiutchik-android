@@ -16,6 +16,7 @@
 
 package dev.fobo66.valiutchik.desktop
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -35,6 +36,7 @@ import dev.fobo66.valiutchik.desktop.di.refreshModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
+import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
 import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import dev.fobo66.valiutchik.ui.rates.RatesPanel
 import dev.fobo66.valiutchik.ui.theme.AppTheme
@@ -74,11 +76,20 @@ fun main() = application {
             ) {
                 AppTheme {
                     Scaffold {
-                        PreferencesPanel(
-                            canOpenSettings = false,
-                            onOpenLicenses = {},
-                            onBack = { isSettingsOpen = false }
-                        )
+                        var isLicensesShown by remember { mutableStateOf(false) }
+                        Crossfade(isLicensesShown) {
+                            if (it) {
+                                OpenSourceLicensesPanel(
+                                    onBack = { isLicensesShown = false }
+                                )
+                            } else {
+                                PreferencesPanel(
+                                    canOpenSettings = false,
+                                    onOpenLicenses = { isLicensesShown = true },
+                                    onBack = { isSettingsOpen = false }
+                                )
+                            }
+                        }
                     }
                 }
             }
