@@ -24,6 +24,8 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
@@ -35,9 +37,6 @@ kotlin {
         namespace = "dev.fobo66.valiutchik.ui"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R
-
-        withHostTestBuilder {
-        }
 
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
