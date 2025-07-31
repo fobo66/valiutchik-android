@@ -20,6 +20,7 @@ import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.PreferencesViewModel
@@ -36,6 +37,8 @@ fun PreferencesPanel(
     preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
+    val actualOpenLicenses by rememberUpdatedState(onOpenLicenses)
+    val actualOnBack by rememberUpdatedState(onBack)
     val defaultCity by preferencesViewModel.defaultCityPreference
         .collectAsStateWithLifecycle()
 
@@ -50,12 +53,12 @@ fun PreferencesPanel(
         onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
         onOpenSourceLicensesClick = {
             scope.launch {
-                onOpenLicenses()
+                actualOpenLicenses()
             }
         },
         onBackClick = {
             scope.launch {
-                onBack()
+                actualOnBack()
             }
         },
         modifier = modifier

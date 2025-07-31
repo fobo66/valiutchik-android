@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.MainViewModel
@@ -59,6 +60,7 @@ fun RatesPanel(
     val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
 
     val scope = rememberCoroutineScope()
+    val actualOpenSettings by rememberUpdatedState(onOpenSettings)
 
     PermissionsEffect(
         snackbarHostState,
@@ -96,7 +98,7 @@ fun RatesPanel(
         showSettings = canOpenSettings,
         onSettingsClick = {
             scope.launch {
-                onOpenSettings()
+                actualOpenSettings()
             }
         },
         isRefreshing = viewState is MainScreenState.Loading,
