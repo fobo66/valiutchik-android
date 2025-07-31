@@ -42,6 +42,14 @@ compose.desktop {
 
         jvmArgs("-Dapple.awt.application.appearance=system")
 
+        buildTypes {
+            release {
+                proguard {
+                    isEnabled = true
+                }
+            }
+        }
+
         nativeDistributions {
             targetFormats(TargetFormat.Exe, TargetFormat.Deb, TargetFormat.Dmg)
             packageName = "dev.fobo66.valiutchik.desktop"
