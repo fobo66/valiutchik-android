@@ -132,7 +132,7 @@ fun MainScreenPanels(
         },
         extraPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
-                OpenSourceLicensesPanel(navigator = navigator)
+                OpenSourceLicensesPanel(onBack = { navigator.navigateBack() })
             }
         },
         paneExpansionState = rememberPaneExpansionState(
