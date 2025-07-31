@@ -67,9 +67,9 @@ import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
-import valiutchik.ui.generated.resources.app_name
 import valiutchik.ui.generated.resources.bank_name_indicator
 import valiutchik.ui.generated.resources.share_description
+import valiutchik.ui.generated.resources.title_rates
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -89,7 +89,7 @@ fun BestRatesGrid(
         var isAboutDialogShown by remember { mutableStateOf(false) }
 
         PrimaryTopBar(
-            title = stringResource(Res.string.app_name),
+            title = stringResource(Res.string.title_rates),
             onAboutClick = { isAboutDialogShown = true },
             onSettingsClick = onSettingsClick,
             onRefreshClick = onRefresh,
