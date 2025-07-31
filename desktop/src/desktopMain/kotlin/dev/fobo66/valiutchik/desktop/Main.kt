@@ -44,8 +44,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.test.setMain
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
+import valiutchik.desktop.generated.resources.Res
+import valiutchik.desktop.generated.resources.app_name
+import valiutchik.desktop.generated.resources.title_settings
 
 @OptIn(KoinExperimentalAPI::class, ExperimentalCoroutinesApi::class)
 fun main() = application {
@@ -64,7 +68,10 @@ fun main() = application {
     ) {
         var isSettingsOpen by remember { mutableStateOf(false) }
         if (isSettingsOpen) {
-            Window(onCloseRequest = { isSettingsOpen = false }, title = "Settings") {
+            Window(
+                onCloseRequest = { isSettingsOpen = false },
+                title = stringResource(Res.string.title_settings)
+            ) {
                 AppTheme {
                     Scaffold {
                         PreferencesPanel(
@@ -77,7 +84,7 @@ fun main() = application {
             }
         }
 
-        Window(onCloseRequest = ::exitApplication, title = "Valiutchik") {
+        Window(onCloseRequest = ::exitApplication, title = stringResource(Res.string.app_name)) {
             val snackbarHostState = remember { SnackbarHostState() }
 
             AppTheme {

@@ -17,7 +17,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
@@ -26,14 +26,38 @@ plugins {
 }
 
 kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    jvm("desktop") {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
     }
-}
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":ui"))
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(libs.compose.material)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.viewmodel)
+                implementation(libs.napier)
+            }
+        }
+
+        getByName("desktopMain") {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutines.swing)
+                implementation(libs.slf4j)
+                implementation(libs.logback)
+            }
+        }
+    }
 }
 
 compose.desktop {
@@ -59,19 +83,6 @@ compose.desktop {
 }
 
 dependencies {
-    api(project(":ui"))
-    implementation(compose.ui)
-    implementation(compose.desktop.currentOs)
-    implementation(libs.compose.material)
-    implementation(libs.kotlinx.coroutines.test)
-    implementation(libs.kotlinx.coroutines.swing)
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.core)
-    implementation(libs.koin.compose)
-    implementation(libs.koin.viewmodel)
-    implementation(libs.napier)
-    implementation(libs.slf4j)
-    implementation(libs.logback)
     detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
