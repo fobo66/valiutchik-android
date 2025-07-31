@@ -16,42 +16,25 @@
 
 package dev.fobo66.valiutchik.desktop
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import dev.fobo66.valiutchik.desktop.di.refreshModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
+import dev.fobo66.valiutchik.desktop.rates.RatesWindow
+import dev.fobo66.valiutchik.desktop.settings.SettingsWindow
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
-import dev.fobo66.valiutchik.ui.TAG_SNACKBAR
-import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
-import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
-import dev.fobo66.valiutchik.ui.rates.RatesPanel
-import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.test.setMain
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
-import valiutchik.desktop.generated.resources.Res
-import valiutchik.desktop.generated.resources.app_name
-import valiutchik.desktop.generated.resources.title_settings
 
 @OptIn(KoinExperimentalAPI::class, ExperimentalCoroutinesApi::class)
 fun main() = application {
@@ -70,58 +53,9 @@ fun main() = application {
     ) {
         var isSettingsOpen by remember { mutableStateOf(false) }
         if (isSettingsOpen) {
-            Window(
-                onCloseRequest = { isSettingsOpen = false },
-                title = stringResource(Res.string.title_settings)
-            ) {
-                AppTheme {
-                    Scaffold {
-                        var isLicensesShown by remember { mutableStateOf(false) }
-                        Crossfade(isLicensesShown) {
-                            if (it) {
-                                OpenSourceLicensesPanel(
-                                    onBack = { isLicensesShown = false }
-                                )
-                            } else {
-                                PreferencesPanel(
-                                    canOpenSettings = false,
-                                    onOpenLicenses = { isLicensesShown = true },
-                                    onBack = { isSettingsOpen = false }
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+            SettingsWindow(onClose = { isSettingsOpen = false })
         }
 
-        Window(onCloseRequest = ::exitApplication, title = stringResource(Res.string.app_name)) {
-            val snackbarHostState = remember { SnackbarHostState() }
-
-            AppTheme {
-                Scaffold(
-                    snackbarHost = {
-                        SnackbarHost(
-                            hostState = snackbarHostState,
-                            modifier = Modifier.navigationBarsPadding(),
-                            snackbar = {
-                                Snackbar(
-                                    snackbarData = it,
-                                    modifier = Modifier.testTag(TAG_SNACKBAR)
-                                )
-                            }
-                        )
-                    }
-                ) {
-                    RatesPanel(
-                        snackbarHostState = snackbarHostState,
-                        manualRefreshVisible = true,
-                        canOpenSettings = true,
-                        onOpenSettings = { isSettingsOpen = true },
-                        modifier = Modifier.padding(it)
-                    )
-                }
-            }
-        }
+        RatesWindow(onClose = ::exitApplication, onOpenSettings = { isSettingsOpen = true })
     }
 }
