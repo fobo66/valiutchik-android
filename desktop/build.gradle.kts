@@ -23,7 +23,6 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
