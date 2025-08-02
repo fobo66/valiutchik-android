@@ -78,6 +78,13 @@ compose.desktop {
             targetFormats(TargetFormat.Exe, TargetFormat.Deb, TargetFormat.Dmg)
             packageName = "dev.fobo66.valiutchik.desktop"
             packageVersion = "1.0.0"
+
+            linux {
+                iconFile = project.layout.projectDirectory.file("icons/ic_launcher.png")
+            }
+            windows {
+                iconFile = project.layout.projectDirectory.file("icons/ic_launcher.ico")
+            }
         }
     }
 }
