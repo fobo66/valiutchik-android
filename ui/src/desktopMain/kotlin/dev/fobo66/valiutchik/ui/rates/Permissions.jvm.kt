@@ -22,6 +22,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 
+private const val PERMISSIONS_NOT_SUPPORTED_ON_DESKTOP = false
+
 @Composable
 actual fun PermissionsEffect(
     snackbarHostState: SnackbarHostState,
@@ -32,6 +34,6 @@ actual fun PermissionsEffect(
     val actualHandlePermissions by rememberUpdatedState(onHandlePermissions)
 
     LaunchedEffect(Unit) {
-        actualHandlePermissions(false)
+        actualHandlePermissions(PERMISSIONS_NOT_SUPPORTED_ON_DESKTOP)
     }
 }
