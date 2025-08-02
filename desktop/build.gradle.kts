@@ -15,6 +15,7 @@
  */
 
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -28,7 +29,7 @@ plugins {
 kotlin {
     jvm("desktop") {
         compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            jvmTarget = JvmTarget.JVM_17
         }
     }
 
