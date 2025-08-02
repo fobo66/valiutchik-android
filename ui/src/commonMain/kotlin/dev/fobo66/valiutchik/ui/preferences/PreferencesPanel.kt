@@ -17,11 +17,10 @@
 package dev.fobo66.valiutchik.ui.preferences
 
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.PreferencesViewModel
@@ -31,12 +30,15 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun PreferencesPanel(
-    navigator: ThreePaneScaffoldNavigator<Any>,
     canOpenSettings: Boolean,
+    onOpenLicenses: suspend () -> Unit,
+    onBack: suspend () -> Unit,
     modifier: Modifier = Modifier,
     preferencesViewModel: PreferencesViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
+    val actualOpenLicenses by rememberUpdatedState(onOpenLicenses)
+    val actualOnBack by rememberUpdatedState(onBack)
     val defaultCity by preferencesViewModel.defaultCityPreference
         .collectAsStateWithLifecycle()
 
@@ -51,14 +53,12 @@ fun PreferencesPanel(
         onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
         onOpenSourceLicensesClick = {
             scope.launch {
-                navigator.navigateTo(
-                    ThreePaneScaffoldRole.Tertiary
-                )
+                actualOpenLicenses()
             }
         },
         onBackClick = {
             scope.launch {
-                navigator.navigateBack()
+                actualOnBack()
             }
         },
         modifier = modifier

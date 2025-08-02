@@ -34,6 +34,7 @@ import androidx.compose.material3.adaptive.layout.AdaptStrategy
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldDefaults
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
@@ -107,24 +108,31 @@ fun MainScreenPanels(
         mainPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 RatesPanel(
-                    navigator = navigator,
                     snackbarHostState = snackbarHostState,
                     manualRefreshVisible = manualRefreshVisible,
-                    canOpenSettings = canOpenSettings
+                    canOpenSettings = canOpenSettings,
+                    onOpenSettings = {
+                        navigator.navigateTo(ThreePaneScaffoldRole.Secondary)
+                    }
                 )
             }
         },
         supportingPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 PreferencesPanel(
-                    navigator = navigator,
-                    canOpenSettings = canOpenSettings
+                    canOpenSettings = canOpenSettings,
+                    onBack = { navigator.navigateBack() },
+                    onOpenLicenses = {
+                        navigator.navigateTo(
+                            ThreePaneScaffoldRole.Tertiary
+                        )
+                    }
                 )
             }
         },
         extraPane = {
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
-                OpenSourceLicensesPanel(navigator = navigator)
+                OpenSourceLicensesPanel(onBack = { navigator.navigateBack() })
             }
         },
         paneExpansionState = rememberPaneExpansionState(

@@ -51,8 +51,7 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
         onDismissRequest = onDismiss
     ) {
         Column(
-            modifier =
-            modifier
+            modifier = modifier
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.large
@@ -88,14 +87,11 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
             Text(
                 text = descriptionAnnotatedText,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier =
-                Modifier
-                    .padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
             TextButton(
                 onClick = onDismiss,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .padding(top = 24.dp)
                     .align(Alignment.End)
             ) {

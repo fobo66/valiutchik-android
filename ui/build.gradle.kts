@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -35,9 +36,6 @@ kotlin {
         namespace = "dev.fobo66.valiutchik.ui"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R
-
-        withHostTestBuilder {
-        }
 
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
@@ -100,7 +98,14 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(compose.preview)
+                implementation(compose.uiTooling)
                 implementation(libs.accompanist.permissions)
+            }
+        }
+
+        getByName("desktopMain") {
+            dependencies {
+                implementation(compose.uiTooling)
             }
         }
 

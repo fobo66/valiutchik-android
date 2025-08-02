@@ -16,6 +16,7 @@
 
 <resources>
   <string name="app_name">Валютчик</string>
+  <string name="title_rates">Курсы валют</string>
   <string name="action_settings">Настройки</string>
   <string name="action_about">О приложении</string>
   <string name="title_about">О приложении</string>

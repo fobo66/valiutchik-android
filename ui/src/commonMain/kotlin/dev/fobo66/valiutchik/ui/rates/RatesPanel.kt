@@ -18,12 +18,11 @@ package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.MainViewModel
@@ -43,10 +42,10 @@ import valiutchik.ui.generated.resources.permission_description
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun RatesPanel(
-    navigator: ThreePaneScaffoldNavigator<Any>,
     snackbarHostState: SnackbarHostState,
     manualRefreshVisible: Boolean,
     canOpenSettings: Boolean,
+    onOpenSettings: suspend () -> Unit,
     modifier: Modifier = Modifier,
     mainViewModel: MainViewModel = koinViewModel(),
     permissionPrompt: String = stringResource(Res.string.permission_description),
@@ -61,6 +60,7 @@ fun RatesPanel(
     val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
 
     val scope = rememberCoroutineScope()
+    val actualOpenSettings by rememberUpdatedState(onOpenSettings)
 
     PermissionsEffect(
         snackbarHostState,
@@ -98,7 +98,7 @@ fun RatesPanel(
         showSettings = canOpenSettings,
         onSettingsClick = {
             scope.launch {
-                navigator.navigateTo(ThreePaneScaffoldRole.Secondary)
+                actualOpenSettings()
             }
         },
         isRefreshing = viewState is MainScreenState.Loading,
