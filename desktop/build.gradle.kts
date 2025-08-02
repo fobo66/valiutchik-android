@@ -82,6 +82,9 @@ compose.desktop {
             linux {
                 iconFile = project.layout.projectDirectory.file("icons/ic_launcher.png")
             }
+            macOS {
+                iconFile = project.layout.projectDirectory.file("icons/ic_launcher.icns")
+            }
             windows {
                 iconFile = project.layout.projectDirectory.file("icons/ic_launcher.ico")
             }
