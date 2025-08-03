@@ -15,6 +15,7 @@
  */
 
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -22,13 +23,12 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
     jvm("desktop") {
         compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            jvmTarget = JvmTarget.JVM_17
         }
     }
 
@@ -39,6 +39,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(libs.compose.material)
+                implementation(libs.compose.material.icons.core)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project.dependencies.platform(libs.koin.bom))
@@ -78,6 +79,16 @@ compose.desktop {
             targetFormats(TargetFormat.Exe, TargetFormat.Deb, TargetFormat.Dmg)
             packageName = "dev.fobo66.valiutchik.desktop"
             packageVersion = "1.0.0"
+
+            linux {
+                iconFile = project.layout.projectDirectory.file("icons/ic_launcher.png")
+            }
+            macOS {
+                iconFile = project.layout.projectDirectory.file("icons/ic_launcher.icns")
+            }
+            windows {
+                iconFile = project.layout.projectDirectory.file("icons/ic_launcher.ico")
+            }
         }
     }
 }

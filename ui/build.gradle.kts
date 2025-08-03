@@ -25,7 +25,6 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
@@ -99,7 +98,15 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(compose.preview)
+                implementation(compose.uiTooling)
                 implementation(libs.accompanist.permissions)
+            }
+        }
+
+        getByName("desktopMain") {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(compose.uiTooling)
             }
         }
 
