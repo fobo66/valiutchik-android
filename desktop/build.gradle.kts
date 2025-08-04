@@ -50,7 +50,7 @@ kotlin {
             }
         }
 
-        getByName("desktopMain") {
+        named("desktopMain") {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
