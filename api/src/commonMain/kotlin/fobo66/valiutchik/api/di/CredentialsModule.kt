@@ -21,12 +21,6 @@ import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val credentialsModule = module {
-    single(qualifier(Api.USERNAME)) {
-        Secrets.API_USERNAME
-    }
-    single(qualifier(Api.PASSWORD)) {
-        Secrets.API_PASSWORD
-    }
     single(qualifier(Api.GEOCODING_API_KEY)) {
         Secrets.GEOAPIFY_API_KEY
     }

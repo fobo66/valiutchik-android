@@ -23,16 +23,6 @@ import org.gradle.api.Project
 fun generateSecrets(project: Project) {
     val secretObject = TypeSpec.objectBuilder("Secrets")
         .addProperty(
-            PropertySpec.builder(API_USERNAME, String::class, KModifier.CONST)
-                .initializer("%S", loadSecret(project, API_USERNAME))
-                .build()
-        )
-        .addProperty(
-            PropertySpec.builder(API_PASSWORD, String::class, KModifier.CONST)
-                .initializer("%S", loadSecret(project, API_PASSWORD))
-                .build()
-        )
-        .addProperty(
             PropertySpec.builder(GEOCODER_TOKEN, String::class, KModifier.CONST)
                 .initializer("%S", loadSecret(project, GEOCODER_TOKEN))
                 .build()
