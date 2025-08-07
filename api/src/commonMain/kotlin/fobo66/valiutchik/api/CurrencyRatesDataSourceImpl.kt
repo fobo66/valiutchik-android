@@ -17,14 +17,15 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
-import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import fobo66.valiutchik.api.entity.Mapobject
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -39,6 +40,7 @@ private const val CLACKS_VALUE = "GNU Terry Pratchett"
 
 class CurrencyRatesDataSourceImpl(
     private val client: HttpClient,
+    private val parser: CurrencyRatesResponseParser,
     private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
 
@@ -56,13 +58,14 @@ class CurrencyRatesDataSourceImpl(
                                 url {
                                     path("currency", "rates")
                                 }
+                                contentType(ContentType.Application.Json)
                                 header(CLACKS_KEY, CLACKS_VALUE)
                                 setBody(request)
-                            }.body<CurrencyRatesResponse>()
+                            }
                         }
                     }
                     .awaitAll()
-                    .flatMap { it.mapobjects }
+                    .flatMap { parser.parse(it.bodyAsText()) }
                     .groupBy { it.id }
             } catch (e: ResponseException) {
                 throw IOException(e)

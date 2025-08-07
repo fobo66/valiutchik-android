@@ -18,6 +18,8 @@ package fobo66.valiutchik.api.di
 
 import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
+import fobo66.valiutchik.api.CurrencyRatesResponseParser
+import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.GeocodingDataSourceImpl
 import org.koin.core.qualifier.qualifier
@@ -29,9 +31,11 @@ val apiModule =
         single<CurrencyRatesDataSource> {
             CurrencyRatesDataSourceImpl(
                 get(),
+                get(),
                 get(qualifier(Dispatcher.BACKGROUND))
             )
         }
+        single<CurrencyRatesResponseParser> { CurrencyRatesResponseParserImpl(get()) }
         single<GeocodingDataSource> {
             GeocodingDataSourceImpl(
                 get(),
