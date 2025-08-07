@@ -17,26 +17,25 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.CurrencyRatesRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
-import io.ktor.client.request.basicAuth
-import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-const val BASE_URL = "https://admin.myfin.by/"
+const val BASE_URL = "https://api.myfin.by/"
 
 private const val CLACKS_KEY = "X-Clacks-Overhead"
 private const val CLACKS_VALUE = "GNU Terry Pratchett"
 
 class CurrencyRatesDataSourceImpl(
     private val client: HttpClient,
-    private val username: String,
-    private val password: String,
     private val parser: CurrencyRatesParser,
     private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
@@ -44,12 +43,12 @@ class CurrencyRatesDataSourceImpl(
         withContext(ioDispatcher) {
             try {
                 val response =
-                    client.get(BASE_URL) {
+                    client.post(BASE_URL) {
                         url {
-                            path("outer", "authXml", cityIndex)
+                            path("currency", "rates")
                         }
-                        basicAuth(username, password)
                         header(CLACKS_KEY, CLACKS_VALUE)
+                        setBody(CurrencyRatesRequest(cityId = cityIndex))
                     }
 
                 parser.parse(response.bodyAsText())
