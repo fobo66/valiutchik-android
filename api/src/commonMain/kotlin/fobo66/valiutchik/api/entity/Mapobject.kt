@@ -28,7 +28,7 @@ data class Mapobject(
     @SerialName("bank_icon")
     val bankIcon: String,
     @SerialName("bank_id")
-    val bankId: String,
+    val bankId: Long,
     @SerialName("bank_logo")
     val bankLogo: String,
     @SerialName("bank_name")
@@ -44,7 +44,7 @@ data class Mapobject(
     @SerialName("geo")
     val geo: Geo,
     @SerialName("id")
-    val id: String,
+    val id: Long,
     @SerialName("sef_alias")
     val sefAlias: String,
     @SerialName("time_to_distance")

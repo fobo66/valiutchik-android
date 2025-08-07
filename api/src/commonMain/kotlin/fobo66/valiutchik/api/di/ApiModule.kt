@@ -29,7 +29,6 @@ val apiModule =
         single<CurrencyRatesDataSource> {
             CurrencyRatesDataSourceImpl(
                 get(),
-                get(),
                 get(qualifier(Dispatcher.BACKGROUND))
             )
         }
