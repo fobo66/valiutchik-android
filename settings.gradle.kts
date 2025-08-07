@@ -57,5 +57,6 @@ include(
     ":domain-testing",
     ":presentation",
     ":widget",
-    ":ui"
+    ":ui",
+    ":desktop"
 )

@@ -23,7 +23,7 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.compose.hotreload)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -35,9 +35,6 @@ kotlin {
         namespace = "dev.fobo66.valiutchik.ui"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R
-
-        withHostTestBuilder {
-        }
 
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
@@ -100,17 +97,25 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(compose.preview)
+                implementation(compose.uiTooling)
                 implementation(libs.accompanist.permissions)
             }
         }
 
-        getByName("desktopTest") {
+        named("desktopMain") {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(compose.uiTooling)
+            }
+        }
+
+        named("desktopTest") {
             dependencies {
                 implementation(compose.desktop.currentOs)
             }
         }
 
-        getByName("androidDeviceTest") {
+        named("androidDeviceTest") {
             dependencies {
                 implementation(libs.androidx.test.runner)
                 implementation(libs.androidx.test.junit)

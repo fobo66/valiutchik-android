@@ -108,7 +108,7 @@ kotlin {
             }
         }
 
-        getByName("androidHostTest") {
+        named("androidHostTest") {
             dependencies {
                 implementation(libs.truth)
                 implementation(project.dependencies.platform(libs.koin.bom))
@@ -118,7 +118,7 @@ kotlin {
             }
         }
 
-        getByName("androidDeviceTest") {
+        named("androidDeviceTest") {
             dependencies {
                 implementation(libs.truth)
                 implementation(libs.turbine)

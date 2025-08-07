@@ -14,6 +14,14 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.ui
+package dev.fobo66.valiutchik.desktop.di
 
-actual fun platform() = "iOS"
+import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import fobo66.valiutchik.domain.usecases.RefreshInteractorImpl
+import org.koin.dsl.module
+
+val refreshModule = module {
+    single<RefreshInteractor> {
+        RefreshInteractorImpl(get(), get())
+    }
+}

@@ -17,10 +17,10 @@
 package dev.fobo66.valiutchik.ui.licenses
 
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,12 +31,13 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun OpenSourceLicensesPanel(
-    navigator: ThreePaneScaffoldNavigator<Any>,
+    onBack: suspend () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OpenSourceLicensesViewModel = koinViewModel()
 ) {
     val uriHandler = LocalUriHandler.current
     val scope = rememberCoroutineScope()
+    val actualOnBack by rememberUpdatedState(onBack)
 
     val licensesState by viewModel.licensesState.collectAsStateWithLifecycle()
 
@@ -45,7 +46,7 @@ fun OpenSourceLicensesPanel(
         onItemClick = uriHandler::openUri,
         onBackClick = {
             scope.launch {
-                navigator.navigateBack()
+                actualOnBack()
             }
         },
         modifier = modifier
