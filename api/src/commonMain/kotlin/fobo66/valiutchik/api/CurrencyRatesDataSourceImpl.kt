@@ -26,14 +26,13 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-const val BASE_URL = "https://api.myfin.by/"
+const val API_URL = "https://api.myfin.by/currency/rates"
 
 private const val CLACKS_KEY = "X-Clacks-Overhead"
 private const val CLACKS_VALUE = "GNU Terry Pratchett"
@@ -54,10 +53,7 @@ class CurrencyRatesDataSourceImpl(
                 apiCurrencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
                     .map { request ->
                         async {
-                            client.post(BASE_URL) {
-                                url {
-                                    path("currency", "rates")
-                                }
+                            client.post(API_URL) {
                                 contentType(ContentType.Application.Json)
                                 header(CLACKS_KEY, CLACKS_VALUE)
                                 setBody(request)
