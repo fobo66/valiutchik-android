@@ -22,11 +22,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Currency(
     @SerialName("buy")
-    val buy: String,
+    val buy: Double,
     @SerialName("date_update")
-    val dateUpdate: String,
+    val dateUpdate: Long,
     @SerialName("iname")
     val iname: String,
     @SerialName("sell")
-    val sell: String
+    val sell: Double
 )

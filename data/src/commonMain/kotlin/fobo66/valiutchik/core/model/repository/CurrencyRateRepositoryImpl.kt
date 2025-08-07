@@ -135,9 +135,9 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        val rates = currencies.asFlow()
+        val rates = currencies.values.asFlow()
             .map {
-                it.toRate(apiDateFormat)
+                it.toRate()
             }.toList()
 
         persistenceDataSource.saveRates(

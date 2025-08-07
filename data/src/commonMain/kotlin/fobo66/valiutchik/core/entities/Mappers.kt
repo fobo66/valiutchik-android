@@ -17,8 +17,13 @@
 package fobo66.valiutchik.core.entities
 
 import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.Mapobject
+import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import kotlin.math.log10
 import kotlin.math.roundToInt
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format.DateTimeFormat
 
@@ -39,6 +44,30 @@ fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
     uahBuy = uahBuy,
     uahSell = uahSell
 )
+
+@OptIn(ExperimentalTime::class)
+fun List<Mapobject>.toRate(): Rate = Rate(
+    id = concatIds(get(0).bankId, get(0).id),
+    date = Instant.fromEpochSeconds(maxBy { it.currency.dateUpdate }.currency.dateUpdate)
+        .toString(),
+    bankName = get(0).bankName,
+    usdBuy = resolveBuyRate("usd"),
+    usdSell = resolveSellRate("usd"),
+    eurBuy = resolveBuyRate("eur"),
+    eurSell = resolveSellRate("eur"),
+    rubBuy = resolveBuyRate("rub"),
+    rubSell = resolveSellRate("rub"),
+    plnBuy = resolveBuyRate("pln"),
+    plnSell = resolveSellRate("pln"),
+    uahBuy = resolveBuyRate("uah"),
+    uahSell = resolveSellRate("uah")
+)
+
+fun List<Mapobject>.resolveBuyRate(alias: String) =
+    find { it.currency.iname == alias }?.currency?.buy ?: UNDEFINED_BUY_RATE
+
+fun List<Mapobject>.resolveSellRate(alias: String) =
+    find { it.currency.iname == alias }?.currency?.sell ?: UNDEFINED_SELL_RATE
 
 private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): String =
     if (rawDate.isEmpty()) {
