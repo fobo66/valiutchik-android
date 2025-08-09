@@ -19,8 +19,15 @@ package fobo66.valiutchik.api
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 
 /**
- * JSON parser for [MyFIN](myfin.by) dataset
+ * Response parser for [MyFIN](myfin.by) dataset
  */
 interface CurrencyRatesResponseParser {
+    /**
+     * Parse JSON response from the API
+     *
+     * @param body response body
+     *
+     * @return set of bank branch info with the actual rate
+     */
     fun parse(body: String): Set<CurrencyRateSource>
 }
