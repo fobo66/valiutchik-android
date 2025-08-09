@@ -56,6 +56,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.slf4j)
                 implementation(libs.logback)
+                implementation(libs.jansi)
             }
         }
     }

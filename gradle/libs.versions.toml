@@ -31,6 +31,7 @@ detektCompose = "0.4.27"
 dotenvKotlin = "6.5.1"
 espresso = "3.7.0"
 icu = "77.1"
+jansi = "2.4.2"
 junit = "5.13.4"
 junitPlugin = "1.13.1.0"
 koin = "4.1.0"
@@ -111,6 +112,7 @@ detekt-rules-compose = { module = "io.nlopez.compose.rules:detekt", version.ref 
 detekt-rules-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
 icu = { group = "com.ibm.icu", name = "icu4j", version.ref = "icu" }
+jansi = { group = "org.fusesource.jansi", name = "jansi", version.ref = "jansi" }
 junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
 junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
 koin-android = { group = "io.insert-koin", name = "koin-android" }
