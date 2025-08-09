@@ -16,22 +16,6 @@
 
 package fobo66.valiutchik.api
 
-const val ROOT_TAG_NAME = "root"
-const val ENTRY_TAG_NAME = "bank"
-const val TAG_NAME_BANK_ID = "bankid"
-const val TAG_NAME_FILIAL_ID = "filialid"
-const val TAG_NAME_DATE = "date"
-const val TAG_NAME_BANK_NAME = "bankname"
-const val TAG_NAME_USD_BUY = "usd_buy"
-const val TAG_NAME_USD_SELL = "usd_sell"
-const val TAG_NAME_EUR_BUY = "eur_buy"
-const val TAG_NAME_EUR_SELL = "eur_sell"
-const val TAG_NAME_RUR_BUY = "rub_buy"
-const val TAG_NAME_RUR_SELL = "rub_sell"
-const val TAG_NAME_PLN_BUY = "pln_buy"
-const val TAG_NAME_PLN_SELL = "pln_sell"
-const val TAG_NAME_UAH_BUY = "uah_buy"
-const val TAG_NAME_UAH_SELL = "uah_sell"
 const val CURRENCY_NAME_USD = "usd"
 const val CURRENCY_NAME_EUR = "eur"
 const val CURRENCY_NAME_RUB = "rub"
