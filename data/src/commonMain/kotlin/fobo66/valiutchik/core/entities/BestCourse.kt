@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.entities
 
+import fobo66.valiutchik.api.entity.UNDEFINED_RATE
 import fobo66.valiutchik.core.util.CurrencyName
 
 /**
@@ -23,7 +24,7 @@ import fobo66.valiutchik.core.util.CurrencyName
  */
 data class BestCourse(
     val bankName: String? = "",
-    val currencyValue: Double? = -1.0,
+    val currencyValue: Float? = UNDEFINED_RATE,
     val currencyName: CurrencyName? = CurrencyName.DOLLAR,
     val timestamp: String? = "",
     val isBuy: Boolean? = false

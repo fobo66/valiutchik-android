@@ -20,7 +20,7 @@ import fobo66.valiutchik.api.entity.Bank
 
 const val ID = 1L
 const val TEST = "test"
-const val RATE = 1.23
+const val RATE = 1.23f
 const val DATE = "2025-07-01"
 const val RAW_DATE = "01.07.2025"
 
@@ -30,16 +30,16 @@ fun buildBank(
     filialId: Long = ID,
     date: String = DATE,
     bankName: String = TEST,
-    usdBuy: Double = RATE,
-    usdSell: Double = RATE,
-    eurBuy: Double = RATE,
-    eurSell: Double = RATE,
-    rubBuy: Double = RATE,
-    rubSell: Double = RATE,
-    plnBuy: Double = RATE,
-    plnSell: Double = RATE,
-    uahBuy: Double = RATE,
-    uahSell: Double = RATE
+    usdBuy: Float = RATE,
+    usdSell: Float = RATE,
+    eurBuy: Float = RATE,
+    eurSell: Float = RATE,
+    rubBuy: Float = RATE,
+    rubSell: Float = RATE,
+    plnBuy: Float = RATE,
+    plnSell: Float = RATE,
+    uahBuy: Float = RATE,
+    uahSell: Float = RATE
 ): Bank = Bank(
     bankId,
     filialId,

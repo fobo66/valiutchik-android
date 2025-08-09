@@ -150,8 +150,8 @@ class CurrencyRateRepositoryImpl(
 
     override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(
         when (rate.currencyName) {
-            RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0
-            else -> rate.currencyValue ?: 0.0
+            RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
+            else -> rate.currencyValue ?: 0.0f
         }
     )
 }

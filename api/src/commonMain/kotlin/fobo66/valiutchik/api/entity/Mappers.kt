@@ -58,15 +58,15 @@ fun MutableScatterMap<String, String>.toCurrency(): Bank = Bank(
 
 )
 
-fun List<CurrencyRateSource>.resolveBuyRate(alias: String) =
+fun List<CurrencyRateSource>.resolveBuyRate(alias: String): Float =
     find { it.currency.name == alias }?.currency?.buy ?: UNDEFINED_BUY_RATE
 
-fun List<CurrencyRateSource>.resolveSellRate(alias: String) =
+fun List<CurrencyRateSource>.resolveSellRate(alias: String): Float =
     find { it.currency.name == alias }?.currency?.sell ?: UNDEFINED_SELL_RATE
 
-fun resolveRateValue(rawValue: String?, defaultValue: Double = UNDEFINED_RATE): Double =
+fun resolveRateValue(rawValue: String?, defaultValue: Float = UNDEFINED_RATE): Float =
     if (rawValue.isNullOrEmpty() || rawValue == UNKNOWN_RAW_RATE) {
         defaultValue
     } else {
-        rawValue.toDouble()
+        rawValue.toFloat()
     }
