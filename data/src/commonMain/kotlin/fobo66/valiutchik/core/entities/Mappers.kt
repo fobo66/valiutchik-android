@@ -16,10 +16,15 @@
 
 package fobo66.valiutchik.core.entities
 
+import fobo66.valiutchik.api.CURRENCY_NAME_EUR
+import fobo66.valiutchik.api.CURRENCY_NAME_PLN
+import fobo66.valiutchik.api.CURRENCY_NAME_RUB
+import fobo66.valiutchik.api.CURRENCY_NAME_UAH
+import fobo66.valiutchik.api.CURRENCY_NAME_USD
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.CurrencyRateSource
-import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
-import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
+import fobo66.valiutchik.api.entity.resolveBuyRate
+import fobo66.valiutchik.api.entity.resolveSellRate
 import kotlin.math.log10
 import kotlin.math.roundToInt
 import kotlin.time.ExperimentalTime
@@ -47,27 +52,21 @@ fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
 
 @OptIn(ExperimentalTime::class)
 fun List<CurrencyRateSource>.toRate(): Rate = Rate(
-    id = concatIds(get(0).bankId, get(0).id),
+    id = concatIds(first().bankId, first().id),
     date = Instant.fromEpochSeconds(maxBy { it.currency.dateUpdate }.currency.dateUpdate)
         .toString(),
-    bankName = get(0).bankName,
-    usdBuy = resolveBuyRate("usd"),
-    usdSell = resolveSellRate("usd"),
-    eurBuy = resolveBuyRate("eur"),
-    eurSell = resolveSellRate("eur"),
-    rubBuy = resolveBuyRate("rub"),
-    rubSell = resolveSellRate("rub"),
-    plnBuy = resolveBuyRate("pln"),
-    plnSell = resolveSellRate("pln"),
-    uahBuy = resolveBuyRate("uah"),
-    uahSell = resolveSellRate("uah")
+    bankName = first().bankName,
+    usdBuy = resolveBuyRate(CURRENCY_NAME_USD),
+    usdSell = resolveSellRate(CURRENCY_NAME_USD),
+    eurBuy = resolveBuyRate(CURRENCY_NAME_EUR),
+    eurSell = resolveSellRate(CURRENCY_NAME_EUR),
+    rubBuy = resolveBuyRate(CURRENCY_NAME_RUB),
+    rubSell = resolveSellRate(CURRENCY_NAME_RUB),
+    plnBuy = resolveBuyRate(CURRENCY_NAME_PLN),
+    plnSell = resolveSellRate(CURRENCY_NAME_PLN),
+    uahBuy = resolveBuyRate(CURRENCY_NAME_UAH),
+    uahSell = resolveSellRate(CURRENCY_NAME_UAH)
 )
-
-fun List<CurrencyRateSource>.resolveBuyRate(alias: String) =
-    find { it.currency.iname == alias }?.currency?.buy ?: UNDEFINED_BUY_RATE
-
-fun List<CurrencyRateSource>.resolveSellRate(alias: String) =
-    find { it.currency.iname == alias }?.currency?.sell ?: UNDEFINED_SELL_RATE
 
 private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): String =
     if (rawDate.isEmpty()) {

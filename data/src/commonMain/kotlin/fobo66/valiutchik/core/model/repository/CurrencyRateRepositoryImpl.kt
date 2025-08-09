@@ -32,8 +32,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format.char
 import kotlinx.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
@@ -114,16 +112,6 @@ class CurrencyRateRepositoryImpl(
             "Zhodzina" to "35",
             "Zhytkavichy" to "70"
         )
-    }
-
-    private val apiDateFormat by lazy(mode = LazyThreadSafetyMode.NONE) {
-        LocalDate.Format {
-            day()
-            char('.')
-            monthNumber()
-            char('.')
-            year()
-        }
     }
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {

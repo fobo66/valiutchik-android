@@ -44,7 +44,13 @@ class CurrencyRatesDataSourceImpl(
 ) : CurrencyRatesDataSource {
 
     private val apiCurrencies by lazy(LazyThreadSafetyMode.NONE) {
-        setOf("usd", "eur", "uah", "pln", "rub")
+        listOf(
+            CURRENCY_NAME_USD,
+            CURRENCY_NAME_EUR,
+            CURRENCY_NAME_UAH,
+            CURRENCY_NAME_PLN,
+            CURRENCY_NAME_RUB
+        )
     }
 
     override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<CurrencyRateSource>> =
