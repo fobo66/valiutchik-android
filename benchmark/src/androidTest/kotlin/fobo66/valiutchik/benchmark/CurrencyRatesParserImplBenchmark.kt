@@ -20,7 +20,6 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.api.CurrencyRatesParserCommonImpl
 import fobo66.valiutchik.api.CurrencyRatesParserImpl
 import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
 import kotlinx.serialization.json.Json
@@ -37,7 +36,6 @@ class CurrencyRatesParserImplBenchmark {
     val benchmarkRule = BenchmarkRule()
 
     private val androidParser = CurrencyRatesParserImpl()
-    private val commonParser = CurrencyRatesParserCommonImpl()
     private val jsonParser = CurrencyRatesResponseParserImpl(
         Json {
             ignoreUnknownKeys = true
@@ -52,16 +50,6 @@ class CurrencyRatesParserImplBenchmark {
                 loadResponseBody("myfinFeed.xml")
             }
             androidParser.parse(body)
-        }
-    }
-
-    @Test
-    fun commonParser() {
-        benchmarkRule.measureRepeated {
-            val body = runWithMeasurementDisabled {
-                loadResponseBody("myfinFeed.xml")
-            }
-            commonParser.parse(body)
         }
     }
 
