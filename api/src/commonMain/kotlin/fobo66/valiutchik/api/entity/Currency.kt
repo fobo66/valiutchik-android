@@ -26,7 +26,7 @@ data class Currency(
     @SerialName("date_update")
     val dateUpdate: Long,
     @SerialName("iname")
-    val iname: String,
+    val name: String,
     @SerialName("sell")
     val sell: Double
 )
