@@ -45,11 +45,11 @@ class CurrencyRatesDataSourceImpl(
 
     private val apiCurrencies by lazy(LazyThreadSafetyMode.NONE) {
         listOf(
-            CURRENCY_NAME_USD,
-            CURRENCY_NAME_EUR,
-            CURRENCY_NAME_UAH,
-            CURRENCY_NAME_PLN,
-            CURRENCY_NAME_RUB
+            CURRENCY_ALIAS_US_DOLLAR,
+            CURRENCY_ALIAS_EURO,
+            CURRENCY_ALIAS_HRYVNIA,
+            CURRENCY_ALIAS_ZLOTY,
+            CURRENCY_ALIAS_RUBLE
         )
     }
 

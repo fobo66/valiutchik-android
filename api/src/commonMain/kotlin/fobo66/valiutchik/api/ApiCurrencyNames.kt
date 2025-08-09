@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.api
 
-const val CURRENCY_NAME_USD = "usd"
-const val CURRENCY_NAME_EUR = "eur"
-const val CURRENCY_NAME_RUB = "rub"
-const val CURRENCY_NAME_PLN = "pln"
-const val CURRENCY_NAME_UAH = "uah"
+const val CURRENCY_ALIAS_US_DOLLAR = "usd"
+const val CURRENCY_ALIAS_EURO = "eur"
+const val CURRENCY_ALIAS_ZLOTY = "pln"
+const val CURRENCY_ALIAS_HRYVNIA = "uah"
+const val CURRENCY_ALIAS_RUBLE = "rub"

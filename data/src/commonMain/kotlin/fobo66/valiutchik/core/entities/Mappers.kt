@@ -16,11 +16,11 @@
 
 package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.api.CURRENCY_NAME_EUR
-import fobo66.valiutchik.api.CURRENCY_NAME_PLN
-import fobo66.valiutchik.api.CURRENCY_NAME_RUB
-import fobo66.valiutchik.api.CURRENCY_NAME_UAH
-import fobo66.valiutchik.api.CURRENCY_NAME_USD
+import fobo66.valiutchik.api.CURRENCY_ALIAS_EURO
+import fobo66.valiutchik.api.CURRENCY_ALIAS_HRYVNIA
+import fobo66.valiutchik.api.CURRENCY_ALIAS_RUBLE
+import fobo66.valiutchik.api.CURRENCY_ALIAS_US_DOLLAR
+import fobo66.valiutchik.api.CURRENCY_ALIAS_ZLOTY
 import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.resolveBuyRate
@@ -56,16 +56,16 @@ fun List<CurrencyRateSource>.toRate(): Rate = Rate(
     date = Instant.fromEpochSeconds(maxBy { it.currency.dateUpdate }.currency.dateUpdate)
         .toString(),
     bankName = first().bankName,
-    usdBuy = resolveBuyRate(CURRENCY_NAME_USD),
-    usdSell = resolveSellRate(CURRENCY_NAME_USD),
-    eurBuy = resolveBuyRate(CURRENCY_NAME_EUR),
-    eurSell = resolveSellRate(CURRENCY_NAME_EUR),
-    rubBuy = resolveBuyRate(CURRENCY_NAME_RUB),
-    rubSell = resolveSellRate(CURRENCY_NAME_RUB),
-    plnBuy = resolveBuyRate(CURRENCY_NAME_PLN),
-    plnSell = resolveSellRate(CURRENCY_NAME_PLN),
-    uahBuy = resolveBuyRate(CURRENCY_NAME_UAH),
-    uahSell = resolveSellRate(CURRENCY_NAME_UAH)
+    usdBuy = resolveBuyRate(CURRENCY_ALIAS_US_DOLLAR),
+    usdSell = resolveSellRate(CURRENCY_ALIAS_US_DOLLAR),
+    eurBuy = resolveBuyRate(CURRENCY_ALIAS_EURO),
+    eurSell = resolveSellRate(CURRENCY_ALIAS_EURO),
+    rubBuy = resolveBuyRate(CURRENCY_ALIAS_RUBLE),
+    rubSell = resolveSellRate(CURRENCY_ALIAS_RUBLE),
+    plnBuy = resolveBuyRate(CURRENCY_ALIAS_ZLOTY),
+    plnSell = resolveSellRate(CURRENCY_ALIAS_ZLOTY),
+    uahBuy = resolveBuyRate(CURRENCY_ALIAS_HRYVNIA),
+    uahSell = resolveSellRate(CURRENCY_ALIAS_HRYVNIA)
 )
 
 private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): String =
