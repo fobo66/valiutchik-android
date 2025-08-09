@@ -21,7 +21,6 @@ import fobo66.valiutchik.api.CURRENCY_ALIAS_HRYVNIA
 import fobo66.valiutchik.api.CURRENCY_ALIAS_RUBLE
 import fobo66.valiutchik.api.CURRENCY_ALIAS_US_DOLLAR
 import fobo66.valiutchik.api.CURRENCY_ALIAS_ZLOTY
-import fobo66.valiutchik.api.entity.Bank
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.resolveBuyRate
 import fobo66.valiutchik.api.entity.resolveSellRate
@@ -29,26 +28,6 @@ import kotlin.math.log10
 import kotlin.math.roundToInt
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format.DateTimeFormat
-
-private const val UNDEFINED_DATE = "1970-01-01"
-
-fun Bank.toRate(dateFormat: DateTimeFormat<LocalDate>): Rate = Rate(
-    id = concatIds(bankId, filialId),
-    date = resolveDate(date, dateFormat),
-    bankName = bankName,
-    usdBuy = usdBuy,
-    usdSell = usdSell,
-    eurBuy = eurBuy,
-    eurSell = eurSell,
-    rubBuy = rubBuy,
-    rubSell = rubSell,
-    plnBuy = plnBuy,
-    plnSell = plnSell,
-    uahBuy = uahBuy,
-    uahSell = uahSell
-)
 
 @OptIn(ExperimentalTime::class)
 fun List<CurrencyRateSource>.toRate(): Rate = Rate(
@@ -67,13 +46,6 @@ fun List<CurrencyRateSource>.toRate(): Rate = Rate(
     uahBuy = resolveBuyRate(CURRENCY_ALIAS_HRYVNIA),
     uahSell = resolveSellRate(CURRENCY_ALIAS_HRYVNIA)
 )
-
-private fun resolveDate(rawDate: String, format: DateTimeFormat<LocalDate>): String =
-    if (rawDate.isEmpty()) {
-        UNDEFINED_DATE
-    } else {
-        LocalDate.parse(rawDate, format).toString()
-    }
 
 private fun concatIds(primary: Long, secondary: Long): Long {
     val secondaryLength = if (secondary == 0L) {
