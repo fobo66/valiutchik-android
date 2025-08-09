@@ -49,7 +49,7 @@ class FormattingDataSourceImpl(
         Currency.getInstance(BYN)
     }
 
-    override fun formatCurrencyValue(value: Double): String = NumberFormatter
+    override fun formatCurrencyValue(value: Float): String = NumberFormatter
         .withLocale(locale)
         .unit(targetCurrency)
         .format(value)

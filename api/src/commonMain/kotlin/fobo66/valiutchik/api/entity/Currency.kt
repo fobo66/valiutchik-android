@@ -16,22 +16,17 @@
 
 package fobo66.valiutchik.api.entity
 
-/**
- * Currency model from XML
- */
-data class Bank(
-    val bankId: Long = 0L,
-    val filialId: Long = 0L,
-    val date: String = "",
-    val bankName: String = "",
-    val usdBuy: Double = UNDEFINED_BUY_RATE,
-    val usdSell: Double = UNDEFINED_SELL_RATE,
-    val eurBuy: Double = UNDEFINED_BUY_RATE,
-    val eurSell: Double = UNDEFINED_SELL_RATE,
-    val rubBuy: Double = UNDEFINED_BUY_RATE,
-    val rubSell: Double = UNDEFINED_SELL_RATE,
-    val plnBuy: Double = UNDEFINED_BUY_RATE,
-    val plnSell: Double = UNDEFINED_SELL_RATE,
-    val uahBuy: Double = UNDEFINED_BUY_RATE,
-    val uahSell: Double = UNDEFINED_SELL_RATE
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Currency(
+    @SerialName("buy")
+    val buy: Float,
+    @SerialName("date_update")
+    val dateUpdate: Long,
+    @SerialName("iname")
+    val name: String,
+    @SerialName("sell")
+    val sell: Float
 )

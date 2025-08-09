@@ -14,15 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.di
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.CurrencyRatesParser
-import fobo66.valiutchik.api.CurrencyRatesParserImpl
-import org.koin.core.module.Module
-import org.koin.dsl.module
-
-actual val parserModule: Module = module {
-    single<CurrencyRatesParser> {
-        CurrencyRatesParserImpl()
-    }
-}
+const val CURRENCY_ALIAS_US_DOLLAR = "usd"
+const val CURRENCY_ALIAS_EURO = "eur"
+const val CURRENCY_ALIAS_ZLOTY = "pln"
+const val CURRENCY_ALIAS_HRYVNIA = "uah"
+const val CURRENCY_ALIAS_RUBLE = "rub"

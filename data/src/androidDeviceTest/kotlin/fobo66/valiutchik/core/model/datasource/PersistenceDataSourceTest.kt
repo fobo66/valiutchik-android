@@ -33,7 +33,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-private const val RATE = 1.23456
+private const val RATE = 1.23456f
 private const val DEFAULT_BEST_RATES_COUNT = 10
 
 @SmallTest
@@ -89,8 +89,8 @@ class PersistenceDataSourceTest {
     fun someBestRatesAreMissing() = runTest {
         val rates =
             listOf(
-                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0, RATE, RATE),
-                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0, RATE, RATE)
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0f, RATE, RATE),
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, 0.0f, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -101,7 +101,7 @@ class PersistenceDataSourceTest {
                     awaitItem()
                 ).comparingElementsUsing(
                     Correspondence.transforming(BestCourse::currencyValue, "Currency value")
-                ).contains(0.0)
+                ).contains(0.0f)
             }
     }
 }

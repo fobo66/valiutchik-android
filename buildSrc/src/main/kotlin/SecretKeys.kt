@@ -1,5 +1,5 @@
 /*
- *    Copyright 2024 Andrey Mukamolov
+ *    Copyright 2025 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,5 +19,3 @@ const val KEY_PASSWORD = "BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD"
 const val STORE_FILE = "BITRISEIO_ANDROID_KEYSTORE_URL"
 const val STORE_PASSWORD = "BITRISEIO_ANDROID_KEYSTORE_PASSWORD"
 const val GEOCODER_TOKEN = "GEOAPIFY_API_KEY"
-const val API_USERNAME = "API_USERNAME"
-const val API_PASSWORD = "API_PASSWORD"

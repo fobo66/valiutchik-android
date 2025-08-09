@@ -20,11 +20,10 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.fobo66.core.data.testing.fake.buildBank
-import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.toRate
-import kotlinx.datetime.LocalDate
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,20 +41,20 @@ class RateMapperBenchmark {
         uahSell = UNDEFINED_SELL_RATE
     )
 
-    private val emptyBank = Bank()
+    private val emptyBank = emptyList<CurrencyRateSource>()
 
     @Test
     fun parseFullBank() = benchmarkRule.measureRepeated {
-        fullBank.toRate(LocalDate.Formats.ISO)
+        fullBank.toRate()
     }
 
     @Test
     fun parseEmptyBank() = benchmarkRule.measureRepeated {
-        emptyBank.toRate(LocalDate.Formats.ISO)
+        emptyBank.toRate()
     }
 
     @Test
     fun parsePartialBank() = benchmarkRule.measureRepeated {
-        partialBank.toRate(LocalDate.Formats.ISO)
+        partialBank.toRate()
     }
 }

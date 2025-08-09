@@ -14,10 +14,16 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.entity
+package fobo66.valiutchik.api
 
-fun List<CurrencyRateSource>.resolveBuyRate(alias: String): Float =
-    find { it.currency.name == alias }?.currency?.buy ?: UNDEFINED_BUY_RATE
+import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyRatesResponse
+import kotlinx.serialization.json.Json
 
-fun List<CurrencyRateSource>.resolveSellRate(alias: String): Float =
-    find { it.currency.name == alias }?.currency?.sell ?: UNDEFINED_SELL_RATE
+class CurrencyRatesResponseParserImpl(private val json: Json) : CurrencyRatesResponseParser {
+    override fun parse(body: String): Set<CurrencyRateSource> {
+        val response = json.decodeFromString<CurrencyRatesResponse>(body)
+
+        return response.results
+    }
+}

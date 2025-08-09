@@ -16,43 +16,90 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.CURRENCY_ALIAS_EURO
+import fobo66.valiutchik.api.CURRENCY_ALIAS_HRYVNIA
+import fobo66.valiutchik.api.CURRENCY_ALIAS_RUBLE
+import fobo66.valiutchik.api.CURRENCY_ALIAS_US_DOLLAR
+import fobo66.valiutchik.api.CURRENCY_ALIAS_ZLOTY
+import fobo66.valiutchik.api.entity.Currency
+import fobo66.valiutchik.api.entity.CurrencyRateSource
 
 const val ID = 1L
 const val TEST = "test"
-const val RATE = 1.23
-const val DATE = "2025-07-01"
-const val RAW_DATE = "01.07.2025"
+const val RATE = 1.23f
+const val DATE = 1754725825L
+const val PROCESSED_DATE = "2025-08-09T07:50:25Z"
 
 @Suppress("LongParameterList") // ok for tests
 fun buildBank(
     bankId: Long = ID,
-    filialId: Long = ID,
-    date: String = DATE,
+    branchId: Long = ID,
+    date: Long = DATE,
     bankName: String = TEST,
-    usdBuy: Double = RATE,
-    usdSell: Double = RATE,
-    eurBuy: Double = RATE,
-    eurSell: Double = RATE,
-    rubBuy: Double = RATE,
-    rubSell: Double = RATE,
-    plnBuy: Double = RATE,
-    plnSell: Double = RATE,
-    uahBuy: Double = RATE,
-    uahSell: Double = RATE
-): Bank = Bank(
-    bankId,
-    filialId,
-    date,
-    bankName,
-    usdBuy,
-    usdSell,
-    eurBuy,
-    eurSell,
-    rubBuy,
-    rubSell,
-    plnBuy,
-    plnSell,
-    uahBuy,
-    uahSell
+    usdBuy: Float = RATE,
+    usdSell: Float = RATE,
+    eurBuy: Float = RATE,
+    eurSell: Float = RATE,
+    rubBuy: Float = RATE,
+    rubSell: Float = RATE,
+    plnBuy: Float = RATE,
+    plnSell: Float = RATE,
+    uahBuy: Float = RATE,
+    uahSell: Float = RATE
+): List<CurrencyRateSource> = listOf(
+    CurrencyRateSource(
+        id = branchId,
+        bankId = bankId,
+        bankName = bankName,
+        currency = Currency(
+            buy = usdBuy,
+            dateUpdate = date,
+            name = CURRENCY_ALIAS_US_DOLLAR,
+            sell = usdSell
+        )
+    ),
+    CurrencyRateSource(
+        bankId = bankId,
+        bankName = bankName,
+        currency = Currency(
+            buy = eurBuy,
+            dateUpdate = date,
+            name = CURRENCY_ALIAS_EURO,
+            sell = eurSell
+        ),
+        id = branchId
+    ),
+    CurrencyRateSource(
+        id = branchId,
+        bankId = bankId,
+        bankName = bankName,
+        currency = Currency(
+            buy = plnBuy,
+            dateUpdate = date,
+            name = CURRENCY_ALIAS_ZLOTY,
+            sell = plnSell
+        )
+    ),
+    CurrencyRateSource(
+        id = branchId,
+        bankId = bankId,
+        bankName = bankName,
+        currency = Currency(
+            buy = uahBuy,
+            dateUpdate = date,
+            name = CURRENCY_ALIAS_HRYVNIA,
+            sell = uahSell
+        )
+    ),
+    CurrencyRateSource(
+        id = branchId,
+        bankId = bankId,
+        bankName = bankName,
+        currency = Currency(
+            buy = rubBuy,
+            dateUpdate = date,
+            name = CURRENCY_ALIAS_RUBLE,
+            sell = rubSell
+        )
+    )
 )

@@ -16,43 +16,60 @@
 
 package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.entity.Bank
+import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyRatesRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
-import io.ktor.client.request.basicAuth
-import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
-import io.ktor.http.path
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-const val BASE_URL = "https://admin.myfin.by/"
+const val API_URL = "https://api.myfin.by/currency/rates"
 
 private const val CLACKS_KEY = "X-Clacks-Overhead"
 private const val CLACKS_VALUE = "GNU Terry Pratchett"
 
 class CurrencyRatesDataSourceImpl(
     private val client: HttpClient,
-    private val username: String,
-    private val password: String,
-    private val parser: CurrencyRatesParser,
+    private val parser: CurrencyRatesResponseParser,
     private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
-    override suspend fun loadExchangeRates(cityIndex: String): Set<Bank> =
+
+    private val apiCurrencies by lazy(LazyThreadSafetyMode.NONE) {
+        listOf(
+            CURRENCY_ALIAS_US_DOLLAR,
+            CURRENCY_ALIAS_EURO,
+            CURRENCY_ALIAS_HRYVNIA,
+            CURRENCY_ALIAS_ZLOTY,
+            CURRENCY_ALIAS_RUBLE
+        )
+    }
+
+    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<CurrencyRateSource>> =
         withContext(ioDispatcher) {
             try {
-                val response =
-                    client.get(BASE_URL) {
-                        url {
-                            path("outer", "authXml", cityIndex)
+                apiCurrencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
+                    .map { request ->
+                        async {
+                            val response = client.post(API_URL) {
+                                contentType(ContentType.Application.Json)
+                                header(CLACKS_KEY, CLACKS_VALUE)
+                                setBody(request)
+                            }
+                            parser.parse(response.bodyAsText())
                         }
-                        basicAuth(username, password)
-                        header(CLACKS_KEY, CLACKS_VALUE)
                     }
-
-                parser.parse(response.bodyAsText())
+                    .awaitAll()
+                    .flatMap { it }
+                    .groupBy { it.id }
             } catch (e: ResponseException) {
                 throw IOException(e)
             }

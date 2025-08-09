@@ -30,10 +30,9 @@ import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format.char
 import kotlinx.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
@@ -116,16 +115,6 @@ class CurrencyRateRepositoryImpl(
         )
     }
 
-    private val apiDateFormat by lazy(mode = LazyThreadSafetyMode.NONE) {
-        LocalDate.Format {
-            day()
-            char('.')
-            monthNumber()
-            char('.')
-            year()
-        }
-    }
-
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
         val currencies =
@@ -135,9 +124,10 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        val rates = currencies.asFlow()
+        val rates = currencies.values.asFlow()
+            .filter { it.isNotEmpty() }
             .map {
-                it.toRate(apiDateFormat)
+                it.toRate()
             }.toList()
 
         persistenceDataSource.saveRates(
@@ -162,8 +152,8 @@ class CurrencyRateRepositoryImpl(
 
     override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(
         when (rate.currencyName) {
-            RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0
-            else -> rate.currencyValue ?: 0.0
+            RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
+            else -> rate.currencyValue ?: 0.0f
         }
     )
 }

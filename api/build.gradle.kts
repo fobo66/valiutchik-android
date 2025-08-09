@@ -40,9 +40,6 @@ kotlin {
         minSdk = AndroidVersion.VersionCodes.R
 
         withHostTestBuilder {}.configure {}
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }
 
         compilations.configureEach {
             compilerOptions.configure {
@@ -69,7 +66,6 @@ kotlin {
                 implementation(libs.ktor.logging)
                 implementation(libs.ktor.serialization)
                 implementation(libs.kotlinx.serialization)
-                implementation(libs.ktxml)
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.napier)
@@ -103,13 +99,6 @@ kotlin {
             dependencies {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
-            }
-        }
-
-        named("androidDeviceTest") {
-            dependencies {
-                implementation(libs.androidx.test.rules)
-                implementation(libs.androidx.test.junit)
             }
         }
     }

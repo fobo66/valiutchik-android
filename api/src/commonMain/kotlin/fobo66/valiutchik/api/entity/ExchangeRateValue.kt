@@ -17,6 +17,6 @@
 package fobo66.valiutchik.api.entity
 
 const val UNKNOWN_RAW_RATE = "-"
-const val UNDEFINED_RATE = -1.0
-const val UNDEFINED_BUY_RATE = 0.0
-const val UNDEFINED_SELL_RATE = 999.0
+const val UNDEFINED_RATE = -1.0f
+const val UNDEFINED_BUY_RATE = 0.0f
+const val UNDEFINED_SELL_RATE = 999.0f

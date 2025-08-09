@@ -22,7 +22,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.api.CurrencyRatesParserImpl
+import fobo66.valiutchik.api.CurrencyRatesResponseParser
+import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -30,6 +31,7 @@ import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import java.time.LocalDate
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -51,7 +53,12 @@ class BestCoursePersistenceDataSourceBenchmark {
                 CurrencyRatesDatabase::class.java
             ).build()
 
-    private val parser = CurrencyRatesParserImpl()
+    private val parser: CurrencyRatesResponseParser = CurrencyRatesResponseParserImpl(
+        Json {
+            isLenient = true
+            ignoreUnknownKeys = true
+        }
+    )
 
     private val persistenceDataSource: PersistenceDataSource = PersistenceDataSourceImpl(db)
 
@@ -61,7 +68,7 @@ class BestCoursePersistenceDataSourceBenchmark {
             InstrumentationRegistry
                 .getInstrumentation()
                 .context.assets
-                .open("myfinFeed.xml")
+                .open("myfinNewApi.json")
                 .bufferedReader()
                 .readText()
         persistenceDataSource.saveRates(
@@ -71,16 +78,16 @@ class BestCoursePersistenceDataSourceBenchmark {
                         id = 0L,
                         date = LocalDate.now().toString(),
                         bankName = it.bankName,
-                        usdBuy = it.usdBuy,
-                        usdSell = it.usdSell,
-                        eurBuy = it.eurBuy,
-                        eurSell = it.eurSell,
-                        rubBuy = it.rubBuy,
-                        rubSell = it.rubSell,
-                        plnBuy = it.plnBuy,
-                        plnSell = it.plnSell,
-                        uahBuy = it.uahBuy,
-                        uahSell = it.uahSell
+                        usdBuy = it.currency.buy,
+                        usdSell = it.currency.sell,
+                        eurBuy = it.currency.buy,
+                        eurSell = it.currency.sell,
+                        rubBuy = it.currency.buy,
+                        rubSell = it.currency.sell,
+                        plnBuy = it.currency.buy,
+                        plnSell = it.currency.sell,
+                        uahBuy = it.currency.buy,
+                        uahSell = it.currency.sell
                     )
                 }
         )

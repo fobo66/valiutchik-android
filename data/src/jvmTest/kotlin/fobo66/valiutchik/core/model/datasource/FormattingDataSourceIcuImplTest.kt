@@ -36,7 +36,7 @@ class FormattingDataSourceIcuImplTest {
     fun formatLongCurrency() {
         val formattingDataSource: FormattingDataSource =
             FormattingDataSourceIcuImpl(ULocale.US, bankNameNormalizer)
-        val rate = formattingDataSource.formatCurrencyValue(1.234567890)
+        val rate = formattingDataSource.formatCurrencyValue(LONG_RATE)
         assertThat(rate).isEqualTo(RATE)
     }
 

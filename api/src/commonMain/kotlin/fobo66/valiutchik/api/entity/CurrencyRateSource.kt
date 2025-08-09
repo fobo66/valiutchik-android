@@ -16,8 +16,17 @@
 
 package fobo66.valiutchik.api.entity
 
-fun List<CurrencyRateSource>.resolveBuyRate(alias: String): Float =
-    find { it.currency.name == alias }?.currency?.buy ?: UNDEFINED_BUY_RATE
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-fun List<CurrencyRateSource>.resolveSellRate(alias: String): Float =
-    find { it.currency.name == alias }?.currency?.sell ?: UNDEFINED_SELL_RATE
+@Serializable
+data class CurrencyRateSource(
+    @SerialName("bank_id")
+    val bankId: Long,
+    @SerialName("bank_name")
+    val bankName: String,
+    @SerialName("currency")
+    val currency: Currency,
+    @SerialName("id")
+    val id: Long
+)

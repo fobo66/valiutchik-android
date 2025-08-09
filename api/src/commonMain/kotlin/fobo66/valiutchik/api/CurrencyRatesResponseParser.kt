@@ -14,15 +14,20 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.di
+package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.CurrencyRatesParser
-import fobo66.valiutchik.api.CurrencyRatesParserCommonImpl
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import fobo66.valiutchik.api.entity.CurrencyRateSource
 
-actual val parserModule: Module = module {
-    single<CurrencyRatesParser> {
-        CurrencyRatesParserCommonImpl()
-    }
+/**
+ * Response parser for [MyFIN](myfin.by) dataset
+ */
+interface CurrencyRatesResponseParser {
+    /**
+     * Parse JSON response from the API
+     *
+     * @param body response body
+     *
+     * @return set of bank branch info with the actual rate
+     */
+    fun parse(body: String): Set<CurrencyRateSource>
 }

@@ -16,20 +16,17 @@
 
 package fobo66.valiutchik.core.entities
 
-import dev.fobo66.core.data.testing.fake.DATE
 import dev.fobo66.core.data.testing.fake.ID
+import dev.fobo66.core.data.testing.fake.PROCESSED_DATE
 import dev.fobo66.core.data.testing.fake.RATE
-import dev.fobo66.core.data.testing.fake.RAW_DATE
 import dev.fobo66.core.data.testing.fake.buildBank
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format.char
 
 class MappersTest {
     @Test
     fun `ids are concatenated`() {
-        val rate = buildBank().toRate(LocalDate.Formats.ISO)
+        val rate = buildBank().toRate()
         assertEquals(11L, rate.id)
     }
 
@@ -37,8 +34,8 @@ class MappersTest {
     fun `ids have different digit counts`() {
         val rate = buildBank(
             bankId = 12L,
-            filialId = 3L
-        ).toRate(LocalDate.Formats.ISO)
+            branchId = 3L
+        ).toRate()
         assertEquals(123L, rate.id)
     }
 
@@ -46,7 +43,7 @@ class MappersTest {
     fun `primary id is zero`() {
         val rate = buildBank(
             bankId = 0L
-        ).toRate(LocalDate.Formats.ISO)
+        ).toRate()
         assertEquals(ID, rate.id)
     }
 
@@ -54,30 +51,20 @@ class MappersTest {
     fun `secondary id is zero`() {
         val rate = buildBank(
             bankId = 12L,
-            filialId = 0L
-        ).toRate(LocalDate.Formats.ISO)
+            branchId = 0L
+        ).toRate()
         assertEquals(120L, rate.id)
     }
 
     @Test
     fun `date is parsed by format`() {
-        val rate = buildBank(
-            date = RAW_DATE
-        ).toRate(
-            LocalDate.Format {
-                day()
-                char('.')
-                monthNumber()
-                char('.')
-                year()
-            }
-        )
-        assertEquals(DATE, rate.date)
+        val rate = buildBank().toRate()
+        assertEquals(PROCESSED_DATE, rate.date)
     }
 
     @Test
     fun `parse rate`() {
-        val rate = buildBank().toRate(LocalDate.Formats.ISO)
+        val rate = buildBank().toRate()
         assertEquals(RATE, rate.usdBuy)
     }
 }

@@ -28,7 +28,7 @@ interface FormattingDataSource {
     /**
      * Format currency rate as a monetary value
      */
-    fun formatCurrencyValue(value: Double): String
+    fun formatCurrencyValue(value: Float): String
 
     /**
      * Clean up all the unnecessary parts from the bank name

@@ -16,35 +16,41 @@
 
 package fobo66.valiutchik.api
 
-import androidx.test.filters.SmallTest
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.xmlpull.v1.XmlPullParserException
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlinx.serialization.json.Json
 
-@SmallTest
-class CurrencyRatesParserImplTest {
-    private val parser: CurrencyRatesParser = CurrencyRatesParserImpl()
+class CurrencyRatesResponseParserImplTest {
+    private val parser: CurrencyRatesResponseParser = CurrencyRatesResponseParserImpl(
+        Json {
+            isLenient = true
+            ignoreUnknownKeys = true
+        }
+    )
 
     @Test
-    fun singleCurrency() {
+    fun `single currency`() {
         val currencies = parser.parse(SINGLE_CURRENCY)
         assertEquals(1, currencies.size)
     }
 
     @Test
-    fun multipleCurrencies() {
+    fun `multiple currencies`() {
         val currencies = parser.parse(MULTIPLE_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
-    fun sameCurrenciesFilteredOut() {
+    fun `same currencies filtered out`() {
         val currencies = parser.parse(SAME_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
-    @Test(expected = XmlPullParserException::class)
-    fun errorForIncorrectXml() {
-        parser.parse(WRONG_XML)
+    @Test
+    fun `error for incorrect json`() {
+        assertFails {
+            parser.parse(WRONG_JSON)
+        }
     }
 }

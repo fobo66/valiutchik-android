@@ -29,8 +29,8 @@ import kotlin.test.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
-private const val RATE = 1.23
-private const val LOW_RATE = 0.0123
+private const val RATE = 1.23f
+private const val LOW_RATE = 0.0123f
 private const val FORMATTED_RATE = "1.23"
 private const val CITY = "test"
 
