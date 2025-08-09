@@ -19,32 +19,38 @@ package fobo66.valiutchik.api
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
+import kotlinx.serialization.json.Json
 
-class CurrencyRatesParserCommonImplTest {
-    private val parser: CurrencyRatesParser = CurrencyRatesParserCommonImpl()
+class CurrencyRatesResponseParserImplTest {
+    private val parser: CurrencyRatesResponseParser = CurrencyRatesResponseParserImpl(
+        Json {
+            isLenient = true
+            ignoreUnknownKeys = true
+        }
+    )
 
     @Test
     fun `single currency`() {
-        val currencies = parser.parse(SINGLE_CURRENCY)
+        val currencies = parser.parse(SINGLE_CURRENCY_JSON)
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun `multiple currencies`() {
-        val currencies = parser.parse(MULTIPLE_CURRENCIES)
+        val currencies = parser.parse(MULTIPLE_CURRENCIES_JSON)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun `same currencies filtered out`() {
-        val currencies = parser.parse(SAME_CURRENCIES)
+        val currencies = parser.parse(SAME_CURRENCIES_JSON)
         assertEquals(2, currencies.size)
     }
 
     @Test
-    fun `error for incorrect xml`() {
+    fun `error for incorrect json`() {
         assertFails {
-            parser.parse(WRONG_XML)
+            parser.parse(WRONG_JSON)
         }
     }
 }
