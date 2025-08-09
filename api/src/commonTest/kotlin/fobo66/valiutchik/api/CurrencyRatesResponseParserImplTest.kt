@@ -31,19 +31,19 @@ class CurrencyRatesResponseParserImplTest {
 
     @Test
     fun `single currency`() {
-        val currencies = parser.parse(SINGLE_CURRENCY_JSON)
+        val currencies = parser.parse(SINGLE_CURRENCY)
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun `multiple currencies`() {
-        val currencies = parser.parse(MULTIPLE_CURRENCIES_JSON)
+        val currencies = parser.parse(MULTIPLE_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun `same currencies filtered out`() {
-        val currencies = parser.parse(SAME_CURRENCIES_JSON)
+        val currencies = parser.parse(SAME_CURRENCIES)
         assertEquals(2, currencies.size)
     }
 
