@@ -30,6 +30,7 @@ import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.io.IOException
@@ -124,6 +125,7 @@ class CurrencyRateRepositoryImpl(
             }
 
         val rates = currencies.values.asFlow()
+            .filter { it.isNotEmpty() }
             .map {
                 it.toRate()
             }.toList()
