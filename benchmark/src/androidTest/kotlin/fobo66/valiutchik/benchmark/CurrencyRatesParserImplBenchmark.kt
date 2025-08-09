@@ -22,6 +22,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.api.CurrencyRatesParserCommonImpl
 import fobo66.valiutchik.api.CurrencyRatesParserImpl
+import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
+import kotlinx.serialization.json.Json
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,12 +38,18 @@ class CurrencyRatesParserImplBenchmark {
 
     private val androidParser = CurrencyRatesParserImpl()
     private val commonParser = CurrencyRatesParserCommonImpl()
+    private val jsonParser = CurrencyRatesResponseParserImpl(
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+    )
 
     @Test
     fun customParser() {
         benchmarkRule.measureRepeated {
             val body = runWithMeasurementDisabled {
-                loadResponseBody()
+                loadResponseBody("myfinFeed.xml")
             }
             androidParser.parse(body)
         }
@@ -51,16 +59,26 @@ class CurrencyRatesParserImplBenchmark {
     fun commonParser() {
         benchmarkRule.measureRepeated {
             val body = runWithMeasurementDisabled {
-                loadResponseBody()
+                loadResponseBody("myfinFeed.xml")
             }
             commonParser.parse(body)
         }
     }
 
-    private fun loadResponseBody(): String = InstrumentationRegistry
+    @Test
+    fun jsonParser() {
+        benchmarkRule.measureRepeated {
+            val body = runWithMeasurementDisabled {
+                loadResponseBody("myfinNewApi.json")
+            }
+            jsonParser.parse(body)
+        }
+    }
+
+    private fun loadResponseBody(fileName: String): String = InstrumentationRegistry
         .getInstrumentation()
         .context.assets
-        .open("myfinFeed.xml")
+        .open(fileName)
         .bufferedReader()
         .readText()
 }
