@@ -29,9 +29,6 @@ abstract class CurrencyRatesParser {
             TAG_NAME_FILIAL_ID,
             TAG_NAME_DATE,
             TAG_NAME_BANK_NAME,
-            TAG_NAME_FILIAL_NAME,
-            TAG_NAME_BANK_ADDRESS,
-            TAG_NAME_BANK_PHONE,
             TAG_NAME_USD_BUY,
             TAG_NAME_USD_SELL,
             TAG_NAME_EUR_BUY,
@@ -41,9 +38,7 @@ abstract class CurrencyRatesParser {
             TAG_NAME_PLN_BUY,
             TAG_NAME_PLN_SELL,
             TAG_NAME_UAH_BUY,
-            TAG_NAME_UAH_SELL,
-            TAG_NAME_EURUSD_BUY,
-            TAG_NAME_EURUSD_SELL
+            TAG_NAME_UAH_SELL
         )
     }
 

@@ -24,5 +24,5 @@ data class CurrencyRatesResponse(
     @SerialName("date")
     val date: String,
     @SerialName("mapobjects")
-    val mapobjects: List<Mapobject>
+    val results: List<CurrencyRateSource>
 )

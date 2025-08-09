@@ -17,13 +17,13 @@
 package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.entity.Mapobject
+import fobo66.valiutchik.api.entity.CurrencyRateSource
 import kotlinx.io.IOException
 
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
     var isError = false
 
-    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<Mapobject>> =
+    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<CurrencyRateSource>> =
         if (isError) {
             throw IOException("test")
         } else {

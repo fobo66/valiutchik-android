@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.api
 
-import fobo66.valiutchik.api.entity.Mapobject
+import fobo66.valiutchik.api.entity.CurrencyRateSource
 
 interface CurrencyRatesResponseParser {
-    fun parse(body: String): List<Mapobject>
+    fun parse(body: String): List<CurrencyRateSource>
 }

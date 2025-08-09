@@ -20,35 +20,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Mapobject(
-    @SerialName("adress")
-    val address: String,
-    @SerialName("bank_alias")
-    val bankAlias: String,
-    @SerialName("bank_icon")
-    val bankIcon: String,
+data class CurrencyRateSource(
     @SerialName("bank_id")
     val bankId: Long,
-    @SerialName("bank_logo")
-    val bankLogo: String,
     @SerialName("bank_name")
     val bankName: String,
-    @SerialName("bank_phone")
-    val bankPhone: String,
-    @SerialName("city_id")
-    val cityId: String,
     @SerialName("currency")
     val currency: Currency,
-    @SerialName("distance")
-    val distance: String,
-    @SerialName("geo")
-    val geo: Geo,
     @SerialName("id")
-    val id: Long,
-    @SerialName("sef_alias")
-    val sefAlias: String,
-    @SerialName("time_to_distance")
-    val timeToDistance: Int,
-    @SerialName("working_time")
-    val workingTime: List<List<String>>
+    val id: Long
 )

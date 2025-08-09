@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
-import fobo66.valiutchik.api.entity.Mapobject
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.header
@@ -47,7 +47,7 @@ class CurrencyRatesDataSourceImpl(
         setOf("usd", "eur", "uah", "pln", "rub")
     }
 
-    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<Mapobject>> =
+    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<CurrencyRateSource>> =
         withContext(ioDispatcher) {
             try {
                 apiCurrencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
