@@ -53,15 +53,16 @@ class CurrencyRatesDataSourceImpl(
                 apiCurrencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
                     .map { request ->
                         async {
-                            client.post(API_URL) {
+                            val response = client.post(API_URL) {
                                 contentType(ContentType.Application.Json)
                                 header(CLACKS_KEY, CLACKS_VALUE)
                                 setBody(request)
                             }
+                            parser.parse(response.bodyAsText())
                         }
                     }
                     .awaitAll()
-                    .flatMap { parser.parse(it.bodyAsText()) }
+                    .flatMap { it }
                     .groupBy { it.id }
             } catch (e: ResponseException) {
                 throw IOException(e)
