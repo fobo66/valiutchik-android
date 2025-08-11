@@ -48,7 +48,7 @@ android {
         minSdk = AndroidVersion.VersionCodes.R
         targetSdk = AndroidVersion.VersionCodes.BAKLAVA
         versionCode = 23
-        versionName = "1.14.2"
+        versionName = "1.15.0"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,6 +70,7 @@ android {
 
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
