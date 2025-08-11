@@ -42,8 +42,12 @@ kotlin {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget = JvmTarget.JVM_17
+                }
+            }
         }
 
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true

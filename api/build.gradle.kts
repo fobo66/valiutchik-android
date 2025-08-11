@@ -42,8 +42,10 @@ kotlin {
         withHostTestBuilder {}.configure {}
 
         compilations.configureEach {
-            compilerOptions.configure {
-                jvmTarget = JvmTarget.JVM_17
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget = JvmTarget.JVM_17
+                }
             }
         }
     }
