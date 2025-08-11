@@ -2,10 +2,8 @@ name: Desktop artifacts
 permissions:
   contents: read
 
-on:
-  push:
-    tags: [ "v*.*.*" ]
-  workflow_dispatch:
+on: workflow_dispatch
+
 env:
   BITRISEIO_ANDROID_KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
   BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{secrets.KEYSTORE_PRIVATE_KEY_PASSWORD}}
