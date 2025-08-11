@@ -1,6 +1,6 @@
 name: Desktop artifacts
 permissions:
-  contents: read-write
+  contents: read
 
 on:
   push:
