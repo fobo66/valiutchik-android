@@ -31,9 +31,8 @@ import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 fun List<CurrencyRateSource>.toRate(): Rate = Rate(
-    id = concatIds(first().bankId, first().id),
-    date = Instant.fromEpochSeconds(maxBy { it.currency.dateUpdate }.currency.dateUpdate)
-        .toString(),
+    id = concatIds(firstOrNull()?.bankId ?: 0L, firstOrNull()?.id ?: 0L),
+    date = resolveTimestamp().toString(),
     bankName = first().bankName,
     usdBuy = resolveBuyRate(CURRENCY_ALIAS_US_DOLLAR),
     usdSell = resolveSellRate(CURRENCY_ALIAS_US_DOLLAR),
@@ -46,6 +45,12 @@ fun List<CurrencyRateSource>.toRate(): Rate = Rate(
     uahBuy = resolveBuyRate(CURRENCY_ALIAS_HRYVNIA),
     uahSell = resolveSellRate(CURRENCY_ALIAS_HRYVNIA)
 )
+
+@OptIn(ExperimentalTime::class)
+private fun List<CurrencyRateSource>.resolveTimestamp(): Instant =
+    maxByOrNull { it.currency.dateUpdate }?.currency?.dateUpdate?.let {
+        Instant.fromEpochSeconds(it)
+    } ?: Instant.DISTANT_PAST
 
 private fun concatIds(primary: Long, secondary: Long): Long {
     val secondaryLength = if (secondary == 0L) {
