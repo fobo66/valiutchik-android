@@ -18,6 +18,7 @@ package fobo66.exchangecourcesbelarus.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.ReportDrawn
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
                             canOpenSettings =
                             windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
                         )
+                        ReportDrawn()
                     }
                 }
             }
