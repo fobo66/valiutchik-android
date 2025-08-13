@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: valiutchik-linux
-          path: desktop/build/compose/binaries/main/deb/dev.fobo66.valiutchik.desktop-1.0.0.deb
+          path: desktop/build/compose/binaries/main/deb/dev.fobo66.valiutchik.desktop_1.0.0_amd64.deb
         
   build-dmg:
     runs-on: macos-latest
