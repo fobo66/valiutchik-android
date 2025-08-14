@@ -59,7 +59,7 @@ truth = "1.4.4"
 turbine = "1.2.1"
 uri = "0.0.20"
 work = "2.10.3"
-xr = "1.0.0-alpha05"
+xr = "1.0.0-alpha06"
 xrMaterial = "1.0.0-alpha10"
 
 [libraries]
