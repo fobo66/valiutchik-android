@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "1a0b950cce2af2aea550006f0df0bee8",
+    "identityHash": "c6cfcef02533b9d29a8f20adfcb2854a",
     "entities": [
       {
         "tableName": "rates",
@@ -94,29 +94,101 @@
         },
         "indices": [
           {
-            "name": "index_rates_usdBuy_usdSell_eurBuy_eurSell_rubBuy_rubSell_plnBuy_plnSell_uahBuy_uahSell",
+            "name": "index_rates_usdBuy",
             "unique": false,
             "columnNames": [
-              "usdBuy",
-              "usdSell",
-              "eurBuy",
-              "eurSell",
-              "rubBuy",
-              "rubSell",
-              "plnBuy",
-              "plnSell",
-              "uahBuy",
+              "usdBuy"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_usdBuy` ON `${TABLE_NAME}` (`usdBuy`)"
+          },
+          {
+            "name": "index_rates_usdSell",
+            "unique": false,
+            "columnNames": [
+              "usdSell"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_usdSell` ON `${TABLE_NAME}` (`usdSell`)"
+          },
+          {
+            "name": "index_rates_eurBuy",
+            "unique": false,
+            "columnNames": [
+              "eurBuy"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_eurBuy` ON `${TABLE_NAME}` (`eurBuy`)"
+          },
+          {
+            "name": "index_rates_eurSell",
+            "unique": false,
+            "columnNames": [
+              "eurSell"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_eurSell` ON `${TABLE_NAME}` (`eurSell`)"
+          },
+          {
+            "name": "index_rates_rubBuy",
+            "unique": false,
+            "columnNames": [
+              "rubBuy"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_rubBuy` ON `${TABLE_NAME}` (`rubBuy`)"
+          },
+          {
+            "name": "index_rates_rubSell",
+            "unique": false,
+            "columnNames": [
+              "rubSell"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_rubSell` ON `${TABLE_NAME}` (`rubSell`)"
+          },
+          {
+            "name": "index_rates_plnBuy",
+            "unique": false,
+            "columnNames": [
+              "plnBuy"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_plnBuy` ON `${TABLE_NAME}` (`plnBuy`)"
+          },
+          {
+            "name": "index_rates_plnSell",
+            "unique": false,
+            "columnNames": [
+              "plnSell"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_plnSell` ON `${TABLE_NAME}` (`plnSell`)"
+          },
+          {
+            "name": "index_rates_uahBuy",
+            "unique": false,
+            "columnNames": [
+              "uahBuy"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_uahBuy` ON `${TABLE_NAME}` (`uahBuy`)"
+          },
+          {
+            "name": "index_rates_uahSell",
+            "unique": false,
+            "columnNames": [
               "uahSell"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_usdBuy_usdSell_eurBuy_eurSell_rubBuy_rubSell_plnBuy_plnSell_uahBuy_uahSell` ON `${TABLE_NAME}` (`usdBuy`, `usdSell`, `eurBuy`, `eurSell`, `rubBuy`, `rubSell`, `plnBuy`, `plnSell`, `uahBuy`, `uahSell`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rates_uahSell` ON `${TABLE_NAME}` (`uahSell`)"
           }
         ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1a0b950cce2af2aea550006f0df0bee8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c6cfcef02533b9d29a8f20adfcb2854a')"
     ]
   }
 }

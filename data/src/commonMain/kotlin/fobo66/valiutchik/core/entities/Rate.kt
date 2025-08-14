@@ -23,18 +23,16 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "rates",
     indices = [
-        Index(
-            "usdBuy",
-            "usdSell",
-            "eurBuy",
-            "eurSell",
-            "rubBuy",
-            "rubSell",
-            "plnBuy",
-            "plnSell",
-            "uahBuy",
-            "uahSell"
-        )
+        Index("usdBuy"),
+        Index("usdSell"),
+        Index("eurBuy"),
+        Index("eurSell"),
+        Index("rubBuy"),
+        Index("rubSell"),
+        Index("plnBuy"),
+        Index("plnSell"),
+        Index("uahBuy"),
+        Index("uahSell")
     ]
 )
 data class Rate(
