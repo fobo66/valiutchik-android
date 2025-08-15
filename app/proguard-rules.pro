@@ -1,2 +1,7 @@
 -repackageclasses
 -dontwarn org.slf4j.impl.StaticLoggerBinder
+-dontwarn com.android.extensions.xr.*
+-dontwarn com.android.extensions.xr.function.*
+-dontwarn com.android.extensions.xr.node.*
+-dontwarn com.android.extensions.xr.splitengine.*
+-dontwarn com.android.extensions.xr.subspace.*
