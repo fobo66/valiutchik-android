@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~    Copyright 2025 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +14,23 @@
   ~    limitations under the License.
   -->
 
-<manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <application>
+    <service
+        android:name="dev.fobo66.valiutchik.wear.CurrencyRateTileService"
+        android:description="@string/tile_description"
+        android:exported="true"
+        android:icon="@drawable/ic_tile_logo"
+        android:label="@string/tile_label"
+        android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+      <intent-filter>
+        <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+      </intent-filter>
+
+      <meta-data
+          android:name="androidx.wear.tiles.PREVIEW"
+          android:resource="@drawable/tile_preview" />
+    </service>
+  </application>
 </manifest>
