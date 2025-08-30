@@ -22,14 +22,18 @@ import androidx.wear.tiles.TileBuilders
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.tiles.SuspendingTileService
 
+private const val TILE_VERSION = "1"
+
 @OptIn(ExperimentalHorologistApi::class)
 class CurrencyRateTileService : SuspendingTileService() {
     override suspend fun resourcesRequest(
         requestParams: RequestBuilders.ResourcesRequest
-    ): ResourceBuilders.Resources = ResourceBuilders.Resources.Builder().setVersion("1").build()
+    ): ResourceBuilders.Resources =
+        ResourceBuilders.Resources.Builder().setVersion(TILE_VERSION).build()
 
     override suspend fun tileRequest(
         requestParams: RequestBuilders.TileRequest
     ): TileBuilders.Tile = TileBuilders.Tile.Builder()
+        .setResourcesVersion(TILE_VERSION)
         .build()
 }
