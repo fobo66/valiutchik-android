@@ -50,8 +50,6 @@ class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
             }
         }
 
-        context.registerReceiver(localeReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
-
         val applicationLocales = LocaleManagerCompat.getApplicationLocales(context)
         val systemLocales = LocaleManagerCompat.getSystemLocales(context)
         val currentLocale =
@@ -61,6 +59,8 @@ class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
                 applicationLocales.get(0)
             }
         channel.send((currentLocale ?: Locale.getDefault()).toLanguageTag())
+
+        context.registerReceiver(localeReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
 
         awaitClose { context.unregisterReceiver(localeReceiver) }
     }
