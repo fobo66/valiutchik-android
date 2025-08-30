@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -32,10 +33,11 @@ interface CurrencyRateRepository {
      * Load exchange rates from database or from network
      */
     fun loadExchangeRates(): Flow<List<BestCourse>>
+    fun loadLocale(): Flow<LanguageTag>
 
     /**
      * Format currency rate into human-readable form
      */
-    fun formatRate(rate: BestCourse): String
-    fun formatBankName(rate: BestCourse): String
+    fun formatRate(rate: BestCourse, languageTag: LanguageTag): String
+    fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
 }

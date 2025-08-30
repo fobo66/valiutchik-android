@@ -20,13 +20,12 @@ import com.ibm.icu.number.NumberFormatter
 import com.ibm.icu.text.Transliterator
 import com.ibm.icu.util.Currency
 import com.ibm.icu.util.ULocale
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import kotlin.LazyThreadSafetyMode.NONE
 
-class FormattingDataSourceIcuImpl(
-    private val locale: ULocale,
-    private val bankNameNormalizer: BankNameNormalizer
-) : FormattingDataSource {
+class FormattingDataSourceIcuImpl(private val bankNameNormalizer: BankNameNormalizer) :
+    FormattingDataSource {
     private val targetCurrency: Currency by lazy(NONE) {
         Currency.getInstance(BYN)
     }
@@ -34,21 +33,22 @@ class FormattingDataSourceIcuImpl(
     /**
      * Format currency rate as a monetary value
      */
-    override fun formatCurrencyValue(value: Float): String = NumberFormatter
-        .withLocale(locale)
-        .unit(targetCurrency)
-        .format(value)
-        .toString()
+    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String =
+        NumberFormatter
+            .withLocale(ULocale.forLanguageTag(languageTag))
+            .unit(targetCurrency)
+            .format(value)
+            .toString()
 
     /**
      * Clean up all the unnecessary parts from the bank name
      */
-    override fun formatBankName(name: String): String {
+    override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
         }
         val normalizedName = bankNameNormalizer.normalize(name)
-        val languageCode = locale.isO3Language
+        val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
 
         return if (languageCode == LANG_RU) {
             normalizedName

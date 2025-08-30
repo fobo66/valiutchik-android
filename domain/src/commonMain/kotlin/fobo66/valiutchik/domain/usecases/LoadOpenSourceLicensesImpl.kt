@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 
 class LoadOpenSourceLicensesImpl(private val licensesRepository: LicensesRepository) :
     LoadOpenSourceLicenses {
-    override fun execute(): Flow<List<OpenSourceLicense>> = flow {
+    override fun execute(): Flow<Set<OpenSourceLicense>> = flow {
         val licenses = licensesRepository.loadLicenses()
             .map {
                 OpenSourceLicense(
@@ -34,6 +34,6 @@ class LoadOpenSourceLicensesImpl(private val licensesRepository: LicensesReposit
                     year = it.year.orEmpty()
                 )
             }
-        emit(licenses)
+        emit(licenses.toSet())
     }
 }

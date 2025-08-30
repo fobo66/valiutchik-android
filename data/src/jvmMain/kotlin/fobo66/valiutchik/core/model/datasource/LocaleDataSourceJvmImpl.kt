@@ -14,11 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.domain.entities.OpenSourceLicense
+import com.ibm.icu.util.ULocale
+import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-interface LoadOpenSourceLicenses {
-    fun execute(): Flow<Set<OpenSourceLicense>>
+class LocaleDataSourceJvmImpl : LocaleDataSource {
+    override val locale: Flow<LanguageTag> = flowOf(ULocale.getDefault().toLanguageTag())
 }
