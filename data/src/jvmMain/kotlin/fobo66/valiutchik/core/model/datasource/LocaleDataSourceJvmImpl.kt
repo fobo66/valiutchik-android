@@ -22,6 +22,5 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class LocaleDataSourceJvmImpl : LocaleDataSource {
-    override val locale: Flow<LanguageTag>
-        get() = flowOf(ULocale.getDefault().toLanguageTag())
+    override val locale: Flow<LanguageTag> = flowOf(ULocale.getDefault().toLanguageTag())
 }
