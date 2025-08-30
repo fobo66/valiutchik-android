@@ -14,12 +14,6 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
-
-import kotlinx.coroutines.flow.Flow
+package fobo66.valiutchik.core.entities
 
 typealias LanguageTag = String
-
-interface LocaleDataSource {
-    val locale: Flow<LanguageTag>
-}

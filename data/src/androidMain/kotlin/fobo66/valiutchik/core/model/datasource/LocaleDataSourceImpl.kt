@@ -24,6 +24,7 @@ import android.os.Build
 import android.os.LocaleList
 import androidx.core.app.LocaleManagerCompat
 import androidx.core.content.IntentCompat
+import fobo66.valiutchik.core.entities.LanguageTag
 import java.util.Locale
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
