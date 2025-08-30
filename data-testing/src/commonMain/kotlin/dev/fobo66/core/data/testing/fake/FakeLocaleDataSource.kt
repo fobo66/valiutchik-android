@@ -14,13 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package dev.fobo66.core.data.testing.fake
 
-internal const val RAW_RATE = 1.23f
-internal const val LONG_RATE = 1.2345679f
-internal const val RATE = "BYN 1.23"
-internal const val BANK_NAME = "Приорбанк" // taken from API
+import fobo66.valiutchik.core.entities.LanguageTag
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-internal const val TAG = "en-US"
-internal const val BELARUSIAN_TAG = "be-BY"
-internal const val PASSTHROUGH_TAG = "ru-RU"
+class FakeLocaleDataSource : LocaleDataSource {
+    override val locale: Flow<LanguageTag>
+        get() = flowOf("en-US")
+}
