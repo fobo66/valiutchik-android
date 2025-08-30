@@ -25,6 +25,8 @@ import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSourceIcuImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceDesktopImpl
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
+import fobo66.valiutchik.core.model.datasource.LocaleDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceStubImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
@@ -41,6 +43,7 @@ actual val systemModule: Module = module {
         FormattingDataSourceIcuImpl(get(), get())
     }
 
+    single<LocaleDataSource> { LocaleDataSourceJvmImpl() }
     single<LocationDataSource> { LocationDataSourceStubImpl() }
 
     single<IntentDataSource> { IntentDataSourceDesktopImpl() }

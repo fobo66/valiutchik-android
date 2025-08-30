@@ -26,6 +26,8 @@ import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
+import fobo66.valiutchik.core.model.datasource.LocaleDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
@@ -52,6 +54,8 @@ actual val systemModule: Module = module {
             }
         currentLocale ?: Locale.getDefault()
     }
+
+    single<LocaleDataSource> { LocaleDataSourceImpl(androidContext()) }
 
     single<AssetsDataSource> {
         AssetsDataSourceImpl(get())
