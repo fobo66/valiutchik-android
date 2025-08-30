@@ -25,6 +25,7 @@ import android.os.LocaleList
 import androidx.core.app.LocaleManagerCompat
 import androidx.core.content.IntentCompat
 import fobo66.valiutchik.core.entities.LanguageTag
+import io.github.aakira.napier.Napier
 import java.util.Locale
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -34,6 +35,7 @@ class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
     override val locale: Flow<LanguageTag> = callbackFlow {
         val localeReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
+                Napier.d { "Locale was changed" }
                 if (context.packageName == intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME)) {
                     val newLocaleList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         IntentCompat.getParcelableExtra(
@@ -58,6 +60,10 @@ class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
             } else {
                 applicationLocales.get(0)
             }
+
+        Napier.d {
+            "Starting with locale $currentLocale"
+        }
         channel.send((currentLocale ?: Locale.getDefault()).toLanguageTag())
 
         context.registerReceiver(localeReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
