@@ -20,5 +20,5 @@ import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.coroutines.flow.Flow
 
 interface LoadOpenSourceLicenses {
-    fun execute(): Flow<List<OpenSourceLicense>>
+    fun execute(): Flow<Set<OpenSourceLicense>>
 }
