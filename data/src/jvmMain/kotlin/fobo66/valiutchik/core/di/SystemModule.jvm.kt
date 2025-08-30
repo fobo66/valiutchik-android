@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.di
 
-import com.ibm.icu.util.ULocale
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -35,12 +34,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val systemModule: Module = module {
-    single {
-        ULocale.getDefault()
-    }
 
     single<FormattingDataSource> {
-        FormattingDataSourceIcuImpl(get(), get())
+        FormattingDataSourceIcuImpl(get())
     }
 
     single<LocaleDataSource> { LocaleDataSourceJvmImpl() }

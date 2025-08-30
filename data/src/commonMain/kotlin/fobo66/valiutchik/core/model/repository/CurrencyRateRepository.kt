@@ -38,6 +38,6 @@ interface CurrencyRateRepository {
     /**
      * Format currency rate into human-readable form
      */
-    fun formatRate(rate: BestCourse): String
-    fun formatBankName(rate: BestCourse): String
+    fun formatRate(rate: BestCourse, languageTag: LanguageTag): String
+    fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
 }

@@ -138,8 +138,8 @@ class CurrencyRateRepositoryImpl(
         )
     }
 
-    override fun formatBankName(rate: BestCourse): String =
-        formattingDataSource.formatBankName(rate.bankName.orEmpty())
+    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String =
+        formattingDataSource.formatBankName(rate.bankName.orEmpty(), languageTag)
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()
@@ -153,12 +153,14 @@ class CurrencyRateRepositoryImpl(
                     }
             }
 
-    override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(
-        when (rate.currencyName) {
-            RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
-            else -> rate.currencyValue ?: 0.0f
-        }
-    )
+    override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
+        formattingDataSource.formatCurrencyValue(
+            when (rate.currencyName) {
+                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
+                else -> rate.currencyValue ?: 0.0f
+            },
+            languageTag
+        )
 
     override fun loadLocale(): Flow<LanguageTag> = localeDataSource.locale
 }

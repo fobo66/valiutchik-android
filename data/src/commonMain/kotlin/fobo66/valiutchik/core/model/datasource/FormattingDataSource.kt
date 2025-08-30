@@ -16,6 +16,8 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import fobo66.valiutchik.core.entities.LanguageTag
+
 internal const val LANG_BELARUSIAN = "bel"
 internal const val LANG_RU = "rus"
 internal const val BYN = "BYN"
@@ -28,10 +30,10 @@ interface FormattingDataSource {
     /**
      * Format currency rate as a monetary value
      */
-    fun formatCurrencyValue(value: Float): String
+    fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String
 
     /**
      * Clean up all the unnecessary parts from the bank name
      */
-    fun formatBankName(name: String): String
+    fun formatBankName(name: String, languageTag: LanguageTag): String
 }

@@ -19,7 +19,6 @@ package fobo66.valiutchik.core.model.datasource
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import dev.fobo66.core.data.testing.fake.FakeBankNameNormalizer
-import java.util.Locale
 import kotlin.test.Test
 
 @SmallTest
@@ -29,7 +28,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun formatCurrency() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.US, bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val rate = formattingDataSource.formatCurrencyValue(RAW_RATE)
         assertThat(rate).isEqualTo(RATE)
     }
@@ -37,7 +36,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun formatLongCurrency() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.US, bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val rate = formattingDataSource.formatCurrencyValue(LONG_RATE)
         assertThat(rate).isEqualTo(RATE)
     }
@@ -45,7 +44,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun transliterateToDefaultLocale() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.US, bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo("Priorbank")
     }
@@ -53,7 +52,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun transliterateToRandom() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.SIMPLIFIED_CHINESE, bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo("Priorbank")
     }
@@ -61,7 +60,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun passThrough() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.forLanguageTag(LANG_RU), bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo(BANK_NAME)
     }
@@ -69,7 +68,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun emptyName() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.getDefault(), bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName("")
         assertThat(result).isEmpty()
     }
@@ -77,7 +76,7 @@ class FormattingDataSourceImplTest {
     @Test
     fun transliterateToBelarusianLocale() {
         val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceImpl(Locale.forLanguageTag(LANG_BELARUSIAN), bankNameNormalizer)
+            FormattingDataSourceImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME)
         assertThat(result).isEqualTo("Прыорбанк")
     }
