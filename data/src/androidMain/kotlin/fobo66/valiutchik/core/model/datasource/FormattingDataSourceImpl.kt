@@ -26,9 +26,17 @@ import kotlin.LazyThreadSafetyMode.NONE
 
 class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalizer) :
     FormattingDataSource {
+    private lateinit var cachedLocale: ULocale
+    private var cachedLanguageTag: LanguageTag? = null
+
     override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
+        }
+
+        if (cachedLanguageTag != languageTag) {
+            cachedLocale = ULocale.forLanguageTag(languageTag)
+            cachedLanguageTag = languageTag
         }
 
         val normalizedName = bankNameNormalizer.normalize(name)
@@ -48,12 +56,18 @@ class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalize
         Currency.getInstance(BYN)
     }
 
-    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String =
-        NumberFormatter
-            .withLocale(ULocale.forLanguageTag(languageTag))
+    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String {
+        if (cachedLanguageTag != languageTag) {
+            cachedLocale = ULocale.forLanguageTag(languageTag)
+            cachedLanguageTag = languageTag
+        }
+
+        return NumberFormatter
+            .withLocale(cachedLocale)
             .unit(targetCurrency)
             .format(value)
             .toString()
+    }
 
     private fun transliterate(bankName: String, languageCode: String): String {
         val transliterator =
