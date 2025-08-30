@@ -23,8 +23,10 @@ import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
@@ -40,7 +42,8 @@ private const val EXCHANGE_RATE_NORMALIZER = 100
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
     private val currencyRatesDataSource: CurrencyRatesDataSource,
-    private val formattingDataSource: FormattingDataSource
+    private val formattingDataSource: FormattingDataSource,
+    private val localeDataSource: LocaleDataSource
 ) : CurrencyRateRepository {
     private val citiesMap: ScatterMap<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         mutableScatterMapOf(
@@ -156,4 +159,6 @@ class CurrencyRateRepositoryImpl(
             else -> rate.currencyValue ?: 0.0f
         }
     )
+
+    override fun loadLocale(): Flow<LanguageTag> = localeDataSource.locale
 }

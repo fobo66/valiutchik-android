@@ -17,10 +17,12 @@
 package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
 
@@ -31,6 +33,8 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         isRefreshed = true
     }
+
+    override fun loadLocale(): Flow<LanguageTag> = flowOf("en-US")
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> = rates.asStateFlow()
 
