@@ -22,6 +22,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.LocaleList
+import androidx.core.app.LocaleManagerCompat
 import androidx.core.content.IntentCompat
 import java.util.Locale
 import kotlinx.coroutines.channels.awaitClose
@@ -29,10 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
-
-    private var cachedLocale: Locale? = null
-
-    override val locale: Flow<Locale> = callbackFlow {
+    override val locale: Flow<LanguageTag> = callbackFlow {
         val localeReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 if (context.packageName == intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME)) {
@@ -45,12 +43,23 @@ class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
                     } else {
                         LocaleList.getEmptyLocaleList()
                     }
-                    channel.trySend(newLocaleList.get(0) ?: Locale.getDefault())
+                    val locale = newLocaleList.get(0) ?: Locale.getDefault()
+                    channel.trySend(locale.toLanguageTag())
                 }
             }
         }
 
         context.registerReceiver(localeReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
+
+        val applicationLocales = LocaleManagerCompat.getApplicationLocales(context)
+        val systemLocales = LocaleManagerCompat.getSystemLocales(context)
+        val currentLocale =
+            if (applicationLocales.isEmpty) {
+                systemLocales.get(0)
+            } else {
+                applicationLocales.get(0)
+            }
+        channel.send((currentLocale ?: Locale.getDefault()).toLanguageTag())
 
         awaitClose { context.unregisterReceiver(localeReceiver) }
     }

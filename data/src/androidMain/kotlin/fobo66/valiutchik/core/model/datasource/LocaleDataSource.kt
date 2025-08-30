@@ -16,9 +16,10 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import java.util.Locale
 import kotlinx.coroutines.flow.Flow
 
+typealias LanguageTag = String
+
 interface LocaleDataSource {
-    val locale: Flow<Locale>
+    val locale: Flow<LanguageTag>
 }
