@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
+private const val DEFAULT_CITY_INDEX = "1"
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
@@ -119,7 +120,7 @@ class CurrencyRateRepositoryImpl(
     }
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
-        val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
+        val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: DEFAULT_CITY_INDEX
         val currencies =
             try {
                 currencyRatesDataSource.loadExchangeRates(cityIndex)
