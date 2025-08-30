@@ -22,11 +22,11 @@ import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOf
 
 class FakeCurrencyRateRepository : CurrencyRateRepository {
 
     val rates = MutableStateFlow(emptyList<BestCourse>())
+    val locale = MutableStateFlow<LanguageTag>("en-US")
 
     var isRefreshed = false
 
@@ -34,7 +34,7 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
         isRefreshed = true
     }
 
-    override fun loadLocale(): Flow<LanguageTag> = flowOf("en-US")
+    override fun loadLocale(): Flow<LanguageTag> = locale.asStateFlow()
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> = rates.asStateFlow()
 
