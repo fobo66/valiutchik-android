@@ -19,6 +19,7 @@ package fobo66.valiutchik.domain.usecases
 import app.cash.turbine.test
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.util.CurrencyName
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.update
@@ -42,6 +43,16 @@ class LoadExchangeRatesImplTest {
         }
         loadExchangeRates.execute().test {
             assertTrue(awaitItem().isEmpty())
+        }
+    }
+
+    @Test
+    fun `list of rates`() = runTest {
+        currencyRateRepository.rates.update {
+            listOf(BestCourse("test", 1.23f, CurrencyName.DOLLAR))
+        }
+        loadExchangeRates.execute().test {
+            assertTrue(awaitItem().isNotEmpty())
         }
     }
 }
