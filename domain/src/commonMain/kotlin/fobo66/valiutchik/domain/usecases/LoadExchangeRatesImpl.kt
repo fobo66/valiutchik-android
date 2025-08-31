@@ -31,22 +31,24 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
 
-private data class CurrencyRatesIntermediate(val rates: List<BestCourse>, val locale: LanguageTag)
+private data class CurrencyRatesIntermediate(
+    val languageTag: LanguageTag,
+    val rates: List<BestCourse>
+)
 
 class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
     LoadExchangeRates {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<BestCurrencyRate>> =
-        currencyRateRepository.loadExchangeRates()
-            .zip(currencyRateRepository.loadLocale(), ::CurrencyRatesIntermediate)
-            .map { (rates, languageTag) ->
-                rates.map {
-                    it.toRate(languageTag)
-                }.filter {
-                    it.bank.isNotEmpty()
-                }
+    override fun execute(): Flow<List<BestCurrencyRate>> = currencyRateRepository.loadLocale()
+        .zip(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
+        .map { (languageTag, rates) ->
+            rates.map {
+                it.toRate(languageTag)
+            }.filter {
+                it.bank.isNotEmpty()
             }
+        }
 
     private fun BestCourse.toRate(languageTag: LanguageTag): BestCurrencyRate {
         val bank = currencyRateRepository.formatBankName(this, languageTag)
