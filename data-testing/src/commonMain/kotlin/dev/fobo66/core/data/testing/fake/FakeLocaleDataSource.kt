@@ -14,11 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.domain.entities.OpenSourceLicense
+import fobo66.valiutchik.core.entities.LanguageTag
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-interface LoadOpenSourceLicenses {
-    fun execute(): Flow<Set<OpenSourceLicense>>
+class FakeLocaleDataSource : LocaleDataSource {
+    override val locale: Flow<LanguageTag>
+        get() = flowOf("en-US")
 }

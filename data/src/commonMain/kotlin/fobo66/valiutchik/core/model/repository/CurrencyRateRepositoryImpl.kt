@@ -23,8 +23,10 @@ import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
@@ -36,11 +38,13 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
+private const val DEFAULT_CITY_INDEX = "1"
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
     private val currencyRatesDataSource: CurrencyRatesDataSource,
-    private val formattingDataSource: FormattingDataSource
+    private val formattingDataSource: FormattingDataSource,
+    private val localeDataSource: LocaleDataSource
 ) : CurrencyRateRepository {
     private val citiesMap: ScatterMap<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         mutableScatterMapOf(
@@ -116,7 +120,7 @@ class CurrencyRateRepositoryImpl(
     }
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
-        val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: "1"
+        val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: DEFAULT_CITY_INDEX
         val currencies =
             try {
                 currencyRatesDataSource.loadExchangeRates(cityIndex)
@@ -135,8 +139,8 @@ class CurrencyRateRepositoryImpl(
         )
     }
 
-    override fun formatBankName(rate: BestCourse): String =
-        formattingDataSource.formatBankName(rate.bankName.orEmpty())
+    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String =
+        formattingDataSource.formatBankName(rate.bankName.orEmpty(), languageTag)
 
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestCourses()
@@ -150,10 +154,14 @@ class CurrencyRateRepositoryImpl(
                     }
             }
 
-    override fun formatRate(rate: BestCourse): String = formattingDataSource.formatCurrencyValue(
-        when (rate.currencyName) {
-            RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
-            else -> rate.currencyValue ?: 0.0f
-        }
-    )
+    override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
+        formattingDataSource.formatCurrencyValue(
+            when (rate.currencyName) {
+                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
+                else -> rate.currencyValue ?: 0.0f
+            },
+            languageTag
+        )
+
+    override fun loadLocale(): Flow<LanguageTag> = localeDataSource.locale
 }

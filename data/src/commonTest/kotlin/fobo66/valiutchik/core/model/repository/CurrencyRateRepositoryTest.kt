@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.repository
 
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRatesDataSource
 import dev.fobo66.core.data.testing.fake.FakeFormattingDataSource
+import dev.fobo66.core.data.testing.fake.FakeLocaleDataSource
 import dev.fobo66.core.data.testing.fake.FakePersistenceDataSource
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.util.CurrencyName
@@ -34,17 +35,22 @@ private const val LOW_RATE = 0.0123f
 private const val FORMATTED_RATE = "1.23"
 private const val CITY = "test"
 
+private const val TAG = "be-BY"
+
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
     private val persistenceDataSource = FakePersistenceDataSource()
     private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
     private val formattingDataSource = FakeFormattingDataSource()
 
+    private val localeDataSource = FakeLocaleDataSource()
+
     private val currencyRateRepository: CurrencyRateRepository =
         CurrencyRateRepositoryImpl(
             persistenceDataSource,
             currencyRatesDataSource,
-            formattingDataSource
+            formattingDataSource,
+            localeDataSource
         )
 
     @Test
@@ -66,14 +72,14 @@ class CurrencyRateRepositoryTest {
     @Test
     fun `normalize hryvnia rate`() {
         val rate = BestCourse(currencyValue = LOW_RATE, currencyName = CurrencyName.UAH)
-        val result = currencyRateRepository.formatRate(rate)
+        val result = currencyRateRepository.formatRate(rate, TAG)
         assertEquals(FORMATTED_RATE, result)
     }
 
     @Test
     fun `do not normalize dollar rate`() {
         val rate = BestCourse(currencyValue = RATE, currencyName = DOLLAR)
-        val result = currencyRateRepository.formatRate(rate)
+        val result = currencyRateRepository.formatRate(rate, TAG)
         assertEquals(FORMATTED_RATE, result)
     }
 }
