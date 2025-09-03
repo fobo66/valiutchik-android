@@ -17,6 +17,7 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.util.CurrencyName
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -28,24 +29,30 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate.ZlotyBuyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.zip
+
+private data class CurrencyRatesIntermediate(
+    val languageTag: LanguageTag,
+    val rates: List<BestCourse>
+)
 
 class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
     LoadExchangeRates {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<BestCurrencyRate>> =
-        currencyRateRepository.loadExchangeRates()
-            .map { rates ->
-                rates.map {
-                    it.toRate()
-                }.filter {
-                    it.bank.isNotEmpty()
-                }
+    override fun execute(): Flow<List<BestCurrencyRate>> = currencyRateRepository.loadLocale()
+        .zip(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
+        .map { (languageTag, rates) ->
+            rates.map {
+                it.toRate(languageTag)
+            }.filter {
+                it.bank.isNotEmpty()
             }
+        }
 
-    private fun BestCourse.toRate(): BestCurrencyRate {
-        val bank = currencyRateRepository.formatBankName(this)
-        val rateValue = currencyRateRepository.formatRate(this)
+    private fun BestCourse.toRate(languageTag: LanguageTag): BestCurrencyRate {
+        val bank = currencyRateRepository.formatBankName(this, languageTag)
+        val rateValue = currencyRateRepository.formatRate(this, languageTag)
         val currency = requireNotNull(currencyName) {
             "Null currency name should not happen here!"
         }

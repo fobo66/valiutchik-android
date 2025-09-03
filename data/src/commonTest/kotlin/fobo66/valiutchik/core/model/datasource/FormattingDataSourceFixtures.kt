@@ -20,3 +20,7 @@ internal const val RAW_RATE = 1.23f
 internal const val LONG_RATE = 1.2345679f
 internal const val RATE = "BYN 1.23"
 internal const val BANK_NAME = "Приорбанк" // taken from API
+
+internal const val TAG = "en-US"
+internal const val BELARUSIAN_TAG = "be-BY"
+internal const val PASSTHROUGH_TAG = "ru-RU"

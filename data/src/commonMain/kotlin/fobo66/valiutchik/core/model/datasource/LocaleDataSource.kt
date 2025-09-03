@@ -14,11 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.domain.entities.OpenSourceLicense
+import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
 
-interface LoadOpenSourceLicenses {
-    fun execute(): Flow<Set<OpenSourceLicense>>
+interface LocaleDataSource {
+    val locale: Flow<LanguageTag>
 }

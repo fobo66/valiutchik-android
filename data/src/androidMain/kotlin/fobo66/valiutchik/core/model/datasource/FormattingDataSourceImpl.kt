@@ -19,21 +19,28 @@ package fobo66.valiutchik.core.model.datasource
 import android.icu.number.NumberFormatter
 import android.icu.text.Transliterator
 import android.icu.util.Currency
+import android.icu.util.ULocale
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.util.BankNameNormalizer
-import java.util.Locale
 import kotlin.LazyThreadSafetyMode.NONE
 
-class FormattingDataSourceImpl(
-    private val locale: Locale,
-    private val bankNameNormalizer: BankNameNormalizer
-) : FormattingDataSource {
-    override fun formatBankName(name: String): String {
+class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalizer) :
+    FormattingDataSource {
+    private lateinit var cachedLocale: ULocale
+    private var cachedLanguageTag: LanguageTag? = null
+
+    override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
         }
 
+        if (cachedLanguageTag != languageTag) {
+            cachedLocale = ULocale.forLanguageTag(languageTag)
+            cachedLanguageTag = languageTag
+        }
+
         val normalizedName = bankNameNormalizer.normalize(name)
-        val languageCode = locale.isO3Language
+        val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
 
         return if (languageCode == LANG_RU) {
             normalizedName
@@ -49,11 +56,18 @@ class FormattingDataSourceImpl(
         Currency.getInstance(BYN)
     }
 
-    override fun formatCurrencyValue(value: Float): String = NumberFormatter
-        .withLocale(locale)
-        .unit(targetCurrency)
-        .format(value)
-        .toString()
+    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String {
+        if (cachedLanguageTag != languageTag) {
+            cachedLocale = ULocale.forLanguageTag(languageTag)
+            cachedLanguageTag = languageTag
+        }
+
+        return NumberFormatter
+            .withLocale(cachedLocale)
+            .unit(targetCurrency)
+            .format(value)
+            .toString()
+    }
 
     private fun transliterate(bankName: String, languageCode: String): String {
         val transliterator =

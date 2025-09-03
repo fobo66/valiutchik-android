@@ -16,22 +16,24 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import fobo66.valiutchik.core.entities.LanguageTag
+
 internal const val LANG_BELARUSIAN = "bel"
 internal const val LANG_RU = "rus"
 internal const val BYN = "BYN"
 internal const val CYRILLIC_LATIN = "Cyrillic-Latin"
 internal const val BELARUSIAN_TRANSLITERATOR_ID = "Any_be-Cyrillic"
 internal const val BELARUSIAN_RULES =
-    "сск>ск;ло>ла;но>на;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Те>Тэ;Це>Цэ;и>і"
+    "сск>ск;Нео>Нэа;ло>ла;но>на;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Ре>Рэ;Те>Тэ;Це>Цэ;и>і"
 
 interface FormattingDataSource {
     /**
      * Format currency rate as a monetary value
      */
-    fun formatCurrencyValue(value: Float): String
+    fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String
 
     /**
      * Clean up all the unnecessary parts from the bank name
      */
-    fun formatBankName(name: String): String
+    fun formatBankName(name: String, languageTag: LanguageTag): String
 }
