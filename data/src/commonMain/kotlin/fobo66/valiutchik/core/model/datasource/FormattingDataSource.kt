@@ -24,7 +24,7 @@ internal const val BYN = "BYN"
 internal const val CYRILLIC_LATIN = "Cyrillic-Latin"
 internal const val BELARUSIAN_TRANSLITERATOR_ID = "Any_be-Cyrillic"
 internal const val BELARUSIAN_RULES =
-    "сск>ск;ло>ла;но>на;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Те>Тэ;Це>Цэ;и>і"
+    "сск>ск;Нео>Нэа;ло>ла;но>на;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Ре>Рэ;Те>Тэ;Це>Цэ;и>і"
 
 interface FormattingDataSource {
     /**
