@@ -28,6 +28,10 @@ import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 
+private const val BANK = "test"
+private const val RATE = 1.23f
+private const val NEW_LOCALE = "be-BY"
+
 class LoadExchangeRatesImplTest {
     private val currencyRateRepository = FakeCurrencyRateRepository()
     private val loadExchangeRates: LoadExchangeRates = LoadExchangeRatesImpl(currencyRateRepository)
@@ -52,8 +56,8 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `list of rates`() = runTest {
         val rawList = listOf(
-            BestCourse("test", 1.23f, CurrencyName.DOLLAR),
-            BestCourse("test", 1.23f, CurrencyName.DOLLAR, isBuy = true)
+            BestCourse(BANK, RATE, CurrencyName.DOLLAR),
+            BestCourse(BANK, RATE, CurrencyName.DOLLAR, isBuy = true)
         )
         currencyRateRepository.rates.update {
             rawList
@@ -66,7 +70,7 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `type transformed`() = runTest {
         currencyRateRepository.rates.update {
-            listOf(BestCourse("test", 1.23f, CurrencyName.DOLLAR))
+            listOf(BestCourse(BANK, RATE, CurrencyName.DOLLAR))
         }
         loadExchangeRates.execute().test {
             assertIs<BestCurrencyRate.DollarSellRate>(awaitItem().first())
@@ -76,11 +80,11 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `locale updated`() = runTest {
         currencyRateRepository.rates.update {
-            listOf(BestCourse("test", 1.23f, CurrencyName.DOLLAR))
+            listOf(BestCourse(BANK, RATE, CurrencyName.DOLLAR))
         }
         loadExchangeRates.execute().test {
             assertTrue(awaitItem().isNotEmpty())
-            currencyRateRepository.locale.update { "be-BY" }
+            currencyRateRepository.locale.update { NEW_LOCALE }
             assertTrue(awaitItem().isNotEmpty())
         }
     }
