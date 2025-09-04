@@ -145,6 +145,5 @@ detekt {
 dependencies {
     add("kspJvm", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
