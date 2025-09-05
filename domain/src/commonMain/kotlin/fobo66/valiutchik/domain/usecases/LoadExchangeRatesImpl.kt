@@ -28,8 +28,8 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate.RubleBuyRate
 import fobo66.valiutchik.domain.entities.BestCurrencyRate.ZlotyBuyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.zip
 
 private data class CurrencyRatesIntermediate(
     val languageTag: LanguageTag,
@@ -41,7 +41,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun execute(): Flow<List<BestCurrencyRate>> = currencyRateRepository.loadLocale()
-        .zip(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
+        .combine(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
         .map { (languageTag, rates) ->
             rates.map {
                 it.toRate(languageTag)
