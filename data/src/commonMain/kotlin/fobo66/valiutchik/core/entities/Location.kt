@@ -19,4 +19,4 @@ package fobo66.valiutchik.core.entities
 /**
  * Wrapper for the location coordinates
  */
-data class Location(val latitude: Double, val longitude: Double)
+data class Location(val latitude: Double, val longitude: Double, val ipAddress: String? = null)
