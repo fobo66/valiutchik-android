@@ -1,1 +1,1 @@
--libraryjars  <java.home>/jmods/java.base.jmod
+-dontwarn org.slf4j.*
