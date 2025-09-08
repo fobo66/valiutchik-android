@@ -13,8 +13,6 @@ env:
   BITRISEIO_ANDROID_KEYSTORE_URL: ${{secrets.KEYSTORE_FILE}}
   BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
   GEOAPIFY_API_KEY: ${{secrets.GEOAPIFY_API_KEY}}
-  API_USERNAME: ${{secrets.VALIUTCHIK_API_USERNAME}}
-  API_PASSWORD: ${{secrets.VALIUTCHIK_API_PASSWORD}}
   
 
 jobs:
@@ -34,6 +32,23 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check
         run: ./gradlew check
+
+  proguard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'liberica'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4.4.2
+        with:
+          validate-wrappers: true
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+      - name: Check ProGuard setup
+        run: ./gradlew desktop:proguardReleaseJars
         
   ui-tests:
     runs-on: ubuntu-latest
