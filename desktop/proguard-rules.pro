@@ -1,4 +1,5 @@
 -dontwarn org.slf4j.*
--dontwarn ch.qos.logback.classic.*
+-dontwarn ch.qos.logback.*
+-dontwarn com.ibm.icu.*
 -dontnote "module-info"
 -dontnote "META-INF**"
