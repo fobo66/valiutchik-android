@@ -83,7 +83,6 @@ dependencies {
     api(libs.androidx.glance.preview)
     api(libs.androidx.glance.appwidget.preview)
     implementation(libs.kotlinx.collections)
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
     testImplementation(libs.androidx.glance.test)
     testImplementation(libs.androidx.glance.appwidget.test)

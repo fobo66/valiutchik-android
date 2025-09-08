@@ -96,6 +96,5 @@ compose.desktop {
 }
 
 dependencies {
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
