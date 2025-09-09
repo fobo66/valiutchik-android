@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 import io.github.aakira.napier.Napier
 
 class LocationRepositoryImpl(
@@ -34,6 +35,8 @@ class LocationRepositoryImpl(
             if (ipAddress != null) {
                 val response = geocodingDataSource.findPlaceByIpAddress(ipAddress)
                 response.city
+            } else if (latitude == UNKNOWN_COORDINATE && longitude == UNKNOWN_COORDINATE) {
+                null
             } else {
                 val response = geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
                 response.firstNotNullOfOrNull { it.properties.city }
