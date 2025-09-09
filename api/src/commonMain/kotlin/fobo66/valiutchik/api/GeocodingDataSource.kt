@@ -28,6 +28,11 @@ interface GeocodingDataSource {
      *
      * @param latitude Latitude for search
      * @param longitude Longitude for search
+     * @param ipAddress Optional IP address, if resolved
      */
-    suspend fun findPlace(latitude: Double, longitude: Double): List<Feature>
+    suspend fun findPlace(
+        latitude: Double,
+        longitude: Double,
+        ipAddress: String? = null
+    ): List<Feature>
 }

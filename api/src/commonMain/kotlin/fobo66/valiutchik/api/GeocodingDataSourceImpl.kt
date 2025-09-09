@@ -46,26 +46,29 @@ class GeocodingDataSourceImpl(
     private val apiKey: String,
     private val ioDispatcher: CoroutineDispatcher
 ) : GeocodingDataSource {
-    override suspend fun findPlace(latitude: Double, longitude: Double): List<Feature> =
-        withContext(ioDispatcher) {
-            try {
-                val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
-                    parameter(PARAM_API_KEY, apiKey)
-                    parameter(PARAM_TYPE, PARAM_VALUE_CITY)
-                    parameter(PARAM_LATITUDE, latitude)
-                    parameter(PARAM_LONGITUDE, longitude)
-                }.body()
-                result.features
-            } catch (e: ResponseException) {
-                Napier.e(e) {
-                    "Geocoding API request failed"
-                }
-                throw GeocodingFailedException(e)
-            } catch (e: IOException) {
-                Napier.e(e) {
-                    "Unexpected issue happened during geocoding request"
-                }
-                throw GeocodingFailedException(e)
+    override suspend fun findPlace(
+        latitude: Double,
+        longitude: Double,
+        ipAddress: String?
+    ): List<Feature> = withContext(ioDispatcher) {
+        try {
+            val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
+                parameter(PARAM_API_KEY, apiKey)
+                parameter(PARAM_TYPE, PARAM_VALUE_CITY)
+                parameter(PARAM_LATITUDE, latitude)
+                parameter(PARAM_LONGITUDE, longitude)
+            }.body()
+            result.features
+        } catch (e: ResponseException) {
+            Napier.e(e) {
+                "Geocoding API request failed"
             }
+            throw GeocodingFailedException(e)
+        } catch (e: IOException) {
+            Napier.e(e) {
+                "Unexpected issue happened during geocoding request"
+            }
+            throw GeocodingFailedException(e)
         }
+    }
 }

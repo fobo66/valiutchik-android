@@ -27,7 +27,11 @@ class FakeGeocodingDataSource : GeocodingDataSource {
 
     private val searchResult = Feature(Properties(city = "fake"))
 
-    override suspend fun findPlace(latitude: Double, longitude: Double): List<Feature> = when {
+    override suspend fun findPlace(
+        latitude: Double,
+        longitude: Double,
+        ipAddress: String?
+    ): List<Feature> = when {
         showError -> throw GeocodingFailedException(Throwable("Yikes!"))
         unexpectedError -> throw NullPointerException("Yikes!")
         else -> listOf(searchResult)
