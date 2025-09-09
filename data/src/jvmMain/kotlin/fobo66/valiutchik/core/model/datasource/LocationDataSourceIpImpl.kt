@@ -20,12 +20,10 @@ import fobo66.valiutchik.core.entities.Location
 import java.net.InetAddress
 import java.net.NetworkInterface
 
-private const val STUB_COORDINATE = 0.0
-
 class LocationDataSourceIpImpl : LocationDataSource {
     override suspend fun resolveLocation(): Location = Location(
-        latitude = STUB_COORDINATE,
-        longitude = STUB_COORDINATE,
+        latitude = UNKNOWN_COORDINATE,
+        longitude = UNKNOWN_COORDINATE,
         ipAddress = resolveIp().hostAddress
     )
 
