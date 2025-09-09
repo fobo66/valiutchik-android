@@ -27,23 +27,23 @@ class LocationRepositoryImpl(
 ) : LocationRepository {
 
     override suspend fun resolveUserCity(defaultCity: String): String {
-        val response = try {
+        val city = try {
             Napier.v("Resolving user's location")
             val (latitude, longitude, ipAddress) = locationDataSource.resolveLocation()
             Napier.v { "Resolved user's location: $latitude, $longitude. IP address: $ipAddress" }
-            geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
+            if (ipAddress != null) {
+                val response = geocodingDataSource.findPlaceByIpAddress(ipAddress)
+                response.city
+            } else {
+                val response = geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
+                response.firstNotNullOfOrNull { it.properties.city }
+            }
         } catch (e: GeocodingFailedException) {
             Napier.e("Failed to determine user city", e)
-            emptyList()
+            null
         }
 
-        Napier.v("Resolving user's city")
-        return response
-            .map { it.properties.city }
-            .firstNotNullOfOrNull { it }.also { city ->
-                city?.let {
-                    Napier.v { "Resolved user's city: $it" }
-                }
-            } ?: defaultCity
+        Napier.v { "Resolved user's city: $city" }
+        return city ?: defaultCity
     }
 }

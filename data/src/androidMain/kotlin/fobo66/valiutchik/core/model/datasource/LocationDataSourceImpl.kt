@@ -42,7 +42,7 @@ class LocationDataSourceImpl(
         )
     }
 
-    private val locationFixTimeMaximum: Long by lazy {
+    private val locationFixTimeMaximum: Long by lazy(LazyThreadSafetyMode.NONE) {
         LOCATION_FIX_TIME_DURATION_HOURS.hours.inWholeNanoseconds
     }
 

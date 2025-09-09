@@ -22,5 +22,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class IpLocationInfo(
     @SerialName("city")
-    val city: String? = null
+    val city: String
 )
