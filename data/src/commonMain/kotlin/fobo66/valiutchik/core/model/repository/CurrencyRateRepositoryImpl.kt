@@ -40,6 +40,7 @@ import kotlinx.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
 private const val DEFAULT_CITY_INDEX = "1"
+private const val EMPTY_RATE = 0.0f
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
@@ -158,8 +159,8 @@ class CurrencyRateRepositoryImpl(
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
         formattingDataSource.formatCurrencyValue(
             when (rate.currencyName) {
-                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
-                else -> rate.currencyValue ?: 0.0f
+                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: EMPTY_RATE
+                else -> rate.currencyValue ?: EMPTY_RATE
             },
             languageTag
         )
