@@ -27,7 +27,7 @@ import fobo66.valiutchik.core.model.datasource.IntentDataSourceDesktopImpl
 import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
-import fobo66.valiutchik.core.model.datasource.LocationDataSourceStubImpl
+import fobo66.valiutchik.core.model.datasource.LocationDataSourceIpImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceJvmImpl
 import org.koin.core.module.Module
@@ -40,7 +40,7 @@ actual val systemModule: Module = module {
     }
 
     single<LocaleDataSource> { LocaleDataSourceJvmImpl() }
-    single<LocationDataSource> { LocationDataSourceStubImpl() }
+    single<LocationDataSource> { LocationDataSourceIpImpl() }
 
     single<IntentDataSource> { IntentDataSourceDesktopImpl() }
 
