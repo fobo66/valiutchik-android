@@ -43,7 +43,8 @@ private const val PARAM_LONGITUDE = "lon"
 
 class GeocodingDataSourceImpl(
     private val httpClient: HttpClient,
-    private val apiKey: String,
+    private val geocodingApiKey: String,
+    private val ipGeocodingApiKey: String,
     private val ioDispatcher: CoroutineDispatcher
 ) : GeocodingDataSource {
     override suspend fun findPlace(
@@ -53,7 +54,7 @@ class GeocodingDataSourceImpl(
     ): List<Feature> = withContext(ioDispatcher) {
         try {
             val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
-                parameter(PARAM_API_KEY, apiKey)
+                parameter(PARAM_API_KEY, geocodingApiKey)
                 parameter(PARAM_TYPE, PARAM_VALUE_CITY)
                 parameter(PARAM_LATITUDE, latitude)
                 parameter(PARAM_LONGITUDE, longitude)
