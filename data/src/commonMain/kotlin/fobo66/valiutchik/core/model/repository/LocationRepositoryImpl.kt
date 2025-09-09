@@ -31,7 +31,7 @@ class LocationRepositoryImpl(
             Napier.v("Resolving user's location")
             val (latitude, longitude, ipAddress) = locationDataSource.resolveLocation()
             Napier.v { "Resolved user's location: $latitude, $longitude. IP address: $ipAddress" }
-            geocodingDataSource.findPlace(latitude, longitude, ipAddress)
+            geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
         } catch (e: GeocodingFailedException) {
             Napier.e("Failed to determine user city", e)
             emptyList()

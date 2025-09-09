@@ -17,6 +17,7 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.Feature
+import fobo66.valiutchik.api.entity.IpLocationInfo
 
 /**
  * Datasource for geocoding. Supports only reverse geocoding at the moment
@@ -24,15 +25,17 @@ import fobo66.valiutchik.api.entity.Feature
 interface GeocodingDataSource {
 
     /**
-     * Find possible city address on given location
+     * Find possible city by coordinates
      *
      * @param latitude Latitude for search
      * @param longitude Longitude for search
-     * @param ipAddress Optional IP address, if resolved
      */
-    suspend fun findPlace(
-        latitude: Double,
-        longitude: Double,
-        ipAddress: String? = null
-    ): List<Feature>
+    suspend fun findPlaceByCoordinates(latitude: Double, longitude: Double): List<Feature>
+
+    /**
+     * Find possible city by device IP address
+     *
+     * @param ipAddress IP address
+     */
+    suspend fun findPlaceByIpAddress(ipAddress: String): IpLocationInfo
 }

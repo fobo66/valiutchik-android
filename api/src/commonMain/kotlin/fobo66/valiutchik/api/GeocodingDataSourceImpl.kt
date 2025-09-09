@@ -19,6 +19,8 @@ package fobo66.valiutchik.api
 import fobo66.valiutchik.api.entity.Feature
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.api.entity.GeocodingResult
+import fobo66.valiutchik.api.entity.IpGeocodingResult
+import fobo66.valiutchik.api.entity.IpLocationInfo
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -30,6 +32,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
 private const val GEOCODING_API_URL = "https://api.geoapify.com/v1/geocode/reverse"
+private const val IP_GEOCODING_API_URL = "https://api.ipgeolocation.io/v2/ipgeo"
 
 private const val PARAM_API_KEY = "apiKey"
 
@@ -40,6 +43,7 @@ private const val PARAM_VALUE_CITY = "city"
 private const val PARAM_LATITUDE = "lat"
 
 private const val PARAM_LONGITUDE = "lon"
+private const val PARAM_IP_ADDRESS = "ip"
 
 class GeocodingDataSourceImpl(
     private val httpClient: HttpClient,
@@ -47,10 +51,9 @@ class GeocodingDataSourceImpl(
     private val ipGeocodingApiKey: String,
     private val ioDispatcher: CoroutineDispatcher
 ) : GeocodingDataSource {
-    override suspend fun findPlace(
+    override suspend fun findPlaceByCoordinates(
         latitude: Double,
-        longitude: Double,
-        ipAddress: String?
+        longitude: Double
     ): List<Feature> = withContext(ioDispatcher) {
         try {
             val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
@@ -72,4 +75,25 @@ class GeocodingDataSourceImpl(
             throw GeocodingFailedException(e)
         }
     }
+
+    override suspend fun findPlaceByIpAddress(ipAddress: String): IpLocationInfo =
+        withContext(ioDispatcher) {
+            try {
+                val result: IpGeocodingResult = httpClient.get(IP_GEOCODING_API_URL) {
+                    parameter(PARAM_API_KEY, ipGeocodingApiKey)
+                    parameter(PARAM_IP_ADDRESS, ipAddress)
+                }.body()
+                result.location
+            } catch (e: ResponseException) {
+                Napier.e(e) {
+                    "Geocoding API request failed"
+                }
+                throw GeocodingFailedException(e)
+            } catch (e: IOException) {
+                Napier.e(e) {
+                    "Unexpected issue happened during geocoding request"
+                }
+                throw GeocodingFailedException(e)
+            }
+        }
 }

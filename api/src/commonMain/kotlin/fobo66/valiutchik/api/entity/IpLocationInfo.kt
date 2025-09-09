@@ -22,39 +22,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class IpLocationInfo(
     @SerialName("city")
-    val city: String,
-    @SerialName("continent_code")
-    val continentCode: String,
-    @SerialName("continent_name")
-    val continentName: String,
-    @SerialName("country_capital")
-    val countryCapital: String,
-    @SerialName("country_code2")
-    val countryCode2: String,
-    @SerialName("country_code3")
-    val countryCode3: String,
-    @SerialName("country_emoji")
-    val countryEmoji: String,
-    @SerialName("country_flag")
-    val countryFlag: String,
-    @SerialName("country_name")
-    val countryName: String,
-    @SerialName("country_name_official")
-    val countryNameOfficial: String,
-    @SerialName("district")
-    val district: String,
-    @SerialName("geoname_id")
-    val geonameId: String,
-    @SerialName("is_eu")
-    val isEu: Boolean,
-    @SerialName("latitude")
-    val latitude: String,
-    @SerialName("longitude")
-    val longitude: String,
-    @SerialName("state_code")
-    val stateCode: String,
-    @SerialName("state_prov")
-    val stateProv: String,
-    @SerialName("zipcode")
-    val zipcode: String
+    val city: String? = null
 )
