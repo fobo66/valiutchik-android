@@ -27,6 +27,11 @@ fun generateSecrets(project: Project) {
                 .initializer("%S", loadSecret(project, GEOCODER_TOKEN))
                 .build()
         )
+        .addProperty(
+            PropertySpec.builder(IP_GEOCODER_TOKEN, String::class, KModifier.CONST)
+                .initializer("%S", loadSecret(project, IP_GEOCODER_TOKEN))
+                .build()
+        )
         .build()
     val secretsFile = FileSpec.builder("", "Secrets")
         .indent("    ")
