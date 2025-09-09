@@ -31,6 +31,16 @@ import kotlinx.io.IOException
 
 private const val GEOCODING_API_URL = "https://api.geoapify.com/v1/geocode/reverse"
 
+private const val PARAM_API_KEY = "apiKey"
+
+private const val PARAM_TYPE = "type"
+
+private const val PARAM_VALUE_CITY = "city"
+
+private const val PARAM_LATITUDE = "lat"
+
+private const val PARAM_LONGITUDE = "lon"
+
 class GeocodingDataSourceImpl(
     private val httpClient: HttpClient,
     private val apiKey: String,
@@ -40,10 +50,10 @@ class GeocodingDataSourceImpl(
         withContext(ioDispatcher) {
             try {
                 val result: GeocodingResult = httpClient.get(GEOCODING_API_URL) {
-                    parameter("apiKey", apiKey)
-                    parameter("type", "city")
-                    parameter("lat", latitude)
-                    parameter("lon", longitude)
+                    parameter(PARAM_API_KEY, apiKey)
+                    parameter(PARAM_TYPE, PARAM_VALUE_CITY)
+                    parameter(PARAM_LATITUDE, latitude)
+                    parameter(PARAM_LONGITUDE, longitude)
                 }.body()
                 result.features
             } catch (e: ResponseException) {

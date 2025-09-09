@@ -72,6 +72,5 @@ dependencies {
     androidTestImplementation(libs.kotlinx.serialization)
     androidTestImplementation(libs.kotlinx.datetime)
     androidTestImplementation(project(":data-testing"))
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
