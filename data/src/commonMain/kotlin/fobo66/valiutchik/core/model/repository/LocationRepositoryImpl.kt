@@ -31,13 +31,15 @@ class LocationRepositoryImpl(
         val city = try {
             Napier.v("Resolving user's location")
             val (latitude, longitude, ipAddress) = locationDataSource.resolveLocation()
-            Napier.v { "Resolved user's location: $latitude, $longitude. IP address: $ipAddress" }
             if (ipAddress != null) {
+                Napier.v("Using geocoding via IP address")
                 val response = geocodingDataSource.findPlaceByIpAddress(ipAddress)
                 response.city
             } else if (latitude == UNKNOWN_COORDINATE && longitude == UNKNOWN_COORDINATE) {
+                Napier.v("No geocoding, location is unknown")
                 null
             } else {
+                Napier.v("Using geocoding via coordinates")
                 val response = geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
                 response.firstNotNullOfOrNull { it.properties.city }
             }
@@ -46,7 +48,6 @@ class LocationRepositoryImpl(
             null
         }
 
-        Napier.v { "Resolved user's city: $city" }
         return city ?: defaultCity
     }
 }
