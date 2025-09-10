@@ -24,16 +24,16 @@ class LocationDataSourceIpImpl : LocationDataSource {
     override suspend fun resolveLocation(): Location = Location(
         latitude = UNKNOWN_COORDINATE,
         longitude = UNKNOWN_COORDINATE,
-        ipAddress = resolveIp().hostAddress
+        ipAddress = resolveIp()?.hostAddress.orEmpty()
     )
 
     // https://stackoverflow.com/a/20418809/4606884
-    private fun resolveIp(): InetAddress {
+    private fun resolveIp(): InetAddress? {
         val candidateAddress: InetAddress? = NetworkInterface.getNetworkInterfaces().asSequence()
             .flatMap { it.inetAddresses.asSequence() }
             .filterNot { it.isLoopbackAddress }
             .lastOrNull { !it.isSiteLocalAddress }
 
-        return candidateAddress ?: InetAddress.getLocalHost()
+        return candidateAddress
     }
 }
