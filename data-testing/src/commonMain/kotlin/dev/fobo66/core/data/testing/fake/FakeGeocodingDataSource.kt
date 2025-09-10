@@ -22,14 +22,14 @@ import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.api.entity.IpLocationInfo
 import fobo66.valiutchik.api.entity.Properties
 
-private const val CITY = "fake"
+const val FAKE_CITY = "fake"
 
 class FakeGeocodingDataSource : GeocodingDataSource {
     var showError = false
     var unexpectedError = false
 
-    private val searchResult = Feature(Properties(city = CITY))
-    private val ipSearchResult = IpLocationInfo(city = CITY)
+    private val searchResult = Feature(Properties(city = FAKE_CITY))
+    private val ipSearchResult = IpLocationInfo(city = FAKE_CITY)
 
     override suspend fun findPlaceByCoordinates(
         latitude: Double,

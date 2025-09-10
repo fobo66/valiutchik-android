@@ -18,11 +18,9 @@ package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
-import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 
 class FakeLocationDataSource : LocationDataSource {
-    override suspend fun resolveLocation(): Location = Location(
-        latitude = UNKNOWN_COORDINATE,
-        longitude = UNKNOWN_COORDINATE
-    )
+    var location = Location(0.0, 0.0)
+
+    override suspend fun resolveLocation(): Location = location
 }
