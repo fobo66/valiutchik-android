@@ -84,6 +84,5 @@ detekt {
 }
 
 dependencies {
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }

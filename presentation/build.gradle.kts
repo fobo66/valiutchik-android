@@ -87,3 +87,7 @@ kotlin {
         }
     }
 }
+
+dependencies {
+    detektPlugins(libs.detekt.rules.compose)
+}
