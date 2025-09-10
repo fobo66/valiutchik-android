@@ -23,7 +23,6 @@ plugins {
     kotlin("plugin.serialization")
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.junit)
     alias(libs.plugins.room)
 }
 
