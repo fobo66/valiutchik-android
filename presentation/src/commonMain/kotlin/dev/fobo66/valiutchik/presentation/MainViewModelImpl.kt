@@ -16,7 +16,6 @@
 
 package dev.fobo66.valiutchik.presentation
 
-import androidx.lifecycle.viewModelScope
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -29,14 +28,12 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class MainViewModelImpl(
@@ -52,9 +49,7 @@ class MainViewModelImpl(
                     isRefreshTriggered.emit(true)
                 }
             }.map { it.toImmutableList() }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            .stateInWhileSubscribed(
                 initialValue = persistentListOf()
             )
 
@@ -78,9 +73,7 @@ class MainViewModelImpl(
                 } else {
                     MainScreenState.LoadedRates
                 }
-            }.stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            }.stateInWhileSubscribed(
                 initialValue = MainScreenState.Initial
             )
 
