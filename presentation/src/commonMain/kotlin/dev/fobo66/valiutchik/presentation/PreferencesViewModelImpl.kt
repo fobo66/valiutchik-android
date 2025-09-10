@@ -21,9 +21,7 @@ import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PreferencesViewModelImpl(
@@ -34,17 +32,9 @@ class PreferencesViewModelImpl(
 ) : PreferencesViewModel() {
 
     override val defaultCityPreference: StateFlow<String> = loadDefaultCityPreference.execute()
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-            initialValue = ""
-        )
+        .stateInWhileSubscribed(initialValue = "")
     override val updateIntervalPreference: StateFlow<Float> = loadUpdateIntervalPreference.execute()
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
-            initialValue = 0.0f
-        )
+        .stateInWhileSubscribed(initialValue = 0.0f)
 
     override fun updateDefaultCity(newDefaultCity: String) = viewModelScope.launch {
         updateDefaultCityPreference.execute(newDefaultCity)
