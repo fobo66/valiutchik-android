@@ -24,7 +24,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+//    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
