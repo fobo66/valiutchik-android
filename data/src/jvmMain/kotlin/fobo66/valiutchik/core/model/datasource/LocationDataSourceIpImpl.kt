@@ -17,23 +17,11 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.Location
-import java.net.InetAddress
-import java.net.NetworkInterface
 
 class LocationDataSourceIpImpl : LocationDataSource {
     override suspend fun resolveLocation(): Location = Location(
         latitude = UNKNOWN_COORDINATE,
         longitude = UNKNOWN_COORDINATE,
-        ipAddress = resolveIp()?.hostAddress.orEmpty()
+        ipAddress = ""
     )
-
-    // https://stackoverflow.com/a/20418809/4606884
-    private fun resolveIp(): InetAddress? {
-        val candidateAddress: InetAddress? = NetworkInterface.getNetworkInterfaces().asSequence()
-            .flatMap { it.inetAddresses.asSequence() }
-            .filterNot { it.isLoopbackAddress }
-            .lastOrNull { !it.isSiteLocalAddress }
-
-        return candidateAddress
-    }
 }
