@@ -43,7 +43,6 @@ private const val PARAM_VALUE_CITY = "city"
 private const val PARAM_LATITUDE = "lat"
 
 private const val PARAM_LONGITUDE = "lon"
-private const val PARAM_IP_ADDRESS = "ip"
 
 class GeocodingDataSourceImpl(
     private val httpClient: HttpClient,
@@ -76,24 +75,22 @@ class GeocodingDataSourceImpl(
         }
     }
 
-    override suspend fun findPlaceByIpAddress(ipAddress: String): IpLocationInfo =
-        withContext(ioDispatcher) {
-            try {
-                val result: IpGeocodingResult = httpClient.get(IP_GEOCODING_API_URL) {
-                    parameter(PARAM_API_KEY, ipGeocodingApiKey)
-                    parameter(PARAM_IP_ADDRESS, ipAddress)
-                }.body()
-                result.location
-            } catch (e: ResponseException) {
-                Napier.e(e) {
-                    "IP Geocoding API request failed"
-                }
-                throw GeocodingFailedException(e)
-            } catch (e: IOException) {
-                Napier.e(e) {
-                    "Unexpected issue happened during IP geocoding request"
-                }
-                throw GeocodingFailedException(e)
+    override suspend fun findPlaceByIpAddress(): IpLocationInfo = withContext(ioDispatcher) {
+        try {
+            val result: IpGeocodingResult = httpClient.get(IP_GEOCODING_API_URL) {
+                parameter(PARAM_API_KEY, ipGeocodingApiKey)
+            }.body()
+            result.location
+        } catch (e: ResponseException) {
+            Napier.e(e) {
+                "IP Geocoding API request failed"
             }
+            throw GeocodingFailedException(e)
+        } catch (e: IOException) {
+            Napier.e(e) {
+                "Unexpected issue happened during IP geocoding request"
+            }
+            throw GeocodingFailedException(e)
         }
+    }
 }

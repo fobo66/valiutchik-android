@@ -34,8 +34,6 @@ interface GeocodingDataSource {
 
     /**
      * Find possible city by device IP address
-     *
-     * @param ipAddress IP address
      */
-    suspend fun findPlaceByIpAddress(ipAddress: String): IpLocationInfo
+    suspend fun findPlaceByIpAddress(): IpLocationInfo
 }

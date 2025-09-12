@@ -33,7 +33,7 @@ class LocationRepositoryImpl(
             val (latitude, longitude, ipAddress) = locationDataSource.resolveLocation()
             if (ipAddress != null) {
                 Napier.v("Using geocoding via IP address")
-                val response = geocodingDataSource.findPlaceByIpAddress(ipAddress)
+                val response = geocodingDataSource.findPlaceByIpAddress()
                 response.city
             } else if (latitude == UNKNOWN_COORDINATE && longitude == UNKNOWN_COORDINATE) {
                 Napier.v("No geocoding, location is unknown")

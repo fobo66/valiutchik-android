@@ -40,7 +40,7 @@ class FakeGeocodingDataSource : GeocodingDataSource {
         else -> listOf(searchResult)
     }
 
-    override suspend fun findPlaceByIpAddress(ipAddress: String): IpLocationInfo = when {
+    override suspend fun findPlaceByIpAddress(): IpLocationInfo = when {
         showError -> throw GeocodingFailedException(Throwable("Yikes!"))
         unexpectedError -> throw NullPointerException("Yikes!")
         else -> ipSearchResult
