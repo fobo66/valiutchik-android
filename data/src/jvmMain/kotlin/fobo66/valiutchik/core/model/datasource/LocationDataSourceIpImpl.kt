@@ -18,9 +18,12 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.Location
 
-class LocationDataSourceStubImpl : LocationDataSource {
-    /**
-     * Determine current location
-     */
-    override suspend fun resolveLocation(): Location = Location(0.0, 0.0)
+private const val IP_GEOLOCATION_REQUESTED = "whatsmyip"
+
+class LocationDataSourceIpImpl : LocationDataSource {
+    override suspend fun resolveLocation(): Location = Location(
+        latitude = UNKNOWN_COORDINATE,
+        longitude = UNKNOWN_COORDINATE,
+        ipAddress = IP_GEOLOCATION_REQUESTED
+    )
 }

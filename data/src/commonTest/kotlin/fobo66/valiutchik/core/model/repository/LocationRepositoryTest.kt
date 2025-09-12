@@ -16,8 +16,11 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.fobo66.core.data.testing.fake.FAKE_CITY
 import dev.fobo66.core.data.testing.fake.FakeGeocodingDataSource
 import dev.fobo66.core.data.testing.fake.FakeLocationDataSource
+import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
@@ -37,17 +40,23 @@ class LocationRepositoryTest {
     @Test
     fun `resolve user city`() = runTest {
         val city = locationRepository.resolveUserCity(DEFAULT)
-        assertEquals("fake", city)
+        assertEquals(FAKE_CITY, city)
     }
 
     @Test
-    fun `return default city on HTTP error`() {
+    fun `return default city on HTTP error`() = runTest {
         geocodingDataSource.showError = true
 
-        runTest {
-            val city = locationRepository.resolveUserCity(DEFAULT)
-            assertEquals(DEFAULT, city)
-        }
+        val city = locationRepository.resolveUserCity(DEFAULT)
+        assertEquals(DEFAULT, city)
+    }
+
+    @Test
+    fun `return default city on unknown coordinates`() = runTest {
+        locationDataSource.location = Location(UNKNOWN_COORDINATE, UNKNOWN_COORDINATE)
+
+        val city = locationRepository.resolveUserCity(DEFAULT)
+        assertEquals(DEFAULT, city)
     }
 
     @Test

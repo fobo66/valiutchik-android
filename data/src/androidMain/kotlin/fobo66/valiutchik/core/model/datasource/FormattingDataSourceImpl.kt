@@ -29,15 +29,16 @@ class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalize
     private lateinit var cachedLocale: ULocale
     private var cachedLanguageTag: LanguageTag? = null
 
+    private val targetCurrency: Currency by lazy(NONE) {
+        Currency.getInstance(BYN)
+    }
+
     override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
         }
 
-        if (cachedLanguageTag != languageTag) {
-            cachedLocale = ULocale.forLanguageTag(languageTag)
-            cachedLanguageTag = languageTag
-        }
+        checkLocaleCache(languageTag)
 
         val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
@@ -52,10 +53,6 @@ class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalize
         }
     }
 
-    private val targetCurrency: Currency by lazy(NONE) {
-        Currency.getInstance(BYN)
-    }
-
     override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String {
         if (cachedLanguageTag != languageTag) {
             cachedLocale = ULocale.forLanguageTag(languageTag)
@@ -67,6 +64,13 @@ class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalize
             .unit(targetCurrency)
             .format(value)
             .toString()
+    }
+
+    private fun checkLocaleCache(languageTag: LanguageTag) {
+        if (cachedLanguageTag != languageTag) {
+            cachedLocale = ULocale.forLanguageTag(languageTag)
+            cachedLanguageTag = languageTag
+        }
     }
 
     private fun transliterate(bankName: String, languageCode: String): String {

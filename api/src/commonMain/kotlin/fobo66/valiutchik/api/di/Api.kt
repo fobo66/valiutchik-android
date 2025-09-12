@@ -17,7 +17,6 @@
 package fobo66.valiutchik.api.di
 
 internal enum class Api {
-    USERNAME,
-    PASSWORD,
-    GEOCODING_API_KEY
+    GEOCODING_API_KEY,
+    IP_GEOCODING_API_KEY
 }

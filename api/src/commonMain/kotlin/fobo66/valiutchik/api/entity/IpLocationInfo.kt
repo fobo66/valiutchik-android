@@ -14,18 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package fobo66.valiutchik.api.entity
 
-import fobo66.valiutchik.core.entities.Location
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-const val UNKNOWN_COORDINATE = 999.999
-
-/**
- * Datasource for working with location
- */
-interface LocationDataSource {
-    /**
-     * Determine current location
-     */
-    suspend fun resolveLocation(): Location
-}
+@Serializable
+data class IpLocationInfo(
+    @SerialName("city")
+    val city: String
+)
