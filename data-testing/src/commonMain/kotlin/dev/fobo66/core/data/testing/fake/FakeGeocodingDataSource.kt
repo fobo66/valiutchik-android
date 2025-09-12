@@ -31,18 +31,22 @@ class FakeGeocodingDataSource : GeocodingDataSource {
     private val searchResult = Feature(Properties(city = FAKE_CITY))
     private val ipSearchResult = IpLocationInfo(city = FAKE_CITY)
 
+    private val expectedError = GeocodingFailedException(Throwable("Yikes!"))
+
+    private val exception = NullPointerException("Yikes!")
+
     override suspend fun findPlaceByCoordinates(
         latitude: Double,
         longitude: Double
     ): List<Feature> = when {
-        showError -> throw GeocodingFailedException(Throwable("Yikes!"))
-        unexpectedError -> throw NullPointerException("Yikes!")
+        showError -> throw expectedError
+        unexpectedError -> throw exception
         else -> listOf(searchResult)
     }
 
     override suspend fun findPlaceByIpAddress(): IpLocationInfo = when {
-        showError -> throw GeocodingFailedException(Throwable("Yikes!"))
-        unexpectedError -> throw NullPointerException("Yikes!")
+        showError -> throw expectedError
+        unexpectedError -> throw exception
         else -> ipSearchResult
     }
 }
