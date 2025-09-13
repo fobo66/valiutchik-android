@@ -35,11 +35,14 @@ class LocationDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : LocationDataSource {
 
-    private val noLocation by lazy {
-        Location(0.0, 0.0)
+    private val noLocation by lazy(LazyThreadSafetyMode.NONE) {
+        Location(
+            latitude = UNKNOWN_COORDINATE,
+            longitude = UNKNOWN_COORDINATE
+        )
     }
 
-    private val locationFixTimeMaximum: Long by lazy {
+    private val locationFixTimeMaximum: Long by lazy(LazyThreadSafetyMode.NONE) {
         LOCATION_FIX_TIME_DURATION_HOURS.hours.inWholeNanoseconds
     }
 

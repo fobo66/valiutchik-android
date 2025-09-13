@@ -32,6 +32,7 @@ import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
@@ -39,6 +40,7 @@ import kotlinx.io.IOException
 
 private const val EXCHANGE_RATE_NORMALIZER = 100
 private const val DEFAULT_CITY_INDEX = "1"
+private const val EMPTY_RATE = 0.0f
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
@@ -157,11 +159,11 @@ class CurrencyRateRepositoryImpl(
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
         formattingDataSource.formatCurrencyValue(
             when (rate.currencyName) {
-                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: 0.0f
-                else -> rate.currencyValue ?: 0.0f
+                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: EMPTY_RATE
+                else -> rate.currencyValue ?: EMPTY_RATE
             },
             languageTag
         )
 
-    override fun loadLocale(): Flow<LanguageTag> = localeDataSource.locale
+    override fun loadLocale(): Flow<LanguageTag> = localeDataSource.locale.distinctUntilChanged()
 }

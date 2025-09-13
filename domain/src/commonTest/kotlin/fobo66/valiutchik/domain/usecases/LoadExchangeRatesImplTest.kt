@@ -20,10 +20,17 @@ import app.cash.turbine.test
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.util.CurrencyName
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
+
+private const val BANK = "test"
+private const val RATE = 1.23f
+private const val NEW_LOCALE = "be-BY"
 
 class LoadExchangeRatesImplTest {
     private val currencyRateRepository = FakeCurrencyRateRepository()
@@ -48,10 +55,36 @@ class LoadExchangeRatesImplTest {
 
     @Test
     fun `list of rates`() = runTest {
+        val rawList = listOf(
+            BestCourse(BANK, RATE, CurrencyName.DOLLAR),
+            BestCourse(BANK, RATE, CurrencyName.DOLLAR, isBuy = true)
+        )
         currencyRateRepository.rates.update {
-            listOf(BestCourse("test", 1.23f, CurrencyName.DOLLAR))
+            rawList
         }
         loadExchangeRates.execute().test {
+            assertEquals(rawList.size, awaitItem().size)
+        }
+    }
+
+    @Test
+    fun `type transformed`() = runTest {
+        currencyRateRepository.rates.update {
+            listOf(BestCourse(BANK, RATE, CurrencyName.DOLLAR))
+        }
+        loadExchangeRates.execute().test {
+            assertIs<BestCurrencyRate.DollarSellRate>(awaitItem().first())
+        }
+    }
+
+    @Test
+    fun `locale updated`() = runTest {
+        currencyRateRepository.rates.update {
+            listOf(BestCourse(BANK, RATE, CurrencyName.DOLLAR))
+        }
+        loadExchangeRates.execute().test {
+            assertTrue(awaitItem().isNotEmpty())
+            currencyRateRepository.locale.update { NEW_LOCALE }
             assertTrue(awaitItem().isNotEmpty())
         }
     }

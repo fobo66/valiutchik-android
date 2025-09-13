@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 import io.github.aakira.napier.Napier
 
 class LocationRepositoryImpl(
@@ -27,23 +28,26 @@ class LocationRepositoryImpl(
 ) : LocationRepository {
 
     override suspend fun resolveUserCity(defaultCity: String): String {
-        val response = try {
+        val city = try {
             Napier.v("Resolving user's location")
-            val location = locationDataSource.resolveLocation()
-            Napier.v { "Resolved user's location: $location" }
-            geocodingDataSource.findPlace(location.latitude, location.longitude)
+            val (latitude, longitude, ipAddress) = locationDataSource.resolveLocation()
+            if (ipAddress != null) {
+                Napier.v("Using geocoding via IP address")
+                val response = geocodingDataSource.findPlaceByIpAddress()
+                response.city
+            } else if (latitude == UNKNOWN_COORDINATE && longitude == UNKNOWN_COORDINATE) {
+                Napier.v("No geocoding, location is unknown")
+                null
+            } else {
+                Napier.v("Using geocoding via coordinates")
+                val response = geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
+                response.firstNotNullOfOrNull { it.properties.city }
+            }
         } catch (e: GeocodingFailedException) {
             Napier.e("Failed to determine user city", e)
-            emptyList()
+            null
         }
 
-        Napier.v("Resolving user's city")
-        return response
-            .map { it.properties.city }
-            .firstNotNullOfOrNull { it }.also { city ->
-                city?.let {
-                    Napier.v { "Resolved user's city: $it" }
-                }
-            } ?: defaultCity
+        return city ?: defaultCity
     }
 }

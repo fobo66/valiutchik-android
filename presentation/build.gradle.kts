@@ -29,6 +29,8 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
+
+            freeCompilerArgs.add("-Xcontext-parameters")
         }
     }
 
@@ -41,6 +43,7 @@ kotlin {
             compileTaskProvider.configure {
                 compilerOptions {
                     jvmTarget = JvmTarget.JVM_17
+                    freeCompilerArgs.add("-Xcontext-parameters")
                 }
             }
         }
@@ -83,4 +86,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    detektPlugins(libs.detekt.rules.compose)
 }

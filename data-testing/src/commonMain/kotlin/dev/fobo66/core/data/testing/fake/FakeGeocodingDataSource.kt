@@ -19,17 +19,34 @@ package dev.fobo66.core.data.testing.fake
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.Feature
 import fobo66.valiutchik.api.entity.GeocodingFailedException
+import fobo66.valiutchik.api.entity.IpLocationInfo
 import fobo66.valiutchik.api.entity.Properties
+
+const val FAKE_CITY = "fake"
 
 class FakeGeocodingDataSource : GeocodingDataSource {
     var showError = false
     var unexpectedError = false
 
-    private val searchResult = Feature(Properties(city = "fake"))
+    private val searchResult = Feature(Properties(city = FAKE_CITY))
+    private val ipSearchResult = IpLocationInfo(city = FAKE_CITY)
 
-    override suspend fun findPlace(latitude: Double, longitude: Double): List<Feature> = when {
-        showError -> throw GeocodingFailedException(Throwable("Yikes!"))
-        unexpectedError -> throw NullPointerException("Yikes!")
+    private val expectedError = GeocodingFailedException(Throwable("Yikes!"))
+
+    private val exception = NullPointerException("Yikes!")
+
+    override suspend fun findPlaceByCoordinates(
+        latitude: Double,
+        longitude: Double
+    ): List<Feature> = when {
+        showError -> throw expectedError
+        unexpectedError -> throw exception
         else -> listOf(searchResult)
+    }
+
+    override suspend fun findPlaceByIpAddress(): IpLocationInfo = when {
+        showError -> throw expectedError
+        unexpectedError -> throw exception
+        else -> ipSearchResult
     }
 }

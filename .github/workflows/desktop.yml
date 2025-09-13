@@ -10,7 +10,7 @@ env:
   BITRISEIO_ANDROID_KEYSTORE_URL: ${{secrets.KEYSTORE_FILE}}
   BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
   GEOAPIFY_API_KEY: ${{secrets.GEOAPIFY_API_KEY}}
-  
+  IPGEOCODING_API_KEY: ${{secrets.IPGEOCODING_API_KEY}}
 
 jobs:
   build-deb:
@@ -23,7 +23,7 @@ jobs:
           java-version: '21'
           distribution: 'liberica'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.2
+        uses: gradle/actions/setup-gradle@v4.4.3
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
@@ -45,7 +45,7 @@ jobs:
           java-version: '21'
           distribution: 'liberica'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.2
+        uses: gradle/actions/setup-gradle@v4.4.3
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
@@ -67,7 +67,7 @@ jobs:
           java-version: '21'
           distribution: 'liberica'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.2
+        uses: gradle/actions/setup-gradle@v4.4.3
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}

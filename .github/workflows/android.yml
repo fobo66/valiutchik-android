@@ -13,6 +13,7 @@ env:
   BITRISEIO_ANDROID_KEYSTORE_URL: ${{secrets.KEYSTORE_FILE}}
   BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
   GEOAPIFY_API_KEY: ${{secrets.GEOAPIFY_API_KEY}}
+  IPGEOCODING_API_KEY: ${{secrets.IPGEOCODING_API_KEY}}
   
 
 jobs:
@@ -26,7 +27,7 @@ jobs:
           java-version: '24'
           distribution: 'liberica'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.2
+        uses: gradle/actions/setup-gradle@v4.4.3
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
@@ -49,7 +50,7 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check ProGuard setup
         run: ./gradlew desktop:proguardReleaseJars
-        
+
   ui-tests:
     runs-on: ubuntu-latest
     steps:
@@ -65,7 +66,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v4.4.2
+        uses: gradle/actions/setup-gradle@v4.4.3
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}

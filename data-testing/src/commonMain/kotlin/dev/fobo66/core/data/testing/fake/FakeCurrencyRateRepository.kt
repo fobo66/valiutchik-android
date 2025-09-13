@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class FakeCurrencyRateRepository : CurrencyRateRepository {
 
     val rates = MutableStateFlow(emptyList<BestCourse>())
-    val locale = MutableStateFlow<LanguageTag>("en-US")
+    val locale = MutableStateFlow("en-US")
 
     var isRefreshed = false
 

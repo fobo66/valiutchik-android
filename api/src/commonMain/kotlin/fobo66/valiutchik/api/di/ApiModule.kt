@@ -37,6 +37,7 @@ val apiModule =
             GeocodingDataSourceImpl(
                 get(),
                 get(qualifier(Api.GEOCODING_API_KEY)),
+                get(qualifier(Api.IP_GEOCODING_API_KEY)),
                 get(qualifier(Dispatcher.BACKGROUND))
             )
         }

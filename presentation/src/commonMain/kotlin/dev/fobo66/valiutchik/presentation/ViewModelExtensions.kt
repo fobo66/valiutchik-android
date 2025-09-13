@@ -14,18 +14,18 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package dev.fobo66.valiutchik.presentation
 
-import fobo66.valiutchik.core.entities.Location
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
-const val UNKNOWN_COORDINATE = 999.999
-
-/**
- * Datasource for working with location
- */
-interface LocationDataSource {
-    /**
-     * Determine current location
-     */
-    suspend fun resolveLocation(): Location
-}
+context(viewModel: ViewModel)
+fun <T> Flow<T>.stateInWhileSubscribed(initialValue: T): StateFlow<T> = stateIn(
+    scope = viewModel.viewModelScope,
+    started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+    initialValue = initialValue
+)

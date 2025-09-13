@@ -23,7 +23,6 @@ plugins {
     kotlin("plugin.serialization")
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.junit)
     alias(libs.plugins.room)
 }
 
@@ -145,6 +144,5 @@ detekt {
 dependencies {
     add("kspJvm", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }

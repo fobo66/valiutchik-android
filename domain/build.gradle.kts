@@ -22,7 +22,6 @@ plugins {
     kotlin("multiplatform")
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
-    alias(libs.plugins.junit)
 }
 
 kotlin {
@@ -84,6 +83,5 @@ detekt {
 }
 
 dependencies {
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
