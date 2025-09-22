@@ -1,5 +1,3 @@
-import dev.detekt.gradle.Detekt
-
 /*
  *    Copyright 2025 Andrey Mukamolov
  *
@@ -41,8 +39,4 @@ plugins {
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
 }

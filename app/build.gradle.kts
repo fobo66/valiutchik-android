@@ -15,6 +15,9 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import dev.detekt.gradle.Detekt
+import org.gradle.kotlin.dsl.assign
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -111,6 +114,11 @@ kotlin {
 detekt {
     autoCorrect = true
 }
+
+tasks.withType<Detekt> {
+    jvmTarget = "17"
+}
+
 
 composeCompiler {
     metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
