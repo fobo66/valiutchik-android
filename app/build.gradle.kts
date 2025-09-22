@@ -22,11 +22,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.hotreload)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
     alias(libs.plugins.junit)
-    alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
+    id("quality-convention")
 }
 
 android {
