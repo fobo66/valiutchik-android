@@ -58,5 +58,6 @@ include(
     ":presentation",
     ":widget",
     ":ui",
-    ":desktop"
+    ":desktop",
+    ":wear"
 )
