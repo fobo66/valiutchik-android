@@ -15,6 +15,8 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import dev.detekt.gradle.Detekt
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -66,6 +68,11 @@ kotlin {
 detekt {
     autoCorrect = true
 }
+
+tasks.withType<Detekt> {
+    jvmTarget = "17"
+}
+
 
 dependencies {
     val composeBom = platform(libs.compose.bom)
