@@ -16,7 +16,6 @@
 
 import com.android.sdklib.AndroidVersion
 import dev.detekt.gradle.Detekt
-import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
