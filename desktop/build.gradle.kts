@@ -73,6 +73,11 @@ compose.desktop {
             release {
                 proguard {
                     isEnabled = true
+                    optimize = false 
+                    obfuscate = true
+                    configurationFiles.from(
+                        project.layout.projectDirectory.file("proguard-rules.pro")
+                    )
                 }
             }
         }
