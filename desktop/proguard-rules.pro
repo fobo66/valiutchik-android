@@ -1,6 +1,8 @@
 -dontwarn org.slf4j.**
 -dontwarn ch.qos.logback.**
 -dontwarn com.ibm.icu.**
+-dontwarn androidx.compose.ui.**
 -dontwarn androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldKt
 -dontnote "module-info"
 -dontnote "META-INF**"
+-keep class androidx.compose.runtime.ProvidableCompositionLocal
