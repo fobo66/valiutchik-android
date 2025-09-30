@@ -64,10 +64,12 @@ import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.bank_name_indicator
+import valiutchik.ui.generated.resources.ic_share
 import valiutchik.ui.generated.resources.share_description
 import valiutchik.ui.generated.resources.title_rates
 
@@ -216,7 +218,7 @@ fun BestCurrencyRateCard(
                 onShareClick(currencyName, currencyValue)
             }) {
                 Icon(
-                    Icons.Default.Share,
+                    painterResource(Res.drawable.ic_share),
                     contentDescription = stringResource(Res.string.share_description)
                 )
             }
