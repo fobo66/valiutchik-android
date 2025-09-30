@@ -57,7 +57,6 @@ import dev.fobo66.valiutchik.ui.TAG_RATE_VALUE
 import dev.fobo66.valiutchik.ui.about.AboutAppDialog
 import dev.fobo66.valiutchik.ui.element.PrimaryTopBar
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
-import dev.fobo66.valiutchik.ui.icon.Bank
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
