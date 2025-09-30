@@ -33,12 +33,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.fobo66.valiutchik.ui.TAG_TITLE
 import dev.fobo66.valiutchik.ui.theme.AppTheme
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.action_about
 import valiutchik.ui.generated.resources.action_refresh
 import valiutchik.ui.generated.resources.action_settings
+import valiutchik.ui.generated.resources.ic_arrow_back
+import valiutchik.ui.generated.resources.ic_info
+import valiutchik.ui.generated.resources.ic_refresh
+import valiutchik.ui.generated.resources.ic_settings
 import valiutchik.ui.generated.resources.toolbar_action_more
 import valiutchik.ui.generated.resources.topbar_description_back
 
@@ -75,7 +80,7 @@ fun PrimaryTopBar(
                     onClick = onAboutClick,
                     icon = {
                         Icon(
-                            Icons.Default.Info,
+                            painterResource(Res.drawable.ic_info),
                             contentDescription = aboutLabel
                         )
                     },
@@ -86,7 +91,7 @@ fun PrimaryTopBar(
                         onClick = onRefreshClick,
                         icon = {
                             Icon(
-                                Icons.Default.Refresh,
+                                painterResource(Res.drawable.ic_refresh),
                                 contentDescription = refreshLabel
                             )
                         },
@@ -98,7 +103,7 @@ fun PrimaryTopBar(
                         onClick = onSettingsClick,
                         icon = {
                             Icon(
-                                Icons.Default.Settings,
+                                painterResource(Res.drawable.ic_settings),
                                 contentDescription = settingsLabel
                             )
                         },
@@ -118,7 +123,7 @@ fun SecondaryTopBar(title: String, onBackClick: () -> Unit, modifier: Modifier =
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    Icons.AutoMirrored.Default.ArrowBack,
+                    painterResource(Res.drawable.ic_arrow_back),
                     contentDescription = stringResource(Res.string.topbar_description_back)
                 )
             }
