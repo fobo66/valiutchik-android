@@ -37,7 +37,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":ui"))
-                implementation(compose.ui)
+                implementation(libs.compose.ui)
                 implementation(compose.components.resources)
                 implementation(libs.compose.material)
                 implementation(libs.compose.material.icons.core)
