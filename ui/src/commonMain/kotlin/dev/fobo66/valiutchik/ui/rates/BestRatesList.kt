@@ -29,8 +29,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -69,6 +67,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.bank_name_indicator
+import valiutchik.ui.generated.resources.ic_bank
 import valiutchik.ui.generated.resources.ic_share
 import valiutchik.ui.generated.resources.share_description
 import valiutchik.ui.generated.resources.title_rates
@@ -202,7 +201,7 @@ fun BestCurrencyRateCard(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         ) {
             Icon(
-                Icons.Default.Bank,
+                painterResource(Res.drawable.ic_bank),
                 contentDescription = stringResource(Res.string.bank_name_indicator),
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
