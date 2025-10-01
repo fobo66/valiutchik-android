@@ -40,7 +40,6 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(libs.compose.material)
-                implementation(libs.compose.material.icons.core)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project.dependencies.platform(libs.koin.bom))

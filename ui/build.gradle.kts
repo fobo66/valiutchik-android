@@ -73,7 +73,6 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.kotlinx.collections)
-                implementation(libs.compose.material.icons.core)
                 implementation(libs.compose.material.adaptive)
                 implementation(libs.compose.material.adaptive.layout)
                 implementation(libs.compose.material.adaptive.navigation)
