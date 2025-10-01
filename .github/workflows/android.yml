@@ -29,7 +29,7 @@ jobs:
           java-version: '25'
           distribution: 'liberica'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.4
+        uses: gradle/actions/setup-gradle@v5.0.0
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
@@ -51,7 +51,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v4.4.4
+        uses: gradle/actions/setup-gradle@v5.0.0
         with:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
