@@ -16,8 +16,6 @@
 
 package dev.fobo66.valiutchik.ui.element
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AppBarRow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -38,6 +36,7 @@ import valiutchik.ui.generated.resources.action_refresh
 import valiutchik.ui.generated.resources.action_settings
 import valiutchik.ui.generated.resources.ic_arrow_back
 import valiutchik.ui.generated.resources.ic_info
+import valiutchik.ui.generated.resources.ic_more
 import valiutchik.ui.generated.resources.ic_refresh
 import valiutchik.ui.generated.resources.ic_settings
 import valiutchik.ui.generated.resources.toolbar_action_more
@@ -66,7 +65,7 @@ fun PrimaryTopBar(
                 overflowIndicator = {
                     IconButton(onClick = { it.show() }) {
                         Icon(
-                            imageVector = Icons.Filled.MoreVert,
+                            painterResource(Res.drawable.ic_more),
                             contentDescription = stringResource(Res.string.toolbar_action_more)
                         )
                     }
