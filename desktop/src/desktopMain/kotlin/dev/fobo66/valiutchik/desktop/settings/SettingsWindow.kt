@@ -18,8 +18,6 @@ package dev.fobo66.valiutchik.desktop.settings
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,19 +25,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.window.Window
 import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
 import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import dev.fobo66.valiutchik.ui.theme.AppTheme
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import valiutchik.desktop.generated.resources.Res
+import valiutchik.desktop.generated.resources.ic_settings_window
 import valiutchik.desktop.generated.resources.title_settings
 
 @Composable
 fun SettingsWindow(onClose: () -> Unit) {
     Window(
-        icon = rememberVectorPainter(Icons.Default.Settings),
+        icon = painterResource(Res.drawable.ic_settings_window),
         onCloseRequest = onClose,
         title = stringResource(Res.string.title_settings)
     ) {
