@@ -59,7 +59,7 @@ turbine = "1.2.1"
 uri = "0.0.21"
 work = "2.10.5"
 xr = "1.0.0-alpha07"
-xrMaterial = "1.0.0-alpha11"
+xrMaterial = "1.0.0-alpha12"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
