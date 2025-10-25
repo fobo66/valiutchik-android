@@ -30,7 +30,7 @@ jobs:
       - name: Build installer
         run: ./gradlew desktop:packageDistributionForCurrentOS
       - name: Linux distributable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: valiutchik-linux
           path: desktop/build/compose/binaries/main/deb/dev.fobo66.valiutchik.desktop_1.0.0_amd64.deb
@@ -52,7 +52,7 @@ jobs:
       - name: Build installer
         run: ./gradlew desktop:packageDistributionForCurrentOS
       - name: macOS distributable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: valiutchik-macos
           path: desktop/build/compose/binaries/main/dmg/dev.fobo66.valiutchik.desktop-1.0.0.dmg
@@ -74,7 +74,7 @@ jobs:
       - name: Build installer
         run: ./gradlew desktop:packageDistributionForCurrentOS
       - name: Windows distributable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: valiutchik-windows
           path: desktop/build/compose/binaries/main/exe/dev.fobo66.valiutchik.desktop-1.0.0.exe
