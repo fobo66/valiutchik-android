@@ -71,7 +71,7 @@ kotlin {
                 implementation(libs.compose.material)
                 implementation(compose.material3AdaptiveNavigationSuite)
                 implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.ui.preview)
                 implementation(libs.kotlinx.collections)
                 implementation(libs.compose.material.adaptive)
                 implementation(libs.compose.material.adaptive.layout)

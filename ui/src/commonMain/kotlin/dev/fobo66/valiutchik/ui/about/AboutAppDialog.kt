@@ -32,10 +32,10 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.about_app_description
 import valiutchik.ui.generated.resources.action_about_close

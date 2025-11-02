@@ -100,7 +100,7 @@ compose-material-adaptive-navigation = { group = "org.jetbrains.compose.material
 compose-material-windowsize = { group = "org.jetbrains.compose.material3", name = "material3-window-size-class", version.ref = "composeMultiplatformMaterial" }
 compose-stable-marker = { group = "androidx.compose.runtime", name = "runtime-annotation" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
-compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-ui-preview = { group = "org.jetbrains.compose.ui", name = "ui-tooling-preview", version.ref = "composeMultiplatform" }
 compose-ui-testing = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-testing-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }

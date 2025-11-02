@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.ui.TAG_DEFAULT_CITY
 import dev.fobo66.valiutchik.ui.TAG_LICENSES
 import dev.fobo66.valiutchik.ui.TAG_PREFERENCES
@@ -34,7 +35,6 @@ import dev.fobo66.valiutchik.ui.theme.AppTheme
 import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.pref_cities_list
 import valiutchik.ui.generated.resources.pref_cities_values

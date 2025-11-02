@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import dev.fobo66.valiutchik.ui.TAG_LICENSES_LIST
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
@@ -35,7 +36,6 @@ import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.see_license_click_label
 import valiutchik.ui.generated.resources.title_activity_oss_licenses
