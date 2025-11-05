@@ -38,7 +38,7 @@ kotlin {
             dependencies {
                 api(project(":ui"))
                 implementation(libs.compose.ui)
-                implementation(compose.components.resources)
+                implementation(libs.compose.resources)
                 implementation(libs.compose.material)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.kotlinx.coroutines.core)
@@ -72,7 +72,7 @@ compose.desktop {
             release {
                 proguard {
                     isEnabled = true
-                    optimize = false 
+                    optimize = false
                     obfuscate = true
                     configurationFiles.from(
                         project.layout.projectDirectory.file("proguard-rules.pro")
