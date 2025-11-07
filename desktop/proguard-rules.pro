@@ -37,3 +37,8 @@
     static java.lang.String exceptionMessage*(...);
     java.lang.String exceptionMessage*(...);
 }
+
+# room
+-keep class * extends androidx.room.RoomDatabase
+-keep @androidx.room.Entity class *
+
