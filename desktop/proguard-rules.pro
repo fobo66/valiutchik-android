@@ -41,4 +41,5 @@
 # room
 -keep class * extends androidx.room.RoomDatabase
 -keep @androidx.room.Entity class *
+-keepclasseswithmembers class androidx.sqlite.driver.bundled.** { native <methods>; }
 
