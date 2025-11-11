@@ -46,3 +46,22 @@
 # ktor
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault
 -keepclasseswithmembers class io.ktor.network.selector.InterestSuspensionsMap { volatile <fields>; }
+
+-keep class kotlin.reflect.jvm.internal.** { *; }
+-keep class kotlin.text.RegexOption { *; }
+
+# Kotlinx Coroutines https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro
+
+# ServiceLoader support
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+
+# Most of volatile fields are updated with AFU and should not be mangled
+-keepclassmembers class kotlinx.coroutines.** {
+    volatile <fields>;
+}
+
+# Same story for the standard library's SafeContinuation that also uses AtomicReferenceFieldUpdater
+-keepclassmembers class kotlin.coroutines.SafeContinuation {
+    volatile <fields>;
+}
