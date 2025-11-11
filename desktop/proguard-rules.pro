@@ -43,3 +43,6 @@
 -keep @androidx.room.Entity class *
 -keepclasseswithmembers class androidx.sqlite.driver.bundled.** { native <methods>; }
 
+# ktor
+-keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+-keepclasseswithmembers class io.ktor.network.selector.InterestSuspensionsMap { volatile <fields>; }
