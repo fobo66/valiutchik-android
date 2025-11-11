@@ -28,7 +28,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Build installer
-        run: ./gradlew desktop:packageReleaseDistributionForCurrentOS
+        run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:packageReleaseDistributionForCurrentOS
       - name: Linux distributable
         uses: actions/upload-artifact@v5
         with:
@@ -50,7 +50,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Build installer
-        run: ./gradlew desktop:packageReleaseDistributionForCurrentOS
+        run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:packageReleaseDistributionForCurrentOS
       - name: macOS distributable
         uses: actions/upload-artifact@v5
         with:
@@ -72,7 +72,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Build installer
-        run: ./gradlew desktop:packageReleaseDistributionForCurrentOS
+        run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:packageReleaseDistributionForCurrentOS
       - name: Windows distributable
         uses: actions/upload-artifact@v5
         with:
