@@ -32,7 +32,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check
-        run: ./gradlew check
+        run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true check
 
   proguard:
     runs-on: ubuntu-latest
@@ -49,8 +49,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check ProGuard setup
-        run: ./gradlew desktop:proguardReleaseJars
-
+        run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:proguardReleaseJars
   ui-tests:
     runs-on: ubuntu-latest
     steps:
@@ -80,7 +79,7 @@ jobs:
           key: avd-35
       - name: create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2.34.0
+        uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
           api-level: 35
           target: google_apis
@@ -90,9 +89,9 @@ jobs:
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
       - name: Run tests
-        uses: reactivecircus/android-emulator-runner@v2.34.0
+        uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
-          script: ./gradlew connectedDebugAndroidTest :data:connectedAndroidDeviceTest :ui:connectedAndroidDeviceTest --no-watch-fs -Pandroid.testInstrumentationRunnerArguments.size=small
+          script: ./gradlew -Dorg.gradle.configuration-cache.read-only=true connectedDebugAndroidTest :data:connectedAndroidDeviceTest :ui:connectedAndroidDeviceTest --no-watch-fs -Pandroid.testInstrumentationRunnerArguments.size=small
           arch: x86_64
           target: google_apis
           force-avd-creation: false
