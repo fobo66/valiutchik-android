@@ -68,6 +68,7 @@ kotlin {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization)
+                implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.kotlinx.datetime)

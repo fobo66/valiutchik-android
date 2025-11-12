@@ -19,7 +19,6 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.JsonDataSource
-import kotlinx.io.readString
 
 class LicensesRepositoryImpl(
     private val assetsDataSource: AssetsDataSource,
@@ -29,7 +28,6 @@ class LicensesRepositoryImpl(
     override fun loadLicenses(): List<OpenSourceLicensesItem> = assetsDataSource.loadFile(
         "open_source_licenses.json"
     ).use { licensesFile ->
-        val licenses = licensesFile.readString()
-        return jsonDataSource.decodeLicenses(licenses) ?: emptyList()
+        return jsonDataSource.decodeLicenses(licensesFile) ?: emptyList()
     }
 }

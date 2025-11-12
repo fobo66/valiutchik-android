@@ -17,9 +17,13 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
+import kotlinx.io.Source
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.io.decodeFromSource
 
 class JsonDataSourceImpl(private val json: Json) : JsonDataSource {
-    override fun decodeLicenses(jsonString: String): List<OpenSourceLicensesItem>? =
-        json.decodeFromString(jsonString)
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun decodeLicenses(jsonSource: Source): List<OpenSourceLicensesItem>? =
+        json.decodeFromSource(jsonSource)
 }
