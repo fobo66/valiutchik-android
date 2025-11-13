@@ -63,14 +63,12 @@ kotlin {
                 api(project(":domain"))
                 implementation(libs.androidx.lifecycle.compose)
                 implementation(libs.materialKolor)
-                implementation(project.dependencies.platform(libs.compose.bom))
                 implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.ui)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.ui)
                 implementation(libs.compose.material)
-                implementation(compose.material3AdaptiveNavigationSuite)
-                implementation(compose.components.resources)
+                implementation(libs.compose.resources)
                 implementation(libs.compose.ui.preview)
                 implementation(libs.kotlinx.collections)
                 implementation(libs.compose.material.adaptive)
@@ -84,15 +82,14 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.uiTest)
+                implementation(libs.compose.ui.test)
             }
         }
 
         androidMain {
             dependencies {
-                implementation(compose.preview)
-                implementation(compose.uiTooling)
+                implementation(libs.compose.ui.preview)
+                implementation(libs.compose.ui.tooling)
                 implementation(libs.accompanist.permissions)
             }
         }
@@ -100,7 +97,7 @@ kotlin {
         named("desktopMain") {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(compose.uiTooling)
+                implementation(libs.compose.ui.tooling)
             }
         }
 
