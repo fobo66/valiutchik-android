@@ -17,7 +17,8 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
+import kotlinx.io.Source
 
 interface JsonDataSource {
-    fun decodeLicenses(jsonString: String): List<OpenSourceLicensesItem>?
+    fun decodeLicenses(jsonSource: Source): List<OpenSourceLicensesItem>?
 }

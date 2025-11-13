@@ -36,7 +36,3 @@ plugins {
     alias(libs.plugins.baseline.profile) apply false
     alias(libs.plugins.robolectric.junit5) apply false
 }
-
-tasks.register<Delete>("clean") {
-    delete(rootProject.layout.buildDirectory)
-}
