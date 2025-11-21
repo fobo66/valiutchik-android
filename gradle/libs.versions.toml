@@ -42,7 +42,7 @@ kotlinxCoroutines = "1.10.2"
 kotlinxDatetime = "0.7.1"
 kotlinxIo = "0.8.0"
 kotlinxSerialization = "1.9.0"
-ksp = "2.3.2"
+ksp = "2.3.3"
 ktor = "3.3.2"
 leakCanary = "2.14"
 licensesPlugin = "0.9.8"
@@ -98,7 +98,6 @@ compose-material = { group = "org.jetbrains.compose.material3", name = "material
 compose-material-adaptive = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive", version.ref = "composeMultiplatformAdaptive" }
 compose-material-adaptive-layout = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive-layout", version.ref = "composeMultiplatformAdaptive" }
 compose-material-adaptive-navigation = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive-navigation", version.ref = "composeMultiplatformAdaptive" }
-compose-material-adaptive-navigation-suite = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive-navigation-suite", version.ref = "composeMultiplatformAdaptive" }
 compose-material-windowsize = { group = "org.jetbrains.compose.material3", name = "material3-window-size-class", version.ref = "composeMultiplatformMaterial" }
 compose-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "composeMultiplatform" }
 compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "composeMultiplatform" }
