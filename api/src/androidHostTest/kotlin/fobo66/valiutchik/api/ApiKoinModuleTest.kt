@@ -38,10 +38,10 @@ class ApiKoinModuleTest {
     fun `check network module`() {
         networkModule.verify(
             extraTypes =
-            listOf(
-                HttpClientEngine::class,
-                HttpClientConfig::class
-            )
+                listOf(
+                    HttpClientEngine::class,
+                    HttpClientConfig::class
+                )
         )
     }
 
@@ -56,10 +56,10 @@ class ApiKoinModuleTest {
     fun `check api module`() {
         apiModule.verify(
             extraTypes =
-            listOf(
-                HttpClientEngine::class,
-                HttpClientConfig::class
-            )
+                listOf(
+                    HttpClientEngine::class,
+                    HttpClientConfig::class
+                )
         )
     }
 }

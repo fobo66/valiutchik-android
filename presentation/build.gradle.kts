@@ -58,7 +58,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":domain"))
-                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
