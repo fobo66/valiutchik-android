@@ -41,6 +41,7 @@
 # room
 -keep class * extends androidx.room.RoomDatabase { void <init>(); }
 -keep @androidx.room.Entity class *
+-keep class androidx.sqlite.SQLiteException  { *; }
 -keepclassmembers class androidx.sqlite.driver.bundled.** {
   native <methods>;
   volatile <fields>;
