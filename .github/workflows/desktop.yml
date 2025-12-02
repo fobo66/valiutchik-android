@@ -72,7 +72,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Build installer
-        run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:packageReleaseDistributionForCurrentOS
+        run: ./gradlew.bat desktop:packageReleaseDistributionForCurrentOS
       - name: Windows distributable
         uses: actions/upload-artifact@v5
         with:
