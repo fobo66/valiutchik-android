@@ -37,10 +37,9 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":ui"))
-                implementation(compose.ui)
-                implementation(compose.components.resources)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.resources)
                 implementation(libs.compose.material)
-                implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
@@ -72,6 +71,11 @@ compose.desktop {
             release {
                 proguard {
                     isEnabled = true
+                    optimize = false
+                    obfuscate = true
+                    configurationFiles.from(
+                        project.layout.projectDirectory.file("proguard-rules.pro")
+                    )
                 }
             }
         }

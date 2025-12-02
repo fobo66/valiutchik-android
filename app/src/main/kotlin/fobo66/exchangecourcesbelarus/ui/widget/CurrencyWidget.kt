@@ -158,16 +158,16 @@ private fun CurrencyWidgetPreview() {
     ValiutchikWidgetTheme {
         CurrencyWidgetContent(
             rates =
-            persistentListOf(
-                BestCurrencyRate.DollarBuyRate(
-                    bank = "test",
-                    rateValue = "1.23"
+                persistentListOf(
+                    BestCurrencyRate.DollarBuyRate(
+                        bank = "test",
+                        rateValue = "1.23"
+                    ),
+                    BestCurrencyRate.DollarSellRate(
+                        bank = "test",
+                        rateValue = "4.56"
+                    )
                 ),
-                BestCurrencyRate.DollarSellRate(
-                    bank = "test",
-                    rateValue = "4.56"
-                )
-            ),
             onTitleBarActionClick = {}
         )
     }

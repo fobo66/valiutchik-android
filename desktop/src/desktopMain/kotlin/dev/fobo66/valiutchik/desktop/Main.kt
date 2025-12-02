@@ -29,10 +29,7 @@ import dev.fobo66.valiutchik.desktop.settings.SettingsWindow
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.swing.Swing
-import kotlinx.coroutines.test.setMain
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -40,10 +37,6 @@ import org.koin.core.annotation.KoinExperimentalAPI
 fun main() = application {
     LaunchedEffect(Unit) {
         Napier.base(JvmAntilog())
-    }
-
-    LaunchedEffect(Unit) {
-        Dispatchers.setMain(Dispatchers.Swing)
     }
 
     KoinApplication(
