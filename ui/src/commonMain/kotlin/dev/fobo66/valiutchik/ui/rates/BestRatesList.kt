@@ -149,16 +149,14 @@ fun BestRatesGrid(
 private fun resolveRatesGridPadding(): PaddingValues {
     val density = LocalDensity.current
 
-    return with(density) {
-        PaddingValues(
-            top = 8.dp,
-            start = 8.dp,
-            end = 8.dp,
-            bottom = with(density) {
-                WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
-            }
-        )
-    }
+    return PaddingValues(
+        top = 8.dp,
+        start = 8.dp,
+        end = 8.dp,
+        bottom = with(density) {
+            WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
+        }
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
