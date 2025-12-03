@@ -172,12 +172,12 @@ fun BestCurrencyRateCard(
 ) {
     ElevatedCard(
         modifier =
-        modifier
-            .clip(CardDefaults.elevatedShape)
-            .combinedClickable(
-                onLongClick = { onLongClick(currencyValue) },
-                onClick = { onClick(bankName) }
-            )
+            modifier
+                .clip(CardDefaults.elevatedShape)
+                .combinedClickable(
+                    onLongClick = { onLongClick(currencyValue) },
+                    onClick = { onClick(bankName) }
+                )
     ) {
         Text(
             text = currencyName,
@@ -188,9 +188,9 @@ fun BestCurrencyRateCard(
             text = currencyValue,
             style = MaterialTheme.typography.displayMediumEmphasized,
             modifier =
-            Modifier
-                .padding(vertical = 16.dp, horizontal = 24.dp)
-                .testTag(TAG_RATE_VALUE)
+                Modifier
+                    .padding(vertical = 16.dp, horizontal = 24.dp)
+                    .testTag(TAG_RATE_VALUE)
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -206,9 +206,9 @@ fun BestCurrencyRateCard(
                 text = bankName,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp)
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp)
             )
             IconButton(onClick = {
                 onShareClick(currencyName, currencyValue)
@@ -228,16 +228,16 @@ private fun BestCurrencyRatesPreview() {
     AppTheme {
         BestRatesGrid(
             bestCurrencyRates =
-            persistentListOf(
-                BestCurrencyRate.DollarBuyRate(
-                    bank = "test",
-                    rateValue = "1.23"
+                persistentListOf(
+                    BestCurrencyRate.DollarBuyRate(
+                        bank = "test",
+                        rateValue = "1.23"
+                    ),
+                    BestCurrencyRate.DollarSellRate(
+                        bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
+                        rateValue = "4.56"
+                    )
                 ),
-                BestCurrencyRate.DollarSellRate(
-                    bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-                    rateValue = "4.56"
-                )
-            ),
             onBestRateClick = {},
             onBestRateLongClick = {},
             onShareClick = { _, _ -> },

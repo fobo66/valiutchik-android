@@ -16,6 +16,8 @@
 
 import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -24,7 +26,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.detekt)
-//    alias(libs.plugins.kotlinter)
+    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
@@ -115,6 +117,14 @@ kotlin {
             }
         }
     }
+}
+
+tasks.withType<LintTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
+tasks.withType<FormatTask> {
+    exclude { it.file.path.contains("generated") }
 }
 
 dependencies {

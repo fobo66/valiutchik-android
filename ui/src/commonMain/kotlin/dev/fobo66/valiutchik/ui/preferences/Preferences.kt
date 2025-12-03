@@ -63,17 +63,17 @@ fun TextPreference(
     ListItem(
         headlineContent = title,
         supportingContent =
-        summary ?: {
-            Text(
-                text = summaryProvider()
-            )
-        },
+            summary ?: {
+                Text(
+                    text = summaryProvider()
+                )
+            },
         modifier =
-        modifier.clickable(onClick = {
-            if (enabled) {
-                onClick?.invoke()
-            }
-        }),
+            modifier.clickable(onClick = {
+                if (enabled) {
+                    onClick?.invoke()
+                }
+            }),
         trailingContent = trailing
     )
 }
@@ -126,12 +126,12 @@ private fun ListPreferenceDialog(
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Column(
             modifier =
-            modifier
-                .background(
-                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    shape = MaterialTheme.shapes.large
-                )
-                .padding(24.dp)
+                modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        shape = MaterialTheme.shapes.large
+                    )
+                    .padding(24.dp)
         ) {
             ProvideTextStyle(MaterialTheme.typography.headlineSmall) {
                 title()
@@ -148,9 +148,9 @@ private fun ListPreferenceDialog(
                             RadioButton(
                                 selected = value == current.value,
                                 modifier =
-                                Modifier.semantics {
-                                    stateDescription = current.key
-                                },
+                                    Modifier.semantics {
+                                        stateDescription = current.key
+                                    },
                                 onClick = {
                                     if (value != current.value) {
                                         onValueChange(current.value)
@@ -160,20 +160,20 @@ private fun ListPreferenceDialog(
                             )
                         },
                         colors =
-                        ListItemDefaults.colors(
-                            containerColor = Color.Transparent
-                        ),
+                            ListItemDefaults.colors(
+                                containerColor = Color.Transparent
+                            ),
                         modifier =
-                        Modifier
-                            .clickable(onClick = {
-                                if (value != current.value) {
-                                    onValueChange(current.value)
-                                    onDismiss()
+                            Modifier
+                                .clickable(onClick = {
+                                    if (value != current.value) {
+                                        onValueChange(current.value)
+                                        onDismiss()
+                                    }
+                                })
+                                .semantics {
+                                    stateDescription = current.key
                                 }
-                            })
-                            .semantics {
-                                stateDescription = current.key
-                            }
                     )
                 }
             }

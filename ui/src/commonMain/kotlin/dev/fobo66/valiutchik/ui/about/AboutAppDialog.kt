@@ -71,13 +71,13 @@ fun AboutAppDialog(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
                         LinkAnnotation.Url(
                             url = DESCRIPTION_URL,
                             styles =
-                            TextLinkStyles(
-                                style =
-                                SpanStyle(
-                                    color = MaterialTheme.colorScheme.primary,
-                                    textDecoration = TextDecoration.Underline
+                                TextLinkStyles(
+                                    style =
+                                        SpanStyle(
+                                            color = MaterialTheme.colorScheme.primary,
+                                            textDecoration = TextDecoration.Underline
+                                        )
                                 )
-                            )
                         ),
                         linkIndex,
                         linkEndIndex
