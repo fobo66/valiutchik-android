@@ -31,6 +31,9 @@ interface RatesDao {
     @Query("SELECT * FROM rates")
     suspend fun loadAllRates(): List<Rate>
 
+    @Query("SELECT * FROM rates WHERE date(date) < date('now', '-3 months')")
+    suspend fun loadOldRates(): List<Rate>
+
     @Query(
         """
     SELECT bankName, max(usdBuy) as currencyValue, 'DOLLAR' as currencyName, datetime(date) as timestamp, 1 as isBuy FROM rates WHERE timestamp >= date('now')
