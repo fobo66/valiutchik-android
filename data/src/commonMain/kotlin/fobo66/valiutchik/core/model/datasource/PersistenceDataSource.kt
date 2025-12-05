@@ -30,6 +30,16 @@ interface PersistenceDataSource {
     suspend fun saveRates(rates: List<Rate>)
 
     /**
+     * Delete entries from the database
+     */
+    suspend fun deleteRates(rates: List<Rate>)
+
+    /**
+     * Load outdated entries from the database
+     */
+    suspend fun loadOldRates(fromTimestamp: String): List<Rate>
+
+    /**
      * Read entries from the database
      */
     fun readBestCourses(): Flow<List<BestCourse>>
