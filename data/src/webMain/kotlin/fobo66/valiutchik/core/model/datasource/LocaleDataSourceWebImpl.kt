@@ -14,12 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.di
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.model.datasource.LocaleDataSource
-import fobo66.valiutchik.core.model.datasource.LocaleDataSourceWebImpl
-import org.koin.dsl.module
+import fobo66.valiutchik.core.entities.LanguageTag
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-actual val systemModule = module {
-    single<LocaleDataSource> { LocaleDataSourceWebImpl() }
+class LocaleDataSourceWebImpl : LocaleDataSource {
+    override val locale: Flow<LanguageTag>
+        get() = flowOf()
 }
