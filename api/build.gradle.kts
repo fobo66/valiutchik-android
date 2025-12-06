@@ -49,6 +49,8 @@ kotlin {
         }
     }
 
+    js()
+
     sourceSets {
         commonMain {
             generateSecrets(project)

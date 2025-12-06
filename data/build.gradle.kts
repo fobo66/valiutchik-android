@@ -57,6 +57,10 @@ kotlin {
         }
     }
 
+    js {
+        browser()
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -143,6 +147,7 @@ detekt {
 }
 
 dependencies {
+    add("kspJs", libs.room.compiler)
     add("kspJvm", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
     detektPlugins(libs.detekt.rules.compose)
