@@ -133,13 +133,17 @@ class PersistenceDataSourceTest {
         val rates =
             listOf(
                 Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(0, oldDate, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
                 Rate(0, oldDate, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
 
-        db.ratesDao().deleteRates(rates)
+        val ratesToDelete = db.ratesDao().loadAllRates()
+            .filter { it.date == oldDate }
+
+        persistenceDataSource.deleteRates(ratesToDelete)
         val savedRates = db.ratesDao().loadAllRates()
-        assertThat(savedRates).hasSize(0)
+        assertThat(savedRates).hasSize(1)
     }
 }
