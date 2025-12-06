@@ -57,7 +57,9 @@ kotlin {
         }
     }
 
-    js()
+    js {
+        browser()
+    }
 
     sourceSets {
         commonMain {
