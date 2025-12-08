@@ -18,6 +18,8 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -28,6 +30,9 @@ interface CurrencyRateRepository {
      * Refresh exchange rates for the given city
      */
     suspend fun refreshExchangeRates(city: String, defaultCity: String = city)
+
+    @OptIn(ExperimentalTime::class)
+    suspend fun cleanUpOutdatedRates(now: Instant): Int
 
     /**
      * Load exchange rates from database or from network

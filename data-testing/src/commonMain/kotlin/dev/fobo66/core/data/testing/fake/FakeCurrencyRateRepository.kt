@@ -19,6 +19,8 @@ package dev.fobo66.core.data.testing.fake
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,6 +31,9 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
     val locale = MutableStateFlow("en-US")
 
     var isRefreshed = false
+
+    @OptIn(ExperimentalTime::class)
+    override suspend fun cleanUpOutdatedRates(now: Instant): Int = 0
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         isRefreshed = true
