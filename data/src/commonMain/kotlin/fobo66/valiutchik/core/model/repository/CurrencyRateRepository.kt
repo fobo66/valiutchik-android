@@ -33,11 +33,19 @@ interface CurrencyRateRepository {
      * Load exchange rates from database or from network
      */
     fun loadExchangeRates(): Flow<List<BestCourse>>
+
+    /**
+     * Load current user locale
+     */
     fun loadLocale(): Flow<LanguageTag>
 
     /**
      * Format currency rate into human-readable form
      */
     fun formatRate(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Simplify and transliterate bank name for display
+     */
     fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
 }
