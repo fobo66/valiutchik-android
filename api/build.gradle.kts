@@ -49,7 +49,10 @@ kotlin {
         }
     }
 
-    js()
+    js {
+        browser()
+        nodejs()
+    }
 
     sourceSets {
         commonMain {
