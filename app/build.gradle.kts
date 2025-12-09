@@ -118,7 +118,6 @@ tasks.withType<Detekt> {
     jvmTarget = "17"
 }
 
-
 composeCompiler {
     metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
     reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
@@ -205,5 +204,6 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.accessibility)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.hamcrest)
     androidTestImplementation(libs.work.testing)
 }

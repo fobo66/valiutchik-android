@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.37.3"
-androidGradlePlugin = "9.0.0-beta03"
+androidGradlePlugin = "9.0.0-beta04"
 androidxActivity = "1.12.1"
 androidxAnnotations = "1.9.1"
 androidxBenchmark = "1.4.1"
@@ -29,6 +29,7 @@ detekt = "2.0.0-alpha.1"
 detektCompose = "0.5.1"
 dotenvKotlin = "6.5.1"
 espresso = "3.7.0"
+hamcrest = "3.0"
 icu = "78.1"
 jansi = "2.4.2"
 junit = "6.0.1"
@@ -112,6 +113,7 @@ compose-xr = { group = "androidx.xr.compose", name = "compose", version.ref = "x
 compose-xr-material = { group = "androidx.xr.compose.material3", name = "material3", version.ref = "xrMaterial" }
 detekt-rules-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
+hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
 icu = { group = "com.ibm.icu", name = "icu4j", version.ref = "icu" }
 jansi = { group = "org.fusesource.jansi", name = "jansi", version.ref = "jansi" }
 junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
