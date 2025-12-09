@@ -20,7 +20,7 @@ androidxTestUiAutomator = "2.3.0"
 androidxTracing = "1.3.0"
 androidxWindow = "1.5.1"
 baselineProfilePlugin = "1.4.1"
-composeBom = "2025.12.00"
+compose = "1.11.0-alpha01"
 composeHotReload = "1.0.0"
 composeMultiplatform = "1.10.0-rc01"
 composeMultiplatformAdaptive = "1.3.0-alpha02"
@@ -94,7 +94,6 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "androidxTestUiAutomator" }
 androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidxTracing" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidxWindow" }
-compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
 compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "composeMultiplatform" }
 compose-material = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "composeMultiplatformMaterial" }
 compose-material-adaptive = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive", version.ref = "composeMultiplatformAdaptive" }
@@ -103,12 +102,12 @@ compose-material-adaptive-navigation = { group = "org.jetbrains.compose.material
 compose-material-windowsize = { group = "org.jetbrains.compose.material3", name = "material3-window-size-class", version.ref = "composeMultiplatformMaterial" }
 compose-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "composeMultiplatform" }
 compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "composeMultiplatform" }
-compose-stable-marker = { group = "androidx.compose.runtime", name = "runtime-annotation" }
+compose-stable-marker = { group = "androidx.compose.runtime", name = "runtime-annotation", version.ref = "compose" }
 compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "composeMultiplatform" }
 compose-ui-preview = { group = "org.jetbrains.compose.ui", name = "ui-tooling-preview", version.ref = "composeMultiplatform" }
 compose-ui-test = { group = "org.jetbrains.compose.ui", name = "ui-test", version.ref = "composeMultiplatform" }
-compose-ui-testing = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-compose-ui-testing-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-ui-testing = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose" }
+compose-ui-testing-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose" }
 compose-ui-tooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling", version.ref = "composeMultiplatform" }
 compose-xr = { group = "androidx.xr.compose", name = "compose", version.ref = "xr" }
 compose-xr-material = { group = "androidx.xr.compose.material3", name = "material3", version.ref = "xrMaterial" }

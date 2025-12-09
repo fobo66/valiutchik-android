@@ -154,10 +154,6 @@ dependencies {
     baselineProfile(project(":baselineprofile"))
 
     // compose
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    debugImplementation(composeBom)
-    androidTestImplementation(composeBom)
     implementation(libs.compose.ui)
     implementation(libs.compose.xr)
     implementation(libs.compose.material)

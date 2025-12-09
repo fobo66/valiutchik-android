@@ -63,7 +63,6 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.platform(libs.compose.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.napier)
