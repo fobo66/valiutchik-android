@@ -70,7 +70,7 @@ class RatesRefreshWorkerTest {
                     appContext: Context,
                     workerClassName: String,
                     workerParameters: WorkerParameters
-                ): ListenableWorker? = RatesRefreshWorker(
+                ): ListenableWorker = RatesRefreshWorker(
                     forceRefreshExchangeRates,
                     forceRefreshExchangeRatesForDefaultCity,
                     appContext,
