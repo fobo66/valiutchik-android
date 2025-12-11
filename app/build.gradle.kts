@@ -168,7 +168,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.compose)
     implementation(libs.androidx.lifecycle.viewmodel)
 
-    implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.viewmodel)

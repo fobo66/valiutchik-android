@@ -118,13 +118,12 @@ icu = { group = "com.ibm.icu", name = "icu4j", version.ref = "icu" }
 jansi = { group = "org.fusesource.jansi", name = "jansi", version.ref = "jansi" }
 junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
 junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
-koin-android = { group = "io.insert-koin", name = "koin-android" }
-koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
-koin-compose = { group = "io.insert-koin", name = "koin-compose" }
-koin-core = { group = "io.insert-koin", name = "koin-core" }
-koin-test = { group = "io.insert-koin", name = "koin-test-junit5" }
-koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
-koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test-junit5", version.ref = "koin" }
+koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
+koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koin" }
 kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
 kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollections" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
