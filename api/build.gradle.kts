@@ -58,7 +58,6 @@ kotlin {
 
                 implementation(libs.koin.core)
 
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client)
                 implementation(libs.ktor.auth)
                 implementation(libs.ktor.content)
@@ -88,7 +87,6 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.logging)
             }
         }

@@ -134,13 +134,12 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinxIo" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json-io", version.ref = "kotlinxSerialization" }
-ktor-auth = { group = "io.ktor", name = "ktor-client-auth" }
-ktor-bom = { group = "io.ktor", name = "ktor-bom", version.ref = "ktor" }
-ktor-client = { group = "io.ktor", name = "ktor-client-cio" }
-ktor-content = { group = "io.ktor", name = "ktor-client-content-negotiation" }
-ktor-encoding = { group = "io.ktor", name = "ktor-client-encoding" }
-ktor-logging = { group = "io.ktor", name = "ktor-client-logging" }
-ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
+ktor-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
+ktor-client = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-content = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-encoding = { group = "io.ktor", name = "ktor-client-encoding", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }

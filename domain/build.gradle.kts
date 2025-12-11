@@ -65,7 +65,6 @@ kotlin {
                 implementation(kotlin("test"))
                 api(project(":data-testing"))
                 api(project(":domain-testing"))
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
                 implementation(libs.turbine)
