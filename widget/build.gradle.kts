@@ -73,10 +73,6 @@ tasks.withType<Detekt> {
 }
 
 dependencies {
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    debugImplementation(composeBom)
-    androidTestImplementation(composeBom)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
     androidTestImplementation(libs.compose.ui.testing)

@@ -141,6 +141,16 @@ class CurrencyRateRepositoryImpl(
         )
     }
 
+    override suspend fun cleanUpOutdatedRates(): Int {
+        val oldRates = persistenceDataSource.loadOldRates()
+
+        if (oldRates.isNotEmpty()) {
+            persistenceDataSource.deleteRates(oldRates)
+        }
+
+        return oldRates.size
+    }
+
     override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String =
         formattingDataSource.formatBankName(rate.bankName.orEmpty(), languageTag)
 

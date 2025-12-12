@@ -56,10 +56,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.collection)
 
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
 
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client)
                 implementation(libs.ktor.auth)
                 implementation(libs.ktor.content)
@@ -82,23 +80,19 @@ kotlin {
 
         jvmTest {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
             }
         }
 
         androidMain {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.android)
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.logging)
             }
         }
 
         named("androidHostTest") {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
             }
         }

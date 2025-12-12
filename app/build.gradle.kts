@@ -118,7 +118,6 @@ tasks.withType<Detekt> {
     jvmTarget = "17"
 }
 
-
 composeCompiler {
     metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
     reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
@@ -155,10 +154,6 @@ dependencies {
     baselineProfile(project(":baselineprofile"))
 
     // compose
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    debugImplementation(composeBom)
-    androidTestImplementation(composeBom)
     implementation(libs.compose.ui)
     implementation(libs.compose.xr)
     implementation(libs.compose.material)
@@ -173,7 +168,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.compose)
     implementation(libs.androidx.lifecycle.viewmodel)
 
-    implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.viewmodel)
@@ -197,13 +191,15 @@ dependencies {
     androidTestApi(project(":domain-testing"))
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.turbine)
+    androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.test.espresso.contrib)
     androidTestImplementation(libs.androidx.test.espresso.intents)
     androidTestImplementation(libs.androidx.test.espresso.accessibility)
-    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.truth)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.hamcrest)
     androidTestImplementation(libs.work.testing)
 }
