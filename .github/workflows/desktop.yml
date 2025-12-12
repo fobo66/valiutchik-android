@@ -30,7 +30,7 @@ jobs:
       - name: Build installer
         run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:packageReleaseDistributionForCurrentOS
       - name: Linux distributable
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: valiutchik-linux
           path: desktop/build/compose/binaries/main-release/deb/dev.fobo66.valiutchik.desktop_1.0.0_amd64.deb
@@ -52,7 +52,7 @@ jobs:
       - name: Build installer
         run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true desktop:packageReleaseDistributionForCurrentOS
       - name: macOS distributable
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: valiutchik-macos
           path: desktop/build/compose/binaries/main-release/dmg/dev.fobo66.valiutchik.desktop-1.0.0.dmg
@@ -74,7 +74,7 @@ jobs:
       - name: Build installer
         run: ./gradlew.bat desktop:packageReleaseDistributionForCurrentOS
       - name: Windows distributable
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: valiutchik-windows
           path: desktop/build/compose/binaries/main-release/exe/dev.fobo66.valiutchik.desktop-1.0.0.exe
