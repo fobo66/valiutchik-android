@@ -30,8 +30,6 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.util.CurrencyName.RUB
 import fobo66.valiutchik.core.util.CurrencyName.UAH
-import kotlin.time.ExperimentalTime
-import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -143,9 +141,8 @@ class CurrencyRateRepositoryImpl(
         )
     }
 
-    @OptIn(ExperimentalTime::class)
-    override suspend fun cleanUpOutdatedRates(now: Instant): Int {
-        val oldRates = persistenceDataSource.loadOldRates(now.toString())
+    override suspend fun cleanUpOutdatedRates(): Int {
+        val oldRates = persistenceDataSource.loadOldRates()
 
         if (oldRates.isNotEmpty()) {
             persistenceDataSource.deleteRates(oldRates)

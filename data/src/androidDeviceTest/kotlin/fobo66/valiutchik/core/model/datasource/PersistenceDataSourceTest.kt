@@ -124,7 +124,7 @@ class PersistenceDataSourceTest {
 
         persistenceDataSource.saveRates(rates)
 
-        val result = db.ratesDao().loadOldRates(oldDate)
+        val result = db.ratesDao().loadOldRates()
         assertThat(result).hasSize(1)
     }
 
@@ -133,7 +133,21 @@ class PersistenceDataSourceTest {
         val rates =
             listOf(
                 Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
-                Rate(0, oldDate, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(
+                    0,
+                    oldDate,
+                    "test",
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE
+                ),
                 Rate(0, oldDate, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
             )
 

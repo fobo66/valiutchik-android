@@ -32,8 +32,8 @@ interface RatesDao {
     @Query("SELECT * FROM rates")
     suspend fun loadAllRates(): List<Rate>
 
-    @Query("SELECT * FROM rates WHERE date(date) <= date(:fromTimestamp)")
-    suspend fun loadOldRates(fromTimestamp: String): List<Rate>
+    @Query("SELECT * FROM rates WHERE date(date) < date('now')")
+    suspend fun loadOldRates(): List<Rate>
 
     @Query(
         """

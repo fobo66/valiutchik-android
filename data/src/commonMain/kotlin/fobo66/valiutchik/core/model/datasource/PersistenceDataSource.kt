@@ -37,7 +37,7 @@ interface PersistenceDataSource {
     /**
      * Load outdated entries from the database
      */
-    suspend fun loadOldRates(fromTimestamp: String): List<Rate>
+    suspend fun loadOldRates(): List<Rate>
 
     /**
      * Read entries from the database

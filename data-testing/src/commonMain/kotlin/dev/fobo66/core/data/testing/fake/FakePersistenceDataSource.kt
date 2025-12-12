@@ -26,7 +26,7 @@ class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
     var isDeleted = false
 
-    override suspend fun loadOldRates(fromTimestamp: String): List<Rate> = emptyList()
+    override suspend fun loadOldRates(): List<Rate> = emptyList()
 
     override suspend fun saveRates(rates: List<Rate>) {
         isSaved = true
