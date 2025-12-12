@@ -59,7 +59,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Set up secrets
-      run: cp sample.env .env
+      run: cp .env.sample .env
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
     # or others). This is typically only required for manual builds.
