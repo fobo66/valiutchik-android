@@ -63,8 +63,8 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                api(project(":data-testing"))
-                api(project(":domain-testing"))
+                implementation(project(":data-testing"))
+                implementation(project(":domain-testing"))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
                 implementation(libs.turbine)

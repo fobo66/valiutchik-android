@@ -81,7 +81,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                api(project(":data-testing"))
+                implementation(project(":data-testing"))
                 implementation(libs.room.testing)
                 implementation(libs.kotlinx.coroutines.test)
             }

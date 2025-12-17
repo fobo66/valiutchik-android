@@ -16,16 +16,13 @@
 
 import com.android.sdklib.AndroidVersion
 import dev.detekt.gradle.Detekt
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.app)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.licenses)
     alias(libs.plugins.junit)
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
@@ -123,14 +120,6 @@ composeCompiler {
     reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
 
-licenseReport {
-    generateCsvReport = false
-    generateHtmlReport = false
-
-    copyHtmlReportToAssets = false
-    copyJsonReportToAssets = true
-}
-
 dependencies {
     api(project(":ui"))
     api(project(":presentation"))
@@ -181,14 +170,14 @@ dependencies {
     detektPlugins(libs.detekt.rules.compose)
 
     // tests
-    testApi(project(":domain-testing"))
+    testImplementation(project(":domain-testing"))
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
 
-    androidTestApi(project(":domain-testing"))
+    androidTestImplementation(project(":domain-testing"))
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.core)
