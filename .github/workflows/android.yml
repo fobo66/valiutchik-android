@@ -33,7 +33,20 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check
         run: ./gradlew -Dorg.gradle.configuration-cache.read-only=true check
-
+  dependency-submission:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'liberica'
+          java-version: '25'
+      - name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@v5
   proguard:
     runs-on: ubuntu-latest
     steps:
