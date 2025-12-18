@@ -179,6 +179,7 @@ dependencies {
 
     androidTestImplementation(project(":domain-testing"))
     androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlin.test)
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)
