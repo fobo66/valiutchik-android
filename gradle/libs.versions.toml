@@ -46,7 +46,7 @@ kotlinxSerialization = "1.9.0"
 ksp = "2.3.4"
 ktor = "3.3.3"
 leakCanary = "2.14"
-licensesPlugin = "0.9.8"
+licensesPlugin = "13.1.0"
 logback = "1.5.22"
 materialKolor = "5.0.0-alpha04"
 napier = "2.7.1"
@@ -176,6 +176,6 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-licenses = { id = "com.jaredsburrows.license", version.ref = "licensesPlugin" }
+licenses = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "licensesPlugin" }
 robolectric-junit5 = { id = "tech.apter.junit5.jupiter.robolectric-extension-gradle-plugin", version.ref = "robolectricJunit5" }
 room = { id = "androidx.room", version.ref = "room" }

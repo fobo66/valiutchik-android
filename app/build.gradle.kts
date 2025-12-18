@@ -23,6 +23,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.licenses)
     alias(libs.plugins.junit)
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
@@ -118,6 +119,13 @@ tasks.withType<Detekt> {
 composeCompiler {
     metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
     reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
+}
+
+aboutLibraries {
+    export {
+        outputFile = file("src/main/assets/open_source_licenses.json")
+        variant = "release"
+    }
 }
 
 dependencies {

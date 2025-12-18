@@ -25,6 +25,7 @@ plugins {
     alias(libs.plugins.compose) apply false
     alias(libs.plugins.compose.multiplatform) apply false
     alias(libs.plugins.compose.hotreload) apply false
+    alias(libs.plugins.licenses) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.benchmark) apply false
     alias(libs.plugins.junit) apply false
