@@ -54,8 +54,6 @@ kotlin {
                 implementation(libs.androidx.collection)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.platform(libs.compose.bom))
                 implementation(libs.koin.core)
                 implementation(libs.napier)
                 compileOnly(libs.compose.stable.marker)
@@ -65,10 +63,8 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                api(project(":data-testing"))
-                api(project(":domain-testing"))
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(project(":data-testing"))
+                implementation(project(":domain-testing"))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
                 implementation(libs.turbine)

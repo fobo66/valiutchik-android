@@ -17,6 +17,7 @@
 package fobo66.exchangecourcesbelarus.di
 
 import androidx.work.WorkManager
+import fobo66.exchangecourcesbelarus.work.CleanupWorker
 import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
 import fobo66.exchangecourcesbelarus.work.RefreshInteractorWorkManagerImpl
 import fobo66.valiutchik.domain.usecases.RefreshInteractor
@@ -28,4 +29,5 @@ val workersModule = module {
     single { WorkManager.getInstance(androidContext()) }
     single<RefreshInteractor> { RefreshInteractorWorkManagerImpl(get(), get()) }
     worker { RatesRefreshWorker(get(), get(), androidContext(), get()) }
+    worker { CleanupWorker(get(), androidContext(), get()) }
 }

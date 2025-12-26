@@ -62,8 +62,6 @@ kotlin {
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.platform(libs.compose.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.napier)
@@ -74,11 +72,9 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                api(project(":data-testing"))
-                api(project(":data"))
-                api(project(":domain-testing"))
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(project(":data-testing"))
+                implementation(project(":data"))
+                implementation(project(":domain-testing"))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
                 implementation(libs.turbine)

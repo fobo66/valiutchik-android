@@ -14,14 +14,17 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.desktop.di
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
-import fobo66.valiutchik.domain.usecases.RefreshInteractorImpl
-import org.koin.dsl.module
+import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import io.github.aakira.napier.Napier
 
-val refreshModule = module {
-    single<RefreshInteractor> {
-        RefreshInteractorImpl(get(), get(), get())
+class CleanUpOldRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
+    CleanUpOldRates {
+    override suspend fun execute() {
+        val removedCount = currencyRateRepository.cleanUpOutdatedRates()
+        Napier.d {
+            "Removed $removedCount old rates"
+        }
     }
 }

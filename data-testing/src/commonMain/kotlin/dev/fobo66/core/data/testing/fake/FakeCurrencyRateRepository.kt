@@ -30,6 +30,8 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
 
     var isRefreshed = false
 
+    override suspend fun cleanUpOutdatedRates(): Int = 0
+
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         isRefreshed = true
     }

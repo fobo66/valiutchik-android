@@ -65,7 +65,6 @@ kotlin {
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
 
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
@@ -82,7 +81,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                api(project(":data-testing"))
+                implementation(project(":data-testing"))
                 implementation(libs.room.testing)
                 implementation(libs.kotlinx.coroutines.test)
             }
@@ -97,7 +96,6 @@ kotlin {
 
         jvmTest {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
                 implementation(libs.truth)
             }
@@ -105,7 +103,6 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.android)
             }
         }
@@ -113,9 +110,7 @@ kotlin {
         named("androidHostTest") {
             dependencies {
                 implementation(libs.truth)
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client)
             }
         }

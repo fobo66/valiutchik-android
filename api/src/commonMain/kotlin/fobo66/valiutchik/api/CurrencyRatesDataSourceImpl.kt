@@ -68,7 +68,7 @@ class CurrencyRatesDataSourceImpl(
                         }
                     }
                     .awaitAll()
-                    .flatMap { it }
+                    .flatten()
                     .groupBy { it.id }
             } catch (e: ResponseException) {
                 throw IOException(e)

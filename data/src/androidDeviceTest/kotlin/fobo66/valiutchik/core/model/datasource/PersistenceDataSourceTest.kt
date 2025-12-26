@@ -30,7 +30,9 @@ import kotlin.test.Test
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 
 private const val RATE = 1.23456f
@@ -49,6 +51,13 @@ class PersistenceDataSourceTest {
     @OptIn(ExperimentalTime::class)
     private val date =
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
+
+    @OptIn(ExperimentalTime::class)
+    private val oldDate =
+        Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.minus(
+            3,
+            DateTimeUnit.MONTH
+        ).toString()
 
     @AfterTest
     fun tearDown() {
@@ -103,5 +112,52 @@ class PersistenceDataSourceTest {
                     Correspondence.transforming(BestCourse::currencyValue, "Currency value")
                 ).contains(0.0f)
             }
+    }
+
+    @Test
+    fun loadOldRates() = runTest {
+        val rates =
+            listOf(
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(0, oldDate, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
+            )
+
+        persistenceDataSource.saveRates(rates)
+
+        val result = db.ratesDao().loadOldRates()
+        assertThat(result).hasSize(1)
+    }
+
+    @Test
+    fun deleteRates() = runTest {
+        val rates =
+            listOf(
+                Rate(0, date, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE),
+                Rate(
+                    0,
+                    oldDate,
+                    "test",
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE,
+                    RATE
+                ),
+                Rate(0, oldDate, "test", RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE, RATE)
+            )
+
+        persistenceDataSource.saveRates(rates)
+
+        val ratesToDelete = db.ratesDao().loadAllRates()
+            .filter { it.date == oldDate }
+
+        persistenceDataSource.deleteRates(ratesToDelete)
+        val savedRates = db.ratesDao().loadAllRates()
+        assertThat(savedRates).hasSize(1)
     }
 }

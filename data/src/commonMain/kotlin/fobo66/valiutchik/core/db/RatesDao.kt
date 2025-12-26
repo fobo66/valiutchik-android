@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.db
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import fobo66.valiutchik.core.entities.BestCourse
@@ -30,6 +31,9 @@ interface RatesDao {
 
     @Query("SELECT * FROM rates")
     suspend fun loadAllRates(): List<Rate>
+
+    @Query("SELECT * FROM rates WHERE date(date) < date('now')")
+    suspend fun loadOldRates(): List<Rate>
 
     @Query(
         """
@@ -46,4 +50,7 @@ interface RatesDao {
     ORDER BY currencyName"""
     )
     fun resolveBestRates(): Flow<List<BestCourse>>
+
+    @Delete
+    suspend fun deleteRates(rates: List<Rate>)
 }

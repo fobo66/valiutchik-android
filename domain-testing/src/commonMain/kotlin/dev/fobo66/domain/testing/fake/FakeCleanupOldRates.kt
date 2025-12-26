@@ -14,14 +14,13 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.desktop.di
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
-import fobo66.valiutchik.domain.usecases.RefreshInteractorImpl
-import org.koin.dsl.module
+import fobo66.valiutchik.domain.usecases.CleanUpOldRates
 
-val refreshModule = module {
-    single<RefreshInteractor> {
-        RefreshInteractorImpl(get(), get(), get())
+class FakeCleanupOldRates : CleanUpOldRates {
+    var isCleanedUp = false
+    override suspend fun execute() {
+        isCleanedUp = true
     }
 }

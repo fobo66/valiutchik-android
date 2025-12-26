@@ -17,6 +17,8 @@
 package fobo66.valiutchik.domain.di
 
 import fobo66.valiutchik.core.di.repositoriesModule
+import fobo66.valiutchik.domain.usecases.CleanUpOldRates
+import fobo66.valiutchik.domain.usecases.CleanUpOldRatesImpl
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboardImpl
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
@@ -80,5 +82,9 @@ val domainModule = module {
 
     single<UpdateUpdateIntervalPreference> {
         UpdateUpdateIntervalPreferenceImpl(get())
+    }
+
+    single<CleanUpOldRates> {
+        CleanUpOldRatesImpl(get())
     }
 }

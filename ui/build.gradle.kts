@@ -65,7 +65,6 @@ kotlin {
                 api(project(":domain"))
                 implementation(libs.androidx.lifecycle.compose)
                 implementation(libs.materialKolor)
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.ui)

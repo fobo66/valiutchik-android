@@ -14,14 +14,8 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.desktop.di
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
-import fobo66.valiutchik.domain.usecases.RefreshInteractorImpl
-import org.koin.dsl.module
-
-val refreshModule = module {
-    single<RefreshInteractor> {
-        RefreshInteractorImpl(get(), get(), get())
-    }
+interface CleanUpOldRates {
+    suspend fun execute()
 }
