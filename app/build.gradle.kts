@@ -21,7 +21,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.compose)
-    alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
     alias(libs.plugins.junit)
