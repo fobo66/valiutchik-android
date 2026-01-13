@@ -44,8 +44,6 @@ kotlin {
             version = release(AndroidVersion.VersionCodes.R)
         }
 
-        withHostTestBuilder {}.configure {}
-
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions {
@@ -83,13 +81,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.koin.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.koin.android)
-                implementation(libs.ktor.logging)
             }
         }
     }
