@@ -41,11 +41,19 @@ android {
         }
     }
 
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+            minorApiLevel = 1
+        }
+    }
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
-        minSdk = AndroidVersion.VersionCodes.R
-        targetSdk = AndroidVersion.VersionCodes.BAKLAVA
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
+        targetSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA)
+        }
         versionCode = 25
         versionName = "1.15.1"
         multiDexEnabled = true

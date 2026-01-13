@@ -33,9 +33,15 @@ kotlin {
 
     androidLibrary {
         namespace = "dev.fobo66.core.data.testing"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+        compileSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+                minorApiLevel = 1
+            }
+        }
 
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         compilations.configureEach {
             compileTaskProvider.configure {

@@ -34,9 +34,15 @@ kotlin {
 
     androidLibrary {
         namespace = "fobo66.valiutchik.api"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+        compileSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+                minorApiLevel = 1
+            }
+        }
 
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         withHostTestBuilder {}.configure {}
 
@@ -76,11 +82,6 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-            }
-        }
-
-        jvmTest {
-            dependencies {
                 implementation(libs.koin.test)
             }
         }
@@ -89,12 +90,6 @@ kotlin {
             dependencies {
                 implementation(libs.koin.android)
                 implementation(libs.ktor.logging)
-            }
-        }
-
-        named("androidHostTest") {
-            dependencies {
-                implementation(libs.koin.test)
             }
         }
     }

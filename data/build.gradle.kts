@@ -35,9 +35,15 @@ kotlin {
 
     androidLibrary {
         namespace = "fobo66.valiutchik.core"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+        compileSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+                minorApiLevel = 1
+            }
+        }
 
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         withHostTestBuilder {}.configure {}
         withDeviceTestBuilder {
