@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":data"))
+                implementation(project(":data"))
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
                 implementation(libs.kotlinx.coroutines.core)
