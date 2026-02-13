@@ -32,7 +32,7 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "fobo66.valiutchik.api"
         compileSdk {
             version = release(AndroidVersion.VersionCodes.BAKLAVA) {

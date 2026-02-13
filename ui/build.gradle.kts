@@ -30,7 +30,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.valiutchik.ui"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R

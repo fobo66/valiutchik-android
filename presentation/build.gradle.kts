@@ -34,7 +34,7 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.valiutchik.presentation"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R

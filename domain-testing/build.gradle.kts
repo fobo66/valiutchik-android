@@ -31,7 +31,7 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.domain.testing"
         compileSdk {
             version = release(AndroidVersion.VersionCodes.BAKLAVA) {
