@@ -6,7 +6,11 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   BITRISEIO_ANDROID_KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
   BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{secrets.KEYSTORE_PRIVATE_KEY_PASSWORD}}
@@ -14,7 +18,7 @@ env:
   BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
   GEOAPIFY_API_KEY: ${{secrets.GEOAPIFY_API_KEY}}
   IPGEOCODING_API_KEY: ${{secrets.IPGEOCODING_API_KEY}}
-  
+
 
 jobs:
   check:
