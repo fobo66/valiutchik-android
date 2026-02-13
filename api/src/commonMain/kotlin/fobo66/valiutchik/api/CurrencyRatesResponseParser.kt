@@ -17,6 +17,7 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.CurrencyRateSource
+import kotlinx.io.Source
 
 /**
  * Response parser for [MyFIN](myfin.by) dataset
@@ -29,5 +30,5 @@ interface CurrencyRatesResponseParser {
      *
      * @return set of bank branch info with the actual rate
      */
-    fun parse(body: String): Set<CurrencyRateSource>
+    fun parse(body: Source): Set<CurrencyRateSource>
 }

@@ -31,6 +31,8 @@ import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import java.time.LocalDate
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.io.asSource
+import kotlinx.io.buffered
 import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Before
@@ -69,8 +71,9 @@ class BestCoursePersistenceDataSourceBenchmark {
                 .getInstrumentation()
                 .context.assets
                 .open("myfinNewApi.json")
-                .bufferedReader()
-                .readText()
+                .asSource()
+                .buffered()
+
         persistenceDataSource.saveRates(
             parser.parse(ratesResponseContent)
                 .map {

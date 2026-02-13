@@ -18,14 +18,17 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
+import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.utils.io.readBuffer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -64,7 +67,7 @@ class CurrencyRatesDataSourceImpl(
                                 header(CLACKS_KEY, CLACKS_VALUE)
                                 setBody(request)
                             }
-                            parser.parse(response.bodyAsText())
+                            parser.parse(response.bodyAsChannel().readBuffer())
                         }
                     }
                     .awaitAll()
