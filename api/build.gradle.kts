@@ -26,7 +26,7 @@ plugins {
 }
 
 kotlin {
-    jvm {
+    jvm("desktop") {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
         }
