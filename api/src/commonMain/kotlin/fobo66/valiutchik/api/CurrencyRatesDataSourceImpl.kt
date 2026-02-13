@@ -18,9 +18,7 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
-import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.header
 import io.ktor.client.request.post
