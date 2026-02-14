@@ -28,7 +28,7 @@ class LoadOpenSourceLicensesImpl(private val licensesRepository: LicensesReposit
             .map {
                 OpenSourceLicense(
                     authors = it.developers.joinToString(),
-                    licenses = it.licenses.joinToString { license -> license.license },
+                    licenses = it.licenses.joinToString(),
                     project = it.project,
                     url = it.url,
                     year = it.year.orEmpty()

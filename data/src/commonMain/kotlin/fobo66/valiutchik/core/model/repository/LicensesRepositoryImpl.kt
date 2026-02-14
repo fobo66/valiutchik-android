@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import fobo66.valiutchik.core.entities.License
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.LicensesDataSource
@@ -32,19 +31,14 @@ class LicensesRepositoryImpl(
         return licensesDataSource.decodeLicenses(licensesFile)
             ?.map { library ->
                 OpenSourceLicensesItem(
-                    dependency = library.artifactId,
+                    dependency = library.uniqueId,
                     description = library.description,
                     developers = library.developers.mapNotNull { it.name },
-                    licenses = library.licenses.map {
-                        License(
-                            license = it.name,
-                            licenseUrl = it.url.orEmpty()
-                        )
-                    },
+                    licenses = library.licenses.map { it.name },
                     project = library.name,
                     url = library.website,
                     version = library.artifactVersion.orEmpty(),
-                    year = null
+                    year = library.licenses.find { !it.year.isNullOrEmpty() }?.year
                 )
             } ?: emptyList()
     }
