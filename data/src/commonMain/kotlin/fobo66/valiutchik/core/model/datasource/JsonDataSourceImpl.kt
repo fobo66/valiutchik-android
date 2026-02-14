@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,8 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.entity.Library
 import io.github.aakira.napier.Napier
 import kotlinx.io.IOException
 import kotlinx.io.Source
@@ -27,8 +28,8 @@ import kotlinx.serialization.json.io.decodeFromSource
 
 class JsonDataSourceImpl(private val json: Json) : JsonDataSource {
     @OptIn(ExperimentalSerializationApi::class)
-    override fun decodeLicenses(jsonSource: Source): List<OpenSourceLicensesItem>? = try {
-        json.decodeFromSource(jsonSource)
+    override fun decodeLicenses(jsonSource: Source): List<Library>? = try {
+        json.decodeFromSource<Libs>(jsonSource).libraries
     } catch (e: SerializationException) {
         Napier.e(e) {
             "Data format issue"
