@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
+import com.mikepenz.aboutlibraries.entity.Library
 import kotlinx.io.Source
 
-interface JsonDataSource {
-    fun decodeLicenses(jsonSource: Source): List<OpenSourceLicensesItem>?
+interface LicensesDataSource {
+    fun decodeLicenses(jsonSource: Source): List<Library>?
 }

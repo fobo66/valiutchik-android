@@ -21,6 +21,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.licenses)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
 }
@@ -95,6 +96,12 @@ compose.desktop {
                 iconFile = project.layout.projectDirectory.file("icons/ic_launcher.ico")
             }
         }
+    }
+}
+
+aboutLibraries {
+    export {
+        outputFile = file("src/desktopMain/resources/open_source_licenses.json")
     }
 }
 

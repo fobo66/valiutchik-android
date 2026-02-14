@@ -1,4 +1,5 @@
 [versions]
+aboutLibraries = "14.0.0-b02"
 accompanist = "0.37.3"
 androidGradlePlugin = "9.1.0-alpha09"
 androidxActivity = "1.12.4"
@@ -45,7 +46,6 @@ kotlinxSerialization = "1.10.0"
 ksp = "2.3.5"
 ktor = "3.4.0"
 leakCanary = "2.14"
-licensesPlugin = "13.2.1"
 logback = "1.5.30"
 materialKolor = "5.0.0-alpha06"
 napier = "2.7.1"
@@ -62,6 +62,7 @@ xr = "1.0.0-alpha10"
 xrMaterial = "1.0.0-alpha14"
 
 [libraries]
+aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotations" }
@@ -173,6 +174,6 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-licenses = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "licensesPlugin" }
+licenses = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 robolectric-junit5 = { id = "tech.apter.junit5.jupiter.robolectric-extension-gradle-plugin", version.ref = "robolectricJunit5" }
 room = { id = "androidx.room", version.ref = "room" }
