@@ -34,7 +34,7 @@ class LicensesRepositoryImpl(
                 OpenSourceLicensesItem(
                     dependency = library.artifactId,
                     description = library.description,
-                    developers = library.developers.map { it.name }.filterNotNull(),
+                    developers = library.developers.mapNotNull { it.name },
                     licenses = library.licenses.map {
                         License(
                             license = it.name,

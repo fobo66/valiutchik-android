@@ -18,18 +18,23 @@ package fobo66.valiutchik.core.model.datasource
 
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
+import com.mikepenz.aboutlibraries.util.withJson
 import io.github.aakira.napier.Napier
 import kotlinx.io.IOException
 import kotlinx.io.Source
+import kotlinx.io.readByteArray
+import kotlinx.io.readString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.io.decodeFromSource
 
 class JsonDataSourceImpl(private val json: Json) : JsonDataSource {
     @OptIn(ExperimentalSerializationApi::class)
     override fun decodeLicenses(jsonSource: Source): List<Library>? = try {
-        json.decodeFromSource<Libs>(jsonSource).libraries
+        Libs.Builder()
+            .withJson(jsonSource.readString())
+            .build()
+            .libraries
     } catch (e: SerializationException) {
         Napier.e(e) {
             "Data format issue"
