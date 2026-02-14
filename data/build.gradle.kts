@@ -70,7 +70,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
-
+                implementation(libs.aboutlibraries.core)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
