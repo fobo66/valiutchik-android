@@ -44,7 +44,7 @@ val dataSourcesModule =
         includes(apiModule, systemModule, thirdPartyModule)
 
         single<LicensesDataSource> {
-            LicensesDataSourceImpl(get())
+            LicensesDataSourceImpl()
         }
 
         single<PersistenceDataSource> {

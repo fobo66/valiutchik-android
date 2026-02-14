@@ -24,9 +24,8 @@ import kotlinx.io.Source
 import kotlinx.io.readString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.Json
 
-class LicensesDataSourceImpl(private val json: Json) : LicensesDataSource {
+class LicensesDataSourceImpl : LicensesDataSource {
     @OptIn(ExperimentalSerializationApi::class)
     override fun decodeLicenses(jsonSource: Source): List<Library>? = try {
         Libs.Builder()
