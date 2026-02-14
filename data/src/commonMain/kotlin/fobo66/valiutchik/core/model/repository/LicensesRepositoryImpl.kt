@@ -37,8 +37,7 @@ class LicensesRepositoryImpl(
                     licenses = library.licenses.map { it.name },
                     project = library.name,
                     url = library.website,
-                    version = library.artifactVersion.orEmpty(),
-                    year = library.licenses.find { !it.year.isNullOrEmpty() }?.year
+                    version = library.artifactVersion.orEmpty()
                 )
             } ?: emptyList()
     }

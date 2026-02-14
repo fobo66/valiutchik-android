@@ -24,5 +24,4 @@ data class OpenSourceLicensesItem(
     val project: String,
     val url: String?,
     val version: String,
-    val year: String?
 )
