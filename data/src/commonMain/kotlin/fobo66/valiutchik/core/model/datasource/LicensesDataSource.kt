@@ -19,6 +19,6 @@ package fobo66.valiutchik.core.model.datasource
 import com.mikepenz.aboutlibraries.entity.Library
 import kotlinx.io.Source
 
-interface JsonDataSource {
+interface LicensesDataSource {
     fun decodeLicenses(jsonSource: Source): List<Library>?
 }

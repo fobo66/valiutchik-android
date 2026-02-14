@@ -19,17 +19,17 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.core.entities.License
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
-import fobo66.valiutchik.core.model.datasource.JsonDataSource
+import fobo66.valiutchik.core.model.datasource.LicensesDataSource
 
 class LicensesRepositoryImpl(
     private val assetsDataSource: AssetsDataSource,
-    private val jsonDataSource: JsonDataSource
+    private val licensesDataSource: LicensesDataSource
 ) : LicensesRepository {
 
     override fun loadLicenses(): List<OpenSourceLicensesItem> = assetsDataSource.loadFile(
         "open_source_licenses.json"
     ).use { licensesFile ->
-        return jsonDataSource.decodeLicenses(licensesFile)
+        return licensesDataSource.decodeLicenses(licensesFile)
             ?.map { library ->
                 OpenSourceLicensesItem(
                     dependency = library.artifactId,

@@ -18,17 +18,15 @@ package fobo66.valiutchik.core.model.datasource
 
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
-import com.mikepenz.aboutlibraries.util.withJson
 import io.github.aakira.napier.Napier
 import kotlinx.io.IOException
 import kotlinx.io.Source
-import kotlinx.io.readByteArray
 import kotlinx.io.readString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
-class JsonDataSourceImpl(private val json: Json) : JsonDataSource {
+class LicensesDataSourceImpl(private val json: Json) : LicensesDataSource {
     @OptIn(ExperimentalSerializationApi::class)
     override fun decodeLicenses(jsonSource: Source): List<Library>? = try {
         Libs.Builder()
