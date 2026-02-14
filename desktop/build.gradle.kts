@@ -27,7 +27,7 @@ plugins {
 kotlin {
     jvm("desktop") {
         javaToolchains {
-            version = JavaVersion.VERSION_21
+            version = JavaVersion.VERSION_17
         }
     }
 
