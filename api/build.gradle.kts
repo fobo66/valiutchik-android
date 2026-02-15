@@ -53,6 +53,11 @@ kotlin {
         }
     }
 
+    js {
+        browser()
+        nodejs()
+    }
+
     sourceSets {
         commonMain {
             generateSecrets(project)
