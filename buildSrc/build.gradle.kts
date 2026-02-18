@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,10 +35,18 @@ repositories {
     mavenCentral()
 }
 
+gradlePlugin {
+    plugins {
+        register("QualityPlugin") {
+            id = "dev.fobo66.detekt"
+            implementationClass = "QualityPlugin"
+        }
+    }
+}
+
 dependencies {
-    implementation(plugin(libs.plugins.kotlin.multiplatform))
-    implementation(plugin(libs.plugins.detekt))
-    implementation(plugin(libs.plugins.kotlinter))
+    compileOnly(plugin(libs.plugins.detekt))
+    compileOnly(plugin(libs.plugins.kotlinter))
     implementation(libs.dotenv.kotlin)
     implementation(libs.kotlinpoet)
 }

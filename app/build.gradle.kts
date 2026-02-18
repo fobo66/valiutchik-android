@@ -21,11 +21,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.compose)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
     alias(libs.plugins.junit)
     alias(libs.plugins.baseline.profile)
-    id("quality-convention")
+    id("dev.fobo66.detekt")
 }
 
 android {
