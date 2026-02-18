@@ -14,14 +14,8 @@
  *    limitations under the License.
  */
 
-import dev.detekt.gradle.Detekt
-import dev.detekt.gradle.DetektCreateBaselineTask
-import dev.detekt.gradle.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.findByType
-import org.gradle.kotlin.dsl.withType
-
 /*
  *    Copyright 2026 Andrey Mukamolov
  *
@@ -42,17 +36,5 @@ class QualityPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.pluginManager.apply("dev.detekt")
         target.pluginManager.apply("org.jmailen.kotlinter")
-
-        target.extensions.findByType<DetektExtension>()?.apply {
-            autoCorrect.set(true)
-        }
-
-        target.tasks.withType<Detekt>().configureEach {
-            jvmTarget.set("17")
-        }
-
-        target.tasks.withType<DetektCreateBaselineTask>().configureEach {
-            jvmTarget.set("17")
-        }
     }
 }

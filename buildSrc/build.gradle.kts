@@ -38,7 +38,7 @@ repositories {
 gradlePlugin {
     plugins {
         register("QualityPlugin") {
-            id = "dev.fobo66.detekt"
+            id = "dev.fobo66.quality"
             implementationClass = "QualityPlugin"
         }
     }

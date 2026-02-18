@@ -24,7 +24,7 @@ plugins {
     alias(libs.plugins.licenses)
     alias(libs.plugins.junit)
     alias(libs.plugins.baseline.profile)
-    id("dev.fobo66.detekt")
+    id("dev.fobo66.quality")
 }
 
 android {
