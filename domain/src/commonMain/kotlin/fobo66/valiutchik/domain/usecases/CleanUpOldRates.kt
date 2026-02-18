@@ -14,15 +14,8 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.entities
+package fobo66.valiutchik.domain.usecases
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class License(
-    @SerialName("license")
-    val license: String,
-    @SerialName("license_url")
-    val licenseUrl: String
-)
+interface CleanUpOldRates {
+    suspend fun execute()
+}

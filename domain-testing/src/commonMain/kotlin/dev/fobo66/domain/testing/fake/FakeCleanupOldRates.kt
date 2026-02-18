@@ -14,21 +14,13 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.api.entity.CurrencyRateSource
-import kotlinx.io.Source
+import fobo66.valiutchik.domain.usecases.CleanUpOldRates
 
-/**
- * Response parser for [MyFIN](myfin.by) dataset
- */
-interface CurrencyRatesResponseParser {
-    /**
-     * Parse JSON response from the API
-     *
-     * @param body response body
-     *
-     * @return set of bank branch info with the actual rate
-     */
-    fun parse(body: Source): Set<CurrencyRateSource>
+class FakeCleanupOldRates : CleanUpOldRates {
+    var isCleanedUp = false
+    override suspend fun execute() {
+        isCleanedUp = true
+    }
 }

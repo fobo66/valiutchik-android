@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 private const val WORK_BACKGROUND_REFRESH = "backgroundRefresh"
+private const val WORK_CLEANUP = "cleanup"
 
 class RefreshInteractorWorkManagerImpl(
     private val workManager: WorkManager,
@@ -60,10 +61,19 @@ class RefreshInteractorWorkManagerImpl(
                         .build()
                 ).setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
                 .build()
+
+        val cleanupRequest =
+            PeriodicWorkRequestBuilder<CleanupWorker>(1, TimeUnit.DAYS)
+                .build()
         workManager.enqueueUniquePeriodicWork(
             WORK_BACKGROUND_REFRESH,
             ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
             workRequest
+        )
+        workManager.enqueueUniquePeriodicWork(
+            WORK_CLEANUP,
+            ExistingPeriodicWorkPolicy.KEEP,
+            cleanupRequest
         )
     }
 }

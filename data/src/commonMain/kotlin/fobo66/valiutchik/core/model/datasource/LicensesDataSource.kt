@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,21 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.api.entity.CurrencyRateSource
+import com.mikepenz.aboutlibraries.entity.Library
 import kotlinx.io.Source
 
-/**
- * Response parser for [MyFIN](myfin.by) dataset
- */
-interface CurrencyRatesResponseParser {
-    /**
-     * Parse JSON response from the API
-     *
-     * @param body response body
-     *
-     * @return set of bank branch info with the actual rate
-     */
-    fun parse(body: Source): Set<CurrencyRateSource>
+interface LicensesDataSource {
+    fun decodeLicenses(jsonSource: Source): List<Library>?
 }

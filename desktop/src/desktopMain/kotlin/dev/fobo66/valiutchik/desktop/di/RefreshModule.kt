@@ -22,6 +22,6 @@ import org.koin.dsl.module
 
 val refreshModule = module {
     single<RefreshInteractor> {
-        RefreshInteractorImpl(get(), get())
+        RefreshInteractorImpl(get(), get(), get())
     }
 }

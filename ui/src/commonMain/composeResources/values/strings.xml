@@ -35,6 +35,7 @@
   <string name="no_rates_indicator">No rates available yet</string>
   <string name="bank_name_indicator">Bank name</string>
   <string name="see_license_click_label">See %1$s license</string>
+  <string name="license_authors" translatable="false">© %1$s</string>
   <string name="topbar_description_back">Back</string>
   <string name="open_app">Open app</string>
   <string name="action_refresh">Refresh</string>

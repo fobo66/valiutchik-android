@@ -14,21 +14,17 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.api.entity.CurrencyRateSource
-import kotlinx.io.Source
+import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import io.github.aakira.napier.Napier
 
-/**
- * Response parser for [MyFIN](myfin.by) dataset
- */
-interface CurrencyRatesResponseParser {
-    /**
-     * Parse JSON response from the API
-     *
-     * @param body response body
-     *
-     * @return set of bank branch info with the actual rate
-     */
-    fun parse(body: Source): Set<CurrencyRateSource>
+class CleanUpOldRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
+    CleanUpOldRates {
+    override suspend fun execute() {
+        val removedCount = currencyRateRepository.cleanUpOutdatedRates()
+        Napier.d {
+            "Removed $removedCount old rates"
+        }
+    }
 }

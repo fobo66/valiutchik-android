@@ -24,9 +24,16 @@ import kotlinx.coroutines.flow.emptyFlow
 
 class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
+    var isDeleted = false
+
+    override suspend fun loadOldRates(): List<Rate> = emptyList()
 
     override suspend fun saveRates(rates: List<Rate>) {
         isSaved = true
+    }
+
+    override suspend fun deleteRates(rates: List<Rate>) {
+        isDeleted = true
     }
 
     override fun readBestCourses(): Flow<List<BestCourse>> = emptyFlow()

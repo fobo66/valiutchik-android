@@ -18,8 +18,8 @@ package fobo66.valiutchik.core.di
 
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.JsonDataSource
-import fobo66.valiutchik.core.model.datasource.JsonDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.LicensesDataSource
+import fobo66.valiutchik.core.model.datasource.LicensesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
@@ -43,8 +43,8 @@ val dataSourcesModule =
     module {
         includes(apiModule, systemModule, thirdPartyModule)
 
-        single<JsonDataSource> {
-            JsonDataSourceImpl(get())
+        single<LicensesDataSource> {
+            LicensesDataSourceImpl()
         }
 
         single<PersistenceDataSource> {

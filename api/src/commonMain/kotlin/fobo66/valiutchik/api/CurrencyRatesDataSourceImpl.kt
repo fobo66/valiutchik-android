@@ -23,9 +23,10 @@ import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.utils.io.readBuffer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -64,11 +65,11 @@ class CurrencyRatesDataSourceImpl(
                                 header(CLACKS_KEY, CLACKS_VALUE)
                                 setBody(request)
                             }
-                            parser.parse(response.bodyAsText())
+                            parser.parse(response.bodyAsChannel().readBuffer())
                         }
                     }
                     .awaitAll()
-                    .flatMap { it }
+                    .flatten()
                     .groupBy { it.id }
             } catch (e: ResponseException) {
                 throw IOException(e)

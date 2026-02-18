@@ -16,13 +16,10 @@
 
 import com.android.sdklib.AndroidVersion
 import dev.detekt.gradle.Detekt
-import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.benchmark)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
@@ -73,7 +70,6 @@ tasks.withType<Detekt> {
     jvmTarget = "17"
 }
 
-
 dependencies {
     implementation(project(":api"))
     implementation(project(":data"))
@@ -82,6 +78,7 @@ dependencies {
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.serialization)
+    androidTestImplementation(libs.kotlinx.io)
     androidTestImplementation(libs.kotlinx.datetime)
     androidTestImplementation(project(":data-testing"))
     detektPlugins(libs.detekt.rules.compose)

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.valiutchik.presentation"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R
@@ -57,13 +57,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":domain"))
+                implementation(project(":domain"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.platform(libs.compose.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.napier)
@@ -74,11 +72,9 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                api(project(":data-testing"))
-                api(project(":data"))
-                api(project(":domain-testing"))
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(project(":data-testing"))
+                implementation(project(":data"))
+                implementation(project(":domain-testing"))
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
                 implementation(libs.turbine)

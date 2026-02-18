@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.valiutchik.ui"
         compileSdk = AndroidVersion.VersionCodes.BAKLAVA
         minSdk = AndroidVersion.VersionCodes.R
@@ -61,11 +61,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":presentation"))
-                api(project(":domain"))
+                implementation(project(":presentation"))
+                implementation(project(":domain"))
                 implementation(libs.androidx.lifecycle.compose)
                 implementation(libs.materialKolor)
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.ui)

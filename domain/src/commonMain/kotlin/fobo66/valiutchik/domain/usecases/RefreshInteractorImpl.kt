@@ -25,7 +25,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class RefreshInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
-    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity
+    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
+    private val cleanUpOldRates: CleanUpOldRates
 ) : RefreshInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
@@ -33,6 +34,25 @@ class RefreshInteractorImpl(
 
     override suspend fun initiateRefresh(isLocationAvailable: Boolean) = try {
         _isRefreshInProgress.emit(true)
+        refreshRates(isLocationAvailable)
+        cleanUpOldRates()
+    } catch (e: CurrencyRatesLoadFailedException) {
+        Napier.e("Refresh failed", e)
+    } finally {
+        _isRefreshInProgress.emit(false)
+    }
+
+    private suspend fun cleanUpOldRates() {
+        val cleanupTime = measureTime {
+            cleanUpOldRates.execute()
+        }
+
+        Napier.d {
+            "Cleanup took ${cleanupTime.inWholeMilliseconds} ms"
+        }
+    }
+
+    private suspend fun refreshRates(isLocationAvailable: Boolean) {
         val refreshTime = measureTime {
             if (isLocationAvailable) {
                 refreshExchangeRates.execute()
@@ -44,9 +64,5 @@ class RefreshInteractorImpl(
         Napier.d {
             "Refresh took ${refreshTime.inWholeMilliseconds} ms"
         }
-    } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Refresh failed", e)
-    } finally {
-        _isRefreshInProgress.emit(false)
     }
 }

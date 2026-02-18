@@ -26,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import dev.fobo66.valiutchik.ui.TAG_LICENSES_LIST
@@ -37,6 +36,7 @@ import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import valiutchik.ui.generated.resources.Res
+import valiutchik.ui.generated.resources.license_authors
 import valiutchik.ui.generated.resources.see_license_click_label
 import valiutchik.ui.generated.resources.title_activity_oss_licenses
 
@@ -86,16 +86,7 @@ fun OpenSourceLicense(
         supportingContent = {
             Column {
                 Text(text = item.licenses)
-                Text(
-                    text = buildAnnotatedString {
-                        append("Copyright © ")
-                        if (item.year.isNotEmpty()) {
-                            append(item.year)
-                            append(' ')
-                        }
-                        append(item.authors)
-                    }
-                )
+                Text(text = stringResource(Res.string.license_authors, item.authors))
             }
         },
         modifier = modifier
@@ -116,11 +107,9 @@ private fun OpenSourceLicensePreview() {
     AppTheme {
         OpenSourceLicense(
             item = OpenSourceLicense(
-                authors = "The Android Open Source Project",
-                licenses = "The Apache Software License, Version 2.0",
                 project = "Activity Compose",
-                url = null,
-                year = "2019"
+                licenses = "The Apache Software License, Version 2.0",
+                authors = "The Android Open Source Project"
             ),
             onItemClick = {}
         )
