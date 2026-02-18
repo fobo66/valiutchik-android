@@ -16,7 +16,7 @@ import dev.detekt.gradle.Detekt
  *    limitations under the License.
  */
 plugins {
-    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.multiplatform")
     id("dev.detekt")
     id("org.jmailen.kotlinter")
 }

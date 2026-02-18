@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation(plugin(libs.plugins.kotlin.android))
+    implementation(plugin(libs.plugins.kotlin.multiplatform))
     implementation(plugin(libs.plugins.detekt))
     implementation(plugin(libs.plugins.kotlinter))
     implementation(libs.dotenv.kotlin)
