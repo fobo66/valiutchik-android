@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS Currency (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `name` TEXT NOT NULL,
+  `symbol` TEXT NOT NULL,
+  `multiplier` INTEGER NOT NULL DEFAULT 1
+);
+
+INSERT INTO Currency(id, name, symbol, multiplier)
+VALUES (1, "USD", "$", 1),
+  (4, "EUR", "€", 1),
+  (5, "RUB", "₽", 100),
+  (7, "UAH", "¥", 100),
+  (8, "PLN", "zł", 10);
+
+loadCurrencies:
+SELECT * FROM Currency;
+
+insertCurrency:
+INSERT OR REPLACE INTO Currency(id, name, symbol, multiplier)
+VALUES ?;
