@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS rates (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `date` TEXT NOT NULL,
+  `bankName` TEXT,
+  `usdBuy` REAL NOT NULL, `usdSell` REAL NOT NULL,
+  `eurBuy` REAL NOT NULL, `eurSell` REAL NOT NULL,
+  `rubBuy` REAL NOT NULL, `rubSell` REAL NOT NULL,
+  `plnBuy` REAL NOT NULL, `plnSell` REAL NOT NULL,
+  `uahBuy` REAL NOT NULL, `uahSell` REAL NOT NULL
+ );
+
+ CREATE INDEX IF NOT EXISTS `index_rates_usdBuy` ON `rates` (`usdBuy`);
+ CREATE INDEX IF NOT EXISTS `index_rates_usdSell` ON `rates` (`usdSell`);
+
+ CREATE INDEX IF NOT EXISTS `index_rates_eurBuy` ON `rates` (`eurBuy`);
+ CREATE INDEX IF NOT EXISTS `index_rates_eurSell` ON `rates` (`eurSell`);
+
+ CREATE INDEX IF NOT EXISTS `index_rates_rubBuy` ON `rates` (`rubBuy`);
+ CREATE INDEX IF NOT EXISTS `index_rates_rubSell` ON `rates` (`rubSell`);
+
+ CREATE INDEX IF NOT EXISTS `index_rates_plnBuy` ON `rates` (`plnBuy`);
+ CREATE INDEX IF NOT EXISTS `index_rates_plnSell` ON `rates` (`plnSell`);
+
+ CREATE INDEX IF NOT EXISTS `index_rates_uahBuy` ON `rates` (`uahBuy`);
+ CREATE INDEX IF NOT EXISTS `index_rates_uahSell` ON `rates` (`uahSell`);
