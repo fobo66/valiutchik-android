@@ -23,3 +23,9 @@ CREATE TABLE IF NOT EXISTS rates (
 
  CREATE INDEX IF NOT EXISTS `index_rates_uahBuy` ON `rates` (`uahBuy`);
  CREATE INDEX IF NOT EXISTS `index_rates_uahSell` ON `rates` (`uahSell`);
+
+loadAllRates:
+SELECT * FROM rates;
+
+loadOldRates:
+SELECT * FROM rates WHERE date(date) < date('now');
