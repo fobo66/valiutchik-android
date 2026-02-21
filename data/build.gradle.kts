@@ -46,7 +46,7 @@ kotlin {
             version = release(AndroidVersion.VersionCodes.R)
         }
 
-        withHostTestBuilder {}.configure {}
+        withHostTest {}
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
         }
@@ -144,7 +144,7 @@ room {
 
 sqldelight {
     databases {
-        create("NewCurrencyRatesDatabase") {
+        create("Database") {
             packageName = "dev.fobo66.valiutchik.core.db"
         }
     }
