@@ -79,6 +79,7 @@ kotlin {
 
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.room.runtime)
+                implementation(libs.sqlidelight.coroutines)
                 implementation(libs.androidx.datastore)
                 implementation(libs.napier)
                 implementation(libs.uri)
