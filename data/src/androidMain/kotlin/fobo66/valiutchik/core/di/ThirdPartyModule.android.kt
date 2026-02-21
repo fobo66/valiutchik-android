@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import androidx.sqlite.driver.AndroidSQLiteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import dev.fobo66.valiutchik.core.db.Database
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -37,6 +40,10 @@ actual val thirdPartyModule: Module = module {
         )
             .setDriver(AndroidSQLiteDriver())
             .build()
+    }
+
+    single<SqlDriver> {
+        AndroidSqliteDriver(Database.Schema, androidContext(), DATABASE_NAME)
     }
 
     single<DataStore<Preferences>> {
