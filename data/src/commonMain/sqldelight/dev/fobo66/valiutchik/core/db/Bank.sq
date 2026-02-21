@@ -3,3 +3,10 @@ CREATE TABLE IF NOT EXISTS Bank (
   `name` TEXT NOT NULL,
   `formattedName` TEXT NOT NULL
 );
+
+loadBanks:
+SELECT * FROM Bank;
+
+insertBank:
+INSERT OR REPLACE INTO Bank(id, name, formattedName)
+VALUES ?;
