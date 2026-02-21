@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.di
 
+import dev.fobo66.valiutchik.core.db.Database
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LicensesDataSource
@@ -42,6 +43,8 @@ import org.koin.dsl.module
 val dataSourcesModule =
     module {
         includes(apiModule, systemModule, thirdPartyModule)
+
+        single { Database(get()) }
 
         single<LicensesDataSource> {
             LicensesDataSourceImpl()
