@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
     alias(libs.plugins.room)
+    alias(libs.plugins.sqlidelight)
 }
 
 kotlin {
@@ -97,6 +98,7 @@ kotlin {
             dependencies {
                 implementation(libs.icu)
                 implementation(libs.room.driver.bundled)
+                implementation(libs.sqlidelight.jvm)
             }
         }
 
@@ -110,6 +112,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.sqlidelight.android)
             }
         }
 
@@ -137,6 +140,14 @@ kotlin {
 room {
     generateKotlin = true
     schemaDirectory(layout.projectDirectory.dir("schemas"))
+}
+
+sqldelight {
+    databases {
+        create("NewCurrencyRatesDatabase") {
+            packageName = "dev.fobo66.valiutchik.core.db"
+        }
+    }
 }
 
 detekt {
