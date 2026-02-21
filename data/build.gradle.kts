@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
     alias(libs.plugins.room)
+    alias(libs.plugins.sqlidelight)
 }
 
 kotlin {
@@ -45,7 +46,7 @@ kotlin {
             version = release(AndroidVersion.VersionCodes.R)
         }
 
-        withHostTestBuilder {}.configure {}
+        withHostTest {}
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
         }
@@ -78,6 +79,7 @@ kotlin {
 
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.room.runtime)
+                implementation(libs.sqlidelight.coroutines)
                 implementation(libs.androidx.datastore)
                 implementation(libs.napier)
                 implementation(libs.uri)
@@ -97,6 +99,7 @@ kotlin {
             dependencies {
                 implementation(libs.icu)
                 implementation(libs.room.driver.bundled)
+                implementation(libs.sqlidelight.jvm)
             }
         }
 
@@ -110,6 +113,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.sqlidelight.android)
             }
         }
 
@@ -137,6 +141,14 @@ kotlin {
 room {
     generateKotlin = true
     schemaDirectory(layout.projectDirectory.dir("schemas"))
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName = "dev.fobo66.valiutchik.core.db"
+        }
+    }
 }
 
 detekt {

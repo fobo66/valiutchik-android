@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.kotlinter) apply false
     alias(libs.plugins.room) apply false
+    alias(libs.plugins.sqlidelight) apply false
     alias(libs.plugins.baseline.profile) apply false
     alias(libs.plugins.robolectric.junit5) apply false
 }
