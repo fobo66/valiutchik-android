@@ -57,4 +57,11 @@ class ApiResponseParserImplTest {
             parser.parseRates(WRONG_JSON.byteInputStream().asSource().buffered())
         }
     }
+
+    @Test
+    fun `banks response`() {
+        val banks = parser.parseBanks(BANKS.byteInputStream().asSource().buffered())
+        assertEquals(21, banks.size)
+        assertEquals(6, banks.first().id)
+    }
 }

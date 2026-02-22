@@ -24,7 +24,7 @@ data class BankResponse(
     @SerialName("fullname")
     val fullname: String = "",
     @SerialName("id")
-    val id: String = "",
+    val id: Long = 0,
     @SerialName("name")
     val name: String = "",
     @SerialName("sef_alias")
