@@ -6,11 +6,11 @@ CREATE TABLE IF NOT EXISTS Currency (
 );
 
 INSERT INTO Currency(id, name, symbol, multiplier)
-VALUES (1, "USD", "$", 1),
-  (4, "EUR", "€", 1),
-  (5, "RUB", "₽", 100),
-  (7, "UAH", "¥", 100),
-  (8, "PLN", "zł", 10);
+VALUES (1, "usd", "$", 1),
+  (4, "eur", "€", 1),
+  (5, "rub", "₽", 100),
+  (7, "uah", "¥", 100),
+  (8, "pln", "zł", 10);
 
 loadCurrencies:
 SELECT * FROM Currency;
