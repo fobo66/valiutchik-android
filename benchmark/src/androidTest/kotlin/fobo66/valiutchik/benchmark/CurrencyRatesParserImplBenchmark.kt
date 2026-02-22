@@ -21,6 +21,9 @@ import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fobo66.valiutchik.api.ApiResponseParserImpl
+import kotlinx.io.Source
+import kotlinx.io.asSource
+import kotlinx.io.buffered
 import kotlinx.serialization.json.Json
 import org.junit.Rule
 import org.junit.Test
@@ -51,10 +54,10 @@ class CurrencyRatesParserImplBenchmark {
         }
     }
 
-    private fun loadResponseBody(): String = InstrumentationRegistry
+    private fun loadResponseBody(): Source = InstrumentationRegistry
         .getInstrumentation()
         .context.assets
         .open("myfinNewApi.json")
-        .bufferedReader()
-        .readText()
+        .asSource()
+        .buffered()
 }
