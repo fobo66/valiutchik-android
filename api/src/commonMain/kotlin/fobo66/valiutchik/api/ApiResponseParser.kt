@@ -17,17 +17,19 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.CurrencyRateSource
-import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import kotlinx.io.Source
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.io.decodeFromSource
 
-class CurrencyRatesResponseParserImpl(private val json: Json) : CurrencyRatesResponseParser {
-    @OptIn(ExperimentalSerializationApi::class)
-    override fun parse(body: Source): Set<CurrencyRateSource> {
-        val response = json.decodeFromSource<CurrencyRatesResponse>(body)
-
-        return response.results
-    }
+/**
+ * Response parser for [MyFIN](myfin.by) datasets. The API returns JSON with HTML content type,
+ * so we need to process it separately
+ */
+interface ApiResponseParser {
+    /**
+     * Parse JSON response from the API
+     *
+     * @param body response body
+     *
+     * @return set of bank branch info with the actual rate
+     */
+    fun parse(body: Source): Set<CurrencyRateSource>
 }

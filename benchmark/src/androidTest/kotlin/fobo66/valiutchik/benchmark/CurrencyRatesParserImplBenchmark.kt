@@ -20,7 +20,7 @@ import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
+import fobo66.valiutchik.api.ApiResponseParserImpl
 import kotlinx.serialization.json.Json
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +34,7 @@ class CurrencyRatesParserImplBenchmark {
     @get:Rule
     val benchmarkRule = BenchmarkRule()
 
-    private val jsonParser = CurrencyRatesResponseParserImpl(
+    private val jsonParser = ApiResponseParserImpl(
         Json {
             ignoreUnknownKeys = true
             isLenient = true

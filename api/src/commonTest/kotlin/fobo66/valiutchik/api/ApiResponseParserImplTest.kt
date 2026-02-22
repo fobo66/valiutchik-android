@@ -23,8 +23,8 @@ import kotlinx.io.asSource
 import kotlinx.io.buffered
 import kotlinx.serialization.json.Json
 
-class CurrencyRatesResponseParserImplTest {
-    private val parser: CurrencyRatesResponseParser = CurrencyRatesResponseParserImpl(
+class ApiResponseParserImplTest {
+    private val parser: ApiResponseParser = ApiResponseParserImpl(
         Json {
             isLenient = true
             ignoreUnknownKeys = true

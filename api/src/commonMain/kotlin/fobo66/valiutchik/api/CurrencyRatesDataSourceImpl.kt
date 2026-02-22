@@ -40,7 +40,7 @@ private const val CLACKS_VALUE = "GNU Terry Pratchett"
 
 class CurrencyRatesDataSourceImpl(
     private val client: HttpClient,
-    private val parser: CurrencyRatesResponseParser,
+    private val parser: ApiResponseParser,
     private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
 

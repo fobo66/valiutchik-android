@@ -22,8 +22,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.api.CurrencyRatesResponseParser
-import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
+import fobo66.valiutchik.api.ApiResponseParser
+import fobo66.valiutchik.api.ApiResponseParserImpl
 import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import fobo66.valiutchik.core.entities.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -55,7 +55,7 @@ class BestCoursePersistenceDataSourceBenchmark {
                 CurrencyRatesDatabase::class.java
             ).build()
 
-    private val parser: CurrencyRatesResponseParser = CurrencyRatesResponseParserImpl(
+    private val parser: ApiResponseParser = ApiResponseParserImpl(
         Json {
             isLenient = true
             ignoreUnknownKeys = true

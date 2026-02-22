@@ -17,18 +17,17 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import kotlinx.io.Source
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.io.decodeFromSource
 
-/**
- * Response parser for [MyFIN](myfin.by) dataset
- */
-interface CurrencyRatesResponseParser {
-    /**
-     * Parse JSON response from the API
-     *
-     * @param body response body
-     *
-     * @return set of bank branch info with the actual rate
-     */
-    fun parse(body: Source): Set<CurrencyRateSource>
+class ApiResponseParserImpl(private val json: Json) : ApiResponseParser {
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun parse(body: Source): Set<CurrencyRateSource> {
+        val response = json.decodeFromSource<CurrencyRatesResponse>(body)
+
+        return response.results
+    }
 }
