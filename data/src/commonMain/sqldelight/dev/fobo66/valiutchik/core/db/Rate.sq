@@ -16,6 +16,18 @@ SELECT * FROM Rate;
 loadOldRates:
 SELECT id FROM Rate WHERE date(date) < date('now');
 
+loadBestBuyRates:
+SELECT Bank.formattedName AS bankName, max(Rate.buyRate), Currency.name, Rate.currencyId FROM Rate
+JOIN Bank ON Rate.bankId = Bank.id
+JOIN Currency ON Rate.currencyId = Currency.id
+WHERE Rate.currencyId IN :currencyIds AND datetime(Rate.date) >= datetime('now');
+
+loadBestSellRates:
+SELECT Bank.formattedName AS bankName, min(Rate.sellRate), Currency.name, Rate.currencyId FROM Rate
+JOIN Bank ON Rate.bankId = Bank.id
+JOIN Currency ON Rate.currencyId = Currency.id
+WHERE Rate.currencyId IN :currencyIds AND datetime(Rate.date) >= datetime('now');
+
 insertRate:
 INSERT OR REPLACE INTO Rate(id, date, bankId, currencyId, buyRate, sellRate)
 VALUES ?;
