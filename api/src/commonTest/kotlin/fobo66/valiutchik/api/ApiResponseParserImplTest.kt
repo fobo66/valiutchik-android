@@ -33,26 +33,28 @@ class ApiResponseParserImplTest {
 
     @Test
     fun `single currency`() {
-        val currencies = parser.parse(SINGLE_CURRENCY.byteInputStream().asSource().buffered())
+        val currencies = parser.parseRates(SINGLE_CURRENCY.byteInputStream().asSource().buffered())
         assertEquals(1, currencies.size)
     }
 
     @Test
     fun `multiple currencies`() {
-        val currencies = parser.parse(MULTIPLE_CURRENCIES.byteInputStream().asSource().buffered())
+        val currencies = parser.parseRates(
+            MULTIPLE_CURRENCIES.byteInputStream().asSource().buffered()
+        )
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun `same currencies filtered out`() {
-        val currencies = parser.parse(SAME_CURRENCIES.byteInputStream().asSource().buffered())
+        val currencies = parser.parseRates(SAME_CURRENCIES.byteInputStream().asSource().buffered())
         assertEquals(2, currencies.size)
     }
 
     @Test
     fun `error for incorrect json`() {
         assertFails {
-            parser.parse(WRONG_JSON.byteInputStream().asSource().buffered())
+            parser.parseRates(WRONG_JSON.byteInputStream().asSource().buffered())
         }
     }
 }

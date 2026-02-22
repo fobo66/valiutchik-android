@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import kotlinx.io.Source
@@ -25,9 +26,12 @@ import kotlinx.serialization.json.io.decodeFromSource
 
 class ApiResponseParserImpl(private val json: Json) : ApiResponseParser {
     @OptIn(ExperimentalSerializationApi::class)
-    override fun parse(body: Source): Set<CurrencyRateSource> {
+    override fun parseRates(body: Source): Set<CurrencyRateSource> {
         val response = json.decodeFromSource<CurrencyRatesResponse>(body)
 
         return response.results
     }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun parseBanks(body: Source): List<BankResponse> = json.decodeFromSource(body)
 }

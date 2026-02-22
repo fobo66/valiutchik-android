@@ -47,7 +47,7 @@ class CurrencyRatesParserImplBenchmark {
             val body = runWithMeasurementDisabled {
                 loadResponseBody()
             }
-            jsonParser.parse(body)
+            jsonParser.parseRates(body)
         }
     }
 

@@ -75,7 +75,7 @@ class BestCoursePersistenceDataSourceBenchmark {
                 .buffered()
 
         persistenceDataSource.saveRates(
-            parser.parse(ratesResponseContent)
+            parser.parseRates(ratesResponseContent)
                 .map {
                     Rate(
                         id = 0L,

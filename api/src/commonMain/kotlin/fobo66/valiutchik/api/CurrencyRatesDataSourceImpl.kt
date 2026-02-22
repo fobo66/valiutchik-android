@@ -65,7 +65,7 @@ class CurrencyRatesDataSourceImpl(
                                 header(CLACKS_KEY, CLACKS_VALUE)
                                 setBody(request)
                             }
-                            parser.parse(response.bodyAsChannel().readBuffer())
+                            parser.parseRates(response.bodyAsChannel().readBuffer())
                         }
                     }
                     .awaitAll()
