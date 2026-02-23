@@ -17,6 +17,7 @@
 package fobo66.valiutchik.domain.usecases
 
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.domain.entities.RefreshException
 import io.github.aakira.napier.Napier
 import kotlin.time.measureTime
 import kotlinx.coroutines.flow.Flow
@@ -36,7 +37,7 @@ class RefreshInteractorImpl(
         _isRefreshInProgress.emit(true)
         refreshRates(isLocationAvailable)
         cleanUpOldRates()
-    } catch (e: CurrencyRatesLoadFailedException) {
+    } catch (e: RefreshException) {
         Napier.e("Refresh failed", e)
     } finally {
         _isRefreshInProgress.emit(false)
