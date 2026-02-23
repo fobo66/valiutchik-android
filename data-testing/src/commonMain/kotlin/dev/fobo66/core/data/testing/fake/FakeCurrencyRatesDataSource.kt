@@ -23,7 +23,7 @@ import kotlinx.io.IOException
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
     var isError = false
 
-    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<CurrencyRateSource>> =
+    override suspend fun loadExchangeRates(cityIndex: Int): Map<Long, List<CurrencyRateSource>> =
         if (isError) {
             throw IOException("test")
         } else {

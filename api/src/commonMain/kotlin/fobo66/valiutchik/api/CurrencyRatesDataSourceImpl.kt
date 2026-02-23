@@ -54,7 +54,7 @@ class CurrencyRatesDataSourceImpl(
         )
     }
 
-    override suspend fun loadExchangeRates(cityIndex: String): Map<Long, List<CurrencyRateSource>> =
+    override suspend fun loadExchangeRates(cityIndex: Int): Map<Long, List<CurrencyRateSource>> =
         withContext(ioDispatcher) {
             try {
                 apiCurrencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
