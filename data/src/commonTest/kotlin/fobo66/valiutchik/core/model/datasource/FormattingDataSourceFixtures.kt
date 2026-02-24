@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-internal const val RAW_RATE = 1.23f
-internal const val LONG_RATE = 1.2345679f
+internal const val RAW_RATE = 1.23
+internal const val LONG_RATE = 1.2345679
 internal const val RATE = "BYN 1.23"
 internal const val BANK_NAME = "Приорбанк" // taken from API
 

@@ -107,6 +107,7 @@ kotlin {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.truth)
+                implementation(libs.turbine)
             }
         }
 
@@ -128,7 +129,6 @@ kotlin {
         named("androidDeviceTest") {
             dependencies {
                 implementation(libs.truth)
-                implementation(libs.turbine)
                 implementation(libs.androidx.test.rules)
                 implementation(libs.androidx.test.junit)
                 implementation(libs.androidx.test.truth)
