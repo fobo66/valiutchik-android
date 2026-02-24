@@ -53,7 +53,7 @@ class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalize
         }
     }
 
-    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String {
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String {
         if (cachedLanguageTag != languageTag) {
             cachedLocale = ULocale.forLanguageTag(languageTag)
             cachedLanguageTag = languageTag

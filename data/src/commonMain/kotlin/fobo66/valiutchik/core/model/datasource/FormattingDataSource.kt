@@ -30,7 +30,7 @@ interface FormattingDataSource {
     /**
      * Format currency rate as a monetary value
      */
-    fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String
+    fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String
 
     /**
      * Clean up all the unnecessary parts from the bank name

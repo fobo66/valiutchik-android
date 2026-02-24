@@ -40,7 +40,7 @@ class PersistenceDataSourceImpl(private val database: Database) : PersistenceDat
     override suspend fun loadOldRates(): List<Rate> =
         database.rateQueries.loadOldRates().executeAsList()
 
-    override suspend fun loadCurrencies(): Flow<List<Currency>> =
+    override fun loadCurrencies(): Flow<List<Currency>> =
         database.currencyQueries.loadCurrencies().asFlow()
             .map { it.executeAsList() }
 

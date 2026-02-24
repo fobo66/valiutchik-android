@@ -28,12 +28,13 @@ import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import fobo66.valiutchik.core.util.CurrencyName.RUB
-import fobo66.valiutchik.core.util.CurrencyName.UAH
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.io.IOException
@@ -152,26 +153,50 @@ class CurrencyRateRepositoryImpl(
     }
 
     override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatBankName(rate.bankName.orEmpty(), languageTag)
+        formattingDataSource.formatBankName(rate.bankName, languageTag)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
-        persistenceDataSource.readBestCourses()
+        persistenceDataSource.loadCurrencies()
+            .flatMapLatest { currencies ->
+                val currencyIds = currencies.map { it.id }
+                persistenceDataSource.readBestBuyCourses(currencyIds)
+                    .combine(persistenceDataSource.readBestSellCourses(currencyIds)) {
+                            buyRates,
+                            sellRates
+                        ->
+                        buyRates.map {
+                            BestCourse(
+                                bankName = it.bankName,
+                                currencyValue = it.max ?: UNDEFINED_BUY_RATE,
+                                currencyName = it.name,
+                                multiplier = it.multiplier,
+                                isBuy = true
+                            )
+                        } +
+                            sellRates.map {
+                                BestCourse(
+                                    bankName = it.bankName,
+                                    currencyValue =
+                                        it.min ?: UNDEFINED_SELL_RATE,
+                                    currencyName = it.name,
+                                    multiplier = it.multiplier,
+                                    isBuy = false
+                                )
+                            }
+                    }
+            }
             .map { courses ->
                 courses
                     .filter {
-                        it.bankName != null &&
-                            it.currencyValue != null &&
-                            it.currencyValue != UNDEFINED_BUY_RATE &&
+                        it.currencyValue != UNDEFINED_BUY_RATE &&
                             it.currencyValue != UNDEFINED_SELL_RATE
                     }
             }
 
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
         formattingDataSource.formatCurrencyValue(
-            when (rate.currencyName) {
-                RUB, UAH -> rate.currencyValue?.times(EXCHANGE_RATE_NORMALIZER) ?: EMPTY_RATE
-                else -> rate.currencyValue ?: EMPTY_RATE
-            },
+            rate.currencyValue * rate.multiplier,
             languageTag
         )
 

@@ -44,7 +44,7 @@ interface PersistenceDataSource {
     /**
      * Load currency entries from the database
      */
-    suspend fun loadCurrencies(): Flow<List<Currency>>
+    fun loadCurrencies(): Flow<List<Currency>>
 
     /**
      * Read buy entries from the database

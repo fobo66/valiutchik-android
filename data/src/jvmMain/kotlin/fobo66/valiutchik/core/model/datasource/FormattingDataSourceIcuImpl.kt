@@ -33,7 +33,7 @@ class FormattingDataSourceIcuImpl(private val bankNameNormalizer: BankNameNormal
     /**
      * Format currency rate as a monetary value
      */
-    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String =
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
         NumberFormatter
             .withLocale(ULocale.forLanguageTag(languageTag))
             .unit(targetCurrency)
