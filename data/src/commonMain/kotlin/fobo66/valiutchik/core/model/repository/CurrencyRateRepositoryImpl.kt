@@ -24,6 +24,7 @@ import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.LanguageTag
+import fobo66.valiutchik.core.entities.toBank
 import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSource
@@ -33,10 +34,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toSet
 import kotlinx.io.IOException
 
 private const val DEFAULT_CITY_INDEX = 1
@@ -121,6 +122,7 @@ class CurrencyRateRepositoryImpl(
     }
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
+        val languageTag = loadLocale().first()
         val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: DEFAULT_CITY_INDEX
         val currencies = persistenceDataSource.loadCurrencies().first()
             .map { it.name }
@@ -131,15 +133,18 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        val rates = rawRates.values.asFlow()
-            .filter { it.isNotEmpty() }
-            .map { rateSources ->
-                rateSources.map { it.toRate() }
-            }
+        val ratesFlow = rawRates.values.flatten().asFlow()
+        val rates = ratesFlow
+            .map { it.toRate() }
+            .toSet()
+        val banks = ratesFlow
+            .map { it.toBank(formattingDataSource.formatBankName(it.bankName, languageTag)) }
+            .toSet()
 
-        persistenceDataSource.saveRates(
-            rates.first()
-        )
+        with(persistenceDataSource) {
+            saveBanks(banks)
+            saveRates(rates)
+        }
     }
 
     override suspend fun cleanUpOutdatedRates(): Int {

@@ -16,6 +16,8 @@
 
 package fobo66.valiutchik.core.entities
 
+import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.Rate
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import kotlin.math.log10
 import kotlin.math.roundToInt
@@ -23,15 +25,20 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
-fun CurrencyRateSource.toRate(): dev.fobo66.valiutchik.core.db.Rate =
-    dev.fobo66.valiutchik.core.db.Rate(
-        id = concatIds(bankId, id),
-        date = resolveTimestamp().toString(),
-        bankId = bankId,
-        buyRate = currency.buy,
-        sellRate = currency.sell,
-        currencyId = currency.name
-    )
+fun CurrencyRateSource.toRate(): Rate = Rate(
+    id = concatIds(bankId, id),
+    date = resolveTimestamp().toString(),
+    bankId = bankId,
+    buyRate = currency.buy,
+    sellRate = currency.sell,
+    currencyId = currency.name
+)
+
+fun CurrencyRateSource.toBank(formattedName: String): Bank = Bank(
+    id = bankId,
+    name = bankName,
+    formattedName = formattedName
+)
 
 @OptIn(ExperimentalTime::class)
 private fun CurrencyRateSource.resolveTimestamp(): Instant = currency.dateUpdate.let {

@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.fobo66.valiutchik.core.db.Bank
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
@@ -29,7 +30,12 @@ interface PersistenceDataSource {
     /**
      * Save entries to the database
      */
-    suspend fun saveRates(rates: List<Rate>)
+    suspend fun saveRates(rates: Set<Rate>)
+
+    /**
+     * Save bank entries to the database
+     */
+    suspend fun saveBanks(banks: Set<Bank>)
 
     /**
      * Delete entries from the database

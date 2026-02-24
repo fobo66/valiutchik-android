@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import dev.fobo66.valiutchik.core.db.Bank
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
@@ -33,7 +34,7 @@ class PersistenceDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : PersistenceDataSource {
 
-    override suspend fun saveRates(rates: List<Rate>) = withContext(ioDispatcher) {
+    override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
         rates.forEach {
             database.rateQueries.insertRate(it).await()
         }
@@ -57,6 +58,12 @@ class PersistenceDataSourceImpl(
             .catch {
                 emit(emptyList())
             }
+
+    override suspend fun saveBanks(banks: Set<Bank>) = withContext(ioDispatcher) {
+        banks.forEach {
+            database.bankQueries.insertBank(it).await()
+        }
+    }
 
     override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
         database.rateQueries.loadBestSellRates(currencyIds).asFlow()

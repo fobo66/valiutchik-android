@@ -16,6 +16,7 @@
 
 package dev.fobo66.core.data.testing.fake
 
+import dev.fobo66.valiutchik.core.db.Bank
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
@@ -37,7 +38,11 @@ class FakePersistenceDataSource : PersistenceDataSource {
     override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
         emptyFlow()
 
-    override suspend fun saveRates(rates: List<Rate>) {
+    override suspend fun saveRates(rates: Set<Rate>) {
+        isSaved = true
+    }
+
+    override suspend fun saveBanks(banks: Set<Bank>) {
         isSaved = true
     }
 
