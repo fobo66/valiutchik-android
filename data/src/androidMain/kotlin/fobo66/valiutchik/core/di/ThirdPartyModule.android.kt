@@ -20,27 +20,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import androidx.room.Room
-import androidx.sqlite.driver.AndroidSQLiteDriver
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
-import fobo66.valiutchik.core.db.CurrencyRatesDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val thirdPartyModule: Module = module {
-
-    single<CurrencyRatesDatabase> {
-        val dbFile = androidContext().getDatabasePath(DATABASE_NAME)
-        Room.databaseBuilder<CurrencyRatesDatabase>(
-            context = androidContext(),
-            name = dbFile.absolutePath
-        )
-            .setDriver(AndroidSQLiteDriver())
-            .build()
-    }
 
     single<SqlDriver> {
         AndroidSqliteDriver(Database.Schema, androidContext(), DATABASE_NAME)
