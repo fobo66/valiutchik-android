@@ -16,17 +16,12 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.api.CURRENCY_ALIAS_EURO
-import fobo66.valiutchik.api.CURRENCY_ALIAS_HRYVNIA
-import fobo66.valiutchik.api.CURRENCY_ALIAS_RUBLE
-import fobo66.valiutchik.api.CURRENCY_ALIAS_US_DOLLAR
-import fobo66.valiutchik.api.CURRENCY_ALIAS_ZLOTY
 import fobo66.valiutchik.api.entity.Currency
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 
 const val ID = 1L
 const val TEST = "test"
-const val RATE = 1.23f
+const val RATE = 1.23
 const val DATE = 1754725825L
 const val PROCESSED_DATE = "2025-08-09T07:50:25Z"
 
@@ -36,16 +31,16 @@ fun buildBank(
     branchId: Long = ID,
     date: Long = DATE,
     bankName: String = TEST,
-    usdBuy: Float = RATE,
-    usdSell: Float = RATE,
-    eurBuy: Float = RATE,
-    eurSell: Float = RATE,
-    rubBuy: Float = RATE,
-    rubSell: Float = RATE,
-    plnBuy: Float = RATE,
-    plnSell: Float = RATE,
-    uahBuy: Float = RATE,
-    uahSell: Float = RATE
+    usdBuy: Double = RATE,
+    usdSell: Double = RATE,
+    eurBuy: Double = RATE,
+    eurSell: Double = RATE,
+    rubBuy: Double = RATE,
+    rubSell: Double = RATE,
+    plnBuy: Double = RATE,
+    plnSell: Double = RATE,
+    uahBuy: Double = RATE,
+    uahSell: Double = RATE
 ): List<CurrencyRateSource> = listOf(
     CurrencyRateSource(
         id = branchId,

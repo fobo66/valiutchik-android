@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api
+package dev.fobo66.core.data.testing.fake
 
-const val CURRENCY_ALIAS_US_DOLLAR = "usd"
-const val CURRENCY_ALIAS_EURO = "eur"
-const val CURRENCY_ALIAS_ZLOTY = "pln"
-const val CURRENCY_ALIAS_HRYVNIA = "uah"
-const val CURRENCY_ALIAS_RUBLE = "rub"
+internal const val CURRENCY_ALIAS_US_DOLLAR = "usd"
+internal const val CURRENCY_ALIAS_EURO = "eur"
+internal const val CURRENCY_ALIAS_ZLOTY = "pln"
+internal const val CURRENCY_ALIAS_HRYVNIA = "uah"
+internal const val CURRENCY_ALIAS_RUBLE = "rub"

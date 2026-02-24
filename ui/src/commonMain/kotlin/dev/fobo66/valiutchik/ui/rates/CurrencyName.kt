@@ -41,4 +41,6 @@ fun BestCurrencyRate.resolveCurrencyName(): StringResource = when (this) {
     is BestCurrencyRate.ZlotySellRate -> Res.string.currency_name_pln_sell
     is BestCurrencyRate.RubleBuyRate -> Res.string.currency_name_rub_buy
     is BestCurrencyRate.RubleSellRate -> Res.string.currency_name_rub_sell
+    is BestCurrencyRate.OtherBuyRate -> TODO()
+    is BestCurrencyRate.OtherSellRate -> TODO()
 }

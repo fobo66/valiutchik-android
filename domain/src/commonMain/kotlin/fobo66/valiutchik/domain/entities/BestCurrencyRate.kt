@@ -60,4 +60,18 @@ sealed class BestCurrencyRate(open val bank: String, open val rateValue: String)
     @Immutable
     data class RubleSellRate(override val bank: String, override val rateValue: String) :
         BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class OtherBuyRate(
+        override val bank: String,
+        override val rateValue: String,
+        val label: String
+    ) : BestCurrencyRate(bank, rateValue)
+
+    @Immutable
+    data class OtherSellRate(
+        override val bank: String,
+        override val rateValue: String,
+        val label: String
+    ) : BestCurrencyRate(bank, rateValue)
 }

@@ -43,36 +43,27 @@ class CurrencyRatesDataSourceImpl(
     private val parser: ApiResponseParser,
     private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRatesDataSource {
-
-    private val apiCurrencies by lazy(LazyThreadSafetyMode.NONE) {
-        listOf(
-            CURRENCY_ALIAS_US_DOLLAR,
-            CURRENCY_ALIAS_EURO,
-            CURRENCY_ALIAS_HRYVNIA,
-            CURRENCY_ALIAS_ZLOTY,
-            CURRENCY_ALIAS_RUBLE
-        )
-    }
-
-    override suspend fun loadExchangeRates(cityIndex: Int): Map<Long, List<CurrencyRateSource>> =
-        withContext(ioDispatcher) {
-            try {
-                apiCurrencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
-                    .map { request ->
-                        async {
-                            val response = client.post(API_URL) {
-                                contentType(ContentType.Application.Json)
-                                header(CLACKS_KEY, CLACKS_VALUE)
-                                setBody(request)
-                            }
-                            parser.parseRates(response.bodyAsChannel().readBuffer())
+    override suspend fun loadExchangeRates(
+        currencies: List<String>,
+        cityIndex: Int
+    ): Map<Long, List<CurrencyRateSource>> = withContext(ioDispatcher) {
+        try {
+            currencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
+                .map { request ->
+                    async {
+                        val response = client.post(API_URL) {
+                            contentType(ContentType.Application.Json)
+                            header(CLACKS_KEY, CLACKS_VALUE)
+                            setBody(request)
                         }
+                        parser.parseRates(response.bodyAsChannel().readBuffer())
                     }
-                    .awaitAll()
-                    .flatten()
-                    .groupBy { it.id }
-            } catch (e: ResponseException) {
-                throw IOException(e)
-            }
+                }
+                .awaitAll()
+                .flatten()
+                .groupBy { it.id }
+        } catch (e: ResponseException) {
+            throw IOException(e)
         }
+    }
 }

@@ -122,14 +122,16 @@ class CurrencyRateRepositoryImpl(
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
         val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: DEFAULT_CITY_INDEX
-        val currencies =
+        val currencies = persistenceDataSource.loadCurrencies().first()
+            .map { it.name }
+        val rawRates =
             try {
-                currencyRatesDataSource.loadExchangeRates(cityIndex)
+                currencyRatesDataSource.loadExchangeRates(currencies, cityIndex)
             } catch (e: IOException) {
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        val rates = currencies.values.asFlow()
+        val rates = rawRates.values.asFlow()
             .filter { it.isNotEmpty() }
             .map { rateSources ->
                 rateSources.map { it.toRate() }

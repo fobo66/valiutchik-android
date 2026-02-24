@@ -19,7 +19,11 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import fobo66.valiutchik.core.util.CurrencyName
+import fobo66.valiutchik.core.util.CURRENCY_NAME_EURO
+import fobo66.valiutchik.core.util.CURRENCY_NAME_HRYVNIA
+import fobo66.valiutchik.core.util.CURRENCY_NAME_RUBLE
+import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
+import fobo66.valiutchik.core.util.CURRENCY_NAME_ZLOTY
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.entities.BestCurrencyRate.DollarBuyRate
 import fobo66.valiutchik.domain.entities.BestCurrencyRate.EuroBuyRate
@@ -53,25 +57,24 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
     private fun BestCourse.toRate(languageTag: LanguageTag): BestCurrencyRate {
         val bank = currencyRateRepository.formatBankName(this, languageTag)
         val rateValue = currencyRateRepository.formatRate(this, languageTag)
-        val currency = requireNotNull(currencyName) {
-            "Null currency name should not happen here!"
-        }
 
         return if (isBuy == true) {
-            when (currency) {
-                CurrencyName.DOLLAR -> DollarBuyRate(bank, rateValue)
-                CurrencyName.EUR -> EuroBuyRate(bank, rateValue)
-                CurrencyName.RUB -> RubleBuyRate(bank, rateValue)
-                CurrencyName.PLN -> ZlotyBuyRate(bank, rateValue)
-                CurrencyName.UAH -> HryvniaBuyRate(bank, rateValue)
+            when (currencyName) {
+                CURRENCY_NAME_US_DOLLAR -> DollarBuyRate(bank, rateValue)
+                CURRENCY_NAME_EURO -> EuroBuyRate(bank, rateValue)
+                CURRENCY_NAME_RUBLE -> RubleBuyRate(bank, rateValue)
+                CURRENCY_NAME_ZLOTY -> ZlotyBuyRate(bank, rateValue)
+                CURRENCY_NAME_HRYVNIA -> HryvniaBuyRate(bank, rateValue)
+                else -> BestCurrencyRate.OtherBuyRate(bank, rateValue, "")
             }
         } else {
-            when (currency) {
-                CurrencyName.DOLLAR -> BestCurrencyRate.DollarSellRate(bank, rateValue)
-                CurrencyName.EUR -> BestCurrencyRate.EuroSellRate(bank, rateValue)
-                CurrencyName.RUB -> BestCurrencyRate.RubleSellRate(bank, rateValue)
-                CurrencyName.PLN -> BestCurrencyRate.ZlotySellRate(bank, rateValue)
-                CurrencyName.UAH -> BestCurrencyRate.HryvniaSellRate(bank, rateValue)
+            when (currencyName) {
+                CURRENCY_NAME_US_DOLLAR -> BestCurrencyRate.DollarSellRate(bank, rateValue)
+                CURRENCY_NAME_EURO -> BestCurrencyRate.EuroSellRate(bank, rateValue)
+                CURRENCY_NAME_RUBLE -> BestCurrencyRate.RubleSellRate(bank, rateValue)
+                CURRENCY_NAME_ZLOTY -> BestCurrencyRate.ZlotySellRate(bank, rateValue)
+                CURRENCY_NAME_HRYVNIA -> BestCurrencyRate.HryvniaSellRate(bank, rateValue)
+                else -> BestCurrencyRate.OtherSellRate(bank, rateValue, "")
             }
         }
     }
