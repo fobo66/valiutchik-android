@@ -49,10 +49,10 @@ interface PersistenceDataSource {
     /**
      * Read buy entries from the database
      */
-    fun readBestBuyCourses(currencyIds: List<Long>): Flow<List<LoadBestBuyRates>>
+    fun readBestBuyCourses(currencyIds: List<String>): Flow<List<LoadBestBuyRates>>
 
     /**
      * Read entries from the database
      */
-    fun readBestSellCourses(currencyIds: List<Long>): Flow<List<LoadBestSellRates>>
+    fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>>
 }

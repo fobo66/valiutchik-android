@@ -159,7 +159,7 @@ class CurrencyRateRepositoryImpl(
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.loadCurrencies()
             .flatMapLatest { currencies ->
-                val currencyIds = currencies.map { it.id }
+                val currencyIds = currencies.map { it.name }
                 persistenceDataSource.readBestBuyCourses(currencyIds)
                     .combine(persistenceDataSource.readBestSellCourses(currencyIds)) {
                             buyRates,
@@ -169,7 +169,7 @@ class CurrencyRateRepositoryImpl(
                             BestCourse(
                                 bankName = it.bankName,
                                 currencyValue = it.max ?: UNDEFINED_BUY_RATE,
-                                currencyName = it.name,
+                                currencyName = it.currencyId,
                                 multiplier = it.multiplier,
                                 isBuy = true
                             )
@@ -179,7 +179,7 @@ class CurrencyRateRepositoryImpl(
                                     bankName = it.bankName,
                                     currencyValue =
                                         it.min ?: UNDEFINED_SELL_RATE,
-                                    currencyName = it.name,
+                                    currencyName = it.currencyId,
                                     multiplier = it.multiplier,
                                     isBuy = false
                                 )

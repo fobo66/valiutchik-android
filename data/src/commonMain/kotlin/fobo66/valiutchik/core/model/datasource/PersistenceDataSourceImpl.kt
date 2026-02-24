@@ -44,11 +44,11 @@ class PersistenceDataSourceImpl(private val database: Database) : PersistenceDat
         database.currencyQueries.loadCurrencies().asFlow()
             .map { it.executeAsList() }
 
-    override fun readBestBuyCourses(currencyIds: List<Long>): Flow<List<LoadBestBuyRates>> =
+    override fun readBestBuyCourses(currencyIds: List<String>): Flow<List<LoadBestBuyRates>> =
         database.rateQueries.loadBestBuyRates(currencyIds).asFlow()
             .map { it.executeAsList() }
 
-    override fun readBestSellCourses(currencyIds: List<Long>): Flow<List<LoadBestSellRates>> =
+    override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
         database.rateQueries.loadBestSellRates(currencyIds).asFlow()
             .map { it.executeAsList() }
 }

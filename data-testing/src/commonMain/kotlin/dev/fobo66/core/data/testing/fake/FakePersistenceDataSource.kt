@@ -29,12 +29,12 @@ class FakePersistenceDataSource : PersistenceDataSource {
     var isDeleted = false
 
     override suspend fun loadOldRates(): List<Rate> = emptyList()
-    override suspend fun loadCurrencies(): Flow<List<Currency>> = emptyFlow()
+    override fun loadCurrencies(): Flow<List<Currency>> = emptyFlow()
 
-    override fun readBestBuyCourses(currencyIds: List<Long>): Flow<List<LoadBestBuyRates>> =
+    override fun readBestBuyCourses(currencyIds: List<String>): Flow<List<LoadBestBuyRates>> =
         emptyFlow()
 
-    override fun readBestSellCourses(currencyIds: List<Long>): Flow<List<LoadBestSellRates>> =
+    override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
         emptyFlow()
 
     override suspend fun saveRates(rates: List<Rate>) {
