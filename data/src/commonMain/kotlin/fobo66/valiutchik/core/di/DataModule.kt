@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.di
 
 import dev.fobo66.valiutchik.core.db.Database
+import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LicensesDataSource
@@ -38,6 +39,7 @@ import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
 import fobo66.valiutchik.core.util.BankNameNormalizer
 import fobo66.valiutchik.core.util.BankNameNormalizerImpl
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val dataSourcesModule =
@@ -51,7 +53,7 @@ val dataSourcesModule =
         }
 
         single<PersistenceDataSource> {
-            PersistenceDataSourceImpl(get())
+            PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.IO)))
         }
 
         single<PreferencesDataSource> {

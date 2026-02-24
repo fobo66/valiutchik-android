@@ -16,19 +16,22 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import dev.fobo66.valiutchik.core.db.Bank
 import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.Rate
 import fobo66.valiutchik.core.util.CURRENCY_NAME_EURO
 import fobo66.valiutchik.core.util.CURRENCY_NAME_HRYVNIA
 import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
+import java.util.concurrent.Executors
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
@@ -41,12 +44,20 @@ class PersistenceDataSourceTest {
     private lateinit var persistenceDataSource: PersistenceDataSource
     private lateinit var db: Database
 
+    private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+
     @BeforeTest
-    fun setUp() {
+    fun setUp() = runTest {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         Database.Schema.create(driver)
         db = Database(driver)
-        persistenceDataSource = PersistenceDataSourceImpl(db)
+        persistenceDataSource = PersistenceDataSourceImpl(db, ioDispatcher)
+        db.bankQueries.insertBank(Bank(id = 1, name = "bank", formattedName = "test")).await()
+    }
+
+    @AfterTest
+    fun tearDown() {
+        ioDispatcher.close()
     }
 
     @OptIn(ExperimentalTime::class)
@@ -61,12 +72,12 @@ class PersistenceDataSourceTest {
         ).toString()
 
     @Test
-    fun saveRates() = runTest {
+    fun `save rates`() = runTest {
         val rates =
             listOf(
-                Rate(0, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
                 Rate(
-                    0,
+                    2,
                     date,
                     1,
                     CURRENCY_NAME_US_DOLLAR,
@@ -82,45 +93,46 @@ class PersistenceDataSourceTest {
     }
 
     @Test
-    fun loadBestRates() = runTest {
+    fun `load best rates`() = runTest {
         val rates =
             listOf(
-                Rate(0, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(0, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
+                Rate(2, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
 
-        db.rateQueries.loadBestBuyRates(listOf(CURRENCY_NAME_US_DOLLAR)).asFlow()
+        persistenceDataSource.readBestBuyCourses(listOf(CURRENCY_NAME_US_DOLLAR))
             .test {
-                assertThat(awaitItem().executeAsList()).hasSize(1)
+                assertThat(awaitItem()).hasSize(1)
             }
     }
 
     @Test
-    fun someBestRatesAreMissing() = runTest {
+    fun `missing currency`() = runTest {
         val rates =
             listOf(
-                Rate(0, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(0, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
+                Rate(2, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
 
-        db.rateQueries.loadBestSellRates(listOf(CURRENCY_NAME_HRYVNIA)).asFlow()
+        persistenceDataSource.readBestSellCourses(listOf(CURRENCY_NAME_HRYVNIA))
             .test {
                 assertThat(
-                    awaitItem().executeAsList()
+                    awaitItem()
                 ).hasSize(0)
+                awaitComplete()
             }
     }
 
     @Test
-    fun loadOldRates() = runTest {
+    fun `load old rates`() = runTest {
         val rates =
             listOf(
-                Rate(0, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(0, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
+                Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -130,12 +142,12 @@ class PersistenceDataSourceTest {
     }
 
     @Test
-    fun deleteRates() = runTest {
+    fun `delete rates`() = runTest {
         val rates =
             listOf(
-                Rate(0, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(0, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE),
-                Rate(0, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
+                Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE),
+                Rate(3, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)

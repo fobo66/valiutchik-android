@@ -17,24 +17,31 @@
 package fobo66.valiutchik.core.model.datasource
 
 import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
 import dev.fobo66.valiutchik.core.db.Rate
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.withContext
 
-class PersistenceDataSourceImpl(private val database: Database) : PersistenceDataSource {
+class PersistenceDataSourceImpl(
+    private val database: Database,
+    private val ioDispatcher: CoroutineDispatcher
+) : PersistenceDataSource {
 
-    override suspend fun saveRates(rates: List<Rate>) {
+    override suspend fun saveRates(rates: List<Rate>) = withContext(ioDispatcher) {
         rates.forEach {
-            database.rateQueries.insertRate(it)
+            database.rateQueries.insertRate(it).await()
         }
     }
 
-    override suspend fun deleteRates(rates: List<Rate>) {
-        database.rateQueries.deleteRates(rates.map { it.id })
+    override suspend fun deleteRates(rates: List<Rate>) = withContext(ioDispatcher) {
+        database.rateQueries.deleteRates(rates.map { it.id }).await()
+        Unit
     }
 
     override suspend fun loadOldRates(): List<Rate> =
@@ -42,13 +49,19 @@ class PersistenceDataSourceImpl(private val database: Database) : PersistenceDat
 
     override fun loadCurrencies(): Flow<List<Currency>> =
         database.currencyQueries.loadCurrencies().asFlow()
-            .map { it.executeAsList() }
+            .mapToList(ioDispatcher)
 
     override fun readBestBuyCourses(currencyIds: List<String>): Flow<List<LoadBestBuyRates>> =
         database.rateQueries.loadBestBuyRates(currencyIds).asFlow()
-            .map { it.executeAsList() }
+            .mapToList(ioDispatcher)
+            .catch {
+                emit(emptyList())
+            }
 
     override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
         database.rateQueries.loadBestSellRates(currencyIds).asFlow()
-            .map { it.executeAsList() }
+            .mapToList(ioDispatcher)
+            .catch {
+                emit(emptyList())
+            }
 }

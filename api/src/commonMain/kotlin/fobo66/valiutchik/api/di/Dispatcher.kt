@@ -17,5 +17,6 @@
 package fobo66.valiutchik.api.di
 
 enum class Dispatcher {
-    BACKGROUND
+    BACKGROUND,
+    IO
 }
