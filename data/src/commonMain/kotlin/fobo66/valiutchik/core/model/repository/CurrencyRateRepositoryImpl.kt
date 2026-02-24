@@ -34,14 +34,12 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 import kotlinx.io.IOException
 
-private const val EXCHANGE_RATE_NORMALIZER = 100
 private const val DEFAULT_CITY_INDEX = 1
-private const val EMPTY_RATE = 0.0f
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
@@ -133,12 +131,12 @@ class CurrencyRateRepositoryImpl(
 
         val rates = currencies.values.asFlow()
             .filter { it.isNotEmpty() }
-            .map {
-                it.toRate()
-            }.toList()
+            .map { rateSources ->
+                rateSources.map { it.toRate() }
+            }
 
         persistenceDataSource.saveRates(
-            rates
+            rates.first()
         )
     }
 

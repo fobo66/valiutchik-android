@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS Rate (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `date` TEXT NOT NULL,
   `bankId` INTEGER NOT NULL,
-  `currencyId` INTEGER NOT NULL,
+  `currencyId` TEXT NOT NULL,
   `buyRate` REAL NOT NULL,
   `sellRate` REAL NOT NULL
  );
@@ -19,13 +19,13 @@ SELECT * FROM Rate WHERE date(date) < date('now');
 loadBestBuyRates:
 SELECT Bank.formattedName AS bankName, max(Rate.buyRate), Currency.name, Rate.currencyId, Currency.multiplier FROM Rate
 JOIN Bank ON Rate.bankId = Bank.id
-JOIN Currency ON Rate.currencyId = Currency.id
+JOIN Currency ON Rate.currencyId = Currency.name
 WHERE Rate.currencyId IN :currencyIds AND datetime(Rate.date) >= datetime('now');
 
 loadBestSellRates:
 SELECT Bank.formattedName AS bankName, min(Rate.sellRate), Currency.name, Rate.currencyId, Currency.multiplier FROM Rate
 JOIN Bank ON Rate.bankId = Bank.id
-JOIN Currency ON Rate.currencyId = Currency.id
+JOIN Currency ON Rate.currencyId = Currency.name
 WHERE Rate.currencyId IN :currencyIds AND datetime(Rate.date) >= datetime('now');
 
 insertRate:
