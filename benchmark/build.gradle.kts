@@ -75,7 +75,7 @@ dependencies {
     implementation(project(":data"))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.benchmark)
-    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.sqlidelight.android)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.serialization)
     androidTestImplementation(libs.kotlinx.io)
