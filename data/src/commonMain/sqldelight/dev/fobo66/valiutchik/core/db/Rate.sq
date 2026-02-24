@@ -14,7 +14,7 @@ loadAllRates:
 SELECT * FROM Rate;
 
 loadOldRates:
-SELECT id FROM Rate WHERE date(date) < date('now');
+SELECT * FROM Rate WHERE date(date) < date('now');
 
 loadBestBuyRates:
 SELECT Bank.formattedName AS bankName, max(Rate.buyRate), Currency.name, Rate.currencyId, Currency.multiplier FROM Rate

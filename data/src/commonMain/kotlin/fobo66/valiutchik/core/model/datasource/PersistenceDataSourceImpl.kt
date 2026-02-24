@@ -16,22 +16,39 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.db.CurrencyRatesDatabase
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.Rate
+import app.cash.sqldelight.coroutines.asFlow
+import dev.fobo66.valiutchik.core.db.Currency
+import dev.fobo66.valiutchik.core.db.Database
+import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
+import dev.fobo66.valiutchik.core.db.LoadBestSellRates
+import dev.fobo66.valiutchik.core.db.Rate
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
-    PersistenceDataSource {
+class PersistenceDataSourceImpl(private val database: Database) : PersistenceDataSource {
 
     override suspend fun saveRates(rates: List<Rate>) {
-        database.ratesDao().insertRates(rates)
+        rates.forEach {
+            database.rateQueries.insertRate(it)
+        }
     }
 
     override suspend fun deleteRates(rates: List<Rate>) {
-        database.ratesDao().deleteRates(rates)
+        database.rateQueries.deleteRates(rates.map { it.id })
     }
 
-    override fun readBestCourses(): Flow<List<BestCourse>> = database.ratesDao().resolveBestRates()
-    override suspend fun loadOldRates(): List<Rate> = database.ratesDao().loadOldRates()
+    override suspend fun loadOldRates(): List<Rate> =
+        database.rateQueries.loadOldRates().executeAsList()
+
+    override suspend fun loadCurrencies(): Flow<List<Currency>> =
+        database.currencyQueries.loadCurrencies().asFlow()
+            .map { it.executeAsList() }
+
+    override fun readBestBuyCourses(currencyIds: List<Long>): Flow<List<LoadBestBuyRates>> =
+        database.rateQueries.loadBestBuyRates(currencyIds).asFlow()
+            .map { it.executeAsList() }
+
+    override fun readBestSellCourses(currencyIds: List<Long>): Flow<List<LoadBestSellRates>> =
+        database.rateQueries.loadBestSellRates(currencyIds).asFlow()
+            .map { it.executeAsList() }
 }
