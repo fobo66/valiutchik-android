@@ -19,6 +19,7 @@ package fobo66.valiutchik.api
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
+import fobo66.valiutchik.api.entity.CurrencyResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.get
@@ -77,5 +78,13 @@ class CurrencyRatesDataSourceImpl(
             header(CLACKS_KEY, CLACKS_VALUE)
         }
         parser.parseBanks(response.bodyAsChannel().readBuffer())
+    }
+
+    override suspend fun loadCurrencies(): List<CurrencyResponse> = withContext(ioDispatcher) {
+        val response = client.get(API_URL_CURRENCIES) {
+            contentType(ContentType.Application.Json)
+            header(CLACKS_KEY, CLACKS_VALUE)
+        }
+        parser.parseCurrencies(response.bodyAsChannel().readBuffer())
     }
 }

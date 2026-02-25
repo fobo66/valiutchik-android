@@ -19,6 +19,7 @@ package dev.fobo66.core.data.testing.fake
 import fobo66.valiutchik.api.CurrencyRatesDataSource
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyResponse
 import kotlinx.io.IOException
 
 class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
@@ -34,4 +35,5 @@ class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
     }
 
     override suspend fun loadBanks(): List<BankResponse> = emptyList()
+    override suspend fun loadCurrencies(): List<CurrencyResponse> = emptyList()
 }

@@ -18,6 +18,7 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyResponse
 
 /**
  * API datasource to load actual currency rates
@@ -40,4 +41,10 @@ interface CurrencyRatesDataSource {
      * @return list of banks
      */
     suspend fun loadBanks(): List<BankResponse>
+
+    /**
+     * Load info about currencies
+     * @return list of currencies
+     */
+    suspend fun loadCurrencies(): List<CurrencyResponse>
 }
