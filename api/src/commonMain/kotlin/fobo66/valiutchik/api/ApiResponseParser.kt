@@ -18,6 +18,7 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyResponse
 import kotlinx.io.Source
 
 /**
@@ -42,4 +43,13 @@ interface ApiResponseParser {
      * @return list of banks
      */
     fun parseBanks(body: Source): List<BankResponse>
+
+    /**
+     * Parse currencies JSON response from the API
+     *
+     * @param body response body
+     *
+     * @return list of currencies
+     */
+    fun parseCurrencies(body: Source): List<CurrencyResponse>
 }

@@ -64,4 +64,13 @@ class ApiResponseParserImplTest {
         assertEquals(21, banks.size)
         assertEquals(6, banks.first().id)
     }
+
+    @Test
+    fun `currencies response`() {
+        val currencyResponses = parser.parseCurrencies(
+            CURRENCIES.byteInputStream().asSource().buffered()
+        )
+        assertEquals(36, currencyResponses.size)
+        assertEquals(1, currencyResponses.first().id)
+    }
 }
