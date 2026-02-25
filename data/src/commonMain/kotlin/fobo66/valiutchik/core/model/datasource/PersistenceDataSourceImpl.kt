@@ -64,4 +64,10 @@ class PersistenceDataSourceImpl(
     override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> =
         database.rateQueries.loadBestSellRates().asFlow()
             .mapToList(ioDispatcher)
+
+    override suspend fun saveCurrencies(currencies: Set<Currency>) = withContext(ioDispatcher) {
+        currencies.forEach {
+            database.currencyQueries.insertCurrency(it).await()
+        }
+    }
 }

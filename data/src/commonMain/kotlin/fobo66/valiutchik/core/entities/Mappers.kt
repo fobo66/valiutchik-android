@@ -17,8 +17,11 @@
 package fobo66.valiutchik.core.entities
 
 import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.Rate
+import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
+import fobo66.valiutchik.api.entity.CurrencyResponse
 import kotlin.math.log10
 import kotlin.math.roundToInt
 import kotlin.time.ExperimentalTime
@@ -38,6 +41,19 @@ fun CurrencyRateSource.toBank(): Bank = Bank(
     id = bankId,
     name = bankName,
     formattedName = bankName
+)
+
+fun BankResponse.toBank(): Bank = Bank(
+    id = id,
+    name = fullname,
+    formattedName = name
+)
+
+fun CurrencyResponse.toCurrency(): Currency = Currency(
+    id = id,
+    name = alias,
+    symbol = symbol,
+    multiplier = multiplier
 )
 
 @OptIn(ExperimentalTime::class)

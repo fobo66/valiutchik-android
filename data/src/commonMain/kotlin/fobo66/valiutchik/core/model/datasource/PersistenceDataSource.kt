@@ -38,6 +38,11 @@ interface PersistenceDataSource {
     suspend fun saveBanks(banks: Set<Bank>)
 
     /**
+     * Save currency entries to the database
+     */
+    suspend fun saveCurrencies(currencies: Set<Currency>)
+
+    /**
      * Delete entries from the database
      */
     suspend fun deleteRates(rates: List<Rate>)

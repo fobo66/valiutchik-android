@@ -14,27 +14,14 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.entity
+package fobo66.valiutchik.core.model.repository
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class CurrencyResponse(
-    @SerialName("id")
-    val id: Long = 0,
-    @SerialName("iname")
-    val iname: String = "",
-    @SerialName("status")
-    val multiplier: Long = 1,
-    @SerialName("multiplier")
-    val status: Int = 1,
-    @SerialName("name")
-    val name: String = "",
-    @SerialName("sef_alias")
-    val alias: String = "",
-    @SerialName("short_name")
-    val shortName: String = "",
-    @SerialName("symbol")
-    val symbol: String = ""
-)
+/**
+ * Handle update of the colloquial data required for showing rates properly
+ */
+interface DataRefreshRepository {
+    /**
+     * Load updates from server
+     */
+    suspend fun refresh()
+}

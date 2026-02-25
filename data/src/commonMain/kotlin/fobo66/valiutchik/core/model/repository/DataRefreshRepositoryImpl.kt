@@ -1,0 +1,53 @@
+/*
+ *    Copyright 2026 Andrey Mukamolov
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package fobo66.valiutchik.core.model.repository
+
+import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.core.entities.toBank
+import fobo66.valiutchik.core.entities.toCurrency
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
+
+private const val CURRENCY_STATUS_CONVERSION = 2
+
+class DataRefreshRepositoryImpl(
+    private val currencyRatesDataSource: CurrencyRatesDataSource,
+    private val persistenceDataSource: PersistenceDataSource,
+    private val defaultDispatcher: CoroutineDispatcher
+) : DataRefreshRepository {
+    override suspend fun refresh() = withContext(defaultDispatcher) {
+        val currencies = async {
+            currencyRatesDataSource.loadCurrencies()
+                .filter { it.status != CURRENCY_STATUS_CONVERSION }
+                .map { it.toCurrency() }
+                .toSet()
+        }
+
+        val banks = async {
+            currencyRatesDataSource.loadBanks()
+                .map { it.toBank() }
+                .toSet()
+        }
+
+        with(persistenceDataSource) {
+            saveCurrencies(currencies.await())
+            saveBanks(banks.await())
+        }
+    }
+}
