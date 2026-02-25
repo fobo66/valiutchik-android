@@ -45,6 +45,10 @@ class FakePersistenceDataSource : PersistenceDataSource {
         isSaved = true
     }
 
+    override suspend fun saveCurrencies(currencies: Set<Currency>) {
+        isSaved = true
+    }
+
     override suspend fun deleteRates(rates: List<Rate>) {
         isDeleted = true
     }
