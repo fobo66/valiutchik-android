@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 
 interface CurrencyRatesDataSource {
@@ -23,4 +24,6 @@ interface CurrencyRatesDataSource {
         currencies: List<String>,
         cityIndex: Int
     ): Map<Long, List<CurrencyRateSource>>
+
+    suspend fun loadBanks(): List<BankResponse>
 }

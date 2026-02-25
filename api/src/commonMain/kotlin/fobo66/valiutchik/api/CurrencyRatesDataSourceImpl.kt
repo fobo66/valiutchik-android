@@ -16,10 +16,12 @@
 
 package fobo66.valiutchik.api
 
+import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -33,7 +35,9 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-const val API_URL = "https://api.myfin.by/currency/rates"
+const val API_URL_RATES = "https://api.myfin.by/currency/rates"
+const val API_URL_BANKS = "https://api.myfin.by/banks"
+const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
 
 private const val CLACKS_KEY = "X-Clacks-Overhead"
 private const val CLACKS_VALUE = "GNU Terry Pratchett"
@@ -51,7 +55,7 @@ class CurrencyRatesDataSourceImpl(
             currencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
                 .map { request ->
                     async {
-                        val response = client.post(API_URL) {
+                        val response = client.post(API_URL_RATES) {
                             contentType(ContentType.Application.Json)
                             header(CLACKS_KEY, CLACKS_VALUE)
                             setBody(request)
@@ -65,5 +69,13 @@ class CurrencyRatesDataSourceImpl(
         } catch (e: ResponseException) {
             throw IOException(e)
         }
+    }
+
+    override suspend fun loadBanks(): List<BankResponse> = withContext(ioDispatcher) {
+        val response = client.get(API_URL_BANKS) {
+            contentType(ContentType.Application.Json)
+            header(CLACKS_KEY, CLACKS_VALUE)
+        }
+        parser.parseBanks(response.bodyAsChannel().readBuffer())
     }
 }
