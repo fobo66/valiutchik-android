@@ -53,11 +53,8 @@ class PersistenceDataSourceImpl(
             .mapToList(ioDispatcher)
 
     override fun readBestBuyCourses(currencyIds: List<String>): Flow<List<LoadBestBuyRates>> =
-        database.rateQueries.loadBestBuyRates(currencyIds).asFlow()
+        database.rateQueries.loadBestBuyRates().asFlow()
             .mapToList(ioDispatcher)
-            .catch {
-                emit(emptyList())
-            }
 
     override suspend fun saveBanks(banks: Set<Bank>) = withContext(ioDispatcher) {
         banks.forEach {
@@ -66,9 +63,6 @@ class PersistenceDataSourceImpl(
     }
 
     override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
-        database.rateQueries.loadBestSellRates(currencyIds).asFlow()
+        database.rateQueries.loadBestSellRates().asFlow()
             .mapToList(ioDispatcher)
-            .catch {
-                emit(emptyList())
-            }
 }

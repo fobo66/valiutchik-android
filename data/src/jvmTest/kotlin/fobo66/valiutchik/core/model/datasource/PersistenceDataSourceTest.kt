@@ -18,9 +18,11 @@ package fobo66.valiutchik.core.model.datasource
 
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.turbine.test
+import com.google.common.truth.Correspondence
 import com.google.common.truth.Truth.assertThat
 import dev.fobo66.valiutchik.core.db.Bank
 import dev.fobo66.valiutchik.core.db.Database
+import dev.fobo66.valiutchik.core.db.LoadBestSellRates
 import dev.fobo66.valiutchik.core.db.Rate
 import fobo66.valiutchik.core.util.CURRENCY_NAME_EURO
 import fobo66.valiutchik.core.util.CURRENCY_NAME_HRYVNIA
@@ -74,7 +76,7 @@ class PersistenceDataSourceTest {
     @Test
     fun `save rates`() = runTest {
         val rates =
-            listOf(
+            setOf(
                 Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
                 Rate(
                     2,
@@ -95,23 +97,24 @@ class PersistenceDataSourceTest {
     @Test
     fun `load best rates`() = runTest {
         val rates =
-            listOf(
+            setOf(
                 Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(2, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(2, date, 1, CURRENCY_NAME_US_DOLLAR, RATE / 2, RATE),
+                Rate(3, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
 
         persistenceDataSource.saveRates(rates)
 
         persistenceDataSource.readBestBuyCourses(listOf(CURRENCY_NAME_US_DOLLAR))
             .test {
-                assertThat(awaitItem()).hasSize(1)
+                assertThat(awaitItem()).hasSize(2)
             }
     }
 
     @Test
     fun `missing currency`() = runTest {
         val rates =
-            listOf(
+            setOf(
                 Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
                 Rate(2, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
@@ -122,15 +125,20 @@ class PersistenceDataSourceTest {
             .test {
                 assertThat(
                     awaitItem()
-                ).hasSize(0)
-                awaitComplete()
+                ).comparingElementsUsing(
+                    Correspondence.transforming<LoadBestSellRates, String>(
+                        LoadBestSellRates::currencyId,
+                        "currency id"
+                    )
+                )
+                    .doesNotContain(CURRENCY_NAME_HRYVNIA)
             }
     }
 
     @Test
     fun `load old rates`() = runTest {
         val rates =
-            listOf(
+            setOf(
                 Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
                 Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
             )
@@ -144,7 +152,7 @@ class PersistenceDataSourceTest {
     @Test
     fun `delete rates`() = runTest {
         val rates =
-            listOf(
+            setOf(
                 Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
                 Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE),
                 Rate(3, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
