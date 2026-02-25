@@ -105,7 +105,7 @@ class PersistenceDataSourceTest {
 
         persistenceDataSource.saveRates(rates)
 
-        persistenceDataSource.readBestBuyCourses(listOf(CURRENCY_NAME_US_DOLLAR))
+        persistenceDataSource.readBestBuyCourses()
             .test {
                 assertThat(awaitItem()).hasSize(2)
             }
@@ -121,12 +121,12 @@ class PersistenceDataSourceTest {
 
         persistenceDataSource.saveRates(rates)
 
-        persistenceDataSource.readBestSellCourses(listOf(CURRENCY_NAME_HRYVNIA))
+        persistenceDataSource.readBestSellCourses()
             .test {
                 assertThat(
                     awaitItem()
                 ).comparingElementsUsing(
-                    Correspondence.transforming<LoadBestSellRates, String>(
+                    Correspondence.transforming(
                         LoadBestSellRates::currencyId,
                         "currency id"
                     )

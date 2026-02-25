@@ -26,7 +26,6 @@ import dev.fobo66.valiutchik.core.db.LoadBestSellRates
 import dev.fobo66.valiutchik.core.db.Rate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.withContext
 
 class PersistenceDataSourceImpl(
@@ -52,7 +51,7 @@ class PersistenceDataSourceImpl(
         database.currencyQueries.loadCurrencies().asFlow()
             .mapToList(ioDispatcher)
 
-    override fun readBestBuyCourses(currencyIds: List<String>): Flow<List<LoadBestBuyRates>> =
+    override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> =
         database.rateQueries.loadBestBuyRates().asFlow()
             .mapToList(ioDispatcher)
 
@@ -62,7 +61,7 @@ class PersistenceDataSourceImpl(
         }
     }
 
-    override fun readBestSellCourses(currencyIds: List<String>): Flow<List<LoadBestSellRates>> =
+    override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> =
         database.rateQueries.loadBestSellRates().asFlow()
             .mapToList(ioDispatcher)
 }

@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toSet
 import kotlinx.io.IOException
@@ -162,33 +161,29 @@ class CurrencyRateRepositoryImpl(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
-        persistenceDataSource.loadCurrencies()
-            .flatMapLatest { currencies ->
-                val currencyIds = currencies.map { it.name }
-                persistenceDataSource.readBestBuyCourses(currencyIds)
-                    .combine(persistenceDataSource.readBestSellCourses(currencyIds)) {
-                            buyRates,
-                            sellRates
-                        ->
-                        buyRates.map {
-                            BestCourse(
-                                bankName = it.bankName,
-                                currencyValue = it.max ?: UNDEFINED_BUY_RATE,
-                                currencyName = it.currencyId,
-                                multiplier = it.multiplier,
-                                isBuy = true
-                            )
-                        } +
-                            sellRates.map {
-                                BestCourse(
-                                    bankName = it.bankName,
-                                    currencyValue =
-                                        it.min ?: UNDEFINED_SELL_RATE,
-                                    currencyName = it.currencyId,
-                                    multiplier = it.multiplier,
-                                    isBuy = false
-                                )
-                            }
+        persistenceDataSource.readBestBuyCourses()
+            .combine(persistenceDataSource.readBestSellCourses()) {
+                    buyRates,
+                    sellRates
+                ->
+                buyRates.map {
+                    BestCourse(
+                        bankName = it.bankName,
+                        currencyValue = it.max ?: UNDEFINED_BUY_RATE,
+                        currencyName = it.currencyId,
+                        multiplier = it.multiplier,
+                        isBuy = true
+                    )
+                } +
+                    sellRates.map {
+                        BestCourse(
+                            bankName = it.bankName,
+                            currencyValue =
+                                it.min ?: UNDEFINED_SELL_RATE,
+                            currencyName = it.currencyId,
+                            multiplier = it.multiplier,
+                            isBuy = false
+                        )
                     }
             }
             .map { courses ->
@@ -197,6 +192,7 @@ class CurrencyRateRepositoryImpl(
                         it.currencyValue != UNDEFINED_BUY_RATE &&
                             it.currencyValue != UNDEFINED_SELL_RATE
                     }
+                    .sortedBy { it.currencyName }
             }
 
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =

@@ -28,13 +28,15 @@ import fobo66.valiutchik.api.ApiResponseParser
 import fobo66.valiutchik.api.ApiResponseParserImpl
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
-import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import java.time.LocalDate
+import java.util.concurrent.Executors
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.io.asSource
 import kotlinx.io.buffered
 import kotlinx.serialization.json.Json
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -57,7 +59,9 @@ class BestCoursePersistenceDataSourceBenchmark {
         }
     )
 
-    private val persistenceDataSource: PersistenceDataSource = PersistenceDataSourceImpl(db)
+    private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val persistenceDataSource: PersistenceDataSource =
+        PersistenceDataSourceImpl(db, ioDispatcher)
 
     @Before
     fun setUp() = runTest {
@@ -77,7 +81,7 @@ class BestCoursePersistenceDataSourceBenchmark {
             parser.parseRates(ratesResponseContent)
                 .map {
                     Rate(
-                        id = 0L,
+                        id = it.id,
                         date = LocalDate.now().toString(),
                         bankId = it.bankId,
                         buyRate = it.currency.buy,
@@ -85,14 +89,20 @@ class BestCoursePersistenceDataSourceBenchmark {
                         currencyId = it.currency.name
                     )
                 }
+                .toSet()
         )
+    }
+
+    @After
+    fun tearDown() {
+        ioDispatcher.close()
     }
 
     @Test
     fun readBestCourses() {
         benchmarkRule.measureRepeated {
             runTest {
-                persistenceDataSource.readBestSellCourses(listOf(CURRENCY_NAME_US_DOLLAR)).first()
+                persistenceDataSource.readBestSellCourses().first()
             }
         }
     }
