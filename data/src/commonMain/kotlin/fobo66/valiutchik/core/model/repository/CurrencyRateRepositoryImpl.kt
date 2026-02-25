@@ -121,7 +121,6 @@ class CurrencyRateRepositoryImpl(
     }
 
     override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
-        val languageTag = loadLocale().first()
         val cityIndex = citiesMap[city] ?: citiesMap[defaultCity] ?: DEFAULT_CITY_INDEX
         val currencies = persistenceDataSource.loadCurrencies().first()
             .map { it.name }
@@ -137,7 +136,7 @@ class CurrencyRateRepositoryImpl(
             .map { it.toRate() }
             .toSet()
         val banks = ratesFlow
-            .map { it.toBank(formattingDataSource.formatBankName(it.bankName, languageTag)) }
+            .map { it.toBank() }
             .toSet()
 
         with(persistenceDataSource) {

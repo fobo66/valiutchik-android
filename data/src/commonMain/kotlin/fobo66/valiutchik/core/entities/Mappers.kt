@@ -34,10 +34,10 @@ fun CurrencyRateSource.toRate(): Rate = Rate(
     currencyId = currency.name
 )
 
-fun CurrencyRateSource.toBank(formattedName: String): Bank = Bank(
+fun CurrencyRateSource.toBank(): Bank = Bank(
     id = bankId,
     name = bankName,
-    formattedName = formattedName
+    formattedName = bankName
 )
 
 @OptIn(ExperimentalTime::class)
