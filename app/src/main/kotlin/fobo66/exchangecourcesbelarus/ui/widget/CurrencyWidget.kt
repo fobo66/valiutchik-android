@@ -143,6 +143,8 @@ private fun BestCurrencyRate.resolveCurrencyName(): Int = when (this) {
     is BestCurrencyRate.ZlotySellRate -> R.string.currency_name_pln_sell
     is BestCurrencyRate.RubleBuyRate -> R.string.currency_name_rub_buy
     is BestCurrencyRate.RubleSellRate -> R.string.currency_name_rub_sell
+    is BestCurrencyRate.OtherBuyRate -> TODO()
+    is BestCurrencyRate.OtherSellRate -> TODO()
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {

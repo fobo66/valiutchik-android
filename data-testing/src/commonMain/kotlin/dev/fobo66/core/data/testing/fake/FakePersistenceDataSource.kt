@@ -24,13 +24,14 @@ import dev.fobo66.valiutchik.core.db.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 
 class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
     var isDeleted = false
 
     override suspend fun loadOldRates(): List<Rate> = emptyList()
-    override fun loadCurrencies(): Flow<List<Currency>> = emptyFlow()
+    override fun loadCurrencies(): Flow<List<Currency>> = flowOf(emptyList())
 
     override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> = emptyFlow()
 
