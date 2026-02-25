@@ -22,8 +22,6 @@ import dev.fobo66.valiutchik.core.db.Rate
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyResponse
-import kotlin.math.log10
-import kotlin.math.roundToInt
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -57,6 +55,6 @@ fun CurrencyResponse.toCurrency(): Currency = Currency(
 )
 
 @OptIn(ExperimentalTime::class)
-private fun CurrencyRateSource.resolveTimestamp(): Instant = currency.dateUpdate.let {
-    Instant.fromEpochSeconds(it)
-}
+private fun CurrencyRateSource.resolveTimestamp(): Instant = currency.dateUpdate.runCatching {
+    Instant.fromEpochSeconds(this)
+}.getOrDefault(Instant.DISTANT_PAST)
