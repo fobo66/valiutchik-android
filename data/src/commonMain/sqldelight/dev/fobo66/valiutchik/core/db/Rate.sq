@@ -31,8 +31,8 @@ WHERE date(Rate.date) >= date('now')
 GROUP BY Rate.currencyId;
 
 insertRate:
-INSERT OR REPLACE INTO Rate(id, date, bankId, currencyId, buyRate, sellRate)
-VALUES ?;
+INSERT OR REPLACE INTO Rate(date, bankId, currencyId, buyRate, sellRate)
+VALUES (?, ?, ?, ?, ?);
 
 deleteRates:
 DELETE FROM Rate WHERE id IN :ids;

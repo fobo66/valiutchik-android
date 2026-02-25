@@ -29,7 +29,7 @@ import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 fun CurrencyRateSource.toRate(): Rate = Rate(
-    id = concatIds(bankId, id),
+    id = id,
     date = resolveTimestamp().toString(),
     bankId = bankId,
     buyRate = currency.buy,
@@ -59,22 +59,4 @@ fun CurrencyResponse.toCurrency(): Currency = Currency(
 @OptIn(ExperimentalTime::class)
 private fun CurrencyRateSource.resolveTimestamp(): Instant = currency.dateUpdate.let {
     Instant.fromEpochSeconds(it)
-}
-
-private fun concatIds(primary: Long, secondary: Long): Long {
-    val secondaryLength = if (secondary == 0L) {
-        1
-    } else {
-        (log10(secondary.toFloat()) + 1).roundToInt()
-    }
-    val multiplier = 10L.pow(secondaryLength)
-    return (multiplier * primary) + secondary
-}
-
-private fun Long.pow(exponent: Int): Long {
-    var result = 1L
-    repeat(exponent) {
-        result *= this
-    }
-    return result
 }

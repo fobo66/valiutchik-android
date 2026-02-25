@@ -35,7 +35,13 @@ class PersistenceDataSourceImpl(
 
     override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
         rates.forEach {
-            database.rateQueries.insertRate(it).await()
+            database.rateQueries.insertRate(
+                it.date,
+                it.bankId,
+                it.currencyId,
+                it.buyRate,
+                it.sellRate
+            ).await()
         }
     }
 
