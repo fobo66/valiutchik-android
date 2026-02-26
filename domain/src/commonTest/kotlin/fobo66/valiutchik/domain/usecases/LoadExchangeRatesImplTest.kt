@@ -47,8 +47,8 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `list of rates`() = runTest {
         val rawList = listOf(
-            BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, MULTIPLIER),
-            BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, MULTIPLIER, isBuy = true)
+            BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER),
+            BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER, isBuy = true)
         )
         currencyRateRepository.rates.update {
             rawList
@@ -61,7 +61,7 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `type transformed`() = runTest {
         currencyRateRepository.rates.update {
-            listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, MULTIPLIER))
+            listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
         loadExchangeRates.execute().test {
             assertIs<BestCurrencyRate.DollarSellRate>(awaitItem().first())
@@ -71,7 +71,7 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `locale updated`() = runTest {
         currencyRateRepository.rates.update {
-            listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, MULTIPLIER))
+            listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
         loadExchangeRates.execute().test {
             assertTrue(awaitItem().isNotEmpty())

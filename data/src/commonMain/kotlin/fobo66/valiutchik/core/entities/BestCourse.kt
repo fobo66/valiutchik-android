@@ -23,6 +23,7 @@ data class BestCourse(
     val bankName: String,
     val currencyValue: Double,
     val currencyName: String,
+    val currencyId: Long,
     val multiplier: Long,
     val isBuy: Boolean? = false
 )

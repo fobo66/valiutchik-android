@@ -170,6 +170,7 @@ class CurrencyRateRepositoryImpl(
                         bankName = it.bankName,
                         currencyValue = it.max ?: UNDEFINED_BUY_RATE,
                         currencyName = it.currencyId,
+                        currencyId = it.sortOrder,
                         multiplier = it.multiplier,
                         isBuy = true
                     )
@@ -180,8 +181,8 @@ class CurrencyRateRepositoryImpl(
                             currencyValue =
                                 it.min ?: UNDEFINED_SELL_RATE,
                             currencyName = it.currencyId,
-                            multiplier = it.multiplier,
-                            isBuy = false
+                            currencyId = it.sortOrder,
+                            multiplier = it.multiplier
                         )
                     }
             }
@@ -191,7 +192,7 @@ class CurrencyRateRepositoryImpl(
                         it.currencyValue != UNDEFINED_BUY_RATE &&
                             it.currencyValue != UNDEFINED_SELL_RATE
                     }
-                    .sortedBy { it.currencyName }
+                    .sortedBy { it.currencyId }
             }
 
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =

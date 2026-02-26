@@ -17,18 +17,20 @@ loadOldRates:
 SELECT * FROM Rate WHERE date(date) < date('now');
 
 loadBestBuyRates:
-SELECT Bank.formattedName AS bankName, max(Rate.buyRate), Rate.currencyId, Currency.multiplier FROM Rate
+SELECT Bank.formattedName AS bankName, max(Rate.buyRate), Rate.currencyId, Currency.multiplier, Currency.id AS sortOrder FROM Rate
 JOIN Bank ON Rate.bankId = Bank.id
 JOIN Currency ON Rate.currencyId = Currency.name
 WHERE date(Rate.date) >= date('now')
-GROUP BY Rate.currencyId;
+GROUP BY Rate.currencyId
+ORDER BY sortOrder;
 
 loadBestSellRates:
-SELECT Bank.formattedName AS bankName, min(Rate.sellRate), Rate.currencyId, Currency.multiplier FROM Rate
+SELECT Bank.formattedName AS bankName, min(Rate.sellRate), Rate.currencyId, Currency.multiplier, Currency.id AS sortOrder FROM Rate
 JOIN Bank ON Rate.bankId = Bank.id
 JOIN Currency ON Rate.currencyId = Currency.name
 WHERE date(Rate.date) >= date('now')
-GROUP BY Rate.currencyId;
+GROUP BY Rate.currencyId
+ORDER BY sortOrder;
 
 insertRate:
 INSERT OR REPLACE INTO Rate(date, bankId, currencyId, buyRate, sellRate)
