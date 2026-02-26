@@ -51,16 +51,19 @@ class FormattingDataSourceImpl : FormattingDataSource {
     }
 
     override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String {
-        if (cachedLanguageTag != languageTag) {
-            cachedLocale = ULocale.forLanguageTag(languageTag)
-            cachedLanguageTag = languageTag
-        }
+        checkLocaleCache(languageTag)
 
         return NumberFormatter
             .withLocale(cachedLocale)
             .unit(targetCurrency)
             .format(value)
             .toString()
+    }
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String {
+        checkLocaleCache(languageTag)
+
+        return Currency.getInstance(currencyCode).getSymbol(cachedLocale)
     }
 
     private fun checkLocaleCache(languageTag: LanguageTag) {

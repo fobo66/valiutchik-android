@@ -57,24 +57,55 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
     private fun BestCourse.toRate(languageTag: LanguageTag): BestCurrencyRate {
         val bank = currencyRateRepository.formatBankName(this, languageTag)
         val rateValue = currencyRateRepository.formatRate(this, languageTag)
+        val symbol = currencyRateRepository.formatCurrencySymbol(this, languageTag)
 
         return if (isBuy == true) {
             when (currencyName) {
-                CURRENCY_NAME_US_DOLLAR -> DollarBuyRate(bank, rateValue)
-                CURRENCY_NAME_EURO -> EuroBuyRate(bank, rateValue)
-                CURRENCY_NAME_RUBLE -> RubleBuyRate(bank, rateValue)
-                CURRENCY_NAME_ZLOTY -> ZlotyBuyRate(bank, rateValue)
-                CURRENCY_NAME_HRYVNIA -> HryvniaBuyRate(bank, rateValue)
-                else -> BestCurrencyRate.OtherBuyRate(bank, rateValue, "")
+                CURRENCY_NAME_US_DOLLAR -> DollarBuyRate(bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_EURO -> EuroBuyRate(bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_RUBLE -> RubleBuyRate(bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_ZLOTY -> ZlotyBuyRate(bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_HRYVNIA -> HryvniaBuyRate(bank, rateValue, multiplier, symbol)
+                else -> BestCurrencyRate.OtherBuyRate(bank, rateValue, multiplier, symbol)
             }
         } else {
             when (currencyName) {
-                CURRENCY_NAME_US_DOLLAR -> BestCurrencyRate.DollarSellRate(bank, rateValue)
-                CURRENCY_NAME_EURO -> BestCurrencyRate.EuroSellRate(bank, rateValue)
-                CURRENCY_NAME_RUBLE -> BestCurrencyRate.RubleSellRate(bank, rateValue)
-                CURRENCY_NAME_ZLOTY -> BestCurrencyRate.ZlotySellRate(bank, rateValue)
-                CURRENCY_NAME_HRYVNIA -> BestCurrencyRate.HryvniaSellRate(bank, rateValue)
-                else -> BestCurrencyRate.OtherSellRate(bank, rateValue, "")
+                CURRENCY_NAME_US_DOLLAR -> BestCurrencyRate.DollarSellRate(
+                    bank,
+                    rateValue,
+                    multiplier,
+                    symbol
+                )
+
+                CURRENCY_NAME_EURO -> BestCurrencyRate.EuroSellRate(
+                    bank,
+                    rateValue,
+                    multiplier,
+                    symbol
+                )
+
+                CURRENCY_NAME_RUBLE -> BestCurrencyRate.RubleSellRate(
+                    bank,
+                    rateValue,
+                    multiplier,
+                    symbol
+                )
+
+                CURRENCY_NAME_ZLOTY -> BestCurrencyRate.ZlotySellRate(
+                    bank,
+                    rateValue,
+                    multiplier,
+                    symbol
+                )
+
+                CURRENCY_NAME_HRYVNIA -> BestCurrencyRate.HryvniaSellRate(
+                    bank,
+                    rateValue,
+                    multiplier,
+                    symbol
+                )
+
+                else -> BestCurrencyRate.OtherSellRate(bank, rateValue, multiplier, symbol)
             }
         }
     }

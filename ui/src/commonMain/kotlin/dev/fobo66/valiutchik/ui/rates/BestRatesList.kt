@@ -232,11 +232,15 @@ private fun BestCurrencyRatesPreview() {
                 persistentListOf(
                     BestCurrencyRate.DollarBuyRate(
                         bank = "test",
-                        rateValue = "1.23"
+                        rateValue = "1.23",
+                        quantity = 1,
+                        currencySymbol = "$"
                     ),
                     BestCurrencyRate.DollarSellRate(
                         bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-                        rateValue = "4.56"
+                        rateValue = "4.56",
+                        quantity = 1,
+                        currencySymbol = "$"
                     )
                 ),
             onBestRateClick = {},

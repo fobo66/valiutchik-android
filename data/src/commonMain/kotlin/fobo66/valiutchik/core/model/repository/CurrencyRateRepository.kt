@@ -50,4 +50,9 @@ interface CurrencyRateRepository {
      * Simplify and transliterate bank name for display
      */
     fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Format currency symbol into human-readable form
+     */
+    fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String
 }

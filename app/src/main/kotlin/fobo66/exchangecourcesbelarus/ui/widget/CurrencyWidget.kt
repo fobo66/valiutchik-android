@@ -118,7 +118,13 @@ fun CurrencyWidgetContent(
         titleBarAction = action(null, onTitleBarActionClick),
         items = rates,
         actionButtonClick = actionStartActivity<MainActivity>(),
-        itemHeadlineTextProvider = { context.getString(resolveCurrencyName()) },
+        itemHeadlineTextProvider = {
+            context.getString(
+                resolveCurrencyName(),
+                quantity,
+                currencySymbol
+            )
+        },
         itemMainTextProvider = { rateValue },
         itemSupportingTextProvider = { bank },
         emptyListContent = { EmptyListContent() },
@@ -133,18 +139,19 @@ fun CurrencyWidgetContent(
 
 @StringRes
 private fun BestCurrencyRate.resolveCurrencyName(): Int = when (this) {
-    is BestCurrencyRate.DollarBuyRate -> R.string.currency_name_usd_buy
-    is BestCurrencyRate.DollarSellRate -> R.string.currency_name_usd_sell
-    is BestCurrencyRate.EuroBuyRate -> R.string.currency_name_eur_buy
-    is BestCurrencyRate.EuroSellRate -> R.string.currency_name_eur_sell
-    is BestCurrencyRate.HryvniaBuyRate -> R.string.currency_name_uah_buy
-    is BestCurrencyRate.HryvniaSellRate -> R.string.currency_name_uah_sell
-    is BestCurrencyRate.ZlotyBuyRate -> R.string.currency_name_pln_buy
-    is BestCurrencyRate.ZlotySellRate -> R.string.currency_name_pln_sell
-    is BestCurrencyRate.RubleBuyRate -> R.string.currency_name_rub_buy
-    is BestCurrencyRate.RubleSellRate -> R.string.currency_name_rub_sell
-    is BestCurrencyRate.OtherBuyRate -> TODO()
-    is BestCurrencyRate.OtherSellRate -> TODO()
+    is BestCurrencyRate.DollarBuyRate,
+    is BestCurrencyRate.EuroBuyRate,
+    is BestCurrencyRate.HryvniaBuyRate,
+    is BestCurrencyRate.RubleBuyRate,
+    is BestCurrencyRate.ZlotyBuyRate,
+    is BestCurrencyRate.OtherBuyRate -> R.string.currency_rate_buy
+
+    is BestCurrencyRate.DollarSellRate,
+    is BestCurrencyRate.EuroSellRate,
+    is BestCurrencyRate.HryvniaSellRate,
+    is BestCurrencyRate.ZlotySellRate,
+    is BestCurrencyRate.RubleSellRate,
+    is BestCurrencyRate.OtherSellRate -> R.string.currency_rate_sell
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -163,11 +170,15 @@ private fun CurrencyWidgetPreview() {
                 persistentListOf(
                     BestCurrencyRate.DollarBuyRate(
                         bank = "test",
-                        rateValue = "1.23"
+                        rateValue = "1.23",
+                        quantity = 1,
+                        currencySymbol = "$"
                     ),
                     BestCurrencyRate.DollarSellRate(
                         bank = "test",
-                        rateValue = "4.56"
+                        rateValue = "4.56",
+                        quantity = 1,
+                        currencySymbol = "$"
                     )
                 ),
             onTitleBarActionClick = {}
