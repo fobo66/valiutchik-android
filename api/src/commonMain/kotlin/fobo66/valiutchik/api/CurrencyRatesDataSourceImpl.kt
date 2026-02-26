@@ -72,18 +72,26 @@ class CurrencyRatesDataSourceImpl(
     }
 
     override suspend fun loadBanks(): List<BankResponse> = withContext(ioDispatcher) {
-        val response = client.get(API_URL_BANKS) {
-            contentType(ContentType.Application.Json)
-            header(CLACKS_KEY, CLACKS_VALUE)
+        try {
+            val response = client.get(API_URL_BANKS) {
+                contentType(ContentType.Application.Json)
+                header(CLACKS_KEY, CLACKS_VALUE)
+            }
+            parser.parseBanks(response.bodyAsChannel().readBuffer())
+        } catch (e: ResponseException) {
+            throw IOException(e)
         }
-        parser.parseBanks(response.bodyAsChannel().readBuffer())
     }
 
     override suspend fun loadCurrencies(): List<CurrencyResponse> = withContext(ioDispatcher) {
-        val response = client.get(API_URL_CURRENCIES) {
-            contentType(ContentType.Application.Json)
-            header(CLACKS_KEY, CLACKS_VALUE)
+        try {
+            val response = client.get(API_URL_CURRENCIES) {
+                contentType(ContentType.Application.Json)
+                header(CLACKS_KEY, CLACKS_VALUE)
+            }
+            parser.parseCurrencies(response.bodyAsChannel().readBuffer())
+        } catch (e: ResponseException) {
+            throw IOException(e)
         }
-        parser.parseCurrencies(response.bodyAsChannel().readBuffer())
     }
 }

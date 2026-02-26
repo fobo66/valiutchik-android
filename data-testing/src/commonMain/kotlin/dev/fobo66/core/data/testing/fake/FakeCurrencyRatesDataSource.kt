@@ -28,12 +28,21 @@ class FakeCurrencyRatesDataSource : CurrencyRatesDataSource {
     override suspend fun loadExchangeRates(
         currencies: List<String>,
         cityIndex: Int
-    ): Map<Long, List<CurrencyRateSource>> = if (isError) {
+    ): List<CurrencyRateSource> = if (isError) {
         throw IOException("test")
     } else {
-        mapOf()
+        emptyList()
     }
 
-    override suspend fun loadBanks(): List<BankResponse> = emptyList()
-    override suspend fun loadCurrencies(): List<CurrencyResponse> = emptyList()
+    override suspend fun loadBanks(): List<BankResponse> = if (isError) {
+        throw IOException("test")
+    } else {
+        emptyList()
+    }
+
+    override suspend fun loadCurrencies(): List<CurrencyResponse> = if (isError) {
+        throw IOException("test")
+    } else {
+        emptyList()
+    }
 }
