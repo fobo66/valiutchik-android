@@ -51,7 +51,7 @@ class CurrencyRatesDataSourceImpl(
     override suspend fun loadExchangeRates(
         currencies: List<String>,
         cityIndex: Int
-    ): Map<Long, List<CurrencyRateSource>> = withContext(ioDispatcher) {
+    ): List<CurrencyRateSource> = withContext(ioDispatcher) {
         try {
             currencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }
                 .map { request ->
@@ -66,7 +66,6 @@ class CurrencyRatesDataSourceImpl(
                 }
                 .awaitAll()
                 .flatten()
-                .groupBy { it.id }
         } catch (e: ResponseException) {
             throw IOException(e)
         }

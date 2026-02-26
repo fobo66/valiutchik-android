@@ -34,7 +34,7 @@ interface CurrencyRatesDataSource {
     suspend fun loadExchangeRates(
         currencies: List<String>,
         cityIndex: Int
-    ): Map<Long, List<CurrencyRateSource>>
+    ): List<CurrencyRateSource>
 
     /**
      * Load info about banks

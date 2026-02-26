@@ -131,7 +131,7 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        val ratesFlow = rawRates.values.flatten().asFlow()
+        val ratesFlow = rawRates.asFlow()
         val rates = ratesFlow
             .map { it.toRate() }
             .toSet()
