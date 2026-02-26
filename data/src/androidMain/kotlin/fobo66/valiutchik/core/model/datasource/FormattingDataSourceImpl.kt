@@ -21,11 +21,9 @@ import android.icu.text.Transliterator
 import android.icu.util.Currency
 import android.icu.util.ULocale
 import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.util.BankNameNormalizer
 import kotlin.LazyThreadSafetyMode.NONE
 
-class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalizer) :
-    FormattingDataSource {
+class FormattingDataSourceImpl : FormattingDataSource {
     private lateinit var cachedLocale: ULocale
     private var cachedLanguageTag: LanguageTag? = null
 
@@ -40,14 +38,13 @@ class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalize
 
         checkLocaleCache(languageTag)
 
-        val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
 
         return if (languageCode == LANG_RU) {
-            normalizedName
+            name
         } else {
             transliterate(
-                normalizedName,
+                name,
                 languageCode
             )
         }

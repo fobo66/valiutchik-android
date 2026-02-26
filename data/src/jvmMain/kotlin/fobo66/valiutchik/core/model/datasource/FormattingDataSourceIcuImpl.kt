@@ -21,11 +21,9 @@ import com.ibm.icu.text.Transliterator
 import com.ibm.icu.util.Currency
 import com.ibm.icu.util.ULocale
 import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.util.BankNameNormalizer
 import kotlin.LazyThreadSafetyMode.NONE
 
-class FormattingDataSourceIcuImpl(private val bankNameNormalizer: BankNameNormalizer) :
-    FormattingDataSource {
+class FormattingDataSourceIcuImpl : FormattingDataSource {
     private val targetCurrency: Currency by lazy(NONE) {
         Currency.getInstance(BYN)
     }
@@ -47,14 +45,13 @@ class FormattingDataSourceIcuImpl(private val bankNameNormalizer: BankNameNormal
         if (name.isEmpty()) {
             return name
         }
-        val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
 
         return if (languageCode == LANG_RU) {
-            normalizedName
+            name
         } else {
             transliterate(
-                normalizedName,
+                name,
                 languageCode
             )
         }

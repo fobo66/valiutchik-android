@@ -39,8 +39,6 @@ import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
-import fobo66.valiutchik.core.util.BankNameNormalizer
-import fobo66.valiutchik.core.util.BankNameNormalizerImpl
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
@@ -60,10 +58,6 @@ val dataSourcesModule =
 
         single<PreferencesDataSource> {
             DataStorePreferencesDataSourceImpl(get())
-        }
-
-        single<BankNameNormalizer> {
-            BankNameNormalizerImpl()
         }
     }
 
