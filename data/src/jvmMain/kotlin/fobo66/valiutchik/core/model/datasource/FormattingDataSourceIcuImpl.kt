@@ -28,9 +28,6 @@ class FormattingDataSourceIcuImpl : FormattingDataSource {
         Currency.getInstance(BYN)
     }
 
-    /**
-     * Format currency rate as a monetary value
-     */
     override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
         NumberFormatter
             .withLocale(ULocale.forLanguageTag(languageTag))
@@ -38,9 +35,6 @@ class FormattingDataSourceIcuImpl : FormattingDataSource {
             .format(value)
             .toString()
 
-    /**
-     * Clean up all the unnecessary parts from the bank name
-     */
     override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
@@ -56,6 +50,9 @@ class FormattingDataSourceIcuImpl : FormattingDataSource {
             )
         }
     }
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
+        Currency.getInstance(currencyCode).getSymbol(ULocale.forLanguageTag(languageTag))
 
     private fun transliterate(bankName: String, languageCode: String): String {
         val transliterator =
