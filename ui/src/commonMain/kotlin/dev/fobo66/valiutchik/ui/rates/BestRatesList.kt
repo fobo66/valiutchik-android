@@ -126,7 +126,12 @@ fun BestRatesGrid(
                             key = { item -> item.resolveCurrencyName().key }
                         ) { item ->
                             BestCurrencyRateCard(
-                                currencyName = pluralStringResource(item.resolveCurrencyName(), 1),
+                                currencyName = pluralStringResource(
+                                    item.resolveCurrencyName(),
+                                    item.quantity.toInt(),
+                                    item.quantity,
+                                    item.currencySymbol
+                                ),
                                 currencyValue = item.rateValue,
                                 bankName = item.bank,
                                 onClick = onBestRateClick,

@@ -42,52 +42,52 @@
   <string name="share_description">Share currency rate</string>
   <string name="toolbar_action_more">More</string>
   <plurals name="currency_name_usd_buy">
-    <item quantity="one">%d US Dollar buy rate</item>
-    <item quantity="other">%d US Dollars buy rate</item>
+    <item quantity="one">%1$d US Dollar buy rate</item>
+    <item quantity="other">%1$d US dollars buy rate</item>
   </plurals>
   <plurals name="currency_name_usd_sell">
-    <item quantity="one">%d US Dollar sell rate</item>
-    <item quantity="other">%d US Dollars sell rate</item>
+    <item quantity="one">%1$d US Dollar sell rate</item>
+    <item quantity="other">%1$d US dollars sell rate</item>
   </plurals>
   <plurals name="currency_name_eur_buy">
-    <item quantity="one">%d Euro buy rate</item>
-    <item quantity="other">%d Euros buy rate</item>
+    <item quantity="one">%1$d Euro buy rate</item>
+    <item quantity="other">%1$d euros buy rate</item>
   </plurals>
   <plurals name="currency_name_eur_sell">
-    <item quantity="one">%d Euro sell rate</item>
-    <item quantity="other">%d Euros sell rate</item>
+    <item quantity="one">%1$d Euro sell rate</item>
+    <item quantity="other">%1$d euros sell rate</item>
   </plurals>
   <plurals name="currency_name_rub_buy">
-    <item quantity="one">%d ruble buy rate</item>
-    <item quantity="other">%d rubles buy rate</item>
+    <item quantity="one">%1$d ruble buy rate</item>
+    <item quantity="other">%1$d rubles buy rate</item>
   </plurals>
   <plurals name="currency_name_rub_sell">
-    <item quantity="one">%d ruble sell rate</item>
-    <item quantity="other">%d  rubles sell rate</item>
+    <item quantity="one">%1$d ruble sell rate</item>
+    <item quantity="other">%1$d  rubles sell rate</item>
   </plurals>
   <plurals name="currency_name_pln_buy">
-    <item quantity="one">%d zloty buy rate</item>
-    <item quantity="other">%d zlotys buy rate</item>
+    <item quantity="one">%1$d zloty buy rate</item>
+    <item quantity="other">%1$d zlotys buy rate</item>
   </plurals>
   <plurals name="currency_name_pln_sell">
-    <item quantity="one">%d zloty sell rate</item>
-    <item quantity="other">%d zlotys sell rate</item>
+    <item quantity="one">%1$d zloty sell rate</item>
+    <item quantity="other">%1$d zlotys sell rate</item>
   </plurals>
   <plurals name="currency_name_uah_buy">
-    <item quantity="one">%d hryvnia buy rate</item>
-    <item quantity="other">%d hryvnias buy rate</item>
+    <item quantity="one">%1$d hryvnia buy rate</item>
+    <item quantity="other">%1$d hryvnias buy rate</item>
   </plurals>
   <plurals name="currency_name_uah_sell">
-    <item quantity="one">%d hryvnia sell rate</item>
-    <item quantity="other">%d hryvnias sell rate</item>
+    <item quantity="one">%1$d hryvnia sell rate</item>
+    <item quantity="other">%1$d hryvnias sell rate</item>
   </plurals>
   <plurals name="currency_rate_buy">
-    <item quantity="one">%d %s buy rate</item>
-    <item quantity="other">%d %s buy rate</item>
+    <item quantity="one">%1$d %2$s buy rate</item>
+    <item quantity="other">%1$d %2$s buy rate</item>
   </plurals>
   <plurals name="currency_rate_sell">
-    <item quantity="one">%d %s sell rate</item>
-    <item quantity="other">%d %s sell rate</item>
+    <item quantity="one">%1$d %2$s sell rate</item>
+    <item quantity="other">%1$d %2$s sell rate</item>
   </plurals>
   <string-array name="pref_cities_list">
     <item>Ashmyany</item>
