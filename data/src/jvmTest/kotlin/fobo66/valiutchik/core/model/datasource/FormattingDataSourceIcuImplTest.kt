@@ -17,11 +17,9 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.google.common.truth.Truth.assertThat
-import fobo66.valiutchik.core.util.BankNameNormalizerImpl
 import kotlin.test.Test
 
 class FormattingDataSourceIcuImplTest {
-    private val bankNameNormalizer = BankNameNormalizerImpl()
 
     @Test
     fun formatCurrency() {
