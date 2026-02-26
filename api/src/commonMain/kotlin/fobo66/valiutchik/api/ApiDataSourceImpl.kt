@@ -36,9 +36,9 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-const val API_URL_RATES = "https://api.myfin.by/currency/rates"
-const val API_URL_BANKS = "https://api.myfin.by/banks"
-const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
+private const val API_URL_RATES = "https://api.myfin.by/currency/rates"
+private const val API_URL_BANKS = "https://api.myfin.by/banks"
+private const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
 
 private const val CLACKS_KEY = "X-Clacks-Overhead"
 private const val CLACKS_VALUE = "GNU Terry Pratchett"
