@@ -43,11 +43,11 @@ const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
 private const val CLACKS_KEY = "X-Clacks-Overhead"
 private const val CLACKS_VALUE = "GNU Terry Pratchett"
 
-class CurrencyRatesDataSourceImpl(
+class ApiDataSourceImpl(
     private val client: HttpClient,
     private val parser: ApiResponseParser,
     private val ioDispatcher: CoroutineDispatcher
-) : CurrencyRatesDataSource {
+) : ApiDataSource {
     override suspend fun loadExchangeRates(
         currencies: List<String>,
         cityIndex: Int

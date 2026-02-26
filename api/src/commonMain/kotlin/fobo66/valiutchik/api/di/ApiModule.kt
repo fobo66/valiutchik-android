@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.api.di
 
-import fobo66.valiutchik.api.CurrencyRatesDataSource
-import fobo66.valiutchik.api.CurrencyRatesDataSourceImpl
+import fobo66.valiutchik.api.ApiDataSource
+import fobo66.valiutchik.api.ApiDataSourceImpl
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.GeocodingDataSourceImpl
 import org.koin.core.qualifier.qualifier
@@ -26,8 +26,8 @@ import org.koin.dsl.module
 val apiModule =
     module {
         includes(credentialsModule, networkModule, dispatchersModule, parserModule)
-        single<CurrencyRatesDataSource> {
-            CurrencyRatesDataSourceImpl(
+        single<ApiDataSource> {
+            ApiDataSourceImpl(
                 get(),
                 get(),
                 get(qualifier(Dispatcher.BACKGROUND))

@@ -21,9 +21,9 @@ import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyResponse
 
 /**
- * API datasource to load actual currency rates
+ * Datasource to load actual currency rates from the data provider
  */
-interface CurrencyRatesDataSource {
+interface ApiDataSource {
 
     /**
      * Load exchange rates for the provided currencies in the given city

@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import fobo66.valiutchik.api.CurrencyRatesDataSource
+import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.core.entities.toBank
 import fobo66.valiutchik.core.entities.toCurrency
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -27,20 +27,20 @@ import kotlinx.coroutines.withContext
 private const val CURRENCY_STATUS_CONVERSION = 2
 
 class DataRefreshRepositoryImpl(
-    private val currencyRatesDataSource: CurrencyRatesDataSource,
+    private val apiDataSource: ApiDataSource,
     private val persistenceDataSource: PersistenceDataSource,
     private val defaultDispatcher: CoroutineDispatcher
 ) : DataRefreshRepository {
     override suspend fun refresh() = withContext(defaultDispatcher) {
         val currencies = async {
-            currencyRatesDataSource.loadCurrencies()
+            apiDataSource.loadCurrencies()
                 .filter { it.status != CURRENCY_STATUS_CONVERSION }
                 .map { it.toCurrency() }
                 .toSet()
         }
 
         val banks = async {
-            currencyRatesDataSource.loadBanks()
+            apiDataSource.loadBanks()
                 .map { it.toBank() }
                 .toSet()
         }

@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.core.model.repository
 
-import dev.fobo66.core.data.testing.fake.FakeCurrencyRatesDataSource
+import dev.fobo66.core.data.testing.fake.FakeApiDataSource
 import dev.fobo66.core.data.testing.fake.FakeFormattingDataSource
 import dev.fobo66.core.data.testing.fake.FakeLocaleDataSource
 import dev.fobo66.core.data.testing.fake.FakePersistenceDataSource
@@ -40,7 +40,7 @@ private const val TAG = "be-BY"
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
     private val persistenceDataSource = FakePersistenceDataSource()
-    private val currencyRatesDataSource = FakeCurrencyRatesDataSource()
+    private val currencyRatesDataSource = FakeApiDataSource()
     private val formattingDataSource = FakeFormattingDataSource()
 
     private val localeDataSource = FakeLocaleDataSource()
