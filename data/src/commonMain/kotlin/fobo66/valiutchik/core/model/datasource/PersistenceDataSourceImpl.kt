@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,14 +34,16 @@ class PersistenceDataSourceImpl(
 ) : PersistenceDataSource {
 
     override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
-        rates.forEach {
-            database.rateQueries.insertRate(
-                it.date,
-                it.bankId,
-                it.currencyId,
-                it.buyRate,
-                it.sellRate
-            ).await()
+        database.rateQueries.transaction {
+            rates.forEach {
+                database.rateQueries.insertRate(
+                    it.date,
+                    it.bankId,
+                    it.currencyId,
+                    it.buyRate,
+                    it.sellRate
+                )
+            }
         }
     }
 
@@ -62,8 +64,10 @@ class PersistenceDataSourceImpl(
             .mapToList(ioDispatcher)
 
     override suspend fun saveBanks(banks: Set<Bank>) = withContext(ioDispatcher) {
-        banks.forEach {
-            database.bankQueries.insertBank(it).await()
+        database.bankQueries.transaction {
+            banks.forEach {
+                database.bankQueries.insertBank(it)
+            }
         }
     }
 
@@ -72,8 +76,10 @@ class PersistenceDataSourceImpl(
             .mapToList(ioDispatcher)
 
     override suspend fun saveCurrencies(currencies: Set<Currency>) = withContext(ioDispatcher) {
-        currencies.forEach {
-            database.currencyQueries.insertCurrency(it).await()
+        database.currencyQueries.transaction {
+            currencies.forEach {
+                database.currencyQueries.insertCurrency(it)
+            }
         }
     }
 }

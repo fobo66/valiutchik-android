@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.repository
 
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
+import dev.fobo66.valiutchik.core.db.Bank
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
@@ -36,6 +37,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.toSet
 import kotlinx.io.IOException
 
@@ -131,12 +133,12 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
+        val banks = mutableSetOf<Bank>()
+
         val ratesFlow = rawRates.asFlow()
         val rates = ratesFlow
+            .onEach { banks.add(it.toBank()) }
             .map { it.toRate() }
-            .toSet()
-        val banks = ratesFlow
-            .map { it.toBank() }
             .toSet()
 
         with(persistenceDataSource) {

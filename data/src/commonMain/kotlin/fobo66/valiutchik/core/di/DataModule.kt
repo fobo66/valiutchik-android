@@ -53,7 +53,7 @@ val dataSourcesModule =
         }
 
         single<PersistenceDataSource> {
-            PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.IO)))
+            PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.BACKGROUND)))
         }
 
         single<PreferencesDataSource> {
