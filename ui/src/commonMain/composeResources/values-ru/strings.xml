@@ -1,5 +1,5 @@
 <!--
-  ~    Copyright 2025 Andrey Mukamolov
+  ~    Copyright 2026 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
   <string name="action_settings">Настройки</string>
   <string name="action_about">О приложении</string>
   <string name="title_about">О приложении</string>
-  <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в областных городах Беларуси. По нажатию на карточку курса валюты вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте в вашем городе. По долгому нажатию на карточку вы можете скопировать курс в буфер обмена. Также вы можете настроить интервал обновления курсов или поменять город по умолчанию. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
+  <string name="about_app_description">Приложение позволяет быстро получить информацию о наилучших курсах валют в городах Беларуси. По нажатию на карточку курса валюты вы можете найти ближайшее отделение банка, в котором валюта предлагается по самому выгодному курсу, на карте в вашем городе. По долгому нажатию на карточку вы можете скопировать курс в буфер обмена. Также вы можете настроить интервал обновления курсов или поменять город по умолчанию. Обратите внимание, что информация может быть неактуальной. Уточняйте в банке. Информация предоставлена сайтом <a href="https://myfin.by">myfin.by</a></string>
   <string name="title_activity_settings">Настройки</string>
   <string-array name="pref_cities_list">
     <item>Ошмяны</item>
@@ -110,14 +110,64 @@
   <string name="share_description">Поделиться курсом валюты</string>
   <string name="toolbar_action_more">Больше</string>
   <string name="action_about_close">ОК</string>
-  <string name="currency_name_usd_buy">Доллар США курс покупки</string>
-  <string name="currency_name_usd_sell">Доллар США курс продажи</string>
-  <string name="currency_name_eur_buy">Евро курс покупки</string>
-  <string name="currency_name_eur_sell">Евро курс продажи</string>
-  <string name="currency_name_rub_buy">100 рублей курс покупки</string>
-  <string name="currency_name_rub_sell">100 рублей курс продажи</string>
-  <string name="currency_name_pln_buy">Злотый курс покупки</string>
-  <string name="currency_name_pln_sell">Злотый курс продажи</string>
-  <string name="currency_name_uah_buy">100 гривен курс покупки</string>
-  <string name="currency_name_uah_sell">100 гривен курс продажи</string>
+  <plurals name="currency_name_usd_buy">
+    <item quantity="one">%1$d доллар США курс покупки</item>
+    <item quantity="few">%1$d доллара США курс покупки</item>
+    <item quantity="other">%1$d долларов США курс покупки</item>
+  </plurals>
+  <plurals name="currency_name_usd_sell">
+    <item quantity="one">%1$d доллар США курс продажи</item>
+    <item quantity="few">%1$d доллара США курс продажи</item>
+    <item quantity="other">%1$d долларов США курс продажи</item>
+  </plurals>
+  <plurals name="currency_name_eur_buy">
+    <item quantity="one">%1$d евро курс покупки</item>
+    <item quantity="few">%1$d евро курс покупки</item>
+    <item quantity="other">%1$d евро курс покупки</item>
+  </plurals>
+  <plurals name="currency_name_eur_sell">
+    <item quantity="one">%1$d евро курс продажи</item>
+    <item quantity="few">%1$d евро курс продажи</item>
+    <item quantity="other">%1$d евро курс продажи</item>
+  </plurals>
+  <plurals name="currency_name_rub_buy">
+    <item quantity="one">%1$d рубль курс покупки</item>
+    <item quantity="few">%1$d рубля курс покупки</item>
+    <item quantity="other">%1$d рублей курс покупки</item>
+  </plurals>
+  <plurals name="currency_name_rub_sell">
+    <item quantity="one">%1$d рубль курс продажи</item>
+    <item quantity="few">%1$d рубля курс продажи</item>
+    <item quantity="other">%1$d рублей курс продажи</item>
+  </plurals>
+  <plurals name="currency_name_pln_buy">
+    <item quantity="one">%1$d злотый курс покупки</item>
+    <item quantity="few">%1$d злотых курс покупки</item>
+    <item quantity="other">%1$d злотых курс покупки</item>
+  </plurals>
+  <plurals name="currency_name_pln_sell">
+    <item quantity="one">%1$d злотый курс продажи</item>
+    <item quantity="few">%1$d злотых курс продажи</item>
+    <item quantity="other">%1$d злотых курс продажи</item>
+  </plurals>
+  <plurals name="currency_name_uah_buy">
+    <item quantity="one">%1$d гривна курс покупки</item>
+    <item quantity="few">%1$d гривны курс покупки</item>
+    <item quantity="other">%1$d гривен курс покупки</item>
+  </plurals>
+  <plurals name="currency_name_uah_sell">
+    <item quantity="one">%1$d гривна курс продажи</item>
+    <item quantity="few">%1$d гривны курс продажи</item>
+    <item quantity="other">%1$d гривен курс продажи</item>
+  </plurals>
+  <plurals name="currency_rate_buy">
+    <item quantity="one">%1$d %2$s курс покупки</item>
+    <item quantity="few">%1$d %2$s курс покупки</item>
+    <item quantity="other">%1$d %2$s курс покупки</item>
+  </plurals>
+  <plurals name="currency_rate_sell">
+    <item quantity="one">%1$d %2$s курс продажи</item>
+    <item quantity="few">%1$d %2$s курс продажи</item>
+    <item quantity="other">%1$d %2$s курс продажи</item>
+  </plurals>
 </resources>
