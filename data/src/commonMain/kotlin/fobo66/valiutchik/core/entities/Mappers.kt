@@ -49,7 +49,7 @@ fun BankResponse.toBank(): Bank = Bank(
 
 fun CurrencyResponse.toCurrency(): Currency = Currency(
     id = id,
-    name = internationalName,
+    name = internationalName.lowercase(),
     symbol = symbol,
     multiplier = multiplier
 )
