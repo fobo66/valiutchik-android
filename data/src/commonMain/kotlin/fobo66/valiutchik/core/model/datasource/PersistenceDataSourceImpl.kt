@@ -24,6 +24,7 @@ import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
 import dev.fobo66.valiutchik.core.db.Rate
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -35,6 +36,7 @@ class PersistenceDataSourceImpl(
 
     override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
         database.rateQueries.transaction {
+            afterCommit { Napier.d { "Saved ${rates.size} rates" } }
             rates.forEach {
                 database.rateQueries.insertRate(
                     it.date,
@@ -48,8 +50,10 @@ class PersistenceDataSourceImpl(
     }
 
     override suspend fun deleteRates(rates: List<Rate>) = withContext(ioDispatcher) {
-        database.rateQueries.deleteRates(rates.map { it.id }).await()
-        Unit
+        database.rateQueries.transaction {
+            afterCommit { Napier.d { "Deleted ${rates.size} rates" } }
+            database.rateQueries.deleteRates(rates.map { it.id })
+        }
     }
 
     override suspend fun loadOldRates(): List<Rate> =
@@ -65,6 +69,8 @@ class PersistenceDataSourceImpl(
 
     override suspend fun saveBanks(banks: Set<Bank>) = withContext(ioDispatcher) {
         database.bankQueries.transaction {
+            afterCommit { Napier.d { "Saved ${banks.size} banks" } }
+
             banks.forEach {
                 database.bankQueries.insertBank(it)
             }
@@ -77,6 +83,8 @@ class PersistenceDataSourceImpl(
 
     override suspend fun saveCurrencies(currencies: Set<Currency>) = withContext(ioDispatcher) {
         database.currencyQueries.transaction {
+            afterCommit { Napier.d { "Saved ${currencies.size} currencies" } }
+
             currencies.forEach {
                 database.currencyQueries.insertCurrency(it)
             }
