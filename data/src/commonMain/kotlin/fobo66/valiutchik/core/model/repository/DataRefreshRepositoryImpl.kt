@@ -17,12 +17,14 @@
 package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.api.ApiDataSource
+import fobo66.valiutchik.core.entities.DataSyncFailedException
 import fobo66.valiutchik.core.entities.toBank
 import fobo66.valiutchik.core.entities.toCurrency
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import kotlinx.io.IOException
 
 private const val CURRENCY_STATUS_CONVERSION = 2
 
@@ -32,22 +34,26 @@ class DataRefreshRepositoryImpl(
     private val defaultDispatcher: CoroutineDispatcher
 ) : DataRefreshRepository {
     override suspend fun refresh() = withContext(defaultDispatcher) {
-        val currencies = async {
-            apiDataSource.loadCurrencies()
-                .filter { it.status != CURRENCY_STATUS_CONVERSION }
-                .map { it.toCurrency() }
-                .toSet()
-        }
+        try {
+            val currencies = async {
+                apiDataSource.loadCurrencies()
+                    .filter { it.status != CURRENCY_STATUS_CONVERSION }
+                    .map { it.toCurrency() }
+                    .toSet()
+            }
 
-        val banks = async {
-            apiDataSource.loadBanks()
-                .map { it.toBank() }
-                .toSet()
-        }
+            val banks = async {
+                apiDataSource.loadBanks()
+                    .map { it.toBank() }
+                    .toSet()
+            }
 
-        with(persistenceDataSource) {
-            saveCurrencies(currencies.await())
-            saveBanks(banks.await())
+            with(persistenceDataSource) {
+                saveCurrencies(currencies.await())
+                saveBanks(banks.await())
+            }
+        } catch (e: IOException) {
+            throw DataSyncFailedException(e)
         }
     }
 }
