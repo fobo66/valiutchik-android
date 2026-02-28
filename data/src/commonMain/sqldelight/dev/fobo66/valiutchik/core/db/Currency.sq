@@ -10,7 +10,8 @@ VALUES (1, "usd", "$", 1),
   (4, "eur", "€", 1),
   (5, "rub", "₽", 100),
   (7, "uah", "¥", 100),
-  (8, "pln", "zł", 10);
+  (8, "pln", "zł", 10),
+  (13, "cny", "cny", 10);
 
 loadCurrencies:
 SELECT * FROM Currency;
