@@ -26,7 +26,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-private const val CURRENCY_STATUS_CONVERSION = 2
+private const val CURRENCY_STATUS_MAIN = 1
 
 class DataRefreshRepositoryImpl(
     private val apiDataSource: ApiDataSource,
@@ -37,7 +37,7 @@ class DataRefreshRepositoryImpl(
         try {
             val currencies = async {
                 apiDataSource.loadCurrencies()
-                    .filter { it.status != CURRENCY_STATUS_CONVERSION }
+                    .filter { it.status == CURRENCY_STATUS_MAIN }
                     .map { it.toCurrency() }
                     .toSet()
             }
