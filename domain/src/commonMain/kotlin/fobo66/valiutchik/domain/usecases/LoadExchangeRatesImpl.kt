@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -49,28 +49,28 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
         .map { (languageTag, rates) ->
             rates.map {
                 it.toRate(languageTag)
-            }.filter {
-                it.bank.isNotEmpty()
             }
         }
 
     private fun BestCourse.toRate(languageTag: LanguageTag): BestCurrencyRate {
+        val key = currencyId * 10 + (if (isBuy == true) 1 else 0)
         val bank = currencyRateRepository.formatBankName(this, languageTag)
         val rateValue = currencyRateRepository.formatRate(this, languageTag)
         val symbol = currencyRateRepository.formatCurrencySymbol(this, languageTag)
 
         return if (isBuy == true) {
             when (currencyName) {
-                CURRENCY_NAME_US_DOLLAR -> DollarBuyRate(bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_EURO -> EuroBuyRate(bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_RUBLE -> RubleBuyRate(bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_ZLOTY -> ZlotyBuyRate(bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_HRYVNIA -> HryvniaBuyRate(bank, rateValue, multiplier, symbol)
-                else -> BestCurrencyRate.OtherBuyRate(bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_US_DOLLAR -> DollarBuyRate(key, bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_EURO -> EuroBuyRate(key, bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_RUBLE -> RubleBuyRate(key, bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_ZLOTY -> ZlotyBuyRate(key, bank, rateValue, multiplier, symbol)
+                CURRENCY_NAME_HRYVNIA -> HryvniaBuyRate(key, bank, rateValue, multiplier, symbol)
+                else -> BestCurrencyRate.OtherBuyRate(key, bank, rateValue, multiplier, symbol)
             }
         } else {
             when (currencyName) {
                 CURRENCY_NAME_US_DOLLAR -> BestCurrencyRate.DollarSellRate(
+                    key,
                     bank,
                     rateValue,
                     multiplier,
@@ -78,6 +78,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                 )
 
                 CURRENCY_NAME_EURO -> BestCurrencyRate.EuroSellRate(
+                    key,
                     bank,
                     rateValue,
                     multiplier,
@@ -85,6 +86,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                 )
 
                 CURRENCY_NAME_RUBLE -> BestCurrencyRate.RubleSellRate(
+                    key,
                     bank,
                     rateValue,
                     multiplier,
@@ -92,6 +94,7 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                 )
 
                 CURRENCY_NAME_ZLOTY -> BestCurrencyRate.ZlotySellRate(
+                    key,
                     bank,
                     rateValue,
                     multiplier,
@@ -99,13 +102,14 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
                 )
 
                 CURRENCY_NAME_HRYVNIA -> BestCurrencyRate.HryvniaSellRate(
+                    key,
                     bank,
                     rateValue,
                     multiplier,
                     symbol
                 )
 
-                else -> BestCurrencyRate.OtherSellRate(bank, rateValue, multiplier, symbol)
+                else -> BestCurrencyRate.OtherSellRate(key, bank, rateValue, multiplier, symbol)
             }
         }
     }

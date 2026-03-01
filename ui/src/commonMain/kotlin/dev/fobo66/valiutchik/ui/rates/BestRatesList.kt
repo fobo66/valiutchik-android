@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -123,7 +123,7 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { item -> item.resolveCurrencyName().key }
+                            key = { item -> item.key }
                         ) { item ->
                             BestCurrencyRateCard(
                                 currencyName = pluralStringResource(
@@ -236,12 +236,14 @@ private fun BestCurrencyRatesPreview() {
             bestCurrencyRates =
                 persistentListOf(
                     BestCurrencyRate.DollarBuyRate(
+                        key = 1,
                         bank = "test",
                         rateValue = "1.23",
                         quantity = 1,
                         currencySymbol = "$"
                     ),
                     BestCurrencyRate.DollarSellRate(
+                        key = 2,
                         bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
                         rateValue = "4.56",
                         quantity = 1,
