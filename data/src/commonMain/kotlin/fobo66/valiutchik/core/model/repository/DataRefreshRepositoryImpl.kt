@@ -16,6 +16,8 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import androidx.collection.ScatterSet
+import androidx.collection.scatterSetOf
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.core.entities.DataSyncFailedException
 import fobo66.valiutchik.core.entities.toBank
@@ -26,18 +28,21 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
-private const val CURRENCY_STATUS_MAIN = 1
-
 class DataRefreshRepositoryImpl(
     private val apiDataSource: ApiDataSource,
     private val persistenceDataSource: PersistenceDataSource,
     private val defaultDispatcher: CoroutineDispatcher
 ) : DataRefreshRepository {
+
+    private val ignoredCurrencies: ScatterSet<String> by lazy {
+        scatterSetOf("eurusd", "usdrub", "eurrub")
+    }
+
     override suspend fun refresh() = withContext(defaultDispatcher) {
         try {
             val currencies = async {
                 apiDataSource.loadCurrencies()
-                    .filter { it.status == CURRENCY_STATUS_MAIN }
+                    .filterNot { ignoredCurrencies.contains(it.alias) }
                     .map { it.toCurrency() }
                     .toSet()
             }
