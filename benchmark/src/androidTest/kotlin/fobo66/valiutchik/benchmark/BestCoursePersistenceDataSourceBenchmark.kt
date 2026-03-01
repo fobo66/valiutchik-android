@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,15 +60,15 @@ class BestCoursePersistenceDataSourceBenchmark {
     )
 
     private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-    private val persistenceDataSource: PersistenceDataSource =
-        PersistenceDataSourceImpl(db, ioDispatcher)
+    private lateinit var persistenceDataSource: PersistenceDataSource
 
     @Before
     fun setUp() = runTest {
         val driver =
             AndroidSqliteDriver(Database.Schema, ApplicationProvider.getApplicationContext())
-        Database.Schema.create(driver)
         db = Database(driver)
+        persistenceDataSource =
+            PersistenceDataSourceImpl(db, ioDispatcher)
         val ratesResponseContent =
             InstrumentationRegistry
                 .getInstrumentation()
