@@ -25,9 +25,9 @@ data class CurrencyResponse(
     val id: Long = 0,
     @SerialName("iname")
     val internationalName: String = "",
-    @SerialName("status")
-    val multiplier: Long = 1,
     @SerialName("multiplier")
+    val multiplier: Long = 1,
+    @SerialName("status")
     val status: Int = 1,
     @SerialName("name")
     val name: String = "",
