@@ -34,7 +34,7 @@ class DataRefreshRepositoryImpl(
     private val defaultDispatcher: CoroutineDispatcher
 ) : DataRefreshRepository {
 
-    private val ignoredCurrencies: ScatterSet<String> by lazy {
+    private val ignoredCurrencies: ScatterSet<String> by lazy(LazyThreadSafetyMode.NONE) {
         scatterSetOf("eurusd", "usdrub", "eurrub")
     }
 

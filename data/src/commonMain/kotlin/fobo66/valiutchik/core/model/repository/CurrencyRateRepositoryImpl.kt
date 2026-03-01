@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.repository
 
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
+import androidx.collection.mutableScatterSetOf
 import dev.fobo66.valiutchik.core.db.Bank
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
@@ -133,7 +134,7 @@ class CurrencyRateRepositoryImpl(
                 throw CurrencyRatesLoadFailedException(e)
             }
 
-        val banks = mutableSetOf<Bank>()
+        val banks = mutableScatterSetOf<Bank>()
 
         val ratesFlow = rawRates.asFlow()
         val rates = ratesFlow
@@ -142,7 +143,7 @@ class CurrencyRateRepositoryImpl(
             .toSet()
 
         with(persistenceDataSource) {
-            saveBanks(banks)
+            saveBanks(banks.asSet())
             saveRates(rates)
         }
     }
