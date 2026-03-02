@@ -46,9 +46,7 @@ kotlin {
         }
 
         withHostTest {}
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }
+        withDeviceTest {}
 
         compilations.configureEach {
             compileTaskProvider.configure {

@@ -20,7 +20,8 @@ internal const val RAW_RATE = 1.23
 internal const val LONG_RATE = 1.2345679
 internal const val RATE = "BYN 1.23"
 internal const val BANK_NAME = "Приорбанк" // taken from API
-
+internal const val CURRENCY_NAME = "US dollar"
+internal const val CURRENCY_NAME_PLURAL = "US dollars"
 internal const val TAG = "en-US"
 internal const val BELARUSIAN_TAG = "be-BY"
 internal const val PASSTHROUGH_TAG = "ru-RU"
