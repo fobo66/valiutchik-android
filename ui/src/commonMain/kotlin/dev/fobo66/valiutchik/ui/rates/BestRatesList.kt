@@ -235,14 +235,14 @@ private fun BestCurrencyRatesPreview() {
         BestRatesGrid(
             bestCurrencyRates =
                 persistentListOf(
-                    BestCurrencyRate.DollarBuyRate(
+                    BestCurrencyRate.BuyRate(
                         key = 1,
                         bank = "test",
                         rateValue = "1.23",
                         quantity = 1,
                         currencySymbol = "$"
                     ),
-                    BestCurrencyRate.DollarSellRate(
+                    BestCurrencyRate.SellRate(
                         key = 2,
                         bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
                         rateValue = "4.56",

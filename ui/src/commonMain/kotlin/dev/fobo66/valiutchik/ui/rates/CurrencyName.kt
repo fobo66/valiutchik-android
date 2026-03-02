@@ -19,30 +19,10 @@ package dev.fobo66.valiutchik.ui.rates
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import org.jetbrains.compose.resources.PluralStringResource
 import valiutchik.ui.generated.resources.Res
-import valiutchik.ui.generated.resources.currency_name_eur_buy
-import valiutchik.ui.generated.resources.currency_name_eur_sell
-import valiutchik.ui.generated.resources.currency_name_pln_buy
-import valiutchik.ui.generated.resources.currency_name_pln_sell
-import valiutchik.ui.generated.resources.currency_name_rub_buy
-import valiutchik.ui.generated.resources.currency_name_rub_sell
-import valiutchik.ui.generated.resources.currency_name_uah_buy
-import valiutchik.ui.generated.resources.currency_name_uah_sell
-import valiutchik.ui.generated.resources.currency_name_usd_buy
-import valiutchik.ui.generated.resources.currency_name_usd_sell
 import valiutchik.ui.generated.resources.currency_rate_buy
 import valiutchik.ui.generated.resources.currency_rate_sell
 
 fun BestCurrencyRate.resolveCurrencyName(): PluralStringResource = when (this) {
-    is BestCurrencyRate.DollarBuyRate -> Res.plurals.currency_name_usd_buy
-    is BestCurrencyRate.DollarSellRate -> Res.plurals.currency_name_usd_sell
-    is BestCurrencyRate.EuroBuyRate -> Res.plurals.currency_name_eur_buy
-    is BestCurrencyRate.EuroSellRate -> Res.plurals.currency_name_eur_sell
-    is BestCurrencyRate.HryvniaBuyRate -> Res.plurals.currency_name_uah_buy
-    is BestCurrencyRate.HryvniaSellRate -> Res.plurals.currency_name_uah_sell
-    is BestCurrencyRate.ZlotyBuyRate -> Res.plurals.currency_name_pln_buy
-    is BestCurrencyRate.ZlotySellRate -> Res.plurals.currency_name_pln_sell
-    is BestCurrencyRate.RubleBuyRate -> Res.plurals.currency_name_rub_buy
-    is BestCurrencyRate.RubleSellRate -> Res.plurals.currency_name_rub_sell
-    is BestCurrencyRate.OtherBuyRate -> Res.plurals.currency_rate_buy
-    is BestCurrencyRate.OtherSellRate -> Res.plurals.currency_rate_sell
+    is BestCurrencyRate.BuyRate -> Res.plurals.currency_rate_buy
+    is BestCurrencyRate.SellRate -> Res.plurals.currency_rate_sell
 }

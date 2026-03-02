@@ -19,17 +19,7 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
-import fobo66.valiutchik.core.util.CURRENCY_NAME_EURO
-import fobo66.valiutchik.core.util.CURRENCY_NAME_HRYVNIA
-import fobo66.valiutchik.core.util.CURRENCY_NAME_RUBLE
-import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
-import fobo66.valiutchik.core.util.CURRENCY_NAME_ZLOTY
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import fobo66.valiutchik.domain.entities.BestCurrencyRate.DollarBuyRate
-import fobo66.valiutchik.domain.entities.BestCurrencyRate.EuroBuyRate
-import fobo66.valiutchik.domain.entities.BestCurrencyRate.HryvniaBuyRate
-import fobo66.valiutchik.domain.entities.BestCurrencyRate.RubleBuyRate
-import fobo66.valiutchik.domain.entities.BestCurrencyRate.ZlotyBuyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -59,58 +49,9 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
         val symbol = currencyRateRepository.formatCurrencySymbol(this, languageTag)
 
         return if (isBuy == true) {
-            when (currencyName) {
-                CURRENCY_NAME_US_DOLLAR -> DollarBuyRate(key, bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_EURO -> EuroBuyRate(key, bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_RUBLE -> RubleBuyRate(key, bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_ZLOTY -> ZlotyBuyRate(key, bank, rateValue, multiplier, symbol)
-                CURRENCY_NAME_HRYVNIA -> HryvniaBuyRate(key, bank, rateValue, multiplier, symbol)
-                else -> BestCurrencyRate.OtherBuyRate(key, bank, rateValue, multiplier, symbol)
-            }
+            BestCurrencyRate.BuyRate(key, bank, rateValue, multiplier, symbol)
         } else {
-            when (currencyName) {
-                CURRENCY_NAME_US_DOLLAR -> BestCurrencyRate.DollarSellRate(
-                    key,
-                    bank,
-                    rateValue,
-                    multiplier,
-                    symbol
-                )
-
-                CURRENCY_NAME_EURO -> BestCurrencyRate.EuroSellRate(
-                    key,
-                    bank,
-                    rateValue,
-                    multiplier,
-                    symbol
-                )
-
-                CURRENCY_NAME_RUBLE -> BestCurrencyRate.RubleSellRate(
-                    key,
-                    bank,
-                    rateValue,
-                    multiplier,
-                    symbol
-                )
-
-                CURRENCY_NAME_ZLOTY -> BestCurrencyRate.ZlotySellRate(
-                    key,
-                    bank,
-                    rateValue,
-                    multiplier,
-                    symbol
-                )
-
-                CURRENCY_NAME_HRYVNIA -> BestCurrencyRate.HryvniaSellRate(
-                    key,
-                    bank,
-                    rateValue,
-                    multiplier,
-                    symbol
-                )
-
-                else -> BestCurrencyRate.OtherSellRate(key, bank, rateValue, multiplier, symbol)
-            }
+            BestCurrencyRate.SellRate(key, bank, rateValue, multiplier, symbol)
         }
     }
 }

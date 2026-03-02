@@ -110,56 +110,6 @@
   <string name="share_description">Абагуліць курс валюты</string>
   <string name="toolbar_action_more">Болей</string>
   <string name="action_about_close">ОК</string>
-  <plurals name="currency_name_usd_buy">
-    <item quantity="one">%1$d Долар ЗША курс пакупкі</item>
-    <item quantity="few">%1$d долара ЗША курс пакупкі</item>
-    <item quantity="other">%1$d долараў ЗША курс пакупкі</item>
-  </plurals>
-  <plurals name="currency_name_usd_sell">
-    <item quantity="one">%1$d Долар ЗША курс продажу</item>
-    <item quantity="few">%1$d долара ЗША курс продажу</item>
-    <item quantity="other">%1$d долараў ЗША курс продажу</item>
-  </plurals>
-  <plurals name="currency_name_eur_buy">
-    <item quantity="one">%1$d Еўра курс пакупкі</item>
-    <item quantity="few">%1$d еўра курс пакупкі</item>
-    <item quantity="other">%1$d еўра курс пакупкі</item>
-  </plurals>
-  <plurals name="currency_name_eur_sell">
-    <item quantity="one">%1$d Еўра курс продажу</item>
-    <item quantity="few">%1$d еўра курс продажу</item>
-    <item quantity="other">%1$d еўра курс продажу</item>
-  </plurals>
-  <plurals name="currency_name_rub_buy">
-    <item quantity="one">%1$d рубель курс пакупкі</item>
-    <item quantity="few">%1$d рубля курс пакупкі</item>
-    <item quantity="other">%1$d рублёў курс пакупкі</item>
-  </plurals>
-  <plurals name="currency_name_rub_sell">
-    <item quantity="one">%1$d рубель курс продажу</item>
-    <item quantity="few">%1$d рубля курс продажу</item>
-    <item quantity="other">%1$d рублёў курс продажу</item>
-  </plurals>
-  <plurals name="currency_name_pln_buy">
-    <item quantity="one">%1$d Злоты курс пакупкі</item>
-    <item quantity="few">%1$d злотыя курс пакупкі</item>
-    <item quantity="other">%1$d злотых курс пакупкі</item>
-  </plurals>
-  <plurals name="currency_name_pln_sell">
-    <item quantity="one">%1$d Злоты курс продажу</item>
-    <item quantity="few">%1$d злотыя курс продажу</item>
-    <item quantity="other">%1$d злотых курс продажу</item>
-  </plurals>
-  <plurals name="currency_name_uah_buy">
-    <item quantity="one">%1$d Грыўня курс пакупкі</item>
-    <item quantity="few">%1$d грыўні курс пакупкі</item>
-    <item quantity="other">%1$d грыўняў курс пакупкі</item>
-  </plurals>
-  <plurals name="currency_name_uah_sell">
-    <item quantity="one">%1$d Грыўня курс продажу</item>
-    <item quantity="few">%1$d грыўні курс продажу</item>
-    <item quantity="other">%1$d грыўняў курс продажу</item>
-  </plurals>
   <plurals name="currency_rate_buy">
     <item quantity="one">%1$d %2$s курс пакупкі</item>
     <item quantity="few">%1$d %2$s курс пакупкі</item>

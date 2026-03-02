@@ -22,6 +22,6 @@
   <string name="bank_name_indicator">Название банка</string>
   <string name="open_app">Открыть приложение</string>
   <string name="widget_action_refresh">Обновить</string>
-  <string name="currency_rate_buy">%1$d%2$s покупка</string>
-  <string name="currency_rate_sell">%1$d%2$s продажа</string>
+  <string name="currency_rate_buy">%1$d %2$s покупка</string>
+  <string name="currency_rate_sell">%1$d %2$s продажа</string>
 </resources>

@@ -139,19 +139,8 @@ fun CurrencyWidgetContent(
 
 @StringRes
 private fun BestCurrencyRate.resolveCurrencyName(): Int = when (this) {
-    is BestCurrencyRate.DollarBuyRate,
-    is BestCurrencyRate.EuroBuyRate,
-    is BestCurrencyRate.HryvniaBuyRate,
-    is BestCurrencyRate.RubleBuyRate,
-    is BestCurrencyRate.ZlotyBuyRate,
-    is BestCurrencyRate.OtherBuyRate -> R.string.currency_rate_buy
-
-    is BestCurrencyRate.DollarSellRate,
-    is BestCurrencyRate.EuroSellRate,
-    is BestCurrencyRate.HryvniaSellRate,
-    is BestCurrencyRate.ZlotySellRate,
-    is BestCurrencyRate.RubleSellRate,
-    is BestCurrencyRate.OtherSellRate -> R.string.currency_rate_sell
+    is BestCurrencyRate.BuyRate -> R.string.currency_rate_buy
+    is BestCurrencyRate.SellRate -> R.string.currency_rate_sell
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -168,14 +157,14 @@ private fun CurrencyWidgetPreview() {
         CurrencyWidgetContent(
             rates =
                 persistentListOf(
-                    BestCurrencyRate.DollarBuyRate(
+                    BestCurrencyRate.BuyRate(
                         key = 1,
                         bank = "test",
                         rateValue = "1.23",
                         quantity = 1,
                         currencySymbol = "$"
                     ),
-                    BestCurrencyRate.DollarSellRate(
+                    BestCurrencyRate.SellRate(
                         key = 2,
                         bank = "test",
                         rateValue = "4.56",

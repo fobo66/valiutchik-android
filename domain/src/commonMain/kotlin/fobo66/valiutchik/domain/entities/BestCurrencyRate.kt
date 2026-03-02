@@ -28,7 +28,7 @@ sealed class BestCurrencyRate(
     open val currencySymbol: String
 ) {
     @Immutable
-    data class DollarBuyRate(
+    data class BuyRate(
         override val key: Long,
         override val bank: String,
         override val rateValue: String,
@@ -37,97 +37,7 @@ sealed class BestCurrencyRate(
     ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
 
     @Immutable
-    data class DollarSellRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class EuroBuyRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class EuroSellRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class HryvniaBuyRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class HryvniaSellRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class ZlotyBuyRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class ZlotySellRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class RubleBuyRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class RubleSellRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class OtherBuyRate(
-        override val key: Long,
-        override val bank: String,
-        override val rateValue: String,
-        override val quantity: Long,
-        override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
-
-    @Immutable
-    data class OtherSellRate(
+    data class SellRate(
         override val key: Long,
         override val bank: String,
         override val rateValue: String,
