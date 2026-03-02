@@ -136,8 +136,7 @@ class CurrencyRateRepositoryImpl(
 
         val banks = mutableScatterSetOf<Bank>()
 
-        val ratesFlow = rawRates.asFlow()
-        val rates = ratesFlow
+        val rates = rawRates.asFlow()
             .onEach { banks.add(it.toBank()) }
             .map { it.toRate() }
             .toSet()
@@ -199,7 +198,7 @@ class CurrencyRateRepositoryImpl(
             }
 
     override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatCurrencySymbol(rate.currencyName, languageTag)
+        formattingDataSource.formatCurrencySymbol(rate.currencyName, rate.multiplier, languageTag)
 
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
         formattingDataSource.formatCurrencyValue(

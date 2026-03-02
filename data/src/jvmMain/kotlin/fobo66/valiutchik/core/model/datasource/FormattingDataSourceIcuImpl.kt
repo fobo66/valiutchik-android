@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.ibm.icu.number.NumberFormatter
+import com.ibm.icu.text.PluralRules
 import com.ibm.icu.text.Transliterator
 import com.ibm.icu.util.Currency
 import com.ibm.icu.util.ULocale
@@ -51,8 +52,17 @@ class FormattingDataSourceIcuImpl : FormattingDataSource {
         }
     }
 
-    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
-        Currency.getInstance(currencyCode).getSymbol(ULocale.forLanguageTag(languageTag))
+    override fun formatCurrencySymbol(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String {
+        val locale = ULocale.forLanguageTag(languageTag)
+
+        val pluralCount = PluralRules.forLocale(locale).select(quantity.toDouble())
+        return Currency.getInstance(currencyCode)
+            .getName(locale, Currency.PLURAL_LONG_NAME, pluralCount, null)
+    }
 
     private fun transliterate(bankName: String, languageCode: String): String {
         val transliterator =

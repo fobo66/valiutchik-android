@@ -23,8 +23,11 @@ class FakeFormattingDataSource : FormattingDataSource {
     override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
         value.toString()
 
-    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
-        currencyCode
+    override fun formatCurrencySymbol(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String = currencyCode
 
     override fun formatBankName(name: String, languageTag: LanguageTag): String = name
 }

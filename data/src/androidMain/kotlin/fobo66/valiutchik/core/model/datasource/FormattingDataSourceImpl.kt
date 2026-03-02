@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.icu.number.NumberFormatter
+import android.icu.text.PluralRules
 import android.icu.text.Transliterator
 import android.icu.util.Currency
 import android.icu.util.ULocale
@@ -60,10 +61,17 @@ class FormattingDataSourceImpl : FormattingDataSource {
             .toString()
     }
 
-    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String {
+    override fun formatCurrencySymbol(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String {
         checkLocaleCache(languageTag)
 
-        return Currency.getInstance(currencyCode).getSymbol(cachedLocale)
+        val pluralCount = PluralRules.forLocale(cachedLocale).select(quantity.toDouble())
+
+        return Currency.getInstance(currencyCode)
+            .getName(cachedLocale, Currency.PLURAL_LONG_NAME, pluralCount, null)
     }
 
     private fun checkLocaleCache(languageTag: LanguageTag) {
