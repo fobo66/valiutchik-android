@@ -19,6 +19,7 @@ package fobo66.exchangecourcesbelarus.work
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
+private const val WORK_TAG_REFRESH = "valiutchik-refresh"
 private const val WORK_RATES_REFRESH = "backgroundRefresh"
 private const val WORK_DATA_REFRESH = "backgroundDataRefresh"
 private const val WORK_CLEANUP = "cleanup"
@@ -40,7 +42,7 @@ class RefreshInteractorWorkManagerImpl(
     private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
 ) : RefreshInteractor {
     override val isRefreshInProgress: Flow<Boolean>
-        get() = workManager.getWorkInfosForUniqueWorkFlow(WORK_RATES_REFRESH)
+        get() = workManager.getWorkInfosByTagFlow(WORK_TAG_REFRESH)
             .map { infos ->
                 infos.any { info ->
                     info.state == WorkInfo.State.RUNNING
@@ -58,10 +60,18 @@ class RefreshInteractorWorkManagerImpl(
             .setRequiredNetworkType(NetworkType.NOT_ROAMING)
             .build()
 
-        val workRequest =
+        val periodicRatesRefresh =
             PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateIntervalHours, TimeUnit.HOURS)
                 .setConstraints(constraints)
+                .setInitialDelay(updateIntervalHours, TimeUnit.HOURS)
                 .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+                .build()
+
+        val ratesRefreshRequest =
+            OneTimeWorkRequestBuilder<RatesRefreshWorker>()
+                .setConstraints(constraints)
+                .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+                .addTag(WORK_TAG_REFRESH)
                 .build()
 
         val cleanupRequest =
@@ -69,13 +79,24 @@ class RefreshInteractorWorkManagerImpl(
                 .build()
 
         val dataRefreshRequest =
+            OneTimeWorkRequestBuilder<DataRefreshWorker>()
+                .setConstraints(constraints)
+                .addTag(WORK_TAG_REFRESH)
+                .build()
+
+        val dataRefreshPeriodicRequest =
             PeriodicWorkRequestBuilder<DataRefreshWorker>(1, TimeUnit.DAYS)
                 .setConstraints(constraints)
+                .setInitialDelay(1, TimeUnit.DAYS)
                 .build()
+        workManager.beginWith(ratesRefreshRequest)
+            .then(dataRefreshRequest)
+            .enqueue()
+
         workManager.enqueueUniquePeriodicWork(
             WORK_RATES_REFRESH,
             ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-            workRequest
+            periodicRatesRefresh
         )
         workManager.enqueueUniquePeriodicWork(
             WORK_CLEANUP,
@@ -85,7 +106,7 @@ class RefreshInteractorWorkManagerImpl(
         workManager.enqueueUniquePeriodicWork(
             WORK_DATA_REFRESH,
             ExistingPeriodicWorkPolicy.KEEP,
-            dataRefreshRequest
+            dataRefreshPeriodicRequest
         )
     }
 }
