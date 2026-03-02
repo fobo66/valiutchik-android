@@ -126,11 +126,11 @@ fun BestRatesGrid(
                             key = { item -> item.key }
                         ) { item ->
                             BestCurrencyRateCard(
-                                currencyName = pluralStringResource(
+                                title = pluralStringResource(
                                     item.resolveCurrencyName(),
                                     item.quantity.toInt(),
                                     item.quantity,
-                                    item.currencySymbol
+                                    item.currencyName
                                 ),
                                 currencyValue = item.rateValue,
                                 bankName = item.bank,
@@ -168,7 +168,7 @@ private fun resolveRatesGridPadding(): PaddingValues {
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BestCurrencyRateCard(
-    currencyName: String,
+    title: String,
     currencyValue: String,
     bankName: String,
     onClick: (String) -> Unit,
@@ -186,7 +186,7 @@ fun BestCurrencyRateCard(
                 )
     ) {
         Text(
-            text = currencyName,
+            text = title,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
         )
@@ -217,7 +217,7 @@ fun BestCurrencyRateCard(
                         .padding(start = 8.dp)
             )
             IconButton(onClick = {
-                onShareClick(currencyName, currencyValue)
+                onShareClick(title, currencyValue)
             }) {
                 Icon(
                     painterResource(Res.drawable.ic_share),
@@ -240,6 +240,7 @@ private fun BestCurrencyRatesPreview() {
                         bank = "test",
                         rateValue = "1.23",
                         quantity = 1,
+                        currencyName = "USD",
                         currencySymbol = "$"
                     ),
                     BestCurrencyRate.SellRate(
@@ -247,6 +248,7 @@ private fun BestCurrencyRatesPreview() {
                         bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
                         rateValue = "4.56",
                         quantity = 1,
+                        currencyName = "USD",
                         currencySymbol = "$"
                     )
                 ),

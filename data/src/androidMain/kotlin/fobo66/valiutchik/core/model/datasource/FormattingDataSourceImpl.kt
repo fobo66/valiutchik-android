@@ -61,7 +61,7 @@ class FormattingDataSourceImpl : FormattingDataSource {
             .toString()
     }
 
-    override fun formatCurrencySymbol(
+    override fun formatCurrencyName(
         currencyCode: String,
         quantity: Long,
         languageTag: LanguageTag
@@ -72,6 +72,15 @@ class FormattingDataSourceImpl : FormattingDataSource {
 
         return Currency.getInstance(currencyCode)
             .getName(cachedLocale, Currency.PLURAL_LONG_NAME, pluralCount, null)
+    }
+
+    override fun formatCurrencySymbol(
+        currencyCode: String,
+        languageTag: LanguageTag
+    ): String {
+        checkLocaleCache(languageTag)
+
+        return Currency.getInstance(currencyCode).getSymbol(cachedLocale)
     }
 
     private fun checkLocaleCache(languageTag: LanguageTag) {

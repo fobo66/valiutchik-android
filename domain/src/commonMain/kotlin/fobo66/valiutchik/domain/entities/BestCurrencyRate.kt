@@ -25,6 +25,7 @@ sealed class BestCurrencyRate(
     open val bank: String,
     open val rateValue: String,
     open val quantity: Long,
+    open val currencyName: String,
     open val currencySymbol: String
 ) {
     @Immutable
@@ -33,8 +34,9 @@ sealed class BestCurrencyRate(
         override val bank: String,
         override val rateValue: String,
         override val quantity: Long,
+        override val currencyName: String,
         override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
+    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencyName, currencySymbol)
 
     @Immutable
     data class SellRate(
@@ -42,6 +44,7 @@ sealed class BestCurrencyRate(
         override val bank: String,
         override val rateValue: String,
         override val quantity: Long,
+        override val currencyName: String,
         override val currencySymbol: String
-    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencySymbol)
+    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencyName, currencySymbol)
 }

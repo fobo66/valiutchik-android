@@ -36,9 +36,14 @@ interface FormattingDataSource {
     fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String
 
     /**
+     * Convert currency code to a localized name
+     */
+    fun formatCurrencyName(currencyCode: String, quantity: Long, languageTag: LanguageTag): String
+
+    /**
      * Convert currency code to a localized symbol
      */
-    fun formatCurrencySymbol(currencyCode: String, quantity: Long, languageTag: LanguageTag): String
+    fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String
 
     /**
      * Clean up all the unnecessary parts from the bank name

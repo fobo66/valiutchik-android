@@ -46,12 +46,13 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
         val key = currencyId * 10 + (if (isBuy == true) 1 else 0)
         val bank = currencyRateRepository.formatBankName(this, languageTag)
         val rateValue = currencyRateRepository.formatRate(this, languageTag)
+        val name = currencyRateRepository.formatCurrencyName(this, languageTag)
         val symbol = currencyRateRepository.formatCurrencySymbol(this, languageTag)
 
         return if (isBuy == true) {
-            BestCurrencyRate.BuyRate(key, bank, rateValue, multiplier, symbol)
+            BestCurrencyRate.BuyRate(key, bank, rateValue, multiplier, name, symbol)
         } else {
-            BestCurrencyRate.SellRate(key, bank, rateValue, multiplier, symbol)
+            BestCurrencyRate.SellRate(key, bank, rateValue, multiplier, name, symbol)
         }
     }
 }

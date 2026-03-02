@@ -56,7 +56,7 @@ class MainScreenTest {
         setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(
-                    BestCurrencyRate.BuyRate(1, "test", "0.0", 1, "$")
+                    BestCurrencyRate.BuyRate(1, "test", "0.0", 1, "$", "$")
                 ),
                 onBestRateClick = {
                     isMapOpen = true

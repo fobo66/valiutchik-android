@@ -45,6 +45,6 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
 
     override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String = rate.bankName
 
-    override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
+    override fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String =
         rate.currencyName
 }

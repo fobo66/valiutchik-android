@@ -197,8 +197,11 @@ class CurrencyRateRepositoryImpl(
                     .sortedBy { it.currencyId }
             }
 
+    override fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String =
+        formattingDataSource.formatCurrencyName(rate.currencyName, rate.multiplier, languageTag)
+
     override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatCurrencySymbol(rate.currencyName, rate.multiplier, languageTag)
+        formattingDataSource.formatCurrencySymbol(rate.currencyName, languageTag)
 
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
         formattingDataSource.formatCurrencyValue(

@@ -52,7 +52,7 @@ class FormattingDataSourceIcuImpl : FormattingDataSource {
         }
     }
 
-    override fun formatCurrencySymbol(
+    override fun formatCurrencyName(
         currencyCode: String,
         quantity: Long,
         languageTag: LanguageTag
@@ -63,6 +63,9 @@ class FormattingDataSourceIcuImpl : FormattingDataSource {
         return Currency.getInstance(currencyCode)
             .getName(locale, Currency.PLURAL_LONG_NAME, pluralCount, null)
     }
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
+        Currency.getInstance(currencyCode).getSymbol(ULocale.forLanguageTag(languageTag))
 
     private fun transliterate(bankName: String, languageCode: String): String {
         val transliterator =

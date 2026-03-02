@@ -162,6 +162,7 @@ private fun CurrencyWidgetPreview() {
                         bank = "test",
                         rateValue = "1.23",
                         quantity = 1,
+                        currencyName = "USD",
                         currencySymbol = "$"
                     ),
                     BestCurrencyRate.SellRate(
@@ -169,6 +170,7 @@ private fun CurrencyWidgetPreview() {
                         bank = "test",
                         rateValue = "4.56",
                         quantity = 1,
+                        currencyName = "USD",
                         currencySymbol = "$"
                     )
                 ),
