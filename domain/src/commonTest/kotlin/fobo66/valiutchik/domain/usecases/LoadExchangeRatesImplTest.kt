@@ -64,7 +64,7 @@ class LoadExchangeRatesImplTest {
             listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
         loadExchangeRates.execute().test {
-            assertIs<BestCurrencyRate.DollarSellRate>(awaitItem().first())
+            assertIs<BestCurrencyRate.SellRate>(awaitItem().first())
         }
     }
 
