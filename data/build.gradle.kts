@@ -21,7 +21,6 @@ plugins {
     alias(libs.plugins.android.library.multiplatform)
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
     alias(libs.plugins.sqlidelight)
 }
