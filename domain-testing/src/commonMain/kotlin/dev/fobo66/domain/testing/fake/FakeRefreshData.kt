@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,14 +14,13 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.desktop.di
+package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
-import fobo66.valiutchik.domain.usecases.RefreshInteractorImpl
-import org.koin.dsl.module
+import fobo66.valiutchik.domain.usecases.RefreshData
 
-val refreshModule = module {
-    single<RefreshInteractor> {
-        RefreshInteractorImpl(get(), get(), get(), get())
+class FakeRefreshData : RefreshData {
+    var isRefreshed: Boolean = false
+    override suspend fun execute() {
+        isRefreshed = true
     }
 }
