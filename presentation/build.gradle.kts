@@ -36,8 +36,15 @@ kotlin {
 
     android {
         namespace = "dev.fobo66.valiutchik.presentation"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
-        minSdk = AndroidVersion.VersionCodes.R
+        compileSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+                minorApiLevel = 1
+            }
+        }
+
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         compilations.configureEach {
             compileTaskProvider.configure {
