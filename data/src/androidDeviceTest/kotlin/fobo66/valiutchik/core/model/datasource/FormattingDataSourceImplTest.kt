@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
+import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import org.junit.Test
 
 private const val RAW_RATE = 1.23
@@ -43,19 +44,19 @@ class FormattingDataSourceImplTest {
 
     @Test
     fun formatCurrencyName() {
-        val name = formattingDataSource.formatCurrencyName("USD", 1, TAG)
+        val name = formattingDataSource.formatCurrencyName(CURRENCY_NAME_US_DOLLAR, 1, TAG)
         assertThat(name).isEqualTo(CURRENCY_NAME)
     }
 
     @Test
     fun formatCurrencyNamePlural() {
-        val name = formattingDataSource.formatCurrencyName("USD", 10, TAG)
+        val name = formattingDataSource.formatCurrencyName(CURRENCY_NAME_US_DOLLAR, 10, TAG)
         assertThat(name).isEqualTo(CURRENCY_NAME_PLURAL)
     }
 
     @Test
     fun formatCurrencySymbol() {
-        val name = formattingDataSource.formatCurrencySymbol("USD", TAG)
+        val name = formattingDataSource.formatCurrencySymbol(CURRENCY_NAME_US_DOLLAR, TAG)
         assertThat(name).isEqualTo("$")
     }
 
