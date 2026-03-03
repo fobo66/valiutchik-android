@@ -19,17 +19,7 @@ package fobo66.valiutchik.core.model.datasource
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
-import org.junit.Test
-
-private const val RAW_RATE = 1.23
-private const val LONG_RATE = 1.2345679
-private const val RATE = "BYN 1.23"
-private const val BANK_NAME = "Приорбанк" // taken from API
-private const val CURRENCY_NAME = "US dollar"
-private const val CURRENCY_NAME_PLURAL = "US dollars"
-private const val TAG = "en-US"
-private const val BELARUSIAN_TAG = "be-BY"
-private const val PASSTHROUGH_TAG = "ru-RU"
+import kotlin.test.Test
 
 @SmallTest
 class FormattingDataSourceImplTest {
