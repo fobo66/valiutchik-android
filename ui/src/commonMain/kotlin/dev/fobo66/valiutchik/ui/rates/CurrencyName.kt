@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 package dev.fobo66.valiutchik.ui.rates
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import org.jetbrains.compose.resources.PluralStringResource
+import org.jetbrains.compose.resources.StringResource
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.currency_rate_buy
 import valiutchik.ui.generated.resources.currency_rate_sell
 
-fun BestCurrencyRate.resolveCurrencyName(): PluralStringResource = when (this) {
-    is BestCurrencyRate.BuyRate -> Res.plurals.currency_rate_buy
-    is BestCurrencyRate.SellRate -> Res.plurals.currency_rate_sell
+fun BestCurrencyRate.resolveCurrencyNameResource(): StringResource = when (this) {
+    is BestCurrencyRate.BuyRate -> Res.string.currency_rate_buy
+    is BestCurrencyRate.SellRate -> Res.string.currency_rate_sell
 }

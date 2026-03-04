@@ -41,14 +41,8 @@
   <string name="action_refresh">Refresh</string>
   <string name="share_description">Share currency rate</string>
   <string name="toolbar_action_more">More</string>
-  <plurals name="currency_rate_buy">
-    <item quantity="one">%1$d %2$s buy rate</item>
-    <item quantity="other">%1$d %2$s buy rate</item>
-  </plurals>
-  <plurals name="currency_rate_sell">
-    <item quantity="one">%1$d %2$s sell rate</item>
-    <item quantity="other">%1$d %2$s sell rate</item>
-  </plurals>
+  <string name="currency_rate_buy">%1$d %2$s buy rate</string>
+  <string name="currency_rate_sell">%1$d %2$s sell rate</string>
   <string-array name="pref_cities_list">
     <item>Ashmyany</item>
     <item>Asipovichy</item>

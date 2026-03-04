@@ -63,7 +63,6 @@ import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.bank_name_indicator
@@ -126,9 +125,8 @@ fun BestRatesGrid(
                             key = { item -> item.key }
                         ) { item ->
                             BestCurrencyRateCard(
-                                title = pluralStringResource(
-                                    item.resolveCurrencyName(),
-                                    item.quantity.toInt(),
+                                title = stringResource(
+                                    item.resolveCurrencyNameResource(),
                                     item.quantity,
                                     item.currencyName
                                 ),

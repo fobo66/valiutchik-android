@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2025 Andrey Mukamolov
+  ~    Copyright 2026 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -110,14 +110,6 @@
   <string name="share_description">Абагуліць курс валюты</string>
   <string name="toolbar_action_more">Болей</string>
   <string name="action_about_close">ОК</string>
-  <plurals name="currency_rate_buy">
-    <item quantity="one">%1$d %2$s курс пакупкі</item>
-    <item quantity="few">%1$d %2$s курс пакупкі</item>
-    <item quantity="other">%1$d %2$s курс пакупкі</item>
-  </plurals>
-  <plurals name="currency_rate_sell">
-    <item quantity="one">%1$d %2$s курс продажу</item>
-    <item quantity="few">%1$d %2$s курс продажу</item>
-    <item quantity="other">%1$d %2$s курс продажу</item>
-  </plurals>
+  <string name="currency_rate_buy">%1$d %2$s курс пакупкі</string>
+  <string name="currency_rate_sell">%1$d %2$s курс продажу</string>
 </resources>

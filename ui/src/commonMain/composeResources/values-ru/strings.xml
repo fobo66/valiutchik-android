@@ -110,14 +110,6 @@
   <string name="share_description">Поделиться курсом валюты</string>
   <string name="toolbar_action_more">Больше</string>
   <string name="action_about_close">ОК</string>
-  <plurals name="currency_rate_buy">
-    <item quantity="one">%1$d %2$s курс покупки</item>
-    <item quantity="few">%1$d %2$s курс покупки</item>
-    <item quantity="other">%1$d %2$s курс покупки</item>
-  </plurals>
-  <plurals name="currency_rate_sell">
-    <item quantity="one">%1$d %2$s курс продажи</item>
-    <item quantity="few">%1$d %2$s курс продажи</item>
-    <item quantity="other">%1$d %2$s курс продажи</item>
-  </plurals>
+  <string name="currency_rate_buy">%1$d %2$s курс покупки</string>
+  <string name="currency_rate_sell">%1$d %2$s курс продажи</string>
 </resources>
