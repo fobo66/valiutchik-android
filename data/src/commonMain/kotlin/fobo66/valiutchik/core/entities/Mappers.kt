@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,56 +16,45 @@
 
 package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.api.CURRENCY_ALIAS_EURO
-import fobo66.valiutchik.api.CURRENCY_ALIAS_HRYVNIA
-import fobo66.valiutchik.api.CURRENCY_ALIAS_RUBLE
-import fobo66.valiutchik.api.CURRENCY_ALIAS_US_DOLLAR
-import fobo66.valiutchik.api.CURRENCY_ALIAS_ZLOTY
+import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.Currency
+import dev.fobo66.valiutchik.core.db.Rate
+import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
-import fobo66.valiutchik.api.entity.resolveBuyRate
-import fobo66.valiutchik.api.entity.resolveSellRate
-import kotlin.math.log10
-import kotlin.math.roundToInt
+import fobo66.valiutchik.api.entity.CurrencyResponse
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
-fun List<CurrencyRateSource>.toRate(): Rate = Rate(
-    id = concatIds(firstOrNull()?.bankId ?: 0L, firstOrNull()?.id ?: 0L),
+fun CurrencyRateSource.toRate(): Rate = Rate(
+    id = id,
     date = resolveTimestamp().toString(),
-    bankName = first().bankName,
-    usdBuy = resolveBuyRate(CURRENCY_ALIAS_US_DOLLAR),
-    usdSell = resolveSellRate(CURRENCY_ALIAS_US_DOLLAR),
-    eurBuy = resolveBuyRate(CURRENCY_ALIAS_EURO),
-    eurSell = resolveSellRate(CURRENCY_ALIAS_EURO),
-    rubBuy = resolveBuyRate(CURRENCY_ALIAS_RUBLE),
-    rubSell = resolveSellRate(CURRENCY_ALIAS_RUBLE),
-    plnBuy = resolveBuyRate(CURRENCY_ALIAS_ZLOTY),
-    plnSell = resolveSellRate(CURRENCY_ALIAS_ZLOTY),
-    uahBuy = resolveBuyRate(CURRENCY_ALIAS_HRYVNIA),
-    uahSell = resolveSellRate(CURRENCY_ALIAS_HRYVNIA)
+    bankId = bankId,
+    buyRate = currency.buy,
+    sellRate = currency.sell,
+    currencyId = currency.name
+)
+
+fun CurrencyRateSource.toBank(): Bank = Bank(
+    id = bankId,
+    name = bankName,
+    formattedName = bankName
+)
+
+fun BankResponse.toBank(): Bank = Bank(
+    id = id,
+    name = fullname,
+    formattedName = name
+)
+
+fun CurrencyResponse.toCurrency(): Currency = Currency(
+    id = id,
+    name = internationalName.lowercase(),
+    symbol = symbol,
+    multiplier = multiplier
 )
 
 @OptIn(ExperimentalTime::class)
-private fun List<CurrencyRateSource>.resolveTimestamp(): Instant =
-    maxByOrNull { it.currency.dateUpdate }?.currency?.dateUpdate?.let {
-        Instant.fromEpochSeconds(it)
-    } ?: Instant.DISTANT_PAST
-
-private fun concatIds(primary: Long, secondary: Long): Long {
-    val secondaryLength = if (secondary == 0L) {
-        1
-    } else {
-        (log10(secondary.toFloat()) + 1).roundToInt()
-    }
-    val multiplier = 10L.pow(secondaryLength)
-    return (multiplier * primary) + secondary
-}
-
-private fun Long.pow(exponent: Int): Long {
-    var result = 1L
-    repeat(exponent) {
-        result *= this
-    }
-    return result
-}
+private fun CurrencyRateSource.resolveTimestamp(): Instant = currency.dateUpdate.runCatching {
+    Instant.fromEpochSeconds(this)
+}.getOrDefault(Instant.DISTANT_PAST)

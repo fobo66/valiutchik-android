@@ -16,25 +16,40 @@
 
 package dev.fobo66.core.data.testing.fake
 
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.Rate
+import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.Currency
+import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
+import dev.fobo66.valiutchik.core.db.LoadBestSellRates
+import dev.fobo66.valiutchik.core.db.Rate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 
 class FakePersistenceDataSource : PersistenceDataSource {
     var isSaved = false
     var isDeleted = false
 
     override suspend fun loadOldRates(): List<Rate> = emptyList()
+    override fun loadCurrencies(): Flow<List<Currency>> = flowOf(emptyList())
 
-    override suspend fun saveRates(rates: List<Rate>) {
+    override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> = emptyFlow()
+
+    override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> = emptyFlow()
+
+    override suspend fun saveRates(rates: Set<Rate>) {
+        isSaved = true
+    }
+
+    override suspend fun saveBanks(banks: Set<Bank>) {
+        isSaved = true
+    }
+
+    override suspend fun saveCurrencies(currencies: Set<Currency>) {
         isSaved = true
     }
 
     override suspend fun deleteRates(rates: List<Rate>) {
         isDeleted = true
     }
-
-    override fun readBestCourses(): Flow<List<BestCourse>> = emptyFlow()
 }

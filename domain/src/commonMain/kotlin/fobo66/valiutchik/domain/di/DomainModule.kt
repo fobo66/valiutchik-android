@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,6 +35,8 @@ import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicensesImpl
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreferenceImpl
+import fobo66.valiutchik.domain.usecases.RefreshData
+import fobo66.valiutchik.domain.usecases.RefreshDataImpl
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreferenceImpl
 import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
@@ -87,4 +89,6 @@ val domainModule = module {
     single<CleanUpOldRates> {
         CleanUpOldRatesImpl(get())
     }
+
+    single<RefreshData> { RefreshDataImpl(get()) }
 }

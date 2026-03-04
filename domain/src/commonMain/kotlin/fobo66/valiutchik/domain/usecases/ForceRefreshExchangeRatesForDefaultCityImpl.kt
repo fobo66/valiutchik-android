@@ -16,16 +16,20 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
+import fobo66.valiutchik.domain.entities.RefreshException
 import kotlinx.coroutines.flow.first
 
 class ForceRefreshExchangeRatesForDefaultCityImpl(
     private val currencyRateRepository: CurrencyRateRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRatesForDefaultCity {
-    override suspend fun execute() {
+    override suspend fun execute() = try {
         val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
         currencyRateRepository.refreshExchangeRates(defaultCity)
+    } catch (e: CurrencyRatesLoadFailedException) {
+        throw RefreshException(e)
     }
 }

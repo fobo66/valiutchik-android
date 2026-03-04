@@ -16,11 +16,11 @@
 
 package fobo66.valiutchik.api.di
 
-import fobo66.valiutchik.api.CurrencyRatesResponseParser
-import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
+import fobo66.valiutchik.api.ApiResponseParser
+import fobo66.valiutchik.api.ApiResponseParserImpl
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 internal val parserModule: Module = module {
-    single<CurrencyRatesResponseParser> { CurrencyRatesResponseParserImpl(get()) }
+    single<ApiResponseParser> { ApiResponseParserImpl(get()) }
 }

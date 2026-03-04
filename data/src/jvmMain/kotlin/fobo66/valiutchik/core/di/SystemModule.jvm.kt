@@ -36,7 +36,7 @@ import org.koin.dsl.module
 actual val systemModule: Module = module {
 
     single<FormattingDataSource> {
-        FormattingDataSourceIcuImpl(get())
+        FormattingDataSourceIcuImpl()
     }
 
     single<LocaleDataSource> { LocaleDataSourceJvmImpl() }

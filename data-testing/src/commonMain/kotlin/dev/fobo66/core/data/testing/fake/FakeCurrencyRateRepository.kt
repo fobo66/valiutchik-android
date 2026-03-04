@@ -43,6 +43,11 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
     override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
         rate.currencyValue.toString()
 
-    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String =
-        rate.bankName.orEmpty()
+    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String = rate.bankName
+
+    override fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String =
+        rate.currencyName
+
+    override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
+        rate.currencyName
 }

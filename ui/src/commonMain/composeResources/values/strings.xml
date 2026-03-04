@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~    Copyright 2025 Andrey Mukamolov
+  ~    Copyright 2026 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
   <string name="pref_title_update_interval">Update interval, hours</string>
   <string name="maps_app_required">Unable to show bank offices on map: no maps application found</string>
   <string name="get_data_error">Unable to refresh data</string>
-  <string name="about_app_description">App allows to quickly load the best exchange rates in the big cities of Belarus. By clicking on list item you can find nearest bank offices with best rates on the map in your city. By long pressing on the item you can copy rate to clipboard. You can also customize update interval to refresh rates in timely fashion, or change your default city. Please mind that info about exchange rates may be out of date. Please clarify in banks. Info about exchange rates provided by <a href="https://myfin.by">myfin.by</a></string>
+  <string name="about_app_description">App allows to quickly load the best exchange rates in the cities of Belarus. By clicking on the list item, you can find nearest exchange offices with best rates on the map in your city. By long pressing on the item, you can copy rate to clipboard. You can also customize update interval to refresh rates in timely fashion, or change your default city. Please mind that info about exchange rates may be out of date. Please clarify in banks. Info about exchange rates provided by <a href="https://myfin.by">myfin.by</a></string>
   <string name="currency_value_copied">Currency rate was copied to clipboard</string>
   <string name="title_activity_oss_licenses">Open source licenses</string>
   <string name="open_map">Search for exchange offices on map</string>
@@ -41,16 +41,8 @@
   <string name="action_refresh">Refresh</string>
   <string name="share_description">Share currency rate</string>
   <string name="toolbar_action_more">More</string>
-  <string name="currency_name_usd_buy">US Dollar buy rate</string>
-  <string name="currency_name_usd_sell">US Dollar sell rate</string>
-  <string name="currency_name_eur_buy">Euro buy rate</string>
-  <string name="currency_name_eur_sell">Euro sell rate</string>
-  <string name="currency_name_rub_buy">100 rubles buy rate</string>
-  <string name="currency_name_rub_sell">100 rubles sell rate</string>
-  <string name="currency_name_pln_buy">Zloty buy rate</string>
-  <string name="currency_name_pln_sell">Zloty sell rate</string>
-  <string name="currency_name_uah_buy">100 hryvnias buy rate</string>
-  <string name="currency_name_uah_sell">100 hryvnias sell rate</string>
+  <string name="currency_rate_buy">%1$d %2$s buy rate</string>
+  <string name="currency_rate_sell">%1$d %2$s sell rate</string>
   <string-array name="pref_cities_list">
     <item>Ashmyany</item>
     <item>Asipovichy</item>

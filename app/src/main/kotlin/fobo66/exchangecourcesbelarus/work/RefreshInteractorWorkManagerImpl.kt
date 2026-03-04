@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package fobo66.exchangecourcesbelarus.work
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -31,7 +32,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-private const val WORK_BACKGROUND_REFRESH = "backgroundRefresh"
+private const val WORK_TAG_REFRESH = "valiutchik-refresh"
+private const val WORK_RATES_REFRESH = "backgroundRefresh"
+private const val WORK_DATA_REFRESH = "backgroundDataRefresh"
 private const val WORK_CLEANUP = "cleanup"
 
 class RefreshInteractorWorkManagerImpl(
@@ -39,7 +42,7 @@ class RefreshInteractorWorkManagerImpl(
     private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
 ) : RefreshInteractor {
     override val isRefreshInProgress: Flow<Boolean>
-        get() = workManager.getWorkInfosForUniqueWorkFlow(WORK_BACKGROUND_REFRESH)
+        get() = workManager.getWorkInfosByTagFlow(WORK_TAG_REFRESH)
             .map { infos ->
                 infos.any { info ->
                     info.state == WorkInfo.State.RUNNING
@@ -51,29 +54,59 @@ class RefreshInteractorWorkManagerImpl(
             .map { it.roundToLong() }
             .first()
 
-        val workRequest =
+        val constraints = Constraints
+            .Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.NOT_ROAMING)
+            .build()
+
+        val periodicRatesRefresh =
             PeriodicWorkRequestBuilder<RatesRefreshWorker>(updateIntervalHours, TimeUnit.HOURS)
-                .setConstraints(
-                    Constraints
-                        .Builder()
-                        .setRequiresBatteryNotLow(true)
-                        .setRequiredNetworkType(NetworkType.NOT_ROAMING)
-                        .build()
-                ).setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+                .setConstraints(constraints)
+                .setInitialDelay(updateIntervalHours, TimeUnit.HOURS)
+                .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+                .build()
+
+        val ratesRefreshRequest =
+            OneTimeWorkRequestBuilder<RatesRefreshWorker>()
+                .setConstraints(constraints)
+                .setInputData(workDataOf(WORKER_ARG_LOCATION_AVAILABLE to isLocationAvailable))
+                .addTag(WORK_TAG_REFRESH)
                 .build()
 
         val cleanupRequest =
             PeriodicWorkRequestBuilder<CleanupWorker>(1, TimeUnit.DAYS)
                 .build()
+
+        val dataRefreshRequest =
+            OneTimeWorkRequestBuilder<DataRefreshWorker>()
+                .setConstraints(constraints)
+                .addTag(WORK_TAG_REFRESH)
+                .build()
+
+        val dataRefreshPeriodicRequest =
+            PeriodicWorkRequestBuilder<DataRefreshWorker>(1, TimeUnit.DAYS)
+                .setConstraints(constraints)
+                .setInitialDelay(1, TimeUnit.DAYS)
+                .build()
+        workManager.beginWith(ratesRefreshRequest)
+            .then(dataRefreshRequest)
+            .enqueue()
+
         workManager.enqueueUniquePeriodicWork(
-            WORK_BACKGROUND_REFRESH,
+            WORK_RATES_REFRESH,
             ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-            workRequest
+            periodicRatesRefresh
         )
         workManager.enqueueUniquePeriodicWork(
             WORK_CLEANUP,
             ExistingPeriodicWorkPolicy.KEEP,
             cleanupRequest
+        )
+        workManager.enqueueUniquePeriodicWork(
+            WORK_DATA_REFRESH,
+            ExistingPeriodicWorkPolicy.KEEP,
+            dataRefreshPeriodicRequest
         )
     }
 }

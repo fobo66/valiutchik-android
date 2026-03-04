@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.entities
 
-import dev.fobo66.core.data.testing.fake.ID
 import dev.fobo66.core.data.testing.fake.PROCESSED_DATE
 import dev.fobo66.core.data.testing.fake.RATE
 import dev.fobo66.core.data.testing.fake.buildBank
@@ -24,47 +23,16 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MappersTest {
-    @Test
-    fun `ids are concatenated`() {
-        val rate = buildBank().toRate()
-        assertEquals(11L, rate.id)
-    }
-
-    @Test
-    fun `ids have different digit counts`() {
-        val rate = buildBank(
-            bankId = 12L,
-            branchId = 3L
-        ).toRate()
-        assertEquals(123L, rate.id)
-    }
-
-    @Test
-    fun `primary id is zero`() {
-        val rate = buildBank(
-            bankId = 0L
-        ).toRate()
-        assertEquals(ID, rate.id)
-    }
-
-    @Test
-    fun `secondary id is zero`() {
-        val rate = buildBank(
-            bankId = 12L,
-            branchId = 0L
-        ).toRate()
-        assertEquals(120L, rate.id)
-    }
 
     @Test
     fun `date is parsed by format`() {
-        val rate = buildBank().toRate()
+        val rate = buildBank().map { it.toRate() }.first()
         assertEquals(PROCESSED_DATE, rate.date)
     }
 
     @Test
     fun `parse rate`() {
-        val rate = buildBank().toRate()
-        assertEquals(RATE, rate.usdBuy)
+        val rate = buildBank().map { it.toRate() }.first()
+        assertEquals(RATE, rate.buyRate)
     }
 }

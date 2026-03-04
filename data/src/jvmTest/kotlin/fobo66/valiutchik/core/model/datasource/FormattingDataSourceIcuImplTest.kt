@@ -17,64 +17,69 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.google.common.truth.Truth.assertThat
-import fobo66.valiutchik.core.util.BankNameNormalizerImpl
+import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import kotlin.test.Test
 
 class FormattingDataSourceIcuImplTest {
-    private val bankNameNormalizer = BankNameNormalizerImpl()
+    private val formattingDataSource: FormattingDataSource =
+        FormattingDataSourceIcuImpl()
 
     @Test
     fun formatCurrency() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val rate = formattingDataSource.formatCurrencyValue(RAW_RATE, TAG)
         assertThat(rate).isEqualTo(RATE)
     }
 
     @Test
     fun formatLongCurrency() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val rate = formattingDataSource.formatCurrencyValue(LONG_RATE, TAG)
         assertThat(rate).isEqualTo(RATE)
     }
 
     @Test
+    fun formatCurrencyName() {
+        val name = formattingDataSource.formatCurrencyName(CURRENCY_NAME_US_DOLLAR, 1, TAG)
+        assertThat(name).isEqualTo(CURRENCY_NAME)
+    }
+
+    @Test
+    fun formatCurrencyNamePlural() {
+        val name = formattingDataSource.formatCurrencyName(CURRENCY_NAME_US_DOLLAR, 10, TAG)
+        assertThat(name).isEqualTo(CURRENCY_NAME_PLURAL)
+    }
+
+    @Test
+    fun formatCurrencySymbol() {
+        val name = formattingDataSource.formatCurrencySymbol(CURRENCY_NAME_US_DOLLAR, TAG)
+        assertThat(name).isEqualTo("$")
+    }
+
+    @Test
     fun transliterateToDefaultLocale() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
         assertThat(result).isEqualTo("Priorbank")
     }
 
     @Test
     fun transliterateToRandom() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
         assertThat(result).isEqualTo("Priorbank")
     }
 
     @Test
     fun emptyName() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName("", TAG)
         assertThat(result).isEmpty()
     }
 
     @Test
     fun passThrough() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME, PASSTHROUGH_TAG)
         assertThat(result).isEqualTo(BANK_NAME)
     }
 
     @Test
     fun transliterateToBelarusianLocale() {
-        val formattingDataSource: FormattingDataSource =
-            FormattingDataSourceIcuImpl(bankNameNormalizer)
         val result = formattingDataSource.formatBankName(BANK_NAME, BELARUSIAN_TAG)
         assertThat(result).isEqualTo("Прыорбанк")
     }

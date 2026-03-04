@@ -16,8 +16,11 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.Rate
+import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.Currency
+import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
+import dev.fobo66.valiutchik.core.db.LoadBestSellRates
+import dev.fobo66.valiutchik.core.db.Rate
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -27,7 +30,17 @@ interface PersistenceDataSource {
     /**
      * Save entries to the database
      */
-    suspend fun saveRates(rates: List<Rate>)
+    suspend fun saveRates(rates: Set<Rate>)
+
+    /**
+     * Save bank entries to the database
+     */
+    suspend fun saveBanks(banks: Set<Bank>)
+
+    /**
+     * Save currency entries to the database
+     */
+    suspend fun saveCurrencies(currencies: Set<Currency>)
 
     /**
      * Delete entries from the database
@@ -40,7 +53,17 @@ interface PersistenceDataSource {
     suspend fun loadOldRates(): List<Rate>
 
     /**
+     * Load currency entries from the database
+     */
+    fun loadCurrencies(): Flow<List<Currency>>
+
+    /**
+     * Read buy entries from the database
+     */
+    fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>>
+
+    /**
      * Read entries from the database
      */
-    fun readBestCourses(): Flow<List<BestCourse>>
+    fun readBestSellCourses(): Flow<List<LoadBestSellRates>>
 }

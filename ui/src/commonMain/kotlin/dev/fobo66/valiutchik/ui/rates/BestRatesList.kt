@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -122,10 +122,14 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { item -> item.resolveCurrencyName().key }
+                            key = { item -> item.key }
                         ) { item ->
                             BestCurrencyRateCard(
-                                currencyName = stringResource(item.resolveCurrencyName()),
+                                title = stringResource(
+                                    item.resolveCurrencyNameResource(),
+                                    item.quantity,
+                                    item.currencyName
+                                ),
                                 currencyValue = item.rateValue,
                                 bankName = item.bank,
                                 onClick = onBestRateClick,
@@ -162,7 +166,7 @@ private fun resolveRatesGridPadding(): PaddingValues {
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BestCurrencyRateCard(
-    currencyName: String,
+    title: String,
     currencyValue: String,
     bankName: String,
     onClick: (String) -> Unit,
@@ -180,7 +184,7 @@ fun BestCurrencyRateCard(
                 )
     ) {
         Text(
-            text = currencyName,
+            text = title,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
         )
@@ -211,7 +215,7 @@ fun BestCurrencyRateCard(
                         .padding(start = 8.dp)
             )
             IconButton(onClick = {
-                onShareClick(currencyName, currencyValue)
+                onShareClick(title, currencyValue)
             }) {
                 Icon(
                     painterResource(Res.drawable.ic_share),
@@ -229,13 +233,21 @@ private fun BestCurrencyRatesPreview() {
         BestRatesGrid(
             bestCurrencyRates =
                 persistentListOf(
-                    BestCurrencyRate.DollarBuyRate(
+                    BestCurrencyRate.BuyRate(
+                        key = 1,
                         bank = "test",
-                        rateValue = "1.23"
+                        rateValue = "1.23",
+                        quantity = 1,
+                        currencyName = "USD",
+                        currencySymbol = "$"
                     ),
-                    BestCurrencyRate.DollarSellRate(
+                    BestCurrencyRate.SellRate(
+                        key = 2,
                         bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-                        rateValue = "4.56"
+                        rateValue = "4.56",
+                        quantity = 1,
+                        currencyName = "USD",
+                        currencySymbol = "$"
                     )
                 ),
             onBestRateClick = {},

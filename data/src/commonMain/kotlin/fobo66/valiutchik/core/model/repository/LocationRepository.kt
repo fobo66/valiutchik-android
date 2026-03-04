@@ -20,5 +20,11 @@ package fobo66.valiutchik.core.model.repository
  * Repository to work with device location
  */
 interface LocationRepository {
+    /**
+     * Determine city from device location
+     *
+     * @param defaultCity fallback city if location cannot be determined
+     * @return current city name
+     */
     suspend fun resolveUserCity(defaultCity: String): String
 }
