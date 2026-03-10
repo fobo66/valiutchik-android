@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,16 @@
 
 package fobo66.valiutchik.core.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import okio.FileSystem
 import org.koin.dsl.module
 
-actual val thirdPartyModule = module { }
+actual val thirdPartyModule = module {
+    single<DataStore<Preferences>> {
+        PreferenceDataStoreFactory.createWithPath {
+            FileSystem.SYSTEM_TEMPORARY_DIRECTORY.resolve(PREFERENCES_NAME)
+        }
+    }
+}

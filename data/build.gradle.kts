@@ -87,7 +87,7 @@ kotlin {
 
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.sqlidelight.coroutines)
-                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.core)
                 implementation(libs.napier)
                 implementation(libs.uri)
             }
@@ -119,6 +119,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.androidx.datastore)
                 implementation(libs.sqlidelight.android)
             }
         }

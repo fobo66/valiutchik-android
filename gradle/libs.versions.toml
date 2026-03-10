@@ -68,6 +68,7 @@ androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", 
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidxCollection" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidxDatastore" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
 androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidxGlance" }
