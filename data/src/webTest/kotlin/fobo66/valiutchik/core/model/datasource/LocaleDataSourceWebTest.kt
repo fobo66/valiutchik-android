@@ -14,12 +14,19 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.di
+package fobo66.valiutchik.core.model.datasource
 
-import kotlinx.coroutines.Dispatchers
-import org.koin.core.qualifier.qualifier
-import org.koin.dsl.module
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 
-val dispatchersModule = module {
-    single(qualifier(Dispatcher.BACKGROUND)) { Dispatchers.Default }
+class LocaleDataSourceWebTest {
+    private val localeDataSource = LocaleDataSourceWebImpl()
+
+    @Test
+    fun `load current locale`() = runTest {
+        val locale = localeDataSource.locale.first()
+        assertEquals("en_US", locale)
+    }
 }
