@@ -15,30 +15,37 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import dev.detekt.gradle.Detekt
+import org.gradle.kotlin.dsl.assign
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library.multiplatform)
-    kotlin("multiplatform")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
 }
 
 kotlin {
-    jvm {
+    jvm("desktop") {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "fobo66.valiutchik.api"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+        compileSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+                minorApiLevel = 1
+            }
+        }
 
-        minSdk = AndroidVersion.VersionCodes.R
-
-        withHostTestBuilder {}.configure {}
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         compilations.configureEach {
             compileTaskProvider.configure {
@@ -61,10 +68,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.collection)
 
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
 
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client)
                 implementation(libs.ktor.auth)
                 implementation(libs.ktor.content)
@@ -72,6 +77,7 @@ kotlin {
                 implementation(libs.ktor.logging)
                 implementation(libs.ktor.serialization)
                 implementation(libs.kotlinx.serialization)
+                implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.napier)
@@ -82,28 +88,6 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-            }
-        }
-
-        jvmTest {
-            dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.koin.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.koin.android)
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.ktor.logging)
-            }
-        }
-
-        named("androidHostTest") {
-            dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
             }
         }
@@ -112,6 +96,10 @@ kotlin {
 
 detekt {
     autoCorrect = true
+}
+
+tasks.withType<Detekt> {
+    jvmTarget = "17"
 }
 
 dependencies {

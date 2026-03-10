@@ -16,12 +16,10 @@
 
 import com.android.sdklib.AndroidVersion
 import dev.detekt.gradle.Detekt
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.test)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.baseline.profile)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)

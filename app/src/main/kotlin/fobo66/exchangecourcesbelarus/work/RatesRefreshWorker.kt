@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import fobo66.exchangecourcesbelarus.ui.widget.CurrencyWidget
-import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.domain.entities.RefreshException
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRates
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
 import io.github.aakira.napier.Napier
@@ -51,7 +51,7 @@ class RatesRefreshWorker(
             "Refresh took ${refreshTime.inWholeMilliseconds} ms"
         }
         Result.success()
-    } catch (e: CurrencyRatesLoadFailedException) {
+    } catch (e: RefreshException) {
         Napier.e("Background refresh failed", e)
         Result.failure()
     }

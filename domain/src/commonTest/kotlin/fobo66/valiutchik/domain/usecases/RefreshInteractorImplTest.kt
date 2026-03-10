@@ -17,8 +17,10 @@
 package fobo66.valiutchik.domain.usecases
 
 import app.cash.turbine.test
+import dev.fobo66.domain.testing.fake.FakeCleanupOldRates
 import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRates
 import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRatesForDefaultCity
+import dev.fobo66.domain.testing.fake.FakeRefreshData
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -27,9 +29,16 @@ import kotlinx.coroutines.test.runTest
 class RefreshInteractorImplTest {
     private val refreshExchangeRates = FakeForceRefreshExchangeRates()
     private val refreshExchangeRatesForDefaultCity = FakeForceRefreshExchangeRatesForDefaultCity()
+    private val cleanUpOldRates = FakeCleanupOldRates()
+    private val refreshData = FakeRefreshData()
 
     private val refreshInteractor =
-        RefreshInteractorImpl(refreshExchangeRates, refreshExchangeRatesForDefaultCity)
+        RefreshInteractorImpl(
+            refreshExchangeRates,
+            refreshExchangeRatesForDefaultCity,
+            cleanUpOldRates,
+            refreshData
+        )
 
     @Test
     fun `progress updated`() = runTest {
@@ -39,7 +48,14 @@ class RefreshInteractorImplTest {
             assertTrue(awaitItem())
             assertFalse(awaitItem())
             assertTrue(refreshExchangeRates.isRefreshed)
+            assertTrue(refreshData.isRefreshed)
         }
+    }
+
+    @Test
+    fun `cleanup triggered`() = runTest {
+        refreshInteractor.initiateRefresh(true)
+        assertTrue(cleanUpOldRates.isCleanedUp)
     }
 
     @Test

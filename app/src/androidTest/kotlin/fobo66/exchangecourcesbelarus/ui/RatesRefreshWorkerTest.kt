@@ -18,6 +18,7 @@ package fobo66.exchangecourcesbelarus.ui
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.filters.SmallTest
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
@@ -31,6 +32,7 @@ import fobo66.exchangecourcesbelarus.work.WORKER_ARG_LOCATION_AVAILABLE
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
+@SmallTest
 class RatesRefreshWorkerTest {
     private val forceRefreshExchangeRates = FakeForceRefreshExchangeRates()
     private val forceRefreshExchangeRatesForDefaultCity =
@@ -68,7 +70,7 @@ class RatesRefreshWorkerTest {
                     appContext: Context,
                     workerClassName: String,
                     workerParameters: WorkerParameters
-                ): ListenableWorker? = RatesRefreshWorker(
+                ): ListenableWorker = RatesRefreshWorker(
                     forceRefreshExchangeRates,
                     forceRefreshExchangeRatesForDefaultCity,
                     appContext,

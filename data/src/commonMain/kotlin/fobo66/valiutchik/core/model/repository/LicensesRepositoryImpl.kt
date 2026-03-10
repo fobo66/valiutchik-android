@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,16 +18,27 @@ package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
-import fobo66.valiutchik.core.model.datasource.JsonDataSource
+import fobo66.valiutchik.core.model.datasource.LicensesDataSource
 
 class LicensesRepositoryImpl(
     private val assetsDataSource: AssetsDataSource,
-    private val jsonDataSource: JsonDataSource
+    private val licensesDataSource: LicensesDataSource
 ) : LicensesRepository {
 
     override fun loadLicenses(): List<OpenSourceLicensesItem> = assetsDataSource.loadFile(
         "open_source_licenses.json"
     ).use { licensesFile ->
-        return jsonDataSource.decodeLicenses(licensesFile) ?: emptyList()
+        return licensesDataSource.decodeLicenses(licensesFile)
+            ?.map { library ->
+                OpenSourceLicensesItem(
+                    dependency = library.uniqueId,
+                    description = library.description,
+                    developers = library.developers.mapNotNull { it.name },
+                    licenses = library.licenses.map { it.name },
+                    project = library.name,
+                    url = library.website,
+                    version = library.artifactVersion.orEmpty()
+                )
+            } ?: emptyList()
     }
 }

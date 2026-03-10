@@ -16,25 +16,12 @@
 
 package fobo66.valiutchik.core.entities
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class OpenSourceLicensesItem(
-    @SerialName("dependency")
     val dependency: String,
-    @SerialName("description")
     val description: String?,
-    @SerialName("developers")
     val developers: List<String>,
-    @SerialName("licenses")
-    val licenses: List<License>,
-    @SerialName("project")
+    val licenses: List<String>,
     val project: String,
-    @SerialName("url")
     val url: String?,
-    @SerialName("version")
     val version: String,
-    @SerialName("year")
-    val year: String?
 )

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
+import fobo66.valiutchik.domain.entities.RefreshException
 import kotlinx.coroutines.flow.first
 
 class ForceRefreshExchangeRatesImpl(
@@ -26,10 +28,13 @@ class ForceRefreshExchangeRatesImpl(
     private val currencyRateRepository: CurrencyRateRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRates {
-    override suspend fun execute() {
+    @Throws(RefreshException::class)
+    override suspend fun execute() = try {
         val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
         val city = locationRepository.resolveUserCity(defaultCity)
 
         currencyRateRepository.refreshExchangeRates(city, defaultCity)
+    } catch (e: CurrencyRatesLoadFailedException) {
+        throw RefreshException(e)
     }
 }

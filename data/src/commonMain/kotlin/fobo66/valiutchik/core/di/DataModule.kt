@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +16,12 @@
 
 package fobo66.valiutchik.core.di
 
+import dev.fobo66.valiutchik.core.db.Database
+import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
-import fobo66.valiutchik.core.model.datasource.JsonDataSource
-import fobo66.valiutchik.core.model.datasource.JsonDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.LicensesDataSource
+import fobo66.valiutchik.core.model.datasource.LicensesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
@@ -27,6 +29,8 @@ import fobo66.valiutchik.core.model.repository.ClipboardRepository
 import fobo66.valiutchik.core.model.repository.ClipboardRepositoryImpl
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepositoryImpl
+import fobo66.valiutchik.core.model.repository.DataRefreshRepository
+import fobo66.valiutchik.core.model.repository.DataRefreshRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.core.model.repository.LicensesRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
@@ -35,28 +39,25 @@ import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
-import fobo66.valiutchik.core.util.BankNameNormalizer
-import fobo66.valiutchik.core.util.BankNameNormalizerImpl
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val dataSourcesModule =
     module {
         includes(apiModule, systemModule, thirdPartyModule)
 
-        single<JsonDataSource> {
-            JsonDataSourceImpl(get())
+        single { Database(get()) }
+
+        single<LicensesDataSource> {
+            LicensesDataSourceImpl()
         }
 
         single<PersistenceDataSource> {
-            PersistenceDataSourceImpl(get())
+            PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.BACKGROUND)))
         }
 
         single<PreferencesDataSource> {
             DataStorePreferencesDataSourceImpl(get())
-        }
-
-        single<BankNameNormalizer> {
-            BankNameNormalizerImpl()
         }
     }
 
@@ -70,6 +71,10 @@ val repositoriesModule =
 
         single<CurrencyRateRepository> {
             CurrencyRateRepositoryImpl(get(), get(), get(), get())
+        }
+
+        single<DataRefreshRepository> {
+            DataRefreshRepositoryImpl(get(), get(), get(qualifier(Dispatcher.BACKGROUND)))
         }
 
         single<LicensesRepository> {

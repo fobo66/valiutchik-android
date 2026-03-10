@@ -26,11 +26,24 @@ internal const val BELARUSIAN_TRANSLITERATOR_ID = "Any_be-Cyrillic"
 internal const val BELARUSIAN_RULES =
     "сск>ск;Нео>Нэа;ло>ла;но>на;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Ре>Рэ;Те>Тэ;Це>Цэ;и>і"
 
+/**
+ * Datasource for converting data into localized string representation
+ */
 interface FormattingDataSource {
     /**
      * Format currency rate as a monetary value
      */
-    fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String
+    fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String
+
+    /**
+     * Convert currency code to a localized name
+     */
+    fun formatCurrencyName(currencyCode: String, quantity: Long, languageTag: LanguageTag): String
+
+    /**
+     * Convert currency code to a localized symbol
+     */
+    fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String
 
     /**
      * Clean up all the unnecessary parts from the bank name

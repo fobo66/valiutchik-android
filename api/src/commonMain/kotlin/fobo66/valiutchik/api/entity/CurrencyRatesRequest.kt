@@ -22,7 +22,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CurrencyRatesRequest(
     @property:SerialName("city_id")
-    val cityId: String,
+    val cityId: Int,
     @property:SerialName("currency")
     val currencyAlias: String
 )

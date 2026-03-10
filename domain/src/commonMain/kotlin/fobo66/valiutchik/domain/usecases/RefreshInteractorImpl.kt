@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
+import fobo66.valiutchik.domain.entities.RefreshException
 import io.github.aakira.napier.Napier
 import kotlin.time.measureTime
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +25,9 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class RefreshInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
-    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity
+    private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
+    private val cleanUpOldRates: CleanUpOldRates,
+    private val refreshData: RefreshData
 ) : RefreshInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
@@ -33,6 +35,35 @@ class RefreshInteractorImpl(
 
     override suspend fun initiateRefresh(isLocationAvailable: Boolean) = try {
         _isRefreshInProgress.emit(true)
+        refreshData()
+        refreshRates(isLocationAvailable)
+        cleanUpOldRates()
+    } catch (e: RefreshException) {
+        Napier.e("Refresh failed", e)
+    } finally {
+        _isRefreshInProgress.emit(false)
+    }
+
+    private suspend fun cleanUpOldRates() {
+        val cleanupTime = measureTime {
+            cleanUpOldRates.execute()
+        }
+
+        Napier.d {
+            "Cleanup took ${cleanupTime.inWholeMilliseconds} ms"
+        }
+    }
+    private suspend fun refreshData() {
+        val dataRefreshTime = measureTime {
+            refreshData.execute()
+        }
+
+        Napier.d {
+            "Data refresh took ${dataRefreshTime.inWholeMilliseconds} ms"
+        }
+    }
+
+    private suspend fun refreshRates(isLocationAvailable: Boolean) {
         val refreshTime = measureTime {
             if (isLocationAvailable) {
                 refreshExchangeRates.execute()
@@ -44,9 +75,5 @@ class RefreshInteractorImpl(
         Napier.d {
             "Refresh took ${refreshTime.inWholeMilliseconds} ms"
         }
-    } catch (e: CurrencyRatesLoadFailedException) {
-        Napier.e("Refresh failed", e)
-    } finally {
-        _isRefreshInProgress.emit(false)
     }
 }

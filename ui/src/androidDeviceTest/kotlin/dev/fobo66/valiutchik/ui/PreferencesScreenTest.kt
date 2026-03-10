@@ -24,7 +24,7 @@ import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.runComposeUiTest
+import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.test.filters.SmallTest
 import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
 import kotlin.test.Test

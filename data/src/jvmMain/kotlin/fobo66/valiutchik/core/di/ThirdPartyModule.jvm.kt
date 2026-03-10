@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,21 +19,20 @@ package fobo66.valiutchik.core.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import androidx.room.Room
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import fobo66.valiutchik.core.db.CurrencyRatesDatabase
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import dev.fobo66.valiutchik.core.db.Database
 import java.io.File
+import java.util.Properties
 import okio.Path.Companion.toPath
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val thirdPartyModule: Module = module {
-
-    single<CurrencyRatesDatabase> {
+    single<SqlDriver> {
         val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
-        Room.databaseBuilder<CurrencyRatesDatabase>(name = dbFile.absolutePath)
-            .setDriver(BundledSQLiteDriver())
-            .build()
+        val dbUrl = "jdbc:sqlite:${dbFile.absolutePath}"
+        JdbcSqliteDriver(dbUrl, Properties(), Database.Schema)
     }
 
     single<DataStore<Preferences>> {

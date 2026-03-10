@@ -22,7 +22,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.runComposeUiTest
+import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.test.filters.SmallTest
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
 import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesScreen
@@ -54,7 +54,6 @@ class LicensesScreenTest {
                         OpenSourceLicense(
                             "project",
                             "test",
-                            "2025",
                             "authors"
                         )
                     )
@@ -77,7 +76,6 @@ class LicensesScreenTest {
                         OpenSourceLicense(
                             "project",
                             "test",
-                            "2025",
                             "authors",
                             "test"
                         )
@@ -101,7 +99,6 @@ class LicensesScreenTest {
                         OpenSourceLicense(
                             "project",
                             "test",
-                            "2025",
                             "authors"
                         )
                     )

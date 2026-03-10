@@ -20,8 +20,17 @@ import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 
 class FakeFormattingDataSource : FormattingDataSource {
-    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String =
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
         value.toString()
+
+    override fun formatCurrencyName(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String = currencyCode
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
+        currencyCode
 
     override fun formatBankName(name: String, languageTag: LanguageTag): String = name
 }

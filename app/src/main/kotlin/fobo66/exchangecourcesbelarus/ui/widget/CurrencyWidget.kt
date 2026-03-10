@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -118,7 +118,13 @@ fun CurrencyWidgetContent(
         titleBarAction = action(null, onTitleBarActionClick),
         items = rates,
         actionButtonClick = actionStartActivity<MainActivity>(),
-        itemHeadlineTextProvider = { context.getString(resolveCurrencyName()) },
+        itemHeadlineTextProvider = {
+            context.getString(
+                resolveCurrencyName(),
+                quantity,
+                currencySymbol
+            )
+        },
         itemMainTextProvider = { rateValue },
         itemSupportingTextProvider = { bank },
         emptyListContent = { EmptyListContent() },
@@ -133,16 +139,8 @@ fun CurrencyWidgetContent(
 
 @StringRes
 private fun BestCurrencyRate.resolveCurrencyName(): Int = when (this) {
-    is BestCurrencyRate.DollarBuyRate -> R.string.currency_name_usd_buy
-    is BestCurrencyRate.DollarSellRate -> R.string.currency_name_usd_sell
-    is BestCurrencyRate.EuroBuyRate -> R.string.currency_name_eur_buy
-    is BestCurrencyRate.EuroSellRate -> R.string.currency_name_eur_sell
-    is BestCurrencyRate.HryvniaBuyRate -> R.string.currency_name_uah_buy
-    is BestCurrencyRate.HryvniaSellRate -> R.string.currency_name_uah_sell
-    is BestCurrencyRate.ZlotyBuyRate -> R.string.currency_name_pln_buy
-    is BestCurrencyRate.ZlotySellRate -> R.string.currency_name_pln_sell
-    is BestCurrencyRate.RubleBuyRate -> R.string.currency_name_rub_buy
-    is BestCurrencyRate.RubleSellRate -> R.string.currency_name_rub_sell
+    is BestCurrencyRate.BuyRate -> R.string.currency_rate_buy
+    is BestCurrencyRate.SellRate -> R.string.currency_rate_sell
 }
 
 class CurrencyAppWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -159,13 +157,21 @@ private fun CurrencyWidgetPreview() {
         CurrencyWidgetContent(
             rates =
                 persistentListOf(
-                    BestCurrencyRate.DollarBuyRate(
+                    BestCurrencyRate.BuyRate(
+                        key = 1,
                         bank = "test",
-                        rateValue = "1.23"
+                        rateValue = "1.23",
+                        quantity = 1,
+                        currencyName = "USD",
+                        currencySymbol = "$"
                     ),
-                    BestCurrencyRate.DollarSellRate(
+                    BestCurrencyRate.SellRate(
+                        key = 2,
                         bank = "test",
-                        rateValue = "4.56"
+                        rateValue = "4.56",
+                        quantity = 1,
+                        currencyName = "USD",
+                        currencySymbol = "$"
                     )
                 ),
             onTitleBarActionClick = {}

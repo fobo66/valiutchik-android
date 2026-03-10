@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package fobo66.exchangecourcesbelarus.di
 
 import androidx.work.WorkManager
+import fobo66.exchangecourcesbelarus.work.CleanupWorker
+import fobo66.exchangecourcesbelarus.work.DataRefreshWorker
 import fobo66.exchangecourcesbelarus.work.RatesRefreshWorker
 import fobo66.exchangecourcesbelarus.work.RefreshInteractorWorkManagerImpl
 import fobo66.valiutchik.domain.usecases.RefreshInteractor
@@ -28,4 +30,6 @@ val workersModule = module {
     single { WorkManager.getInstance(androidContext()) }
     single<RefreshInteractor> { RefreshInteractorWorkManagerImpl(get(), get()) }
     worker { RatesRefreshWorker(get(), get(), androidContext(), get()) }
+    worker { CleanupWorker(get(), androidContext(), get()) }
+    worker { DataRefreshWorker(get(), androidContext(), get()) }
 }

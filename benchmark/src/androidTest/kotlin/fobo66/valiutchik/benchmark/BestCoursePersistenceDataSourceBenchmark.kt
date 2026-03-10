@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,19 +18,23 @@ package fobo66.valiutchik.benchmark
 
 import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
-import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import fobo66.valiutchik.api.CurrencyRatesResponseParser
-import fobo66.valiutchik.api.CurrencyRatesResponseParserImpl
-import fobo66.valiutchik.core.db.CurrencyRatesDatabase
-import fobo66.valiutchik.core.entities.Rate
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import dev.fobo66.valiutchik.core.db.Database
+import dev.fobo66.valiutchik.core.db.Rate
+import fobo66.valiutchik.api.ApiResponseParser
+import fobo66.valiutchik.api.ApiResponseParserImpl
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import java.time.LocalDate
+import java.util.concurrent.Executors
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.io.asSource
+import kotlinx.io.buffered
 import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Before
@@ -46,63 +50,59 @@ class BestCoursePersistenceDataSourceBenchmark {
     @get:Rule
     val benchmarkRule = BenchmarkRule()
 
-    private val db: CurrencyRatesDatabase =
-        Room
-            .inMemoryDatabaseBuilder(
-                ApplicationProvider.getApplicationContext(),
-                CurrencyRatesDatabase::class.java
-            ).build()
+    private lateinit var db: Database
 
-    private val parser: CurrencyRatesResponseParser = CurrencyRatesResponseParserImpl(
+    private val parser: ApiResponseParser = ApiResponseParserImpl(
         Json {
             isLenient = true
             ignoreUnknownKeys = true
         }
     )
 
-    private val persistenceDataSource: PersistenceDataSource = PersistenceDataSourceImpl(db)
+    private val ioDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private lateinit var persistenceDataSource: PersistenceDataSource
 
     @Before
     fun setUp() = runTest {
+        val driver =
+            AndroidSqliteDriver(Database.Schema, ApplicationProvider.getApplicationContext())
+        db = Database(driver)
+        persistenceDataSource =
+            PersistenceDataSourceImpl(db, ioDispatcher)
         val ratesResponseContent =
             InstrumentationRegistry
                 .getInstrumentation()
                 .context.assets
                 .open("myfinNewApi.json")
-                .bufferedReader()
-                .readText()
+                .asSource()
+                .buffered()
+
         persistenceDataSource.saveRates(
-            parser.parse(ratesResponseContent)
+            parser.parseRates(ratesResponseContent)
                 .map {
                     Rate(
-                        id = 0L,
+                        id = it.id,
                         date = LocalDate.now().toString(),
-                        bankName = it.bankName,
-                        usdBuy = it.currency.buy,
-                        usdSell = it.currency.sell,
-                        eurBuy = it.currency.buy,
-                        eurSell = it.currency.sell,
-                        rubBuy = it.currency.buy,
-                        rubSell = it.currency.sell,
-                        plnBuy = it.currency.buy,
-                        plnSell = it.currency.sell,
-                        uahBuy = it.currency.buy,
-                        uahSell = it.currency.sell
+                        bankId = it.bankId,
+                        buyRate = it.currency.buy,
+                        sellRate = it.currency.sell,
+                        currencyId = it.currency.name
                     )
                 }
+                .toSet()
         )
     }
 
     @After
     fun tearDown() {
-        db.close()
+        ioDispatcher.close()
     }
 
     @Test
     fun readBestCourses() {
         benchmarkRule.measureRepeated {
             runTest {
-                persistenceDataSource.readBestCourses().first()
+                persistenceDataSource.readBestSellCourses().first()
             }
         }
     }

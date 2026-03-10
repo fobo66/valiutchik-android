@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS Rate (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `date` TEXT NOT NULL,
+  `bankId` INTEGER NOT NULL,
+  `currencyId` TEXT NOT NULL,
+  `buyRate` REAL NOT NULL,
+  `sellRate` REAL NOT NULL
+ );
+
+ CREATE INDEX IF NOT EXISTS `index_rates_buy` ON `Rate` (`buyRate`);
+ CREATE INDEX IF NOT EXISTS `index_rates_sell` ON `Rate` (`sellRate`);
+
+loadAllRates:
+SELECT * FROM Rate;
+
+loadOldRates:
+SELECT * FROM Rate WHERE date(date) < date('now');
+
+loadBestBuyRates:
+SELECT Bank.formattedName AS bankName, max(Rate.buyRate), Rate.currencyId, Currency.multiplier, Currency.id AS sortOrder FROM Rate
+JOIN Bank ON Rate.bankId = Bank.id
+JOIN Currency ON Rate.currencyId = Currency.name
+WHERE date(Rate.date) >= date('now')
+GROUP BY Rate.currencyId
+ORDER BY sortOrder;
+
+loadBestSellRates:
+SELECT Bank.formattedName AS bankName, min(Rate.sellRate), Rate.currencyId, Currency.multiplier, Currency.id AS sortOrder FROM Rate
+JOIN Bank ON Rate.bankId = Bank.id
+JOIN Currency ON Rate.currencyId = Currency.name
+WHERE date(Rate.date) >= date('now')
+GROUP BY Rate.currencyId
+ORDER BY sortOrder;
+
+insertRate:
+INSERT OR REPLACE INTO Rate(date, bankId, currencyId, buyRate, sellRate)
+VALUES (?, ?, ?, ?, ?);
+
+deleteRates:
+DELETE FROM Rate WHERE id IN :ids;

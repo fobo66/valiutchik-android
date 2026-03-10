@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,9 +21,8 @@ plugins {
     alias(libs.plugins.android.library.multiplatform)
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.room)
+    alias(libs.plugins.sqlidelight)
 }
 
 kotlin {
@@ -33,15 +32,23 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "fobo66.valiutchik.core"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+        compileSdk {
+            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
+                minorApiLevel = 1
+            }
+        }
 
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
-        withHostTestBuilder {}.configure {}
+        withHostTest {}
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
         compilations.configureEach {
@@ -65,19 +72,18 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":api"))
+                implementation(project(":api"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
-
-                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.aboutlibraries.core)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.kotlinx.datetime)
-                implementation(libs.room.runtime)
+                implementation(libs.sqlidelight.coroutines)
                 implementation(libs.androidx.datastore)
                 implementation(libs.napier)
                 implementation(libs.uri)
@@ -87,8 +93,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                api(project(":data-testing"))
-                implementation(libs.room.testing)
+                implementation(project(":data-testing"))
                 implementation(libs.kotlinx.coroutines.test)
             }
         }
@@ -96,31 +101,29 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation(libs.icu)
-                implementation(libs.room.driver.bundled)
+                implementation(libs.sqlidelight.jvm)
             }
         }
 
         jvmTest {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
                 implementation(libs.truth)
+                implementation(libs.turbine)
             }
         }
 
         androidMain {
             dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.android)
+                implementation(libs.sqlidelight.android)
             }
         }
 
         named("androidHostTest") {
             dependencies {
                 implementation(libs.truth)
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test)
-                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client)
             }
         }
@@ -128,7 +131,6 @@ kotlin {
         named("androidDeviceTest") {
             dependencies {
                 implementation(libs.truth)
-                implementation(libs.turbine)
                 implementation(libs.androidx.test.rules)
                 implementation(libs.androidx.test.junit)
                 implementation(libs.androidx.test.truth)
@@ -138,9 +140,12 @@ kotlin {
     }
 }
 
-room {
-    generateKotlin = true
-    schemaDirectory(layout.projectDirectory.dir("schemas"))
+sqldelight {
+    databases {
+        create("Database") {
+            packageName = "dev.fobo66.valiutchik.core.db"
+        }
+    }
 }
 
 detekt {
@@ -148,8 +153,5 @@ detekt {
 }
 
 dependencies {
-    add("kspJs", libs.room.compiler)
-    add("kspJvm", libs.room.compiler)
-    add("kspAndroid", libs.room.compiler)
     detektPlugins(libs.detekt.rules.compose)
 }

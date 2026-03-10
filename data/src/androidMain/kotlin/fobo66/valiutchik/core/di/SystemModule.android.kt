@@ -56,7 +56,7 @@ actual val systemModule: Module = module {
     }
 
     single<FormattingDataSource> {
-        FormattingDataSourceImpl(get())
+        FormattingDataSourceImpl()
     }
 
     single<LocationDataSource> {
