@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,14 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 
 class LocaleDataSourceWebImpl : LocaleDataSource {
-    override val locale: Flow<LanguageTag>
-        get() = flowOf()
+    @OptIn(ExperimentalWasmJsInterop::class)
+    override val locale: Flow<LanguageTag> = flow {
+        val locale: String = js(
+            "(navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language"
+        )
+        emit(locale)
+    }
 }
