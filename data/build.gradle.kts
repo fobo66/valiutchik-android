@@ -68,7 +68,13 @@ kotlin {
     }
 
     wasmJs {
-        browser()
+        browser {
+            testTask {
+                useKarma {
+                    useFirefoxHeadless()
+                }
+            }
+        }
         nodejs()
     }
 
