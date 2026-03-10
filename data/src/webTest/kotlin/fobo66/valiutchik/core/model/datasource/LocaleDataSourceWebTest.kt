@@ -27,6 +27,6 @@ class LocaleDataSourceWebTest {
     @Test
     fun `load current locale`() = runTest {
         val locale = localeDataSource.locale.first()
-        assertEquals("en_US", locale)
+        assertEquals("en-US", locale)
     }
 }

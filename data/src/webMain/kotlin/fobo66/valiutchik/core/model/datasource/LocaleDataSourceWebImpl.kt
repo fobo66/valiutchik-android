@@ -20,12 +20,15 @@ import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@OptIn(ExperimentalWasmJsInterop::class)
+private val tag: String =
+    js(
+        "(navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language"
+    )
+
 class LocaleDataSourceWebImpl : LocaleDataSource {
-    @OptIn(ExperimentalWasmJsInterop::class)
+
     override val locale: Flow<LanguageTag> = flow {
-        val locale: String = js(
-            "(navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language"
-        )
-        emit(locale)
+        emit(tag)
     }
 }
