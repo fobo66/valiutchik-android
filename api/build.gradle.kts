@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
 import dev.detekt.gradle.Detekt
-import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -56,7 +57,7 @@ kotlin {
         }
     }
 
-    js {
+    wasmJs {
         browser()
         nodejs()
     }
@@ -88,6 +89,11 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
+            }
+        }
+
+        named("desktopTest") {
+            dependencies {
                 implementation(libs.koin.test)
             }
         }
