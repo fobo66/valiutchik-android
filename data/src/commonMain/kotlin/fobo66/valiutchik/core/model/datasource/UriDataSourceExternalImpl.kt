@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,17 +16,18 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import com.eygraber.uri.Uri
 
-class UriDataSourceJvmImplTest {
-    private val uriDataSource = UriDataSourceJvmImpl()
+internal const val URI_SCHEME = "https"
+internal const val URI_AUTHORITY = "google.com"
 
-    @Test
-    fun `prepare HTTP URI`() {
-        val uri =
-            uriDataSource.prepareUri("test")
-
-        assertEquals(URI_AUTHORITY, uri.authority)
-    }
+class UriDataSourceExternalImpl : UriDataSource {
+    /**
+     * Search Google Maps directly
+     */
+    override fun prepareUri(query: CharSequence): Uri = Uri.Builder()
+        .scheme(URI_SCHEME)
+        .authority(URI_AUTHORITY)
+        .path("maps/search/$query/0,0")
+        .build()
 }
