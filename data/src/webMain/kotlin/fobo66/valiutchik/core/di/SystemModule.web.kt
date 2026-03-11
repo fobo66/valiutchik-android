@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +16,16 @@
 
 package fobo66.valiutchik.core.di
 
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceWebImpl
+import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import fobo66.valiutchik.core.model.datasource.LocationDataSourceIpImpl
 import org.koin.dsl.module
 
 actual val systemModule = module {
     single<LocaleDataSource> { LocaleDataSourceWebImpl() }
+    single<ClipboardDataSource> { ClipboardDataSourceWebImpl() }
+    single<LocationDataSource> { LocationDataSourceIpImpl() }
 }
