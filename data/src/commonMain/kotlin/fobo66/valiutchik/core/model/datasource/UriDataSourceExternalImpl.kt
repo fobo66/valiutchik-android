@@ -19,7 +19,7 @@ package fobo66.valiutchik.core.model.datasource
 import com.eygraber.uri.Uri
 
 internal const val URI_SCHEME = "https"
-internal const val URI_AUTHORITY = "google.com"
+internal const val URI_AUTHORITY = "openstreetmap.org"
 
 class UriDataSourceExternalImpl : UriDataSource {
     /**
@@ -28,6 +28,7 @@ class UriDataSourceExternalImpl : UriDataSource {
     override fun prepareUri(query: CharSequence): Uri = Uri.Builder()
         .scheme(URI_SCHEME)
         .authority(URI_AUTHORITY)
-        .path("maps/search/$query/0,0")
+        .path("search")
+        .appendQueryParameter("query", query.toString())
         .build()
 }
