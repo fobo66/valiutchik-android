@@ -16,20 +16,17 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.LanguageTag
+import io.github.aakira.napier.Napier
 import kotlinx.browser.window
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.await
 
-class LocaleDataSourceWebImpl : LocaleDataSource {
-
+class ClipboardDataSourceWebImpl : ClipboardDataSource {
     @OptIn(ExperimentalWasmJsInterop::class)
-    override val locale: Flow<LanguageTag> = flow {
-        if (window.navigator.languages.length > 0) {
-            val currentLanguage = window.navigator.languages[0]
-            emit(currentLanguage?.toString().orEmpty())
-        } else {
-            emit(window.navigator.language)
-        }
+    override suspend fun copyToClipboard(value: CharSequence): Boolean = try {
+        window.navigator.clipboard.writeText(value.toString()).await<Unit>()
+        true
+    } catch (e: JsException) {
+        Napier.e(e) { "Failed to write to clipboard" }
+        false
     }
 }

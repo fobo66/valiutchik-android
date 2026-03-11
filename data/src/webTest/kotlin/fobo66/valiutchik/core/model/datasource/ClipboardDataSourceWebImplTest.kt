@@ -16,20 +16,18 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.LanguageTag
-import kotlinx.browser.window
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlinx.coroutines.test.runTest
 
-class LocaleDataSourceWebImpl : LocaleDataSource {
+private const val CLIP = "test"
+
+class ClipboardDataSourceWebImplTest {
+    val clipboardDataSource = ClipboardDataSourceWebImpl()
 
     @OptIn(ExperimentalWasmJsInterop::class)
-    override val locale: Flow<LanguageTag> = flow {
-        if (window.navigator.languages.length > 0) {
-            val currentLanguage = window.navigator.languages[0]
-            emit(currentLanguage?.toString().orEmpty())
-        } else {
-            emit(window.navigator.language)
-        }
+    @Test
+    fun `clipboard fails in headless mode`() = runTest {
+        assertFalse(clipboardDataSource.copyToClipboard(CLIP))
     }
 }

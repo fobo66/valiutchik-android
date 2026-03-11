@@ -75,7 +75,6 @@ kotlin {
                 }
             }
         }
-        nodejs()
     }
 
     sourceSets {
@@ -127,6 +126,12 @@ kotlin {
                 implementation(libs.koin.android)
                 implementation(libs.androidx.datastore)
                 implementation(libs.sqlidelight.android)
+            }
+        }
+
+        webMain {
+            dependencies {
+                implementation(libs.kotlinx.browser)
             }
         }
 

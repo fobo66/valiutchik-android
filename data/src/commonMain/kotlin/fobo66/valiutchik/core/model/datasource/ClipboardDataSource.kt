@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ interface ClipboardDataSource {
      *
      * @param value String value of the item
      *
-     * @return Whether or not clipboard operation was successful
+     * @return Whether clipboard operation was successful
      */
-    fun copyToClipboard(value: CharSequence): Boolean
+    suspend fun copyToClipboard(value: CharSequence): Boolean
 }
