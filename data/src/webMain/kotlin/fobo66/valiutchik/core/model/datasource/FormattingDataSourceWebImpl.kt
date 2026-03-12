@@ -36,9 +36,7 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
         currencyCode: String,
         quantity: Long,
         languageTag: LanguageTag
-    ): String {
-        TODO("Not yet implemented")
-    }
+    ): String = currencyCode.uppercase()
 
     override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
         resolveCurrencyName(currencyCode, languageTag)
