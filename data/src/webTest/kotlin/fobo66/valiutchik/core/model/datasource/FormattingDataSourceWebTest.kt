@@ -36,6 +36,12 @@ class FormattingDataSourceWebTest {
     }
 
     @Test
+    fun formatCurrencyName() {
+        val name = formattingDataSource.formatCurrencyName(CURRENCY_NAME_US_DOLLAR, 1, TAG)
+        assertEquals(CURRENCY_NAME_US_DOLLAR.uppercase(), name)
+    }
+
+    @Test
     fun formatCurrencySymbol() {
         val name = formattingDataSource.formatCurrencySymbol(CURRENCY_NAME_US_DOLLAR, TAG)
         assertEquals("$", name)
