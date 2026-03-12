@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -26,5 +27,17 @@ class FormattingDataSourceWebTest {
     fun formatCurrency() {
         val rate = formattingDataSource.formatCurrencyValue(RAW_RATE, TAG)
         assertEquals(RATE, rate)
+    }
+
+    @Test
+    fun formatLongCurrency() {
+        val rate = formattingDataSource.formatCurrencyValue(LONG_RATE, TAG)
+        assertEquals(RATE, rate)
+    }
+
+    @Test
+    fun formatCurrencySymbol() {
+        val name = formattingDataSource.formatCurrencySymbol(CURRENCY_NAME_US_DOLLAR, TAG)
+        assertEquals("$", name)
     }
 }

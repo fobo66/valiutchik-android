@@ -20,14 +20,17 @@ import fobo66.valiutchik.core.entities.LanguageTag
 
 @OptIn(ExperimentalWasmJsInterop::class)
 private fun formatCurrency(value: Double, language: String): String = js(
-    "Intl.NumberFormat(language, {currency: 'BYN', style: 'currency'}).format(value)"
+    "new Intl.NumberFormat(language, {currency: 'BYN', style: 'currency'}).format(value)"
+)
+
+@OptIn(ExperimentalWasmJsInterop::class)
+private fun resolveCurrencyName(value: String, language: String): String = js(
+    "new Intl.DisplayNames([language], {type: 'currency', style: 'narrow'}).of(value)"
 )
 
 class FormattingDataSourceWebImpl : FormattingDataSource {
-    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String {
-        val formatted = formatCurrency(value, languageTag)
-        return formatted
-    }
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
+        formatCurrency(value, languageTag)
 
     override fun formatCurrencyName(
         currencyCode: String,
@@ -37,9 +40,8 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
         TODO("Not yet implemented")
     }
 
-    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String {
-        TODO("Not yet implemented")
-    }
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
+        resolveCurrencyName(currencyCode, languageTag)
 
     override fun formatBankName(name: String, languageTag: LanguageTag): String {
         TODO("Not yet implemented")
