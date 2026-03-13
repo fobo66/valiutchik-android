@@ -206,6 +206,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.accessibility)
     androidTestImplementation(libs.androidx.test.truth)
     androidTestImplementation(libs.truth)
-    androidTestImplementation(libs.hamcrest)
     androidTestImplementation(libs.work.testing)
 }
