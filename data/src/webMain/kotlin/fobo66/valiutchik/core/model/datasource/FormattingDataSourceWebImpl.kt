@@ -22,6 +22,9 @@ import doist.x.normalize.Form
 import doist.x.normalize.normalize
 import fobo66.valiutchik.core.entities.LanguageTag
 
+internal const val LANGUAGE_BELARUSIAN = "be-BY"
+internal const val LANGUAGE_PASSTHROUGH = "ru-RU"
+
 @OptIn(ExperimentalWasmJsInterop::class)
 private fun formatCurrency(value: Double, language: String): String = js(
     "new Intl.NumberFormat(language, {currency: 'BYN', style: 'currency'}).format(value)"
@@ -34,6 +37,26 @@ private fun resolveCurrencyName(value: String, language: String): String = js(
 
 class FormattingDataSourceWebImpl : FormattingDataSource {
 
+    private val cyrillicToBelarusianAssociations: ScatterMap<String, String> by lazy(
+        LazyThreadSafetyMode.NONE
+    ) {
+        mutableScatterMapOf(
+            "сс" to "с",
+            "ео" to "эа",
+            "ло" to "ла",
+            "но" to "на",
+            "ре" to "рэ",
+            "ри" to "ры",
+            "ий" to "і",
+            "ый" to "ы",
+            "те" to "тэ",
+            "ше" to "шэ",
+            "ре" to "рэ",
+            "те" to "тэ",
+            "це" to "цэ",
+            "и" to "і"
+        )
+    }
     private val cyrillicToLatinFirstAssociations: ScatterMap<String, String> by lazy(
         LazyThreadSafetyMode.NONE
     ) {
@@ -123,7 +146,53 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
         resolveCurrencyName(currencyCode, languageTag)
 
     override fun formatBankName(name: String, languageTag: LanguageTag): String =
-        cyrillicToLatin(name)
+        if (languageTag == LANGUAGE_PASSTHROUGH) {
+            name
+        } else if (languageTag == LANGUAGE_BELARUSIAN) {
+            cyrillicToBelarusian(name)
+        } else {
+            cyrillicToLatin(name)
+        }
+
+    private fun cyrillicToBelarusian(input: String): String {
+        if (input.isEmpty()) {
+            return input
+        }
+
+        val normalizedInput = input.normalize(Form.NFC)
+
+        val belarusianString = buildString {
+            for (currentChar in normalizedInput) {
+                val isUpperCaseOrWhatever = currentChar == currentChar.uppercaseChar()
+                val currentCharLowercase = currentChar.lowercase()
+
+                var newLetter: String
+
+                newLetter = cyrillicToBelarusianAssociations[currentCharLowercase].orEmpty()
+
+                if (newLetter.isEmpty()) {
+                    append(
+                        if (isUpperCaseOrWhatever) {
+                            currentCharLowercase.uppercase()
+                        } else {
+                            currentCharLowercase
+                        }
+                    )
+                } else if (isUpperCaseOrWhatever) {
+                    append(
+                        if (newLetter.length > 1) {
+                            newLetter[0].uppercase() + newLetter.substring(1)
+                        } else {
+                            newLetter.uppercase()
+                        }
+                    )
+                } else {
+                    append(newLetter)
+                }
+            }
+        }
+        return belarusianString
+    }
 
     private fun cyrillicToLatin(input: String): String {
         if (input.isEmpty()) {
