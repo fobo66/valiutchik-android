@@ -41,7 +41,8 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
         LazyThreadSafetyMode.NONE
     ) {
         mutableScatterMapOf(
-            "сс" to "с",
+            "нео" to "нэа",
+            "сск" to "ск",
             "ео" to "эа",
             "ло" to "ла",
             "но" to "на",
@@ -146,12 +147,18 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
         resolveCurrencyName(currencyCode, languageTag)
 
     override fun formatBankName(name: String, languageTag: LanguageTag): String =
-        if (languageTag == LANGUAGE_PASSTHROUGH) {
-            name
-        } else if (languageTag == LANGUAGE_BELARUSIAN) {
-            cyrillicToBelarusian(name)
-        } else {
-            cyrillicToLatin(name)
+        when (languageTag) {
+            LANGUAGE_PASSTHROUGH -> {
+                name
+            }
+
+            LANGUAGE_BELARUSIAN -> {
+                cyrillicToBelarusian(name)
+            }
+
+            else -> {
+                cyrillicToLatin(name)
+            }
         }
 
     private fun cyrillicToBelarusian(input: String): String {
@@ -161,37 +168,15 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
 
         val normalizedInput = input.normalize(Form.NFC)
 
-        val belarusianString = buildString {
-            for (currentChar in normalizedInput) {
-                val isUpperCaseOrWhatever = currentChar == currentChar.uppercaseChar()
-                val currentCharLowercase = currentChar.lowercase()
+        var belarusianString = normalizedInput.lowercase()
 
-                var newLetter: String
-
-                newLetter = cyrillicToBelarusianAssociations[currentCharLowercase].orEmpty()
-
-                if (newLetter.isEmpty()) {
-                    append(
-                        if (isUpperCaseOrWhatever) {
-                            currentCharLowercase.uppercase()
-                        } else {
-                            currentCharLowercase
-                        }
-                    )
-                } else if (isUpperCaseOrWhatever) {
-                    append(
-                        if (newLetter.length > 1) {
-                            newLetter[0].uppercase() + newLetter.substring(1)
-                        } else {
-                            newLetter.uppercase()
-                        }
-                    )
-                } else {
-                    append(newLetter)
-                }
-            }
+        cyrillicToBelarusianAssociations.forEach { key, value ->
+            belarusianString = belarusianString.replace(key, value)
         }
-        return belarusianString
+
+        return belarusianString.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase() else it.toString()
+        }
     }
 
     private fun cyrillicToLatin(input: String): String {
