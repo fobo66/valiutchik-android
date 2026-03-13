@@ -21,7 +21,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class FormattingDataSourceWebTest {
-    private val formattingDataSource = FormattingDataSourceWebImpl()
+    private val formattingDataSource: FormattingDataSource = FormattingDataSourceWebImpl()
 
     @Test
     fun formatCurrency() {
@@ -45,5 +45,35 @@ class FormattingDataSourceWebTest {
     fun formatCurrencySymbol() {
         val name = formattingDataSource.formatCurrencySymbol(CURRENCY_NAME_US_DOLLAR, TAG)
         assertEquals("$", name)
+    }
+
+    @Test
+    fun transliterateToDefaultLocale() {
+        val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
+        assertEquals("Priorbank", result)
+    }
+
+    @Test
+    fun transliterateToRandom() {
+        val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
+        assertEquals("Priorbank", result)
+    }
+
+    @Test
+    fun emptyName() {
+        val result = formattingDataSource.formatBankName("", TAG)
+        assertEquals("", result)
+    }
+
+    @Test
+    fun passThrough() {
+        val result = formattingDataSource.formatBankName(BANK_NAME, PASSTHROUGH_TAG)
+        assertEquals(BANK_NAME, result)
+    }
+
+    @Test
+    fun transliterateToBelarusianLocale() {
+        val result = formattingDataSource.formatBankName(BANK_NAME, BELARUSIAN_TAG)
+        assertEquals("Прыорбанк", result)
     }
 }
