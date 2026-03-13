@@ -132,6 +132,7 @@ kotlin {
         webMain {
             dependencies {
                 implementation(libs.kotlinx.browser)
+                implementation(libs.doistx.normalize)
             }
         }
 
