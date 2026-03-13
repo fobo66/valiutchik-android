@@ -18,17 +18,21 @@ package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
 
-internal const val URI_SCHEME = "https"
-internal const val URI_AUTHORITY = "openstreetmap.org"
+internal const val EXTERNAL_URI_SCHEME = "https"
+internal const val EXTERNAL_URI_AUTHORITY = "openstreetmap.org"
+
+private const val URI_PATH = "search"
+
+private const val EXTERNAL_URI_QUERY = "query"
 
 class UriDataSourceExternalImpl : UriDataSource {
     /**
      * Search Google Maps directly
      */
     override fun prepareUri(query: CharSequence): Uri = Uri.Builder()
-        .scheme(URI_SCHEME)
-        .authority(URI_AUTHORITY)
-        .path("search")
-        .appendQueryParameter("query", query.toString())
+        .scheme(EXTERNAL_URI_SCHEME)
+        .authority(EXTERNAL_URI_AUTHORITY)
+        .path(URI_PATH)
+        .appendQueryParameter(EXTERNAL_URI_QUERY, query.toString())
         .build()
 }

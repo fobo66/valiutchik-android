@@ -29,6 +29,6 @@ class UriDataSourceExternalImplTest {
         val uri =
             uriDataSource.prepareUri(QUERY)
 
-        assertEquals(URI_AUTHORITY, uri.authority)
+        assertEquals(EXTERNAL_URI_AUTHORITY, uri.authority)
     }
 }
