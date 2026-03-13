@@ -16,6 +16,8 @@
 
 package fobo66.valiutchik.core.di
 
+import fobo66.valiutchik.core.model.datasource.AssetsDataSource
+import fobo66.valiutchik.core.model.datasource.AssetsDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
@@ -29,6 +31,7 @@ import fobo66.valiutchik.core.model.datasource.UriDataSourceExternalImpl
 import org.koin.dsl.module
 
 actual val systemModule = module {
+    single<AssetsDataSource> { AssetsDataSourceWebImpl() }
     single<ClipboardDataSource> { ClipboardDataSourceWebImpl() }
     single<FormattingDataSource> { FormattingDataSourceWebImpl() }
     single<LocaleDataSource> { LocaleDataSourceWebImpl() }
