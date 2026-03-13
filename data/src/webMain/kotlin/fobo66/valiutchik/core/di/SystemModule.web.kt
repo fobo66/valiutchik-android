@@ -18,6 +18,8 @@ package fobo66.valiutchik.core.di
 
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceWebImpl
+import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.core.model.datasource.FormattingDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
@@ -28,6 +30,7 @@ import org.koin.dsl.module
 
 actual val systemModule = module {
     single<ClipboardDataSource> { ClipboardDataSourceWebImpl() }
+    single<FormattingDataSource> { FormattingDataSourceWebImpl() }
     single<LocaleDataSource> { LocaleDataSourceWebImpl() }
     single<LocationDataSource> { LocationDataSourceIpImpl() }
     single<UriDataSource> { UriDataSourceExternalImpl() }
