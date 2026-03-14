@@ -41,8 +41,11 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
         LazyThreadSafetyMode.NONE
     ) {
         mutableScatterMapOf(
-            "нео" to "нэа",
+            "Нео" to "Нэа",
             "сск" to "ск",
+            "Ре" to "Рэ",
+            "Те" to "Тэ",
+            "Це" to "Цэ",
             "ео" to "эа",
             "ло" to "ла",
             "но" to "на",
@@ -52,9 +55,6 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
             "ый" to "ы",
             "те" to "тэ",
             "ше" to "шэ",
-            "ре" to "рэ",
-            "те" to "тэ",
-            "це" to "цэ",
             "и" to "і"
         )
     }
@@ -168,15 +168,13 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
 
         val normalizedInput = input.normalize(Form.NFC)
 
-        var belarusianString = normalizedInput.lowercase()
+        var belarusianString = normalizedInput
 
         cyrillicToBelarusianAssociations.forEach { key, value ->
             belarusianString = belarusianString.replace(key, value)
         }
 
-        return belarusianString.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase() else it.toString()
-        }
+        return belarusianString
     }
 
     private fun cyrillicToLatin(input: String): String {

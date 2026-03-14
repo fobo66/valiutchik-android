@@ -50,13 +50,13 @@ class FormattingDataSourceWebTest {
     @Test
     fun transliterateToDefaultLocale() {
         val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
-        assertEquals("Priorbank", result)
+        assertEquals(TRANSLITERATED_BANK_NAME, result)
     }
 
     @Test
     fun transliterateToRandom() {
         val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
-        assertEquals("Priorbank", result)
+        assertEquals(TRANSLITERATED_BANK_NAME, result)
     }
 
     @Test
@@ -74,6 +74,6 @@ class FormattingDataSourceWebTest {
     @Test
     fun transliterateToBelarusianLocale() {
         val result = formattingDataSource.formatBankName(BANK_NAME, BELARUSIAN_TAG)
-        assertEquals("Прыорбанк", result)
+        assertEquals(BELARUSIFIED_BANK_NAME, result)
     }
 }
