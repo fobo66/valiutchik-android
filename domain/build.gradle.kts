@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -52,6 +55,10 @@ kotlin {
         }
     }
 
+    wasmJs {
+        browser()
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -62,7 +69,7 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.koin.core)
                 implementation(libs.napier)
-                compileOnly(libs.compose.stable.marker)
+                implementation(libs.compose.stable.marker)
             }
         }
 
@@ -71,10 +78,15 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(project(":data-testing"))
                 implementation(project(":domain-testing"))
-                implementation(libs.koin.test)
-                implementation(libs.ktor.client)
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(libs.koin.test)
+                implementation(libs.ktor.client)
             }
         }
     }
