@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ internal const val RAW_RATE = 1.23
 internal const val LONG_RATE = 1.2345679
 internal const val RATE = "BYN 1.23"
 internal const val BANK_NAME = "Приорбанк" // taken from API
+internal const val TRANSLITERATED_BANK_NAME = "Priorbank"
+internal const val BELARUSIFIED_BANK_NAME = "Прыорбанк"
 internal const val CURRENCY_NAME = "US dollar"
 internal const val CURRENCY_NAME_PLURAL = "US dollars"
 internal const val TAG = "en-US"

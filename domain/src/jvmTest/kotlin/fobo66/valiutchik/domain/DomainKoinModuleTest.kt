@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package fobo66.valiutchik.domain
 
-import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import fobo66.valiutchik.domain.di.domainModule
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngine
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
-class ViewModelsKoinModuleTest {
+class DomainKoinModuleTest {
     @OptIn(KoinExperimentalAPI::class)
     @Test
     fun `check domain module`() {
-        viewModelsModule.verify(
+        domainModule.verify(
             extraTypes = listOf(
                 HttpClientEngine::class,
                 HttpClientConfig::class

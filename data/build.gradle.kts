@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -64,6 +67,16 @@ kotlin {
         }
     }
 
+    wasmJs {
+        browser {
+            testTask {
+                useKarma {
+                    useFirefoxHeadless()
+                }
+            }
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -79,7 +92,7 @@ kotlin {
 
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.sqlidelight.coroutines)
-                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.core)
                 implementation(libs.napier)
                 implementation(libs.uri)
             }
@@ -111,7 +124,15 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.androidx.datastore)
                 implementation(libs.sqlidelight.android)
+            }
+        }
+
+        webMain {
+            dependencies {
+                implementation(libs.kotlinx.browser)
+                implementation(libs.doistx.normalize)
             }
         }
 

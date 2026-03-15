@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,17 +16,20 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import fobo66.valiutchik.core.entities.LanguageTag
+import kotlinx.browser.window
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-class UriDataSourceJvmImplTest {
-    private val uriDataSource = UriDataSourceJvmImpl()
+class LocaleDataSourceWebImpl : LocaleDataSource {
 
-    @Test
-    fun `prepare HTTP URI`() {
-        val uri =
-            uriDataSource.prepareUri("test")
-
-        assertEquals(URI_AUTHORITY, uri.authority)
+    @OptIn(ExperimentalWasmJsInterop::class)
+    override val locale: Flow<LanguageTag> = flow {
+        if (window.navigator.languages.length > 0) {
+            val currentLanguage = window.navigator.languages[0]
+            emit(currentLanguage?.toString().orEmpty())
+        } else {
+            emit(window.navigator.language)
+        }
     }
 }

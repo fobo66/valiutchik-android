@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,24 +14,21 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.domain.di.domainModule
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.HttpClientEngine
-import org.junit.jupiter.api.Test
-import org.koin.core.annotation.KoinExperimentalAPI
-import org.koin.test.verify.verify
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class DomainKoinModuleTest {
-    @OptIn(KoinExperimentalAPI::class)
+private const val QUERY = "test"
+
+class UriDataSourceExternalImplTest {
+    private val uriDataSource = UriDataSourceExternalImpl()
+
     @Test
-    fun `check domain module`() {
-        domainModule.verify(
-            extraTypes = listOf(
-                HttpClientEngine::class,
-                HttpClientConfig::class
-            )
-        )
+    fun `prepare HTTP URI`() {
+        val uri =
+            uriDataSource.prepareUri(QUERY)
+
+        assertEquals(EXTERNAL_URI_AUTHORITY, uri.authority)
     }
 }

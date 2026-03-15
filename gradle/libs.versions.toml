@@ -1,7 +1,7 @@
 [versions]
 aboutLibraries = "14.0.0-b02"
 accompanist = "0.37.3"
-androidGradlePlugin = "9.1.0"
+androidGradlePlugin = "9.2.0-alpha04"
 androidxActivity = "1.13.0"
 androidxAnnotations = "1.9.1"
 androidxBenchmark = "1.5.0-alpha04"
@@ -10,7 +10,7 @@ androidxCollection = "1.6.0"
 androidxDatastore = "1.3.0-alpha07"
 androidxGlance = "1.2.0-rc01"
 androidxGlancePreview = "1.2.0-rc01"
-androidxLifecycle = "2.11.0-alpha01"
+androidxLifecycle = "2.10.0-beta01"
 androidxSplashscreen = "1.2.0"
 androidxStartup = "1.2.0"
 androidxTest = "1.7.0"
@@ -28,7 +28,6 @@ detekt = "2.0.0-alpha.2"
 detektCompose = "0.5.6"
 dotenvKotlin = "6.5.1"
 espresso = "3.7.0"
-hamcrest = "3.0"
 icu = "78.2"
 jansi = "2.4.2"
 junit = "6.0.3"
@@ -37,6 +36,7 @@ koin = "4.1.1"
 kotlin = "2.3.10"
 kotlinPoet = "2.2.0"
 kotlinter = "5.4.2"
+kotlinxBrowser = "0.5.0"
 kotlinxCollections = "0.4.0"
 kotlinxCoroutines = "1.10.2"
 kotlinxDatetime = "0.7.1"
@@ -47,6 +47,7 @@ leakCanary = "2.14"
 logback = "1.5.32"
 materialKolor = "5.0.0-alpha07"
 napier = "2.7.1"
+normalizer = "1.3.3"
 profileinstallerVersion = "1.4.1"
 robolectric = "4.16.1"
 robolectricJunit5 = "0.9.0"
@@ -68,6 +69,7 @@ androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", 
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidxCollection" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidxDatastore" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
 androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidxGlance" }
@@ -77,11 +79,9 @@ androidx-glance-test = { module = "androidx.glance:glance-testing", version.ref 
 androidx-glance-material = { module = "androidx.glance:glance-material3", version.ref = "androidxGlance" }
 androidx-glance-preview = { module = "androidx.glance:glance-preview", version.ref = "androidxGlancePreview" }
 androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
-androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplashscreen" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
-androidx-test-espresso-accessibility = { group = "androidx.test.espresso", name = "espresso-accessibility", version.ref = "androidxTestEspresso" }
-androidx-test-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "androidxTestEspresso" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-test-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "androidxTestEspresso" }
 androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTest" }
@@ -110,8 +110,8 @@ compose-ui-tooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling", 
 compose-xr = { group = "androidx.xr.compose", name = "compose", version.ref = "xr" }
 compose-xr-material = { group = "androidx.xr.compose.material3", name = "material3", version.ref = "xrMaterial" }
 detekt-rules-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
+doistx-normalize = { module = "com.doist.x:normalize", version.ref = "normalizer" }
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
-hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
 icu = { group = "com.ibm.icu", name = "icu4j", version.ref = "icu" }
 jansi = { group = "org.fusesource.jansi", name = "jansi", version.ref = "jansi" }
 junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
@@ -123,6 +123,7 @@ koin-test = { group = "io.insert-koin", name = "koin-test-junit5", version.ref =
 koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koin" }
 kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
+kotlinx-browser = { group = "org.jetbrains.kotlinx", name = "kotlinx-browser", version.ref = "kotlinxBrowser" }
 kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollections" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }

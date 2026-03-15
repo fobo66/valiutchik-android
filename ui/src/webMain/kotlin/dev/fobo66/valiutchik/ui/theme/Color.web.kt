@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,16 +14,11 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.datasource
+package dev.fobo66.valiutchik.ui.theme
 
-import fobo66.valiutchik.core.entities.Location
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private const val IP_GEOLOCATION_REQUESTED = "whatsmyip"
-
-class LocationDataSourceIpImpl : LocationDataSource {
-    override suspend fun resolveLocation(): Location = Location(
-        latitude = UNKNOWN_COORDINATE,
-        longitude = UNKNOWN_COORDINATE,
-        ipAddress = IP_GEOLOCATION_REQUESTED
-    )
-}
+@Composable
+internal actual fun resolveSeedColor(isDark: Boolean, isDynamic: Boolean): Color =
+    Color(DEFAULT_SEED_COLOR)
