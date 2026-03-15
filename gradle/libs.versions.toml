@@ -10,7 +10,7 @@ androidxCollection = "1.6.0"
 androidxDatastore = "1.3.0-alpha07"
 androidxGlance = "1.2.0-rc01"
 androidxGlancePreview = "1.2.0-rc01"
-androidxLifecycle = "2.11.0-alpha02"
+androidxLifecycle = "2.10.0-beta01"
 androidxSplashscreen = "1.2.0"
 androidxStartup = "1.2.0"
 androidxTest = "1.7.0"
@@ -79,11 +79,9 @@ androidx-glance-test = { module = "androidx.glance:glance-testing", version.ref 
 androidx-glance-material = { module = "androidx.glance:glance-material3", version.ref = "androidxGlance" }
 androidx-glance-preview = { module = "androidx.glance:glance-preview", version.ref = "androidxGlancePreview" }
 androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
-androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplashscreen" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
-androidx-test-espresso-accessibility = { group = "androidx.test.espresso", name = "espresso-accessibility", version.ref = "androidxTestEspresso" }
-androidx-test-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "androidxTestEspresso" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-test-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "androidxTestEspresso" }
 androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTest" }
