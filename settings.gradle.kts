@@ -62,3 +62,4 @@ include(
     ":ui",
     ":desktop"
 )
+include(":webapp")
