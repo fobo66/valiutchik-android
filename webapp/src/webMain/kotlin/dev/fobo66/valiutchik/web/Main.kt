@@ -34,18 +34,16 @@ import org.koin.core.annotation.KoinExperimentalAPI
     ExperimentalCoroutinesApi::class,
     ExperimentalComposeUiApi::class
 )
-fun main() {
-    ComposeViewport {
-        LaunchedEffect(Unit) {
-            Napier.base(DebugAntilog())
-        }
+fun main() = ComposeViewport {
+    LaunchedEffect(Unit) {
+        Napier.base(DebugAntilog())
+    }
 
-        KoinApplication(
-            application = {
-                modules(viewModelsModule, domainModule, refreshModule)
-            }
-        ) {
-            MainContent(showManualRefresh = true)
+    KoinApplication(
+        application = {
+            modules(viewModelsModule, domainModule, refreshModule)
         }
+    ) {
+        MainContent(showManualRefresh = true)
     }
 }
