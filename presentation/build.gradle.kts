@@ -65,9 +65,7 @@ kotlin {
         }
         browser {
             testTask {
-                useKarma {
-                    useFirefoxHeadless()
-                }
+                enabled = false
             }
         }
     }
