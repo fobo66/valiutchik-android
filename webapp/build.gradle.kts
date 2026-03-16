@@ -30,7 +30,6 @@ plugins {
 kotlin {
 
     wasmJs {
-        outputModuleName = "valitchikWeb"
         browser()
         binaries.executable()
     }
