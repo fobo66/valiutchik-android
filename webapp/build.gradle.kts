@@ -17,6 +17,8 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -51,6 +53,14 @@ kotlin {
             }
         }
     }
+}
+
+tasks.withType<LintTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
+tasks.withType<FormatTask> {
+    exclude { it.file.path.contains("generated") }
 }
 
 dependencies {
