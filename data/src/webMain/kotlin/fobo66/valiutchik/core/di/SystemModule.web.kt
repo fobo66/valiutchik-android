@@ -22,6 +22,8 @@ import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSourceWebImpl
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
+import fobo66.valiutchik.core.model.datasource.IntentDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
@@ -34,6 +36,7 @@ actual val systemModule = module {
     single<AssetsDataSource> { AssetsDataSourceWebImpl() }
     single<ClipboardDataSource> { ClipboardDataSourceWebImpl() }
     single<FormattingDataSource> { FormattingDataSourceWebImpl() }
+    single<IntentDataSource> { IntentDataSourceWebImpl() }
     single<LocaleDataSource> { LocaleDataSourceWebImpl() }
     single<LocationDataSource> { LocationDataSourceIpImpl() }
     single<UriDataSource> { UriDataSourceExternalImpl() }
