@@ -19,10 +19,18 @@ package fobo66.valiutchik.core.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.worker.createDefaultWebWorkerDriver
+import kotlinx.coroutines.DelicateCoroutinesApi
 import okio.FileSystem
 import org.koin.dsl.module
 
+@OptIn(DelicateCoroutinesApi::class)
 actual val thirdPartyModule = module {
+    single<SqlDriver> {
+        createDefaultWebWorkerDriver()
+    }
+
     single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
             FileSystem.SYSTEM_TEMPORARY_DIRECTORY.resolve(PREFERENCES_NAME)

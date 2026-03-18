@@ -20,17 +20,18 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import org.koin.core.module.LazyModule
+import org.koin.dsl.lazyModule
 
-actual val thirdPartyModule: Module = module {
+actual val thirdPartyModule: LazyModule = lazyModule {
 
     single<SqlDriver> {
-        AndroidSqliteDriver(Database.Schema, androidContext(), DATABASE_NAME)
+        AndroidSqliteDriver(Database.Schema.synchronous(), androidContext(), DATABASE_NAME)
     }
 
     single<DataStore<Preferences>> {

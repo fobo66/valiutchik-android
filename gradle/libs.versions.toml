@@ -33,7 +33,7 @@ jansi = "2.4.2"
 junit = "6.0.3"
 junitPlugin = "2.0.1"
 koin = "4.2.0"
-kotlin = "2.3.10"
+kotlin = "2.3.20"
 kotlinPoet = "2.2.0"
 kotlinter = "5.4.2"
 kotlinxBrowser = "0.5.0"
@@ -119,6 +119,7 @@ junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", ver
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-core-coroutines = { group = "io.insert-koin", name = "koin-core-coroutines", version.ref = "koin" }
 koin-test = { group = "io.insert-koin", name = "koin-test-junit5", version.ref = "koin" }
 koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 koin-work = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koin" }
@@ -148,6 +149,7 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 sqlidelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 sqlidelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
+sqlidelight-js = { group = "app.cash.sqldelight", name = "web-worker-driver", version.ref = "sqldelight" }
 sqlidelight-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }

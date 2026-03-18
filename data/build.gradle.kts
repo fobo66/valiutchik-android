@@ -133,6 +133,8 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.browser)
                 implementation(libs.doistx.normalize)
+                implementation(libs.sqlidelight.js)
+                implementation(devNpm("copy-webpack-plugin", "14.0.0"))
             }
         }
 
@@ -160,6 +162,7 @@ sqldelight {
     databases {
         create("Database") {
             packageName = "dev.fobo66.valiutchik.core.db"
+            generateAsync = true
         }
     }
 }
