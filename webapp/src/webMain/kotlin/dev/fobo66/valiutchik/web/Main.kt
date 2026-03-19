@@ -56,7 +56,11 @@ fun main() {
             }),
             content = {
                 AppTheme {
-                    MainContent(showManualRefresh = true, modifier = Modifier.fillMaxSize())
+                    MainContent(
+                        showManualRefresh = true,
+                        canOpenSettings = false,
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         )
