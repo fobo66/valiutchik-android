@@ -16,16 +16,20 @@
 
 package dev.fobo66.valiutchik.web
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeViewport
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.main.MainContent
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import dev.fobo66.valiutchik.web.di.refreshModule
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.jetbrains.compose.resources.configureWebResources
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.koinConfiguration
@@ -35,21 +39,26 @@ import org.koin.dsl.koinConfiguration
     ExperimentalCoroutinesApi::class,
     ExperimentalComposeUiApi::class
 )
-fun main() = ComposeViewport {
-    LaunchedEffect(Unit) {
-        Napier.base(DebugAntilog())
-    }
-
-    KoinApplication(
-        configuration = koinConfiguration(declaration = {
-            modules(
-                viewModelsModule,
-                domainModule,
-                refreshModule
-            )
-        }),
-        content = {
-            MainContent(showManualRefresh = true)
+fun main() {
+    configureWebResources { resourcePathMapping { path -> "./$path" } }
+    ComposeViewport {
+        LaunchedEffect(Unit) {
+            Napier.base(DebugAntilog())
         }
-    )
+
+        KoinApplication(
+            configuration = koinConfiguration(declaration = {
+                modules(
+                    viewModelsModule,
+                    domainModule,
+                    refreshModule
+                )
+            }),
+            content = {
+                AppTheme {
+                    MainContent(showManualRefresh = true, modifier = Modifier.fillMaxSize())
+                }
+            }
+        )
+    }
 }
