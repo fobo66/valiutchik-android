@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package fobo66.valiutchik.api.di
 
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
@@ -31,6 +30,7 @@ import org.koin.dsl.module
 
 val networkModule =
     module {
+        includes(clientModule)
         single<Logger> {
             object : Logger {
                 override fun log(message: String) {
@@ -46,7 +46,7 @@ val networkModule =
         }
 
         single<HttpClient> {
-            HttpClient(CIO) {
+            HttpClient(get()) {
                 install(ContentNegotiation) {
                     json(get())
                 }

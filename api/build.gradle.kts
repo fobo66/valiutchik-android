@@ -85,6 +85,12 @@ kotlin {
             kotlin.srcDir(project.layout.buildDirectory.dir("generated/source/secret"))
         }
 
+        webMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
+        }
+
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
