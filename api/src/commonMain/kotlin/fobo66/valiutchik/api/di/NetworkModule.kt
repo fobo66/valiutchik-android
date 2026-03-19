@@ -30,7 +30,6 @@ import org.koin.dsl.module
 
 val networkModule =
     module {
-        includes(clientModule)
         single<Logger> {
             object : Logger {
                 override fun log(message: String) {
@@ -46,7 +45,7 @@ val networkModule =
         }
 
         single<HttpClient> {
-            HttpClient(get()) {
+            HttpClient(provideEngine()) {
                 install(ContentNegotiation) {
                     json(get())
                 }

@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.api.di
 
-import org.koin.core.module.Module
+import io.ktor.client.engine.HttpClientEngineConfig
+import io.ktor.client.engine.HttpClientEngineFactory
 
-expect val clientModule: Module
+expect fun provideEngine(): HttpClientEngineFactory<HttpClientEngineConfig>

@@ -16,10 +16,8 @@
 
 package fobo66.valiutchik.api.di
 
-import io.ktor.client.engine.js.Js
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import io.ktor.client.engine.HttpClientEngineConfig
+import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.engine.js.JsClient
 
-actual val clientModule: Module = module {
-    single { Js }
-}
+actual fun provideEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = JsClient()
