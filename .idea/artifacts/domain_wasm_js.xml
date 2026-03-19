@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="domain-wasm-js">
     <output-path>$PROJECT_DIR$/domain/build/libs</output-path>
-    <root id="archive" name="domain-wasm-js.jar">
-      <element id="module-output" name="Valiutchik.domain.wasmJsMain" />
-    </root>
+    <root id="archive" name="domain-wasm-js.jar" />
   </artifact>
 </component>
