@@ -25,10 +25,10 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.LazyModule
-import org.koin.dsl.lazyModule
+import org.koin.core.module.Module
+import org.koin.dsl.module
 
-actual val thirdPartyModule: LazyModule = lazyModule {
+actual val thirdPartyModule: Module = module {
 
     single<SqlDriver> {
         AndroidSqliteDriver(Database.Schema.synchronous(), androidContext(), DATABASE_NAME)
