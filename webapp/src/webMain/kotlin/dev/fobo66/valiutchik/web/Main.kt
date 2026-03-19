@@ -28,6 +28,7 @@ import io.github.aakira.napier.Napier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.dsl.koinConfiguration
 
 @OptIn(
     KoinExperimentalAPI::class,
@@ -40,10 +41,15 @@ fun main() = ComposeViewport {
     }
 
     KoinApplication(
-        application = {
-            modules(viewModelsModule, domainModule, refreshModule)
+        configuration = koinConfiguration(declaration = {
+            modules(
+                viewModelsModule,
+                domainModule,
+                refreshModule
+            )
+        }),
+        content = {
+            MainContent(showManualRefresh = true)
         }
-    ) {
-        MainContent(showManualRefresh = true)
-    }
+    )
 }
