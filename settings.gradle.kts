@@ -60,6 +60,6 @@ include(
     ":presentation",
     ":widget",
     ":ui",
-    ":desktop"
+    ":desktop",
+    ":webapp"
 )
-include(":webapp")
