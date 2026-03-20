@@ -134,7 +134,6 @@ kotlin {
                 implementation(libs.kotlinx.browser)
                 implementation(libs.doistx.normalize)
                 implementation(libs.sqlidelight.js)
-                implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.3.2"))
                 implementation(npm("sql.js", "1.14.1"))
                 implementation(devNpm("copy-webpack-plugin", "14.0.0"))
             }

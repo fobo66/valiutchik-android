@@ -6,11 +6,23 @@ config.resolve = {
     }
 };
 
+config.devServer = {
+  ...config.devServer,
+  headers: {
+    "Cross-Origin-Embedder-Policy": "require-corp",
+    "Cross-Origin-Opener-Policy": "same-origin",
+  }
+}
+
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 config.plugins.push(
-    new CopyWebpackPlugin({
-        patterns: [
-            '../../node_modules/sql.js/dist/sql-wasm.wasm'
-        ]
-    })
+    new CopyWebpackPlugin(
+        {
+            patterns: [
+                  "../../node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3.js",
+                  "../../node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3.wasm",
+                  "../../node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3-opfs-async-proxy.js",
+            ]
+        }
+    )
 );

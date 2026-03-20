@@ -20,15 +20,21 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.worker.createDefaultWebWorkerDriver
+import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import kotlinx.coroutines.DelicateCoroutinesApi
 import okio.FileSystem
 import org.koin.dsl.module
+import org.w3c.dom.Worker
+
+@OptIn(ExperimentalWasmJsInterop::class)
+internal fun jsWorker(): Worker = js(
+    """new Worker(new URL("./sqlite.worker.js", import.meta.url))"""
+)
 
 @OptIn(DelicateCoroutinesApi::class)
 actual val thirdPartyModule = module {
     single<SqlDriver> {
-        createDefaultWebWorkerDriver()
+        WebWorkerDriver(jsWorker())
     }
 
     single<DataStore<Preferences>> {
