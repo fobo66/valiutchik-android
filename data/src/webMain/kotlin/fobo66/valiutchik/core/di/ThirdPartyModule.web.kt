@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import dev.fobo66.valiutchik.core.db.Database
@@ -39,7 +40,7 @@ actual val thirdPartyModule = module {
     single<SqlDriver> {
         WebWorkerDriver(jsWorker()).also {
             GlobalScope.launch {
-                Database.Schema.create(it).await()
+                Database.Schema.awaitCreate(it)
             }
         }
     }

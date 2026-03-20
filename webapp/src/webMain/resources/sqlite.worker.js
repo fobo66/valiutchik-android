@@ -2,7 +2,7 @@ import initSqlJs from "sql.js";
 
 let db = null;
 async function createDatabase() {
-  let SQL = await initSqlJs({ locateFile: file => ' https://cdn.jsdelivr.net/npm/sql.js@1.14.1/dist/sql-wasm-browser.wasm' });
+  let SQL = await initSqlJs({ locateFile: file => "/sql-wasm-browser.wasm" });
   db = new SQL.Database();
 }
 
@@ -40,6 +40,7 @@ function onModuleReady() {
 }
 
 function onError(err) {
+  console.error(err)
   return postMessage({
     id: this.data.id,
     error: err
