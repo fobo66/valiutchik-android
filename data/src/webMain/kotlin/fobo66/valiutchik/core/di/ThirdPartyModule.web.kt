@@ -21,7 +21,10 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
+import dev.fobo66.valiutchik.core.db.Database
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okio.FileSystem
 import org.koin.dsl.module
 import org.w3c.dom.Worker
@@ -34,7 +37,11 @@ internal fun jsWorker(): Worker = js(
 @OptIn(DelicateCoroutinesApi::class)
 actual val thirdPartyModule = module {
     single<SqlDriver> {
-        WebWorkerDriver(jsWorker())
+        WebWorkerDriver(jsWorker()).also {
+            GlobalScope.launch {
+                Database.Schema.create(it).await()
+            }
+        }
     }
 
     single<DataStore<Preferences>> {
