@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.City
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
@@ -36,6 +37,11 @@ interface PersistenceDataSource {
      * Save bank entries to the database
      */
     suspend fun saveBanks(banks: Set<Bank>)
+
+    /**
+     * Save city entries to the database
+     */
+    suspend fun saveCities(cities: Set<City>)
 
     /**
      * Save currency entries to the database

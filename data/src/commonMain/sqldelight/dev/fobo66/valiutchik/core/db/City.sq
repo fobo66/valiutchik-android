@@ -1,0 +1,13 @@
+CREATE TABLE City (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `name` TEXT NOT NULL,
+  `rusName` TEXT NOT NULL,
+  `belName` TEXT NOT NULL
+);
+
+loadCities:
+SELECT * FROM City;
+
+insertCity:
+INSERT OR REPLACE INTO City(id, name, rusName, belName)
+VALUES ?;
