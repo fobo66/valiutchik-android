@@ -17,6 +17,7 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.BankResponse
+import fobo66.valiutchik.api.entity.CityResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
 import fobo66.valiutchik.api.entity.CurrencyResponse
@@ -36,9 +37,7 @@ import kotlinx.io.IOException
 private const val API_URL_RATES = "https://api.myfin.by/currency/rates"
 private const val API_URL_BANKS = "https://api.myfin.by/banks"
 private const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
-
-private const val CLACKS_KEY = "X-Clacks-Overhead"
-private const val CLACKS_VALUE = "GNU Terry Pratchett"
+private const val API_URL_CITIES = "https://api.myfin.by/city"
 
 class ApiDataSourceImpl(
     private val client: HttpClient,
@@ -79,6 +78,15 @@ class ApiDataSourceImpl(
         try {
             val response = client.get(API_URL_CURRENCIES)
             parser.parseCurrencies(response.bodyAsChannel().readBuffer())
+        } catch (e: ResponseException) {
+            throw IOException(e)
+        }
+    }
+
+    override suspend fun loadCities(): List<CityResponse> = withContext(ioDispatcher) {
+        try {
+            val response = client.get(API_URL_CITIES)
+            parser.parseCities(response.bodyAsChannel().readBuffer())
         } catch (e: ResponseException) {
             throw IOException(e)
         }
