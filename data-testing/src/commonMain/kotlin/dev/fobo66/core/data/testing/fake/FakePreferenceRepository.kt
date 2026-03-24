@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,13 +22,16 @@ import kotlinx.coroutines.flow.flowOf
 
 class FakePreferenceRepository : PreferenceRepository {
     var defaultCity = "default"
+    var defaultCityId = 1L
     var updateInterval = 3.0f
 
     override fun observeDefaultCityPreference(): Flow<String> = flowOf(defaultCity)
+    override fun observeDefaultCityIdPreference(): Flow<Long> = flowOf(defaultCityId)
 
     override fun observeUpdateIntervalPreference(): Flow<Float> = flowOf(updateInterval)
 
     override suspend fun updateDefaultCityPreference(newValue: String) = Unit
+    override suspend fun updateDefaultCityIdPreference(newValue: Long) = Unit
 
     override suspend fun updateUpdateIntervalPreference(newValue: Float) = Unit
 }
