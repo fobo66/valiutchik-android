@@ -17,22 +17,25 @@
 package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import fobo66.valiutchik.core.entities.LanguageTag
+import fobo66.valiutchik.core.model.repository.LocaleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class FakeCurrencyRateRepository : CurrencyRateRepository {
+class FakeLocaleRepository : LocaleRepository {
+    val locale = MutableStateFlow("en-US")
 
-    val rates = MutableStateFlow(emptyList<BestCourse>())
+    override fun loadLocale(): Flow<LanguageTag> = locale.asStateFlow()
 
-    var isRefreshed = false
+    override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
+        rate.currencyValue.toString()
 
-    override suspend fun cleanUpOutdatedRates(): Int = 0
+    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String = rate.bankName
 
-    override suspend fun refreshExchangeRates(city: String, defaultCity: String) {
-        isRefreshed = true
-    }
+    override fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String =
+        rate.currencyName
 
-    override fun loadExchangeRates(): Flow<List<BestCourse>> = rates.asStateFlow()
+    override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
+        rate.currencyName
 }

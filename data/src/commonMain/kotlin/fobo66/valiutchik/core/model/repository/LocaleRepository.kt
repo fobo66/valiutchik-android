@@ -17,21 +17,35 @@
 package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Repository to process exchange rates
+ * Repository to handle operations related to locale and language
  */
-interface CurrencyRateRepository {
+interface LocaleRepository {
     /**
-     * Refresh exchange rates for the given city
+     * Load current user locale
      */
-    suspend fun refreshExchangeRates(city: String, defaultCity: String = city)
-
-    suspend fun cleanUpOutdatedRates(): Int
+    fun loadLocale(): Flow<LanguageTag>
 
     /**
-     * Load exchange rates from database or from network
+     * Format currency rate into human-readable form
      */
-    fun loadExchangeRates(): Flow<List<BestCourse>>
+    fun formatRate(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Simplify and transliterate bank name for display
+     */
+    fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Format currency symbol into human-readable form
+     */
+    fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Format currency symbol into human-readable form
+     */
+    fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String
 }

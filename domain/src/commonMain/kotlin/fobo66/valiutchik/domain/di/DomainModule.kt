@@ -67,7 +67,7 @@ val domainModule = module {
     }
 
     single<LoadExchangeRates> {
-        LoadExchangeRatesImpl(get())
+        LoadExchangeRatesImpl(get(), get())
     }
 
     single<LoadOpenSourceLicenses> {
