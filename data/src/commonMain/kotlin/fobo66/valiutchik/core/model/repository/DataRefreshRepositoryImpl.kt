@@ -26,6 +26,7 @@ import fobo66.valiutchik.core.entities.toCurrency
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
@@ -55,6 +56,7 @@ class DataRefreshRepositoryImpl(
             }
 
             val cities = async {
+                val existingCities = persistenceDataSource.readCities().first().map { it.id }
                 apiDataSource.loadCities()
                     .map { cityResponse ->
                         City(
@@ -66,6 +68,7 @@ class DataRefreshRepositoryImpl(
                             }
                         )
                     }
+                    .filterNot { existingCities.contains(it.id) }
                     .toSet()
             }
 
