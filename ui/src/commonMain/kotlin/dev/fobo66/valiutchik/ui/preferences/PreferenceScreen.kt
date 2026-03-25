@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ import dev.fobo66.valiutchik.ui.element.SecondaryTopBar
 import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntries
 import dev.fobo66.valiutchik.ui.entities.ListPreferenceEntry
 import dev.fobo66.valiutchik.ui.theme.AppTheme
+import fobo66.valiutchik.domain.entities.CityPreference
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import valiutchik.ui.generated.resources.Res
-import valiutchik.ui.generated.resources.pref_cities_list
-import valiutchik.ui.generated.resources.pref_cities_values
 import valiutchik.ui.generated.resources.pref_title_default_city
 import valiutchik.ui.generated.resources.pref_title_update_interval
 import valiutchik.ui.generated.resources.title_activity_oss_licenses
@@ -50,6 +50,7 @@ const val UPDATE_INTERVAL_STEPS = 22
 @Composable
 fun PreferenceScreen(
     defaultCityValue: String,
+    defaultCityValues: ImmutableList<CityPreference>,
     updateIntervalValue: Float,
     canOpenSettings: Boolean,
     onDefaultCityChange: (String) -> Unit,
@@ -67,6 +68,7 @@ fun PreferenceScreen(
         }
         PreferenceScreenContent(
             defaultCityValue = defaultCityValue,
+            defaultCityValues = defaultCityValues,
             updateIntervalValue = updateIntervalValue,
             onDefaultCityChange = onDefaultCityChange,
             onUpdateIntervalChange = onUpdateIntervalChange,
@@ -78,17 +80,16 @@ fun PreferenceScreen(
 @Composable
 fun PreferenceScreenContent(
     defaultCityValue: String,
+    defaultCityValues: ImmutableList<CityPreference>,
     updateIntervalValue: Float,
     onDefaultCityChange: (String) -> Unit,
     onUpdateIntervalChange: (Float) -> Unit,
     onOpenSourceLicensesClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val citiesKeys = stringArrayResource(Res.array.pref_cities_list)
-    val citiesValues = stringArrayResource(Res.array.pref_cities_values)
     val entries = remember {
         ListPreferenceEntries(
-            citiesKeys.mapIndexed { index, key -> ListPreferenceEntry(key, citiesValues[index]) }
+            defaultCityValues.map { ListPreferenceEntry(it.label, it.preferenceValue.toString()) }
                 .toImmutableList()
         )
     }
@@ -133,6 +134,7 @@ private fun PreferenceScreenPreview() {
     AppTheme {
         PreferenceScreen(
             defaultCityValue = "Minsk",
+            defaultCityValues = persistentListOf(),
             updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,
             canOpenSettings = true,
             onDefaultCityChange = {},

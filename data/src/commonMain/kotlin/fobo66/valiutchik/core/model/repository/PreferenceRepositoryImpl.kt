@@ -16,9 +16,11 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.fobo66.valiutchik.core.db.City
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY_ID
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.Flow
@@ -28,14 +30,18 @@ private const val DEFAULT_UPDATE_INTERVAL = 3
 private const val DEFAULT_CITY = "Minsk"
 private const val DEFAULT_CITY_ID = 1
 
-class PreferenceRepositoryImpl(private val preferencesDataSource: PreferencesDataSource) :
-    PreferenceRepository {
+class PreferenceRepositoryImpl(
+    private val preferencesDataSource: PreferencesDataSource,
+    private val persistenceDataSource: PersistenceDataSource
+) : PreferenceRepository {
     override fun observeDefaultCityPreference(): Flow<String> =
         preferencesDataSource.observeString(KEY_DEFAULT_CITY, DEFAULT_CITY)
 
     override fun observeDefaultCityIdPreference(): Flow<Long> =
         preferencesDataSource.observeInt(KEY_DEFAULT_CITY_ID, DEFAULT_CITY_ID)
             .map { it.toLong() }
+
+    override fun observeCities(): Flow<List<City>> = persistenceDataSource.readCities()
 
     override fun observeUpdateIntervalPreference(): Flow<Float> =
         preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)

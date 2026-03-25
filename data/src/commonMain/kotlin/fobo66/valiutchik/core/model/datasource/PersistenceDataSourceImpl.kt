@@ -35,6 +35,9 @@ class PersistenceDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : PersistenceDataSource {
 
+    override fun readCities(): Flow<List<City>> = database.cityQueries.loadCities().asFlow()
+        .mapToList(ioDispatcher)
+
     override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
         database.rateQueries.transaction {
             afterCommit { Napier.d { "Saved ${rates.size} rates" } }

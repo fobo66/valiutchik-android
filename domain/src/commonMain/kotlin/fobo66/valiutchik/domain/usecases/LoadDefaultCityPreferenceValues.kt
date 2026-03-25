@@ -14,18 +14,11 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package fobo66.valiutchik.domain.usecases
 
-import androidx.lifecycle.ViewModel
 import fobo66.valiutchik.domain.entities.CityPreference
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
-abstract class PreferencesViewModel : ViewModel() {
-    abstract val defaultCityPreference: StateFlow<String>
-    abstract val defaultCityPreferenceValues: StateFlow<ImmutableList<CityPreference>>
-    abstract val updateIntervalPreference: StateFlow<Float>
-    abstract fun updateDefaultCity(newDefaultCity: String): Job
-    abstract fun updateUpdateInterval(newUpdateInterval: Float): Job
+interface LoadDefaultCityPreferenceValues {
+    fun execute(): Flow<List<CityPreference>>
 }

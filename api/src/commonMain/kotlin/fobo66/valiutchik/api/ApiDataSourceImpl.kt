@@ -27,6 +27,8 @@ import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.utils.io.readBuffer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -53,6 +55,7 @@ class ApiDataSourceImpl(
                 .map { request ->
                     async {
                         val response = client.post(API_URL_RATES) {
+                            contentType(ContentType.Application.Json)
                             setBody(request)
                         }
                         parser.parseRates(response.bodyAsChannel().readBuffer())

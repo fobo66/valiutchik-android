@@ -14,20 +14,9 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.core.model.repository
+package fobo66.valiutchik.domain.entities
 
-import dev.fobo66.valiutchik.core.db.City
-import kotlinx.coroutines.flow.Flow
+import androidx.compose.runtime.Immutable
 
-/**
- * Repository to handle application preferences
- */
-interface PreferenceRepository {
-    fun observeDefaultCityPreference(): Flow<String>
-    fun observeDefaultCityIdPreference(): Flow<Long>
-    fun observeCities(): Flow<List<City>>
-    fun observeUpdateIntervalPreference(): Flow<Float>
-    suspend fun updateDefaultCityPreference(newValue: String)
-    suspend fun updateDefaultCityIdPreference(newValue: Long)
-    suspend fun updateUpdateIntervalPreference(newValue: Float)
-}
+@Immutable
+data class CityPreference(val label: String, val preferenceValue: Long)

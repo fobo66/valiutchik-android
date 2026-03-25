@@ -29,6 +29,8 @@ import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
 import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesImpl
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceImpl
+import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceValues
+import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceValuesImpl
 import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadExchangeRatesImpl
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
@@ -91,4 +93,6 @@ val domainModule = module {
     }
 
     single<RefreshData> { RefreshDataImpl(get()) }
+
+    single<LoadDefaultCityPreferenceValues> { LoadDefaultCityPreferenceValuesImpl(get(), get()) }
 }

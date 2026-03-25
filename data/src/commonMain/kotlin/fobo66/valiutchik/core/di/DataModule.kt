@@ -92,7 +92,7 @@ val repositoriesModule =
         }
 
         single<PreferenceRepository> {
-            PreferenceRepositoryImpl(get())
+            PreferenceRepositoryImpl(get(), get())
         }
 
         single<LocaleRepository> {

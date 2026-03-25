@@ -69,7 +69,12 @@ interface PersistenceDataSource {
     fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>>
 
     /**
-     * Read entries from the database
+     * Read sell entries from the database
      */
     fun readBestSellCourses(): Flow<List<LoadBestSellRates>>
+
+    /**
+     * Read cities from the database
+     */
+    fun readCities(): Flow<List<City>>
 }
