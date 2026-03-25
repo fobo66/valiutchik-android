@@ -55,7 +55,7 @@ sqldelight = "2.3.2"
 truth = "1.4.5"
 turbine = "1.2.1"
 uri = "0.0.21"
-work = "2.11.1"
+work = "2.11.2"
 xr = "1.0.0-alpha12"
 xrMaterial = "1.0.0-alpha15"
 
