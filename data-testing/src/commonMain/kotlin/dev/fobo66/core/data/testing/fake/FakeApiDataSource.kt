@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.api.entity.BankResponse
+import fobo66.valiutchik.api.entity.CityResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyResponse
 import kotlinx.io.IOException
@@ -28,19 +29,15 @@ class FakeApiDataSource : ApiDataSource {
     override suspend fun loadExchangeRates(
         currencies: List<String>,
         cityIndex: Int
-    ): List<CurrencyRateSource> = if (isError) {
-        throw IOException("test")
-    } else {
-        emptyList()
-    }
+    ): List<CurrencyRateSource> = forgeResponse()
 
-    override suspend fun loadBanks(): List<BankResponse> = if (isError) {
-        throw IOException("test")
-    } else {
-        emptyList()
-    }
+    override suspend fun loadBanks(): List<BankResponse> = forgeResponse()
 
-    override suspend fun loadCurrencies(): List<CurrencyResponse> = if (isError) {
+    override suspend fun loadCurrencies(): List<CurrencyResponse> = forgeResponse()
+
+    override suspend fun loadCities(): List<CityResponse> = forgeResponse()
+
+    private fun <T> forgeResponse(): List<T> = if (isError) {
         throw IOException("test")
     } else {
         emptyList()

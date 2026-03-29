@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -56,6 +59,17 @@ kotlin {
         }
     }
 
+    wasmJs {
+        compilerOptions {
+            freeCompilerArgs.add("-Xcontext-parameters")
+        }
+        browser {
+            testTask {
+                enabled = false
+            }
+        }
+    }
+
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the
     // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
@@ -72,7 +86,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.napier)
-                compileOnly(libs.compose.stable.marker)
+                implementation(libs.compose.stable.marker)
             }
         }
 
@@ -82,10 +96,15 @@ kotlin {
                 implementation(project(":data-testing"))
                 implementation(project(":data"))
                 implementation(project(":domain-testing"))
-                implementation(libs.koin.test)
-                implementation(libs.ktor.client)
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(libs.koin.test)
+                implementation(libs.ktor.client)
             }
         }
     }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,40 +17,24 @@
 package fobo66.valiutchik.core.model.repository
 
 import dev.fobo66.core.data.testing.fake.FakeApiDataSource
-import dev.fobo66.core.data.testing.fake.FakeFormattingDataSource
-import dev.fobo66.core.data.testing.fake.FakeLocaleDataSource
 import dev.fobo66.core.data.testing.fake.FakePersistenceDataSource
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.util.CURRENCY_NAME_HRYVNIA
-import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
-private const val RATE = 1.23
-private const val LOW_RATE = 0.0123
-private const val FORMATTED_RATE = "1.23"
 private const val CITY = "test"
-
-private const val TAG = "be-BY"
 
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {
     private val persistenceDataSource = FakePersistenceDataSource()
     private val currencyRatesDataSource = FakeApiDataSource()
-    private val formattingDataSource = FakeFormattingDataSource()
-
-    private val localeDataSource = FakeLocaleDataSource()
 
     private val currencyRateRepository: CurrencyRateRepository =
         CurrencyRateRepositoryImpl(
             persistenceDataSource,
-            currencyRatesDataSource,
-            formattingDataSource,
-            localeDataSource
+            currencyRatesDataSource
         )
 
     @Test
@@ -67,31 +51,5 @@ class CurrencyRateRepositoryTest {
         assertFails {
             currencyRateRepository.refreshExchangeRates(CITY)
         }
-    }
-
-    @Test
-    fun `normalize hryvnia rate`() {
-        val rate = BestCourse(
-            bankName = "test",
-            currencyValue = LOW_RATE,
-            currencyName = CURRENCY_NAME_HRYVNIA,
-            currencyId = 0,
-            multiplier = 100
-        )
-        val result = currencyRateRepository.formatRate(rate, TAG)
-        assertEquals(FORMATTED_RATE, result)
-    }
-
-    @Test
-    fun `do not normalize dollar rate`() {
-        val rate = BestCourse(
-            bankName = "test",
-            currencyValue = RATE,
-            currencyName = CURRENCY_NAME_US_DOLLAR,
-            currencyId = 0,
-            multiplier = 1
-        )
-        val result = currencyRateRepository.formatRate(rate, TAG)
-        assertEquals(FORMATTED_RATE, result)
     }
 }

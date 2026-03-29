@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package dev.fobo66.core.data.testing.fake
 
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.asStateFlow
 class FakeCurrencyRateRepository : CurrencyRateRepository {
 
     val rates = MutableStateFlow(emptyList<BestCourse>())
-    val locale = MutableStateFlow("en-US")
 
     var isRefreshed = false
 
@@ -36,18 +34,5 @@ class FakeCurrencyRateRepository : CurrencyRateRepository {
         isRefreshed = true
     }
 
-    override fun loadLocale(): Flow<LanguageTag> = locale.asStateFlow()
-
     override fun loadExchangeRates(): Flow<List<BestCourse>> = rates.asStateFlow()
-
-    override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
-        rate.currencyValue.toString()
-
-    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String = rate.bankName
-
-    override fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String =
-        rate.currencyName
-
-    override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
-        rate.currencyName
 }

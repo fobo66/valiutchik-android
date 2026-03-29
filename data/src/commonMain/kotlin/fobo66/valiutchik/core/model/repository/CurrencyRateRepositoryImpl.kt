@@ -25,17 +25,13 @@ import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
-import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.entities.toBank
 import fobo66.valiutchik.core.entities.toRate
-import fobo66.valiutchik.core.model.datasource.FormattingDataSource
-import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -46,9 +42,7 @@ private const val DEFAULT_CITY_INDEX = 1
 
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
-    private val apiDataSource: ApiDataSource,
-    private val formattingDataSource: FormattingDataSource,
-    private val localeDataSource: LocaleDataSource
+    private val apiDataSource: ApiDataSource
 ) : CurrencyRateRepository {
     private val citiesMap: ScatterMap<String, Int> by lazy(LazyThreadSafetyMode.NONE) {
         mutableScatterMapOf(
@@ -157,9 +151,6 @@ class CurrencyRateRepositoryImpl(
         return oldRates.size
     }
 
-    override fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatBankName(rate.bankName, languageTag)
-
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestBuyCourses()
@@ -196,18 +187,4 @@ class CurrencyRateRepositoryImpl(
                     }
                     .sortedBy { it.currencyId }
             }
-
-    override fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatCurrencyName(rate.currencyName, rate.multiplier, languageTag)
-
-    override fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatCurrencySymbol(rate.currencyName, languageTag)
-
-    override fun formatRate(rate: BestCourse, languageTag: LanguageTag): String =
-        formattingDataSource.formatCurrencyValue(
-            rate.currencyValue * rate.multiplier,
-            languageTag
-        )
-
-    override fun loadLocale(): Flow<LanguageTag> = localeDataSource.locale.distinctUntilChanged()
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceIpImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
-import fobo66.valiutchik.core.model.datasource.UriDataSourceJvmImpl
+import fobo66.valiutchik.core.model.datasource.UriDataSourceExternalImpl
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -48,5 +48,5 @@ actual val systemModule: Module = module {
 
     single<AssetsDataSource> { AssetsDataSourceJvmImpl() }
 
-    single<UriDataSource> { UriDataSourceJvmImpl() }
+    single<UriDataSource> { UriDataSourceExternalImpl() }
 }

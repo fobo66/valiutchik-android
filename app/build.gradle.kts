@@ -23,7 +23,6 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
-    alias(libs.plugins.junit)
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
 }
@@ -185,27 +184,12 @@ dependencies {
 
     detektPlugins(libs.detekt.rules.compose)
 
-    // tests
-    testImplementation(project(":domain-testing"))
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.junit.api)
-    testRuntimeOnly(libs.junit.engine)
-    testImplementation(libs.turbine)
-    testImplementation(libs.truth)
-
     androidTestImplementation(project(":domain-testing"))
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlin.test)
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.test.espresso.contrib)
-    androidTestImplementation(libs.androidx.test.espresso.intents)
-    androidTestImplementation(libs.androidx.test.espresso.accessibility)
-    androidTestImplementation(libs.androidx.test.truth)
     androidTestImplementation(libs.truth)
-    androidTestImplementation(libs.hamcrest)
     androidTestImplementation(libs.work.testing)
 }

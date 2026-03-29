@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +16,11 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.fobo66.valiutchik.core.db.City
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY
+import fobo66.valiutchik.core.KEY_DEFAULT_CITY_ID
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.Flow
@@ -25,11 +28,20 @@ import kotlinx.coroutines.flow.map
 
 private const val DEFAULT_UPDATE_INTERVAL = 3
 private const val DEFAULT_CITY = "Minsk"
+private const val DEFAULT_CITY_ID = 1
 
-class PreferenceRepositoryImpl(private val preferencesDataSource: PreferencesDataSource) :
-    PreferenceRepository {
+class PreferenceRepositoryImpl(
+    private val preferencesDataSource: PreferencesDataSource,
+    private val persistenceDataSource: PersistenceDataSource
+) : PreferenceRepository {
     override fun observeDefaultCityPreference(): Flow<String> =
         preferencesDataSource.observeString(KEY_DEFAULT_CITY, DEFAULT_CITY)
+
+    override fun observeDefaultCityIdPreference(): Flow<Long> =
+        preferencesDataSource.observeInt(KEY_DEFAULT_CITY_ID, DEFAULT_CITY_ID)
+            .map { it.toLong() }
+
+    override fun observeCities(): Flow<List<City>> = persistenceDataSource.readCities()
 
     override fun observeUpdateIntervalPreference(): Flow<Float> =
         preferencesDataSource.observeInt(KEY_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
@@ -37,6 +49,10 @@ class PreferenceRepositoryImpl(private val preferencesDataSource: PreferencesDat
 
     override suspend fun updateDefaultCityPreference(newValue: String) {
         preferencesDataSource.saveString(KEY_DEFAULT_CITY, newValue)
+    }
+
+    override suspend fun updateDefaultCityIdPreference(newValue: Long) {
+        preferencesDataSource.saveInt(KEY_DEFAULT_CITY_ID, newValue.toInt())
     }
 
     override suspend fun updateUpdateIntervalPreference(newValue: Float) {

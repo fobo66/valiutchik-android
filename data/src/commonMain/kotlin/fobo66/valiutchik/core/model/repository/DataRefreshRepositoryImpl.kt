@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.repository
 
 import androidx.collection.ScatterSet
 import androidx.collection.scatterSetOf
+import dev.fobo66.valiutchik.core.db.City
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.core.entities.DataSyncFailedException
 import fobo66.valiutchik.core.entities.toBank
@@ -25,6 +26,7 @@ import fobo66.valiutchik.core.entities.toCurrency
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
@@ -53,9 +55,27 @@ class DataRefreshRepositoryImpl(
                     .toSet()
             }
 
+            val cities = async {
+                val existingCities = persistenceDataSource.readCities().first().map { it.id }
+                apiDataSource.loadCities()
+                    .map { cityResponse ->
+                        City(
+                            id = cityResponse.id,
+                            rusName = cityResponse.name,
+                            belName = cityResponse.name,
+                            name = cityResponse.alias.replaceFirstChar {
+                                if (it.isLowerCase()) it.uppercaseChar() else it
+                            }
+                        )
+                    }
+                    .filterNot { existingCities.contains(it.id) }
+                    .toSet()
+            }
+
             with(persistenceDataSource) {
                 saveCurrencies(currencies.await())
                 saveBanks(banks.await())
+                saveCities(cities.await())
             }
         } catch (e: IOException) {
             throw DataSyncFailedException(e)

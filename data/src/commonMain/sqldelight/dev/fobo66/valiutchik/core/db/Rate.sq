@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS Rate (
   `bankId` INTEGER NOT NULL,
   `currencyId` TEXT NOT NULL,
   `buyRate` REAL NOT NULL,
-  `sellRate` REAL NOT NULL
+  `sellRate` REAL NOT NULL,
+  `cityId` INTEGER NOT NULL
  );
 
  CREATE INDEX IF NOT EXISTS `index_rates_buy` ON `Rate` (`buyRate`);
@@ -33,8 +34,8 @@ GROUP BY Rate.currencyId
 ORDER BY sortOrder;
 
 insertRate:
-INSERT OR REPLACE INTO Rate(date, bankId, currencyId, buyRate, sellRate)
-VALUES (?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Rate(date, bankId, currencyId, buyRate, sellRate, cityId)
+VALUES (?, ?, ?, ?, ?, ?);
 
 deleteRates:
 DELETE FROM Rate WHERE id IN :ids;

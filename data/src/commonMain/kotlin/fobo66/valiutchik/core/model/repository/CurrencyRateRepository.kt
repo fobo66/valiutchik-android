@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package fobo66.valiutchik.core.model.repository
 
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -35,30 +34,4 @@ interface CurrencyRateRepository {
      * Load exchange rates from database or from network
      */
     fun loadExchangeRates(): Flow<List<BestCourse>>
-
-    /**
-     * Load current user locale
-     */
-    fun loadLocale(): Flow<LanguageTag>
-
-    /**
-     * Format currency rate into human-readable form
-     */
-    fun formatRate(rate: BestCourse, languageTag: LanguageTag): String
-
-    /**
-     * Simplify and transliterate bank name for display
-     */
-    fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
-
-    /**
-     * Format currency symbol into human-readable form
-     */
-    fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String
-
-
-    /**
-     * Format currency symbol into human-readable form
-     */
-    fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String
 }

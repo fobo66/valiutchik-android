@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ const val PROCESSED_DATE = "2025-08-09T07:50:25Z"
 fun buildBank(
     bankId: Long = ID,
     branchId: Long = ID,
+    cityId: Long = ID,
     date: Long = DATE,
     bankName: String = TEST,
     usdBuy: Double = RATE,
@@ -51,7 +52,8 @@ fun buildBank(
             dateUpdate = date,
             name = CURRENCY_ALIAS_US_DOLLAR,
             sell = usdSell
-        )
+        ),
+        cityId = cityId
     ),
     CurrencyRateSource(
         bankId = bankId,
@@ -62,7 +64,8 @@ fun buildBank(
             name = CURRENCY_ALIAS_EURO,
             sell = eurSell
         ),
-        id = branchId
+        id = branchId,
+        cityId = cityId
     ),
     CurrencyRateSource(
         id = branchId,
@@ -73,7 +76,8 @@ fun buildBank(
             dateUpdate = date,
             name = CURRENCY_ALIAS_ZLOTY,
             sell = plnSell
-        )
+        ),
+        cityId = cityId
     ),
     CurrencyRateSource(
         id = branchId,
@@ -84,7 +88,8 @@ fun buildBank(
             dateUpdate = date,
             name = CURRENCY_ALIAS_HRYVNIA,
             sell = uahSell
-        )
+        ),
+        cityId = cityId
     ),
     CurrencyRateSource(
         id = branchId,
@@ -95,6 +100,7 @@ fun buildBank(
             dateUpdate = date,
             name = CURRENCY_ALIAS_RUBLE,
             sell = rubSell
-        )
+        ),
+        cityId = cityId
     )
 )

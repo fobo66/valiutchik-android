@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.fobo66.valiutchik.core.db.City
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -23,7 +24,10 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PreferenceRepository {
     fun observeDefaultCityPreference(): Flow<String>
+    fun observeDefaultCityIdPreference(): Flow<Long>
+    fun observeCities(): Flow<List<City>>
     fun observeUpdateIntervalPreference(): Flow<Float>
     suspend fun updateDefaultCityPreference(newValue: String)
+    suspend fun updateDefaultCityIdPreference(newValue: Long)
     suspend fun updateUpdateIntervalPreference(newValue: Float)
 }

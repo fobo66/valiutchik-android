@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,13 +57,13 @@ class FormattingDataSourceIcuImplTest {
     @Test
     fun transliterateToDefaultLocale() {
         val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
-        assertThat(result).isEqualTo("Priorbank")
+        assertThat(result).isEqualTo(TRANSLITERATED_BANK_NAME)
     }
 
     @Test
     fun transliterateToRandom() {
         val result = formattingDataSource.formatBankName(BANK_NAME, TAG)
-        assertThat(result).isEqualTo("Priorbank")
+        assertThat(result).isEqualTo(TRANSLITERATED_BANK_NAME)
     }
 
     @Test
@@ -81,6 +81,6 @@ class FormattingDataSourceIcuImplTest {
     @Test
     fun transliterateToBelarusianLocale() {
         val result = formattingDataSource.formatBankName(BANK_NAME, BELARUSIAN_TAG)
-        assertThat(result).isEqualTo("Прыорбанк")
+        assertThat(result).isEqualTo(BELARUSIFIED_BANK_NAME)
     }
 }

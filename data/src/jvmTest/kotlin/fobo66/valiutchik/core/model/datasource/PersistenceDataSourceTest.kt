@@ -51,10 +51,10 @@ class PersistenceDataSourceTest {
     @BeforeTest
     fun setUp() = runTest {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-        Database.Schema.create(driver)
+        Database.Schema.create(driver).await()
         db = Database(driver)
         persistenceDataSource = PersistenceDataSourceImpl(db, ioDispatcher)
-        db.bankQueries.insertBank(Bank(id = 1, name = "bank", formattedName = "test")).await()
+        db.bankQueries.insertBank(Bank(id = 1, name = "bank", formattedName = "test"))
     }
 
     @AfterTest
