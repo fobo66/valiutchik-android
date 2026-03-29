@@ -2,7 +2,8 @@ import initSqlJs from "sql.js";
 
 let db = null;
 async function createDatabase() {
-  let SQL = await initSqlJs({ locateFile: file => "/sql-wasm-browser.wasm" });
+  console.log("Creating database");
+  let SQL = await initSqlJs({ locateFile: file => "/sql-wasm.wasm" });
   db = new SQL.Database();
 }
 
@@ -55,4 +56,6 @@ if (typeof importScripts === "function") {
       .then(onModuleReady.bind(event))
       .catch(onError.bind(event));
   }
+} else {
+  console.error("Creating database is not possible");
 }

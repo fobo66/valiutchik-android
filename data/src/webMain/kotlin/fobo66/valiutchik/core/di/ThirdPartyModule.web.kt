@@ -23,10 +23,15 @@ import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import dev.fobo66.valiutchik.core.db.Database
+import fobo66.valiutchik.api.di.Dispatcher
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okio.FileSystem
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 import org.w3c.dom.Worker
 
@@ -40,7 +45,12 @@ actual val thirdPartyModule = module {
     single<SqlDriver> {
         WebWorkerDriver(jsWorker()).also {
             GlobalScope.launch {
-                Database.Schema.awaitCreate(it)
+                Napier.d { "Setting up driver" }
+                withContext(get<CoroutineDispatcher>(qualifier(Dispatcher.BACKGROUND))) {
+                    Napier.d { "Creating schema" }
+                    Database.Schema.awaitCreate(it)
+                    Napier.d { "Created tables" }
+                }
             }
         }
     }
