@@ -23,9 +23,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.StateFlow
 
 abstract class PreferencesViewModel : ViewModel() {
-    abstract val defaultCityPreference: StateFlow<String>
+    abstract val defaultCityPreference: StateFlow<Long>
     abstract val defaultCityPreferenceValues: StateFlow<ImmutableList<CityPreference>>
     abstract val updateIntervalPreference: StateFlow<Float>
-    abstract fun updateDefaultCity(newDefaultCity: String): Job
+    abstract fun updateDefaultCity(newDefaultCity: Long): Job
     abstract fun updateUpdateInterval(newUpdateInterval: Float): Job
 }

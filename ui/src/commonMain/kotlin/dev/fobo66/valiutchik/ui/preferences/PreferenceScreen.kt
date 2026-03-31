@@ -49,7 +49,7 @@ const val UPDATE_INTERVAL_STEPS = 22
 
 @Composable
 fun PreferenceScreen(
-    defaultCityValue: String,
+    defaultCityValue: Long,
     defaultCityValues: ImmutableList<CityPreference>,
     updateIntervalValue: Float,
     canOpenSettings: Boolean,
@@ -79,7 +79,7 @@ fun PreferenceScreen(
 
 @Composable
 fun PreferenceScreenContent(
-    defaultCityValue: String,
+    defaultCityValue: Long,
     defaultCityValues: ImmutableList<CityPreference>,
     updateIntervalValue: Float,
     onDefaultCityChange: (String) -> Unit,
@@ -101,7 +101,7 @@ fun PreferenceScreenContent(
             title = {
                 Text(text = stringResource(Res.string.pref_title_default_city))
             },
-            value = defaultCityValue,
+            value = defaultCityValue.toString(),
             entries = entries,
             onValueChange = onDefaultCityChange,
             modifier = Modifier.testTag(TAG_DEFAULT_CITY)
@@ -133,8 +133,8 @@ private const val PREVIEW_UPDATE_INTERVAL_VALUE = 3f
 private fun PreferenceScreenPreview() {
     AppTheme {
         PreferenceScreen(
-            defaultCityValue = "Minsk",
-            defaultCityValues = persistentListOf(),
+            defaultCityValue = 1L,
+            defaultCityValues = persistentListOf(CityPreference("Minsk", 1L)),
             updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,
             canOpenSettings = true,
             onDefaultCityChange = {},

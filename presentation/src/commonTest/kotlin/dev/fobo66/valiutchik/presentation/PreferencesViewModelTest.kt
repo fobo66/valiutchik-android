@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package dev.fobo66.valiutchik.presentation
 
 import app.cash.turbine.test
 import dev.fobo66.domain.testing.fake.FakeLoadDefaultCityPreference
+import dev.fobo66.domain.testing.fake.FakeLoadDefaultCityPreferenceValues
 import dev.fobo66.domain.testing.fake.FakeLoadUpdateIntervalPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateDefaultCityPreference
 import dev.fobo66.domain.testing.fake.FakeUpdateUpdateIntervalPreference
@@ -36,19 +37,20 @@ import kotlinx.coroutines.test.setMain
 
 private const val INTERVAL = 1f
 private const val NEW_INTERVAL = 3f
-private const val CITY = "test"
-private const val NEW_CITY = "newcity"
+private const val CITY = 1L
+private const val NEW_CITY = 2L
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesViewModelTest {
     private lateinit var viewModel: PreferencesViewModel
 
     private val fakeStorage = buildMap {
-        put(KEY_DEFAULT_CITY, CITY)
+        put(KEY_DEFAULT_CITY, CITY.toString())
         put(KEY_UPDATE_INTERVAL, INTERVAL.toString())
     }.toMutableMap()
 
     private val loadDefaultCityPreference = FakeLoadDefaultCityPreference(fakeStorage)
+    private val loadDefaultCityPreferenceValues = FakeLoadDefaultCityPreferenceValues()
     private val updateDefaultCityPreference = FakeUpdateDefaultCityPreference(fakeStorage)
     private val loadUpdateIntervalPreference = FakeLoadUpdateIntervalPreference(fakeStorage)
     private val updateUpdateIntervalPreference = FakeUpdateUpdateIntervalPreference(fakeStorage)
@@ -59,6 +61,7 @@ class PreferencesViewModelTest {
         viewModel = PreferencesViewModelImpl(
             loadDefaultCityPreference,
             loadUpdateIntervalPreference,
+            loadDefaultCityPreferenceValues,
             updateDefaultCityPreference,
             updateUpdateIntervalPreference
         )

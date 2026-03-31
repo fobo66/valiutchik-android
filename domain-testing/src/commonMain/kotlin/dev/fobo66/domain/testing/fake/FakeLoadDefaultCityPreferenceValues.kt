@@ -16,14 +16,11 @@
 
 package dev.fobo66.domain.testing.fake
 
-import fobo66.valiutchik.core.KEY_DEFAULT_CITY
-import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
+import fobo66.valiutchik.domain.entities.CityPreference
+import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceValues
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 
-class FakeLoadDefaultCityPreference(private val storage: Map<String, String>) :
-    LoadDefaultCityPreference {
-    override fun execute(): Flow<Long> = flowOf(storage)
-        .map { it.getValue(KEY_DEFAULT_CITY).toLong() }
+class FakeLoadDefaultCityPreferenceValues : LoadDefaultCityPreferenceValues {
+    override fun execute(): Flow<List<CityPreference>> = flowOf(emptyList())
 }
