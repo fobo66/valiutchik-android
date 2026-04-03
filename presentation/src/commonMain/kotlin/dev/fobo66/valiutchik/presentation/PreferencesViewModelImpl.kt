@@ -47,8 +47,8 @@ class PreferencesViewModelImpl(
     override val updateIntervalPreference: StateFlow<Float> = loadUpdateIntervalPreference.execute()
         .stateInWhileSubscribed(initialValue = 0.0f)
 
-    override fun updateDefaultCity(newDefaultCity: Long) = viewModelScope.launch {
-        updateDefaultCityPreference.execute(newDefaultCity)
+    override fun updateDefaultCity(newDefaultCity: String) = viewModelScope.launch {
+        updateDefaultCityPreference.execute(newDefaultCity.toLong())
     }
 
     override fun updateUpdateInterval(newUpdateInterval: Float) = viewModelScope.launch {
