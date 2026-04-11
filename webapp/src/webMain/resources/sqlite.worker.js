@@ -9,6 +9,7 @@ async function createDatabase() {
 
 function onModuleReady() {
   const data = this.data;
+  console.log(data)
 
   switch (data && data.action) {
     case "exec":
@@ -48,14 +49,9 @@ function onError(err) {
   });
 }
 
-if (typeof importScripts === "function") {
-  db = null;
-  const sqlModuleReady = createDatabase()
-  self.onmessage = (event) => {
-    return sqlModuleReady
-      .then(onModuleReady.bind(event))
-      .catch(onError.bind(event));
-  }
-} else {
-  console.error("Creating database is not possible");
+const sqlModuleReady = createDatabase()
+self.onmessage = (event) => {
+  return sqlModuleReady
+    .then(onModuleReady.bind(event))
+    .catch(onError.bind(event));
 }
