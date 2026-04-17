@@ -37,7 +37,7 @@ import org.w3c.dom.Worker
 
 @OptIn(ExperimentalWasmJsInterop::class)
 internal fun jsWorker(): Worker = js(
-    """new Worker(new URL("./sqlite.worker.js", import.meta.url))"""
+    """new Worker(new URL("./sqlite.worker.js", import.meta.url), { type: "module" })"""
 )
 
 @OptIn(DelicateCoroutinesApi::class)
