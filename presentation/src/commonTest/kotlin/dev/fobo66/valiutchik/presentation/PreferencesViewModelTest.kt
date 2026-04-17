@@ -82,7 +82,7 @@ class PreferencesViewModelTest {
 
     @Test
     fun `update default city pref`() = runTest {
-        viewModel.updateDefaultCity(NEW_CITY)
+        viewModel.updateDefaultCity(NEW_CITY.toString())
 
         viewModel.defaultCityPreference.test {
             val pref = awaitItem()
