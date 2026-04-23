@@ -41,9 +41,7 @@ android {
     }
 
     compileSdk {
-        version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-            minorApiLevel = 1
-        }
+        version = release(37)
     }
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
@@ -51,7 +49,7 @@ android {
             version = release(AndroidVersion.VersionCodes.R)
         }
         targetSdk {
-            version = release(AndroidVersion.VersionCodes.BAKLAVA)
+            version = release(37)
         }
         versionCode = 25
         versionName = "1.15.1"

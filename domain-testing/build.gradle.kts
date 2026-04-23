@@ -37,9 +37,7 @@ kotlin {
     android {
         namespace = "dev.fobo66.domain.testing"
         compileSdk {
-            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-                minorApiLevel = 1
-            }
+            version = release(37)
         }
 
         minSdk {

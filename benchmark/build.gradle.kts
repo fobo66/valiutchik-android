@@ -27,9 +27,7 @@ plugins {
 
 android {
     compileSdk {
-        version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-            minorApiLevel = 1
-        }
+        version = release(37)
     }
 
     compileOptions {

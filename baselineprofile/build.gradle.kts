@@ -28,9 +28,7 @@ plugins {
 android {
     namespace = "dev.fobo66.baselineprofile"
     compileSdk {
-        version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-            minorApiLevel = 1
-        }
+        version = release(37)
     }
 
     compileOptions {
@@ -43,7 +41,7 @@ android {
             version = release(AndroidVersion.VersionCodes.R)
         }
         targetSdk {
-            version = release(AndroidVersion.VersionCodes.BAKLAVA)
+            version = release(37)
         }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
