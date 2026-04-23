@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import dev.fobo66.valiutchik.ui.preferences.PreferenceScreen
 import kotlin.test.Test
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
+import kotlinx.collections.immutable.persistentListOf
 
 @SmallTest
 @OptIn(ExperimentalTestApi::class)
@@ -40,7 +41,8 @@ class PreferencesScreenTest {
         var showLicense = false
         setContent {
             PreferenceScreen(
-                defaultCityValue = "Minsk",
+                defaultCityValue = 1L,
+                defaultCityValues = persistentListOf(),
                 updateIntervalValue = 1f,
                 canOpenSettings = true,
                 onDefaultCityChange = {},
@@ -62,7 +64,8 @@ class PreferencesScreenTest {
 
         setContent {
             PreferenceScreen(
-                defaultCityValue = "Minsk",
+                defaultCityValue = 1L,
+                defaultCityValues = persistentListOf(),
                 updateIntervalValue = updateInterval,
                 canOpenSettings = true,
                 onDefaultCityChange = {},
@@ -83,7 +86,8 @@ class PreferencesScreenTest {
     fun defaultCityDialogShown() = runComposeUiTest {
         setContent {
             PreferenceScreen(
-                defaultCityValue = "Minsk",
+                defaultCityValue = 1L,
+                defaultCityValues = persistentListOf(),
                 updateIntervalValue = 1f,
                 canOpenSettings = true,
                 onDefaultCityChange = {},
