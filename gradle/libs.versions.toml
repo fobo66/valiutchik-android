@@ -1,11 +1,11 @@
 [versions]
 aboutLibraries = "14.0.1"
 accompanist = "0.37.3"
-androidGradlePlugin = "9.3.0-alpha01"
+androidGradlePlugin = "9.3.0-alpha02"
 androidxActivity = "1.13.0"
 androidxAnnotations = "1.10.0"
 androidxBenchmark = "1.5.0-alpha05"
-androidxCore = "1.18.0"
+androidxCore = "1.19.0-alpha01"
 androidxCollection = "1.6.0"
 androidxDatastore = "1.3.0-alpha08"
 androidxGlance = "1.2.0-rc01"
@@ -20,7 +20,7 @@ androidxTestUiAutomator = "2.3.0"
 androidxTracing = "1.3.0"
 androidxWindow = "1.5.1"
 baselineProfilePlugin = "1.4.1"
-compose = "1.11.0"
+compose = "1.12.0-alpha01"
 composeMultiplatform = "1.11.0-beta03"
 composeMultiplatformAdaptive = "1.3.0-alpha07"
 composeMultiplatformMaterial = "1.10.0-alpha05"
@@ -68,7 +68,7 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "androidxBenchmark" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidxCollection" }
-androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-core = { module = "androidx.core:core", version.ref = "androidxCore" }
 androidx-datastore-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidxDatastore" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
 androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
