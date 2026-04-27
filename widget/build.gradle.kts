@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,10 +29,14 @@ plugins {
 
 android {
     namespace = "dev.fobo66.valiutchik.android.widget"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(37)
+    }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.BankResponse
+import fobo66.valiutchik.api.entity.CityResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesRequest
 import fobo66.valiutchik.api.entity.CurrencyResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.get
-import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsChannel
@@ -39,9 +39,7 @@ import kotlinx.io.IOException
 private const val API_URL_RATES = "https://api.myfin.by/currency/rates"
 private const val API_URL_BANKS = "https://api.myfin.by/banks"
 private const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
-
-private const val CLACKS_KEY = "X-Clacks-Overhead"
-private const val CLACKS_VALUE = "GNU Terry Pratchett"
+private const val API_URL_CITIES = "https://api.myfin.by/city"
 
 class ApiDataSourceImpl(
     private val client: HttpClient,
@@ -58,7 +56,6 @@ class ApiDataSourceImpl(
                     async {
                         val response = client.post(API_URL_RATES) {
                             contentType(ContentType.Application.Json)
-                            header(CLACKS_KEY, CLACKS_VALUE)
                             setBody(request)
                         }
                         parser.parseRates(response.bodyAsChannel().readBuffer())
@@ -73,10 +70,7 @@ class ApiDataSourceImpl(
 
     override suspend fun loadBanks(): List<BankResponse> = withContext(ioDispatcher) {
         try {
-            val response = client.get(API_URL_BANKS) {
-                contentType(ContentType.Application.Json)
-                header(CLACKS_KEY, CLACKS_VALUE)
-            }
+            val response = client.get(API_URL_BANKS)
             parser.parseBanks(response.bodyAsChannel().readBuffer())
         } catch (e: ResponseException) {
             throw IOException(e)
@@ -85,11 +79,17 @@ class ApiDataSourceImpl(
 
     override suspend fun loadCurrencies(): List<CurrencyResponse> = withContext(ioDispatcher) {
         try {
-            val response = client.get(API_URL_CURRENCIES) {
-                contentType(ContentType.Application.Json)
-                header(CLACKS_KEY, CLACKS_VALUE)
-            }
+            val response = client.get(API_URL_CURRENCIES)
             parser.parseCurrencies(response.bodyAsChannel().readBuffer())
+        } catch (e: ResponseException) {
+            throw IOException(e)
+        }
+    }
+
+    override suspend fun loadCities(): List<CityResponse> = withContext(ioDispatcher) {
+        try {
+            val response = client.get(API_URL_CITIES)
+            parser.parseCities(response.bodyAsChannel().readBuffer())
         } catch (e: ResponseException) {
             throw IOException(e)
         }

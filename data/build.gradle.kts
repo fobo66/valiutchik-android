@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -35,9 +38,7 @@ kotlin {
     android {
         namespace = "fobo66.valiutchik.core"
         compileSdk {
-            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-                minorApiLevel = 1
-            }
+            version = release(37)
         }
 
         minSdk {
@@ -64,6 +65,16 @@ kotlin {
         }
     }
 
+    wasmJs {
+        browser {
+            testTask {
+                useKarma {
+                    useFirefoxHeadless()
+                }
+            }
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -71,6 +82,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
+                implementation(libs.androidx.sqlite)
                 implementation(libs.aboutlibraries.core)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization)
@@ -78,8 +90,9 @@ kotlin {
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.sqlidelight.androidx)
                 implementation(libs.sqlidelight.coroutines)
-                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.core)
                 implementation(libs.napier)
                 implementation(libs.uri)
             }
@@ -111,7 +124,20 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.androidx.datastore)
                 implementation(libs.sqlidelight.android)
+            }
+        }
+
+        webMain {
+            dependencies {
+                implementation(libs.androidx.sqlite.web)
+                implementation(libs.kotlinx.browser)
+                implementation(libs.doistx.normalize)
+                implementation(libs.sqlidelight.js)
+                implementation(libs.sqlidelight.web)
+                implementation(npm("@sqlite.org/sqlite-wasm", "3.53.0-build1"))
+                implementation(devNpm("copy-webpack-plugin", "14.0.0"))
             }
         }
 
@@ -139,6 +165,7 @@ sqldelight {
     databases {
         create("Database") {
             packageName = "dev.fobo66.valiutchik.core.db"
+            generateAsync = true
         }
     }
 }

@@ -33,6 +33,8 @@ import fobo66.valiutchik.core.model.repository.DataRefreshRepository
 import fobo66.valiutchik.core.model.repository.DataRefreshRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.core.model.repository.LicensesRepositoryImpl
+import fobo66.valiutchik.core.model.repository.LocaleRepository
+import fobo66.valiutchik.core.model.repository.LocaleRepositoryImpl
 import fobo66.valiutchik.core.model.repository.LocationRepository
 import fobo66.valiutchik.core.model.repository.LocationRepositoryImpl
 import fobo66.valiutchik.core.model.repository.MapRepository
@@ -70,7 +72,7 @@ val repositoriesModule =
         }
 
         single<CurrencyRateRepository> {
-            CurrencyRateRepositoryImpl(get(), get(), get(), get())
+            CurrencyRateRepositoryImpl(get(), get())
         }
 
         single<DataRefreshRepository> {
@@ -90,6 +92,10 @@ val repositoriesModule =
         }
 
         single<PreferenceRepository> {
-            PreferenceRepositoryImpl(get())
+            PreferenceRepositoryImpl(get(), get())
+        }
+
+        single<LocaleRepository> {
+            LocaleRepositoryImpl(get(), get())
         }
     }

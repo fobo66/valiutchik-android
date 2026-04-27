@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package fobo66.valiutchik.domain.usecases
 
 import app.cash.turbine.test
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
+import dev.fobo66.core.data.testing.fake.FakeLocaleRepository
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -35,7 +36,9 @@ private const val NEW_LOCALE = "be-BY"
 
 class LoadExchangeRatesImplTest {
     private val currencyRateRepository = FakeCurrencyRateRepository()
-    private val loadExchangeRates: LoadExchangeRates = LoadExchangeRatesImpl(currencyRateRepository)
+    private val localeRepository = FakeLocaleRepository()
+    private val loadExchangeRates: LoadExchangeRates =
+        LoadExchangeRatesImpl(currencyRateRepository, localeRepository)
 
     @Test
     fun `empty list`() = runTest {
@@ -75,7 +78,7 @@ class LoadExchangeRatesImplTest {
         }
         loadExchangeRates.execute().test {
             assertTrue(awaitItem().isNotEmpty())
-            currencyRateRepository.locale.update { NEW_LOCALE }
+            localeRepository.locale.update { NEW_LOCALE }
             assertTrue(awaitItem().isNotEmpty())
         }
     }

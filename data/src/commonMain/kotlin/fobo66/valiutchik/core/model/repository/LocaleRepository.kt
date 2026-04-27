@@ -1,0 +1,51 @@
+/*
+ *    Copyright 2026 Andrey Mukamolov
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package fobo66.valiutchik.core.model.repository
+
+import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
+import kotlinx.coroutines.flow.Flow
+
+/**
+ * Repository to handle operations related to locale and language
+ */
+interface LocaleRepository {
+    /**
+     * Load current user locale
+     */
+    fun loadLocale(): Flow<LanguageTag>
+
+    /**
+     * Format currency rate into human-readable form
+     */
+    fun formatRate(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Simplify and transliterate bank name for display
+     */
+    fun formatBankName(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Format currency symbol into human-readable form
+     */
+    fun formatCurrencyName(rate: BestCourse, languageTag: LanguageTag): String
+
+    /**
+     * Format currency symbol into human-readable form
+     */
+    fun formatCurrencySymbol(rate: BestCourse, languageTag: LanguageTag): String
+}

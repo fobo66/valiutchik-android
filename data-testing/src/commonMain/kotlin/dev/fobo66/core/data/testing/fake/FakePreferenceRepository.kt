@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,19 +16,25 @@
 
 package dev.fobo66.core.data.testing.fake
 
+import dev.fobo66.valiutchik.core.db.City
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 
 class FakePreferenceRepository : PreferenceRepository {
     var defaultCity = "default"
+    var defaultCityId = 1L
     var updateInterval = 3.0f
 
     override fun observeDefaultCityPreference(): Flow<String> = flowOf(defaultCity)
+    override fun observeDefaultCityIdPreference(): Flow<Long> = flowOf(defaultCityId)
+    override fun observeCities(): Flow<List<City>> = emptyFlow()
 
     override fun observeUpdateIntervalPreference(): Flow<Float> = flowOf(updateInterval)
 
     override suspend fun updateDefaultCityPreference(newValue: String) = Unit
+    override suspend fun updateDefaultCityIdPreference(newValue: Long) = Unit
 
     override suspend fun updateUpdateIntervalPreference(newValue: Float) = Unit
 }

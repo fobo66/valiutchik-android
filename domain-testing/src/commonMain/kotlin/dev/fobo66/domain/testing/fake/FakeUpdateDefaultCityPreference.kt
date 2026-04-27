@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 
 class FakeUpdateDefaultCityPreference(private val storage: MutableMap<String, String>) :
     UpdateDefaultCityPreference {
-    override suspend fun execute(newDefaultCity: String) {
-        storage.put(KEY_DEFAULT_CITY, newDefaultCity)
+    override suspend fun execute(newDefaultCity: Long) {
+        storage.put(KEY_DEFAULT_CITY, newDefaultCity.toString())
     }
 }

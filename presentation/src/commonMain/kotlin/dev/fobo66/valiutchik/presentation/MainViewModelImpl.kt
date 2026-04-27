@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -91,7 +91,7 @@ class MainViewModelImpl(
             permissionGranted
         }
 
-    override fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
+    override suspend fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
         copyCurrencyRateToClipboard.execute(currencyValue)
     }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,6 +24,6 @@ import kotlinx.coroutines.flow.map
 
 class FakeLoadDefaultCityPreference(private val storage: Map<String, String>) :
     LoadDefaultCityPreference {
-    override fun execute(): Flow<String> = flowOf(storage)
-        .map { it.getValue(KEY_DEFAULT_CITY) }
+    override fun execute(): Flow<Long> = flowOf(storage)
+        .map { it.getValue(KEY_DEFAULT_CITY).toLong() }
 }

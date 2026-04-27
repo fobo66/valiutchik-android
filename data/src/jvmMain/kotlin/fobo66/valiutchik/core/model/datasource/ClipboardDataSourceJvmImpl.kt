@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 class ClipboardDataSourceJvmImpl : ClipboardDataSource {
-    override fun copyToClipboard(value: CharSequence): Boolean = try {
+    override suspend fun copyToClipboard(value: CharSequence): Boolean = try {
         Toolkit.getDefaultToolkit()
             .systemClipboard
             .setContents(

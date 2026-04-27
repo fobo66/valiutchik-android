@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,12 +41,15 @@ fun PreferencesPanel(
     val actualOnBack by rememberUpdatedState(onBack)
     val defaultCity by preferencesViewModel.defaultCityPreference
         .collectAsStateWithLifecycle()
+    val defaultCityValues by preferencesViewModel.defaultCityPreferenceValues
+        .collectAsStateWithLifecycle()
 
     val updateInterval by preferencesViewModel.updateIntervalPreference
         .collectAsStateWithLifecycle()
 
     PreferenceScreen(
         defaultCityValue = defaultCity,
+        defaultCityValues = defaultCityValues,
         updateIntervalValue = updateInterval,
         canOpenSettings = canOpenSettings,
         onDefaultCityChange = preferencesViewModel::updateDefaultCity,

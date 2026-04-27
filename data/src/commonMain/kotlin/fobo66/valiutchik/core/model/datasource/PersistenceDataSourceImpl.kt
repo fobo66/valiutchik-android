@@ -16,9 +16,10 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
+import com.eygraber.sqldelight.androidx.driver.coroutines.asFlow
+import com.eygraber.sqldelight.androidx.driver.coroutines.mapToList
 import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.City
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
@@ -34,6 +35,9 @@ class PersistenceDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : PersistenceDataSource {
 
+    override fun readCities(): Flow<List<City>> = database.cityQueries.loadCities().asFlow()
+        .mapToList(ioDispatcher)
+
     override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
         database.rateQueries.transaction {
             afterCommit { Napier.d { "Saved ${rates.size} rates" } }
@@ -43,7 +47,8 @@ class PersistenceDataSourceImpl(
                     it.bankId,
                     it.currencyId,
                     it.buyRate,
-                    it.sellRate
+                    it.sellRate,
+                    it.cityId
                 )
             }
         }
@@ -73,6 +78,16 @@ class PersistenceDataSourceImpl(
 
             banks.forEach {
                 database.bankQueries.insertBank(it)
+            }
+        }
+    }
+
+    override suspend fun saveCities(cities: Set<City>) = withContext(ioDispatcher) {
+        database.cityQueries.transaction {
+            afterCommit { Napier.d { "Saved ${cities.size} cities" } }
+
+            cities.forEach {
+                database.cityQueries.insertCity(it)
             }
         }
     }

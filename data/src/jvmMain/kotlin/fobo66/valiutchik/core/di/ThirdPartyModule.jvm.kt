@@ -19,6 +19,7 @@ package fobo66.valiutchik.core.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
@@ -32,7 +33,7 @@ actual val thirdPartyModule: Module = module {
     single<SqlDriver> {
         val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
         val dbUrl = "jdbc:sqlite:${dbFile.absolutePath}"
-        JdbcSqliteDriver(dbUrl, Properties(), Database.Schema)
+        JdbcSqliteDriver(dbUrl, Properties(), Database.Schema.synchronous())
     }
 
     single<DataStore<Preferences>> {

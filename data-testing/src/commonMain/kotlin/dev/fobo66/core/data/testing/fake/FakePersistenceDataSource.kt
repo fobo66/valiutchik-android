@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package dev.fobo66.core.data.testing.fake
 
 import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.City
 import dev.fobo66.valiutchik.core.db.Currency
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
@@ -34,8 +35,12 @@ class FakePersistenceDataSource : PersistenceDataSource {
     override fun loadCurrencies(): Flow<List<Currency>> = flowOf(emptyList())
 
     override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> = emptyFlow()
+    override suspend fun saveCities(cities: Set<City>) {
+        isSaved = true
+    }
 
     override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> = emptyFlow()
+    override fun readCities(): Flow<List<City>> = flowOf(emptyList())
 
     override suspend fun saveRates(rates: Set<Rate>) {
         isSaved = true

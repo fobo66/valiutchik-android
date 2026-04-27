@@ -19,6 +19,7 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import fobo66.valiutchik.core.model.repository.LocaleRepository
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -30,11 +31,13 @@ private data class CurrencyRatesIntermediate(
     val rates: List<BestCourse>
 )
 
-class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
-    LoadExchangeRates {
+class LoadExchangeRatesImpl(
+    private val currencyRateRepository: CurrencyRateRepository,
+    private val localeRepository: LocaleRepository
+) : LoadExchangeRates {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<BestCurrencyRate>> = currencyRateRepository.loadLocale()
+    override fun execute(): Flow<List<BestCurrencyRate>> = localeRepository.loadLocale()
         .combine(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
         .map { (languageTag, rates) ->
             rates.map {
@@ -44,10 +47,10 @@ class LoadExchangeRatesImpl(private val currencyRateRepository: CurrencyRateRepo
 
     private fun BestCourse.toRate(languageTag: LanguageTag): BestCurrencyRate {
         val key = currencyId * 10 + (if (isBuy == true) 1 else 0)
-        val bank = currencyRateRepository.formatBankName(this, languageTag)
-        val rateValue = currencyRateRepository.formatRate(this, languageTag)
-        val name = currencyRateRepository.formatCurrencyName(this, languageTag)
-        val symbol = currencyRateRepository.formatCurrencySymbol(this, languageTag)
+        val bank = localeRepository.formatBankName(this, languageTag)
+        val rateValue = localeRepository.formatRate(this, languageTag)
+        val name = localeRepository.formatCurrencyName(this, languageTag)
+        val symbol = localeRepository.formatCurrencySymbol(this, languageTag)
 
         return if (isBuy == true) {
             BestCurrencyRate.BuyRate(key, bank, rateValue, multiplier, name, symbol)
