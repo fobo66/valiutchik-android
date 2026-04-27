@@ -12,6 +12,7 @@ androidxGlance = "1.2.0-rc01"
 androidxGlancePreview = "1.2.0-rc01"
 androidxLifecycle = "2.10.0"
 androidxSplashscreen = "1.2.0"
+androidxSqliteDriver = "0.5.0-alpha.1"
 androidxStartup = "1.2.0"
 androidxTest = "1.7.0"
 androidxTestEspresso = "3.7.0"
@@ -151,6 +152,7 @@ slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 sqlidelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 sqlidelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
 sqlidelight-js = { group = "app.cash.sqldelight", name = "web-worker-driver", version.ref = "sqldelight" }
+sqlidelight-web = { group = "com.eygraber", name = "sqldelight-androidx-driver-opfs", version.ref = "androidxSqliteDriver" }
 sqlidelight-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
