@@ -16,8 +16,8 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
+import com.eygraber.sqldelight.androidx.driver.coroutines.asFlow
+import com.eygraber.sqldelight.androidx.driver.coroutines.mapToList
 import dev.fobo66.valiutchik.core.db.Bank
 import dev.fobo66.valiutchik.core.db.City
 import dev.fobo66.valiutchik.core.db.Currency

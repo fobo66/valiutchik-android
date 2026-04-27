@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@js-joda/core/-/core-3.2.0.tgz#3e61e21b7b2b8a6be746df1335cf91d70db2a273"
   integrity sha512-PMqgJ0sw5B7FKb2d5bWYIoxjri+QlW/Pys7+Rw82jSH0QN3rB05jZ/VrrsUdh1w4+i2kw9JOejXGq/KhDOX7Kg==
 
+"@sqlite.org/sqlite-wasm@3.53.0-build1":
+  version "3.53.0-build1"
+  resolved "https://registry.yarnpkg.com/@sqlite.org/sqlite-wasm/-/sqlite-wasm-3.53.0-build1.tgz#066cab9189973c39edbb7078c55bb4daa1cd2d30"
+  integrity sha512-PfWPWN2n+/37doa8oh2/oUXk4OOsRYZsxc1W1sDXIGb/Pu5Yrb+f2eyYpgQMGITVX7HVgxhs9P18Rc6I97ym/g==
+
 "@types/json-schema@^7.0.9":
   version "7.0.15"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
@@ -115,11 +120,6 @@ serialize-javascript@^7.0.3:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-7.0.4.tgz#c517735bd5b7631dd1fc191ee19cbb713ff8e05c"
   integrity sha512-DuGdB+Po43Q5Jxwpzt1lhyFSYKryqoNjQSA9M92tyw0lyHIOur+XCalOUe0KTJpyqzT8+fQ5A0Jf7vCx/NKmIg==
-
-sql.js@1.14.1:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/sql.js/-/sql.js-1.14.1.tgz#89b6bd5d7fa8c8fa8df6c449e0a351c38dca7404"
-  integrity sha512-gcj8zBWU5cFsi9WUP+4bFNXAyF1iRpA3LLyS/DP5xlrNzGmPIizUeBggKa8DbDwdqaKwUcTEnChtd2grWo/x/A==
 
 tinyglobby@^0.2.12:
   version "0.2.15"

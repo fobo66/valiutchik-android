@@ -82,6 +82,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
+                implementation(libs.androidx.sqlite)
                 implementation(libs.aboutlibraries.core)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization)
@@ -89,6 +90,7 @@ kotlin {
                 implementation(libs.kotlinx.io)
 
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.sqlidelight.androidx)
                 implementation(libs.sqlidelight.coroutines)
                 implementation(libs.androidx.datastore.core)
                 implementation(libs.napier)
@@ -129,11 +131,12 @@ kotlin {
 
         webMain {
             dependencies {
+                implementation(libs.androidx.sqlite.web)
                 implementation(libs.kotlinx.browser)
                 implementation(libs.doistx.normalize)
                 implementation(libs.sqlidelight.js)
                 implementation(libs.sqlidelight.web)
-                implementation(npm("sql.js", "1.14.1"))
+                implementation(npm("@sqlite.org/sqlite-wasm", "3.53.0-build1"))
                 implementation(devNpm("copy-webpack-plugin", "14.0.0"))
             }
         }

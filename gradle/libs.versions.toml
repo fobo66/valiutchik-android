@@ -12,6 +12,7 @@ androidxGlance = "1.2.0-rc01"
 androidxGlancePreview = "1.2.0-rc01"
 androidxLifecycle = "2.10.0"
 androidxSplashscreen = "1.2.0"
+androidxSqlite = "2.7.0-alpha03"
 androidxSqliteDriver = "0.5.0-alpha.1"
 androidxStartup = "1.2.0"
 androidxTest = "1.7.0"
@@ -82,6 +83,8 @@ androidx-glance-preview = { module = "androidx.glance:glance-preview", version.r
 androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplashscreen" }
+androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "androidxSqlite" }
+androidx-sqlite-web = { module = "androidx.sqlite:sqlite-web", version.ref = "androidxSqlite" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-test-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "androidxTestEspresso" }
@@ -150,7 +153,8 @@ profileinstaller = { module = "androidx.profileinstaller:profileinstaller", vers
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 sqlidelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
-sqlidelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
+sqlidelight-androidx = { group = "com.eygraber", name = "sqldelight-androidx-driver", version.ref = "androidxSqliteDriver" }
+sqlidelight-coroutines = { group = "com.eygraber", name = "sqldelight-coroutines-extensions", version.ref = "androidxSqliteDriver" }
 sqlidelight-js = { group = "app.cash.sqldelight", name = "web-worker-driver", version.ref = "sqldelight" }
 sqlidelight-web = { group = "com.eygraber", name = "sqldelight-androidx-driver-opfs", version.ref = "androidxSqliteDriver" }
 sqlidelight-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
