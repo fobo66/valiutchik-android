@@ -56,12 +56,6 @@ kotlin {
                 implementation(libs.napier)
             }
         }
-
-        webMain {
-            dependencies {
-                implementation(npm("@sqlite.org/sqlite-wasm", "3.53.0-build1"))
-            }
-        }
     }
 }
 

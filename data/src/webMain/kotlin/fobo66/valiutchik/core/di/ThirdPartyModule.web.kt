@@ -19,35 +19,40 @@ package fobo66.valiutchik.core.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import androidx.sqlite.driver.web.WebWorkerSQLiteDriver
+import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.SqlDriver
-import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDatabaseType
-import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDriver
+import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import dev.fobo66.valiutchik.core.db.Database
+import fobo66.valiutchik.api.di.Dispatcher
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okio.FileSystem
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-import org.w3c.dom.MODULE
 import org.w3c.dom.Worker
-import org.w3c.dom.WorkerOptions
-import org.w3c.dom.WorkerType
 
 @OptIn(ExperimentalWasmJsInterop::class)
-internal fun jsWorker(): Worker = Worker(jsWorkerUrl(), WorkerOptions(type = WorkerType.MODULE))
-
-@OptIn(ExperimentalWasmJsInterop::class)
-internal fun jsWorkerUrl(): String = js(
-    """new URL("./sqlite.worker.js", import.meta.url).toString()"""
+internal fun jsWorker(): Worker = js(
+    """new Worker(new URL("./sqlite.worker.js", import.meta.url), { type: "module" })"""
 )
 
 @OptIn(DelicateCoroutinesApi::class)
 actual val thirdPartyModule = module {
     single<SqlDriver> {
-        AndroidxSqliteDriver(
-            driver = WebWorkerSQLiteDriver(jsWorker()),
-            databaseType = AndroidxSqliteDatabaseType.File(DATABASE_NAME),
-            schema = Database.Schema
-        )
+        WebWorkerDriver(jsWorker()).also {
+            GlobalScope.launch {
+                Napier.d { "Setting up driver" }
+                withContext(get<CoroutineDispatcher>(qualifier(Dispatcher.BACKGROUND))) {
+                    Napier.d { "Creating schema" }
+                    Database.Schema.awaitCreate(it)
+                    Napier.d { "Created tables" }
+                }
+            }
+        }
     }
 
     single<DataStore<Preferences>> {
