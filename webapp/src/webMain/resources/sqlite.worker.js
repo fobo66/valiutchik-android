@@ -1,9 +1,9 @@
-import initSqlJs from "sql.js";
+import initSqlJs from "https://cdn.jsdelivr.net/npm/sql.js@1.14.1/+esm";
 
 let db = null;
 async function createDatabase() {
   console.log("Creating database");
-  let SQL = await initSqlJs({ locateFile: file => "/sql-wasm.wasm" });
+  let SQL = await initSqlJs({ locateFile: file => "./sql-wasm.wasm" });
   db = new SQL.Database();
 }
 

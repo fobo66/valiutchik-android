@@ -11,6 +11,7 @@ config.plugins.push(
     new CopyWebpackPlugin({
         patterns: [
             '../../node_modules/sql.js/dist/sql-wasm.wasm',
+            '../../node_modules/sql.js/dist/sql-wasm.js',
             '../../node_modules/sql.js/dist/sql-wasm-browser.wasm'
         ]
     })
