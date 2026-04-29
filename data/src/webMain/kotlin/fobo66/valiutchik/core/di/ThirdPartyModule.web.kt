@@ -33,11 +33,16 @@ import kotlinx.coroutines.withContext
 import okio.FileSystem
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
+import org.w3c.dom.MODULE
 import org.w3c.dom.Worker
+import org.w3c.dom.WorkerOptions
+import org.w3c.dom.WorkerType
+
+internal fun jsWorker(): Worker = Worker(jsWorkerUrl(), WorkerOptions(type = WorkerType.MODULE))
 
 @OptIn(ExperimentalWasmJsInterop::class)
-internal fun jsWorker(): Worker = js(
-    """new Worker(new URL("./sqlite.worker.js", import.meta.url), { type: "module" })"""
+internal fun jsWorkerUrl(): String = js(
+    """new URL("./sqlite.worker.js", import.meta.url).toString()"""
 )
 
 @OptIn(DelicateCoroutinesApi::class)
