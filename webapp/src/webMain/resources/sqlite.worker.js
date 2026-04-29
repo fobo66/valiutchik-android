@@ -5,6 +5,7 @@ async function createDatabase() {
   console.log("Creating database");
   let SQL = await initSqlJs({ locateFile: file => "./sql-wasm.wasm" });
   db = new SQL.Database();
+  console.log("Database created");
 }
 
 function onModuleReady() {
