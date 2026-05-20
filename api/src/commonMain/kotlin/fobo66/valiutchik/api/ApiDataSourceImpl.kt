@@ -48,7 +48,7 @@ class ApiDataSourceImpl(
 ) : ApiDataSource {
     override suspend fun loadExchangeRates(
         currencies: List<String>,
-        cityIndex: Int
+        cityIndex: Long
     ): List<CurrencyRateSource> = withContext(ioDispatcher) {
         try {
             currencies.map { CurrencyRatesRequest(cityId = cityIndex, currencyAlias = it) }

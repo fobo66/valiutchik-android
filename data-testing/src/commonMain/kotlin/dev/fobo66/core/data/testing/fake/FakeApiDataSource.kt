@@ -28,7 +28,7 @@ class FakeApiDataSource : ApiDataSource {
 
     override suspend fun loadExchangeRates(
         currencies: List<String>,
-        cityIndex: Int
+        cityIndex: Long
     ): List<CurrencyRateSource> = forgeResponse()
 
     override suspend fun loadBanks(): List<BankResponse> = forgeResponse()

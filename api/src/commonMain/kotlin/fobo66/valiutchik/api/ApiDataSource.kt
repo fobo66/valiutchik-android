@@ -34,7 +34,7 @@ interface ApiDataSource {
      */
     suspend fun loadExchangeRates(
         currencies: List<String>,
-        cityIndex: Int
+        cityIndex: Long
     ): List<CurrencyRateSource>
 
     /**

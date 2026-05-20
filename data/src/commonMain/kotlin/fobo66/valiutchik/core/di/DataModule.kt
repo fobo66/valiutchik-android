@@ -84,7 +84,7 @@ val repositoriesModule =
         }
 
         single<LocationRepository> {
-            LocationRepositoryImpl(get(), get())
+            LocationRepositoryImpl(get(), get(), get())
         }
 
         single<MapRepository> {

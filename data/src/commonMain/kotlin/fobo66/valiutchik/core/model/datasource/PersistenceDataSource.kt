@@ -77,4 +77,9 @@ interface PersistenceDataSource {
      * Read cities from the database
      */
     fun readCities(): Flow<List<City>>
+
+    /**
+     * Find city by name
+     */
+    suspend fun findCityIdByName(name: String): Long?
 }

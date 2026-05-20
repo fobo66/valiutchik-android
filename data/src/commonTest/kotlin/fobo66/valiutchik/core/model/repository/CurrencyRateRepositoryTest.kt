@@ -24,7 +24,7 @@ import kotlin.test.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
-private const val CITY = "test"
+private const val CITY = 1L
 
 @ExperimentalCoroutinesApi
 class CurrencyRateRepositoryTest {

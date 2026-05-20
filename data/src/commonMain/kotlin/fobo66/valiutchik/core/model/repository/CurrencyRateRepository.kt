@@ -26,7 +26,7 @@ interface CurrencyRateRepository {
     /**
      * Refresh exchange rates for the given city
      */
-    suspend fun refreshExchangeRates(city: String, defaultCity: String = city)
+    suspend fun refreshExchangeRates(city: Long, defaultCity: Long = city)
 
     suspend fun cleanUpOutdatedRates(): Int
 

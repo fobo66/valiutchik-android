@@ -159,3 +159,6 @@ SELECT * FROM City;
 insertCity:
 INSERT OR REPLACE INTO City(id, name, rusName, belName)
 VALUES ?;
+
+findCityIdByName:
+SELECT id FROM City WHERE name LIKE ?;

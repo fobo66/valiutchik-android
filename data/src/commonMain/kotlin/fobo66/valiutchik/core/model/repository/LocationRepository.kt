@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,5 +26,5 @@ interface LocationRepository {
      * @param defaultCity fallback city if location cannot be determined
      * @return current city name
      */
-    suspend fun resolveUserCity(defaultCity: String): String
+    suspend fun resolveUserCity(defaultCity: Long): Long
 }

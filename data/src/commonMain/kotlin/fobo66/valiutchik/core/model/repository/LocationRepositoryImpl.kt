@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,29 +19,32 @@ package fobo66.valiutchik.core.model.repository
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 import io.github.aakira.napier.Napier
 
 class LocationRepositoryImpl(
     private val locationDataSource: LocationDataSource,
-    private val geocodingDataSource: GeocodingDataSource
+    private val geocodingDataSource: GeocodingDataSource,
+    private val persistenceDataSource: PersistenceDataSource
 ) : LocationRepository {
 
-    override suspend fun resolveUserCity(defaultCity: String): String {
+    override suspend fun resolveUserCity(defaultCity: Long): Long {
         val city = try {
             Napier.v("Resolving user's location")
             val (latitude, longitude, ipAddress) = locationDataSource.resolveLocation()
             if (ipAddress != null) {
                 Napier.v("Using geocoding via IP address")
                 val response = geocodingDataSource.findPlaceByIpAddress()
-                response.city
+                persistenceDataSource.findCityIdByName(response.city)
             } else if (latitude == UNKNOWN_COORDINATE && longitude == UNKNOWN_COORDINATE) {
                 Napier.v("No geocoding, location is unknown")
                 null
             } else {
                 Napier.v("Using geocoding via coordinates")
                 val response = geocodingDataSource.findPlaceByCoordinates(latitude, longitude)
-                response.firstNotNullOfOrNull { it.properties.city }
+                val city = response.firstNotNullOfOrNull { it.properties.city }
+                persistenceDataSource.findCityIdByName(city.orEmpty())
             }
         } catch (e: GeocodingFailedException) {
             Napier.e("Failed to determine user city", e)

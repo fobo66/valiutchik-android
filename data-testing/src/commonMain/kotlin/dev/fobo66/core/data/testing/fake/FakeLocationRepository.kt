@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import fobo66.valiutchik.core.model.repository.LocationRepository
 class FakeLocationRepository : LocationRepository {
     var isResolved = false
 
-    override suspend fun resolveUserCity(defaultCity: String): String {
+    override suspend fun resolveUserCity(defaultCity: Long): Long {
         isResolved = true
-        return "fake"
+        return 1L
     }
 }

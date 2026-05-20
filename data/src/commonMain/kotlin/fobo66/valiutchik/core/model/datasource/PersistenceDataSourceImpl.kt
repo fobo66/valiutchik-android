@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import dev.fobo66.valiutchik.core.db.Bank
@@ -37,6 +38,10 @@ class PersistenceDataSourceImpl(
 
     override fun readCities(): Flow<List<City>> = database.cityQueries.loadCities().asFlow()
         .mapToList(ioDispatcher)
+
+    override suspend fun findCityIdByName(name: String): Long? = withContext(ioDispatcher) {
+        database.cityQueries.findCityIdByName(name).awaitAsOneOrNull()
+    }
 
     override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
         database.rateQueries.transaction {
