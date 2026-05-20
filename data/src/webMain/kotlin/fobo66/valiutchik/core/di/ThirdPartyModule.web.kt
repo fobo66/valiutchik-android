@@ -26,10 +26,9 @@ import dev.fobo66.valiutchik.core.db.Database
 import fobo66.valiutchik.api.di.Dispatcher
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okio.FileSystem
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
@@ -49,13 +48,11 @@ internal fun jsWorkerUrl(): String = js(
 actual val thirdPartyModule = module {
     single<SqlDriver> {
         WebWorkerDriver(jsWorker()).also {
-            GlobalScope.launch {
+            CoroutineScope(get<CoroutineDispatcher>(qualifier(Dispatcher.BACKGROUND))).launch {
                 Napier.d { "Setting up driver" }
-                withContext(get<CoroutineDispatcher>(qualifier(Dispatcher.BACKGROUND))) {
-                    Napier.d { "Creating schema" }
-                    Database.Schema.awaitCreate(it)
-                    Napier.d { "Created tables" }
-                }
+                Napier.d { "Creating schema" }
+                Database.Schema.awaitCreate(it)
+                Napier.d { "Created tables" }
             }
         }
     }
