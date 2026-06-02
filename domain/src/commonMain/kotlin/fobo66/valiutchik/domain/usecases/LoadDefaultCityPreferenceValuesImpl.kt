@@ -35,8 +35,8 @@ class LoadDefaultCityPreferenceValuesImpl(
                 .map { cities ->
                     cities.map { city ->
                         val label = when (languageTag) {
-                            "be" -> city.belName
-                            "ru" -> city.rusName
+                            "be-BY" -> city.belName
+                            "ru-RU" -> city.rusName
                             else -> city.name
                         }
 
