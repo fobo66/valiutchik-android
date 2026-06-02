@@ -23,7 +23,7 @@ import kotlinx.coroutines.await
 class ClipboardDataSourceWebImpl : ClipboardDataSource {
     @OptIn(ExperimentalWasmJsInterop::class)
     override suspend fun copyToClipboard(value: CharSequence): Boolean = try {
-        window.navigator.clipboard.writeText(value.toString()).await<Unit>()
+        window.navigator.clipboard.writeText(value.toString()).await()
         true
     } catch (e: JsException) {
         Napier.e(e) { "Failed to write to clipboard" }
