@@ -87,7 +87,7 @@ fun PreferenceScreenContent(
     onOpenSourceLicensesClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val entries = remember {
+    val entries = remember(defaultCityValues) {
         ListPreferenceEntries(
             defaultCityValues.map { ListPreferenceEntry(it.label, it.preferenceValue.toString()) }
                 .toImmutableList()
