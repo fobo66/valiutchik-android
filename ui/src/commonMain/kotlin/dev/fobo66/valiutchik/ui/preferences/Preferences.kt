@@ -89,9 +89,9 @@ fun ListPreference(
 ) {
     val (isDialogShown, showDialog) = remember { mutableStateOf(false) }
     val summaryValue = remember(entries, value) {
-        entries.preferenceEntries.find { it.value == value }?.key ?: entries.preferenceEntries.firstOrNull()?.key.orEmpty()
+        entries.preferenceEntries.find { it.value == value }?.key
+            ?: entries.preferenceEntries.firstOrNull()?.key.orEmpty()
     }
-
 
     TextPreference(
         title = title,
