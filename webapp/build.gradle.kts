@@ -32,16 +32,12 @@ plugins {
 kotlin {
 
     wasmJs {
-        browser {
-            commonWebpackConfig {
-                configDirectory = layout.projectDirectory.dir("webpack.config.d").asFile
-            }
-        }
+        browser()
         binaries.executable()
     }
 
     sourceSets {
-        commonMain {
+        webMain {
             dependencies {
                 implementation(project(":ui"))
                 implementation(project(":domain"))
