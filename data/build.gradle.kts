@@ -87,8 +87,9 @@ kotlin {
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
-
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.sqlidelight.androidx)
+                implementation(libs.androidx.sqlite)
                 implementation(libs.sqlidelight.coroutines)
                 implementation(libs.androidx.datastore.core)
                 implementation(libs.napier)
@@ -131,9 +132,9 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.browser)
                 implementation(libs.doistx.normalize)
+                implementation(libs.androidx.sqlite.web)
                 implementation(libs.sqlidelight.js)
-                implementation(npm("sql.js", "1.14.1"))
-                implementation(devNpm("copy-webpack-plugin", "14.0.0"))
+                implementation(libs.sqlidelight.androidx.web)
             }
         }
 
