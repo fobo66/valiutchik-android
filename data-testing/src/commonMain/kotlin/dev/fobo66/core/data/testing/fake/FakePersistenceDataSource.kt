@@ -41,7 +41,7 @@ class FakePersistenceDataSource : PersistenceDataSource {
 
     override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> = emptyFlow()
     override fun readCities(): Flow<List<City>> = flowOf(emptyList())
-    override suspend fun findCityIdByName(name: String): Long? = null
+    override suspend fun findCityIdByName(name: String): Long = 2L
 
     override suspend fun saveRates(rates: Set<Rate>) {
         isSaved = true
