@@ -18,6 +18,6 @@ package fobo66.valiutchik.api.di
 
 import io.ktor.client.engine.HttpClientEngineConfig
 import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.engine.js.JsClient
+import io.ktor.client.engine.js.Js
 
-actual fun provideEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = JsClient()
+actual fun provideEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = Js
