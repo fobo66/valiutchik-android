@@ -32,8 +32,6 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
-
-            freeCompilerArgs.add("-Xcontext-parameters")
         }
     }
 
@@ -51,16 +49,12 @@ kotlin {
             compileTaskProvider.configure {
                 compilerOptions {
                     jvmTarget = JvmTarget.JVM_17
-                    freeCompilerArgs.add("-Xcontext-parameters")
                 }
             }
         }
     }
 
     wasmJs {
-        compilerOptions {
-            freeCompilerArgs.add("-Xcontext-parameters")
-        }
         browser {
             testTask {
                 enabled = false
