@@ -20,6 +20,7 @@ import app.cash.turbine.test
 import dev.fobo66.domain.testing.fake.FakeCleanupOldRates
 import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRates
 import dev.fobo66.domain.testing.fake.FakeForceRefreshExchangeRatesForDefaultCity
+import dev.fobo66.domain.testing.fake.FakeLoadExchangeRates
 import dev.fobo66.domain.testing.fake.FakeRefreshData
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -31,13 +32,15 @@ class RatesInteractorImplTest {
     private val refreshExchangeRatesForDefaultCity = FakeForceRefreshExchangeRatesForDefaultCity()
     private val cleanUpOldRates = FakeCleanupOldRates()
     private val refreshData = FakeRefreshData()
+    private val loadExchangeRates = FakeLoadExchangeRates()
 
     private val refreshInteractor =
         RatesInteractorImpl(
             refreshExchangeRates,
             refreshExchangeRatesForDefaultCity,
             cleanUpOldRates,
-            refreshData
+            refreshData,
+            loadExchangeRates
         )
 
     @Test
