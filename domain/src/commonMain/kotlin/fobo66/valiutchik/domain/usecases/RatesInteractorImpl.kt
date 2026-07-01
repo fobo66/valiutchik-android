@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.entities.RefreshException
 import io.github.aakira.napier.Napier
 import kotlin.time.measureTime
@@ -23,13 +24,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class RefreshInteractorImpl(
+class RatesInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
     private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
     private val cleanUpOldRates: CleanUpOldRates,
-    private val refreshData: RefreshData
-) : RefreshInteractor {
+    private val refreshData: RefreshData,
+    private val loadExchangeRates: LoadExchangeRates
+) : RatesInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val rates: Flow<List<BestCurrencyRate>>
+        get() = loadExchangeRates.execute()
 
     override val isRefreshInProgress: Flow<Boolean> = _isRefreshInProgress.asStateFlow()
 
@@ -53,6 +57,7 @@ class RefreshInteractorImpl(
             "Cleanup took ${cleanupTime.inWholeMilliseconds} ms"
         }
     }
+
     private suspend fun refreshData() {
         val dataRefreshTime = measureTime {
             refreshData.execute()

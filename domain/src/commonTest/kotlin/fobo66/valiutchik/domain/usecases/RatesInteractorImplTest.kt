@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
 
-class RefreshInteractorImplTest {
+class RatesInteractorImplTest {
     private val refreshExchangeRates = FakeForceRefreshExchangeRates()
     private val refreshExchangeRatesForDefaultCity = FakeForceRefreshExchangeRatesForDefaultCity()
     private val cleanUpOldRates = FakeCleanupOldRates()
     private val refreshData = FakeRefreshData()
 
     private val refreshInteractor =
-        RefreshInteractorImpl(
+        RatesInteractorImpl(
             refreshExchangeRates,
             refreshExchangeRatesForDefaultCity,
             cleanUpOldRates,

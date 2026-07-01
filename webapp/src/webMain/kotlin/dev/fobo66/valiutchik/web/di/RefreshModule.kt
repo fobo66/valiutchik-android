@@ -16,10 +16,10 @@
 
 package dev.fobo66.valiutchik.web.di
 
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
-import fobo66.valiutchik.domain.usecases.RefreshInteractorImpl
+import fobo66.valiutchik.domain.usecases.RatesInteractor
+import fobo66.valiutchik.domain.usecases.RatesInteractorImpl
 import org.koin.dsl.module
 
 val refreshModule = module {
-    single<RefreshInteractor> { RefreshInteractorImpl(get(), get(), get(), get()) }
+    single<RatesInteractor> { RatesInteractorImpl(get(), get(), get(), get()) }
 }

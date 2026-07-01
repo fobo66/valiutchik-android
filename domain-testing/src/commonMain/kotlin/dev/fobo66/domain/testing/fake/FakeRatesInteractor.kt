@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,14 +17,18 @@
 package dev.fobo66.domain.testing.fake
 
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import fobo66.valiutchik.domain.usecases.LoadExchangeRates
+import fobo66.valiutchik.domain.usecases.RatesInteractor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 
-class FakeLoadExchangeRates : LoadExchangeRates {
+class FakeRatesInteractor : RatesInteractor {
+    val isInProgress = MutableStateFlow(false)
+    override val rates: Flow<List<BestCurrencyRate>>
+        get() = flowOf(emptyList())
 
-    val rates = MutableStateFlow<List<BestCurrencyRate>>(emptyList())
+    override val isRefreshInProgress: Flow<Boolean> = isInProgress.asStateFlow()
 
-    override fun execute(): Flow<List<BestCurrencyRate>> = rates.asStateFlow()
+    override suspend fun initiateRefresh(isLocationAvailable: Boolean) = Unit
 }

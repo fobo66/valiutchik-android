@@ -21,8 +21,7 @@ import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
-import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import fobo66.valiutchik.domain.usecases.RatesInteractor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -37,13 +36,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 class MainViewModelImpl(
-    loadExchangeRates: LoadExchangeRates,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap,
-    private val refreshInteractor: RefreshInteractor
+    private val ratesInteractor: RatesInteractor
 ) : MainViewModel() {
     override val bestCurrencyRates: StateFlow<ImmutableList<BestCurrencyRate>> =
-        loadExchangeRates.execute()
+        ratesInteractor.rates
             .onEach {
                 if (it.isEmpty()) {
                     isRefreshTriggered.emit(true)
@@ -64,9 +62,9 @@ class MainViewModelImpl(
             ::MainScreenStateTrigger
         ).filter { it.isRefreshTriggered && it.isLocationAvailable != null }
             .onEach {
-                refreshInteractor.initiateRefresh(it.isLocationAvailable == true)
+                ratesInteractor.initiateRefresh(it.isLocationAvailable == true)
                 isRefreshTriggered.emit(false)
-            }.flatMapLatest { refreshInteractor.isRefreshInProgress }
+            }.flatMapLatest { ratesInteractor.isRefreshInProgress }
             .map {
                 if (it) {
                     MainScreenState.Loading

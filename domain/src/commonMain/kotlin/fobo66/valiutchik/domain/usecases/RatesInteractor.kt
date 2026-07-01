@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,17 +14,24 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.domain.testing.fake
+package fobo66.valiutchik.domain.usecases
 
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
-class FakeRefreshInteractor : RefreshInteractor {
-    val isInProgress = MutableStateFlow(false)
+interface RatesInteractor {
 
-    override val isRefreshInProgress: Flow<Boolean> = isInProgress.asStateFlow()
+    val rates: Flow<List<BestCurrencyRate>>
 
-    override suspend fun initiateRefresh(isLocationAvailable: Boolean) = Unit
+    /**
+     * Flow to observe refresh progress
+     */
+    val isRefreshInProgress: Flow<Boolean>
+
+    /**
+     * Trigger rates refresh
+     *
+     * @param isLocationAvailable Whether the user's location can be obtained
+     */
+    suspend fun initiateRefresh(isLocationAvailable: Boolean)
 }

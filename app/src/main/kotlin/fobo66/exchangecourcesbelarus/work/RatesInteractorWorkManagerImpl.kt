@@ -24,8 +24,10 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import fobo66.valiutchik.domain.entities.BestCurrencyRate
+import fobo66.valiutchik.domain.usecases.LoadExchangeRates
 import fobo66.valiutchik.domain.usecases.LoadUpdateIntervalPreference
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import fobo66.valiutchik.domain.usecases.RatesInteractor
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToLong
 import kotlinx.coroutines.flow.Flow
@@ -37,10 +39,14 @@ private const val WORK_RATES_REFRESH = "backgroundRefresh"
 private const val WORK_DATA_REFRESH = "backgroundDataRefresh"
 private const val WORK_CLEANUP = "cleanup"
 
-class RefreshInteractorWorkManagerImpl(
+class RatesInteractorWorkManagerImpl(
     private val workManager: WorkManager,
-    private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference
-) : RefreshInteractor {
+    private val loadUpdateIntervalPreference: LoadUpdateIntervalPreference,
+    private val loadExchangeRates: LoadExchangeRates
+) : RatesInteractor {
+    override val rates: Flow<List<BestCurrencyRate>>
+        get() = loadExchangeRates.execute()
+
     override val isRefreshInProgress: Flow<Boolean>
         get() = workManager.getWorkInfosByTagFlow(WORK_TAG_REFRESH)
             .map { infos ->
