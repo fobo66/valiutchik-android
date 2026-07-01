@@ -21,6 +21,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface RatesInteractor {
 
+    /**
+     * Flow to observe best rates
+     */
     val rates: Flow<List<BestCurrencyRate>>
 
     /**
