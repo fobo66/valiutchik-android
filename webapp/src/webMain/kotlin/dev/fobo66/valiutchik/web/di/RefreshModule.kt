@@ -21,5 +21,5 @@ import fobo66.valiutchik.domain.usecases.RatesInteractorImpl
 import org.koin.dsl.module
 
 val refreshModule = module {
-    single<RatesInteractor> { RatesInteractorImpl(get(), get(), get(), get()) }
+    single<RatesInteractor> { RatesInteractorImpl(get(), get(), get(), get(), get()) }
 }

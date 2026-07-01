@@ -22,6 +22,6 @@ import org.koin.dsl.module
 
 val refreshModule = module {
     single<RatesInteractor> {
-        RatesInteractorImpl(get(), get(), get(), get())
+        RatesInteractorImpl(get(), get(), get(), get(), get())
     }
 }
