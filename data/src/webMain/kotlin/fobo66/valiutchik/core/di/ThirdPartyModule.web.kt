@@ -24,11 +24,9 @@ import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDatabaseType
 import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDriver
 import com.eygraber.sqldelight.androidx.driver.opfs.androidxSqliteOpfsDriver
 import dev.fobo66.valiutchik.core.db.Database
-import kotlinx.coroutines.DelicateCoroutinesApi
 import okio.FileSystem
 import org.koin.dsl.module
 
-@OptIn(DelicateCoroutinesApi::class)
 actual val thirdPartyModule = module {
     single<SqlDriver> {
         AndroidxSqliteDriver(

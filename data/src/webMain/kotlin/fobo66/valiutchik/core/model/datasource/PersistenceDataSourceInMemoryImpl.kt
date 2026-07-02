@@ -64,12 +64,48 @@ class PersistenceDataSourceInMemoryImpl : PersistenceDataSource {
     override fun loadCurrencies(): Flow<List<Currency>> = currenciesFlow.asStateFlow()
         .map { it.toList() }
 
-    override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> {
-        TODO("Not yet implemented")
+    override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> = ratesFlow.map { rates ->
+        rates.groupBy { it.currencyId.toLong() }
+            .map { (currencyId, currencyRates) ->
+                val currency =
+                    currenciesFlow.map { currencies -> currencies.find { it.id == currencyId } }
+                        .first()
+                val max = currencyRates.maxByOrNull { it.buyRate }
+                max?.let { maxRate ->
+                    val bank =
+                        banksFlow.map { banks -> banks.find { it.id == maxRate.bankId } }.first()
+                    LoadBestBuyRates(
+                        bankName = bank?.formattedName.orEmpty(),
+                        max = maxRate.buyRate,
+                        currencyId = currencyId.toString(),
+                        sortOrder = currencyId,
+                        multiplier = currency?.multiplier ?: 1
+                    )
+                }
+            }
+            .filterNotNull()
     }
 
-    override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> {
-        TODO("Not yet implemented")
+    override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> = ratesFlow.map { rates ->
+        rates.groupBy { it.currencyId.toLong() }
+            .map { (currencyId, currencyRates) ->
+                val currency =
+                    currenciesFlow.map { currencies -> currencies.find { it.id == currencyId } }
+                        .first()
+                val max = currencyRates.minByOrNull { it.sellRate }
+                max?.let { maxRate ->
+                    val bank =
+                        banksFlow.map { banks -> banks.find { it.id == maxRate.bankId } }.first()
+                    LoadBestSellRates(
+                        bankName = bank?.formattedName.orEmpty(),
+                        min = maxRate.sellRate,
+                        currencyId = currencyId.toString(),
+                        sortOrder = currencyId,
+                        multiplier = currency?.multiplier ?: 1
+                    )
+                }
+            }
+            .filterNotNull()
     }
 
     override fun readCities(): Flow<List<City>> = citiesFlow.asStateFlow()
