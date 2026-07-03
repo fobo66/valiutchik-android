@@ -22,10 +22,11 @@ import kotlinx.coroutines.await
 
 class ClipboardDataSourceWebImpl : ClipboardDataSource {
     @OptIn(ExperimentalWasmJsInterop::class)
+    @Suppress("TooGenericExceptionCaught") // interop throws generic exception
     override suspend fun copyToClipboard(value: CharSequence): Boolean = try {
         window.navigator.clipboard.writeText(value.toString()).await()
         true
-    } catch (e: JsException) {
+    } catch (e: Exception) {
         Napier.e(e) { "Failed to write to clipboard" }
         false
     }

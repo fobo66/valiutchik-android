@@ -22,6 +22,8 @@ import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LicensesDataSource
 import fobo66.valiutchik.core.model.datasource.LicensesDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.PreferencesDataSource
 import fobo66.valiutchik.core.model.repository.ClipboardRepository
 import fobo66.valiutchik.core.model.repository.ClipboardRepositoryImpl
@@ -50,6 +52,10 @@ val dataSourcesModule =
 
         single<LicensesDataSource> {
             LicensesDataSourceImpl()
+        }
+
+        single<PersistenceDataSource> {
+            PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.BACKGROUND)))
         }
 
         single<PreferencesDataSource> {
