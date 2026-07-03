@@ -102,6 +102,7 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(project(":data-testing"))
                 implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.turbine)
             }
         }
 
@@ -116,7 +117,6 @@ kotlin {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.truth)
-                implementation(libs.turbine)
             }
         }
 
