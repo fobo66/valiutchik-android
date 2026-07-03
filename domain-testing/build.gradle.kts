@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -34,9 +37,7 @@ kotlin {
     android {
         namespace = "dev.fobo66.domain.testing"
         compileSdk {
-            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-                minorApiLevel = 1
-            }
+            version = release(37)
         }
 
         minSdk {
@@ -50,6 +51,10 @@ kotlin {
                 }
             }
         }
+    }
+
+    wasmJs {
+        browser()
     }
 
     sourceSets {

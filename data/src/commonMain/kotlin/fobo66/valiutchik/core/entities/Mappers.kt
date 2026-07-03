@@ -32,7 +32,8 @@ fun CurrencyRateSource.toRate(): Rate = Rate(
     bankId = bankId,
     buyRate = currency.buy,
     sellRate = currency.sell,
-    currencyId = currency.name
+    currencyId = currency.name,
+    cityId = cityId
 )
 
 fun CurrencyRateSource.toBank(): Bank = Bank(

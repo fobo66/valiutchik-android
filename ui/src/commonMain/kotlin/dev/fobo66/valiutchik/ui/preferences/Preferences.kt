@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -88,6 +88,10 @@ fun ListPreference(
     onValueChange: (String) -> Unit
 ) {
     val (isDialogShown, showDialog) = remember { mutableStateOf(false) }
+    val summaryValue = remember(entries, value) {
+        entries.preferenceEntries.find { it.value == value }?.key
+            ?: entries.preferenceEntries.firstOrNull()?.key.orEmpty()
+    }
 
     TextPreference(
         title = title,
@@ -95,9 +99,8 @@ fun ListPreference(
         enabled = enabled,
         onClick = { showDialog(!isDialogShown) },
         summary = {
-            val summaryValue = entries.preferenceEntries.find { it.value == value }?.key
             Text(
-                text = summaryValue ?: entries.preferenceEntries.first().key
+                text = summaryValue
             )
         }
     )

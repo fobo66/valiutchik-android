@@ -14,14 +14,20 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.android.library.multiplatform)
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
     alias(libs.plugins.sqlidelight)
 }
 
@@ -35,9 +41,7 @@ kotlin {
     android {
         namespace = "fobo66.valiutchik.core"
         compileSdk {
-            version = release(AndroidVersion.VersionCodes.BAKLAVA) {
-                minorApiLevel = 1
-            }
+            version = release(37)
         }
 
         minSdk {
@@ -64,6 +68,16 @@ kotlin {
         }
     }
 
+    wasmJs {
+        browser {
+            testTask {
+                useKarma {
+                    useFirefoxHeadless()
+                }
+            }
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -76,10 +90,11 @@ kotlin {
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
-
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.sqlidelight.androidx)
+                implementation(libs.androidx.sqlite)
                 implementation(libs.sqlidelight.coroutines)
-                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.core)
                 implementation(libs.napier)
                 implementation(libs.uri)
             }
@@ -90,6 +105,7 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(project(":data-testing"))
                 implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.turbine)
             }
         }
 
@@ -104,14 +120,24 @@ kotlin {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.truth)
-                implementation(libs.turbine)
             }
         }
 
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.androidx.datastore)
                 implementation(libs.sqlidelight.android)
+            }
+        }
+
+        webMain {
+            dependencies {
+                implementation(libs.kotlinx.browser)
+                implementation(libs.doistx.normalize)
+                implementation(libs.androidx.sqlite.web)
+                implementation(libs.sqlidelight.js)
+                implementation(libs.sqlidelight.androidx.web)
             }
         }
 
@@ -135,10 +161,19 @@ kotlin {
     }
 }
 
+tasks.withType<LintTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
+tasks.withType<FormatTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
 sqldelight {
     databases {
         create("Database") {
             packageName = "dev.fobo66.valiutchik.core.db"
+            generateAsync = true
         }
     }
 }

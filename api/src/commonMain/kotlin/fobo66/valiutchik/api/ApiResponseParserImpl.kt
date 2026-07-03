@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.entity.BankResponse
+import fobo66.valiutchik.api.entity.CityResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
 import fobo66.valiutchik.api.entity.CurrencyRatesResponse
 import fobo66.valiutchik.api.entity.CurrencyResponse
@@ -38,4 +39,7 @@ class ApiResponseParserImpl(private val json: Json) : ApiResponseParser {
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun parseCurrencies(body: Source): List<CurrencyResponse> = json.decodeFromSource(body)
+
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun parseCities(body: Source): List<CityResponse> = json.decodeFromSource(body)
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import io.github.aakira.napier.Napier
 class ClipboardRepositoryImpl(private val clipboardDataSource: ClipboardDataSource) :
     ClipboardRepository {
 
-    override fun copyToClipboard(value: CharSequence) {
+    override suspend fun copyToClipboard(value: CharSequence) {
         Napier.v { "Copying to clipboard" }
         if (clipboardDataSource.copyToClipboard(value)) {
             Napier.v("Copied successfully")

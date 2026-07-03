@@ -21,6 +21,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Correspondence
 import com.google.common.truth.Truth.assertThat
 import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.City
 import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
 import dev.fobo66.valiutchik.core.db.Rate
@@ -41,6 +42,7 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 
 private const val RATE = 1.23456
+private const val ID = 1L
 
 class PersistenceDataSourceTest {
     private lateinit var persistenceDataSource: PersistenceDataSource
@@ -51,10 +53,11 @@ class PersistenceDataSourceTest {
     @BeforeTest
     fun setUp() = runTest {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-        Database.Schema.create(driver)
+        Database.Schema.create(driver).await()
         db = Database(driver)
         persistenceDataSource = PersistenceDataSourceImpl(db, ioDispatcher)
-        db.bankQueries.insertBank(Bank(id = 1, name = "bank", formattedName = "test")).await()
+        db.bankQueries.insertBank(Bank(id = ID, name = "bank", formattedName = "test"))
+        db.cityQueries.insertCity(City(id = ID, name = "city", belName = "city", rusName = "city"))
     }
 
     @AfterTest
@@ -77,14 +80,15 @@ class PersistenceDataSourceTest {
     fun `save rates`() = runTest {
         val rates =
             setOf(
-                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
+                Rate(ID, date, ID, CURRENCY_NAME_US_DOLLAR, RATE, RATE, ID),
                 Rate(
                     2,
                     date,
-                    1,
+                    ID,
                     CURRENCY_NAME_US_DOLLAR,
                     RATE,
-                    RATE
+                    RATE,
+                    ID
                 )
             )
 
@@ -98,9 +102,9 @@ class PersistenceDataSourceTest {
     fun `load best rates`() = runTest {
         val rates =
             setOf(
-                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(2, date, 1, CURRENCY_NAME_US_DOLLAR, RATE / 2, RATE),
-                Rate(3, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, ID, CURRENCY_NAME_US_DOLLAR, RATE, RATE, ID),
+                Rate(2, date, ID, CURRENCY_NAME_US_DOLLAR, RATE / 2, RATE, ID),
+                Rate(3, date, ID, CURRENCY_NAME_EURO, RATE, RATE, ID)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -115,8 +119,8 @@ class PersistenceDataSourceTest {
     fun `missing currency`() = runTest {
         val rates =
             setOf(
-                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(2, date, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE, ID),
+                Rate(2, date, 1, CURRENCY_NAME_EURO, RATE, RATE, ID)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -139,8 +143,8 @@ class PersistenceDataSourceTest {
     fun `load old rates`() = runTest {
         val rates =
             setOf(
-                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, ID, CURRENCY_NAME_US_DOLLAR, RATE, RATE, ID),
+                Rate(2, oldDate, ID, CURRENCY_NAME_EURO, RATE, RATE, ID)
             )
 
         persistenceDataSource.saveRates(rates)
@@ -153,9 +157,9 @@ class PersistenceDataSourceTest {
     fun `delete rates`() = runTest {
         val rates =
             setOf(
-                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE),
-                Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE),
-                Rate(3, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE)
+                Rate(1, date, 1, CURRENCY_NAME_US_DOLLAR, RATE, RATE, ID),
+                Rate(2, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE, ID),
+                Rate(3, oldDate, 1, CURRENCY_NAME_EURO, RATE, RATE, ID)
             )
 
         persistenceDataSource.saveRates(rates)

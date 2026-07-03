@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -74,10 +74,7 @@ class FormattingDataSourceImpl : FormattingDataSource {
             .getName(cachedLocale, Currency.PLURAL_LONG_NAME, pluralCount, null)
     }
 
-    override fun formatCurrencySymbol(
-        currencyCode: String,
-        languageTag: LanguageTag
-    ): String {
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String {
         checkLocaleCache(languageTag)
 
         return Currency.getInstance(currencyCode).getSymbol(cachedLocale)

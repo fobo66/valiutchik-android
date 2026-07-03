@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@ package dev.fobo66.valiutchik.presentation
 import app.cash.turbine.test
 import dev.fobo66.domain.testing.fake.FakeCopyCurrencyRateToClipboard
 import dev.fobo66.domain.testing.fake.FakeFindBankOnMap
-import dev.fobo66.domain.testing.fake.FakeLoadExchangeRates
-import dev.fobo66.domain.testing.fake.FakeRefreshInteractor
+import dev.fobo66.domain.testing.fake.FakeRatesInteractor
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -37,16 +36,14 @@ import kotlinx.coroutines.test.setMain
 class MainViewModelTest {
     private lateinit var viewModel: MainViewModel
 
-    private val loadExchangeRates = FakeLoadExchangeRates()
     private val copyCurrencyRateToClipboard = FakeCopyCurrencyRateToClipboard()
     private val findBankOnMap = FakeFindBankOnMap()
-    private val refreshInteractor = FakeRefreshInteractor()
+    private val refreshInteractor = FakeRatesInteractor()
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         viewModel = MainViewModelImpl(
-            loadExchangeRates,
             copyCurrencyRateToClipboard,
             findBankOnMap,
             refreshInteractor

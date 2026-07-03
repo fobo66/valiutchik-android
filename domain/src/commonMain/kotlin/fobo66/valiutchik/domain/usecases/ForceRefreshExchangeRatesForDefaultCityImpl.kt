@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ class ForceRefreshExchangeRatesForDefaultCityImpl(
     private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRatesForDefaultCity {
     override suspend fun execute() = try {
-        val defaultCity = preferenceRepository.observeDefaultCityPreference().first()
+        val defaultCity = preferenceRepository.observeDefaultCityIdPreference().first()
         currencyRateRepository.refreshExchangeRates(defaultCity)
     } catch (e: CurrencyRatesLoadFailedException) {
         throw RefreshException(e)

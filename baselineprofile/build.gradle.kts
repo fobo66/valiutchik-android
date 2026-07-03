@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,9 @@ plugins {
 
 android {
     namespace = "dev.fobo66.baselineprofile"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(37)
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -35,8 +37,12 @@ android {
     }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
-        targetSdk = AndroidVersion.VersionCodes.BAKLAVA
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
+        targetSdk {
+            version = release(37)
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

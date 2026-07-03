@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CurrencyRatesRequest(
     @property:SerialName("city_id")
-    val cityId: Int,
+    val cityId: Long,
     @property:SerialName("currency")
     val currencyAlias: String
 )

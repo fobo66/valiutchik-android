@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,14 +26,18 @@ plugins {
 }
 
 android {
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(37)
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }
@@ -41,8 +45,6 @@ android {
     testBuildType = "release"
     buildTypes {
         debug {
-            // Since debuggable can"t be modified by gradle for library modules,
-            // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
