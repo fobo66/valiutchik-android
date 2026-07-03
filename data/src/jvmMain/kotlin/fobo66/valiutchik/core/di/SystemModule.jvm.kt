@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.core.di
 
+import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -28,9 +29,12 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceIpImpl
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceExternalImpl
 import org.koin.core.module.Module
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 actual val systemModule: Module = module {
@@ -49,4 +53,8 @@ actual val systemModule: Module = module {
     single<AssetsDataSource> { AssetsDataSourceJvmImpl() }
 
     single<UriDataSource> { UriDataSourceExternalImpl() }
+
+    single<PersistenceDataSource> {
+        PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.BACKGROUND)))
+    }
 }

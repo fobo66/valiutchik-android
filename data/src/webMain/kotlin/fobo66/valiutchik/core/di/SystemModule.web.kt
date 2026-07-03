@@ -28,6 +28,8 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceIpImpl
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceInMemoryImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceExternalImpl
 import org.koin.dsl.module
@@ -40,4 +42,5 @@ actual val systemModule = module {
     single<LocaleDataSource> { LocaleDataSourceWebImpl() }
     single<LocationDataSource> { LocationDataSourceIpImpl() }
     single<UriDataSource> { UriDataSourceExternalImpl() }
+    single<PersistenceDataSource> { PersistenceDataSourceInMemoryImpl() }
 }

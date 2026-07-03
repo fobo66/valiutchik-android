@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,6 +29,8 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import fobo66.valiutchik.core.model.datasource.PersistenceDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
 import org.koin.android.ext.koin.androidContext
@@ -64,4 +66,8 @@ actual val systemModule: Module = module {
     }
 
     single<UriDataSource> { UriDataSourceImpl() }
+
+    single<PersistenceDataSource> {
+        PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.BACKGROUND)))
+    }
 }
