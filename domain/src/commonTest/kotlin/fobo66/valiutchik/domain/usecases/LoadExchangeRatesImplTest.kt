@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,8 +18,9 @@ package fobo66.valiutchik.domain.usecases
 
 import app.cash.turbine.test
 import dev.fobo66.core.data.testing.fake.FakeCurrencyRateRepository
+import dev.fobo66.core.data.testing.fake.FakeLocaleRepository
 import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.util.CurrencyName
+import fobo66.valiutchik.core.util.CURRENCY_NAME_US_DOLLAR
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -29,12 +30,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 
 private const val BANK = "test"
-private const val RATE = 1.23f
+private const val RATE = 1.23
+private const val MULTIPLIER = 1L
 private const val NEW_LOCALE = "be-BY"
 
 class LoadExchangeRatesImplTest {
     private val currencyRateRepository = FakeCurrencyRateRepository()
-    private val loadExchangeRates: LoadExchangeRates = LoadExchangeRatesImpl(currencyRateRepository)
+    private val localeRepository = FakeLocaleRepository()
+    private val loadExchangeRates: LoadExchangeRates =
+        LoadExchangeRatesImpl(currencyRateRepository, localeRepository)
 
     @Test
     fun `empty list`() = runTest {
@@ -44,20 +48,10 @@ class LoadExchangeRatesImplTest {
     }
 
     @Test
-    fun `malformed rates skipped`() = runTest {
-        currencyRateRepository.rates.update {
-            listOf(BestCourse())
-        }
-        loadExchangeRates.execute().test {
-            assertTrue(awaitItem().isEmpty())
-        }
-    }
-
-    @Test
     fun `list of rates`() = runTest {
         val rawList = listOf(
-            BestCourse(BANK, RATE, CurrencyName.DOLLAR),
-            BestCourse(BANK, RATE, CurrencyName.DOLLAR, isBuy = true)
+            BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER),
+            BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER, isBuy = true)
         )
         currencyRateRepository.rates.update {
             rawList
@@ -70,21 +64,21 @@ class LoadExchangeRatesImplTest {
     @Test
     fun `type transformed`() = runTest {
         currencyRateRepository.rates.update {
-            listOf(BestCourse(BANK, RATE, CurrencyName.DOLLAR))
+            listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
         loadExchangeRates.execute().test {
-            assertIs<BestCurrencyRate.DollarSellRate>(awaitItem().first())
+            assertIs<BestCurrencyRate.SellRate>(awaitItem().first())
         }
     }
 
     @Test
     fun `locale updated`() = runTest {
         currencyRateRepository.rates.update {
-            listOf(BestCourse(BANK, RATE, CurrencyName.DOLLAR))
+            listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
         loadExchangeRates.execute().test {
             assertTrue(awaitItem().isNotEmpty())
-            currencyRateRepository.locale.update { NEW_LOCALE }
+            localeRepository.locale.update { NEW_LOCALE }
             assertTrue(awaitItem().isNotEmpty())
         }
     }

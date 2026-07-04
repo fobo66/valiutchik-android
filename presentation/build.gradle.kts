@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -32,16 +35,29 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.valiutchik.presentation"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
-        minSdk = AndroidVersion.VersionCodes.R
+        compileSdk {
+            version = release(37)
+        }
+
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions {
                     jvmTarget = JvmTarget.JVM_17
                 }
+            }
+        }
+    }
+
+    wasmJs {
+        browser {
+            testTask {
+                enabled = false
             }
         }
     }
@@ -54,33 +70,38 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":domain"))
-                implementation(libs.kotlinx.coroutines.android)
+                implementation(project(":domain"))
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(project.dependencies.platform(libs.compose.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.napier)
-                compileOnly(libs.compose.stable.marker)
+                implementation(libs.compose.stable.marker)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                api(project(":data-testing"))
-                api(project(":data"))
-                api(project(":domain-testing"))
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.koin.test)
-                implementation(libs.ktor.client)
+                implementation(project(":data-testing"))
+                implementation(project(":data"))
+                implementation(project(":domain-testing"))
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)
             }
         }
+
+        jvmTest {
+            dependencies {
+                implementation(libs.koin.test)
+                implementation(libs.ktor.client)
+            }
+        }
     }
+}
+
+dependencies {
+    detektPlugins(libs.detekt.rules.compose)
 }

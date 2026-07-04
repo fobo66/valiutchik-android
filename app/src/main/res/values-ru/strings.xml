@@ -1,5 +1,5 @@
 <!--
-  ~    Copyright 2025 Andrey Mukamolov
+  ~    Copyright 2026 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -22,14 +22,6 @@
   <string name="bank_name_indicator">Название банка</string>
   <string name="open_app">Открыть приложение</string>
   <string name="widget_action_refresh">Обновить</string>
-  <string name="currency_name_usd_buy">USD покупка</string>
-  <string name="currency_name_usd_sell">USD продажа</string>
-  <string name="currency_name_eur_buy">EUR покупка</string>
-  <string name="currency_name_eur_sell">EUR продажа</string>
-  <string name="currency_name_rub_buy">100 RUB покупка</string>
-  <string name="currency_name_rub_sell">100 RUB продажа</string>
-  <string name="currency_name_pln_buy">PLN покупка</string>
-  <string name="currency_name_pln_sell">PLN продажа</string>
-  <string name="currency_name_uah_buy">100 UAH покупка</string>
-  <string name="currency_name_uah_sell">100 UAH продажа</string>
+  <string name="currency_rate_buy">%1$d %2$s покупка</string>
+  <string name="currency_rate_sell">%1$d %2$s продажа</string>
 </resources>

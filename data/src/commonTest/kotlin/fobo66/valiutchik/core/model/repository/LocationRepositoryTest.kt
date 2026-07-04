@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,36 +18,45 @@ package fobo66.valiutchik.core.model.repository
 
 import dev.fobo66.core.data.testing.fake.FakeGeocodingDataSource
 import dev.fobo66.core.data.testing.fake.FakeLocationDataSource
+import dev.fobo66.core.data.testing.fake.FakePersistenceDataSource
+import fobo66.valiutchik.core.entities.Location
+import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
-private const val DEFAULT = "default"
+private const val DEFAULT = 1L
+private const val CITY = 2L
 
-@ExperimentalCoroutinesApi
 class LocationRepositoryTest {
     private val locationDataSource = FakeLocationDataSource()
     private val geocodingDataSource = FakeGeocodingDataSource()
+    private val persistenceDataSource = FakePersistenceDataSource()
 
     private val locationRepository: LocationRepository =
-        LocationRepositoryImpl(locationDataSource, geocodingDataSource)
+        LocationRepositoryImpl(locationDataSource, geocodingDataSource, persistenceDataSource)
 
     @Test
     fun `resolve user city`() = runTest {
         val city = locationRepository.resolveUserCity(DEFAULT)
-        assertEquals("fake", city)
+        assertEquals(CITY, city)
     }
 
     @Test
-    fun `return default city on HTTP error`() {
+    fun `return default city on HTTP error`() = runTest {
         geocodingDataSource.showError = true
 
-        runTest {
-            val city = locationRepository.resolveUserCity(DEFAULT)
-            assertEquals(DEFAULT, city)
-        }
+        val city = locationRepository.resolveUserCity(DEFAULT)
+        assertEquals(DEFAULT, city)
+    }
+
+    @Test
+    fun `return default city on unknown coordinates`() = runTest {
+        locationDataSource.location = Location(UNKNOWN_COORDINATE, UNKNOWN_COORDINATE)
+
+        val city = locationRepository.resolveUserCity(DEFAULT)
+        assertEquals(DEFAULT, city)
     }
 
     @Test

@@ -24,4 +24,7 @@ val credentialsModule = module {
     single(qualifier(Api.GEOCODING_API_KEY)) {
         Secrets.GEOAPIFY_API_KEY
     }
+    single(qualifier(Api.IP_GEOCODING_API_KEY)) {
+        Secrets.IPGEOCODING_API_KEY
+    }
 }

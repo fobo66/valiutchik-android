@@ -140,11 +140,11 @@ fun <T> ActionListLayout(
         backgroundColor = GlanceTheme.colors.widgetBackground,
         modifier = modifier.padding(top = scaffoldTopPadding),
         titleBar =
-        if (showTitleBar()) {
-            titleBar()
-        } else {
-            null
-        }
+            if (showTitleBar()) {
+                titleBar()
+            } else {
+                null
+            }
     ) {
         Content(
             items = items,
@@ -304,30 +304,30 @@ private fun ListItem(
 ) {
     ListItem(
         modifier =
-        modifier
-            // We set a combined content description on list item since entire item is clickable.
-            .semantics {
-                contentDescription =
-                    combinedContentDescription(headlineText, mainText, supportingText)
-            }.filledContainer(),
+            modifier
+                // We set a combined content description on list item since entire item is clickable.
+                .semantics {
+                    contentDescription =
+                        combinedContentDescription(headlineText, mainText, supportingText)
+                }.filledContainer(),
         contentSpacing = itemContentSpacing,
         leadingContent =
-        takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
-            Box(
-                GlanceModifier
-                    .size(stateIconBackgroundSize)
-                    .cornerRadius(circularCornerRadius),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    provider = ImageProvider(leadingIcon),
-                    modifier = GlanceModifier.size(stateIconSize)
-                        .semantics { testTag = TAG_LEADING_ICON },
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
-                )
-            }
-        },
+            takeComposableIf(ActionListLayoutSize.fromLocalSize() != Small) {
+                Box(
+                    GlanceModifier
+                        .size(stateIconBackgroundSize)
+                        .cornerRadius(circularCornerRadius),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        provider = ImageProvider(leadingIcon),
+                        modifier = GlanceModifier.size(stateIconSize)
+                            .semantics { testTag = TAG_LEADING_ICON },
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurfaceVariant)
+                    )
+                }
+            },
         headlineContent = {
             Text(
                 text = headlineText,
@@ -478,11 +478,11 @@ private object ActionListLayoutTextStyles {
     fun headlineText(): TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize =
-        if (ActionListLayoutSize.fromLocalSize() == Small) {
-            14.sp // M3 Title Small Expressive
-        } else {
-            28.sp // M3 Headline Medium
-        },
+            if (ActionListLayoutSize.fromLocalSize() == Small) {
+                14.sp // M3 Title Small Expressive
+            } else {
+                28.sp // M3 Headline Medium
+            },
         color = GlanceTheme.colors.onSurface
     )
 

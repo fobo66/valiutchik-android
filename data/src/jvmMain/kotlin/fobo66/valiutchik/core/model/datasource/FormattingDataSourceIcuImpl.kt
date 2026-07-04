@@ -17,48 +17,55 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.ibm.icu.number.NumberFormatter
+import com.ibm.icu.text.PluralRules
 import com.ibm.icu.text.Transliterator
 import com.ibm.icu.util.Currency
 import com.ibm.icu.util.ULocale
 import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.util.BankNameNormalizer
 import kotlin.LazyThreadSafetyMode.NONE
 
-class FormattingDataSourceIcuImpl(private val bankNameNormalizer: BankNameNormalizer) :
-    FormattingDataSource {
+class FormattingDataSourceIcuImpl : FormattingDataSource {
     private val targetCurrency: Currency by lazy(NONE) {
         Currency.getInstance(BYN)
     }
 
-    /**
-     * Format currency rate as a monetary value
-     */
-    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String =
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
         NumberFormatter
             .withLocale(ULocale.forLanguageTag(languageTag))
             .unit(targetCurrency)
             .format(value)
             .toString()
 
-    /**
-     * Clean up all the unnecessary parts from the bank name
-     */
     override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
         }
-        val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
 
         return if (languageCode == LANG_RU) {
-            normalizedName
+            name
         } else {
             transliterate(
-                normalizedName,
+                name,
                 languageCode
             )
         }
     }
+
+    override fun formatCurrencyName(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String {
+        val locale = ULocale.forLanguageTag(languageTag)
+
+        val pluralCount = PluralRules.forLocale(locale).select(quantity.toDouble())
+        return Currency.getInstance(currencyCode)
+            .getName(locale, Currency.PLURAL_LONG_NAME, pluralCount, null)
+    }
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
+        Currency.getInstance(currencyCode).getSymbol(ULocale.forLanguageTag(languageTag))
 
     private fun transliterate(bankName: String, languageCode: String): String {
         val transliterator =

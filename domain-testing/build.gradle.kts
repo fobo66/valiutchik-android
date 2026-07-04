@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,7 +14,10 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -31,11 +34,15 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.domain.testing"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+        compileSdk {
+            version = release(37)
+        }
 
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         compilations.configureEach {
             compileTaskProvider.configure {
@@ -46,11 +53,15 @@ kotlin {
         }
     }
 
+    wasmJs {
+        browser()
+    }
+
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":domain"))
-                api(project(":data"))
+                implementation(project(":domain"))
+                implementation(project(":data"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.io)
@@ -65,6 +76,5 @@ detekt {
 }
 
 dependencies {
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.compose.hotreload)
+    alias(libs.plugins.licenses)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
 }
@@ -36,14 +36,13 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":ui"))
-                implementation(compose.ui)
-                implementation(compose.components.resources)
+                implementation(project(":ui"))
+                implementation(project(":domain"))
+                implementation(project(":presentation"))
+                implementation(libs.compose.ui)
+                implementation(libs.compose.resources)
                 implementation(libs.compose.material)
-                implementation(libs.compose.material.icons.core)
-                implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.koin.viewmodel)
@@ -73,6 +72,11 @@ compose.desktop {
             release {
                 proguard {
                     isEnabled = true
+                    optimize = false
+                    obfuscate = true
+                    configurationFiles.from(
+                        project.layout.projectDirectory.file("proguard-rules.pro")
+                    )
                 }
             }
         }
@@ -95,7 +99,12 @@ compose.desktop {
     }
 }
 
+aboutLibraries {
+    export {
+        outputFile = file("src/desktopMain/resources/open_source_licenses.json")
+    }
+}
+
 dependencies {
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }

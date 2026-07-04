@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,17 +16,98 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.db.CurrencyRatesDatabase
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.Rate
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import dev.fobo66.valiutchik.core.db.Bank
+import dev.fobo66.valiutchik.core.db.City
+import dev.fobo66.valiutchik.core.db.Currency
+import dev.fobo66.valiutchik.core.db.Database
+import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
+import dev.fobo66.valiutchik.core.db.LoadBestSellRates
+import dev.fobo66.valiutchik.core.db.Rate
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
-class PersistenceDataSourceImpl(private val database: CurrencyRatesDatabase) :
-    PersistenceDataSource {
+class PersistenceDataSourceImpl(
+    private val database: Database,
+    private val ioDispatcher: CoroutineDispatcher
+) : PersistenceDataSource {
 
-    override suspend fun saveRates(rates: List<Rate>) {
-        database.ratesDao().insertRates(rates)
+    override fun readCities(): Flow<List<City>> = database.cityQueries.loadCities().asFlow()
+        .mapToList(ioDispatcher)
+
+    override suspend fun findCityIdByName(name: String): Long? = withContext(ioDispatcher) {
+        database.cityQueries.findCityIdByName(name).awaitAsOneOrNull()
     }
 
-    override fun readBestCourses(): Flow<List<BestCourse>> = database.ratesDao().resolveBestRates()
+    override suspend fun saveRates(rates: Set<Rate>) = withContext(ioDispatcher) {
+        database.rateQueries.transaction {
+            afterCommit { Napier.d { "Saved ${rates.size} rates" } }
+            rates.forEach {
+                database.rateQueries.insertRate(
+                    it.date,
+                    it.bankId,
+                    it.currencyId,
+                    it.buyRate,
+                    it.sellRate,
+                    it.cityId
+                )
+            }
+        }
+    }
+
+    override suspend fun deleteRates(rates: List<Rate>) = withContext(ioDispatcher) {
+        database.rateQueries.transaction {
+            afterCommit { Napier.d { "Deleted ${rates.size} rates" } }
+            database.rateQueries.deleteRates(rates.map { it.id })
+        }
+    }
+
+    override suspend fun loadOldRates(): List<Rate> =
+        database.rateQueries.loadOldRates().executeAsList()
+
+    override fun loadCurrencies(): Flow<List<Currency>> =
+        database.currencyQueries.loadCurrencies().asFlow()
+            .mapToList(ioDispatcher)
+
+    override fun readBestBuyCourses(): Flow<List<LoadBestBuyRates>> =
+        database.rateQueries.loadBestBuyRates().asFlow()
+            .mapToList(ioDispatcher)
+
+    override suspend fun saveBanks(banks: Set<Bank>) = withContext(ioDispatcher) {
+        database.bankQueries.transaction {
+            afterCommit { Napier.d { "Saved ${banks.size} banks" } }
+
+            banks.forEach {
+                database.bankQueries.insertBank(it)
+            }
+        }
+    }
+
+    override suspend fun saveCities(cities: Set<City>) = withContext(ioDispatcher) {
+        database.cityQueries.transaction {
+            afterCommit { Napier.d { "Saved ${cities.size} cities" } }
+
+            cities.forEach {
+                database.cityQueries.insertCity(it)
+            }
+        }
+    }
+
+    override fun readBestSellCourses(): Flow<List<LoadBestSellRates>> =
+        database.rateQueries.loadBestSellRates().asFlow()
+            .mapToList(ioDispatcher)
+
+    override suspend fun saveCurrencies(currencies: Set<Currency>) = withContext(ioDispatcher) {
+        database.currencyQueries.transaction {
+            afterCommit { Napier.d { "Saved ${currencies.size} currencies" } }
+
+            currencies.forEach {
+                database.currencyQueries.insertCurrency(it)
+            }
+        }
+    }
 }

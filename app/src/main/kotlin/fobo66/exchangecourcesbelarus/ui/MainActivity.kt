@@ -46,9 +46,9 @@ class MainActivity : ComponentActivity() {
                     EnableXrComponentOverrides {
                         MainContent(
                             showManualRefresh =
-                            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
+                                windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
                             canOpenSettings =
-                            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
+                                windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
                         )
                         ReportDrawn()
                     }

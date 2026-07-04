@@ -17,8 +17,8 @@
 package fobo66.valiutchik.core.model.datasource
 
 import androidx.test.filters.SmallTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import com.google.common.truth.Truth.assertThat
+import org.junit.Test
 
 @SmallTest
 class UriDataSourceTest {
@@ -29,7 +29,7 @@ class UriDataSourceTest {
         val uri =
             uriDataSource.prepareUri("test")
 
-        assertEquals("test", uri.getQueryParameter(URI_PARAM_KEY))
-        assertEquals(URI_SCHEME, uri.scheme)
+        assertThat(uri.getQueryParameter(URI_PARAM_KEY)).isEqualTo("test")
+        assertThat(uri.scheme).isEqualTo(URI_SCHEME)
     }
 }

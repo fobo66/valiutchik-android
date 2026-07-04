@@ -18,6 +18,8 @@ package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.Location
 
+const val UNKNOWN_COORDINATE = 999.999
+
 /**
  * Datasource for working with location
  */

@@ -24,9 +24,9 @@ import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.filters.SmallTest
 import com.eygraber.uri.Uri
 import com.google.common.truth.Truth.assertThat
-import kotlin.test.Test
 import org.hamcrest.Matchers
 import org.junit.Rule
+import org.junit.Test
 
 @SmallTest
 class IntentDataSourceTest {

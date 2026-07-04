@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,8 +29,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,6 +50,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.fobo66.valiutchik.ui.TAG_NO_RATES
 import dev.fobo66.valiutchik.ui.TAG_RATES
@@ -59,15 +58,16 @@ import dev.fobo66.valiutchik.ui.TAG_RATE_VALUE
 import dev.fobo66.valiutchik.ui.about.AboutAppDialog
 import dev.fobo66.valiutchik.ui.element.PrimaryTopBar
 import dev.fobo66.valiutchik.ui.element.ProgressIndicator
-import dev.fobo66.valiutchik.ui.icon.Bank
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.bank_name_indicator
+import valiutchik.ui.generated.resources.ic_bank
+import valiutchik.ui.generated.resources.ic_share
 import valiutchik.ui.generated.resources.share_description
 import valiutchik.ui.generated.resources.title_rates
 
@@ -122,10 +122,14 @@ fun BestRatesGrid(
                     ) {
                         items(
                             items = bestCurrencyRates,
-                            key = { item -> item.resolveCurrencyName().key }
+                            key = { item -> item.key }
                         ) { item ->
                             BestCurrencyRateCard(
-                                currencyName = stringResource(item.resolveCurrencyName()),
+                                title = stringResource(
+                                    item.resolveCurrencyNameResource(),
+                                    item.quantity,
+                                    item.currencyName
+                                ),
                                 currencyValue = item.rateValue,
                                 bankName = item.bank,
                                 onClick = onBestRateClick,
@@ -149,22 +153,20 @@ fun BestRatesGrid(
 private fun resolveRatesGridPadding(): PaddingValues {
     val density = LocalDensity.current
 
-    return with(density) {
-        PaddingValues(
-            top = 8.dp,
-            start = 8.dp,
-            end = 8.dp,
-            bottom = with(density) {
-                WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
-            }
-        )
-    }
+    return PaddingValues(
+        top = 8.dp,
+        start = 8.dp,
+        end = 8.dp,
+        bottom = with(density) {
+            WindowInsets.systemBars.getBottom(this).toDp() + 8.dp
+        }
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BestCurrencyRateCard(
-    currencyName: String,
+    title: String,
     currencyValue: String,
     bankName: String,
     onClick: (String) -> Unit,
@@ -174,15 +176,15 @@ fun BestCurrencyRateCard(
 ) {
     ElevatedCard(
         modifier =
-        modifier
-            .clip(CardDefaults.elevatedShape)
-            .combinedClickable(
-                onLongClick = { onLongClick(currencyValue) },
-                onClick = { onClick(bankName) }
-            )
+            modifier
+                .clip(CardDefaults.elevatedShape)
+                .combinedClickable(
+                    onLongClick = { onLongClick(currencyValue) },
+                    onClick = { onClick(bankName) }
+                )
     ) {
         Text(
-            text = currencyName,
+            text = title,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
         )
@@ -190,9 +192,9 @@ fun BestCurrencyRateCard(
             text = currencyValue,
             style = MaterialTheme.typography.displayMediumEmphasized,
             modifier =
-            Modifier
-                .padding(vertical = 16.dp, horizontal = 24.dp)
-                .testTag(TAG_RATE_VALUE)
+                Modifier
+                    .padding(vertical = 16.dp, horizontal = 24.dp)
+                    .testTag(TAG_RATE_VALUE)
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -200,7 +202,7 @@ fun BestCurrencyRateCard(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         ) {
             Icon(
-                Icons.Default.Bank,
+                painterResource(Res.drawable.ic_bank),
                 contentDescription = stringResource(Res.string.bank_name_indicator),
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
@@ -208,15 +210,15 @@ fun BestCurrencyRateCard(
                 text = bankName,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp)
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp)
             )
             IconButton(onClick = {
-                onShareClick(currencyName, currencyValue)
+                onShareClick(title, currencyValue)
             }) {
                 Icon(
-                    Icons.Default.Share,
+                    painterResource(Res.drawable.ic_share),
                     contentDescription = stringResource(Res.string.share_description)
                 )
             }
@@ -230,16 +232,24 @@ private fun BestCurrencyRatesPreview() {
     AppTheme {
         BestRatesGrid(
             bestCurrencyRates =
-            persistentListOf(
-                BestCurrencyRate.DollarBuyRate(
-                    bank = "test",
-                    rateValue = "1.23"
+                persistentListOf(
+                    BestCurrencyRate.BuyRate(
+                        key = 1,
+                        bank = "test",
+                        rateValue = "1.23",
+                        quantity = 1,
+                        currencyName = "USD",
+                        currencySymbol = "$"
+                    ),
+                    BestCurrencyRate.SellRate(
+                        key = 2,
+                        bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
+                        rateValue = "4.56",
+                        quantity = 1,
+                        currencyName = "USD",
+                        currencySymbol = "$"
+                    )
                 ),
-                BestCurrencyRate.DollarSellRate(
-                    bank = "testtesttesttesttesttesttetstsetsetsetsetsetsetsetsetset",
-                    rateValue = "4.56"
-                )
-            ),
             onBestRateClick = {},
             onBestRateLongClick = {},
             onShareClick = { _, _ -> },

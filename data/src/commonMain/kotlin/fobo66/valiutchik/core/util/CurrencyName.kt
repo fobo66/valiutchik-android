@@ -16,10 +16,8 @@
 
 package fobo66.valiutchik.core.util
 
-enum class CurrencyName {
-    DOLLAR,
-    EUR,
-    RUB,
-    PLN,
-    UAH
-}
+const val CURRENCY_NAME_US_DOLLAR = "usd"
+const val CURRENCY_NAME_EURO = "eur"
+const val CURRENCY_NAME_ZLOTY = "pln"
+const val CURRENCY_NAME_HRYVNIA = "uah"
+const val CURRENCY_NAME_RUBLE = "rub"

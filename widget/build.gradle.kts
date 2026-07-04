@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
     alias(libs.plugins.detekt)
     alias(libs.plugins.junit)
@@ -29,10 +29,14 @@ plugins {
 
 android {
     namespace = "dev.fobo66.valiutchik.android.widget"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(37)
+    }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -67,11 +71,11 @@ detekt {
     autoCorrect = true
 }
 
+tasks.withType<Detekt> {
+    jvmTarget = "17"
+}
+
 dependencies {
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    debugImplementation(composeBom)
-    androidTestImplementation(composeBom)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
     androidTestImplementation(libs.compose.ui.testing)
@@ -83,7 +87,6 @@ dependencies {
     api(libs.androidx.glance.preview)
     api(libs.androidx.glance.appwidget.preview)
     implementation(libs.kotlinx.collections)
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
     testImplementation(libs.androidx.glance.test)
     testImplementation(libs.androidx.glance.appwidget.test)

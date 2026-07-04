@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,11 +35,14 @@ class LocationDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : LocationDataSource {
 
-    private val noLocation by lazy {
-        Location(0.0, 0.0)
+    private val noLocation by lazy(LazyThreadSafetyMode.NONE) {
+        Location(
+            latitude = UNKNOWN_COORDINATE,
+            longitude = UNKNOWN_COORDINATE
+        )
     }
 
-    private val locationFixTimeMaximum: Long by lazy {
+    private val locationFixTimeMaximum: Long by lazy(LazyThreadSafetyMode.NONE) {
         LOCATION_FIX_TIME_DURATION_HOURS.hours.inWholeNanoseconds
     }
 
@@ -53,8 +56,7 @@ class LocationDataSourceImpl(
             withContext(ioDispatcher) {
                 location = locationManager.getProviders(true)
                     .asSequence()
-                    .map { locationManager.getLastKnownLocation(it) }
-                    .filterNotNull()
+                    .mapNotNull { locationManager.getLastKnownLocation(it) }
                     .filter {
                         SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos <=
                             locationFixTimeMaximum

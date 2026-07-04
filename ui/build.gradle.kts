@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,8 +14,13 @@
  *    limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.sdklib.AndroidVersion
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -24,17 +29,18 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
-
-    // Target declarations - add or remove as needed below. These define
-    // which platforms this KMP module supports.
-    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
+    android {
         namespace = "dev.fobo66.valiutchik.ui"
-        compileSdk = AndroidVersion.VersionCodes.BAKLAVA
-        minSdk = AndroidVersion.VersionCodes.R
+        compileSdk {
+            version = release(37)
+        }
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
@@ -59,29 +65,25 @@ kotlin {
         }
     }
 
-    // Source set declarations.
-    // Declaring a target automatically creates a source set with the same name. By default, the
-    // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
-    // common to share sources between related targets.
-    // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
+
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":presentation"))
-                api(project(":domain"))
+                implementation(project(":presentation"))
+                implementation(project(":domain"))
                 implementation(libs.androidx.lifecycle.compose)
                 implementation(libs.materialKolor)
-                implementation(project.dependencies.platform(libs.compose.bom))
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.ui)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.ui)
                 implementation(libs.compose.material)
-                implementation(compose.material3AdaptiveNavigationSuite)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.resources)
+                implementation(libs.compose.ui.preview)
                 implementation(libs.kotlinx.collections)
-                implementation(libs.compose.material.icons.core)
                 implementation(libs.compose.material.adaptive)
                 implementation(libs.compose.material.adaptive.layout)
                 implementation(libs.compose.material.adaptive.navigation)
@@ -93,15 +95,14 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.uiTest)
+                implementation(libs.compose.ui.test)
             }
         }
 
         androidMain {
             dependencies {
-                implementation(compose.preview)
-                implementation(compose.uiTooling)
+                implementation(libs.compose.ui.preview)
+                implementation(libs.compose.ui.tooling)
                 implementation(libs.accompanist.permissions)
             }
         }
@@ -109,7 +110,7 @@ kotlin {
         named("desktopMain") {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(compose.uiTooling)
+                implementation(libs.compose.ui.tooling)
             }
         }
 
@@ -127,4 +128,16 @@ kotlin {
             }
         }
     }
+}
+
+tasks.withType<LintTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
+tasks.withType<FormatTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
+dependencies {
+    detektPlugins(libs.detekt.rules.compose)
 }

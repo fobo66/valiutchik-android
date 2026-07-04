@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,44 +20,31 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 
 @Stable
-sealed class BestCurrencyRate(open val bank: String, open val rateValue: String) {
+sealed class BestCurrencyRate(
+    open val key: Long,
+    open val bank: String,
+    open val rateValue: String,
+    open val quantity: Long,
+    open val currencyName: String,
+    open val currencySymbol: String
+) {
     @Immutable
-    data class DollarBuyRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
+    data class BuyRate(
+        override val key: Long,
+        override val bank: String,
+        override val rateValue: String,
+        override val quantity: Long,
+        override val currencyName: String,
+        override val currencySymbol: String
+    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencyName, currencySymbol)
 
     @Immutable
-    data class DollarSellRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class EuroBuyRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class EuroSellRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class HryvniaBuyRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class HryvniaSellRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class ZlotyBuyRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class ZlotySellRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class RubleBuyRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
-
-    @Immutable
-    data class RubleSellRate(override val bank: String, override val rateValue: String) :
-        BestCurrencyRate(bank, rateValue)
+    data class SellRate(
+        override val key: Long,
+        override val bank: String,
+        override val rateValue: String,
+        override val quantity: Long,
+        override val currencyName: String,
+        override val currencySymbol: String
+    ) : BestCurrencyRate(key, bank, rateValue, quantity, currencyName, currencySymbol)
 }

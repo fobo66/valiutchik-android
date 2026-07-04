@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,12 +29,10 @@ import dev.fobo66.valiutchik.desktop.settings.SettingsWindow
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import fobo66.valiutchik.domain.di.domainModule
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.swing.Swing
-import kotlinx.coroutines.test.setMain
 import org.koin.compose.KoinApplication
 import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.dsl.koinConfiguration
 
 @OptIn(KoinExperimentalAPI::class, ExperimentalCoroutinesApi::class)
 fun main() = application {
@@ -42,20 +40,21 @@ fun main() = application {
         Napier.base(JvmAntilog())
     }
 
-    LaunchedEffect(Unit) {
-        Dispatchers.setMain(Dispatchers.Swing)
-    }
-
     KoinApplication(
-        application = {
-            modules(viewModelsModule, domainModule, refreshModule)
-        }
-    ) {
-        var isSettingsOpen by remember { mutableStateOf(false) }
-        if (isSettingsOpen) {
-            SettingsWindow(onClose = { isSettingsOpen = false })
-        }
+        configuration = koinConfiguration(declaration = {
+            modules(
+                viewModelsModule,
+                domainModule,
+                refreshModule
+            )
+        }),
+        content = {
+            var isSettingsOpen by remember { mutableStateOf(false) }
+            if (isSettingsOpen) {
+                SettingsWindow(onClose = { isSettingsOpen = false })
+            }
 
-        RatesWindow(onClose = ::exitApplication, onOpenSettings = { isSettingsOpen = true })
-    }
+            RatesWindow(onClose = ::exitApplication, onOpenSettings = { isSettingsOpen = true })
+        }
+    )
 }

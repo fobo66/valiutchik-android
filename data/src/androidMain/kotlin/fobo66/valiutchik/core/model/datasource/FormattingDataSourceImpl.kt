@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,56 +17,74 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.icu.number.NumberFormatter
+import android.icu.text.PluralRules
 import android.icu.text.Transliterator
 import android.icu.util.Currency
 import android.icu.util.ULocale
 import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.util.BankNameNormalizer
 import kotlin.LazyThreadSafetyMode.NONE
 
-class FormattingDataSourceImpl(private val bankNameNormalizer: BankNameNormalizer) :
-    FormattingDataSource {
+class FormattingDataSourceImpl : FormattingDataSource {
     private lateinit var cachedLocale: ULocale
     private var cachedLanguageTag: LanguageTag? = null
+
+    private val targetCurrency: Currency by lazy(NONE) {
+        Currency.getInstance(BYN)
+    }
 
     override fun formatBankName(name: String, languageTag: LanguageTag): String {
         if (name.isEmpty()) {
             return name
         }
 
-        if (cachedLanguageTag != languageTag) {
-            cachedLocale = ULocale.forLanguageTag(languageTag)
-            cachedLanguageTag = languageTag
-        }
+        checkLocaleCache(languageTag)
 
-        val normalizedName = bankNameNormalizer.normalize(name)
         val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
 
         return if (languageCode == LANG_RU) {
-            normalizedName
+            name
         } else {
             transliterate(
-                normalizedName,
+                name,
                 languageCode
             )
         }
     }
 
-    private val targetCurrency: Currency by lazy(NONE) {
-        Currency.getInstance(BYN)
-    }
-
-    override fun formatCurrencyValue(value: Float, languageTag: LanguageTag): String {
-        if (cachedLanguageTag != languageTag) {
-            cachedLocale = ULocale.forLanguageTag(languageTag)
-            cachedLanguageTag = languageTag
-        }
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String {
+        checkLocaleCache(languageTag)
 
         return NumberFormatter
             .withLocale(cachedLocale)
             .unit(targetCurrency)
             .format(value)
             .toString()
+    }
+
+    override fun formatCurrencyName(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String {
+        checkLocaleCache(languageTag)
+
+        val pluralCount = PluralRules.forLocale(cachedLocale).select(quantity.toDouble())
+
+        return Currency.getInstance(currencyCode)
+            .getName(cachedLocale, Currency.PLURAL_LONG_NAME, pluralCount, null)
+    }
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String {
+        checkLocaleCache(languageTag)
+
+        return Currency.getInstance(currencyCode).getSymbol(cachedLocale)
+    }
+
+    private fun checkLocaleCache(languageTag: LanguageTag) {
+        if (cachedLanguageTag != languageTag) {
+            cachedLocale = ULocale.forLanguageTag(languageTag)
+            cachedLanguageTag = languageTag
+        }
     }
 
     private fun transliterate(bankName: String, languageCode: String): String {

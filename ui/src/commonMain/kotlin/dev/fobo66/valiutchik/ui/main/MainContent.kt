@@ -75,13 +75,13 @@ fun MainContent(
             manualRefreshVisible = showManualRefresh,
             canOpenSettings = canOpenSettings,
             modifier =
-            Modifier
-                .padding(
-                    start = it.calculateStartPadding(layoutDirection),
-                    end = it.calculateEndPadding(layoutDirection),
-                    top = it.calculateTopPadding()
-                )
-                .consumeWindowInsets(it)
+                Modifier
+                    .padding(
+                        start = it.calculateStartPadding(layoutDirection),
+                        end = it.calculateEndPadding(layoutDirection),
+                        top = it.calculateTopPadding()
+                    )
+                    .consumeWindowInsets(it)
         )
     }
 }
@@ -142,11 +142,11 @@ fun MainScreenPanels(
             val interactionSource = remember { MutableInteractionSource() }
             VerticalDragHandle(
                 modifier =
-                Modifier.paneExpansionDraggable(
-                    state,
-                    LocalMinimumInteractiveComponentSize.current,
-                    interactionSource
-                ),
+                    Modifier.paneExpansionDraggable(
+                        state,
+                        LocalMinimumInteractiveComponentSize.current,
+                        interactionSource
+                    ),
                 interactionSource = interactionSource
             )
         },

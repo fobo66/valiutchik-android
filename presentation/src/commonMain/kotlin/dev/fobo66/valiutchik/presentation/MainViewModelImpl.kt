@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,45 +16,38 @@
 
 package dev.fobo66.valiutchik.presentation
 
-import androidx.lifecycle.viewModelScope
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
-import fobo66.valiutchik.domain.usecases.LoadExchangeRates
-import fobo66.valiutchik.domain.usecases.RefreshInteractor
+import fobo66.valiutchik.domain.usecases.RatesInteractor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class MainViewModelImpl(
-    loadExchangeRates: LoadExchangeRates,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap,
-    private val refreshInteractor: RefreshInteractor
+    private val ratesInteractor: RatesInteractor
 ) : MainViewModel() {
     override val bestCurrencyRates: StateFlow<ImmutableList<BestCurrencyRate>> =
-        loadExchangeRates.execute()
+        ratesInteractor.rates
             .onEach {
                 if (it.isEmpty()) {
                     isRefreshTriggered.emit(true)
                 }
             }.map { it.toImmutableList() }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            .stateInWhileSubscribed(
                 initialValue = persistentListOf()
             )
 
@@ -69,18 +62,16 @@ class MainViewModelImpl(
             ::MainScreenStateTrigger
         ).filter { it.isRefreshTriggered && it.isLocationAvailable != null }
             .onEach {
-                refreshInteractor.initiateRefresh(it.isLocationAvailable == true)
+                ratesInteractor.initiateRefresh(it.isLocationAvailable == true)
                 isRefreshTriggered.emit(false)
-            }.flatMapLatest { refreshInteractor.isRefreshInProgress }
+            }.flatMapLatest { ratesInteractor.isRefreshInProgress }
             .map {
                 if (it) {
                     MainScreenState.Loading
                 } else {
                     MainScreenState.LoadedRates
                 }
-            }.stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(STATE_FLOW_SUBSCRIBE_STOP_TIMEOUT_MS),
+            }.stateInWhileSubscribed(
                 initialValue = MainScreenState.Initial
             )
 
@@ -98,7 +89,7 @@ class MainViewModelImpl(
             permissionGranted
         }
 
-    override fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
+    override suspend fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
         copyCurrencyRateToClipboard.execute(currencyValue)
     }
 }

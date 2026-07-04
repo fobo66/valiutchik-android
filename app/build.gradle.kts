@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,16 +15,14 @@
  */
 
 import com.android.sdklib.AndroidVersion
+import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.app)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
-    alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
-    alias(libs.plugins.junit)
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
 }
@@ -42,11 +40,17 @@ android {
         }
     }
 
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(37)
+    }
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
-        minSdk = AndroidVersion.VersionCodes.R
-        targetSdk = AndroidVersion.VersionCodes.BAKLAVA
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
+        targetSdk {
+            version = release(37)
+        }
         versionCode = 25
         versionName = "1.15.1"
         multiDexEnabled = true
@@ -112,22 +116,26 @@ detekt {
     autoCorrect = true
 }
 
+tasks.withType<Detekt> {
+    jvmTarget = "17"
+}
+
 composeCompiler {
     metricsDestination = project.layout.buildDirectory.dir("compose_metrics")
     reportsDestination = project.layout.buildDirectory.dir("compose_metrics")
 }
 
-licenseReport {
-    generateCsvReport = false
-    generateHtmlReport = false
-
-    copyHtmlReportToAssets = false
-    copyJsonReportToAssets = true
+aboutLibraries {
+    export {
+        outputFile = file("src/main/assets/open_source_licenses.json")
+        variant = "release"
+    }
 }
 
 dependencies {
-    api(project(":ui"))
-    api(project(":presentation"))
+    implementation(project(":ui"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
     implementation(project(":widget"))
 
     // kotlin
@@ -148,10 +156,6 @@ dependencies {
     baselineProfile(project(":baselineprofile"))
 
     // compose
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    debugImplementation(composeBom)
-    androidTestImplementation(composeBom)
     implementation(libs.compose.ui)
     implementation(libs.compose.xr)
     implementation(libs.compose.material)
@@ -166,7 +170,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.compose)
     implementation(libs.androidx.lifecycle.viewmodel)
 
-    implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.viewmodel)
@@ -177,27 +180,14 @@ dependencies {
     // leakcanary
     debugImplementation(libs.leakcanary)
 
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 
-    // tests
-    testApi(project(":domain-testing"))
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.junit.api)
-    testRuntimeOnly(libs.junit.engine)
-    testImplementation(libs.turbine)
-    testImplementation(libs.truth)
-
-    androidTestApi(project(":domain-testing"))
+    androidTestImplementation(project(":domain-testing"))
     androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlin.test)
     androidTestImplementation(libs.turbine)
+    androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.test.espresso.contrib)
-    androidTestImplementation(libs.androidx.test.espresso.intents)
-    androidTestImplementation(libs.androidx.test.espresso.accessibility)
-    androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.work.testing)
 }

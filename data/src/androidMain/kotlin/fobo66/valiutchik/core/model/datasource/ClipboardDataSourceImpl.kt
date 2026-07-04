@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ private const val CLIP_LABEL = "CURRENCY_EXCHANGE_RATE"
 
 class ClipboardDataSourceImpl(private val context: Context) : ClipboardDataSource {
 
-    override fun copyToClipboard(value: CharSequence): Boolean {
+    override suspend fun copyToClipboard(value: CharSequence): Boolean {
         val clipData = ClipData.newPlainText(CLIP_LABEL, value)
         val clipboardManager = context.getSystemService<ClipboardManager>()
         return clipboardManager?.let {

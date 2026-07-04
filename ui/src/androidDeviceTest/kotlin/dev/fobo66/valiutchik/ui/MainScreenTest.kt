@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.runComposeUiTest
+import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.test.filters.SmallTest
 import dev.fobo66.valiutchik.ui.rates.BestRatesGrid
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -56,7 +56,7 @@ class MainScreenTest {
         setContent {
             BestRatesGrid(
                 bestCurrencyRates = persistentListOf(
-                    BestCurrencyRate.DollarBuyRate("test", "0.0")
+                    BestCurrencyRate.BuyRate(1, "test", "0.0", 1, "$", "$")
                 ),
                 onBestRateClick = {
                     isMapOpen = true

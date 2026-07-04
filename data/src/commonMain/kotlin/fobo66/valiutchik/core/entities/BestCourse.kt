@@ -16,16 +16,14 @@
 
 package fobo66.valiutchik.core.entities
 
-import fobo66.valiutchik.api.entity.UNDEFINED_RATE
-import fobo66.valiutchik.core.util.CurrencyName
-
 /**
- * Database entity for best available exchange courses. Constructed from rates upon request
+ * Entity for best available exchange courses. Constructed from rates upon request
  */
 data class BestCourse(
-    val bankName: String? = "",
-    val currencyValue: Float? = UNDEFINED_RATE,
-    val currencyName: CurrencyName? = CurrencyName.DOLLAR,
-    val timestamp: String? = "",
+    val bankName: String,
+    val currencyValue: Double,
+    val currencyName: String,
+    val currencyId: Long,
+    val multiplier: Long,
     val isBuy: Boolean? = false
 )

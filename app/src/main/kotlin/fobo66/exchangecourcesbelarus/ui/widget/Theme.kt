@@ -42,11 +42,11 @@ fun ValiutchikWidgetTheme(
     val dynamicColor = isDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     GlanceTheme(
         colors =
-        if (dynamicColor) {
-            GlanceTheme.colors
-        } else {
-            WidgetColors
-        },
+            if (dynamicColor) {
+                GlanceTheme.colors
+            } else {
+                WidgetColors
+            },
         content = content
     )
 }

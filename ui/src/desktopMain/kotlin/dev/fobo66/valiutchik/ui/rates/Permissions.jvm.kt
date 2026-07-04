@@ -22,7 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 
-private const val PERMISSIONS_NOT_SUPPORTED_ON_DESKTOP = false
+private const val PERMISSIONS_NOT_SUPPORTED_ON_DESKTOP = true
 
 @Composable
 actual fun PermissionsEffect(

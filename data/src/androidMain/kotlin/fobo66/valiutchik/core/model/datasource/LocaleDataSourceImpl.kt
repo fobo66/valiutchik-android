@@ -66,7 +66,12 @@ class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
         }
         channel.send((currentLocale ?: Locale.getDefault()).toLanguageTag())
 
-        context.registerReceiver(localeReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
+        context.registerReceiver(
+            localeReceiver,
+            IntentFilter(Intent.ACTION_LOCALE_CHANGED),
+            "android.permission.READ_APP_SPECIFIC_LOCALES",
+            null
+        )
 
         awaitClose { context.unregisterReceiver(localeReceiver) }
     }

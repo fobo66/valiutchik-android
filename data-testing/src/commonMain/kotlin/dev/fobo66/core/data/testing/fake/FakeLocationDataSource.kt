@@ -20,5 +20,7 @@ import fobo66.valiutchik.core.entities.Location
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 
 class FakeLocationDataSource : LocationDataSource {
-    override suspend fun resolveLocation(): Location = Location(0.0, 0.0)
+    var location = Location(0.0, 0.0)
+
+    override suspend fun resolveLocation(): Location = location
 }
