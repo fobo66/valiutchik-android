@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.junit)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
@@ -27,10 +26,14 @@ plugins {
 
 android {
     namespace = "dev.fobo66.valiutchik.wear"
-    compileSdk = AndroidVersion.VersionCodes.BAKLAVA
+    compileSdk {
+        version = release(AndroidVersion.VersionCodes.CINNAMON_BUN)
+    }
 
     defaultConfig {
-        minSdk = AndroidVersion.VersionCodes.R
+        minSdk {
+            version = release(AndroidVersion.VersionCodes.R)
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -71,6 +74,5 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     androidTestImplementation(libs.androidx.test.espresso.core)
-    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.compose)
 }
