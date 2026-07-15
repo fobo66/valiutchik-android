@@ -29,6 +29,7 @@ detekt = "2.0.0-alpha.5"
 detektCompose = "0.6.2"
 dotenvKotlin = "6.5.1"
 espresso = "3.7.0"
+horologist = "0.8.1-alpha"
 icu = "78.3"
 jansi = "2.4.3"
 junit = "6.1.2"
@@ -50,6 +51,7 @@ materialKolor = "5.0.0"
 napier = "2.7.1"
 normalizer = "1.3.3"
 profileinstallerVersion = "1.4.1"
+protoLayout = "1.4.1"
 robolectric = "4.16.1"
 robolectricJunit5 = "0.9.0"
 slf4j = "2.0.18"
@@ -57,6 +59,7 @@ sqldelight = "2.3.2"
 sqldelightAndroidxDriver = "0.5.0-alpha.9"
 truth = "1.4.5"
 turbine = "1.2.1"
+tiles = "1.6.1"
 uri = "0.0.21"
 work = "2.11.2"
 xr = "1.0.0-alpha15"
@@ -116,6 +119,7 @@ compose-xr-material = { group = "androidx.xr.compose.material3", name = "materia
 detekt-rules-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 doistx-normalize = { module = "com.doist.x:normalize", version.ref = "normalizer" }
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
+horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologist" }
 icu = { group = "com.ibm.icu", name = "icu4j", version.ref = "icu" }
 jansi = { group = "org.fusesource.jansi", name = "jansi", version.ref = "jansi" }
 junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
@@ -160,6 +164,12 @@ sqlidelight-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", versi
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 uri = { module = "com.eygraber:uri-kmp", version.ref = "uri" }
+wear-proto = { group = "androidx.wear.protolayout", name = "protolayout", version.ref = "protoLayout" }
+wear-proto-expression = { group = "androidx.wear.protolayout", name = "protolayout-expression", version.ref = "protoLayout" }
+wear-proto-material = { group = "androidx.wear.protolayout", name = "protolayout-material3", version.ref = "protoLayout" }
+wear-tiles = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
+wear-tiles-renderer = { group = "androidx.wear.tiles", name = "tiles-renderer", version.ref = "tiles" }
+wear-tiles-testing = { group = "androidx.wear.tiles", name = "tiles-testing", version.ref = "tiles" }
 work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 work-testing = { group = "androidx.work", name = "work-testing", version.ref = "work" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
