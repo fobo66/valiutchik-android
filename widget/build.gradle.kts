@@ -30,7 +30,9 @@ plugins {
 android {
     namespace = "dev.fobo66.valiutchik.android.widget"
     compileSdk {
-        version = release(37)
+        version = release(37) {
+            minorApiLevel = 1
+        }
     }
 
     defaultConfig {

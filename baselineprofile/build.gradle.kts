@@ -28,7 +28,9 @@ plugins {
 android {
     namespace = "dev.fobo66.baselineprofile"
     compileSdk {
-        version = release(37)
+        version = release(37) {
+            minorApiLevel = 1
+        }
     }
 
     compileOptions {
