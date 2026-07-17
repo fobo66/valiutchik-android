@@ -28,6 +28,7 @@ repositories {
 dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.detekt)
+    implementation(libs.kotlinter)
     implementation(libs.dotenv.kotlin)
 }
 

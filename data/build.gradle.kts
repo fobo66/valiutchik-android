@@ -19,14 +19,11 @@
 import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jmailen.gradle.kotlinter.tasks.FormatTask
-import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.android.library.multiplatform)
     id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
-    alias(libs.plugins.kotlinter)
     alias(libs.plugins.sqlidelight)
 }
 
@@ -142,14 +139,6 @@ kotlin {
             }
         }
     }
-}
-
-tasks.withType<LintTask> {
-    exclude { it.file.path.contains("generated") }
-}
-
-tasks.withType<FormatTask> {
-    exclude { it.file.path.contains("generated") }
 }
 
 sqldelight {

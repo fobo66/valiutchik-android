@@ -13,8 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+@file:OptIn(ExperimentalWasmDsl::class)
 
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 /*
  *    Copyright 2026 Andrey Mukamolov
@@ -34,6 +38,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("dev.detekt")
+    id("org.jmailen.kotlinter")
 }
 
 kotlin {
@@ -56,6 +61,14 @@ kotlin {
 
 detekt {
     autoCorrect = true
+}
+
+tasks.withType<LintTask> {
+    exclude { it.file.path.contains("generated") }
+}
+
+tasks.withType<FormatTask> {
+    exclude { it.file.path.contains("generated") }
 }
 
 dependencies {
