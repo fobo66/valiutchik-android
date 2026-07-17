@@ -19,25 +19,15 @@
 import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jmailen.gradle.kotlinter.tasks.FormatTask
-import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.android.library.multiplatform)
-    kotlin("multiplatform")
+    id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
     alias(libs.plugins.sqlidelight)
 }
 
 kotlin {
-    jvm {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "fobo66.valiutchik.core"
         compileSdk {
@@ -65,16 +55,6 @@ kotlin {
 
         packaging {
             jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
-        }
-    }
-
-    wasmJs {
-        browser {
-            testTask {
-                useKarma {
-                    useFirefoxHeadless()
-                }
-            }
         }
     }
 
@@ -159,14 +139,6 @@ kotlin {
             }
         }
     }
-}
-
-tasks.withType<LintTask> {
-    exclude { it.file.path.contains("generated") }
-}
-
-tasks.withType<FormatTask> {
-    exclude { it.file.path.contains("generated") }
 }
 
 sqldelight {

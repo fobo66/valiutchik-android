@@ -130,6 +130,10 @@ kotlin {
     }
 }
 
+detekt {
+    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
+}
+
 tasks.withType<LintTask> {
     exclude { it.file.path.contains("generated") }
 }

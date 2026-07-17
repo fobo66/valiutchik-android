@@ -41,7 +41,9 @@ android {
     }
 
     compileSdk {
-        version = release(37)
+        version = release(37) {
+            minorApiLevel = 1
+        }
     }
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
@@ -114,10 +116,12 @@ kotlin {
 
 detekt {
     autoCorrect = true
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
 }
 
 tasks.withType<Detekt> {
     jvmTarget = "17"
+    autoCorrect = true
 }
 
 composeCompiler {

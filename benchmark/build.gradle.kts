@@ -27,7 +27,9 @@ plugins {
 
 android {
     compileSdk {
-        version = release(37)
+        version = release(37) {
+            minorApiLevel = 1
+        }
     }
 
     compileOptions {
@@ -83,5 +85,4 @@ dependencies {
     androidTestImplementation(libs.kotlinx.io)
     androidTestImplementation(libs.kotlinx.datetime)
     androidTestImplementation(project(":data-testing"))
-    detektPlugins(libs.detekt.rules.compose)
 }

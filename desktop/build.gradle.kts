@@ -104,7 +104,3 @@ aboutLibraries {
         outputFile = file("src/desktopMain/resources/open_source_licenses.json")
     }
 }
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
-}
