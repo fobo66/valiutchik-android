@@ -116,10 +116,12 @@ kotlin {
 
 detekt {
     autoCorrect = true
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
 }
 
 tasks.withType<Detekt> {
     jvmTarget = "17"
+    autoCorrect = true
 }
 
 composeCompiler {

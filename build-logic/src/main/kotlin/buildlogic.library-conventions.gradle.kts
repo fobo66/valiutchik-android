@@ -76,7 +76,3 @@ tasks.withType<LintTask> {
 tasks.withType<FormatTask> {
     exclude { it.file.path.contains("generated") }
 }
-
-dependencies {
-    detektPlugins("io.nlopez.compose.rules:detekt:0.6.3")
-}

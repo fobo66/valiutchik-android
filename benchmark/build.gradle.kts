@@ -85,5 +85,4 @@ dependencies {
     androidTestImplementation(libs.kotlinx.io)
     androidTestImplementation(libs.kotlinx.datetime)
     androidTestImplementation(project(":data-testing"))
-    detektPlugins(libs.detekt.rules.compose)
 }

@@ -109,8 +109,5 @@ detekt {
 
 tasks.withType<Detekt> {
     jvmTarget = "17"
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
+    autoCorrect = true
 }
