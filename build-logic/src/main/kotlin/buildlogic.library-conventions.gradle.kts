@@ -15,6 +15,7 @@
  */
 @file:OptIn(ExperimentalWasmDsl::class)
 
+import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jmailen.gradle.kotlinter.tasks.FormatTask
@@ -60,6 +61,11 @@ kotlin {
 }
 
 detekt {
+    autoCorrect = true
+}
+
+tasks.withType<Detekt> {
+    jvmTarget = "17"
     autoCorrect = true
 }
 
