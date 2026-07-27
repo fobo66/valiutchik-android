@@ -17,16 +17,13 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jmailen.gradle.kotlinter.tasks.FormatTask
-import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.licenses)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.common-conventions")
 }
 
 kotlin {
@@ -55,12 +52,8 @@ kotlin {
     }
 }
 
-tasks.withType<LintTask> {
-    exclude { it.file.path.contains("generated") }
-}
-
-tasks.withType<FormatTask> {
-    exclude { it.file.path.contains("generated") }
+detekt {
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
 }
 
 dependencies {

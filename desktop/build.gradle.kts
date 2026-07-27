@@ -22,8 +22,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.licenses)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.common-conventions")
 }
 
 kotlin {
@@ -103,4 +102,12 @@ aboutLibraries {
     export {
         outputFile = file("src/desktopMain/resources/open_source_licenses.json")
     }
+}
+
+detekt {
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
+}
+
+dependencies {
+    detektPlugins(libs.detekt.rules.compose)
 }
