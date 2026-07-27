@@ -22,18 +22,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library.multiplatform)
-    kotlin("multiplatform")
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.library-conventions")
 }
 
 kotlin {
-    jvm {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "fobo66.valiutchik.domain"
         compileSdk {
@@ -48,16 +40,6 @@ kotlin {
             compileTaskProvider.configure {
                 compilerOptions {
                     jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
-    }
-
-    wasmJs {
-        browser {
-            testTask {
-                useKarma {
-                    useFirefoxHeadless()
                 }
             }
         }
@@ -87,19 +69,11 @@ kotlin {
             }
         }
 
-        jvmTest {
+        named("desktopTest") {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
 }
