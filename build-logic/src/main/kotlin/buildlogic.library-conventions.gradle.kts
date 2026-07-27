@@ -15,17 +15,13 @@
  */
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jmailen.gradle.kotlinter.tasks.FormatTask
-import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
-    id("dev.detekt")
-    id("org.jmailen.kotlinter")
+    id("buildlogic.common-conventions")
 }
 
 kotlin {
@@ -71,21 +67,4 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
-    autoCorrect = true
-}
-
-tasks.withType<LintTask> {
-    exclude { it.file.path.contains("generated") }
-}
-
-tasks.withType<FormatTask> {
-    exclude { it.file.path.contains("generated") }
 }

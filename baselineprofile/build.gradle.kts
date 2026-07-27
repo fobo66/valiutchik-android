@@ -15,14 +15,12 @@
  */
 
 import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.test)
     alias(libs.plugins.baseline.profile)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.common-conventions")
 }
 
 android {
@@ -62,14 +60,6 @@ kotlin {
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
     useConnectedDevices = true
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
 }
 
 dependencies {

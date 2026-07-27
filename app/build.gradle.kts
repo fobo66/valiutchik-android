@@ -15,16 +15,14 @@
  */
 
 import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.compose)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
-    alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
+    id("buildlogic.common-conventions")
 }
 
 android {
@@ -115,13 +113,7 @@ kotlin {
 }
 
 detekt {
-    autoCorrect = true
     config.setFrom(rootProject.file("config/detekt/compose.yml"))
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
-    autoCorrect = true
 }
 
 composeCompiler {
