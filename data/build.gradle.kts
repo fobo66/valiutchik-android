@@ -89,14 +89,14 @@ kotlin {
             }
         }
 
-        jvmMain {
+        named("desktopMain") {
             dependencies {
                 implementation(libs.icu)
                 implementation(libs.sqlidelight.jvm)
             }
         }
 
-        jvmTest {
+        named("desktopTest") {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.truth)
