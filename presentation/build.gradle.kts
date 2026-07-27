@@ -21,20 +21,12 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
+    id("buildlogic.library-conventions")
     alias(libs.plugins.android.library.multiplatform)
     alias(libs.plugins.android.lint)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
-    jvm {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "dev.fobo66.valiutchik.presentation"
         compileSdk {
@@ -62,11 +54,6 @@ kotlin {
         }
     }
 
-    // Source set declarations.
-    // Declaring a target automatically creates a source set with the same name. By default, the
-    // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
-    // common to share sources between related targets.
-    // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
         commonMain {
             dependencies {
@@ -93,15 +80,11 @@ kotlin {
             }
         }
 
-        jvmTest {
+        named("desktopTest") {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
             }
         }
     }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
 }
