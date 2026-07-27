@@ -23,10 +23,12 @@ plugins {
 repositories {
     gradlePluginPortal()
     mavenCentral()
+    google()
 }
 
 dependencies {
     implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.android.library.multiplatform)
     implementation(libs.detekt)
     implementation(libs.kotlinter)
     implementation(libs.dotenv.kotlin)

@@ -23,6 +23,7 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.kotlin.multiplatform.library")
     id("dev.detekt")
     id("org.jmailen.kotlinter")
 }
@@ -31,6 +32,33 @@ kotlin {
     jvm("desktop") {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
+        }
+    }
+
+    android {
+        compileSdk {
+            version = release(37) {
+                minorApiLevel = 1
+            }
+        }
+
+        minSdk {
+            version = release(30)
+        }
+
+        withHostTest {}
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget = JvmTarget.JVM_17
+                }
+            }
         }
     }
 

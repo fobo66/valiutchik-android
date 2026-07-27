@@ -16,13 +16,10 @@
 
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("buildlogic.library-conventions")
-    alias(libs.plugins.android.library.multiplatform)
     alias(libs.plugins.android.lint)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
@@ -31,26 +28,6 @@ plugins {
 kotlin {
     android {
         namespace = "dev.fobo66.valiutchik.ui"
-        compileSdk {
-            version = release(37)
-        }
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
-
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
 
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }

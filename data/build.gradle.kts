@@ -16,12 +16,9 @@
 
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library.multiplatform)
     id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
     alias(libs.plugins.sqlidelight)
@@ -30,28 +27,6 @@ plugins {
 kotlin {
     android {
         namespace = "fobo66.valiutchik.core"
-        compileSdk {
-            version = release(37)
-        }
-
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        withHostTest {}
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
-
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
 
         packaging {
             jniLibs.pickFirsts.add("lib/**/libc++_shared.so")

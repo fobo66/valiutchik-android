@@ -16,12 +16,9 @@
 
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library.multiplatform)
     id("buildlogic.library-conventions")
     alias(libs.plugins.kotlin.serialization)
 }
@@ -29,21 +26,6 @@ plugins {
 kotlin {
     android {
         namespace = "fobo66.valiutchik.api"
-        compileSdk {
-            version = release(37)
-        }
-
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
     }
 
     sourceSets {
