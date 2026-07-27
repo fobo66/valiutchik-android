@@ -17,25 +17,16 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library.multiplatform)
-    alias(libs.plugins.kotlin.multiplatform)
+    id("buildlogic.library-conventions")
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
-    jvm("desktop") {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "fobo66.valiutchik.api"
         compileSdk {
@@ -53,10 +44,6 @@ kotlin {
                 }
             }
         }
-    }
-
-    wasmJs {
-        browser()
     }
 
     sourceSets {
@@ -101,13 +88,4 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
-    autoCorrect = true
 }
