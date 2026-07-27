@@ -19,17 +19,13 @@
 import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jmailen.gradle.kotlinter.tasks.FormatTask
-import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
+    id("buildlogic.library-conventions")
     alias(libs.plugins.android.library.multiplatform)
     alias(libs.plugins.android.lint)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
@@ -59,14 +55,7 @@ kotlin {
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
-    jvm("desktop") {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     wasmJs {
-        browser()
         binaries.executable()
     }
 
@@ -131,15 +120,7 @@ kotlin {
 }
 
 detekt {
-    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
-}
-
-tasks.withType<LintTask> {
-    exclude { it.file.path.contains("generated") }
-}
-
-tasks.withType<FormatTask> {
-    exclude { it.file.path.contains("generated") }
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
 }
 
 dependencies {
