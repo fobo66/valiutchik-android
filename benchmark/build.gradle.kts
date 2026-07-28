@@ -14,31 +14,15 @@
  *    limitations under the License.
  */
 
-import com.android.sdklib.AndroidVersion
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.benchmark)
     id("buildlogic.common-conventions")
+    id("buildlogic.android-conventions")
 }
 
 android {
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 1
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     defaultConfig {
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }
 
@@ -56,12 +40,6 @@ android {
         }
     }
     namespace = "fobo66.valiutchik.benchmark"
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-    }
 }
 
 dependencies {
