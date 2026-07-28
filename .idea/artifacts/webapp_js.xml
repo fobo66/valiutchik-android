@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="webapp-js">
+    <output-path>$PROJECT_DIR$/webapp/build/libs</output-path>
+    <root id="archive" name="webapp-js.jar">
+      <element id="module-output" name="Valiutchik.webapp.jsMain" />
+    </root>
+  </artifact>
+</component>

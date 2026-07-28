@@ -14,53 +14,13 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
-
-import com.android.sdklib.AndroidVersion
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.android.library.multiplatform)
-    kotlin("multiplatform")
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.library-conventions")
 }
 
 kotlin {
-    jvm {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "fobo66.valiutchik.domain"
-        compileSdk {
-            version = release(37)
-        }
-
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
-    }
-
-    wasmJs {
-        browser {
-            testTask {
-                useKarma {
-                    useFirefoxHeadless()
-                }
-            }
-        }
     }
 
     sourceSets {
@@ -87,19 +47,11 @@ kotlin {
             }
         }
 
-        jvmTest {
+        named("desktopTest") {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.ktor.client)
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
 }

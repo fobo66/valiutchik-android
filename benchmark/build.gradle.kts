@@ -14,31 +14,15 @@
  *    limitations under the License.
  */
 
-import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.benchmark)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.common-conventions")
+    id("buildlogic.android-conventions")
 }
 
 android {
-    compileSdk {
-        version = release(37)
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     defaultConfig {
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }
 
@@ -58,20 +42,6 @@ android {
     namespace = "fobo66.valiutchik.benchmark"
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-    }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
-}
-
 dependencies {
     implementation(project(":api"))
     implementation(project(":data"))
@@ -83,5 +53,4 @@ dependencies {
     androidTestImplementation(libs.kotlinx.io)
     androidTestImplementation(libs.kotlinx.datetime)
     androidTestImplementation(project(":data-testing"))
-    detektPlugins(libs.detekt.rules.compose)
 }

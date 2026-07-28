@@ -16,52 +16,21 @@
 
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library.multiplatform)
-    alias(libs.plugins.kotlin.multiplatform)
+    id("buildlogic.library-conventions")
+    id("buildlogic.secrets-conventions")
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
 }
 
 kotlin {
-    jvm("desktop") {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "fobo66.valiutchik.api"
-        compileSdk {
-            version = release(37)
-        }
-
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
-    }
-
-    wasmJs {
-        browser()
     }
 
     sourceSets {
         commonMain {
-            generateSecrets(project)
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.collection)
@@ -80,7 +49,6 @@ kotlin {
 
                 implementation(libs.napier)
             }
-            kotlin.srcDir(project.layout.buildDirectory.dir("generated/source/secret"))
         }
 
         webMain {
@@ -101,16 +69,4 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
 }

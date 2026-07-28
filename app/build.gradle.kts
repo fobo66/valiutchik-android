@@ -14,43 +14,20 @@
  *    limitations under the License.
  */
 
-import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.compose)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.licenses)
-    alias(libs.plugins.kotlinter)
     alias(libs.plugins.baseline.profile)
+    id("buildlogic.common-conventions")
+    id("buildlogic.android-conventions")
 }
 
 android {
-    signingConfigs {
-        register("releaseSignConfig") {
-            keyAlias = loadSecret(rootProject, KEY_ALIAS)
-            keyPassword = loadSecret(rootProject, KEY_PASSWORD)
-            storeFile = file(loadSecret(rootProject, STORE_FILE))
-            storePassword = loadSecret(rootProject, STORE_PASSWORD)
 
-            enableV3Signing = true
-            enableV4Signing = true
-        }
-    }
-
-    compileSdk {
-        version = release(37)
-    }
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-        targetSdk {
-            version = release(37)
-        }
+
         versionCode = 25
         versionName = "1.15.1"
         multiDexEnabled = true
@@ -71,31 +48,10 @@ android {
             matchingFallbacks += listOf("release")
             isDebuggable = false
         }
-
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.getByName("releaseSignConfig")
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
         compose = true
-    }
-
-    packaging {
-        resources {
-            excludes += "META-INF/AL2.0"
-            excludes += "META-INF/LGPL2.1"
-        }
     }
 
     testOptions {
@@ -106,18 +62,8 @@ android {
     namespace = "fobo66.exchangecourcesbelarus"
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-    }
-}
-
 detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
 }
 
 composeCompiler {

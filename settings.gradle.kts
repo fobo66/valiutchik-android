@@ -29,6 +29,8 @@ dependencyResolutionManagement {
 }
 
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         exclusiveContent {
             forRepository { google() }

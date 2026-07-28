@@ -14,60 +14,25 @@
  *    limitations under the License.
  */
 
-import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.test)
     alias(libs.plugins.baseline.profile)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.common-conventions")
+    id("buildlogic.android-conventions")
 }
 
 android {
     namespace = "dev.fobo66.baselineprofile"
-    compileSdk {
-        version = release(37)
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 
     defaultConfig {
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-        targetSdk {
-            version = release(37)
-        }
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     targetProjectPath = ":app"
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-    }
-}
-
-// This is the configuration block for the Baseline Profile plugin.
-// You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
     useConnectedDevices = true
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
 }
 
 dependencies {
@@ -75,7 +40,6 @@ dependencies {
     implementation(libs.androidx.test.espresso.core)
     implementation(libs.androidx.test.uiautomator)
     implementation(libs.androidx.benchmark.macro)
-    detektPlugins(libs.detekt.rules.compose)
 }
 
 androidComponents {

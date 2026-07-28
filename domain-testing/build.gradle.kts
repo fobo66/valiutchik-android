@@ -16,45 +16,15 @@
 
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import com.android.sdklib.AndroidVersion
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library.multiplatform)
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.library-conventions")
 }
 
 kotlin {
-    jvm {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
     android {
         namespace = "dev.fobo66.domain.testing"
-        compileSdk {
-            version = release(37)
-        }
-
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
-                }
-            }
-        }
-    }
-
-    wasmJs {
-        browser()
     }
 
     sourceSets {
@@ -69,12 +39,4 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
 }

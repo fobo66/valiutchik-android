@@ -1,0 +1,83 @@
+/*
+ *    Copyright 2026 Andrey Mukamolov
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package fobo66.valiutchik.core.model.datasource
+
+import com.ibm.icu.number.NumberFormatter
+import com.ibm.icu.text.PluralRules
+import com.ibm.icu.text.Transliterator
+import com.ibm.icu.util.Currency
+import com.ibm.icu.util.ULocale
+import fobo66.valiutchik.core.entities.LanguageTag
+import kotlin.LazyThreadSafetyMode.NONE
+
+class FormattingDataSourceIcuImpl : FormattingDataSource {
+    private val targetCurrency: Currency by lazy(NONE) {
+        Currency.getInstance(BYN)
+    }
+
+    override fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String =
+        NumberFormatter
+            .withLocale(ULocale.forLanguageTag(languageTag))
+            .unit(targetCurrency)
+            .format(value)
+            .toString()
+
+    override fun formatBankName(name: String, languageTag: LanguageTag): String {
+        if (name.isEmpty()) {
+            return name
+        }
+        val languageCode = ULocale.forLanguageTag(languageTag).isO3Language
+
+        return if (languageCode == LANG_RU) {
+            name
+        } else {
+            transliterate(
+                name,
+                languageCode
+            )
+        }
+    }
+
+    override fun formatCurrencyName(
+        currencyCode: String,
+        quantity: Long,
+        languageTag: LanguageTag
+    ): String {
+        val locale = ULocale.forLanguageTag(languageTag)
+
+        val pluralCount = PluralRules.forLocale(locale).select(quantity.toDouble())
+        return Currency.getInstance(currencyCode)
+            .getName(locale, Currency.PLURAL_LONG_NAME, pluralCount, null)
+    }
+
+    override fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String =
+        Currency.getInstance(currencyCode).getSymbol(ULocale.forLanguageTag(languageTag))
+
+    private fun transliterate(bankName: String, languageCode: String): String {
+        val transliterator =
+            if (languageCode == LANG_BELARUSIAN) {
+                Transliterator.createFromRules(
+                    BELARUSIAN_TRANSLITERATOR_ID,
+                    BELARUSIAN_RULES,
+                    Transliterator.FORWARD
+                )
+            } else {
+                Transliterator.getInstance(CYRILLIC_LATIN)
+            }
+        return transliterator.transliterate(bankName)
+    }
+}

@@ -14,33 +14,17 @@
  *    limitations under the License.
  */
 
-import com.android.sdklib.AndroidVersion
-import dev.detekt.gradle.Detekt
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.junit)
     alias(libs.plugins.robolectric.junit5)
-    alias(libs.plugins.kotlinter)
+    id("buildlogic.common-conventions")
+    id("buildlogic.android-conventions")
 }
 
 android {
     namespace = "dev.fobo66.valiutchik.android.widget"
-    compileSdk {
-        version = release(37)
-    }
-
-    defaultConfig {
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
 
     buildFeatures {
         compose = true
@@ -55,24 +39,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-    }
-}
-
-detekt {
-    autoCorrect = true
-}
-
-tasks.withType<Detekt> {
-    jvmTarget = "17"
 }
 
 dependencies {
