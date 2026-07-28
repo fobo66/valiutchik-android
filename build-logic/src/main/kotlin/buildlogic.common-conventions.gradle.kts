@@ -45,7 +45,7 @@ detekt {
 }
 
 tasks.withType<Detekt> {
-    jvmTarget = "17"
+    jvmTarget = TARGET_JVM_VERSION
     autoCorrect = true
 }
 

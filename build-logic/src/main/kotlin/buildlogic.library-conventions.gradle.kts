@@ -27,19 +27,19 @@ plugins {
 kotlin {
     jvm("desktop") {
         compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
+            jvmTarget = JvmTarget.fromTarget(TARGET_JVM_VERSION)
         }
     }
 
     android {
         compileSdk {
-            version = release(37) {
+            version = release(COMPILE_ANDROID_SDK_VERSION) {
                 minorApiLevel = 1
             }
         }
 
         minSdk {
-            version = release(30)
+            version = release(MIN_ANDROID_SDK_VERSION)
         }
 
         withHostTest {}
@@ -52,7 +52,7 @@ kotlin {
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions {
-                    jvmTarget = JvmTarget.JVM_17
+                    jvmTarget = JvmTarget.fromTarget(TARGET_JVM_VERSION)
                 }
             }
         }

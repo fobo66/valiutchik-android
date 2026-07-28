@@ -46,7 +46,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
                 defaultConfig {
                     targetSdk {
-                        version = release(37)
+                        version = release(TARGET_ANDROID_SDK_VERSION)
                     }
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -60,7 +60,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
                 defaultConfig {
                     targetSdk {
-                        version = release(37)
+                        version = release(TARGET_ANDROID_SDK_VERSION)
                     }
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -71,7 +71,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         if (hasAppPlugin || hasLibraryPlugin || hasTestPlugin) {
             target.extensions.configure<KotlinAndroidProjectExtension>("kotlin") {
                 compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_17)
+                    jvmTarget.set(JvmTarget.fromTarget(TARGET_JVM_VERSION))
                 }
             }
         }
@@ -79,12 +79,12 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
     fun CommonExtension.setupSdk() {
         compileSdk {
-            version = release(37) {
+            version = release(COMPILE_ANDROID_SDK_VERSION) {
                 minorApiLevel = 1
             }
         }
         defaultConfig.minSdk {
-            version = release(30)
+            version = release(MIN_ANDROID_SDK_VERSION)
         }
         compileOptions.sourceCompatibility = JavaVersion.VERSION_17
         compileOptions.targetCompatibility = JavaVersion.VERSION_17
