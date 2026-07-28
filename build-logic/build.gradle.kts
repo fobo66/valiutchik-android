@@ -17,6 +17,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    `java-gradle-plugin`
     `kotlin-dsl`
 }
 
@@ -27,11 +28,14 @@ repositories {
 }
 
 dependencies {
+    compileOnly(libs.android.gradle.api)
+    implementation(gradleKotlinDsl())
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.android.library.multiplatform)
     implementation(libs.detekt)
     implementation(libs.kotlinter)
     implementation(libs.dotenv.kotlin)
+    implementation(libs.kotlinpoet)
 }
 
 kotlin {
@@ -42,4 +46,13 @@ kotlin {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+}
+
+gradlePlugin {
+    plugins {
+        register("androidConventions") {
+            id = "buildlogic.android-conventions"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+    }
 }
