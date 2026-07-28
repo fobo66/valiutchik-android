@@ -14,15 +14,13 @@
  *    limitations under the License.
  */
 
-import com.android.sdklib.AndroidVersion
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.compose)
     alias(libs.plugins.licenses)
     alias(libs.plugins.baseline.profile)
     id("buildlogic.common-conventions")
+    id("buildlogic.android-conventions")
 }
 
 android {
@@ -38,19 +36,9 @@ android {
         }
     }
 
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 1
-        }
-    }
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
-        minSdk {
-            version = release(AndroidVersion.VersionCodes.R)
-        }
-        targetSdk {
-            version = release(37)
-        }
+
         versionCode = 25
         versionName = "1.15.1"
         multiDexEnabled = true
@@ -82,10 +70,6 @@ android {
             signingConfig = signingConfigs.getByName("releaseSignConfig")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 
     buildFeatures {
         compose = true
@@ -104,12 +88,6 @@ android {
     }
 
     namespace = "fobo66.exchangecourcesbelarus"
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-    }
 }
 
 detekt {
