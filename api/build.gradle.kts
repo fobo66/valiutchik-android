@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     id("buildlogic.library-conventions")
+    id("buildlogic.secrets-conventions")
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -30,7 +31,6 @@ kotlin {
 
     sourceSets {
         commonMain {
-            generateSecrets(project)
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.collection)
@@ -49,7 +49,6 @@ kotlin {
 
                 implementation(libs.napier)
             }
-            kotlin.srcDir(project.layout.buildDirectory.dir("generated/source/secret"))
         }
 
         webMain {

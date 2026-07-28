@@ -54,5 +54,9 @@ gradlePlugin {
             id = "buildlogic.android-conventions"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("secretsConventions") {
+            id = "buildlogic.secrets-conventions"
+            implementationClass = "SecretsConventionPlugin"
+        }
     }
 }
