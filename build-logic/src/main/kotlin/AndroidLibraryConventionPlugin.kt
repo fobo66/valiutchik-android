@@ -45,6 +45,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 setupSdk()
 
                 defaultConfig {
+                    targetSdk {
+                        version = release(37)
+                    }
+
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
             }
