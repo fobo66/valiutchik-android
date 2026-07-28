@@ -24,17 +24,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        register("releaseSignConfig") {
-            keyAlias = loadSecret(rootProject, KEY_ALIAS)
-            keyPassword = loadSecret(rootProject, KEY_PASSWORD)
-            storeFile = file(loadSecret(rootProject, STORE_FILE))
-            storePassword = loadSecret(rootProject, STORE_PASSWORD)
-
-            enableV3Signing = true
-            enableV4Signing = true
-        }
-    }
 
     defaultConfig {
         applicationId = "fobo66.exchangecourcesbelarus"
@@ -58,16 +47,6 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
-        }
-
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.getByName("releaseSignConfig")
         }
     }
 

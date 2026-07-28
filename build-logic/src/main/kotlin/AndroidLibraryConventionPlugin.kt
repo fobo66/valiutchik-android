@@ -58,12 +58,39 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             target.extensions.configure<ApplicationExtension>("android") {
                 setupSdk()
 
+                signingConfigs {
+                    register("releaseSignConfig") {
+                        val env = target.loadEnv()
+                        keyAlias = env[ENV_VAR_KEY_ALIAS]
+                        keyPassword = env[ENV_VAR_KEY_PASSWORD]
+                        storeFile = target.file(env[ENV_VAR_STORE_FILE])
+                        storePassword = env[ENV_VAR_STORE_PASSWORD]
+
+                        enableV1Signing = true
+                        enableV2Signing = true
+                        enableV3Signing = true
+                        enableV4Signing = true
+                    }
+                }
+
                 defaultConfig {
                     targetSdk {
                         version = release(TARGET_ANDROID_SDK_VERSION)
                     }
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                }
+
+                buildTypes {
+                    release {
+                        isMinifyEnabled = true
+                        isShrinkResources = true
+                        proguardFiles(
+                            getDefaultProguardFile("proguard-android-optimize.txt"),
+                            "proguard-rules.pro"
+                        )
+                        signingConfig = signingConfigs.getByName("releaseSignConfig")
+                    }
                 }
             }
         }
@@ -77,7 +104,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         }
     }
 
-    fun CommonExtension.setupSdk() {
+    private fun CommonExtension.setupSdk() {
         compileSdk {
             version = release(COMPILE_ANDROID_SDK_VERSION) {
                 minorApiLevel = 1
