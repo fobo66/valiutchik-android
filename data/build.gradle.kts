@@ -22,6 +22,7 @@ plugins {
     id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
     alias(libs.plugins.sqlidelight)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
