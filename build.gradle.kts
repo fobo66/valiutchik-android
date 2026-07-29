@@ -30,6 +30,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.kotlinter) apply false
     alias(libs.plugins.sqlidelight) apply false
+    alias(libs.plugins.metro) apply false
     alias(libs.plugins.baseline.profile) apply false
     alias(libs.plugins.robolectric.junit5) apply false
 }
