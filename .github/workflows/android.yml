@@ -36,7 +36,7 @@ jobs:
           validate-wrappers: true
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check
-        run: ./gradlew --no-daemon check
+        run: ./gradlew --no-daemon allTests detektMain lint lintKotlin
   dependency-submission:
     runs-on: ubuntu-latest
     permissions:
