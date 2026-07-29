@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.api
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CityResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
@@ -41,6 +44,8 @@ private const val API_URL_BANKS = "https://api.myfin.by/banks"
 private const val API_URL_CURRENCIES = "https://api.myfin.by/currency"
 private const val API_URL_CITIES = "https://api.myfin.by/city"
 
+@ContributesBinding(AppScope::class)
+@Inject
 class ApiDataSourceImpl(
     private val client: HttpClient,
     private val parser: ApiResponseParser,
