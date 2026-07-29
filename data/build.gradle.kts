@@ -124,11 +124,3 @@ sqldelight {
         }
     }
 }
-
-detekt {
-    autoCorrect = true
-}
-
-dependencies {
-    detektPlugins(libs.detekt.rules.compose)
-}
