@@ -26,6 +26,7 @@ plugins {
 
 detekt {
     autoCorrect = true
+    config.setFrom(rootProject.layout.projectDirectory.file("config/detekt/detekt.yml"))
 }
 
 tasks.withType<Detekt> {

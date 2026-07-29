@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ fun <T> ActionListLayout(
     fun titleBar(): @Composable (() -> Unit) = {
         TitleBar(
             startIcon = ImageProvider(titleIconRes),
-            title = title.takeIf { ActionListLayoutSize.fromLocalSize() != Small } ?: "",
+            title = title.takeIf { ActionListLayoutSize.fromLocalSize() != Small }.orEmpty(),
             iconColor = GlanceTheme.colors.primary,
             textColor = GlanceTheme.colors.onSurface,
             actions = {
