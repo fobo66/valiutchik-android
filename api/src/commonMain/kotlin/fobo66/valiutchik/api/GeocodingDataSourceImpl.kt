@@ -19,6 +19,8 @@ package fobo66.valiutchik.api
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import fobo66.valiutchik.api.di.GeocodingApiKey
+import fobo66.valiutchik.api.di.IpGeocodingApiKey
 import fobo66.valiutchik.api.entity.Feature
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.api.entity.GeocodingResult
@@ -51,8 +53,8 @@ private const val PARAM_LONGITUDE = "lon"
 @Inject
 class GeocodingDataSourceImpl(
     private val httpClient: HttpClient,
-    private val geocodingApiKey: String,
-    private val ipGeocodingApiKey: String,
+    @GeocodingApiKey private val geocodingApiKey: String,
+    @IpGeocodingApiKey private val ipGeocodingApiKey: String,
     private val ioDispatcher: CoroutineDispatcher
 ) : GeocodingDataSource {
     override suspend fun findPlaceByCoordinates(

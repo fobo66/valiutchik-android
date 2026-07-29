@@ -14,17 +14,15 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.di
+package fobo66.valiutchik.api.log
 
-import dev.zacsweers.metro.Qualifier
+import io.github.aakira.napier.Napier
+import io.ktor.client.plugins.logging.Logger
 
-internal enum class Api {
-    GEOCODING_API_KEY,
-    IP_GEOCODING_API_KEY
+val Logger.Companion.NAPIER: Logger get() = NapierLogger
+
+private object NapierLogger : Logger {
+    override fun log(message: String) {
+        Napier.d(tag = "HttpClient") { message }
+    }
 }
-
-@Qualifier
-annotation class GeocodingApiKey
-
-@Qualifier
-annotation class IpGeocodingApiKey

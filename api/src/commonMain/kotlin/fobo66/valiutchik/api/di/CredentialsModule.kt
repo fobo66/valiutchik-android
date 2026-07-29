@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,10 @@
 package fobo66.valiutchik.api.di
 
 import Secrets
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
@@ -27,4 +31,16 @@ val credentialsModule = module {
     single(qualifier(Api.IP_GEOCODING_API_KEY)) {
         Secrets.IPGEOCODING_API_KEY
     }
+}
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object CredentialsModule {
+    @Provides
+    @GeocodingApiKey
+    fun provideGeocodingApiKey(): String = Secrets.GEOAPIFY_API_KEY
+
+    @Provides
+    @IpGeocodingApiKey
+    fun provideIpGeocodingApiKey(): String = Secrets.IPGEOCODING_API_KEY
 }

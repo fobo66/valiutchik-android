@@ -16,7 +16,11 @@
 
 package fobo66.valiutchik.api.di
 
-import io.github.aakira.napier.Napier
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import fobo66.valiutchik.api.log.NAPIER
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -31,11 +35,7 @@ import org.koin.dsl.module
 val networkModule =
     module {
         single<Logger> {
-            object : Logger {
-                override fun log(message: String) {
-                    Napier.d(message, tag = "Ktor")
-                }
-            }
+            Logger.NAPIER
         }
         single<Json> {
             Json {
@@ -63,3 +63,31 @@ val networkModule =
             }
         }
     }
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object NetworkModule {
+    @Provides
+    fun provideJson(): Json = Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+    }
+
+    @Provides
+    fun provideHttpClient(json: Json): HttpClient = HttpClient(provideEngine()) {
+        install(ContentNegotiation) {
+            json(json)
+        }
+        install(ContentEncoding) {
+            gzip()
+            deflate()
+        }
+        install(Logging) {
+            logger = Logger.NAPIER
+            level = LogLevel.HEADERS
+            sanitizeHeader { header -> header == HttpHeaders.Authorization }
+        }
+
+        expectSuccess = true
+    }
+}

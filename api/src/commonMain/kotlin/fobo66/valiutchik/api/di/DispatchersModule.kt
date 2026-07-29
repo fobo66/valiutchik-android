@@ -16,10 +16,22 @@
 
 package fobo66.valiutchik.api.di
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val dispatchersModule = module {
     single(qualifier(Dispatcher.BACKGROUND)) { Dispatchers.Default }
+}
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object DispatchersModule {
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher = Dispatchers.Default
 }
