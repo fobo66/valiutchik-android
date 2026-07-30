@@ -1,6 +1,7 @@
 name: Android CI
 permissions:
   contents: read
+  checks: write
 
 on:
   push:
@@ -37,6 +38,11 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check
         run: ./gradlew --no-daemon allTests detektMain lint lintKotlin
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v6
+        if: success() || failure()
+        with:
+          report_paths: '**/build/test-results/*/TEST-*.xml'
   dependency-submission:
     runs-on: ubuntu-latest
     permissions:
