@@ -16,9 +16,17 @@
 
 package fobo66.valiutchik.core.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import app.cash.sqldelight.db.SqlDriver
 import org.koin.core.module.Module
 
 internal const val DATABASE_NAME = "currency-rates-db"
 internal const val PREFERENCES_NAME = "valiutchik-prefs.preferences_pb"
 
 expect val thirdPartyModule: Module
+
+interface ThirdPartyModule {
+    val sqlDriver: SqlDriver
+    val preferences: DataStore<Preferences>
+}

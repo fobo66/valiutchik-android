@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,21 @@
 
 package fobo66.valiutchik.core.di
 
+import fobo66.valiutchik.core.model.datasource.AssetsDataSource
+import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
+import fobo66.valiutchik.core.model.datasource.FormattingDataSource
+import fobo66.valiutchik.core.model.datasource.IntentDataSource
+import fobo66.valiutchik.core.model.datasource.LocationDataSource
+import fobo66.valiutchik.core.model.datasource.UriDataSource
 import org.koin.core.module.Module
 
 expect val systemModule: Module
+
+interface SystemModule {
+    val assetsDataSource: AssetsDataSource
+    val clipboardDataSource: ClipboardDataSource
+    val formattingDataSource: FormattingDataSource
+    val intentDataSource: IntentDataSource
+    val locationDataSource: LocationDataSource
+    val uriDataSource: UriDataSource
+}
