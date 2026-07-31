@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +16,13 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.repository.MapRepository
 
+@ContributesBinding(AppScope::class)
+@Inject
 class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
     override fun execute(bankName: CharSequence): Boolean = mapRepository.searchOnMap(bankName)
 }
