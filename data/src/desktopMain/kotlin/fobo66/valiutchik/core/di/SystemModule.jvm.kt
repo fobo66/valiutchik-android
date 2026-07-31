@@ -16,6 +16,10 @@
 
 package fobo66.valiutchik.core.di
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Provides
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -49,4 +53,29 @@ actual val systemModule: Module = module {
     single<AssetsDataSource> { AssetsDataSourceJvmImpl() }
 
     single<UriDataSource> { UriDataSourceExternalImpl() }
+}
+
+@DependencyGraph
+@ContributesTo(AppScope::class)
+interface DesktopSystemModule : SystemModule {
+    @Provides
+    fun provideAssetsDataSource(): AssetsDataSource = AssetsDataSourceJvmImpl()
+
+    @Provides
+    fun provideClipboardDataSource(): ClipboardDataSource = ClipboardDataSourceJvmImpl()
+
+    @Provides
+    fun provideFormattingDataSource(): FormattingDataSource = FormattingDataSourceIcuImpl()
+
+    @Provides
+    fun provideIntentDataSource(): IntentDataSource = IntentDataSourceDesktopImpl()
+
+    @Provides
+    fun provideLocaleDataSource(): LocaleDataSource = LocaleDataSourceJvmImpl()
+
+    @Provides
+    fun provideLocationDataSource(): LocationDataSource = LocationDataSourceIpImpl()
+
+    @Provides
+    fun provideUriDataSource(): UriDataSource = UriDataSourceExternalImpl()
 }

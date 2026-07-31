@@ -20,6 +20,7 @@ import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
+import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import org.koin.core.module.Module
@@ -31,6 +32,7 @@ interface SystemModule {
     val clipboardDataSource: ClipboardDataSource
     val formattingDataSource: FormattingDataSource
     val intentDataSource: IntentDataSource
+    val localeDataSource: LocaleDataSource
     val locationDataSource: LocationDataSource
     val uriDataSource: UriDataSource
 }
