@@ -17,9 +17,9 @@
 package fobo66.valiutchik.core.di
 
 import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Binds
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.DependencyGraph
-import dev.zacsweers.metro.Provides
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -58,24 +58,17 @@ actual val systemModule: Module = module {
 @DependencyGraph
 @ContributesTo(AppScope::class)
 interface DesktopSystemModule : SystemModule {
-    @Provides
-    fun provideAssetsDataSource(): AssetsDataSource = AssetsDataSourceJvmImpl()
+    @Binds val AssetsDataSourceJvmImpl.bind: AssetsDataSource
 
-    @Provides
-    fun provideClipboardDataSource(): ClipboardDataSource = ClipboardDataSourceJvmImpl()
+    @Binds val ClipboardDataSourceJvmImpl.bind: ClipboardDataSource
 
-    @Provides
-    fun provideFormattingDataSource(): FormattingDataSource = FormattingDataSourceIcuImpl()
+    @Binds val FormattingDataSourceIcuImpl.bind: FormattingDataSource
 
-    @Provides
-    fun provideIntentDataSource(): IntentDataSource = IntentDataSourceDesktopImpl()
+    @Binds val IntentDataSourceDesktopImpl.bind: IntentDataSource
 
-    @Provides
-    fun provideLocaleDataSource(): LocaleDataSource = LocaleDataSourceJvmImpl()
+    @Binds val LocaleDataSourceJvmImpl.bind: LocaleDataSource
 
-    @Provides
-    fun provideLocationDataSource(): LocationDataSource = LocationDataSourceIpImpl()
+    @Binds val LocationDataSourceIpImpl.bind: LocationDataSource
 
-    @Provides
-    fun provideUriDataSource(): UriDataSource = UriDataSourceExternalImpl()
+    @Binds val UriDataSourceExternalImpl.bind: UriDataSource
 }

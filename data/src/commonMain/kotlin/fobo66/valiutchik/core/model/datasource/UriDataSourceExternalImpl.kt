@@ -17,6 +17,7 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
+import dev.zacsweers.metro.Inject
 
 internal const val EXTERNAL_URI_SCHEME = "https"
 internal const val EXTERNAL_URI_AUTHORITY = "openstreetmap.org"
@@ -25,6 +26,7 @@ private const val URI_PATH = "search"
 
 private const val EXTERNAL_URI_QUERY = "query"
 
+@Inject
 class UriDataSourceExternalImpl : UriDataSource {
     /**
      * Search Google Maps directly

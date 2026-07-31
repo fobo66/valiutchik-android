@@ -18,11 +18,13 @@ package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
 import com.eygraber.uri.toURI
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 import java.awt.Desktop
 import java.awt.HeadlessException
 import kotlinx.io.IOException
 
+@Inject
 class IntentDataSourceDesktopImpl : IntentDataSource {
     override fun resolveIntent(intentUri: Uri): Boolean = try {
         val desktop = Desktop.getDesktop()

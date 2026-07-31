@@ -17,10 +17,12 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.ibm.icu.util.ULocale
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+@Inject
 class LocaleDataSourceJvmImpl : LocaleDataSource {
     override val locale: Flow<LanguageTag> = flowOf(ULocale.getDefault().toLanguageTag())
 }
