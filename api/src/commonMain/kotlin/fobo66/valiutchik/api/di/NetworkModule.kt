@@ -20,6 +20,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import fobo66.valiutchik.api.log.NAPIER
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.compression.ContentEncoding
@@ -68,12 +69,14 @@ val networkModule =
 @ContributesTo(AppScope::class)
 object NetworkModule {
     @Provides
+    @SingleIn(AppScope::class)
     fun provideJson(): Json = Json {
         isLenient = true
         ignoreUnknownKeys = true
     }
 
     @Provides
+    @SingleIn(AppScope::class)
     fun provideHttpClient(json: Json): HttpClient = HttpClient(provideEngine()) {
         install(ContentNegotiation) {
             json(json)
