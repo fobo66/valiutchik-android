@@ -16,6 +16,10 @@
 
 package fobo66.valiutchik.core.di
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.Binds
+import dev.zacsweers.metro.ContributesTo
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceWebImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -40,4 +44,29 @@ actual val systemModule = module {
     single<LocaleDataSource> { LocaleDataSourceWebImpl() }
     single<LocationDataSource> { LocationDataSourceIpImpl() }
     single<UriDataSource> { UriDataSourceExternalImpl() }
+}
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+interface WebSystemModule : SystemModule {
+    @Binds
+    val AssetsDataSourceWebImpl.bind: AssetsDataSource
+
+    @Binds
+    val ClipboardDataSourceWebImpl.bind: ClipboardDataSource
+
+    @Binds
+    val FormattingDataSourceWebImpl.bind: FormattingDataSource
+
+    @Binds
+    val IntentDataSourceWebImpl.bind: IntentDataSource
+
+    @Binds
+    val LocaleDataSourceWebImpl.bind: LocaleDataSource
+
+    @Binds
+    val LocationDataSourceIpImpl.bind: LocationDataSource
+
+    @Binds
+    val UriDataSourceExternalImpl.bind: UriDataSource
 }

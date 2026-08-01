@@ -24,6 +24,11 @@ import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDatabaseType
 import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDriver
 import com.eygraber.sqldelight.androidx.driver.opfs.androidxSqliteOpfsDriver
 import dev.fobo66.valiutchik.core.db.Database
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import okio.FileSystem
 import org.koin.dsl.module
 
@@ -40,5 +45,23 @@ actual val thirdPartyModule = module {
         PreferenceDataStoreFactory.createWithPath {
             FileSystem.SYSTEM_TEMPORARY_DIRECTORY.resolve(PREFERENCES_NAME)
         }
+    }
+}
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object WebThirdPartyModule {
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideSqlDriver(): SqlDriver = AndroidxSqliteDriver(
+        driver = androidxSqliteOpfsDriver(),
+        databaseType = AndroidxSqliteDatabaseType.File(DATABASE_NAME),
+        schema = Database.Schema
+    )
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun providePreferences(): DataStore<Preferences> = PreferenceDataStoreFactory.createWithPath {
+        FileSystem.SYSTEM_TEMPORARY_DIRECTORY.resolve(PREFERENCES_NAME)
     }
 }
