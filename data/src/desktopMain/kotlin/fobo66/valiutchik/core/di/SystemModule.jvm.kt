@@ -17,9 +17,9 @@
 package fobo66.valiutchik.core.di
 
 import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.Binds
 import dev.zacsweers.metro.ContributesTo
-import dev.zacsweers.metro.DependencyGraph
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -55,7 +55,7 @@ actual val systemModule: Module = module {
     single<UriDataSource> { UriDataSourceExternalImpl() }
 }
 
-@DependencyGraph
+@BindingContainer
 @ContributesTo(AppScope::class)
 interface DesktopSystemModule : SystemModule {
     @Binds val AssetsDataSourceJvmImpl.bind: AssetsDataSource

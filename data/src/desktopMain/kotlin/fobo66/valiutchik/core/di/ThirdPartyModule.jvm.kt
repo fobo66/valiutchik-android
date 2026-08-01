@@ -23,6 +23,11 @@ import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import java.io.File
 import java.util.Properties
 import okio.Path.Companion.toPath
@@ -41,5 +46,24 @@ actual val thirdPartyModule: Module = module {
             val file = File(System.getProperty("java.io.tmpdir"), PREFERENCES_NAME)
             file.absolutePath.toPath()
         }
+    }
+}
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object DesktopThirdPartyModule {
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideSqlDriver(): SqlDriver {
+        val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
+        val dbUrl = "jdbc:sqlite:${dbFile.absolutePath}"
+        return JdbcSqliteDriver(dbUrl, Properties(), Database.Schema.synchronous())
+    }
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun providePreferences(): DataStore<Preferences> = PreferenceDataStoreFactory.createWithPath {
+        val file = File(System.getProperty("java.io.tmpdir"), PREFERENCES_NAME)
+        file.absolutePath.toPath()
     }
 }
