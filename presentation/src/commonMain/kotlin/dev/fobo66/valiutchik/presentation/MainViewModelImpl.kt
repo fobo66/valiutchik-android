@@ -18,6 +18,10 @@ package dev.fobo66.valiutchik.presentation
 
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.presentation.entity.MainScreenStateTrigger
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
@@ -35,6 +39,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
+@Inject
+@ViewModelKey(MainViewModel::class)
+@ContributesIntoMap(AppScope::class)
 class MainViewModelImpl(
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap,

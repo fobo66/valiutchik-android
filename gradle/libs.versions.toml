@@ -153,6 +153,7 @@ ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-jso
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
+metro-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }

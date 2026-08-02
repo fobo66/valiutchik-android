@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     id("buildlogic.library-conventions")
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -46,6 +47,7 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
+                implementation(libs.metro.viewmodel)
                 implementation(libs.napier)
                 implementation(libs.compose.stable.marker)
             }
