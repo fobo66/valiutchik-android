@@ -20,5 +20,5 @@ import org.gradle.api.Project
 
 fun Project.loadEnv(): Dotenv = dotenv {
     ignoreIfMissing = true
-    directory = rootProject.layout.projectDirectory.asFile.path
+    directory = layout.settingsDirectory.asFile.path
 }

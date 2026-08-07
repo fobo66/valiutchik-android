@@ -42,7 +42,7 @@ android {
 }
 
 detekt {
-    config.setFrom(rootProject.file("config/detekt/compose.yml"))
+    config.setFrom(layout.settingsDirectory.file("config/detekt/compose.yml"))
 }
 
 dependencies {
