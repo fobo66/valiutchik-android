@@ -26,11 +26,15 @@ plugins {
 
 extensions.configure<DetektExtension> {
     autoCorrect = true
+    parallel = true
 }
 
 tasks.withType<Detekt> {
     jvmTarget = TARGET_JVM_VERSION
     autoCorrect = true
+    reports {
+        checkstyle.required.set(true)
+    }
 }
 
 tasks.withType<LintTask> {
