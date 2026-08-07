@@ -41,6 +41,10 @@ android {
     }
 }
 
+detekt {
+    config.setFrom(rootProject.file("config/detekt/compose.yml"))
+}
+
 dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)

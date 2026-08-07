@@ -116,9 +116,9 @@ complexity:
     allowedLines: 60
   LongParameterList:
     active: true
-    allowedFunctionParameters: 5
+    allowedFunctionParameters: 25
     allowedConstructorParameters: 6
-    ignoreDefaultParameters: false
+    ignoreDefaultParameters: true
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ ]
   MethodOverloading:
@@ -804,6 +804,7 @@ style:
     active: true
     aliases: [ 'unused' ]
     allowedNames: ''
+    ignoreAnnotated: [ 'Preview', 'PreviewSmallWidget' ]
   UnusedPrivateProperty:
     active: true
     aliases: [ 'unused' ]
