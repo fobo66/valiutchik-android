@@ -15,7 +15,7 @@
  */
 
 import dev.detekt.gradle.Detekt
-import gradle.kotlin.dsl.accessors._2169d90dba626d7b0f54fc2e627f1429.detekt
+import dev.detekt.gradle.extensions.DetektExtension
 import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
@@ -24,7 +24,7 @@ plugins {
     id("org.jmailen.kotlinter")
 }
 
-detekt {
+extensions.configure<DetektExtension> {
     autoCorrect = true
 }
 
