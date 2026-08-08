@@ -38,13 +38,13 @@ class PreferencesViewModelImpl(
     private val updateUpdateIntervalPreference: UpdateUpdateIntervalPreference
 ) : PreferencesViewModel() {
 
-    override val defaultCityPreference: StateFlow<Long> = loadDefaultCityPreference.execute()
+    override val defaultCityPreference: StateFlow<Long> = loadDefaultCityPreference()
         .stateInWhileSubscribed(initialValue = 0L)
     override val defaultCityPreferenceValues: StateFlow<ImmutableList<CityPreference>> =
         loadDefaultCityPreferenceValues.execute()
             .map { it.toImmutableList() }
             .stateInWhileSubscribed(initialValue = persistentListOf())
-    override val updateIntervalPreference: StateFlow<Float> = loadUpdateIntervalPreference.execute()
+    override val updateIntervalPreference: StateFlow<Float> = loadUpdateIntervalPreference()
         .stateInWhileSubscribed(initialValue = 0.0f)
 
     override fun updateDefaultCity(newDefaultCity: String) = viewModelScope.launch {

@@ -56,7 +56,7 @@ class RatesInteractorWorkManagerImpl(
             }
 
     override suspend fun initiateRefresh(isLocationAvailable: Boolean) {
-        val updateIntervalHours = loadUpdateIntervalPreference.execute()
+        val updateIntervalHours = loadUpdateIntervalPreference()
             .map { it.roundToLong() }
             .first()
 

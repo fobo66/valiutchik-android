@@ -19,5 +19,5 @@ package fobo66.valiutchik.domain.usecases
 import kotlinx.coroutines.flow.Flow
 
 interface LoadDefaultCityPreference {
-    fun execute(): Flow<Long>
+    operator fun invoke(): Flow<Long>
 }

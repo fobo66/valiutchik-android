@@ -21,5 +21,5 @@ import kotlinx.coroutines.flow.Flow
 
 class LoadDefaultCityPreferenceImpl(private val preferenceRepository: PreferenceRepository) :
     LoadDefaultCityPreference {
-    override fun execute(): Flow<Long> = preferenceRepository.observeDefaultCityIdPreference()
+    override fun invoke(): Flow<Long> = preferenceRepository.observeDefaultCityIdPreference()
 }
