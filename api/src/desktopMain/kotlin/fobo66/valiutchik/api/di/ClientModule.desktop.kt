@@ -16,8 +16,15 @@
 
 package fobo66.valiutchik.api.di
 
-import io.ktor.client.engine.HttpClientEngineConfig
-import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.okhttp.OkHttp
 
-actual fun provideEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = CIO
+actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient = HttpClient(OkHttp) {
+    config(this)
+    engine {
+        config {
+            duplexStreamingEnabled = true
+        }
+    }
+}

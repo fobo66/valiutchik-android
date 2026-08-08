@@ -51,6 +51,18 @@ kotlin {
             }
         }
 
+        androidMain {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
+
+        named("desktopMain") {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
+
         webMain {
             dependencies {
                 implementation(libs.ktor.client.js)

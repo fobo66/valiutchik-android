@@ -23,7 +23,6 @@ import fobo66.valiutchik.api.entity.CurrencyRatesRequest
 import fobo66.valiutchik.api.entity.CurrencyResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ResponseException
-import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsChannel
@@ -70,7 +69,7 @@ class ApiDataSourceImpl(
 
     override suspend fun loadBanks(): List<BankResponse> = withContext(ioDispatcher) {
         try {
-            val response = client.get(API_URL_BANKS)
+            val response = client.post(API_URL_BANKS)
             parser.parseBanks(response.bodyAsChannel().readBuffer())
         } catch (e: ResponseException) {
             throw IOException(e)
@@ -79,7 +78,7 @@ class ApiDataSourceImpl(
 
     override suspend fun loadCurrencies(): List<CurrencyResponse> = withContext(ioDispatcher) {
         try {
-            val response = client.get(API_URL_CURRENCIES)
+            val response = client.post(API_URL_CURRENCIES)
             parser.parseCurrencies(response.bodyAsChannel().readBuffer())
         } catch (e: ResponseException) {
             throw IOException(e)
@@ -88,7 +87,7 @@ class ApiDataSourceImpl(
 
     override suspend fun loadCities(): List<CityResponse> = withContext(ioDispatcher) {
         try {
-            val response = client.get(API_URL_CITIES)
+            val response = client.post(API_URL_CITIES)
             parser.parseCities(response.bodyAsChannel().readBuffer())
         } catch (e: ResponseException) {
             throw IOException(e)

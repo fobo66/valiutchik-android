@@ -16,7 +16,7 @@
 
 package fobo66.valiutchik.api.di
 
-import io.ktor.client.engine.HttpClientEngineConfig
-import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
 
-expect fun provideEngine(): HttpClientEngineFactory<HttpClientEngineConfig>
+expect fun httpClient(config: HttpClientConfig<*>.() -> Unit = {}): HttpClient

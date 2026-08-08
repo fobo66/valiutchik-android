@@ -45,7 +45,7 @@ val networkModule =
         }
 
         single<HttpClient> {
-            HttpClient(provideEngine()) {
+            httpClient {
                 install(ContentNegotiation) {
                     json(get())
                 }
