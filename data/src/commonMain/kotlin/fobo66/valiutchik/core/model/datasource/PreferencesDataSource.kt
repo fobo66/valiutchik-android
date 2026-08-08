@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,10 +22,8 @@ import kotlinx.coroutines.flow.Flow
  * Datasource for working with key-value preferences
  */
 interface PreferencesDataSource {
-    suspend fun loadString(key: String, defaultValue: String = ""): String
-    suspend fun saveString(key: String, value: String)
-    suspend fun loadInt(key: String, defaultValue: Int = 0): Int
-    fun observeString(key: String, defaultValue: String): Flow<String>
-    fun observeInt(key: String, defaultValue: Int): Flow<Int>
-    suspend fun saveInt(key: String, value: Int)
+    fun observeLong(key: String, defaultValue: Long): Flow<Long>
+    fun observeFloat(key: String, defaultValue: Float): Flow<Float>
+    suspend fun saveLong(key: String, value: Long)
+    suspend fun saveFloat(key: String, value: Float)
 }

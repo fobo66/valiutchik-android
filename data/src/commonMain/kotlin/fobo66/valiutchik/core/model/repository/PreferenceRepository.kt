@@ -23,11 +23,9 @@ import kotlinx.coroutines.flow.Flow
  * Repository to handle application preferences
  */
 interface PreferenceRepository {
-    fun observeDefaultCityPreference(): Flow<String>
     fun observeDefaultCityIdPreference(): Flow<Long>
     fun observeCities(): Flow<List<City>>
     fun observeUpdateIntervalPreference(): Flow<Float>
-    suspend fun updateDefaultCityPreference(newValue: String)
     suspend fun updateDefaultCityIdPreference(newValue: Long)
     suspend fun updateUpdateIntervalPreference(newValue: Float)
 }

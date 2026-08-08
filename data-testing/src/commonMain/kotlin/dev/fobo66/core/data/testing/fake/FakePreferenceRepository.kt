@@ -23,17 +23,14 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 
 class FakePreferenceRepository : PreferenceRepository {
-    var defaultCity = "default"
     var defaultCityId = 1L
     var updateInterval = 3.0f
 
-    override fun observeDefaultCityPreference(): Flow<String> = flowOf(defaultCity)
     override fun observeDefaultCityIdPreference(): Flow<Long> = flowOf(defaultCityId)
     override fun observeCities(): Flow<List<City>> = emptyFlow()
 
     override fun observeUpdateIntervalPreference(): Flow<Float> = flowOf(updateInterval)
 
-    override suspend fun updateDefaultCityPreference(newValue: String) = Unit
     override suspend fun updateDefaultCityIdPreference(newValue: Long) = Unit
 
     override suspend fun updateUpdateIntervalPreference(newValue: Float) = Unit
