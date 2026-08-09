@@ -59,8 +59,7 @@ class CurrencyWidget :
 
     override suspend fun provideGlance(context: Context, id: GlanceId): Nothing {
         val ratesState =
-            loadExchangeRates
-                .execute()
+            loadExchangeRates()
                 .map { it.toImmutableList() }
 
         provideContent {
@@ -75,7 +74,7 @@ class CurrencyWidget :
                     rates = rates,
                     onTitleBarActionClick = {
                         scope.launch {
-                            refreshExchangeRates.execute()
+                            refreshExchangeRates()
                             update(context, id)
                         }
                     }
@@ -86,8 +85,7 @@ class CurrencyWidget :
 
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         val ratesState =
-            loadExchangeRates
-                .execute()
+            loadExchangeRates()
                 .map { it.toImmutableList() }
 
         provideContent {

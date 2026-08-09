@@ -21,7 +21,7 @@ import io.github.aakira.napier.Napier
 
 class UpdateDefaultCityPreferenceImpl(private val preferenceRepository: PreferenceRepository) :
     UpdateDefaultCityPreference {
-    override suspend fun execute(newDefaultCity: Long) {
+    override suspend fun invoke(newDefaultCity: Long) {
         Napier.v { "Saving new default city: $newDefaultCity" }
         preferenceRepository.updateDefaultCityIdPreference(newDefaultCity)
         Napier.v("Saved!")

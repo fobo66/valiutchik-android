@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import io.github.aakira.napier.Napier
 
 class CleanUpOldRatesImpl(private val currencyRateRepository: CurrencyRateRepository) :
     CleanUpOldRates {
-    override suspend fun execute() {
+    override suspend fun invoke() {
         val removedCount = currencyRateRepository.cleanUpOutdatedRates()
         Napier.d {
             "Removed $removedCount old rates"

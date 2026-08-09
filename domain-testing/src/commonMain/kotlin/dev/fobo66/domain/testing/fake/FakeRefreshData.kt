@@ -20,7 +20,7 @@ import fobo66.valiutchik.domain.usecases.RefreshData
 
 class FakeRefreshData : RefreshData {
     var isRefreshed: Boolean = false
-    override suspend fun execute() {
+    override suspend fun invoke() {
         isRefreshed = true
     }
 }

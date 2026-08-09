@@ -17,5 +17,5 @@
 package fobo66.valiutchik.domain.usecases
 
 interface UpdateDefaultCityPreference {
-    suspend fun execute(newDefaultCity: Long)
+    suspend operator fun invoke(newDefaultCity: Long)
 }

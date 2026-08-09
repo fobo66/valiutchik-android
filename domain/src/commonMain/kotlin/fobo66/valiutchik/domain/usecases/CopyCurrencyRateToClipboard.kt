@@ -17,5 +17,5 @@
 package fobo66.valiutchik.domain.usecases
 
 interface CopyCurrencyRateToClipboard {
-    suspend fun execute(currencyValue: CharSequence)
+    suspend operator fun invoke(currencyValue: CharSequence)
 }

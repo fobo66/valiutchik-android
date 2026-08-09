@@ -20,7 +20,7 @@ import fobo66.valiutchik.core.model.repository.ClipboardRepository
 
 class CopyCurrencyRateToClipboardImpl(private val clipboardRepository: ClipboardRepository) :
     CopyCurrencyRateToClipboard {
-    override suspend fun execute(currencyValue: CharSequence) {
+    override suspend fun invoke(currencyValue: CharSequence) {
         clipboardRepository.copyToClipboard(currencyValue)
     }
 }

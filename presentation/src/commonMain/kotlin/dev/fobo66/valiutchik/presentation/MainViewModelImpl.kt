@@ -75,7 +75,7 @@ class MainViewModelImpl(
                 initialValue = MainScreenState.Initial
             )
 
-    override fun findBankOnMap(bankName: CharSequence): Boolean = findBankOnMap.execute(bankName)
+    override fun findOnMap(bankName: CharSequence): Boolean = findBankOnMap(bankName)
 
     override fun manualRefresh() = isRefreshTriggered.update {
         true
@@ -89,7 +89,7 @@ class MainViewModelImpl(
             permissionGranted
         }
 
-    override suspend fun copyCurrencyRateToClipboard(currencyValue: CharSequence) {
-        copyCurrencyRateToClipboard.execute(currencyValue)
+    override suspend fun copyToClipboard(currencyValue: CharSequence) {
+        copyCurrencyRateToClipboard(currencyValue)
     }
 }

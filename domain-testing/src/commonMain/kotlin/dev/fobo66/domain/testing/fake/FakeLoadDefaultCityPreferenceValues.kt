@@ -22,5 +22,5 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeLoadDefaultCityPreferenceValues : LoadDefaultCityPreferenceValues {
-    override fun execute(): Flow<List<CityPreference>> = flowOf(emptyList())
+    override fun invoke(): Flow<List<CityPreference>> = flowOf(emptyList())
 }

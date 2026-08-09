@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.map
 
 class OpenSourceLicensesViewModelImpl(loadOpenSourceLicenses: LoadOpenSourceLicenses) :
     OpenSourceLicensesViewModel() {
-    override val licensesState = loadOpenSourceLicenses.execute()
+    override val licensesState = loadOpenSourceLicenses()
         .map { LicensesState(it.toImmutableList()) }
         .stateInWhileSubscribed(
             initialValue = LicensesState(

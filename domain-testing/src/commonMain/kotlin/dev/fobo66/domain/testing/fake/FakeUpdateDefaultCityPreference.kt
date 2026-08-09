@@ -21,7 +21,7 @@ import fobo66.valiutchik.domain.usecases.UpdateDefaultCityPreference
 
 class FakeUpdateDefaultCityPreference(private val storage: MutableMap<String, String>) :
     UpdateDefaultCityPreference {
-    override suspend fun execute(newDefaultCity: Long) {
+    override suspend fun invoke(newDefaultCity: Long) {
         storage.put(KEY_DEFAULT_CITY, newDefaultCity.toString())
     }
 }

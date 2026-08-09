@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import fobo66.valiutchik.domain.usecases.ForceRefreshExchangeRatesForDefaultCity
 class FakeForceRefreshExchangeRatesForDefaultCity : ForceRefreshExchangeRatesForDefaultCity {
     var isRefreshed: Boolean = false
 
-    override suspend fun execute() {
+    override suspend fun invoke() {
         isRefreshed = true
     }
 }

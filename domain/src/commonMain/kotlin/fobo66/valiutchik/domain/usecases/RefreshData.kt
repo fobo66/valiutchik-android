@@ -17,5 +17,5 @@
 package fobo66.valiutchik.domain.usecases
 
 interface RefreshData {
-    suspend fun execute()
+    suspend operator fun invoke()
 }

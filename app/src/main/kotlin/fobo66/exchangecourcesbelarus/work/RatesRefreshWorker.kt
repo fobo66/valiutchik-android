@@ -41,9 +41,9 @@ class RatesRefreshWorker(
                 this.inputData.getBoolean(WORKER_ARG_LOCATION_AVAILABLE, false)
 
             if (isLocationAvailable) {
-                refreshExchangeRates.execute()
+                refreshExchangeRates()
             } else {
-                refreshExchangeRatesForDefaultCity.execute()
+                refreshExchangeRatesForDefaultCity()
             }
             CurrencyWidget().updateAll(applicationContext)
         }

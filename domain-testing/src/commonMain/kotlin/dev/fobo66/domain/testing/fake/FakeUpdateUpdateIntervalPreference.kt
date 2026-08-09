@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 
 class FakeUpdateUpdateIntervalPreference(private val storage: MutableMap<String, String>) :
     UpdateUpdateIntervalPreference {
-    override suspend fun execute(newUpdateInterval: Float) {
+    override suspend fun invoke(newUpdateInterval: Float) {
         storage.put(KEY_UPDATE_INTERVAL, newUpdateInterval.toString())
     }
 }

@@ -28,7 +28,7 @@ class RefreshDataTest {
 
     @Test
     fun `refresh data`() = runTest {
-        refreshData.execute()
+        refreshData()
         assertTrue(dataRefreshRepository.isRefreshed)
     }
 }

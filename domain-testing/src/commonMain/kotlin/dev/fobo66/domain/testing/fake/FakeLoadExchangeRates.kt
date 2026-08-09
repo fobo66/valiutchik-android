@@ -26,5 +26,5 @@ class FakeLoadExchangeRates : LoadExchangeRates {
 
     val rates = MutableStateFlow<List<BestCurrencyRate>>(emptyList())
 
-    override fun execute(): Flow<List<BestCurrencyRate>> = rates.asStateFlow()
+    override fun invoke(): Flow<List<BestCurrencyRate>> = rates.asStateFlow()
 }

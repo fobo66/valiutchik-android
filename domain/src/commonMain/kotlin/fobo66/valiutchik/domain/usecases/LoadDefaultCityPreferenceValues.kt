@@ -20,5 +20,5 @@ import fobo66.valiutchik.domain.entities.CityPreference
 import kotlinx.coroutines.flow.Flow
 
 interface LoadDefaultCityPreferenceValues {
-    fun execute(): Flow<List<CityPreference>>
+    operator fun invoke(): Flow<List<CityPreference>>
 }

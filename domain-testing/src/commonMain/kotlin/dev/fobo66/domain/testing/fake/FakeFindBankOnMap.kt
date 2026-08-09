@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,5 +21,5 @@ import fobo66.valiutchik.domain.usecases.FindBankOnMap
 class FakeFindBankOnMap : FindBankOnMap {
     var isFound = false
 
-    override fun execute(bankName: CharSequence): Boolean = isFound
+    override fun invoke(bankName: CharSequence): Boolean = isFound
 }

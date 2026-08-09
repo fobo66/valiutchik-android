@@ -29,7 +29,7 @@ class ForceRefreshExchangeRatesImpl(
     private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRates {
     @Throws(RefreshException::class)
-    override suspend fun execute() = try {
+    override suspend fun invoke() = try {
         val defaultCity = preferenceRepository.observeDefaultCityIdPreference().first()
         val city = locationRepository.resolveUserCity(defaultCity)
 

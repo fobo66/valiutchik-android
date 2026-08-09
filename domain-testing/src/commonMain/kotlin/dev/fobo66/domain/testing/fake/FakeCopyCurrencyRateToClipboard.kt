@@ -21,7 +21,7 @@ import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 class FakeCopyCurrencyRateToClipboard : CopyCurrencyRateToClipboard {
     var isCopied = false
 
-    override suspend fun execute(currencyValue: CharSequence) {
+    override suspend fun invoke(currencyValue: CharSequence) {
         isCopied = true
     }
 }

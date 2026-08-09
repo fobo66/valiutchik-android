@@ -21,7 +21,7 @@ import fobo66.valiutchik.core.model.repository.DataRefreshRepository
 import fobo66.valiutchik.domain.entities.RefreshException
 
 class RefreshDataImpl(private val dataRefreshRepository: DataRefreshRepository) : RefreshData {
-    override suspend fun execute() = try {
+    override suspend fun invoke() = try {
         dataRefreshRepository.refresh()
     } catch (e: DataSyncFailedException) {
         throw RefreshException(e)

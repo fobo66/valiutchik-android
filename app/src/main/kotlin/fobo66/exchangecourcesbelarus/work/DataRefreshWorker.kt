@@ -31,7 +31,7 @@ class DataRefreshWorker(
 ) : CoroutineWorker(appContext, params) {
     override suspend fun doWork(): Result = try {
         val refreshTime = measureTime {
-            refreshData.execute()
+            refreshData()
         }
 
         Napier.d {

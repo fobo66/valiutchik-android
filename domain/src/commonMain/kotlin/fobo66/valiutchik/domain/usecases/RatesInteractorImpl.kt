@@ -33,7 +33,7 @@ class RatesInteractorImpl(
 ) : RatesInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val rates: Flow<List<BestCurrencyRate>>
-        get() = loadExchangeRates.execute()
+        get() = loadExchangeRates.invoke()
 
     override val isRefreshInProgress: Flow<Boolean> = _isRefreshInProgress.asStateFlow()
 
@@ -50,7 +50,7 @@ class RatesInteractorImpl(
 
     private suspend fun cleanUpOldRates() {
         val cleanupTime = measureTime {
-            cleanUpOldRates.execute()
+            cleanUpOldRates.invoke()
         }
 
         Napier.d {
@@ -60,7 +60,7 @@ class RatesInteractorImpl(
 
     private suspend fun refreshData() {
         val dataRefreshTime = measureTime {
-            refreshData.execute()
+            refreshData.invoke()
         }
 
         Napier.d {
@@ -71,9 +71,9 @@ class RatesInteractorImpl(
     private suspend fun refreshRates(isLocationAvailable: Boolean) {
         val refreshTime = measureTime {
             if (isLocationAvailable) {
-                refreshExchangeRates.execute()
+                refreshExchangeRates()
             } else {
-                refreshExchangeRatesForDefaultCity.execute()
+                refreshExchangeRatesForDefaultCity()
             }
         }
 

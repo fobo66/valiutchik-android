@@ -42,7 +42,7 @@ class LoadExchangeRatesImplTest {
 
     @Test
     fun `empty list`() = runTest {
-        loadExchangeRates.execute().test {
+        loadExchangeRates.invoke().test {
             assertTrue(awaitItem().isEmpty())
         }
     }
@@ -56,7 +56,7 @@ class LoadExchangeRatesImplTest {
         currencyRateRepository.rates.update {
             rawList
         }
-        loadExchangeRates.execute().test {
+        loadExchangeRates.invoke().test {
             assertEquals(rawList.size, awaitItem().size)
         }
     }
@@ -66,7 +66,7 @@ class LoadExchangeRatesImplTest {
         currencyRateRepository.rates.update {
             listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
-        loadExchangeRates.execute().test {
+        loadExchangeRates.invoke().test {
             assertIs<BestCurrencyRate.SellRate>(awaitItem().first())
         }
     }
@@ -76,7 +76,7 @@ class LoadExchangeRatesImplTest {
         currencyRateRepository.rates.update {
             listOf(BestCourse(BANK, RATE, CURRENCY_NAME_US_DOLLAR, 0, MULTIPLIER))
         }
-        loadExchangeRates.execute().test {
+        loadExchangeRates.invoke().test {
             assertTrue(awaitItem().isNotEmpty())
             localeRepository.locale.update { NEW_LOCALE }
             assertTrue(awaitItem().isNotEmpty())

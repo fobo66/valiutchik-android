@@ -26,8 +26,8 @@ abstract class MainViewModel : ViewModel() {
     abstract val bestCurrencyRates: StateFlow<ImmutableList<BestCurrencyRate>>
     abstract val screenState: StateFlow<MainScreenState>
 
-    abstract fun findBankOnMap(bankName: CharSequence): Boolean
+    abstract fun findOnMap(bankName: CharSequence): Boolean
     abstract fun manualRefresh()
     abstract fun handleLocationPermission(permissionGranted: Boolean)
-    abstract suspend fun copyCurrencyRateToClipboard(currencyValue: CharSequence)
+    abstract suspend fun copyToClipboard(currencyValue: CharSequence)
 }

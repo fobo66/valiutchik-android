@@ -37,7 +37,7 @@ class LoadExchangeRatesImpl(
 ) : LoadExchangeRates {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<BestCurrencyRate>> = localeRepository.loadLocale()
+    override fun invoke(): Flow<List<BestCurrencyRate>> = localeRepository.loadLocale()
         .combine(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
         .map { (languageTag, rates) ->
             rates.map {

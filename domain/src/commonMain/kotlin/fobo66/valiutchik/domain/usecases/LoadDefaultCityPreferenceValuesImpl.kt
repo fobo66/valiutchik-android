@@ -29,7 +29,7 @@ class LoadDefaultCityPreferenceValuesImpl(
     private val preferenceRepository: PreferenceRepository
 ) : LoadDefaultCityPreferenceValues {
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun execute(): Flow<List<CityPreference>> = localeRepository.loadLocale()
+    override fun invoke(): Flow<List<CityPreference>> = localeRepository.loadLocale()
         .flatMapLatest { languageTag ->
             preferenceRepository.observeCities()
                 .map { cities ->

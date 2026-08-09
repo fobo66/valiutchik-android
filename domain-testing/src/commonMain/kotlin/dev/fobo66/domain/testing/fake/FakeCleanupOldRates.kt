@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import fobo66.valiutchik.domain.usecases.CleanUpOldRates
 
 class FakeCleanupOldRates : CleanUpOldRates {
     var isCleanedUp = false
-    override suspend fun execute() {
+    override suspend fun invoke() {
         isCleanedUp = true
     }
 }

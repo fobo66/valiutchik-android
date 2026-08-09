@@ -26,7 +26,7 @@ class ForceRefreshExchangeRatesForDefaultCityImpl(
     private val currencyRateRepository: CurrencyRateRepository,
     private val preferenceRepository: PreferenceRepository
 ) : ForceRefreshExchangeRatesForDefaultCity {
-    override suspend fun execute() = try {
+    override suspend fun invoke() = try {
         val defaultCity = preferenceRepository.observeDefaultCityIdPreference().first()
         currencyRateRepository.refreshExchangeRates(defaultCity)
     } catch (e: CurrencyRatesLoadFailedException) {

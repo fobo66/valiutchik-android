@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 
 class LoadOpenSourceLicensesImpl(private val licensesRepository: LicensesRepository) :
     LoadOpenSourceLicenses {
-    override fun execute(): Flow<Set<OpenSourceLicense>> = flow {
+    override fun invoke(): Flow<Set<OpenSourceLicense>> = flow {
         val licenses = licensesRepository.loadLicenses()
             .map {
                 OpenSourceLicense(

@@ -80,12 +80,12 @@ fun RatesPanel(
     BestRatesGrid(
         bestCurrencyRates = bestCurrencyRates,
         onBestRateClick = { bankName ->
-            val isMapOpened = mainViewModel.findBankOnMap(bankName)
+            val isMapOpened = mainViewModel.findOnMap(bankName)
             handleOpenMap(isMapOpened, scope, snackbarHostState, noMapMessage)
         },
         onBestRateLongClick = { currencyValue ->
             scope.launch {
-                mainViewModel.copyCurrencyRateToClipboard(currencyValue)
+                mainViewModel.copyToClipboard(currencyValue)
                 snackbarHostState.showSnackbar(
                     message = rateCopiedMessage
                 )

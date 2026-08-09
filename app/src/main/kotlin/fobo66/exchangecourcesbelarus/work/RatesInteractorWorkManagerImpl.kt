@@ -45,7 +45,7 @@ class RatesInteractorWorkManagerImpl(
     private val loadExchangeRates: LoadExchangeRates
 ) : RatesInteractor {
     override val rates: Flow<List<BestCurrencyRate>>
-        get() = loadExchangeRates.execute()
+        get() = loadExchangeRates.invoke()
 
     override val isRefreshInProgress: Flow<Boolean>
         get() = workManager.getWorkInfosByTagFlow(WORK_TAG_REFRESH)
