@@ -22,6 +22,6 @@ import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreference
 class FakeUpdateUpdateIntervalPreference(private val storage: MutableMap<String, String>) :
     UpdateUpdateIntervalPreference {
     override suspend fun invoke(newUpdateInterval: Float) {
-        storage.put(KEY_UPDATE_INTERVAL, newUpdateInterval.toString())
+        storage[KEY_UPDATE_INTERVAL] = newUpdateInterval.toString()
     }
 }
