@@ -43,7 +43,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":api"))
+    implementation(project(":api:api"))
+    implementation(project(":api:impl"))
     implementation(project(":data"))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.benchmark)

@@ -14,29 +14,12 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
+package fobo66.valiutchik.api.di
 
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import org.koin.dsl.module
 
-plugins {
-    id("buildlogic.library-conventions")
-}
-
-kotlin {
-    android {
-        namespace = "dev.fobo66.core.data.testing"
-    }
-
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":api:api"))
-                implementation(project(":data"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io)
-                implementation(libs.uri)
-            }
-        }
-    }
+val dispatchersModule = module {
+    single<CoroutineDispatcher> { Dispatchers.Default }
 }

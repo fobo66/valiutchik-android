@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wiring">
+    <output-path>$PROJECT_DIR$/api/wiring/build/libs</output-path>
+    <root id="archive" name="wiring.jar" />
+  </artifact>
+</component>

@@ -14,29 +14,17 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
+package fobo66.valiutchik.api.di
 
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import Secrets
+import org.koin.core.qualifier.qualifier
+import org.koin.dsl.module
 
-plugins {
-    id("buildlogic.library-conventions")
-}
-
-kotlin {
-    android {
-        namespace = "dev.fobo66.core.data.testing"
+val credentialsModule = module {
+    single(qualifier(Api.GEOCODING_API_KEY)) {
+        Secrets.GEOAPIFY_API_KEY
     }
-
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":api:api"))
-                implementation(project(":data"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io)
-                implementation(libs.uri)
-            }
-        }
+    single(qualifier(Api.IP_GEOCODING_API_KEY)) {
+        Secrets.IPGEOCODING_API_KEY
     }
 }

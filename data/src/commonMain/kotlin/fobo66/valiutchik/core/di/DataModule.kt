@@ -17,8 +17,6 @@
 package fobo66.valiutchik.core.di
 
 import dev.fobo66.valiutchik.core.db.Database
-import fobo66.valiutchik.api.di.Dispatcher
-import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.model.datasource.DataStorePreferencesDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LicensesDataSource
 import fobo66.valiutchik.core.model.datasource.LicensesDataSourceImpl
@@ -41,12 +39,11 @@ import fobo66.valiutchik.core.model.repository.MapRepository
 import fobo66.valiutchik.core.model.repository.MapRepositoryImpl
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepositoryImpl
-import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val dataSourcesModule =
     module {
-        includes(apiModule, systemModule, thirdPartyModule)
+        includes(systemModule, thirdPartyModule)
 
         single { Database(get()) }
 
@@ -55,7 +52,7 @@ val dataSourcesModule =
         }
 
         single<PersistenceDataSource> {
-            PersistenceDataSourceImpl(get(), get(qualifier(Dispatcher.BACKGROUND)))
+            PersistenceDataSourceImpl(get(), get())
         }
 
         single<PreferencesDataSource> {
@@ -76,7 +73,7 @@ val repositoriesModule =
         }
 
         single<DataRefreshRepository> {
-            DataRefreshRepositoryImpl(get(), get(), get(qualifier(Dispatcher.BACKGROUND)))
+            DataRefreshRepositoryImpl(get(), get(), get())
         }
 
         single<LicensesRepository> {

@@ -20,22 +20,20 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     id("buildlogic.library-conventions")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     android {
-        namespace = "dev.fobo66.core.data.testing"
+        namespace = "fobo66.valiutchik.api"
     }
 
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":api:api"))
-                implementation(project(":data"))
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.io)
-                implementation(libs.uri)
+                implementation(libs.kotlinx.serialization)
             }
         }
     }

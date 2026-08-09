@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.core.di
 
-import fobo66.valiutchik.api.di.Dispatcher
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -33,7 +32,6 @@ import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
-import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 actual val systemModule: Module = module {
@@ -60,7 +58,7 @@ actual val systemModule: Module = module {
     }
 
     single<LocationDataSource> {
-        LocationDataSourceImpl(androidContext(), get(qualifier(Dispatcher.BACKGROUND)))
+        LocationDataSourceImpl(androidContext(), get())
     }
 
     single<UriDataSource> { UriDataSourceImpl() }

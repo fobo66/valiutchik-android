@@ -83,6 +83,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":presentation"))
     implementation(project(":widget"))
+    implementation(project(":api:wiring"))
 
     // kotlin
     implementation(libs.kotlinx.coroutines.android)

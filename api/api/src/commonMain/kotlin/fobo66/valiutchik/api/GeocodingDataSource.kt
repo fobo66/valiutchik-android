@@ -14,29 +14,26 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
+package fobo66.valiutchik.api
 
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import fobo66.valiutchik.api.entity.Feature
+import fobo66.valiutchik.api.entity.IpLocationInfo
 
-plugins {
-    id("buildlogic.library-conventions")
-}
+/**
+ * Datasource for geocoding. Supports only reverse geocoding at the moment
+ */
+interface GeocodingDataSource {
 
-kotlin {
-    android {
-        namespace = "dev.fobo66.core.data.testing"
-    }
+    /**
+     * Find possible city by coordinates
+     *
+     * @param latitude Latitude for search
+     * @param longitude Longitude for search
+     */
+    suspend fun findPlaceByCoordinates(latitude: Double, longitude: Double): List<Feature>
 
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":api:api"))
-                implementation(project(":data"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io)
-                implementation(libs.uri)
-            }
-        }
-    }
+    /**
+     * Find possible city by device IP address
+     */
+    suspend fun findPlaceByIpAddress(): IpLocationInfo
 }

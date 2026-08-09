@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wiring-wasm-js">
+    <output-path>$PROJECT_DIR$/api/wiring/build/libs</output-path>
+    <root id="archive" name="wiring-wasm-js.jar" />
+  </artifact>
+</component>

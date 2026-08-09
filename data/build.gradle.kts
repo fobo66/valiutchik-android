@@ -36,7 +36,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":api"))
+                implementation(project(":api:api"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
