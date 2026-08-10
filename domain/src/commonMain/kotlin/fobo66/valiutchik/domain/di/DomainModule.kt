@@ -16,7 +16,6 @@
 
 package fobo66.valiutchik.domain.di
 
-import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.usecases.CleanUpOldRates
 import fobo66.valiutchik.domain.usecases.CleanUpOldRatesImpl
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
@@ -46,7 +45,6 @@ import fobo66.valiutchik.domain.usecases.UpdateUpdateIntervalPreferenceImpl
 import org.koin.dsl.module
 
 val domainModule = module {
-    includes(repositoriesModule)
 
     single<CopyCurrencyRateToClipboard> {
         CopyCurrencyRateToClipboardImpl(get())

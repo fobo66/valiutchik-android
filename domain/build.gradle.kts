@@ -26,7 +26,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":data"))
+                implementation(project(":data:api"))
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
                 implementation(libs.kotlinx.coroutines.core)
@@ -40,7 +40,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(project(":data-testing"))
+                implementation(project(":data:testing"))
                 implementation(project(":domain-testing"))
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)

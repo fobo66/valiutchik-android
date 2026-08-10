@@ -54,8 +54,8 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(project(":data-testing"))
-                implementation(project(":data"))
+                implementation(project(":data:testing"))
+                implementation(project(":data:api"))
                 implementation(project(":domain-testing"))
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)

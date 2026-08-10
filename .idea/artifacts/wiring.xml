@@ -1,6 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="wiring">
-    <output-path>$PROJECT_DIR$/api/wiring/build/libs</output-path>
-    <root id="archive" name="wiring.jar" />
+    <output-path>$PROJECT_DIR$/data/wiring/build/libs</output-path>
+    <root id="archive" name="wiring.jar">
+      <element id="module-output" name="Valiutchik.data.wiring.androidMain" />
+    </root>
   </artifact>
 </component>

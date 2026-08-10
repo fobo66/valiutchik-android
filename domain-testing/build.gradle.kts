@@ -31,7 +31,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":domain"))
-                implementation(project(":data"))
+                implementation(project(":data:api"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.io)

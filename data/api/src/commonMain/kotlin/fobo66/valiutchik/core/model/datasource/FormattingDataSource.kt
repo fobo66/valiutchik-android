@@ -1,0 +1,52 @@
+/*
+ *    Copyright 2026 Andrey Mukamolov
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package fobo66.valiutchik.core.model.datasource
+
+import fobo66.valiutchik.core.entities.LanguageTag
+
+const val LANG_BELARUSIAN = "bel"
+const val LANG_RU = "rus"
+const val BYN = "BYN"
+const val CYRILLIC_LATIN = "Cyrillic-Latin"
+const val BELARUSIAN_TRANSLITERATOR_ID = "Any_be-Cyrillic"
+const val BELARUSIAN_RULES =
+    "сск>ск;Нео>Нэа;ло>ла;но>на;ре>рэ;ри>ры;ий>і;ый>ы;те>тэ;ше>шэ;Ре>Рэ;Те>Тэ;Це>Цэ;и>і"
+
+/**
+ * Datasource for converting data into localized string representation
+ */
+interface FormattingDataSource {
+    /**
+     * Format currency rate as a monetary value
+     */
+    fun formatCurrencyValue(value: Double, languageTag: LanguageTag): String
+
+    /**
+     * Convert currency code to a localized name
+     */
+    fun formatCurrencyName(currencyCode: String, quantity: Long, languageTag: LanguageTag): String
+
+    /**
+     * Convert currency code to a localized symbol
+     */
+    fun formatCurrencySymbol(currencyCode: String, languageTag: LanguageTag): String
+
+    /**
+     * Clean up all the unnecessary parts from the bank name
+     */
+    fun formatBankName(name: String, languageTag: LanguageTag): String
+}
