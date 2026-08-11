@@ -25,11 +25,11 @@ import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
 import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.GraphExtension
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 
-@DependencyGraph(AppScope::class)
+@GraphExtension
 interface AndroidThirdPartyModule : ThirdPartyModule {
     @Provides
     @SingleIn(AppScope::class)

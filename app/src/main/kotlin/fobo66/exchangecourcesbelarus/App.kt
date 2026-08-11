@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,8 +17,17 @@
 package fobo66.exchangecourcesbelarus
 
 import android.app.Application
+import dev.zacsweers.metro.createGraphFactory
+import dev.zacsweers.metrox.android.MetroAppComponentProviders
+import dev.zacsweers.metrox.android.MetroApplication
+import fobo66.exchangecourcesbelarus.di.AppGraph
 import org.koin.core.component.KoinComponent
 
 open class App :
     Application(),
-    KoinComponent
+    KoinComponent,
+    MetroApplication {
+    override val appComponentProviders: MetroAppComponentProviders by lazy {
+        createGraphFactory<AppGraph.Factory>().create(this)
+    }
+}

@@ -1,0 +1,39 @@
+/*
+ *    Copyright 2026 Andrey Mukamolov
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package fobo66.exchangecourcesbelarus.di
+
+import android.content.Context
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metrox.android.MetroAppComponentProviders
+import fobo66.valiutchik.api.di.AndroidDispatchersModule
+import fobo66.valiutchik.core.di.AndroidSystemModule
+import fobo66.valiutchik.core.di.AndroidThirdPartyModule
+
+@DependencyGraph(AppScope::class)
+interface AppGraph : MetroAppComponentProviders {
+    val context: Context
+    val systemModule: AndroidSystemModule
+    val thirdPartyModule: AndroidThirdPartyModule
+    val dispatchersModule: AndroidDispatchersModule
+
+    @DependencyGraph.Factory
+    fun interface Factory {
+        fun create(@Provides context: Context): AppGraph
+    }
+}
