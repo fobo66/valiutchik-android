@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.core.di
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Binds
+import dev.zacsweers.metro.DependencyGraph
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -30,33 +33,27 @@ import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.Module
-import org.koin.dsl.module
 
-actual val systemModule: Module = module {
+@DependencyGraph(AppScope::class)
+interface AndroidSystemModule : SystemModule {
+    @Binds
+    val AssetsDataSourceImpl.bind: AssetsDataSource
 
-    single<LocaleDataSource> { LocaleDataSourceImpl(androidContext()) }
+    @Binds
+    val ClipboardDataSourceImpl.bind: ClipboardDataSource
 
-    single<AssetsDataSource> {
-        AssetsDataSourceImpl(androidContext())
-    }
+    @Binds
+    val FormattingDataSourceImpl.bind: FormattingDataSource
 
-    single<ClipboardDataSource> {
-        ClipboardDataSourceImpl(androidContext())
-    }
+    @Binds
+    val IntentDataSourceImpl.bind: IntentDataSource
 
-    single<IntentDataSource> {
-        IntentDataSourceImpl(androidContext())
-    }
+    @Binds
+    val LocaleDataSourceImpl.bind: LocaleDataSource
 
-    single<FormattingDataSource> {
-        FormattingDataSourceImpl()
-    }
+    @Binds
+    val LocationDataSourceImpl.bind: LocationDataSource
 
-    single<LocationDataSource> {
-        LocationDataSourceImpl(androidContext(), get())
-    }
-
-    single<UriDataSource> { UriDataSourceImpl() }
+    @Binds
+    val UriDataSourceImpl.bind: UriDataSource
 }

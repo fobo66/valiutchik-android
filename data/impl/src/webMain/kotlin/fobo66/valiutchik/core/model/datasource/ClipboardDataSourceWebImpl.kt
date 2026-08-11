@@ -16,10 +16,12 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 import kotlinx.browser.window
 import kotlinx.coroutines.await
 
+@Inject
 class ClipboardDataSourceWebImpl : ClipboardDataSource {
     @OptIn(ExperimentalWasmJsInterop::class)
     @Suppress("TooGenericExceptionCaught") // interop throws generic exception

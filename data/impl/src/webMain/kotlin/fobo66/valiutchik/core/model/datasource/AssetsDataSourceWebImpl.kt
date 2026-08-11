@@ -16,9 +16,11 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.Inject
 import kotlinx.io.Buffer
 import kotlinx.io.Source
 
+@Inject
 class AssetsDataSourceWebImpl : AssetsDataSource {
     override fun loadFile(fileName: String): Source = Buffer()
 }

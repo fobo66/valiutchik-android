@@ -16,12 +16,14 @@
 
 package fobo66.valiutchik.core.model.datasource
 
-import android.content.res.AssetManager
+import android.content.Context
+import dev.zacsweers.metro.Inject
 import kotlinx.io.Source
 import kotlinx.io.asSource
 import kotlinx.io.buffered
 
-class AssetsDataSourceImpl(private val assetManager: AssetManager) : AssetsDataSource {
+@Inject
+class AssetsDataSourceImpl(private val context: Context) : AssetsDataSource {
     override fun loadFile(fileName: String): Source =
-        assetManager.open(fileName).asSource().buffered()
+        context.assets.open(fileName).asSource().buffered()
 }

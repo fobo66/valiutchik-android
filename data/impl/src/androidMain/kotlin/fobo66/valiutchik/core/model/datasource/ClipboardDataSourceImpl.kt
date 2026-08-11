@@ -20,9 +20,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.getSystemService
+import dev.zacsweers.metro.Inject
 
 private const val CLIP_LABEL = "CURRENCY_EXCHANGE_RATE"
 
+@Inject
 class ClipboardDataSourceImpl(private val context: Context) : ClipboardDataSource {
 
     override suspend fun copyToClipboard(value: CharSequence): Boolean {

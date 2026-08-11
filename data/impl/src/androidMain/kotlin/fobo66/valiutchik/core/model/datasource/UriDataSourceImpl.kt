@@ -17,11 +17,13 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
+import dev.zacsweers.metro.Inject
 
 internal const val URI_SCHEME = "geo"
 internal const val URI_AUTHORITY = "0,0"
 internal const val URI_PARAM_KEY = "q"
 
+@Inject
 class UriDataSourceImpl : UriDataSource {
     override fun prepareUri(query: CharSequence): Uri = Uri.Builder()
         .scheme(URI_SCHEME)

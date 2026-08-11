@@ -21,9 +21,11 @@ import com.ibm.icu.text.PluralRules
 import com.ibm.icu.text.Transliterator
 import com.ibm.icu.util.Currency
 import com.ibm.icu.util.ULocale
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.LanguageTag
 import kotlin.LazyThreadSafetyMode.NONE
 
+@Inject
 class FormattingDataSourceIcuImpl : FormattingDataSource {
     private val targetCurrency: Currency by lazy(NONE) {
         Currency.getInstance(BYN)

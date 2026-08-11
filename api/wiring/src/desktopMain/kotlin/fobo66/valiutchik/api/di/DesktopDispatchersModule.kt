@@ -16,13 +16,14 @@
 
 package fobo66.valiutchik.api.di
 
-import dev.zacsweers.metro.GraphExtension
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Provides
 import java.util.concurrent.Executors
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
 
-@GraphExtension
+@DependencyGraph(AppScope::class)
 interface DesktopDispatchersModule : DispatchersModule {
     @Provides
     fun provideDispatcher(): CoroutineDispatcher =

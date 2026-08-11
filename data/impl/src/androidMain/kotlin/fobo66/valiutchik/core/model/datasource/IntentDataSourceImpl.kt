@@ -21,9 +21,11 @@ import android.content.Context
 import android.content.Intent
 import com.eygraber.uri.Uri
 import com.eygraber.uri.toAndroidUri
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 import java.net.URISyntaxException
 
+@Inject
 class IntentDataSourceImpl(private val context: Context) : IntentDataSource {
     override fun resolveIntent(intentUri: Uri): Boolean = try {
         context.startActivity(

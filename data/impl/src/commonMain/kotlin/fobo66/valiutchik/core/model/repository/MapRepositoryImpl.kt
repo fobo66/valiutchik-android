@@ -16,10 +16,15 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.datasource.IntentDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import io.github.aakira.napier.Napier
 
+@ContributesBinding(AppScope::class)
+@Inject
 class MapRepositoryImpl(
     private val uriDataSource: UriDataSource,
     private val intentDataSource: IntentDataSource

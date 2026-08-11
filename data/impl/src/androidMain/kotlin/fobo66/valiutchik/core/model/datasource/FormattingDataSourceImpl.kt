@@ -21,9 +21,11 @@ import android.icu.text.PluralRules
 import android.icu.text.Transliterator
 import android.icu.util.Currency
 import android.icu.util.ULocale
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.LanguageTag
 import kotlin.LazyThreadSafetyMode.NONE
 
+@Inject
 class FormattingDataSourceImpl : FormattingDataSource {
     private lateinit var cachedLocale: ULocale
     private var cachedLanguageTag: LanguageTag? = null

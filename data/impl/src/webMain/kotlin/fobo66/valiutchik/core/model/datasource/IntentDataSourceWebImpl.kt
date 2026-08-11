@@ -17,8 +17,10 @@
 package fobo66.valiutchik.core.model.datasource
 
 import com.eygraber.uri.Uri
+import dev.zacsweers.metro.Inject
 import kotlinx.browser.window
 
+@Inject
 class IntentDataSourceWebImpl : IntentDataSource {
     override fun resolveIntent(intentUri: Uri): Boolean =
         window.open(url = intentUri.toString(), target = "_blank")?.let {

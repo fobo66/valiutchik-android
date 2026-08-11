@@ -24,6 +24,7 @@ import android.os.Build
 import android.os.LocaleList
 import androidx.core.app.LocaleManagerCompat
 import androidx.core.content.IntentCompat
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.LanguageTag
 import io.github.aakira.napier.Napier
 import java.util.Locale
@@ -31,6 +32,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
+@Inject
 class LocaleDataSourceImpl(private val context: Context) : LocaleDataSource {
     override val locale: Flow<LanguageTag> = callbackFlow {
         val localeReceiver = object : BroadcastReceiver() {

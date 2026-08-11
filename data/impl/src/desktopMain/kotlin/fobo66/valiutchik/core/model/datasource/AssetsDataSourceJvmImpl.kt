@@ -16,11 +16,13 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.Inject
 import kotlinx.io.Source
 import kotlinx.io.asSource
 import kotlinx.io.buffered
 import kotlinx.io.files.FileNotFoundException
 
+@Inject
 class AssetsDataSourceJvmImpl : AssetsDataSource {
     /**
      * Load file from assets

@@ -18,6 +18,7 @@ package fobo66.valiutchik.core.model.datasource
 
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
+import dev.zacsweers.metro.Inject
 import doist.x.normalize.Form
 import doist.x.normalize.normalize
 import fobo66.valiutchik.core.entities.LanguageTag
@@ -35,6 +36,7 @@ private fun resolveCurrencyName(value: String, language: String): String = js(
     "new Intl.DisplayNames([language], {type: 'currency', style: 'narrow'}).of(value)"
 )
 
+@Inject
 class FormattingDataSourceWebImpl : FormattingDataSource {
 
     private val cyrillicToBelarusianAssociations: ScatterMap<String, String> by lazy(
