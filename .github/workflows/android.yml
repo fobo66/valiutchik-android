@@ -45,7 +45,7 @@ jobs:
           report_paths: '**/build/test-results/*/TEST-*.xml'
           fail_on_failure: true
       - name: Publish Checkstyle Code Report
-        uses: lcollins/checkstyle-github-action@v3.2.0
+        uses: lcollins/checkstyle-github-action@v4.0.0
         if: failure()
         with:
           path: '**/build/reports/detekt/*.xml'
