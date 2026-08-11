@@ -16,6 +16,7 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.entities.RefreshException
 import io.github.aakira.napier.Napier
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+@Inject
 class RatesInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
     private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
