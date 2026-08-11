@@ -21,6 +21,9 @@ import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.android.MetroApplication
 import fobo66.exchangecourcesbelarus.di.AppGraph
+import fobo66.valiutchik.core.di.AndroidSystemModule
+import fobo66.valiutchik.core.di.AndroidThirdPartyModule
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.component.KoinComponent
 
 open class App :
@@ -28,6 +31,10 @@ open class App :
     KoinComponent,
     MetroApplication {
     override val appComponentProviders: MetroAppComponentProviders by lazy {
-        createGraphFactory<AppGraph.Factory>().create(this)
+        createGraphFactory<AppGraph.Factory>().create(
+            this,
+            createGraphFactory<AndroidSystemModule.Factory>().create(this, Dispatchers.Default),
+            createGraphFactory<AndroidThirdPartyModule.Factory>().create(this)
+        )
     }
 }

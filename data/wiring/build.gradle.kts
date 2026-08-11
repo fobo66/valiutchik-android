@@ -38,6 +38,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":api:api"))
+                implementation(project(":data:api"))
                 implementation(project(":data:impl"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.annotation)

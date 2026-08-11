@@ -19,21 +19,22 @@ package fobo66.exchangecourcesbelarus.di
 import android.content.Context
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Includes
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
-import fobo66.valiutchik.api.di.AndroidDispatchersModule
 import fobo66.valiutchik.core.di.AndroidSystemModule
 import fobo66.valiutchik.core.di.AndroidThirdPartyModule
 
 @DependencyGraph(AppScope::class)
 interface AppGraph : MetroAppComponentProviders {
     val context: Context
-    val systemModule: AndroidSystemModule
-    val thirdPartyModule: AndroidThirdPartyModule
-    val dispatchersModule: AndroidDispatchersModule
 
     @DependencyGraph.Factory
     fun interface Factory {
-        fun create(@Provides context: Context): AppGraph
+        fun create(
+            @Provides context: Context,
+            @Includes systemModule: AndroidSystemModule,
+            @Includes thirdPartyModule: AndroidThirdPartyModule
+        ): AppGraph
     }
 }

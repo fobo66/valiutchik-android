@@ -16,8 +16,11 @@
 
 package fobo66.valiutchik.core.di
 
+import android.content.Context
+import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Binds
-import dev.zacsweers.metro.GraphExtension
+import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Provides
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.AssetsDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
@@ -32,8 +35,9 @@ import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
+import kotlinx.coroutines.CoroutineDispatcher
 
-@GraphExtension
+@DependencyGraph(AppScope::class)
 interface AndroidSystemModule : SystemModule {
     @Binds
     val AssetsDataSourceImpl.bind: AssetsDataSource
@@ -55,4 +59,12 @@ interface AndroidSystemModule : SystemModule {
 
     @Binds
     val UriDataSourceImpl.bind: UriDataSource
+
+    @DependencyGraph.Factory
+    fun interface Factory {
+        fun create(
+            @Provides context: Context,
+            @Provides dispatcher: CoroutineDispatcher
+        ): AndroidSystemModule
+    }
 }
