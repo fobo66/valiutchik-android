@@ -43,8 +43,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":api"))
-    implementation(project(":data"))
+    implementation(project(":api:api"))
+    implementation(project(":api:impl"))
+    implementation(project(":data:api"))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.benchmark)
     androidTestImplementation(libs.sqlidelight.android)
@@ -52,5 +53,5 @@ dependencies {
     androidTestImplementation(libs.kotlinx.serialization)
     androidTestImplementation(libs.kotlinx.io)
     androidTestImplementation(libs.kotlinx.datetime)
-    androidTestImplementation(project(":data-testing"))
+    androidTestImplementation(project(":data:testing"))
 }

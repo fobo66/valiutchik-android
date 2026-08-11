@@ -80,9 +80,12 @@ aboutLibraries {
 
 dependencies {
     implementation(project(":ui"))
-    implementation(project(":domain"))
-    implementation(project(":presentation"))
     implementation(project(":widget"))
+    implementation(project(":domain:api"))
+    implementation(project(":domain:wiring"))
+    implementation(project(":presentation:wiring"))
+    implementation(project(":api:wiring"))
+    implementation(project(":data:wiring"))
 
     // kotlin
     implementation(libs.kotlinx.coroutines.android)
@@ -128,7 +131,7 @@ dependencies {
 
     detektPlugins(libs.detekt.rules.compose)
 
-    androidTestImplementation(project(":domain-testing"))
+    androidTestImplementation(project(":domain:testing"))
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlin.test)
     androidTestImplementation(libs.turbine)

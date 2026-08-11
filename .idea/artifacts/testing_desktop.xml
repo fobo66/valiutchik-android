@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="testing-desktop">
+    <output-path>$PROJECT_DIR$/domain/testing/build/libs</output-path>
+    <root id="archive" name="testing-desktop.jar">
+      <element id="module-output" name="Valiutchik.domain.testing.desktopMain" />
+    </root>
+  </artifact>
+</component>

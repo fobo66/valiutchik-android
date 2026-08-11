@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wiring-desktop">
+    <output-path>$PROJECT_DIR$/presentation/wiring/build/libs</output-path>
+    <root id="archive" name="wiring-desktop.jar">
+      <element id="module-output" name="Valiutchik.presentation.wiring.desktopMain" />
+    </root>
+  </artifact>
+</component>

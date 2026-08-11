@@ -24,8 +24,10 @@ import androidx.compose.ui.window.ComposeViewport
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
-import dev.fobo66.valiutchik.web.di.refreshModule
+import fobo66.valiutchik.api.di.apiModule
+import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.di.domainModule
+import fobo66.valiutchik.domain.di.refreshModule
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -51,6 +53,8 @@ fun main() {
                 modules(
                     viewModelsModule,
                     domainModule,
+                    apiModule,
+                    repositoriesModule,
                     refreshModule
                 )
             }),

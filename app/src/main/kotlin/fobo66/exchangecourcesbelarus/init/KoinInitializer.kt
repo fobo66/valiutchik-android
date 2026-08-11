@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ import android.content.Context
 import androidx.startup.Initializer
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import fobo66.exchangecourcesbelarus.di.workersModule
+import fobo66.valiutchik.api.di.apiModule
+import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
@@ -30,7 +32,7 @@ class KoinInitializer : Initializer<KoinApplication> {
     override fun create(context: Context): KoinApplication = startKoin {
         androidContext(context)
         workManagerFactory()
-        modules(viewModelsModule, domainModule, workersModule)
+        modules(apiModule, viewModelsModule, domainModule, repositoriesModule, workersModule)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>?> = emptyList()

@@ -22,12 +22,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.application
-import dev.fobo66.valiutchik.desktop.di.refreshModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.desktop.rates.RatesWindow
 import dev.fobo66.valiutchik.desktop.settings.SettingsWindow
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import fobo66.valiutchik.api.di.apiModule
+import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.di.domainModule
+import fobo66.valiutchik.domain.di.refreshModule
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.compose.KoinApplication
@@ -45,6 +47,8 @@ fun main() = application {
             modules(
                 viewModelsModule,
                 domainModule,
+                apiModule,
+                repositoriesModule,
                 refreshModule
             )
         }),
