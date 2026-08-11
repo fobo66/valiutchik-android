@@ -39,7 +39,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":presentation"))
+                implementation(project(":presentation:api"))
                 implementation(project(":domain:api"))
                 implementation(libs.androidx.lifecycle.compose)
                 implementation(libs.materialKolor)

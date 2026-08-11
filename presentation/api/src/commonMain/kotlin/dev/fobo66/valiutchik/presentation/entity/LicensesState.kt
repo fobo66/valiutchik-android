@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,19 +17,8 @@
 package dev.fobo66.valiutchik.presentation.entity
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
+import fobo66.valiutchik.domain.entities.OpenSourceLicense
+import kotlinx.collections.immutable.ImmutableList
 
-@Stable
-sealed class MainScreenState {
-    @Immutable
-    object Initial : MainScreenState()
-
-    @Immutable
-    object Loading : MainScreenState()
-
-    @Immutable
-    object LoadedRates : MainScreenState()
-
-    @Immutable
-    object Error : MainScreenState()
-}
+@Immutable
+data class LicensesState(val licenses: ImmutableList<OpenSourceLicense>)

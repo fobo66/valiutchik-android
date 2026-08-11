@@ -80,10 +80,10 @@ aboutLibraries {
 
 dependencies {
     implementation(project(":ui"))
+    implementation(project(":widget"))
     implementation(project(":domain:api"))
     implementation(project(":domain:wiring"))
-    implementation(project(":presentation"))
-    implementation(project(":widget"))
+    implementation(project(":presentation:wiring"))
     implementation(project(":api:wiring"))
     implementation(project(":data:wiring"))
 

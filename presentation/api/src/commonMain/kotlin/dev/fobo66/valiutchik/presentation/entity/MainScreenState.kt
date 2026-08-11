@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,12 +14,22 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.valiutchik.presentation.entity
 
-import androidx.lifecycle.ViewModel
-import dev.fobo66.valiutchik.presentation.entity.LicensesState
-import kotlinx.coroutines.flow.StateFlow
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
-abstract class OpenSourceLicensesViewModel : ViewModel() {
-    abstract val licensesState: StateFlow<LicensesState>
+@Stable
+sealed class MainScreenState {
+    @Immutable
+    object Initial : MainScreenState()
+
+    @Immutable
+    object Loading : MainScreenState()
+
+    @Immutable
+    object LoadedRates : MainScreenState()
+
+    @Immutable
+    object Error : MainScreenState()
 }

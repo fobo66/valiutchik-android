@@ -25,7 +25,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "dev.fobo66.valiutchik.presentation"
+        namespace = "dev.fobo66.valiutchik.presentation.wiring"
     }
 
     wasmJs {
@@ -40,25 +40,15 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":domain:api"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.collections)
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(project(":presentation:impl"))
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
-                implementation(libs.napier)
-                implementation(libs.compose.stable.marker)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(project(":data:testing"))
-                implementation(project(":data:api"))
-                implementation(project(":domain:testing"))
-                implementation(libs.turbine)
-                implementation(libs.kotlinx.coroutines.test)
             }
         }
 

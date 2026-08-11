@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,11 +14,12 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation.entity
+package dev.fobo66.valiutchik.presentation
 
-import androidx.compose.runtime.Immutable
-import fobo66.valiutchik.domain.entities.OpenSourceLicense
-import kotlinx.collections.immutable.ImmutableList
+import androidx.lifecycle.ViewModel
+import dev.fobo66.valiutchik.presentation.entity.LicensesState
+import kotlinx.coroutines.flow.StateFlow
 
-@Immutable
-data class LicensesState(val licenses: ImmutableList<OpenSourceLicense>)
+abstract class OpenSourceLicensesViewModel : ViewModel() {
+    abstract val licensesState: StateFlow<LicensesState>
+}
