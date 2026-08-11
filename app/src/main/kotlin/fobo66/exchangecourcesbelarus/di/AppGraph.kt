@@ -22,11 +22,14 @@ import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Includes
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
+import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import fobo66.valiutchik.core.di.AndroidSystemModule
 import fobo66.valiutchik.core.di.AndroidThirdPartyModule
 
 @DependencyGraph(AppScope::class)
-interface AppGraph : MetroAppComponentProviders {
+interface AppGraph :
+    MetroAppComponentProviders,
+    ViewModelGraph {
     val context: Context
 
     @DependencyGraph.Factory

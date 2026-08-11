@@ -155,6 +155,7 @@ leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.re
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 metrox-android = { module = "dev.zacsweers.metro:metrox-android", version.ref = "metro" }
+metrox-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
 metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }

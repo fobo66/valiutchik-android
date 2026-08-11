@@ -125,6 +125,7 @@ dependencies {
     implementation(libs.koin.viewmodel)
     implementation(libs.koin.work)
     implementation(libs.metrox.android)
+    implementation(libs.metrox.viewmodel.compose)
 
     implementation(libs.napier)
 

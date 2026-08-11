@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     id("buildlogic.library-conventions")
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -45,6 +46,7 @@ kotlin {
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.metrox.viewmodel)
                 implementation(libs.napier)
             }
         }
