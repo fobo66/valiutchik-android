@@ -24,8 +24,8 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.PreferencesViewModel
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.launch
-import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -34,7 +34,7 @@ fun PreferencesPanel(
     onOpenLicenses: suspend () -> Unit,
     onBack: suspend () -> Unit,
     modifier: Modifier = Modifier,
-    preferencesViewModel: PreferencesViewModel = koinViewModel()
+    preferencesViewModel: PreferencesViewModel = metroViewModel()
 ) {
     val scope = rememberCoroutineScope()
     val actualOpenLicenses by rememberUpdatedState(onOpenLicenses)

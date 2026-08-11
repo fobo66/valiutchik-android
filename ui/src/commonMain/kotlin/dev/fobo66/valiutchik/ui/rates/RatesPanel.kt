@@ -28,10 +28,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.ui.share.rememberShareProvider
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 import valiutchik.ui.generated.resources.Res
 import valiutchik.ui.generated.resources.currency_value_copied
 import valiutchik.ui.generated.resources.get_data_error
@@ -47,7 +47,7 @@ fun RatesPanel(
     canOpenSettings: Boolean,
     onOpenSettings: suspend () -> Unit,
     modifier: Modifier = Modifier,
-    mainViewModel: MainViewModel = koinViewModel(),
+    mainViewModel: MainViewModel = metroViewModel(),
     permissionPrompt: String = stringResource(Res.string.permission_description),
     errorMessage: String = stringResource(Res.string.get_data_error),
     rateCopiedMessage: String = stringResource(Res.string.currency_value_copied),

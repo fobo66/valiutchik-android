@@ -55,6 +55,7 @@ kotlin {
                 implementation(libs.compose.material.adaptive.navigation)
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
+                implementation(libs.metrox.viewmodel.compose)
             }
         }
 
