@@ -16,14 +16,15 @@
 
 package fobo66.valiutchik.api.di
 
+import dev.zacsweers.metro.GraphExtension
+import dev.zacsweers.metro.Provides
+import java.util.concurrent.Executors
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import org.koin.dsl.module
+import kotlinx.coroutines.asCoroutineDispatcher
 
-val dispatchersModule = module {
-    single<CoroutineDispatcher> { Dispatchers.Default }
-}
-
-interface DispatchersModule {
-    val dispatcher: CoroutineDispatcher
+@GraphExtension
+interface DesktopDispatchersModule : DispatchersModule {
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher =
+        Executors.newVirtualThreadPerTaskExecutor().asCoroutineDispatcher()
 }

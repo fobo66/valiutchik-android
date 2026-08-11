@@ -16,14 +16,13 @@
 
 package fobo66.valiutchik.api.di
 
+import dev.zacsweers.metro.GraphExtension
+import dev.zacsweers.metro.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import org.koin.dsl.module
 
-val dispatchersModule = module {
-    single<CoroutineDispatcher> { Dispatchers.Default }
-}
-
-interface DispatchersModule {
-    val dispatcher: CoroutineDispatcher
+@GraphExtension
+interface WebDispatchersModule : DispatchersModule {
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher = Dispatchers.Default
 }

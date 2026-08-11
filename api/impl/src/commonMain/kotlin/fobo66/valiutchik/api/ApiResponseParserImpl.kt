@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.api
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.api.entity.BankResponse
 import fobo66.valiutchik.api.entity.CityResponse
 import fobo66.valiutchik.api.entity.CurrencyRateSource
@@ -26,6 +29,8 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.decodeFromSource
 
+@ContributesBinding(AppScope::class)
+@Inject
 class ApiResponseParserImpl(private val json: Json) : ApiResponseParser {
     @OptIn(ExperimentalSerializationApi::class)
     override fun parseRates(body: Source): Set<CurrencyRateSource> {
