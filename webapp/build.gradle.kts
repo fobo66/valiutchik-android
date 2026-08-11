@@ -37,7 +37,9 @@ kotlin {
         webMain {
             dependencies {
                 implementation(project(":ui"))
-                implementation(project(":domain"))
+                implementation(project(":api:wiring"))
+                implementation(project(":data:wiring"))
+                implementation(project(":domain:wiring"))
                 implementation(project(":presentation"))
                 implementation(libs.compose.ui)
                 implementation(libs.compose.resources)

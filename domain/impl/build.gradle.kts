@@ -14,38 +14,24 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
-
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-
 plugins {
     id("buildlogic.library-conventions")
-    alias(libs.plugins.android.lint)
 }
 
 kotlin {
     android {
-        namespace = "dev.fobo66.valiutchik.presentation"
-    }
-
-    wasmJs {
-        browser {
-            testTask {
-                enabled = false
-            }
-        }
+        namespace = "fobo66.valiutchik.domain.impl"
     }
 
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":domain:api"))
+                implementation(project(":data:api"))
+                api(project(":domain:api"))
+                implementation(libs.androidx.annotation)
+                implementation(libs.androidx.collection)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(libs.koin.core)
-                implementation(libs.koin.viewmodel)
                 implementation(libs.napier)
                 implementation(libs.compose.stable.marker)
             }
@@ -53,19 +39,11 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(libs.kotlin.test)
+                implementation(kotlin("test"))
                 implementation(project(":data:testing"))
-                implementation(project(":data:api"))
                 implementation(project(":domain:testing"))
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)
-            }
-        }
-
-        named("desktopTest") {
-            dependencies {
-                implementation(libs.koin.test)
-                implementation(libs.ktor.client)
             }
         }
     }

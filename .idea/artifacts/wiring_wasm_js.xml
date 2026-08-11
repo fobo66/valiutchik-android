@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="wiring-wasm-js">
-    <output-path>$PROJECT_DIR$/data/wiring/build/libs</output-path>
+    <output-path>$PROJECT_DIR$/domain/wiring/build/libs</output-path>
     <root id="archive" name="wiring-wasm-js.jar">
-      <element id="module-output" name="Valiutchik.data.wiring.wasmJsMain" />
+      <element id="module-output" name="Valiutchik.domain.wiring.wasmJsMain" />
     </root>
   </artifact>
 </component>

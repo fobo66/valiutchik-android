@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="impl">
-    <output-path>$PROJECT_DIR$/data/impl/build/libs</output-path>
+    <output-path>$PROJECT_DIR$/domain/impl/build/libs</output-path>
     <root id="archive" name="impl.jar">
-      <element id="module-output" name="Valiutchik.data.impl.androidMain" />
+      <element id="module-output" name="Valiutchik.domain.impl.androidMain" />
     </root>
   </artifact>
 </component>

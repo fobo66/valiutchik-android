@@ -20,30 +20,21 @@ plugins {
 
 kotlin {
     android {
-        namespace = "fobo66.valiutchik.domain"
+        namespace = "fobo66.valiutchik.domain.wiring"
     }
 
     sourceSets {
         commonMain {
             dependencies {
                 implementation(project(":data:api"))
-                implementation(libs.androidx.annotation)
-                implementation(libs.androidx.collection)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.datetime)
+                implementation(project(":domain:impl"))
                 implementation(libs.koin.core)
-                implementation(libs.napier)
-                implementation(libs.compose.stable.marker)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(project(":data:testing"))
-                implementation(project(":domain-testing"))
-                implementation(libs.turbine)
-                implementation(libs.kotlinx.coroutines.test)
             }
         }
 

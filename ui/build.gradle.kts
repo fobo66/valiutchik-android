@@ -40,7 +40,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":presentation"))
-                implementation(project(":domain"))
+                implementation(project(":domain:api"))
                 implementation(libs.androidx.lifecycle.compose)
                 implementation(libs.materialKolor)
                 implementation(libs.compose.runtime)

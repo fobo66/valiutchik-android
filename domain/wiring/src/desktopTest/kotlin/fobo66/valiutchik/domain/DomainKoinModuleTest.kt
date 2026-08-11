@@ -14,29 +14,24 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
+package fobo66.valiutchik.domain
 
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import fobo66.valiutchik.domain.di.domainModule
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngine
+import kotlin.test.Test
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.test.verify.verify
 
-plugins {
-    id("buildlogic.library-conventions")
-}
-
-kotlin {
-    android {
-        namespace = "dev.fobo66.domain.testing"
-    }
-
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":domain"))
-                implementation(project(":data:api"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io)
-                implementation(libs.uri)
-            }
-        }
+class DomainKoinModuleTest {
+    @OptIn(KoinExperimentalAPI::class)
+    @Test
+    fun `check domain module`() {
+        domainModule.verify(
+            extraTypes = listOf(
+                HttpClientEngine::class,
+                HttpClientConfig::class
+            )
+        )
     }
 }
