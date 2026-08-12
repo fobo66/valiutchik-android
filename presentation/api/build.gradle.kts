@@ -25,6 +25,13 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-P",
+            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=dev.fobo66.valiutchik.presentation.Parcelize",
+            "-Xexpect-actual-classes"
+        )
+    }
     android {
         namespace = "dev.fobo66.valiutchik.presentation"
     }

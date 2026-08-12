@@ -27,6 +27,7 @@ import com.slack.circuit.retained.rememberRetained
 import dev.fobo66.valiutchik.presentation.entity.MainScreen
 import dev.fobo66.valiutchik.presentation.entity.MainScreenEvent
 import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
 import fobo66.valiutchik.domain.usecases.FindBankOnMap
@@ -37,6 +38,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
 @CircuitInject(MainScreen::class, AppScope::class)
+@Inject
 class MainPresenterImpl(
     private val ratesInteractor: RatesInteractor,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,

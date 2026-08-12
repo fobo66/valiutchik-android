@@ -18,10 +18,12 @@ package dev.fobo66.valiutchik.presentation.entity
 
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.ParcelableScreen
+import dev.fobo66.valiutchik.presentation.Parcelize
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Parcelize
 data object MainScreen : ParcelableScreen {
     data class State(
         val isLocationPermissionGranted: Boolean = false,

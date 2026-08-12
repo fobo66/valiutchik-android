@@ -23,6 +23,7 @@ plugins {
     id("buildlogic.library-conventions")
     alias(libs.plugins.android.lint)
     alias(libs.plugins.metro)
+    alias(libs.plugins.compose)
 }
 
 kotlin {
