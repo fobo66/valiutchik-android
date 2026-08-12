@@ -14,19 +14,9 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation.entity
+package dev.fobo66.valiutchik.presentation
 
-import com.slack.circuit.runtime.CircuitUiState
-import com.slack.circuit.runtime.screen.ParcelableScreen
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import com.slack.circuit.runtime.presenter.Presenter
+import dev.fobo66.valiutchik.presentation.entity.MainScreen
 
-data object MainScreen : ParcelableScreen {
-    data class State(
-        val isLocationPermissionGranted: Boolean = false,
-        val isLoading: Boolean = false,
-        val rates: ImmutableList<BestCurrencyRate> = persistentListOf(),
-        val eventSink: (MainScreenEvent) -> Unit
-    ) : CircuitUiState
-}
+interface MainPresenter : Presenter<MainScreen.State>

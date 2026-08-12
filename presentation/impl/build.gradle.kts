@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
+@file:OptIn(ExperimentalWasmDsl::class, ExperimentalMetroGradleApi::class)
 
+import dev.zacsweers.metro.gradle.ExperimentalMetroGradleApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -43,6 +44,7 @@ kotlin {
                 implementation(project(":domain:api"))
                 api(project(":presentation:api"))
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.circuit.foundation)
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
@@ -62,4 +64,8 @@ kotlin {
             }
         }
     }
+}
+
+metro {
+    enableCircuitCodegen = true
 }

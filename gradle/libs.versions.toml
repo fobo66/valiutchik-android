@@ -101,6 +101,7 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidxTracing" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidxWindow" }
 circuit-foundation = { group = "com.slack.circuit", name = "circuit-foundation", version.ref = "circuit" }
+circuit-runtime = { group = "com.slack.circuit", name = "circuit-foundation", version.ref = "circuit" }
 compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "composeMultiplatform" }
 compose-material = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "composeMultiplatformMaterial" }
 compose-material-adaptive = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive", version.ref = "composeMultiplatformAdaptive" }

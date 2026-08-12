@@ -16,13 +16,11 @@
 
 package dev.fobo66.valiutchik.presentation.entity
 
-import com.slack.circuit.runtime.CircuitUiState
-import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import com.slack.circuit.runtime.CircuitUiEvent
 
-data class MainUiState(
-    val isLocationPermissionGranted: Boolean = false,
-    val isLoading: Boolean = false,
-    val rates: ImmutableList<BestCurrencyRate> = persistentListOf()
-) : CircuitUiState
+sealed interface MainScreenEvent : CircuitUiEvent {
+    data object Refresh : MainScreenEvent
+    data class CopyToClipboard(val rate: CharSequence) : MainScreenEvent
+    data class OpenOnMap(val bankName: String) : MainScreenEvent
+    data class PermissionStateChanged(val isGranted: Boolean) : MainScreenEvent
+}
