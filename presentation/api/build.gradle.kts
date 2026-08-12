@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     id("buildlogic.library-conventions")
     alias(libs.plugins.android.lint)
+    id("kotlin-parcelize")
 }
 
 kotlin {
