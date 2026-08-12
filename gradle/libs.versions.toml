@@ -21,6 +21,7 @@ androidxTestUiAutomator = "2.4.0"
 androidxTracing = "1.3.0"
 androidxWindow = "1.5.1"
 baselineProfilePlugin = "1.4.1"
+circuit = "0.36.1"
 compose = "1.12.0-rc01"
 composeMultiplatform = "1.12.0-rc01"
 composeMultiplatformAdaptive = "1.3.0-beta02"
@@ -99,6 +100,7 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "androidxTestUiAutomator" }
 androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidxTracing" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidxWindow" }
+circuit-foundation = { group = "com.slack.circuit", name = "circuit-foundation", version.ref = "circuit" }
 compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "composeMultiplatform" }
 compose-material = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "composeMultiplatformMaterial" }
 compose-material-adaptive = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive", version.ref = "composeMultiplatformAdaptive" }
