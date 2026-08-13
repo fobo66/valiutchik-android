@@ -21,17 +21,9 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     id("buildlogic.library-conventions")
     alias(libs.plugins.android.lint)
-    id("kotlin-parcelize")
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll(
-            "-P",
-            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=dev.fobo66.valiutchik.presentation.Parcelize",
-            "-Xexpect-actual-classes"
-        )
-    }
     android {
         namespace = "dev.fobo66.valiutchik.presentation"
     }

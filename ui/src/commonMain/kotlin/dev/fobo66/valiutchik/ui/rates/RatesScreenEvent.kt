@@ -14,8 +14,21 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.valiutchik.ui.rates
 
-import kotlinx.parcelize.Parcelize
+import androidx.compose.runtime.Immutable
+import com.slack.circuit.runtime.CircuitUiEvent
 
-actual typealias Parcelize = Parcelize
+sealed interface RatesScreenEvent : CircuitUiEvent {
+    @Immutable
+    data object Refresh : RatesScreenEvent
+
+    @Immutable
+    data class CopyToClipboard(val rate: CharSequence) : RatesScreenEvent
+
+    @Immutable
+    data class OpenOnMap(val bankName: String) : RatesScreenEvent
+
+    @Immutable
+    data class PermissionStateChanged(val isGranted: Boolean) : RatesScreenEvent
+}

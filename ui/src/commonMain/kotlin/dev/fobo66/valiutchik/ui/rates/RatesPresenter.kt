@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,8 +24,7 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.produceRetainedState
 import com.slack.circuit.retained.rememberRetained
-import dev.fobo66.valiutchik.presentation.entity.MainScreen
-import dev.fobo66.valiutchik.presentation.entity.MainScreenEvent
+import com.slack.circuit.runtime.presenter.Presenter
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
@@ -37,15 +36,15 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
-@CircuitInject(MainScreen::class, AppScope::class)
+@CircuitInject(RatesScreen::class, AppScope::class)
 @Inject
-class MainPresenterImpl(
+class RatesPresenter(
     private val ratesInteractor: RatesInteractor,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap
-) : MainPresenter {
+) : Presenter<RatesScreen.State> {
     @Composable
-    override fun present(): MainScreen.State {
+    override fun present(): RatesScreen.State {
         val scope = rememberCoroutineScope()
         var isPermissionGranted by rememberRetained { mutableStateOf(false) }
         val isRefreshing by produceRetainedState(false) {
@@ -61,25 +60,25 @@ class MainPresenterImpl(
                 }
         }
 
-        return MainScreen.State(
+        return RatesScreen.State(
             isLoading = isRefreshing,
             rates = rates,
             isLocationPermissionGranted = isPermissionGranted
         ) { event ->
             when (event) {
-                is MainScreenEvent.CopyToClipboard -> {
+                is RatesScreenEvent.CopyToClipboard -> {
                     scope.launch {
                         copyCurrencyRateToClipboard(event.rate)
                     }
                 }
 
-                is MainScreenEvent.OpenOnMap -> scope.launch {
+                is RatesScreenEvent.OpenOnMap -> scope.launch {
                     findBankOnMap(event.bankName)
                 }
 
-                is MainScreenEvent.PermissionStateChanged -> isPermissionGranted = event.isGranted
+                is RatesScreenEvent.PermissionStateChanged -> isPermissionGranted = event.isGranted
 
-                MainScreenEvent.Refresh -> scope.launch {
+                RatesScreenEvent.Refresh -> scope.launch {
                     ratesInteractor.initiateRefresh(isPermissionGranted)
                 }
             }

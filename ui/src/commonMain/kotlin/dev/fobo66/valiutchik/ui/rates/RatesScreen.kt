@@ -14,21 +14,21 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation.entity
+package dev.fobo66.valiutchik.ui.rates
 
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.ParcelableScreen
-import dev.fobo66.valiutchik.presentation.Parcelize
+import dev.fobo66.valiutchik.ui.entities.Parcelize
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Parcelize
-data object MainScreen : ParcelableScreen {
+data object RatesScreen : ParcelableScreen {
     data class State(
         val isLocationPermissionGranted: Boolean = false,
         val isLoading: Boolean = false,
         val rates: ImmutableList<BestCurrencyRate> = persistentListOf(),
-        val eventSink: (MainScreenEvent) -> Unit
+        val eventSink: (RatesScreenEvent) -> Unit
     ) : CircuitUiState
 }

@@ -14,6 +14,8 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.valiutchik.presentation
+package dev.fobo66.valiutchik.ui.entities
 
-actual annotation class Parcelize
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.BINARY)
+expect annotation class Parcelize()
