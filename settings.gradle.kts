@@ -71,5 +71,6 @@ include(
     ":widget",
     ":ui",
     ":desktop",
+    ":wear",
     ":webapp"
 )
