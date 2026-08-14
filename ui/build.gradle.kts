@@ -32,7 +32,7 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll(
             "-P",
-            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=dev.fobo66.valiutchik.presentation.Parcelize",
+            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=dev.fobo66.valiutchik.ui.entities.Parcelize",
             "-Xexpect-actual-classes"
         )
     }
