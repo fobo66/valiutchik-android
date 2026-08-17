@@ -17,6 +17,7 @@
 package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.window.core.layout.WindowSizeClass
 import dev.fobo66.valiutchik.presentation.MainViewModel
 import dev.fobo66.valiutchik.presentation.entity.MainScreenState
 import dev.fobo66.valiutchik.ui.share.rememberShareProvider
@@ -41,8 +43,6 @@ import valiutchik.ui.generated.resources.permission_description
 @Composable
 fun RatesPanel(
     snackbarHostState: SnackbarHostState,
-    manualRefreshVisible: Boolean,
-    canOpenSettings: Boolean,
     onOpenSettings: suspend () -> Unit,
     modifier: Modifier = Modifier,
     mainViewModel: MainViewModel = koinViewModel(),
@@ -59,6 +59,11 @@ fun RatesPanel(
 
     val scope = rememberCoroutineScope()
     val actualOpenSettings by rememberUpdatedState(onOpenSettings)
+    val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
+    val showSettings =
+        !windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)
+    val showExplicitRefresh =
+        windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)
 
     PermissionsEffect(
         snackbarHostState,
@@ -92,8 +97,8 @@ fun RatesPanel(
         onShareClick = { currencyName, currencyValue ->
             shareProvider.shareText(currencyName, currencyValue)
         },
-        showExplicitRefresh = manualRefreshVisible,
-        showSettings = canOpenSettings,
+        showExplicitRefresh = showExplicitRefresh,
+        showSettings = showSettings,
         onSettingsClick = {
             scope.launch {
                 actualOpenSettings()

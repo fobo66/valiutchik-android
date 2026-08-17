@@ -54,7 +54,7 @@ fun main() = runBlocking {
             }),
             content = {
                 AppTheme {
-                    MainContent(showManualRefresh = true, canOpenSettings = true)
+                    MainContent()
                 }
             }
         )

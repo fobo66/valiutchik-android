@@ -48,13 +48,8 @@ import dev.fobo66.valiutchik.ui.licenses.OpenSourceLicensesPanel
 import dev.fobo66.valiutchik.ui.preferences.PreferencesPanel
 import dev.fobo66.valiutchik.ui.rates.RatesPanel
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun MainContent(
-    modifier: Modifier = Modifier,
-    showManualRefresh: Boolean = false,
-    canOpenSettings: Boolean = true
-) {
+fun MainContent(modifier: Modifier = Modifier) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -72,8 +67,6 @@ fun MainContent(
         val layoutDirection = LocalLayoutDirection.current
         MainScreenPanels(
             snackbarHostState = snackbarHostState,
-            manualRefreshVisible = showManualRefresh,
-            canOpenSettings = canOpenSettings,
             modifier =
                 Modifier
                     .padding(
@@ -88,12 +81,7 @@ fun MainContent(
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun MainScreenPanels(
-    snackbarHostState: SnackbarHostState,
-    manualRefreshVisible: Boolean,
-    canOpenSettings: Boolean,
-    modifier: Modifier = Modifier
-) {
+fun MainScreenPanels(snackbarHostState: SnackbarHostState, modifier: Modifier = Modifier) {
     val navigator = rememberSupportingPaneScaffoldNavigator(
         adaptStrategies = SupportingPaneScaffoldDefaults.adaptStrategies(
             supportingPaneAdaptStrategy = AdaptStrategy.Hide
@@ -109,8 +97,6 @@ fun MainScreenPanels(
             AnimatedPane(modifier = Modifier.safeContentPadding()) {
                 RatesPanel(
                     snackbarHostState = snackbarHostState,
-                    manualRefreshVisible = manualRefreshVisible,
-                    canOpenSettings = canOpenSettings,
                     onOpenSettings = {
                         navigator.navigateTo(ThreePaneScaffoldRole.Secondary)
                     }
