@@ -17,7 +17,6 @@
 package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,7 +38,6 @@ import valiutchik.ui.generated.resources.maps_app_required
 import valiutchik.ui.generated.resources.permission_action
 import valiutchik.ui.generated.resources.permission_description
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun RatesPanel(
     snackbarHostState: SnackbarHostState,
