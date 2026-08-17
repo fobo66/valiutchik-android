@@ -34,8 +34,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":api:impl"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.androidx.collection)
 
                 implementation(libs.koin.core)
 
@@ -48,7 +46,6 @@ kotlin {
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
-
                 implementation(libs.napier)
             }
         }

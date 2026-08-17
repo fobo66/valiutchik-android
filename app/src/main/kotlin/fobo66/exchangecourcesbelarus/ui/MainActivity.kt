@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,9 +22,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.ReportDrawn
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.xr.compose.material3.EnableXrComponentOverrides
@@ -44,7 +41,7 @@ import org.koin.compose.KoinContext
 @ActivityKey
 @Inject
 class MainActivity(private val metroVmf: MetroViewModelFactory) : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3XrApi::class)
+    @OptIn(ExperimentalMaterial3XrApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -52,17 +49,12 @@ class MainActivity(private val metroVmf: MetroViewModelFactory) : ComponentActiv
         enableEdgeToEdge()
 
         setContent {
-            val windowSizeClass = calculateWindowSizeClass(this)
             AppTheme {
                 KoinContext {
                     CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
                         EnableXrComponentOverrides {
-                            MainContent(
-                                showManualRefresh =
-                                    windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
-                                canOpenSettings =
-                                    windowSizeClass.widthSizeClass != WindowWidthSizeClass.Expanded
-                            )
+                            MainContent()
+
                             ReportDrawn()
                         }
                     }

@@ -17,48 +17,46 @@
 package dev.fobo66.valiutchik.desktop
 
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.window.application
+import androidx.compose.ui.window.singleWindowApplication
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
-import dev.fobo66.valiutchik.desktop.rates.RatesWindow
-import dev.fobo66.valiutchik.desktop.settings.SettingsWindow
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import dev.fobo66.valiutchik.ui.main.MainContent
+import dev.fobo66.valiutchik.ui.theme.AppTheme
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.di.domainModule
 import fobo66.valiutchik.domain.di.refreshModule
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.getString
 import org.koin.compose.KoinApplication
-import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.koinConfiguration
+import valiutchik.desktop.generated.resources.Res
+import valiutchik.desktop.generated.resources.app_name
 
-@OptIn(KoinExperimentalAPI::class, ExperimentalCoroutinesApi::class)
-fun main() = application {
-    LaunchedEffect(Unit) {
-        Napier.base(JvmAntilog())
-    }
-
-    KoinApplication(
-        configuration = koinConfiguration(declaration = {
-            modules(
-                viewModelsModule,
-                domainModule,
-                apiModule,
-                repositoriesModule,
-                refreshModule
-            )
-        }),
-        content = {
-            var isSettingsOpen by remember { mutableStateOf(false) }
-            if (isSettingsOpen) {
-                SettingsWindow(onClose = { isSettingsOpen = false })
-            }
-
-            RatesWindow(onClose = ::exitApplication, onOpenSettings = { isSettingsOpen = true })
+fun main() = runBlocking {
+    singleWindowApplication(
+        title = getString(Res.string.app_name)
+    ) {
+        LaunchedEffect(Unit) {
+            Napier.base(JvmAntilog())
         }
-    )
+
+        KoinApplication(
+            configuration = koinConfiguration(declaration = {
+                modules(
+                    viewModelsModule,
+                    domainModule,
+                    apiModule,
+                    repositoriesModule,
+                    refreshModule
+                )
+            }),
+            content = {
+                AppTheme {
+                    MainContent()
+                }
+            }
+        )
+    }
 }

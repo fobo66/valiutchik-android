@@ -16,7 +16,6 @@
 
 package dev.fobo66.valiutchik.ui.preferences
 
-import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,10 +26,8 @@ import dev.fobo66.valiutchik.presentation.PreferencesViewModel
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun PreferencesPanel(
-    canOpenSettings: Boolean,
     onOpenLicenses: suspend () -> Unit,
     onBack: suspend () -> Unit,
     modifier: Modifier = Modifier,
@@ -51,7 +48,6 @@ fun PreferencesPanel(
         defaultCityValue = defaultCity,
         defaultCityValues = defaultCityValues,
         updateIntervalValue = updateInterval,
-        canOpenSettings = canOpenSettings,
         onDefaultCityChange = preferencesViewModel::updateDefaultCity,
         onUpdateIntervalChange = preferencesViewModel::updateUpdateInterval,
         onOpenSourceLicensesClick = {

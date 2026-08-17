@@ -19,11 +19,13 @@ package dev.fobo66.valiutchik.ui.preferences
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.window.core.layout.WindowSizeClass
 import dev.fobo66.valiutchik.ui.TAG_DEFAULT_CITY
 import dev.fobo66.valiutchik.ui.TAG_LICENSES
 import dev.fobo66.valiutchik.ui.TAG_PREFERENCES
@@ -52,15 +54,18 @@ fun PreferenceScreen(
     defaultCityValue: Long,
     defaultCityValues: ImmutableList<CityPreference>,
     updateIntervalValue: Float,
-    canOpenSettings: Boolean,
     onDefaultCityChange: (String) -> Unit,
     onUpdateIntervalChange: (Float) -> Unit,
     onOpenSourceLicensesClick: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
+
+    val showTopBar =
+        !windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)
     Column(modifier = modifier) {
-        this.AnimatedVisibility(canOpenSettings) {
+        this.AnimatedVisibility(showTopBar) {
             SecondaryTopBar(
                 title = stringResource(Res.string.title_activity_settings),
                 onBackClick = onBackClick
@@ -136,7 +141,6 @@ private fun PreferenceScreenPreview() {
             defaultCityValue = 1L,
             defaultCityValues = persistentListOf(CityPreference("Minsk", 1L)),
             updateIntervalValue = PREVIEW_UPDATE_INTERVAL_VALUE,
-            canOpenSettings = true,
             onDefaultCityChange = {},
             onUpdateIntervalChange = {},
             onOpenSourceLicensesClick = {},

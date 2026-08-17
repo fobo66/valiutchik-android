@@ -34,10 +34,6 @@ kotlin {
             dependencies {
                 api(project(":api:api"))
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.androidx.collection)
-
-                implementation(libs.koin.core)
-
                 implementation(libs.ktor.client)
                 implementation(libs.ktor.auth)
                 implementation(libs.ktor.content)
@@ -47,38 +43,13 @@ kotlin {
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.kotlinx.serialization.io)
                 implementation(libs.kotlinx.io)
-
                 implementation(libs.napier)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
-
-        named("desktopMain") {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
-
-        webMain {
-            dependencies {
-                implementation(libs.ktor.client.js)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-            }
-        }
-
-        named("desktopTest") {
-            dependencies {
-                implementation(libs.koin.test)
             }
         }
     }
