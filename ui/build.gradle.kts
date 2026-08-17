@@ -69,7 +69,6 @@ kotlin {
             dependencies {
                 implementation(libs.compose.ui.preview)
                 implementation(libs.compose.ui.tooling)
-                implementation(libs.accompanist.permissions)
             }
         }
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@
 package dev.fobo66.valiutchik.ui.rates
 
 import android.Manifest.permission
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -26,12 +29,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 
 @Composable
-@OptIn(ExperimentalPermissionsApi::class)
 actual fun PermissionsEffect(
     snackbarHostState: SnackbarHostState,
     permissionPrompt: String,
@@ -39,11 +40,22 @@ actual fun PermissionsEffect(
     onHandlePermissions: (Boolean) -> Unit
 ) {
     var isLocationPermissionPromptShown by rememberSaveable { mutableStateOf(false) }
-    val permissionState = rememberPermissionState(permission.ACCESS_COARSE_LOCATION)
     val permissionsHandler by rememberUpdatedState(onHandlePermissions)
+    val context = LocalContext.current
 
-    LaunchedEffect(permissionState.status) {
-        val isPermissionGranted = permissionState.status.isGranted
+    val permissionState =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            permissionsHandler(isGranted)
+        }
+
+    LaunchedEffect(Unit) {
+        val isPermissionGranted = ContextCompat.checkSelfPermission(
+            context,
+            permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
         permissionsHandler(isPermissionGranted)
         if (!isPermissionGranted && !isLocationPermissionPromptShown) {
             isLocationPermissionPromptShown = true
@@ -54,7 +66,7 @@ actual fun PermissionsEffect(
             )
 
             if (result == SnackbarResult.ActionPerformed) {
-                permissionState.launchPermissionRequest()
+                permissionState.launch(permission.ACCESS_COARSE_LOCATION)
             }
         }
     }
