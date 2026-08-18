@@ -18,6 +18,8 @@ package fobo66.valiutchik.core.model.datasource
 
 import androidx.collection.ScatterMap
 import androidx.collection.mutableScatterMapOf
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import doist.x.normalize.Form
 import doist.x.normalize.normalize
@@ -37,6 +39,7 @@ private fun resolveCurrencyName(value: String, language: String): String = js(
 )
 
 @Inject
+@ContributesBinding(AppScope::class)
 class FormattingDataSourceWebImpl : FormattingDataSource {
 
     private val cyrillicToBelarusianAssociations: ScatterMap<String, String> by lazy(

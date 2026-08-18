@@ -17,18 +17,14 @@
 package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.window.core.layout.WindowSizeClass
+import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.foundation.NavEvent
 import dev.fobo66.valiutchik.presentation.MainViewModel
-import dev.fobo66.valiutchik.presentation.entity.MainScreenState
-import dev.fobo66.valiutchik.ui.share.rememberShareProvider
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -52,62 +48,16 @@ fun RatesPanel(
     noMapMessage: String = stringResource(Res.string.maps_app_required),
     permissionAction: String = stringResource(Res.string.permission_action)
 ) {
-    val shareProvider = rememberShareProvider()
-    val bestCurrencyRates by mainViewModel.bestCurrencyRates.collectAsStateWithLifecycle()
-
-    val viewState by mainViewModel.screenState.collectAsStateWithLifecycle()
-
     val scope = rememberCoroutineScope()
     val actualOpenSettings by rememberUpdatedState(onOpenSettings)
-    val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
-    val showSettings =
-        !windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)
-    val showExplicitRefresh =
-        windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)
 
-    PermissionsEffect(
-        snackbarHostState,
-        permissionPrompt,
-        permissionAction
-    ) {
-        mainViewModel.handleLocationPermission(it)
-    }
-
-    LaunchedEffect(viewState) {
-        if (viewState is MainScreenState.Error) {
-            snackbarHostState.showSnackbar(
-                message = errorMessage
-            )
-        }
-    }
-    BestRatesGrid(
-        bestCurrencyRates = bestCurrencyRates,
-        onBestRateClick = { bankName ->
-            val isMapOpened = mainViewModel.findOnMap(bankName)
-            handleOpenMap(isMapOpened, scope, snackbarHostState, noMapMessage)
-        },
-        onBestRateLongClick = { currencyValue ->
-            scope.launch {
-                mainViewModel.copyToClipboard(currencyValue)
-                snackbarHostState.showSnackbar(
-                    message = rateCopiedMessage
-                )
-            }
-        },
-        onShareClick = { currencyName, currencyValue ->
-            shareProvider.shareText(currencyName, currencyValue)
-        },
-        showExplicitRefresh = showExplicitRefresh,
-        showSettings = showSettings,
-        onSettingsClick = {
+    CircuitContent(RatesScreen, modifier = modifier, onNavEvent = {
+        if (it is NavEvent.Forward) {
             scope.launch {
                 actualOpenSettings()
             }
-        },
-        isRefreshing = viewState is MainScreenState.Loading,
-        onRefresh = mainViewModel::manualRefresh,
-        modifier = modifier
-    )
+        }
+    })
 }
 
 private fun handleOpenMap(

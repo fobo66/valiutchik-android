@@ -106,6 +106,7 @@ dependencies {
     baselineProfile(project(":baselineprofile"))
 
     // compose
+    implementation(libs.circuit.runtime)
     implementation(libs.compose.ui)
     implementation(libs.compose.xr)
     implementation(libs.compose.material)

@@ -26,6 +26,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.xr.compose.material3.EnableXrComponentOverrides
 import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 import dev.zacsweers.metro.AppScope
@@ -40,7 +42,8 @@ import org.koin.compose.KoinContext
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey
 @Inject
-class MainActivity(private val metroVmf: MetroViewModelFactory) : ComponentActivity() {
+class MainActivity(private val metroVmf: MetroViewModelFactory, private val circuit: Circuit) :
+    ComponentActivity() {
     @OptIn(ExperimentalMaterial3XrApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -53,7 +56,9 @@ class MainActivity(private val metroVmf: MetroViewModelFactory) : ComponentActiv
                 KoinContext {
                     CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
                         EnableXrComponentOverrides {
-                            MainContent()
+                            CircuitCompositionLocals(circuit) {
+                                MainContent()
+                            }
 
                             ReportDrawn()
                         }

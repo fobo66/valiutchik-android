@@ -24,6 +24,9 @@ sealed interface RatesScreenEvent : CircuitUiEvent {
     data object Refresh : RatesScreenEvent
 
     @Immutable
+    data object OpenSettings : RatesScreenEvent
+
+    @Immutable
     data class CopyToClipboard(val rate: CharSequence) : RatesScreenEvent
 
     @Immutable

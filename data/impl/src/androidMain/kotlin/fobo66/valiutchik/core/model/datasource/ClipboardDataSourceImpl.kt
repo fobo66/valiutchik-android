@@ -20,18 +20,21 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.getSystemService
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 
 private const val CLIP_LABEL = "CURRENCY_EXCHANGE_RATE"
 
 @Inject
+@ContributesBinding(AppScope::class)
 class ClipboardDataSourceImpl(private val context: Context) : ClipboardDataSource {
 
     override suspend fun copyToClipboard(value: CharSequence): Boolean {
         val clipData = ClipData.newPlainText(CLIP_LABEL, value)
         val clipboardManager = context.getSystemService<ClipboardManager>()
         return clipboardManager?.let {
-            it.setPrimaryClip(clipData)
+            it.primaryClip = clipData
             it.hasPrimaryClip()
         } == true
     }

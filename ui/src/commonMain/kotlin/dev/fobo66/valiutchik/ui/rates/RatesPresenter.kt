@@ -22,8 +22,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.foundation.NavEvent
+import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.retained.produceRetainedState
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
@@ -39,6 +42,7 @@ import kotlinx.coroutines.launch
 @CircuitInject(RatesScreen::class, AppScope::class)
 @Inject
 class RatesPresenter(
+    private val navigator: Navigator,
     private val ratesInteractor: RatesInteractor,
     private val copyCurrencyRateToClipboard: CopyCurrencyRateToClipboard,
     private val findBankOnMap: FindBankOnMap
@@ -81,6 +85,8 @@ class RatesPresenter(
                 RatesScreenEvent.Refresh -> scope.launch {
                     ratesInteractor.initiateRefresh(isPermissionGranted)
                 }
+
+                RatesScreenEvent.OpenSettings -> navigator.onNavEvent(NavEvent.Forward)
             }
         }
     }

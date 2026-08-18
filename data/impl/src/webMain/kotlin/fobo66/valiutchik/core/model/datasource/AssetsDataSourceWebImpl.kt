@@ -16,11 +16,14 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import kotlinx.io.Buffer
 import kotlinx.io.Source
 
 @Inject
+@ContributesBinding(AppScope::class)
 class AssetsDataSourceWebImpl : AssetsDataSource {
     override fun loadFile(fileName: String): Source = Buffer()
 }

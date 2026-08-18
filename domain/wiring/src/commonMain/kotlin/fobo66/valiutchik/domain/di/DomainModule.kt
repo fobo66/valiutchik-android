@@ -16,6 +16,8 @@
 
 package fobo66.valiutchik.domain.di
 
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.Binds
 import fobo66.valiutchik.domain.usecases.CleanUpOldRates
 import fobo66.valiutchik.domain.usecases.CleanUpOldRatesImpl
 import fobo66.valiutchik.domain.usecases.CopyCurrencyRateToClipboard
@@ -99,4 +101,50 @@ val domainModule = module {
 
 val refreshModule = module {
     single<RatesInteractor> { RatesInteractorImpl(get(), get(), get(), get(), get()) }
+}
+
+@BindingContainer
+interface DomainModule {
+
+    @Binds
+    val CopyCurrencyRateToClipboardImpl.bind: CopyCurrencyRateToClipboard
+
+    @Binds
+    val FindBankOnMapImpl.bind: FindBankOnMap
+
+    @Binds
+    val ForceRefreshExchangeRatesImpl.bind: ForceRefreshExchangeRates
+
+    @Binds
+    val ForceRefreshExchangeRatesForDefaultCityImpl.bind: ForceRefreshExchangeRatesForDefaultCity
+
+    @Binds
+    val LoadDefaultCityPreferenceImpl.bind: LoadDefaultCityPreference
+
+    @Binds
+    val LoadExchangeRatesImpl.bind: LoadExchangeRates
+
+    @Binds
+    val LoadOpenSourceLicensesImpl.bind: LoadOpenSourceLicenses
+
+    @Binds
+    val LoadUpdateIntervalPreferenceImpl.bind: LoadUpdateIntervalPreference
+
+    @Binds
+    val UpdateDefaultCityPreferenceImpl.bind: UpdateDefaultCityPreference
+
+    @Binds
+    val UpdateUpdateIntervalPreferenceImpl.bind: UpdateUpdateIntervalPreference
+
+    @Binds
+    val CleanUpOldRatesImpl.bind: CleanUpOldRates
+
+    @Binds
+    val RefreshDataImpl.bind: RefreshData
+
+    @Binds
+    val LoadDefaultCityPreferenceValuesImpl.bind: LoadDefaultCityPreferenceValues
+
+    @Binds
+    val RatesInteractorImpl.bind: RatesInteractor
 }

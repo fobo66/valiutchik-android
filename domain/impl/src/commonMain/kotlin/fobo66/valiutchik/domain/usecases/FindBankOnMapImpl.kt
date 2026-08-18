@@ -21,8 +21,8 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.repository.MapRepository
 
-@ContributesBinding(AppScope::class)
 @Inject
+@ContributesBinding(AppScope::class)
 class FindBankOnMapImpl(private val mapRepository: MapRepository) : FindBankOnMap {
     override fun invoke(bankName: CharSequence): Boolean = mapRepository.searchOnMap(bankName)
 }

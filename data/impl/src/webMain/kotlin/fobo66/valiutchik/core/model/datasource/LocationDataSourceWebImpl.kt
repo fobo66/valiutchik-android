@@ -14,18 +14,19 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.domain.usecases
+package fobo66.valiutchik.core.model.datasource
 
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import fobo66.valiutchik.core.model.repository.ClipboardRepository
+import fobo66.valiutchik.core.entities.Location
 
 @Inject
 @ContributesBinding(AppScope::class)
-class CopyCurrencyRateToClipboardImpl(private val clipboardRepository: ClipboardRepository) :
-    CopyCurrencyRateToClipboard {
-    override suspend fun invoke(currencyValue: CharSequence) {
-        clipboardRepository.copyToClipboard(currencyValue)
-    }
+class LocationDataSourceWebImpl : LocationDataSource {
+    override suspend fun resolveLocation(): Location = Location(
+        latitude = UNKNOWN_COORDINATE,
+        longitude = UNKNOWN_COORDINATE,
+        ipAddress = IP_GEOLOCATION_REQUESTED
+    )
 }
