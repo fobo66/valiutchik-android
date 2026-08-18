@@ -16,11 +16,16 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.LanguageTag
 import kotlinx.browser.window
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@Inject
+@ContributesBinding(AppScope::class)
 class LocaleDataSourceWebImpl : LocaleDataSource {
 
     @OptIn(ExperimentalWasmJsInterop::class)

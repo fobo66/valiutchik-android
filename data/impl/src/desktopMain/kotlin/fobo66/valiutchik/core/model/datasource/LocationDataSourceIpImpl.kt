@@ -16,10 +16,13 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.Location
 
-private const val IP_GEOLOCATION_REQUESTED = "whatsmyip"
-
+@Inject
+@ContributesBinding(AppScope::class)
 class LocationDataSourceIpImpl : LocationDataSource {
     override suspend fun resolveLocation(): Location = Location(
         latitude = UNKNOWN_COORDINATE,

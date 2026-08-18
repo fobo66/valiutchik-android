@@ -16,9 +16,14 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.datasource.ClipboardDataSource
 import io.github.aakira.napier.Napier
 
+@ContributesBinding(AppScope::class)
+@Inject
 class ClipboardRepositoryImpl(private val clipboardDataSource: ClipboardDataSource) :
     ClipboardRepository {
 

@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
 import fobo66.valiutchik.domain.entities.RefreshException
 import io.github.aakira.napier.Napier
@@ -24,6 +27,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+@Inject
+@ContributesBinding(AppScope::class)
 class RatesInteractorImpl(
     private val refreshExchangeRates: ForceRefreshExchangeRates,
     private val refreshExchangeRatesForDefaultCity: ForceRefreshExchangeRatesForDefaultCity,
@@ -33,7 +38,7 @@ class RatesInteractorImpl(
 ) : RatesInteractor {
     private val _isRefreshInProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val rates: Flow<List<BestCurrencyRate>>
-        get() = loadExchangeRates.invoke()
+        get() = loadExchangeRates()
 
     override val isRefreshInProgress: Flow<Boolean> = _isRefreshInProgress.asStateFlow()
 

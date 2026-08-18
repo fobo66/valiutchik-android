@@ -44,6 +44,7 @@ kotlin {
                 implementation(libs.kotlinx.collections)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.circuit.foundation)
                 implementation(libs.compose.stable.marker)
             }
         }

@@ -19,6 +19,9 @@ package fobo66.valiutchik.core.model.repository
 import androidx.collection.ScatterSet
 import androidx.collection.scatterSetOf
 import dev.fobo66.valiutchik.core.db.City
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.core.entities.DataSyncFailedException
 import fobo66.valiutchik.core.entities.toBank
@@ -30,6 +33,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 
+@ContributesBinding(AppScope::class)
+@Inject
 class DataRefreshRepositoryImpl(
     private val apiDataSource: ApiDataSource,
     private val persistenceDataSource: PersistenceDataSource,

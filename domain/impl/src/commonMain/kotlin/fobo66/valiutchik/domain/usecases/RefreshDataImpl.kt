@@ -16,10 +16,15 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.DataSyncFailedException
 import fobo66.valiutchik.core.model.repository.DataRefreshRepository
 import fobo66.valiutchik.domain.entities.RefreshException
 
+@ContributesBinding(AppScope::class)
+@Inject
 class RefreshDataImpl(private val dataRefreshRepository: DataRefreshRepository) : RefreshData {
     override suspend fun invoke() = try {
         dataRefreshRepository.refresh()

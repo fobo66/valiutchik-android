@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
+@file:OptIn(ExperimentalWasmDsl::class, ExperimentalMetroGradleApi::class)
 
+import dev.zacsweers.metro.gradle.ExperimentalMetroGradleApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -23,9 +24,18 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.metro)
+    id("kotlin-parcelize")
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-P",
+            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=dev.fobo66.valiutchik.ui.entities.Parcelize",
+            "-Xexpect-actual-classes"
+        )
+    }
     android {
         namespace = "dev.fobo66.valiutchik.ui"
 
@@ -55,6 +65,8 @@ kotlin {
                 implementation(libs.compose.material.adaptive.navigation)
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
+                implementation(libs.metrox.viewmodel.compose)
+                implementation(libs.circuit.foundation)
             }
         }
 
@@ -93,6 +105,10 @@ kotlin {
             }
         }
     }
+}
+
+metro {
+    enableCircuitCodegen = true
 }
 
 detekt {

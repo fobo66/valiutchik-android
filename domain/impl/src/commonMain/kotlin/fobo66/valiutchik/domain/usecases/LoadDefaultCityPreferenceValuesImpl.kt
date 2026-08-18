@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.repository.LocaleRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.domain.entities.CityPreference
@@ -24,6 +27,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LoadDefaultCityPreferenceValuesImpl(
     private val localeRepository: LocaleRepository,
     private val preferenceRepository: PreferenceRepository

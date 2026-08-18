@@ -16,19 +16,34 @@
 
 package fobo66.exchangecourcesbelarus.ui
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.ReportDrawn
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.xr.compose.material3.EnableXrComponentOverrides
 import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.android.ActivityKey
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import org.koin.compose.KoinContext
 
-class MainActivity : ComponentActivity() {
+@ContributesIntoMap(AppScope::class, binding<Activity>())
+@ActivityKey
+@Inject
+class MainActivity(private val metroVmf: MetroViewModelFactory, private val circuit: Circuit) :
+    ComponentActivity() {
     @OptIn(ExperimentalMaterial3XrApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -39,9 +54,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 KoinContext {
-                    EnableXrComponentOverrides {
-                        MainContent()
-                        ReportDrawn()
+                    CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
+                        EnableXrComponentOverrides {
+                            CircuitCompositionLocals(circuit) {
+                                MainContent()
+                            }
+
+                            ReportDrawn()
+                        }
                     }
                 }
             }
