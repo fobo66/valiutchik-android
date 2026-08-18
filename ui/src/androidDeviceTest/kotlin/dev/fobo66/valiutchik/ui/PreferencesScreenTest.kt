@@ -44,7 +44,6 @@ class PreferencesScreenTest {
                 defaultCityValue = 1L,
                 defaultCityValues = persistentListOf(),
                 updateIntervalValue = 1f,
-                canOpenSettings = true,
                 onDefaultCityChange = {},
                 onUpdateIntervalChange = {},
                 onOpenSourceLicensesClick = {
@@ -67,7 +66,6 @@ class PreferencesScreenTest {
                 defaultCityValue = 1L,
                 defaultCityValues = persistentListOf(),
                 updateIntervalValue = updateInterval,
-                canOpenSettings = true,
                 onDefaultCityChange = {},
                 onUpdateIntervalChange = { updateInterval = it },
                 onOpenSourceLicensesClick = {},
@@ -89,7 +87,6 @@ class PreferencesScreenTest {
                 defaultCityValue = 1L,
                 defaultCityValues = persistentListOf(),
                 updateIntervalValue = 1f,
-                canOpenSettings = true,
                 onDefaultCityChange = {},
                 onUpdateIntervalChange = {},
                 onOpenSourceLicensesClick = {},
@@ -98,6 +95,8 @@ class PreferencesScreenTest {
         }
 
         onNodeWithTag(TAG_DEFAULT_CITY).performClick()
-        onNode(isDialog()).assertIsDisplayed()
+        runOnIdle {
+            onNode(isDialog()).assertIsDisplayed()
+        }
     }
 }
