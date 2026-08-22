@@ -26,7 +26,6 @@ import androidx.xr.compose.material3.EnableXrComponentOverrides
 import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
 import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
-import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3XrApi::class)
@@ -38,11 +37,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                KoinContext {
-                    EnableXrComponentOverrides {
-                        MainContent()
-                        ReportDrawn()
-                    }
+                EnableXrComponentOverrides {
+                    MainContent()
+                    ReportDrawn()
                 }
             }
         }
