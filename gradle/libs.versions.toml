@@ -2,6 +2,7 @@
 aboutLibraries = "15.0.4"
 androidGradlePlugin = "9.5.0-alpha02"
 androidxActivity = "1.13.0"
+androidxAppSearch = "1.2.0-alpha01"
 androidxAnnotations = "1.10.0"
 androidxBenchmark = "1.5.0-rc01"
 androidxCore = "1.19.0"
@@ -66,6 +67,10 @@ aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref
 android-gradle-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "androidGradlePlugin" }
 android-library-multiplatform = { module = "com.android.kotlin.multiplatform.library:com.android.kotlin.multiplatform.library.gradle.plugin", version.ref = "androidGradlePlugin" }
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+androidx-appsearch = { module = "androidx.appsearch:appsearch", version.ref = "androidxAppSearch" }
+androidx-appsearch-compiler = { module = "androidx.appsearch:appsearch-compiler", version.ref = "androidxAppSearch" }
+androidx-appsearch-storage-local = { module = "androidx.appsearch:appsearch-local-storage", version.ref = "androidxAppSearch" }
+androidx-appsearch-storage-platform = { module = "androidx.appsearch:appsearch-platform-storage", version.ref = "androidxAppSearch" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotations" }
 androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "androidxBenchmark" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxBenchmark" }
