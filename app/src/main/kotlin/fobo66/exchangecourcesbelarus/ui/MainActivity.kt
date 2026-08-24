@@ -37,7 +37,6 @@ import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.android.ActivityKey
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
-import org.koin.compose.KoinContext
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey
@@ -53,7 +52,6 @@ class MainActivity(private val metroVmf: MetroViewModelFactory, private val circ
 
         setContent {
             AppTheme {
-                KoinContext {
                     CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
                         EnableXrComponentOverrides {
                             CircuitCompositionLocals(circuit) {
@@ -63,7 +61,6 @@ class MainActivity(private val metroVmf: MetroViewModelFactory, private val circ
                             ReportDrawn()
                         }
                     }
-                }
             }
         }
     }

@@ -101,6 +101,7 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.test.runner)
                 implementation(libs.androidx.test.junit)
+                implementation(libs.androidx.test.espresso.core)
                 implementation(libs.compose.ui.testing.manifest)
             }
         }
