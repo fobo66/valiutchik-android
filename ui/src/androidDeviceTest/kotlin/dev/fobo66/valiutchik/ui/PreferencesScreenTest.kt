@@ -95,8 +95,7 @@ class PreferencesScreenTest {
         }
 
         onNodeWithTag(TAG_DEFAULT_CITY).performClick()
-        runOnIdle {
-            onNode(isDialog()).assertIsDisplayed()
-        }
+
+        onNode(isDialog()).assertIsDisplayed()
     }
 }
