@@ -81,7 +81,6 @@ kotlin {
                 implementation(libs.sqlidelight.android)
                 implementation(libs.androidx.appsearch)
                 implementation(libs.androidx.appsearch.storage.platform)
-                implementation(libs.androidx.appsearch.storage.local)
                 implementation(libs.kotlinx.coroutines.guava)
             }
         }

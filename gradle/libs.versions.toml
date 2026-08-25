@@ -70,7 +70,6 @@ android-library-multiplatform = { module = "com.android.kotlin.multiplatform.lib
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-appsearch = { module = "androidx.appsearch:appsearch", version.ref = "androidxAppSearch" }
 androidx-appsearch-compiler = { module = "androidx.appsearch:appsearch-compiler", version.ref = "androidxAppSearch" }
-androidx-appsearch-storage-local = { module = "androidx.appsearch:appsearch-local-storage", version.ref = "androidxAppSearch" }
 androidx-appsearch-storage-platform = { module = "androidx.appsearch:appsearch-platform-storage", version.ref = "androidxAppSearch" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotations" }
 androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "androidxBenchmark" }

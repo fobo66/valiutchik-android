@@ -18,7 +18,7 @@
 const val TARGET_JVM_VERSION = "17"
 const val COMPILE_ANDROID_SDK_VERSION = 37
 const val TARGET_ANDROID_SDK_VERSION = COMPILE_ANDROID_SDK_VERSION
-const val MIN_ANDROID_SDK_VERSION = 30
+const val MIN_ANDROID_SDK_VERSION = 31
 // endregion
 
 // region Environment variables
