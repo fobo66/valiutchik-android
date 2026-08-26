@@ -23,3 +23,7 @@ import org.koin.dsl.module
 val dispatchersModule = module {
     single<CoroutineDispatcher> { Dispatchers.Default }
 }
+
+interface DispatchersModule {
+    val dispatcher: CoroutineDispatcher
+}

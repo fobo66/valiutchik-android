@@ -19,6 +19,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.licenses)
     alias(libs.plugins.baseline.profile)
+    alias(libs.plugins.metro)
     id("buildlogic.common-conventions")
     id("buildlogic.android-conventions")
 }
@@ -105,6 +106,7 @@ dependencies {
     baselineProfile(project(":baselineprofile"))
 
     // compose
+    implementation(libs.circuit.runtime)
     implementation(libs.compose.ui)
     implementation(libs.compose.xr)
     implementation(libs.compose.material)
@@ -123,6 +125,8 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.viewmodel)
     implementation(libs.koin.work)
+    implementation(libs.metrox.android)
+    implementation(libs.metrox.viewmodel.compose)
 
     implementation(libs.napier)
 

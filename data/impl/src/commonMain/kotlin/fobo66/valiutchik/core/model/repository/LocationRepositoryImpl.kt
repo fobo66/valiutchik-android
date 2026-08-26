@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.api.GeocodingDataSource
 import fobo66.valiutchik.api.entity.GeocodingFailedException
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
@@ -23,6 +26,8 @@ import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
 import fobo66.valiutchik.core.model.datasource.UNKNOWN_COORDINATE
 import io.github.aakira.napier.Napier
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LocationRepositoryImpl(
     private val locationDataSource: LocationDataSource,
     private val geocodingDataSource: GeocodingDataSource,

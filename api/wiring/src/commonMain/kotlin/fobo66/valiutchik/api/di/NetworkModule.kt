@@ -16,6 +16,11 @@
 
 package fobo66.valiutchik.api.di
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.compression.ContentEncoding
@@ -63,3 +68,38 @@ val networkModule =
             }
         }
     }
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object NetworkModule {
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideJson(): Json = Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+    }
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideHttpClient(json: Json): HttpClient = httpClient {
+        install(ContentNegotiation) {
+            json(json)
+        }
+        install(ContentEncoding) {
+            gzip()
+            deflate()
+        }
+        install(Logging) {
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Napier.d(message, tag = "Ktor")
+                }
+            }
+            level = LogLevel.HEADERS
+            sanitizeHeader { header -> header == HttpHeaders.Authorization }
+        }
+
+        expectSuccess = true
+    }
+}

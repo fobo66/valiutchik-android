@@ -22,6 +22,7 @@ plugins {
     id("buildlogic.library-conventions")
     id("buildlogic.secrets-conventions")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.metro)
 }
 
 kotlin {

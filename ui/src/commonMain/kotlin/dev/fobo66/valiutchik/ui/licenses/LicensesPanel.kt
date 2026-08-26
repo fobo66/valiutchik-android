@@ -25,15 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fobo66.valiutchik.presentation.OpenSourceLicensesViewModel
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.launch
-import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun OpenSourceLicensesPanel(
     onBack: suspend () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: OpenSourceLicensesViewModel = koinViewModel()
+    viewModel: OpenSourceLicensesViewModel = metroViewModel()
 ) {
     val uriHandler = LocalUriHandler.current
     val scope = rememberCoroutineScope()

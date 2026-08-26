@@ -26,11 +26,16 @@ import dev.fobo66.valiutchik.core.db.Database
 import dev.fobo66.valiutchik.core.db.LoadBestBuyRates
 import dev.fobo66.valiutchik.core.db.LoadBestSellRates
 import dev.fobo66.valiutchik.core.db.Rate
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
+@ContributesBinding(AppScope::class)
+@Inject
 class PersistenceDataSourceImpl(
     private val database: Database,
     private val ioDispatcher: CoroutineDispatcher

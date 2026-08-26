@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
@@ -31,6 +34,8 @@ private data class CurrencyRatesIntermediate(
     val rates: List<BestCourse>
 )
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LoadExchangeRatesImpl(
     private val currencyRateRepository: CurrencyRateRepository,
     private val localeRepository: LocaleRepository

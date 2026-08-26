@@ -16,12 +16,17 @@
 
 package fobo66.valiutchik.core.model.datasource
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 import java.awt.AWTError
 import java.awt.HeadlessException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
+@Inject
+@ContributesBinding(AppScope::class)
 class ClipboardDataSourceJvmImpl : ClipboardDataSource {
     override suspend fun copyToClipboard(value: CharSequence): Boolean = try {
         Toolkit.getDefaultToolkit()

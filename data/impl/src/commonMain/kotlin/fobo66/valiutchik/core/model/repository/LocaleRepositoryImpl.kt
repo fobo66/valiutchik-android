@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.datasource.FormattingDataSource
@@ -23,6 +26,8 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LocaleRepositoryImpl(
     private val formattingDataSource: FormattingDataSource,
     private val localeDataSource: LocaleDataSource

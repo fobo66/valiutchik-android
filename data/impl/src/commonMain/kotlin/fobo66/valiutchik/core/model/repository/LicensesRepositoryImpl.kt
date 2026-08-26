@@ -16,10 +16,15 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.OpenSourceLicensesItem
 import fobo66.valiutchik.core.model.datasource.AssetsDataSource
 import fobo66.valiutchik.core.model.datasource.LicensesDataSource
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LicensesRepositoryImpl(
     private val assetsDataSource: AssetsDataSource,
     private val licensesDataSource: LicensesDataSource

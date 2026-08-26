@@ -20,7 +20,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     id("buildlogic.library-conventions")
-    alias(libs.plugins.android.lint)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -43,6 +43,7 @@ kotlin {
                 implementation(project(":presentation:impl"))
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
+                implementation(libs.metrox.viewmodel)
             }
         }
 
