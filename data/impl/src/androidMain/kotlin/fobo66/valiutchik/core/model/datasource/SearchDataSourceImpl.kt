@@ -17,6 +17,9 @@
 package fobo66.valiutchik.core.model.datasource
 
 import android.content.Context
+import android.icu.util.Currency
+import androidx.appsearch.app.PutDocumentsRequest
+import androidx.appsearch.app.SetSchemaRequest
 import androidx.appsearch.platformstorage.PlatformStorage
 import fobo66.valiutchik.core.entities.BestCourse
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,5 +34,26 @@ class SearchDataSourceImpl(
         val searchContext = PlatformStorage.SearchContext.Builder(context, "byn-exchange-rates")
             .build()
         val searchSession = PlatformStorage.createSearchSessionAsync(searchContext).await()
+        val setSchemaRequest =
+            SetSchemaRequest.Builder().addDocumentClasses(BestSearchableRate::class.java)
+                .build()
+
+        searchSession.setSchemaAsync(setSchemaRequest).await()
+        val putDocumentsRequest = PutDocumentsRequest.Builder()
+            .addDocuments(
+                bestCourses.map {
+                    BestSearchableRate(
+                        id = "${it.currencyId}-${it.isBuy}",
+                        namespace = "byn-rates",
+                        rate = "${it.currencyName} ${it.currencyValue * it.multiplier} ${
+                            Currency.getInstance(
+                                "BYN"
+                            ).displayName
+                        }"
+                    )
+                }
+            )
+            .build()
+        val putResult = searchSession.putAsync(putDocumentsRequest).await()
     }
 }
