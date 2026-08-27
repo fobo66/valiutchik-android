@@ -17,10 +17,11 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 import io.github.aakira.napier.Napier
 
 class SearchDataSourceNoOpImpl : SearchDataSource {
-    override suspend fun index(bestCourses: List<BestCourse>) {
+    override suspend fun index(bestCourses: List<BestCourse>, languageTag: LanguageTag) {
         Napier.v { "Skipping search indexing" }
     }
 }

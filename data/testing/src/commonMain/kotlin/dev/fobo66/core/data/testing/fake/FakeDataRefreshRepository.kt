@@ -16,6 +16,8 @@
 
 package dev.fobo66.core.data.testing.fake
 
+import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.DataRefreshRepository
 
 class FakeDataRefreshRepository : DataRefreshRepository {
@@ -23,4 +25,6 @@ class FakeDataRefreshRepository : DataRefreshRepository {
     override suspend fun refresh() {
         isRefreshed = true
     }
+
+    override suspend fun refreshSearch(rates: List<BestCourse>, languageTag: LanguageTag) = Unit
 }

@@ -18,10 +18,13 @@ package fobo66.valiutchik.core.model.datasource
 
 import android.content.Context
 import android.icu.util.Currency
+import android.icu.util.ULocale
 import androidx.appsearch.app.PutDocumentsRequest
 import androidx.appsearch.app.SetSchemaRequest
 import androidx.appsearch.platformstorage.PlatformStorage
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.withContext
@@ -30,30 +33,48 @@ class SearchDataSourceImpl(
     private val context: Context,
     private val dispatcher: CoroutineDispatcher
 ) : SearchDataSource {
-    override suspend fun index(bestCourses: List<BestCourse>) = withContext(dispatcher) {
-        val searchContext = PlatformStorage.SearchContext.Builder(context, "byn-exchange-rates")
-            .build()
-        val searchSession = PlatformStorage.createSearchSessionAsync(searchContext).await()
-        val setSchemaRequest =
-            SetSchemaRequest.Builder().addDocumentClasses(BestSearchableRate::class.java)
+    override suspend fun index(bestCourses: List<BestCourse>, languageTag: LanguageTag) =
+        withContext(dispatcher) {
+            val locale = ULocale.forLanguageTag(languageTag)
+            val searchContext = PlatformStorage.SearchContext.Builder(context, "byn-exchange-rates")
                 .build()
+            val searchSession = PlatformStorage.createSearchSessionAsync(searchContext).await()
+            Napier.d { "Initialized search session" }
+            val setSchemaRequest =
+                SetSchemaRequest.Builder().addDocumentClasses(BestSearchableRate::class.java)
+                    .build()
 
-        searchSession.setSchemaAsync(setSchemaRequest).await()
-        val putDocumentsRequest = PutDocumentsRequest.Builder()
-            .addDocuments(
-                bestCourses.map {
-                    BestSearchableRate(
-                        id = "${it.currencyId}-${it.isBuy}",
-                        namespace = "byn-rates",
-                        rate = "${it.currencyName} ${it.currencyValue * it.multiplier} ${
-                            Currency.getInstance(
-                                "BYN"
-                            ).displayName
-                        }"
-                    )
-                }
-            )
-            .build()
-        val putResult = searchSession.putAsync(putDocumentsRequest).await()
-    }
+            val setSchemaResult = searchSession.setSchemaAsync(setSchemaRequest).await()
+            Napier.d { "Initialized search schema: ${setSchemaResult.migrationFailures}" }
+            val putDocumentsRequest = PutDocumentsRequest.Builder()
+                .addDocuments(
+                    bestCourses.map {
+                        BestSearchableRate(
+                            id = "${it.currencyId}-${it.isBuy == true}",
+                            namespace = "byn-rates",
+                            rate = "${
+                                resolveCurrencyName(
+                                    locale,
+                                    it.currencyName
+                                )
+                            } ${it.currencyValue * it.multiplier} ${
+                                resolveCurrencyName(locale, "BYN")
+                            }",
+                            type = if (it.isBuy == true) {
+                                "buyrate"
+                            } else {
+                                "sellrate"
+                            }
+                        )
+                    }
+                )
+                .build()
+            val putResult = searchSession.putAsync(putDocumentsRequest).await()
+            Napier.d { "Put data to search: ${putResult.isSuccess}" }
+        }
+
+    private fun resolveCurrencyName(locale: ULocale, symbol: String): String? =
+        Currency.getInstance(
+            symbol
+        ).getName(locale, Currency.LONG_NAME, null)
 }

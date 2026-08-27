@@ -73,7 +73,7 @@ val repositoriesModule =
         }
 
         single<DataRefreshRepository> {
-            DataRefreshRepositoryImpl(get(), get(), get())
+            DataRefreshRepositoryImpl(get(), get(), get(), get())
         }
 
         single<LicensesRepository> {

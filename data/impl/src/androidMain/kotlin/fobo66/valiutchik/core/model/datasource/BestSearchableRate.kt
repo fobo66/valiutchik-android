@@ -30,5 +30,10 @@ data class BestSearchableRate(
     @Document.StringProperty(
         indexingType = AppSearchSchema.StringPropertyConfig.INDEXING_TYPE_PREFIXES
     )
-    val rate: String
+    val rate: String,
+
+    @Document.StringProperty(
+        indexingType = AppSearchSchema.StringPropertyConfig.INDEXING_TYPE_EXACT_TERMS
+    )
+    val type: String
 )

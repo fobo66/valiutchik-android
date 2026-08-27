@@ -17,7 +17,8 @@
 package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
 
 interface SearchDataSource {
-    suspend fun index(bestCourses: List<BestCourse>)
+    suspend fun index(bestCourses: List<BestCourse>, languageTag: LanguageTag)
 }
