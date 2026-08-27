@@ -116,5 +116,5 @@ kotlin {
 }
 
 dependencies {
-    add("kspAndroidMain", libs.androidx.appsearch.compiler)
+    add("kspAndroid", libs.androidx.appsearch.compiler)
 }
