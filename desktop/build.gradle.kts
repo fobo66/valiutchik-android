@@ -83,6 +83,7 @@ compose.desktop {
         }
 
         nativeDistributions {
+            modules("java.sql")
             targetFormats(TargetFormat.Exe, TargetFormat.Deb, TargetFormat.Dmg)
             packageName = "dev.fobo66.valiutchik.desktop"
             packageVersion = "1.0.0"

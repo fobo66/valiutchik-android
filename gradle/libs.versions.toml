@@ -84,6 +84,7 @@ androidx-lifecycle-compose = { group = "org.jetbrains.androidx.lifecycle", name 
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplashscreen" }
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "androidxSqlite" }
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "androidxSqlite" }
 androidx-sqlite-web = { module = "androidx.sqlite:sqlite-web", version.ref = "androidxSqlite" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
@@ -157,6 +158,7 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 sqlidelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 sqlidelight-androidx = { group = "com.eygraber", name = "sqldelight-androidx-driver", version.ref = "sqldelightAndroidxDriver" }
+sqlidelight-androidx-jvm = { group = "com.eygraber", name = "sqldelight-androidx-driver-jvm", version.ref = "sqldelightAndroidxDriver" }
 sqlidelight-androidx-web = { group = "com.eygraber", name = "sqldelight-androidx-driver-opfs", version.ref = "sqldelightAndroidxDriver" }
 sqlidelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
 sqlidelight-js = { group = "app.cash.sqldelight", name = "web-worker-driver", version.ref = "sqldelight" }

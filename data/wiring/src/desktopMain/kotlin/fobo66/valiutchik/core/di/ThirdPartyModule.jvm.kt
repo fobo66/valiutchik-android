@@ -19,12 +19,12 @@ package fobo66.valiutchik.core.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import app.cash.sqldelight.async.coroutines.synchronous
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDatabaseType
+import com.eygraber.sqldelight.androidx.driver.AndroidxSqliteDriver
 import dev.fobo66.valiutchik.core.db.Database
 import java.io.File
-import java.util.Properties
 import okio.Path.Companion.toPath
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -32,8 +32,11 @@ import org.koin.dsl.module
 actual val thirdPartyModule: Module = module {
     single<SqlDriver> {
         val dbFile = File(System.getProperty("java.io.tmpdir"), DATABASE_NAME)
-        val dbUrl = "jdbc:sqlite:${dbFile.absolutePath}"
-        JdbcSqliteDriver(dbUrl, Properties(), Database.Schema.synchronous())
+        AndroidxSqliteDriver(
+            driver = BundledSQLiteDriver(),
+            databaseType = AndroidxSqliteDatabaseType.File(dbFile.absolutePath),
+            schema = Database.Schema
+        )
     }
 
     single<DataStore<Preferences>> {
