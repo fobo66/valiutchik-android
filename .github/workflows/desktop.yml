@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: valiutchik-linux
-          path: desktop/build/compose/binaries/main-release/deb/dev.fobo66.valiutchik.desktop_1.0.0_amd64.deb
+          path: desktop/build/compose/binaries/main-release/deb/*.deb
         
   build-dmg:
     runs-on: macos-latest
@@ -43,7 +43,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           java-version: '25'
-          distribution: 'corretto'
+          distribution: 'zulu'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.3.0
         with:
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: valiutchik-macos
-          path: desktop/build/compose/binaries/main-release/dmg/dev.fobo66.valiutchik.desktop-1.0.0.dmg
+          path: desktop/build/compose/binaries/main-release/dmg/*.dmg
 
   build-exe:
     runs-on: windows-latest
@@ -65,7 +65,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           java-version: '25'
-          distribution: 'liberica'
+          distribution: 'zulu'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.3.0
         with:
@@ -77,4 +77,4 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: valiutchik-windows
-          path: desktop/build/compose/binaries/main-release/exe/dev.fobo66.valiutchik.desktop-1.0.0.exe
+          path: desktop/build/compose/binaries/main-release/exe/*.exe
