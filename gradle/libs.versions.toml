@@ -1,5 +1,5 @@
 [versions]
-aboutLibraries = "15.1.1"
+aboutLibraries = "15.2.0"
 androidGradlePlugin = "9.5.0-alpha03"
 androidxActivity = "1.13.0"
 androidxAnnotations = "1.10.0"
