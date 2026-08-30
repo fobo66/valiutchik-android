@@ -1,15 +1,15 @@
 [versions]
-aboutLibraries = "15.1.1"
-androidGradlePlugin = "9.5.0-alpha02"
+aboutLibraries = "15.2.0"
+androidGradlePlugin = "9.5.0-alpha03"
 androidxActivity = "1.13.0"
 androidxAppSearch = "1.2.0-alpha02"
 androidxAnnotations = "1.10.0"
-androidxBenchmark = "1.5.0-rc01"
+androidxBenchmark = "1.5.0-rc02"
 androidxCore = "1.19.0"
 androidxCollection = "1.6.0"
 androidxDatastore = "1.3.0-alpha10"
-androidxGlance = "1.2.0-rc01"
-androidxGlancePreview = "1.2.0-rc01"
+androidxGlance = "1.2.0"
+androidxGlancePreview = "1.2.0"
 androidxLifecycle = "2.11.0"
 androidxSplashscreen = "1.2.0"
 androidxSqlite = "2.7.0"
@@ -18,11 +18,11 @@ androidxTest = "1.7.0"
 androidxTestEspresso = "3.7.0"
 androidxTestJunit = "1.3.0"
 androidxTestUiAutomator = "2.4.0"
-androidxTracing = "2.0.0"
+androidxTracing = "2.0.1"
 androidxWindow = "1.5.1"
 baselineProfilePlugin = "1.4.1"
 compose = "1.12.0"
-composeMultiplatform = "1.12.0-rc01"
+composeMultiplatform = "1.12.0"
 composeMultiplatformAdaptive = "1.3.0-beta02"
 composeMultiplatformMaterial = "1.11.0-alpha07"
 detekt = "2.0.0-alpha.6"
@@ -38,7 +38,7 @@ kotlin = "2.4.10"
 kotlinPoet = "2.3.0"
 kotlinter = "5.7.0"
 kotlinxBrowser = "0.5.0"
-kotlinxCollections = "0.5.1"
+kotlinxCollections = "0.5.2"
 kotlinxCoroutines = "1.11.0"
 kotlinxDatetime = "0.8.0"
 kotlinxIo = "0.9.1"
@@ -47,7 +47,7 @@ ksp = "2.3.11"
 ktor = "3.5.2"
 leakCanary = "3.0-alpha-9"
 logback = "1.6.3"
-materialKolor = "5.0.0"
+materialKolor = "5.0.1"
 napier = "2.7.1"
 normalizer = "1.3.3"
 profileinstallerVersion = "1.4.1"
@@ -89,6 +89,7 @@ androidx-lifecycle-compose = { group = "org.jetbrains.androidx.lifecycle", name 
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplashscreen" }
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "androidxSqlite" }
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "androidxSqlite" }
 androidx-sqlite-web = { module = "androidx.sqlite:sqlite-web", version.ref = "androidxSqlite" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
@@ -163,6 +164,7 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 sqlidelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 sqlidelight-androidx = { group = "com.eygraber", name = "sqldelight-androidx-driver", version.ref = "sqldelightAndroidxDriver" }
+sqlidelight-androidx-jvm = { group = "com.eygraber", name = "sqldelight-androidx-driver-jvm", version.ref = "sqldelightAndroidxDriver" }
 sqlidelight-androidx-web = { group = "com.eygraber", name = "sqldelight-androidx-driver-opfs", version.ref = "sqldelightAndroidxDriver" }
 sqlidelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
 sqlidelight-js = { group = "app.cash.sqldelight", name = "web-worker-driver", version.ref = "sqldelight" }

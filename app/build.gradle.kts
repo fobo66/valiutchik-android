@@ -30,7 +30,6 @@ android {
 
         versionCode = 25
         versionName = "1.15.1"
-        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

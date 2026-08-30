@@ -3,6 +3,7 @@
 -dontwarn com.ibm.icu.**
 -dontwarn androidx.compose.ui.**
 -dontwarn androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldKt
+-dontwarn androidx.compose.material3.**
 -dontnote "module-info"
 -dontnote "META-INF**"
 -keep class androidx.compose.runtime.ProvidableCompositionLocal
@@ -73,3 +74,18 @@
 -keepclassmembers class kotlin.coroutines.SafeContinuation {
     volatile <fields>;
 }
+
+# okhttp
+# JSR 305 annotations are for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# OkHttp platform used only on JVM and when Conscrypt and other security providers are available.
+# May be used with robolectric or deliberate use of Bouncy Castle on Android
+-dontwarn okhttp3.internal.platform.**
+-dontwarn okhttp3.internal.graal.**
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+
