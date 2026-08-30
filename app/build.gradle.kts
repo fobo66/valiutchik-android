@@ -19,6 +19,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.licenses)
     alias(libs.plugins.baseline.profile)
+    alias(libs.plugins.ksp)
     id("buildlogic.common-conventions")
     id("buildlogic.android-conventions")
 }
@@ -93,6 +94,8 @@ dependencies {
 
     // androidx
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.appfunctions)
+    ksp(libs.androidx.appfunctions.compiler)
     implementation(libs.androidx.startup)
     implementation(libs.androidx.core)
     implementation(libs.androidx.splashscreen)

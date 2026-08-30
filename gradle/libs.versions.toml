@@ -3,6 +3,7 @@ aboutLibraries = "15.2.0"
 androidGradlePlugin = "9.5.0-alpha03"
 androidxActivity = "1.13.0"
 androidxAnnotations = "1.10.0"
+androidxAppFunctions = "1.0.0-alpha11"
 androidxBenchmark = "1.5.0-rc02"
 androidxCore = "1.19.0"
 androidxCollection = "1.6.0"
@@ -42,6 +43,7 @@ kotlinxCoroutines = "1.11.0"
 kotlinxDatetime = "0.8.0"
 kotlinxIo = "0.9.1"
 kotlinxSerialization = "1.11.0"
+ksp = "2.3.11"
 ktor = "3.5.2"
 leakCanary = "3.0-alpha-9"
 logback = "1.6.3"
@@ -67,6 +69,8 @@ android-gradle-api = { group = "com.android.tools.build", name = "gradle-api", v
 android-library-multiplatform = { module = "com.android.kotlin.multiplatform.library:com.android.kotlin.multiplatform.library.gradle.plugin", version.ref = "androidGradlePlugin" }
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotations" }
+androidx-appfunctions = { module = "androidx.appfunctions:appfunctions", version.ref = "androidxAppFunctions" }
+androidx-appfunctions-compiler = { module = "androidx.appfunctions:appfunctions-compiler", version.ref = "androidxAppFunctions" }
 androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "androidxBenchmark" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-collection = { module = "androidx.collection:collection", version.ref = "androidxCollection" }
@@ -185,6 +189,7 @@ junit = { id = "de.mannodermaus.android-junit5", version.ref = "junitPlugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 licenses = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 robolectric-junit5 = { id = "tech.apter.junit5.jupiter.robolectric-extension-gradle-plugin", version.ref = "robolectricJunit5" }
 sqlidelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
