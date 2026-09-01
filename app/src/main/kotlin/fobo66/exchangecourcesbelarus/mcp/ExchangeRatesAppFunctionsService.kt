@@ -23,7 +23,7 @@ import androidx.appfunctions.AppFunctionServiceEntryPoint
 
 @RequiresApi(Build.VERSION_CODES.BAKLAVA)
 @AppFunctionServiceEntryPoint(
-    serviceName = "TaskAppFunctionService",
-    appFunctionXmlFileName = "task_app_function_service"
+    serviceName = "RatesAppFunctionService",
+    appFunctionXmlFileName = "rates_app_function_service"
 )
 abstract class ExchangeRatesAppFunctionsService : AppFunctionService()
