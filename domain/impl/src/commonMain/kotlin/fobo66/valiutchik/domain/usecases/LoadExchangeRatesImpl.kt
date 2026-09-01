@@ -21,7 +21,6 @@ import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.LocaleRepository
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -36,7 +35,6 @@ class LoadExchangeRatesImpl(
     private val localeRepository: LocaleRepository
 ) : LoadExchangeRates {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun invoke(): Flow<List<BestCurrencyRate>> = localeRepository.loadLocale()
         .combine(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
         .map { (languageTag, rates) ->
