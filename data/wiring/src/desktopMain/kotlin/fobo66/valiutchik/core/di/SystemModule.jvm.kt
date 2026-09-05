@@ -28,6 +28,8 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceJvmImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceIpImpl
+import fobo66.valiutchik.core.model.datasource.SearchDataSource
+import fobo66.valiutchik.core.model.datasource.SearchDataSourceNoOpImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceExternalImpl
 import org.koin.core.module.Module
@@ -47,6 +49,7 @@ actual val systemModule: Module = module {
     single<ClipboardDataSource> { ClipboardDataSourceJvmImpl() }
 
     single<AssetsDataSource> { AssetsDataSourceJvmImpl() }
+    single<SearchDataSource> { SearchDataSourceNoOpImpl() }
 
     single<UriDataSource> { UriDataSourceExternalImpl() }
 }

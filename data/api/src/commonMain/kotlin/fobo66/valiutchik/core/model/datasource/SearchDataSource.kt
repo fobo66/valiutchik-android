@@ -14,17 +14,11 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.core.data.testing.fake
+package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.model.repository.DataRefreshRepository
 
-class FakeDataRefreshRepository : DataRefreshRepository {
-    var isRefreshed = false
-    override suspend fun refresh() {
-        isRefreshed = true
-    }
-
-    override suspend fun refreshSearch(rates: List<BestCourse>, languageTag: LanguageTag) = Unit
+interface SearchDataSource {
+    suspend fun index(bestCourses: List<BestCourse>, languageTag: LanguageTag)
 }

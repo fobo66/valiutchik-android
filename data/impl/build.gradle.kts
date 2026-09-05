@@ -14,13 +14,10 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
-
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-
 plugins {
     id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -82,6 +79,9 @@ kotlin {
                 implementation(libs.koin.android)
                 implementation(libs.androidx.datastore)
                 implementation(libs.sqlidelight.android)
+                implementation(libs.androidx.appsearch)
+                implementation(libs.androidx.appsearch.storage.platform)
+                implementation(libs.kotlinx.coroutines.guava)
             }
         }
 
@@ -113,4 +113,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.androidx.appsearch.compiler)
 }
