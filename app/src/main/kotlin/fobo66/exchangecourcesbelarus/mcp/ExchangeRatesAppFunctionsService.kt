@@ -46,7 +46,7 @@ abstract class ExchangeRatesAppFunctionsService : AppFunctionService() {
     suspend fun loadExchangeRateForCurrency(currency: String): String? =
         withContext(Dispatchers.Default) {
             val rate = loadExchangeRates()
-                .map { it.firstOrNull { it.currencyName == currency } }
+                .map { rates -> rates.firstOrNull { it.currencyName == currency } }
                 .first()
 
             rate?.rateValue
