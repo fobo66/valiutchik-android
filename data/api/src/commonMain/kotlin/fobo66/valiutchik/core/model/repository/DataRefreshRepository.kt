@@ -16,6 +16,9 @@
 
 package fobo66.valiutchik.core.model.repository
 
+import fobo66.valiutchik.core.entities.BestCourse
+import fobo66.valiutchik.core.entities.LanguageTag
+
 /**
  * Handle update of the colloquial data required for showing rates properly
  */
@@ -24,4 +27,9 @@ interface DataRefreshRepository {
      * Load updates from server
      */
     suspend fun refresh()
+
+    /**
+     * Update search index
+     */
+    suspend fun refreshSearch(rates: List<BestCourse>, languageTag: LanguageTag)
 }

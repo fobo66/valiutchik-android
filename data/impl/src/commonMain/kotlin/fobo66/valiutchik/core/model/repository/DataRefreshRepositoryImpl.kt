@@ -20,10 +20,13 @@ import androidx.collection.ScatterSet
 import androidx.collection.scatterSetOf
 import dev.fobo66.valiutchik.core.db.City
 import fobo66.valiutchik.api.ApiDataSource
+import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.DataSyncFailedException
+import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.entities.toBank
 import fobo66.valiutchik.core.entities.toCurrency
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
+import fobo66.valiutchik.core.model.datasource.SearchDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
@@ -33,6 +36,7 @@ import kotlinx.io.IOException
 class DataRefreshRepositoryImpl(
     private val apiDataSource: ApiDataSource,
     private val persistenceDataSource: PersistenceDataSource,
+    private val searchDataSource: SearchDataSource,
     private val defaultDispatcher: CoroutineDispatcher
 ) : DataRefreshRepository {
 
@@ -80,5 +84,9 @@ class DataRefreshRepositoryImpl(
         } catch (e: IOException) {
             throw DataSyncFailedException(e)
         }
+    }
+
+    override suspend fun refreshSearch(rates: List<BestCourse>, languageTag: LanguageTag) {
+        searchDataSource.index(rates, languageTag)
     }
 }

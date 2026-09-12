@@ -26,7 +26,6 @@ import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.entities.toBank
 import fobo66.valiutchik.core.entities.toRate
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
@@ -74,7 +73,6 @@ class CurrencyRateRepositoryImpl(
         return oldRates.size
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun loadExchangeRates(): Flow<List<BestCourse>> =
         persistenceDataSource.readBestBuyCourses()
             .combine(persistenceDataSource.readBestSellCourses()) {

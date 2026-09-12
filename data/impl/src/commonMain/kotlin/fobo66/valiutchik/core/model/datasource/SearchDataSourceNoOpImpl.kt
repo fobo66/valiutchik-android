@@ -14,17 +14,14 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.core.data.testing.fake
+package fobo66.valiutchik.core.model.datasource
 
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.model.repository.DataRefreshRepository
+import io.github.aakira.napier.Napier
 
-class FakeDataRefreshRepository : DataRefreshRepository {
-    var isRefreshed = false
-    override suspend fun refresh() {
-        isRefreshed = true
+class SearchDataSourceNoOpImpl : SearchDataSource {
+    override suspend fun index(bestCourses: List<BestCourse>, languageTag: LanguageTag) {
+        Napier.v { "Skipping search indexing" }
     }
-
-    override suspend fun refreshSearch(rates: List<BestCourse>, languageTag: LanguageTag) = Unit
 }
