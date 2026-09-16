@@ -17,7 +17,7 @@
 package dev.fobo66.valiutchik.web
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeViewport
@@ -39,7 +39,7 @@ import org.koin.dsl.koinConfiguration
 fun main() {
     configureWebResources { resourcePathMapping { path -> "./$path" } }
     ComposeViewport {
-        LaunchedEffect(Unit) {
+        SideEffect(Unit) {
             Napier.base(DebugAntilog())
         }
 

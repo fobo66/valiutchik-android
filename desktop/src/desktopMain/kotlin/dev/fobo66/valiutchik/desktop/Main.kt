@@ -16,7 +16,7 @@
 
 package dev.fobo66.valiutchik.desktop
 
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.window.singleWindowApplication
 import dev.fobo66.valiutchik.desktop.di.dispatchersModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
@@ -39,7 +39,7 @@ fun main() = runBlocking {
     singleWindowApplication(
         title = getString(Res.string.app_name)
     ) {
-        LaunchedEffect(Unit) {
+        SideEffect(Unit) {
             Napier.base(JvmAntilog())
         }
 
