@@ -18,6 +18,7 @@ package dev.fobo66.valiutchik.desktop
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.window.singleWindowApplication
+import dev.fobo66.valiutchik.desktop.di.dispatchersModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.main.MainContent
@@ -49,7 +50,8 @@ fun main() = runBlocking {
                     domainModule,
                     apiModule,
                     repositoriesModule,
-                    refreshModule
+                    refreshModule,
+                    dispatchersModule
                 )
             }),
             content = {

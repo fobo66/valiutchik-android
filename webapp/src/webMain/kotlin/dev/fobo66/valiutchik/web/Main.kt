@@ -24,23 +24,18 @@ import androidx.compose.ui.window.ComposeViewport
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
+import dev.fobo66.valiutchik.web.di.dispatchersModule
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.di.repositoriesModule
 import fobo66.valiutchik.domain.di.domainModule
 import fobo66.valiutchik.domain.di.refreshModule
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.jetbrains.compose.resources.configureWebResources
 import org.koin.compose.KoinApplication
-import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.koinConfiguration
 
-@OptIn(
-    KoinExperimentalAPI::class,
-    ExperimentalCoroutinesApi::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     configureWebResources { resourcePathMapping { path -> "./$path" } }
     ComposeViewport {
@@ -55,7 +50,8 @@ fun main() {
                     domainModule,
                     apiModule,
                     repositoriesModule,
-                    refreshModule
+                    refreshModule,
+                    dispatchersModule
                 )
             }),
             content = {

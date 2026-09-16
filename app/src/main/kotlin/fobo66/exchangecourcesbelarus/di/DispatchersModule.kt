@@ -14,12 +14,12 @@
  *    limitations under the License.
  */
 
-package fobo66.valiutchik.api.di
+package fobo66.exchangecourcesbelarus.di
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 val dispatchersModule = module {
-    single<CoroutineDispatcher> { Dispatchers.Default }
+    single<CoroutineDispatcher> { Dispatchers.IO }
 }
