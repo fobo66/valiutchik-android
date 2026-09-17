@@ -68,6 +68,8 @@ kotlin {
             dependencies {
                 implementation(libs.icu)
                 implementation(libs.sqlidelight.jvm)
+                implementation(libs.sqlidelight.androidx.jvm)
+                implementation(libs.androidx.sqlite.bundled)
             }
         }
 
