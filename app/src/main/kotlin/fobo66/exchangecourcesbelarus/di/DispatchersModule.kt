@@ -21,5 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 val dispatchersModule = module {
+    @Suppress("InjectDispatcher") // duh
     single<CoroutineDispatcher> { Dispatchers.IO }
 }
