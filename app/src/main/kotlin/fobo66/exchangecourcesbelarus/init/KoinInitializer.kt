@@ -19,6 +19,7 @@ package fobo66.exchangecourcesbelarus.init
 import android.content.Context
 import androidx.startup.Initializer
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
+import fobo66.exchangecourcesbelarus.di.dispatchersModule
 import fobo66.exchangecourcesbelarus.di.workersModule
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.core.di.repositoriesModule
@@ -32,7 +33,14 @@ class KoinInitializer : Initializer<KoinApplication> {
     override fun create(context: Context): KoinApplication = startKoin {
         androidContext(context)
         workManagerFactory()
-        modules(apiModule, viewModelsModule, domainModule, repositoriesModule, workersModule)
+        modules(
+            apiModule,
+            viewModelsModule,
+            domainModule,
+            repositoriesModule,
+            workersModule,
+            dispatchersModule
+        )
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>?> = emptyList()

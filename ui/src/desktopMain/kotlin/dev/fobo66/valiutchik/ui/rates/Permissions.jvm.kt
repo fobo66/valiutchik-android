@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Andrey Mukamolov
+ *    Copyright 2026 Andrey Mukamolov
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 
@@ -33,7 +33,7 @@ actual fun PermissionsEffect(
 ) {
     val actualHandlePermissions by rememberUpdatedState(onHandlePermissions)
 
-    LaunchedEffect(Unit) {
+    SideEffect(Unit) {
         actualHandlePermissions(PERMISSIONS_NOT_SUPPORTED_ON_DESKTOP)
     }
 }

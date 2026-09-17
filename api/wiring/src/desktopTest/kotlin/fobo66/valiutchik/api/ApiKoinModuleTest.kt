@@ -18,7 +18,6 @@ package fobo66.valiutchik.api
 
 import fobo66.valiutchik.api.di.apiModule
 import fobo66.valiutchik.api.di.credentialsModule
-import fobo66.valiutchik.api.di.dispatchersModule
 import fobo66.valiutchik.api.di.networkModule
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngine
@@ -27,11 +26,6 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
 class ApiKoinModuleTest {
-    @OptIn(KoinExperimentalAPI::class)
-    @Test
-    fun `check dispatchers module`() {
-        dispatchersModule.verify()
-    }
 
     @OptIn(KoinExperimentalAPI::class)
     @Test
