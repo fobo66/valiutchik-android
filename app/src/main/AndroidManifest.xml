@@ -85,7 +85,7 @@
           android:value="app_functions_schema.xsd" />
       <property
           android:name="android.app.appfunctions.v2"
-          android:value="task_app_function_service.xml" />
+          android:value="rates_app_function_service.xml" />
       <intent-filter>
         <action android:name="android.app.appfunctions.AppFunctionService" />
       </intent-filter>
