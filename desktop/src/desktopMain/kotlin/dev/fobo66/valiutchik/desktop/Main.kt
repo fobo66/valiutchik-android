@@ -16,8 +16,9 @@
 
 package dev.fobo66.valiutchik.desktop
 
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.window.singleWindowApplication
+import dev.fobo66.valiutchik.desktop.di.dispatchersModule
 import dev.fobo66.valiutchik.desktop.log.JvmAntilog
 import dev.fobo66.valiutchik.presentation.di.viewModelsModule
 import dev.fobo66.valiutchik.ui.main.MainContent
@@ -38,7 +39,7 @@ fun main() = runBlocking {
     singleWindowApplication(
         title = getString(Res.string.app_name)
     ) {
-        LaunchedEffect(Unit) {
+        SideEffect(Unit) {
             Napier.base(JvmAntilog())
         }
 
@@ -49,7 +50,8 @@ fun main() = runBlocking {
                     domainModule,
                     apiModule,
                     repositoriesModule,
-                    refreshModule
+                    refreshModule,
+                    dispatchersModule
                 )
             }),
             content = {

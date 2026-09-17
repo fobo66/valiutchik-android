@@ -25,7 +25,7 @@ import org.koin.dsl.module
 
 val apiModule =
     module {
-        includes(credentialsModule, networkModule, dispatchersModule, parserModule)
+        includes(credentialsModule, networkModule, parserModule)
         single<ApiDataSource> {
             ApiDataSourceImpl(
                 get(),

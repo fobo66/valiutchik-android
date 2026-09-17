@@ -18,7 +18,7 @@ package dev.fobo66.valiutchik.ui.rates
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 
@@ -33,7 +33,7 @@ actual fun PermissionsEffect(
 ) {
     val actualHandlePermissions by rememberUpdatedState(onHandlePermissions)
 
-    LaunchedEffect(Unit) {
+    SideEffect(Unit) {
         actualHandlePermissions(PERMISSIONS_NOT_SUPPORTED_ON_WEB)
     }
 }

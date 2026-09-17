@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?><!--
-  ~    Copyright 2025 Andrey Mukamolov
+  ~    Copyright 2026 Andrey Mukamolov
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@
   <import class="ch.qos.logback.core.ConsoleAppender" />
 
   <appender name="STDOUT" class="ConsoleAppender">
-    <withJansi>true</withJansi>
     <encoder class="PatternLayoutEncoder">
       <pattern>[%thread] %highlight(%-5level) %cyan(%logger{15}) -%kvp -%msg %n</pattern>
     </encoder>
