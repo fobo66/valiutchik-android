@@ -23,6 +23,7 @@ import android.os.SystemClock
 import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationManagerCompat
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.Location
 import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,6 +31,7 @@ import kotlinx.coroutines.withContext
 
 private const val LOCATION_FIX_TIME_DURATION_HOURS = 3
 
+@Inject
 class LocationDataSourceImpl(
     private val context: Context,
     private val ioDispatcher: CoroutineDispatcher

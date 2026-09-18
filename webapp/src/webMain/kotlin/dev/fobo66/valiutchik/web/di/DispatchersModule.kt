@@ -25,3 +25,7 @@ val dispatchersModule = module {
         Dispatchers.Default
     }
 }
+
+interface DispatchersModule {
+    val dispatcher: CoroutineDispatcher
+}

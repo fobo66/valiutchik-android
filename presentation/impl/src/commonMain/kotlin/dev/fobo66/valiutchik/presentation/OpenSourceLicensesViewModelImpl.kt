@@ -16,12 +16,21 @@
 
 package dev.fobo66.valiutchik.presentation
 
+import androidx.lifecycle.ViewModel
 import dev.fobo66.valiutchik.presentation.entity.LicensesState
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import fobo66.valiutchik.domain.usecases.LoadOpenSourceLicenses
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 
+@Inject
+@ViewModelKey
+@ContributesIntoMap(AppScope::class, binding<ViewModel>())
 class OpenSourceLicensesViewModelImpl(loadOpenSourceLicenses: LoadOpenSourceLicenses) :
     OpenSourceLicensesViewModel() {
     override val licensesState = loadOpenSourceLicenses()

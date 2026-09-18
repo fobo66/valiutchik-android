@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.repository
 
 import androidx.collection.mutableScatterSetOf
 import dev.fobo66.valiutchik.core.db.Bank
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.api.ApiDataSource
 import fobo66.valiutchik.api.entity.UNDEFINED_BUY_RATE
 import fobo66.valiutchik.api.entity.UNDEFINED_SELL_RATE
@@ -36,6 +39,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.toSet
 import kotlinx.io.IOException
 
+@ContributesBinding(AppScope::class)
+@Inject
 class CurrencyRateRepositoryImpl(
     private val persistenceDataSource: PersistenceDataSource,
     private val apiDataSource: ApiDataSource

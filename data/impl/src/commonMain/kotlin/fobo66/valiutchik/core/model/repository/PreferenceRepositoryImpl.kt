@@ -17,6 +17,9 @@
 package fobo66.valiutchik.core.model.repository
 
 import dev.fobo66.valiutchik.core.db.City
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.KEY_DEFAULT_CITY_ID
 import fobo66.valiutchik.core.KEY_UPDATE_INTERVAL
 import fobo66.valiutchik.core.model.datasource.PersistenceDataSource
@@ -26,6 +29,8 @@ import kotlinx.coroutines.flow.Flow
 private const val DEFAULT_UPDATE_INTERVAL = 3f
 private const val DEFAULT_CITY_ID = 1L
 
+@ContributesBinding(AppScope::class)
+@Inject
 class PreferenceRepositoryImpl(
     private val preferencesDataSource: PreferencesDataSource,
     private val persistenceDataSource: PersistenceDataSource

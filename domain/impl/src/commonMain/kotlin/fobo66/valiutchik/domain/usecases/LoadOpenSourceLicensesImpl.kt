@@ -16,11 +16,16 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.repository.LicensesRepository
 import fobo66.valiutchik.domain.entities.OpenSourceLicense
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LoadOpenSourceLicensesImpl(private val licensesRepository: LicensesRepository) :
     LoadOpenSourceLicenses {
     override fun invoke(): Flow<Set<OpenSourceLicense>> = flow {

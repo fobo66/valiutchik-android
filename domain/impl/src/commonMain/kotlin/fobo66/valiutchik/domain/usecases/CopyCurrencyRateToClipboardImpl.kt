@@ -16,8 +16,13 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.model.repository.ClipboardRepository
 
+@Inject
+@ContributesBinding(AppScope::class)
 class CopyCurrencyRateToClipboardImpl(private val clipboardRepository: ClipboardRepository) :
     CopyCurrencyRateToClipboard {
     override suspend fun invoke(currencyValue: CharSequence) {
