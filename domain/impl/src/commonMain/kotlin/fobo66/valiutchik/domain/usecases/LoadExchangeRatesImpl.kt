@@ -19,12 +19,13 @@ package fobo66.valiutchik.domain.usecases
 import fobo66.valiutchik.core.entities.BestCourse
 import fobo66.valiutchik.core.entities.LanguageTag
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
+import fobo66.valiutchik.core.model.repository.DataRefreshRepository
 import fobo66.valiutchik.core.model.repository.LocaleRepository
 import fobo66.valiutchik.domain.entities.BestCurrencyRate
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 private data class CurrencyRatesIntermediate(
     val languageTag: LanguageTag,
@@ -33,12 +34,13 @@ private data class CurrencyRatesIntermediate(
 
 class LoadExchangeRatesImpl(
     private val currencyRateRepository: CurrencyRateRepository,
-    private val localeRepository: LocaleRepository
+    private val localeRepository: LocaleRepository,
+    private val dataRefreshRepository: DataRefreshRepository
 ) : LoadExchangeRates {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun invoke(): Flow<List<BestCurrencyRate>> = localeRepository.loadLocale()
         .combine(currencyRateRepository.loadExchangeRates(), ::CurrencyRatesIntermediate)
+        .onEach { (languageTag, rates) -> dataRefreshRepository.refreshSearch(rates, languageTag) }
         .map { (languageTag, rates) ->
             rates.map {
                 it.toRate(languageTag)
