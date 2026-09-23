@@ -35,14 +35,11 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val systemModule: Module = module {
-    single {
-        androidContext().assets
-    }
 
     single<LocaleDataSource> { LocaleDataSourceImpl(androidContext()) }
 
     single<AssetsDataSource> {
-        AssetsDataSourceImpl(get())
+        AssetsDataSourceImpl(androidContext())
     }
 
     single<ClipboardDataSource> {

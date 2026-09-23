@@ -16,6 +16,7 @@
 
 plugins {
     id("buildlogic.library-conventions")
+    alias(libs.plugins.metro)
 }
 
 kotlin {

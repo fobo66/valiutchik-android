@@ -16,12 +16,17 @@
 
 package fobo66.valiutchik.domain.usecases
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import fobo66.valiutchik.core.entities.CurrencyRatesLoadFailedException
 import fobo66.valiutchik.core.model.repository.CurrencyRateRepository
 import fobo66.valiutchik.core.model.repository.PreferenceRepository
 import fobo66.valiutchik.domain.entities.RefreshException
 import kotlinx.coroutines.flow.first
 
+@ContributesBinding(AppScope::class)
+@Inject
 class ForceRefreshExchangeRatesForDefaultCityImpl(
     private val currencyRateRepository: CurrencyRateRepository,
     private val preferenceRepository: PreferenceRepository

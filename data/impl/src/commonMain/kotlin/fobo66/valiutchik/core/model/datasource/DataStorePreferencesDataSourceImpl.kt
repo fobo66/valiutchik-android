@@ -21,9 +21,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+@ContributesBinding(AppScope::class)
+@Inject
 class DataStorePreferencesDataSourceImpl(private val dataStore: DataStore<Preferences>) :
     PreferencesDataSource {
 

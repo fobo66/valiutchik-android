@@ -16,7 +16,13 @@
 
 package dev.fobo66.valiutchik.presentation
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import fobo66.valiutchik.domain.entities.CityPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreference
 import fobo66.valiutchik.domain.usecases.LoadDefaultCityPreferenceValues
@@ -30,6 +36,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+@Inject
+@ViewModelKey
+@ContributesIntoMap(AppScope::class, binding<ViewModel>())
 class PreferencesViewModelImpl(
     loadDefaultCityPreference: LoadDefaultCityPreference,
     loadUpdateIntervalPreference: LoadUpdateIntervalPreference,

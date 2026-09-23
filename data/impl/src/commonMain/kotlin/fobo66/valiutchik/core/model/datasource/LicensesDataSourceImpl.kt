@@ -18,6 +18,9 @@ package fobo66.valiutchik.core.model.datasource
 
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 import kotlinx.io.IOException
 import kotlinx.io.Source
@@ -25,6 +28,8 @@ import kotlinx.io.readString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 
+@ContributesBinding(AppScope::class)
+@Inject
 class LicensesDataSourceImpl : LicensesDataSource {
     @OptIn(ExperimentalSerializationApi::class)
     override fun decodeLicenses(jsonSource: Source): List<Library>? = try {
