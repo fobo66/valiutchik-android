@@ -17,7 +17,7 @@
 plugins {
     id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 kotlin {
@@ -82,6 +82,9 @@ kotlin {
                 implementation(libs.androidx.appsearch)
                 implementation(libs.androidx.appsearch.storage.platform)
                 implementation(libs.kotlinx.coroutines.guava)
+                configurations.getByName("kapt").dependencies.add(
+                    libs.androidx.appsearch.compiler.get()
+                )
             }
         }
 
@@ -113,8 +116,4 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    add("kspAndroid", libs.androidx.appsearch.compiler)
 }
