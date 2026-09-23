@@ -19,6 +19,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.licenses)
     alias(libs.plugins.baseline.profile)
+    alias(libs.plugins.koin.compiler)
     id("buildlogic.common-conventions")
     id("buildlogic.android-conventions")
 }

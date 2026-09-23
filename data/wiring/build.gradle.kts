@@ -14,14 +14,11 @@
  *    limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmDsl::class)
-
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-
 plugins {
     id("buildlogic.library-conventions")
     kotlin("plugin.serialization")
     alias(libs.plugins.sqlidelight)
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
