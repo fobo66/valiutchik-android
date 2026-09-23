@@ -14,17 +14,26 @@
  *    limitations under the License.
  */
 
-package dev.fobo66.core.data.testing.fake
+package fobo66.valiutchik.core.model.datasource
 
-import fobo66.valiutchik.core.entities.BestCourse
-import fobo66.valiutchik.core.entities.LanguageTag
-import fobo66.valiutchik.core.model.repository.DataRefreshRepository
+import androidx.appsearch.annotation.Document
+import androidx.appsearch.app.AppSearchSchema
 
-class FakeDataRefreshRepository : DataRefreshRepository {
-    var isRefreshed = false
-    override suspend fun refresh() {
-        isRefreshed = true
-    }
+@Document
+data class BestSearchableRate(
+    @Document.Namespace
+    val namespace: String,
 
-    override suspend fun refreshSearch(rates: List<BestCourse>, languageTag: LanguageTag) = Unit
-}
+    @Document.Id
+    val id: String,
+
+    @Document.StringProperty(
+        indexingType = AppSearchSchema.StringPropertyConfig.INDEXING_TYPE_PREFIXES
+    )
+    val rate: String,
+
+    @Document.StringProperty(
+        indexingType = AppSearchSchema.StringPropertyConfig.INDEXING_TYPE_EXACT_TERMS
+    )
+    val type: String
+)

@@ -28,6 +28,8 @@ import fobo66.valiutchik.core.model.datasource.LocaleDataSource
 import fobo66.valiutchik.core.model.datasource.LocaleDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.LocationDataSource
 import fobo66.valiutchik.core.model.datasource.LocationDataSourceImpl
+import fobo66.valiutchik.core.model.datasource.SearchDataSource
+import fobo66.valiutchik.core.model.datasource.SearchDataSourceImpl
 import fobo66.valiutchik.core.model.datasource.UriDataSource
 import fobo66.valiutchik.core.model.datasource.UriDataSourceImpl
 import org.koin.android.ext.koin.androidContext
@@ -61,5 +63,6 @@ actual val systemModule: Module = module {
         LocationDataSourceImpl(androidContext(), get())
     }
 
+    single<SearchDataSource> { SearchDataSourceImpl(androidContext(), get()) }
     single<UriDataSource> { UriDataSourceImpl() }
 }
