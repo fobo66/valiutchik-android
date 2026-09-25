@@ -2,7 +2,7 @@
 aboutLibraries = "15.2.0"
 androidGradlePlugin = "9.4.1"
 androidxActivity = "1.13.0"
-androidxAnnotations = "1.10.0"
+androidxAnnotations = "1.11.0"
 androidxBenchmark = "1.5.0"
 androidxCore = "1.19.0"
 androidxCollection = "1.6.0"
