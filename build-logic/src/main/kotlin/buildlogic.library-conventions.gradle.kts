@@ -34,7 +34,7 @@ kotlin {
     android {
         compileSdk {
             version = release(COMPILE_ANDROID_SDK_VERSION) {
-                minorApiLevel = 1
+                minorApiLevel = 2
             }
         }
 
