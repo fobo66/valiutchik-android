@@ -22,13 +22,10 @@ import androidx.activity.compose.ReportDrawn
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.xr.compose.material3.EnableXrComponentOverrides
-import androidx.xr.compose.material3.ExperimentalMaterial3XrApi
 import dev.fobo66.valiutchik.ui.main.MainContent
 import dev.fobo66.valiutchik.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3XrApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -37,10 +34,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                EnableXrComponentOverrides {
-                    MainContent()
-                    ReportDrawn()
-                }
+                MainContent()
+                ReportDrawn()
             }
         }
     }
