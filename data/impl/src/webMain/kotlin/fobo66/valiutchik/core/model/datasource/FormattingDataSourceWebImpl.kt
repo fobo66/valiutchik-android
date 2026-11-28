@@ -42,6 +42,7 @@ class FormattingDataSourceWebImpl : FormattingDataSource {
     ) {
         mutableScatterMapOf(
             "Нео" to "Нэа",
+            "При" to "Пры",
             "сск" to "ск",
             "Ре" to "Рэ",
             "Те" to "Тэ",
