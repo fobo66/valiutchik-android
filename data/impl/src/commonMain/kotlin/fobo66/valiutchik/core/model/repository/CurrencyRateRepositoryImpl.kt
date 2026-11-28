@@ -84,7 +84,7 @@ class CurrencyRateRepositoryImpl(
                 buyRates.map {
                     BestCourse(
                         bankName = it.bankName,
-                        currencyValue = it.max ?: UNDEFINED_BUY_RATE,
+                        currencyValue = it.max,
                         currencyName = it.currencyId,
                         currencyId = it.sortOrder,
                         multiplier = it.multiplier,
@@ -94,8 +94,7 @@ class CurrencyRateRepositoryImpl(
                     sellRates.map {
                         BestCourse(
                             bankName = it.bankName,
-                            currencyValue =
-                                it.min ?: UNDEFINED_SELL_RATE,
+                            currencyValue = it.min,
                             currencyName = it.currencyId,
                             currencyId = it.sortOrder,
                             multiplier = it.multiplier
